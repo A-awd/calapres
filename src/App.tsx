@@ -12,6 +12,7 @@ import BundleBuilder from "./pages/BundleBuilder";
 import Collections from "./pages/Collections";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import OrderTracking from "./pages/OrderTracking";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/collections/:categorySlug" element={<Collections />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/track-order" element={<OrderTracking />} />
               
               {/* Admin */}
               <Route path="/admin" element={<AdminLogin />} />
