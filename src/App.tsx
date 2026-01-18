@@ -10,6 +10,8 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import BundleBuilder from "./pages/BundleBuilder";
 import Collections from "./pages/Collections";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -34,6 +36,8 @@ const App = () => (
               <Route path="/bundle-builder" element={<BundleBuilder />} />
               <Route path="/collections" element={<Collections />} />
               <Route path="/collections/:categorySlug" element={<Collections />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/order-success" element={<OrderSuccess />} />
               
               {/* Admin */}
               <Route path="/admin" element={<AdminLogin />} />
