@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Cairo', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
+        display: ['Cormorant Garamond', 'serif'],
         arabic: ['Cairo', 'sans-serif'],
       },
       colors: {
@@ -62,9 +62,16 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Custom Calapres colors
+        // Premium Calapres colors
         gold: "hsl(var(--gold))",
         "gold-light": "hsl(var(--gold-light))",
+        champagne: "hsl(var(--champagne))",
+        charcoal: "hsl(var(--charcoal))",
+        "charcoal-light": "hsl(var(--charcoal-light))",
+        ivory: "hsl(var(--ivory))",
+        sand: "hsl(var(--sand))",
+        blush: "hsl(var(--blush))",
+        // Legacy colors for admin
         burgundy: "hsl(var(--burgundy))",
         "burgundy-light": "hsl(var(--burgundy-light))",
         "burgundy-dark": "hsl(var(--burgundy-dark))",
@@ -112,16 +119,21 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out",
-        "slide-in-right": "slide-in-right 0.4s ease-out",
-        "slide-in-left": "slide-in-left 0.4s ease-out",
-        "scale-in": "scale-in 0.3s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "slide-in-right": "slide-in-right 0.5s ease-out",
+        "slide-in-left": "slide-in-left 0.5s ease-out",
+        "scale-in": "scale-in 0.4s ease-out",
         "pulse-soft": "pulse-soft 2s ease-in-out infinite",
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'elegant': 'var(--shadow-elegant)',
         'card': 'var(--shadow-card)',
+        'hover': 'var(--shadow-hover)',
+      },
+      letterSpacing: {
+        'luxury': '0.2em',
+        'wide-luxury': '0.15em',
       },
     },
   },

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,94 +6,97 @@
 
 @layer base {
   :root {
-    /* Luxury Calapres Palette - Warm Burgundy & Cream */
-    --background: 30 25% 97%;
-    --foreground: 20 20% 15%;
+    /* Bloss-inspired Premium Palette - Minimalist Luxury */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
-    --card: 30 20% 99%;
-    --card-foreground: 20 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 30 20% 99%;
-    --popover-foreground: 20 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
-    /* Burgundy/Wine - from wax seal */
-    --primary: 350 35% 35%;
-    --primary-foreground: 30 20% 98%;
+    /* Deep Charcoal Primary */
+    --primary: 0 0% 12%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Warm cream */
-    --secondary: 35 30% 92%;
-    --secondary-foreground: 20 20% 20%;
+    /* Soft warm gray */
+    --secondary: 30 10% 96%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 30 15% 90%;
-    --muted-foreground: 20 10% 45%;
+    --muted: 30 8% 94%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Rose gold accent */
-    --accent: 15 50% 75%;
-    --accent-foreground: 20 20% 15%;
+    /* Champagne Gold accent */
+    --accent: 38 45% 70%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 20% 88%;
-    --input: 30 20% 88%;
-    --ring: 350 35% 35%;
+    --border: 30 10% 90%;
+    --input: 30 10% 92%;
+    --ring: 38 45% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
     /* Custom luxury tokens */
-    --gold: 40 60% 55%;
-    --gold-light: 40 50% 75%;
+    --gold: 38 50% 60%;
+    --gold-light: 38 40% 78%;
+    --champagne: 38 30% 88%;
+    --charcoal: 0 0% 12%;
+    --charcoal-light: 0 0% 25%;
+    --ivory: 40 30% 98%;
+    --sand: 35 20% 94%;
+    --blush: 10 30% 95%;
+    
+    /* Keep legacy colors for admin */
     --burgundy: 350 35% 35%;
     --burgundy-light: 350 30% 45%;
     --burgundy-dark: 350 40% 25%;
     --cream: 35 30% 92%;
     --cream-light: 35 40% 97%;
-    --chocolate: 20 30% 25%;
+    --chocolate: 0 0% 12%;
     --rose: 350 40% 85%;
     --rose-light: 350 50% 95%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(350 35% 35%), hsl(20 30% 25%));
-    --gradient-gold: linear-gradient(135deg, hsl(40 60% 55%), hsl(35 50% 65%));
-    --gradient-cream: linear-gradient(180deg, hsl(35 40% 97%), hsl(30 25% 93%));
-    --gradient-card: linear-gradient(145deg, hsl(30 20% 99%), hsl(35 25% 95%));
-
-    /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(20 30% 25% / 0.1);
-    --shadow-elegant: 0 10px 40px -10px hsl(350 35% 35% / 0.15);
-    --shadow-card: 0 2px 16px -2px hsl(20 20% 15% / 0.08);
+    /* Refined Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.04);
+    --shadow-elegant: 0 12px 40px -12px hsl(0 0% 0% / 0.12);
+    --shadow-card: 0 1px 3px 0px hsl(0 0% 0% / 0.03);
+    --shadow-hover: 0 20px 50px -15px hsl(0 0% 0% / 0.15);
 
     /* Sidebar - Admin */
-    --sidebar-background: 20 20% 12%;
-    --sidebar-foreground: 30 20% 90%;
-    --sidebar-primary: 350 35% 45%;
-    --sidebar-primary-foreground: 30 20% 98%;
-    --sidebar-accent: 20 20% 18%;
-    --sidebar-accent-foreground: 30 20% 90%;
-    --sidebar-border: 20 15% 20%;
-    --sidebar-ring: 350 35% 45%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 38 45% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 38 45% 60%;
   }
 
   .dark {
-    --background: 20 20% 8%;
-    --foreground: 30 20% 95%;
-    --card: 20 18% 12%;
-    --card-foreground: 30 20% 95%;
-    --popover: 20 18% 12%;
-    --popover-foreground: 30 20% 95%;
-    --primary: 350 40% 55%;
-    --primary-foreground: 20 20% 10%;
-    --secondary: 20 15% 18%;
-    --secondary-foreground: 30 20% 90%;
-    --muted: 20 15% 20%;
-    --muted-foreground: 30 10% 60%;
-    --accent: 15 40% 45%;
-    --accent-foreground: 30 20% 95%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 38 45% 65%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 38 40% 50%;
+    --accent-foreground: 0 0% 95%;
     --destructive: 0 60% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 20 15% 20%;
-    --input: 20 15% 20%;
-    --ring: 350 40% 55%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 38 45% 65%;
   }
 }
 
@@ -108,6 +111,9 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* RTL Support */
@@ -116,179 +122,215 @@
   }
 
   [dir="ltr"] {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Refined Typography Scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+    font-weight: 500;
+  }
+
+  h1 {
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    letter-spacing: -0.015em;
   }
 }
 
 @layer components {
   /* Typography */
   .font-display {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
   }
 
   .font-arabic {
     font-family: 'Cairo', sans-serif;
   }
 
-  /* Luxury text gradients */
+  /* Ultra-minimal Header */
+  .header-luxury {
+    @apply bg-white/95 backdrop-blur-xl border-b border-border/50;
+  }
+
+  /* Luxury text effects */
   .text-gradient-gold {
-    background: var(--gradient-gold);
+    background: linear-gradient(135deg, hsl(38 50% 55%), hsl(40 45% 70%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .text-gradient-burgundy {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Card styles */
+  /* Minimal Card styles */
   .card-luxury {
-    @apply bg-card rounded-lg;
-    background: var(--gradient-card);
+    @apply bg-white border border-border/40 rounded-sm;
     box-shadow: var(--shadow-card);
   }
 
   .card-hover {
-    @apply transition-all duration-300;
+    @apply transition-all duration-500 ease-out;
   }
 
   .card-hover:hover {
-    box-shadow: var(--shadow-elegant);
-    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
   }
 
-  /* Button enhancements */
+  /* Premium Button */
   .btn-luxury {
-    @apply relative overflow-hidden;
-    background: var(--gradient-hero);
+    @apply relative overflow-hidden bg-charcoal text-white px-8 py-4 text-sm tracking-widest uppercase;
+    letter-spacing: 0.15em;
   }
 
-  .btn-luxury::before {
+  .btn-luxury::after {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, hsl(350 40% 45%), hsl(20 35% 35%));
+    @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
   }
 
-  .btn-luxury:hover::before {
+  .btn-luxury:hover::after {
     @apply opacity-100;
+  }
+
+  /* Gold accent button */
+  .btn-gold {
+    @apply bg-transparent border border-gold text-foreground px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300;
+    letter-spacing: 0.15em;
+  }
+
+  .btn-gold:hover {
+    @apply bg-gold/10;
   }
 
   /* WhatsApp floating button */
   .whatsapp-float {
-    @apply fixed bottom-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-transform duration-300;
+    @apply fixed bottom-8 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-elegant transition-all duration-300;
     background: #25D366;
-    right: 1.5rem;
+    right: 2rem;
   }
 
   [dir="rtl"] .whatsapp-float {
     right: auto;
-    left: 1.5rem;
+    left: 2rem;
   }
 
   .whatsapp-float:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px -10px rgba(37, 211, 102, 0.4);
   }
 
   /* Section spacing */
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-32;
   }
 
   /* Container */
   .container-luxury {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
   }
 
   /* Decorative elements */
   .divider-elegant {
-    @apply w-20 h-0.5 mx-auto;
-    background: var(--gradient-gold);
+    @apply w-16 h-px bg-gold/60;
+  }
+
+  .divider-dark {
+    @apply w-16 h-px bg-charcoal/20;
   }
 
   /* Price styling */
   .price-original {
-    @apply line-through text-muted-foreground text-sm;
+    @apply line-through text-muted-foreground text-sm font-light;
   }
 
   .price-current {
-    @apply text-primary font-bold text-lg;
+    @apply text-foreground font-medium text-base;
   }
 
   .price-discount {
-    @apply bg-destructive text-destructive-foreground px-2 py-0.5 rounded text-xs font-medium;
+    @apply bg-foreground text-background px-2 py-0.5 text-xs font-medium tracking-wider;
   }
 
-  /* Badge styles */
+  /* Badge styles - Minimal */
   .badge-bestseller {
-    @apply bg-gold text-chocolate px-2 py-0.5 rounded-full text-xs font-semibold;
-    background: hsl(var(--gold));
+    @apply bg-gold/15 text-gold-light border border-gold/30 px-3 py-1 text-xs font-medium tracking-wider uppercase;
+    color: hsl(38 60% 40%);
   }
 
   .badge-new {
-    @apply bg-primary text-primary-foreground px-2 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-foreground text-background px-3 py-1 text-xs font-medium tracking-wider uppercase;
   }
 
   .badge-express {
-    @apply bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-xs font-medium tracking-wider uppercase;
   }
 
   /* Form inputs luxury style */
   .input-luxury {
-    @apply border-2 border-border bg-background rounded-lg px-4 py-3 transition-all duration-200;
+    @apply border border-border bg-white px-4 py-3.5 transition-all duration-200 text-sm;
   }
 
   .input-luxury:focus {
-    @apply border-primary ring-2 ring-primary/20 outline-none;
+    @apply border-foreground ring-0 outline-none;
+  }
+
+  .input-luxury::placeholder {
+    @apply text-muted-foreground/60;
   }
 
   /* Scrollbar styling */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-muted;
+    @apply bg-transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/30 rounded-full;
+    @apply bg-border rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary/50;
+    @apply bg-muted-foreground/30;
+  }
+
+  /* Product image overlay */
+  .product-overlay {
+    @apply absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500;
   }
 }
 
 @layer utilities {
   /* Animation utilities */
   .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
   }
 
-  .animate-shimmer {
-    animation: shimmer 2s linear infinite;
-    background: linear-gradient(90deg, transparent, hsl(var(--gold) / 0.3), transparent);
-    background-size: 200% 100%;
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
   }
 
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* Backdrop blur */
   .glass {
-    @apply bg-background/80 backdrop-blur-md;
+    @apply bg-white/90 backdrop-blur-xl;
+  }
+
+  .glass-dark {
+    @apply bg-charcoal/95 backdrop-blur-xl;
   }
 
   /* Hide scrollbar */
@@ -299,5 +341,24 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Aspect ratios */
+  .aspect-product {
+    aspect-ratio: 3/4;
+  }
+
+  .aspect-hero {
+    aspect-ratio: 16/9;
+  }
+
+  /* Letter spacing */
+  .tracking-luxury {
+    letter-spacing: 0.2em;
   }
 }
