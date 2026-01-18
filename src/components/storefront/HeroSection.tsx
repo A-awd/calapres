@@ -44,7 +44,7 @@ const HeroSection: React.FC = () => {
           >
             {t(
               'أهدِ لحظات لا تُنسى مع كالابريز',
-              'Gift Unforgettable Moments with Calabriz'
+              'Gift Unforgettable Moments with Calapres'
             )}
           </motion.h1>
 
