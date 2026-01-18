@@ -7,6 +7,8 @@ import { CartProvider } from "@/contexts/CartContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import Cart from "./pages/Cart";
+import ProductDetail from "./pages/ProductDetail";
+import BundleBuilder from "./pages/BundleBuilder";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -27,6 +29,8 @@ const App = () => (
               {/* Storefront */}
               <Route path="/" element={<Index />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/bundle-builder" element={<BundleBuilder />} />
               
               {/* Admin */}
               <Route path="/admin" element={<AdminLogin />} />
