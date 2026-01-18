@@ -1,66 +1,71 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { categories } from '@/data/mockData';
 
 const CategoriesSection: React.FC = () => {
-  const { t, direction } = useLanguage();
-  const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
+  const { t, language } = useLanguage();
 
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-sand">
       <div className="container-luxury">
         {/* Section header */}
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2"
-            >
-              {t('تصفح حسب النوع', 'Browse by Type')}
-            </motion.h2>
-            <div className="divider-elegant mx-0" />
-          </div>
-          <Link
-            to="/categories"
-            className="hidden md:flex items-center gap-2 text-primary hover:gap-3 transition-all"
+        <div className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-xs tracking-luxury text-gold uppercase mb-4"
           >
-            {t('عرض الكل', 'View All')}
-            <Arrow className="w-4 h-4" />
-          </Link>
+            {t('تصفح مجموعاتنا', 'EXPLORE OUR COLLECTIONS')}
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-display text-3xl md:text-4xl font-medium text-foreground mb-6"
+          >
+            {t('التصنيفات', 'Categories')}
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="divider-elegant mx-auto"
+          />
         </div>
 
-        {/* Categories grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {categories.map((category, index) => (
+        {/* Categories grid - Asymmetric layout */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {categories.slice(0, 4).map((category, index) => (
             <motion.div
               key={category.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}
             >
               <Link
                 to={`/categories/${category.slug}`}
-                className="group block card-luxury rounded-2xl overflow-hidden card-hover"
+                className="group block relative h-full"
               >
-                <div className="relative aspect-[4/5] overflow-hidden">
+                <div className={`relative overflow-hidden bg-white ${index === 0 ? 'aspect-square md:aspect-auto md:h-full' : 'aspect-square'}`}>
                   <img
                     src={category.image}
-                    alt={t(category.nameAr, category.name)}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    alt={language === 'ar' ? category.nameAr : category.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-chocolate/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 start-0 end-0 p-4 text-cream">
-                    <h3 className="font-semibold text-lg mb-1">
-                      {t(category.nameAr, category.name)}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <h3 className="text-white font-display text-xl md:text-2xl font-medium mb-1">
+                      {language === 'ar' ? category.nameAr : category.name}
                     </h3>
-                    <p className="text-sm text-cream/70">
-                      {category.productCount} {t('منتج', 'products')}
+                    <p className="text-white/70 text-sm">
+                      {category.productCount} {t('منتج', 'Products')}
                     </p>
                   </div>
                 </div>
@@ -69,16 +74,40 @@ const CategoriesSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Mobile view all link */}
-        <div className="md:hidden mt-8 text-center">
-          <Link
-            to="/categories"
-            className="inline-flex items-center gap-2 text-primary font-medium"
+        {/* Fifth category - full width */}
+        {categories[4] && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-4 md:mt-6"
           >
-            {t('عرض جميع التصنيفات', 'View All Categories')}
-            <Arrow className="w-4 h-4" />
-          </Link>
-        </div>
+            <Link
+              to={`/categories/${categories[4].slug}`}
+              className="group block relative"
+            >
+              <div className="relative overflow-hidden bg-white aspect-[3/1]">
+                <img
+                  src={categories[4].image}
+                  alt={language === 'ar' ? categories[4].nameAr : categories[4].name}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent rtl:bg-gradient-to-l" />
+                <div className="absolute inset-y-0 start-0 flex flex-col justify-center p-8 md:p-12">
+                  <h3 className="text-white font-display text-2xl md:text-3xl font-medium mb-2">
+                    {language === 'ar' ? categories[4].nameAr : categories[4].name}
+                  </h3>
+                  <p className="text-white/70 text-sm mb-4">
+                    {categories[4].productCount} {t('منتج', 'Products')}
+                  </p>
+                  <span className="inline-flex items-center text-white text-sm tracking-wider uppercase border-b border-white/50 pb-1 w-fit group-hover:border-white transition-colors">
+                    {t('تسوق الآن', 'Shop Now')}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );

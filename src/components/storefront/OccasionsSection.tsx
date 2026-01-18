@@ -5,28 +5,37 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { occasions } from '@/data/mockData';
 
 const OccasionsSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
-    <section className="section-padding bg-cream-light">
+    <section className="section-padding bg-white">
       <div className="container-luxury">
         {/* Section header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-xs tracking-luxury text-gold uppercase mb-4"
+          >
+            {t('للمناسبات الخاصة', 'FOR SPECIAL MOMENTS')}
+          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4"
+            transition={{ delay: 0.1 }}
+            className="font-display text-3xl md:text-4xl font-medium text-foreground mb-6"
           >
             {t('تسوق حسب المناسبة', 'Shop by Occasion')}
           </motion.h2>
-          <div className="divider-elegant mb-4" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {t(
-              'اختر الهدية المثالية لكل مناسبة خاصة في حياتك',
-              'Choose the perfect gift for every special occasion in your life'
-            )}
-          </p>
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="divider-elegant mx-auto"
+          />
         </div>
 
         {/* Occasions grid */}
@@ -41,24 +50,21 @@ const OccasionsSection: React.FC = () => {
             >
               <Link
                 to={`/occasions/${occasion.slug}`}
-                className="group block"
+                className="group block text-center"
               >
-                <div className="relative aspect-square rounded-2xl overflow-hidden mb-4">
+                <div className="relative aspect-square overflow-hidden bg-sand mb-4">
                   <img
                     src={occasion.image}
-                    alt={t(occasion.nameAr, occasion.name)}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    alt={language === 'ar' ? occasion.nameAr : occasion.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-chocolate/60 to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className={`w-12 h-12 ${occasion.color} rounded-full flex items-center justify-center`}>
-                      <span className="text-white text-xl">❤️</span>
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <h3 className="text-white font-medium text-sm md:text-base">
+                      {language === 'ar' ? occasion.nameAr : occasion.name}
+                    </h3>
                   </div>
                 </div>
-                <h3 className="text-center font-semibold text-foreground group-hover:text-primary transition-colors">
-                  {t(occasion.nameAr, occasion.name)}
-                </h3>
               </Link>
             </motion.div>
           ))}
