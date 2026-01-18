@@ -43,8 +43,8 @@ const HeroSection: React.FC = () => {
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-cream leading-tight mb-6"
           >
             {t(
-              'أهدِ لحظات لا تُنسى مع كالابريس',
-              'Gift Unforgettable Moments with Calapres'
+              'أهدِ لحظات لا تُنسى مع كالابريز',
+              'Gift Unforgettable Moments with Calabriz'
             )}
           </motion.h1>
 
