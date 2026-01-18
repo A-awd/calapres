@@ -1,96 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Luxury Calapres Palette - Warm Burgundy & Cream */
+    --background: 30 25% 97%;
+    --foreground: 20 20% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 30 20% 99%;
+    --card-foreground: 20 20% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 30 20% 99%;
+    --popover-foreground: 20 20% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Burgundy/Wine - from wax seal */
+    --primary: 350 35% 35%;
+    --primary-foreground: 30 20% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm cream */
+    --secondary: 35 30% 92%;
+    --secondary-foreground: 20 20% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 15% 90%;
+    --muted-foreground: 20 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Rose gold accent */
+    --accent: 15 50% 75%;
+    --accent-foreground: 20 20% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 20% 88%;
+    --input: 30 20% 88%;
+    --ring: 350 35% 35%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Custom luxury tokens */
+    --gold: 40 60% 55%;
+    --gold-light: 40 50% 75%;
+    --burgundy: 350 35% 35%;
+    --burgundy-light: 350 30% 45%;
+    --burgundy-dark: 350 40% 25%;
+    --cream: 35 30% 92%;
+    --cream-light: 35 40% 97%;
+    --chocolate: 20 30% 25%;
+    --rose: 350 40% 85%;
+    --rose-light: 350 50% 95%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(350 35% 35%), hsl(20 30% 25%));
+    --gradient-gold: linear-gradient(135deg, hsl(40 60% 55%), hsl(35 50% 65%));
+    --gradient-cream: linear-gradient(180deg, hsl(35 40% 97%), hsl(30 25% 93%));
+    --gradient-card: linear-gradient(145deg, hsl(30 20% 99%), hsl(35 25% 95%));
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(20 30% 25% / 0.1);
+    --shadow-elegant: 0 10px 40px -10px hsl(350 35% 35% / 0.15);
+    --shadow-card: 0 2px 16px -2px hsl(20 20% 15% / 0.08);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar - Admin */
+    --sidebar-background: 20 20% 12%;
+    --sidebar-foreground: 30 20% 90%;
+    --sidebar-primary: 350 35% 45%;
+    --sidebar-primary-foreground: 30 20% 98%;
+    --sidebar-accent: 20 20% 18%;
+    --sidebar-accent-foreground: 30 20% 90%;
+    --sidebar-border: 20 15% 20%;
+    --sidebar-ring: 350 35% 45%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 20 20% 8%;
+    --foreground: 30 20% 95%;
+    --card: 20 18% 12%;
+    --card-foreground: 30 20% 95%;
+    --popover: 20 18% 12%;
+    --popover-foreground: 30 20% 95%;
+    --primary: 350 40% 55%;
+    --primary-foreground: 20 20% 10%;
+    --secondary: 20 15% 18%;
+    --secondary-foreground: 30 20% 90%;
+    --muted: 20 15% 20%;
+    --muted-foreground: 30 10% 60%;
+    --accent: 15 40% 45%;
+    --accent-foreground: 30 20% 95%;
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 15% 20%;
+    --input: 20 15% 20%;
+    --ring: 350 40% 55%;
   }
 }
 
@@ -99,7 +102,202 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] {
+    font-family: 'Cairo', sans-serif;
+  }
+
+  [dir="ltr"] {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  /* Typography */
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-arabic {
+    font-family: 'Cairo', sans-serif;
+  }
+
+  /* Luxury text gradients */
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-burgundy {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Card styles */
+  .card-luxury {
+    @apply bg-card rounded-lg;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-elegant);
+    transform: translateY(-4px);
+  }
+
+  /* Button enhancements */
+  .btn-luxury {
+    @apply relative overflow-hidden;
+    background: var(--gradient-hero);
+  }
+
+  .btn-luxury::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(350 40% 45%), hsl(20 35% 35%));
+  }
+
+  .btn-luxury:hover::before {
+    @apply opacity-100;
+  }
+
+  /* WhatsApp floating button */
+  .whatsapp-float {
+    @apply fixed bottom-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-transform duration-300;
+    background: #25D366;
+    right: 1.5rem;
+  }
+
+  [dir="rtl"] .whatsapp-float {
+    right: auto;
+    left: 1.5rem;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  /* Container */
+  .container-luxury {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Decorative elements */
+  .divider-elegant {
+    @apply w-20 h-0.5 mx-auto;
+    background: var(--gradient-gold);
+  }
+
+  /* Price styling */
+  .price-original {
+    @apply line-through text-muted-foreground text-sm;
+  }
+
+  .price-current {
+    @apply text-primary font-bold text-lg;
+  }
+
+  .price-discount {
+    @apply bg-destructive text-destructive-foreground px-2 py-0.5 rounded text-xs font-medium;
+  }
+
+  /* Badge styles */
+  .badge-bestseller {
+    @apply bg-gold text-chocolate px-2 py-0.5 rounded-full text-xs font-semibold;
+    background: hsl(var(--gold));
+  }
+
+  .badge-new {
+    @apply bg-primary text-primary-foreground px-2 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-express {
+    @apply bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  /* Form inputs luxury style */
+  .input-luxury {
+    @apply border-2 border-border bg-background rounded-lg px-4 py-3 transition-all duration-200;
+  }
+
+  .input-luxury:focus {
+    @apply border-primary ring-2 ring-primary/20 outline-none;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background: linear-gradient(90deg, transparent, hsl(var(--gold) / 0.3), transparent);
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Backdrop blur */
+  .glass {
+    @apply bg-background/80 backdrop-blur-md;
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
