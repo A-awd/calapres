@@ -65,7 +65,7 @@ const HeroSection: React.FC = () => {
             className="flex flex-wrap gap-4"
           >
             <Link
-              to="/categories"
+              to="/collections"
               className="inline-flex items-center gap-3 bg-charcoal text-white px-8 py-4 text-sm tracking-wider uppercase hover:bg-charcoal/90 transition-colors"
             >
               {t('تسوق الآن', 'Shop Now')}

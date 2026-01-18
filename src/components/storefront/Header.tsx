@@ -69,19 +69,19 @@ const Header: React.FC = () => {
 
           {/* Right - Icons */}
           <div className="flex items-center justify-end gap-3 w-1/3">
-            <Link
-              to="/wishlist"
+            <button
               className="p-1.5 hover:bg-secondary transition-colors hidden sm:block"
+              title={t('المفضلة', 'Wishlist')}
             >
               <Heart className="w-5 h-5" />
-            </Link>
+            </button>
 
-            <Link
-              to="/account"
+            <button
               className="p-1.5 hover:bg-secondary transition-colors hidden sm:block"
+              title={t('الحساب', 'Account')}
             >
               <User className="w-5 h-5" />
-            </Link>
+            </button>
 
             <Link
               to="/cart"
