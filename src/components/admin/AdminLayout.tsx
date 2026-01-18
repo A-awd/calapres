@@ -50,9 +50,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         {/* Logo */}
         <div className="p-6 border-b border-sidebar-border">
           <Link to="/admin/dashboard" className="flex items-center gap-3">
-            <img src={logo} alt="Calabriz" className="h-10 w-auto brightness-150" />
+            <img src={logo} alt="Calapres" className="h-10 w-auto brightness-150" />
             <span className="font-display text-lg font-bold text-white">
-              Calabriz
+              Calapres
             </span>
           </Link>
         </div>

@@ -55,9 +55,9 @@ const Header: React.FC = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Calabriz" className="h-12 w-auto" />
+            <img src={logo} alt="Calapres" className="h-12 w-auto" />
             <span className="font-display text-2xl font-bold text-primary hidden sm:block">
-              Calabriz
+              Calapres
             </span>
           </Link>
 
