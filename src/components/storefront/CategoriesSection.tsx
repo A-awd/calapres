@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { categories } from '@/data/mockData';
 
 const CategoriesSection: React.FC = () => {
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
+
+  // On mobile, load immediately without scroll-triggered animations
+  const viewportConfig = isMobile ? undefined : { once: true };
+  const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
 
   return (
     <section className="section-padding bg-sand">
@@ -13,27 +19,27 @@ const CategoriesSection: React.FC = () => {
         {/* Section header */}
         <div className="text-center mb-16">
           <motion.span
-            initial={{ opacity: 0, y: 20 }}
+            initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={viewportConfig}
             className="inline-block text-xs tracking-luxury text-gold uppercase mb-4"
           >
             {t('تصفح مجموعاتنا', 'EXPLORE OUR COLLECTIONS')}
           </motion.span>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            viewport={viewportConfig}
+            transition={{ delay: isMobile ? 0 : 0.1 }}
             className="font-display text-3xl md:text-4xl font-medium text-foreground mb-6"
           >
             {t('التصنيفات', 'Categories')}
           </motion.h2>
           <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
+            initial={isMobile ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            viewport={viewportConfig}
+            transition={{ delay: isMobile ? 0 : 0.2 }}
             className="divider-elegant mx-auto"
           />
         </div>
@@ -43,14 +49,14 @@ const CategoriesSection: React.FC = () => {
           {categories.slice(0, 4).map((category, index) => (
             <motion.div
               key={category.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={initialState}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              viewport={viewportConfig}
+              transition={{ delay: isMobile ? 0 : index * 0.1 }}
               className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}
             >
               <Link
-                to={`/categories/${category.slug}`}
+                to={`/collections/${category.slug}`}
                 className="group block relative h-full"
               >
                 <div className={`relative overflow-hidden bg-white ${index === 0 ? 'aspect-square md:aspect-auto md:h-full' : 'aspect-square'}`}>
@@ -77,13 +83,13 @@ const CategoriesSection: React.FC = () => {
         {/* Fifth category - full width */}
         {categories[4] && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={viewportConfig}
             className="mt-4 md:mt-6"
           >
             <Link
-              to={`/categories/${categories[4].slug}`}
+              to={`/collections/${categories[4].slug}`}
               className="group block relative"
             >
               <div className="relative overflow-hidden bg-white aspect-[3/1]">

@@ -3,12 +3,18 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Package } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { bundles } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 
 const BundlesSection: React.FC = () => {
   const { t, direction } = useLanguage();
+  const isMobile = useIsMobile();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
+
+  // On mobile, load immediately without scroll-triggered animations
+  const viewportConfig = isMobile ? undefined : { once: true };
+  const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
 
   return (
     <section className="section-padding bg-rose-light">
@@ -16,18 +22,18 @@ const BundlesSection: React.FC = () => {
         {/* Section header */}
         <div className="text-center mb-12">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={viewportConfig}
             className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4"
           >
             <Package className="w-5 h-5" />
             <span className="font-medium">{t('وفر أكثر', 'Save More')}</span>
           </motion.div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={viewportConfig}
             className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4"
           >
             {t('باقات الهدايا المميزة', 'Premium Gift Bundles')}
@@ -46,10 +52,10 @@ const BundlesSection: React.FC = () => {
           {bundles.map((bundle, index) => (
             <motion.div
               key={bundle.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={initialState}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              viewport={viewportConfig}
+              transition={{ delay: isMobile ? 0 : index * 0.1 }}
               className="group"
             >
               <Link to={`/bundles/${bundle.id}`} className="block">
