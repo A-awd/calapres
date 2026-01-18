@@ -14,9 +14,9 @@ const Header: React.FC = () => {
 
   const navItems = [
     { label: t('الرئيسية', 'Home'), href: '/' },
-    { label: t('المناسبات', 'Occasions'), href: '/occasions' },
-    { label: t('التصنيفات', 'Categories'), href: '/categories' },
-    { label: t('الباقات', 'Bundles'), href: '/bundles' },
+    { label: t('المناسبات', 'Occasions'), href: '/collections' },
+    { label: t('التصنيفات', 'Categories'), href: '/collections' },
+    { label: t('الباقات', 'Bundles'), href: '/collections' },
     { label: t('صمم هديتك', 'Build Your Gift'), href: '/bundle-builder' },
   ];
 

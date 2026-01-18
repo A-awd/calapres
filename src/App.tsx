@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import BundleBuilder from "./pages/BundleBuilder";
+import Collections from "./pages/Collections";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -31,6 +32,8 @@ const App = () => (
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/bundle-builder" element={<BundleBuilder />} />
+              <Route path="/collections" element={<Collections />} />
+              <Route path="/collections/:categorySlug" element={<Collections />} />
               
               {/* Admin */}
               <Route path="/admin" element={<AdminLogin />} />
