@@ -2,10 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { testimonials } from '@/data/mockData';
 
 const TestimonialsSection: React.FC = () => {
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
+
+  // On mobile, load immediately without scroll-triggered animations
+  const viewportConfig = isMobile ? undefined : { once: true };
+  const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
 
   return (
     <section className="section-padding bg-primary text-primary-foreground relative overflow-hidden">
@@ -17,9 +23,9 @@ const TestimonialsSection: React.FC = () => {
         {/* Section header */}
         <div className="text-center mb-12">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={viewportConfig}
             className="font-display text-3xl md:text-4xl font-bold mb-4"
           >
             {t('ماذا يقول عملاؤنا', 'What Our Customers Say')}
@@ -32,10 +38,10 @@ const TestimonialsSection: React.FC = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={initialState}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              viewport={viewportConfig}
+              transition={{ delay: isMobile ? 0 : index * 0.1 }}
               className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6"
             >
               <Quote className="w-10 h-10 text-gold/50 mb-4" />

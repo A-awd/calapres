@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Heart, Eye } from 'lucide-react';
+import { ShoppingBag, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Product } from '@/types';
 
 interface ProductCardProps {
@@ -14,17 +15,22 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
   const { t, language } = useLanguage();
   const { addItem } = useCart();
+  const isMobile = useIsMobile();
 
   const discount = product.originalPrice 
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : 0;
 
+  // On mobile, load immediately without scroll-triggered animations
+  const viewportConfig = isMobile ? undefined : { once: true };
+  const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={initialState}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      viewport={viewportConfig}
+      transition={{ delay: isMobile ? 0 : index * 0.1, duration: 0.5 }}
       className="group"
     >
       <div className="relative">
