@@ -21,7 +21,7 @@ const AdminLogin: React.FC = () => {
     setError('');
 
     // Demo login - in production, this would be authenticated via Supabase
-    if (email === 'admin@calapres.com' && password === 'admin123') {
+    if (email === 'admin@calabriz.com' && password === 'admin123') {
       setTimeout(() => {
         navigate('/admin/dashboard');
       }, 1000);
@@ -43,9 +43,9 @@ const AdminLogin: React.FC = () => {
         <div className="bg-background rounded-2xl shadow-elegant p-8">
           {/* Logo */}
           <div className="text-center mb-8">
-            <img src={logo} alt="Calapres" className="h-20 w-auto mx-auto mb-4" />
+            <img src={logo} alt="Calabriz" className="h-20 w-auto mx-auto mb-4" />
             <h1 className="font-display text-2xl font-bold text-foreground">
-              Calapres Admin
+              Calabriz Admin
             </h1>
             <p className="text-muted-foreground mt-2">
               Sign in to manage your store
@@ -61,7 +61,7 @@ const AdminLogin: React.FC = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@calapres.com"
+                  placeholder="admin@calabriz.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="ps-10"
@@ -130,7 +130,7 @@ const AdminLogin: React.FC = () => {
               Demo credentials:
             </p>
             <p className="text-sm text-center font-mono">
-              admin@calapres.com / admin123
+              admin@calabriz.com / admin123
             </p>
           </div>
         </div>

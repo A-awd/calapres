@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="Calapres" className="h-16 w-auto brightness-150" />
-              <span className="font-display text-2xl font-bold">Calapres</span>
+              <img src={logo} alt="Calabriz" className="h-16 w-auto brightness-150" />
+              <span className="font-display text-2xl font-bold">Calabriz</span>
             </Link>
             <p className="text-cream/70 leading-relaxed">
               {t(
@@ -103,7 +103,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3 text-cream/70">
                 <Mail className="w-5 h-5 text-gold" />
-                <span>info@calapres.com</span>
+                <span>info@calabriz.com</span>
               </li>
               <li className="flex items-start gap-3 text-cream/70">
                 <MapPin className="w-5 h-5 text-gold flex-shrink-0 mt-1" />
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
       <div className="border-t border-cream/10">
         <div className="container-luxury py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-cream/50 text-sm">
-            © 2024 Calapres. {t('جميع الحقوق محفوظة', 'All rights reserved')}.
+            © 2024 Calabriz. {t('جميع الحقوق محفوظة', 'All rights reserved')}.
           </p>
           <div className="flex items-center gap-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" className="h-8 opacity-50 hover:opacity-100 transition-opacity" />
