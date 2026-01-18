@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ShoppingBag, Search, User, Globe, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo.png';
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
   const { itemCount } = useCart();
+  const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -76,12 +78,13 @@ const Header: React.FC = () => {
               <Heart className="w-5 h-5" />
             </button>
 
-            <button
+            <Link
+              to={user ? '/account' : '/auth'}
               className="p-1.5 hover:bg-secondary transition-colors hidden sm:block"
               title={t('الحساب', 'Account')}
             >
               <User className="w-5 h-5" />
-            </button>
+            </Link>
 
             <Link
               to="/cart"
