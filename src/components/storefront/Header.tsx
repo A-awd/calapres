@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, Search, User, Globe } from 'lucide-react';
+import { Menu, X, ShoppingBag, Search, User, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/hooks/useAuth';
@@ -17,17 +17,16 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navItems = [
-    { label: t('الرئيسية', 'Home'), href: '/' },
-    { label: t('المجموعات', 'Collections'), href: '/collections' },
-    { label: t('صمم هديتك', 'Build Gift'), href: '/bundle-builder' },
-    { label: t('تتبع الطلب', 'Track Order'), href: '/track-order' },
+    { label: t('المجموعات', 'Shop'), href: '/collections' },
+    { label: t('صمم هديتك', 'Custom'), href: '/bundle-builder' },
+    { label: t('تتبع الطلب', 'Track'), href: '/track-order' },
   ];
 
   const isActive = (href: string) => {
@@ -36,185 +35,214 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/98 backdrop-blur-md shadow-sm' 
-          : 'bg-white'
-      }`}
-    >
-      <div className="container-luxury">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Left - Navigation (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-8 flex-1">
-            {navItems.slice(0, 2).map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={`relative text-sm tracking-wide transition-colors duration-300 ${
-                  isActive(item.href)
-                    ? 'text-foreground font-medium'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
+          isScrolled 
+            ? 'bg-background/95 backdrop-blur-xl shadow-[0_1px_0_0_hsl(var(--border)/0.1)]' 
+            : 'bg-transparent'
+        }`}
+      >
+        {/* Top Announcement Bar */}
+        <AnimatePresence>
+          {!isScrolled && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-foreground text-background overflow-hidden"
+            >
+              <div className="container-luxury py-2 text-center">
+                <p className="text-xs tracking-widest uppercase">
+                  {t('توصيل مجاني للطلبات فوق ٣٠٠ ر.س', 'Free delivery on orders over 300 SAR')}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Main Header */}
+        <div className="container-luxury">
+          <div className="flex items-center justify-between h-14 lg:h-16">
+            {/* Left - Mobile Menu */}
+            <div className="flex items-center gap-2 w-32 lg:w-40">
+              <button
+                className="lg:hidden p-1.5 text-foreground/70 hover:text-foreground transition-colors"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Menu"
               >
-                {item.label}
-                {isActive(item.href) && (
-                  <motion.span
-                    layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-px bg-foreground"
-                  />
-                )}
-              </Link>
-            ))}
-          </nav>
+                <Menu className="w-5 h-5" strokeWidth={1.5} />
+              </button>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 -ms-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
-          >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+              {/* Desktop Nav */}
+              <nav className="hidden lg:flex items-center gap-6">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className="group relative"
+                  >
+                    <span className={`text-[13px] uppercase tracking-[0.15em] transition-colors duration-300 ${
+                      isActive(item.href)
+                        ? 'text-foreground'
+                        : 'text-foreground/60 group-hover:text-foreground'
+                    }`}>
+                      {item.label}
+                    </span>
+                    <span className={`absolute -bottom-0.5 left-0 h-px bg-foreground transition-all duration-300 ${
+                      isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`} />
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
-          {/* Center - Logo */}
-          <Link 
-            to="/" 
-            className="absolute left-1/2 -translate-x-1/2 flex items-center"
-          >
-            <span className="font-display text-2xl lg:text-3xl tracking-[0.15em] text-foreground">
-              CALAPRES
-            </span>
-          </Link>
-
-          {/* Right - Navigation (Desktop) + Icons */}
-          <div className="hidden lg:flex items-center gap-8 flex-1 justify-end">
-            {navItems.slice(2).map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={`relative text-sm tracking-wide transition-colors duration-300 ${
-                  isActive(item.href)
-                    ? 'text-foreground font-medium'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
+            {/* Center - Logo */}
+            <Link 
+              to="/" 
+              className="absolute left-1/2 -translate-x-1/2"
+            >
+              <motion.div
+                initial={false}
+                animate={{ scale: isScrolled ? 0.9 : 1 }}
+                transition={{ duration: 0.3 }}
               >
-                {item.label}
-                {isActive(item.href) && (
-                  <motion.span
-                    layoutId="activeNav2"
-                    className="absolute -bottom-1 left-0 right-0 h-px bg-foreground"
-                  />
-                )}
-              </Link>
-            ))}
-            
-            <div className="flex items-center gap-1 ps-4 border-s border-border/50">
+                <h1 className="font-display text-xl lg:text-2xl tracking-[0.2em] text-foreground font-light">
+                  CALAPRES
+                </h1>
+              </motion.div>
+            </Link>
+
+            {/* Right - Actions */}
+            <div className="flex items-center justify-end gap-1 lg:gap-3 w-32 lg:w-40">
+              {/* Language Toggle */}
               <button
                 onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
-                className="p-2.5 text-muted-foreground hover:text-foreground transition-colors"
-                title={language === 'ar' ? 'English' : 'عربي'}
+                className="hidden lg:flex items-center gap-1 px-2 py-1 text-[11px] uppercase tracking-widest text-foreground/60 hover:text-foreground transition-colors"
               >
-                <Globe className="w-[18px] h-[18px]" />
+                {language === 'ar' ? 'EN' : 'ع'}
               </button>
-              
+
+              {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2.5 text-muted-foreground hover:text-foreground transition-colors"
+                className="p-2 text-foreground/60 hover:text-foreground transition-colors"
                 aria-label="Search"
               >
-                <Search className="w-[18px] h-[18px]" />
+                <Search className="w-[18px] h-[18px]" strokeWidth={1.5} />
               </button>
 
+              {/* Account */}
               <Link
                 to={user ? '/account' : '/auth'}
-                className="p-2.5 text-muted-foreground hover:text-foreground transition-colors"
+                className="hidden lg:block p-2 text-foreground/60 hover:text-foreground transition-colors"
                 aria-label="Account"
               >
-                <User className="w-[18px] h-[18px]" />
+                <User className="w-[18px] h-[18px]" strokeWidth={1.5} />
               </Link>
 
+              {/* Cart */}
               <Link
                 to="/cart"
-                className="relative p-2.5 text-muted-foreground hover:text-foreground transition-colors"
+                className="relative p-2 text-foreground/60 hover:text-foreground transition-colors"
                 aria-label="Cart"
               >
-                <ShoppingBag className="w-[18px] h-[18px]" />
+                <ShoppingBag className="w-[18px] h-[18px]" strokeWidth={1.5} />
                 {itemCount > 0 && (
-                  <span className="absolute top-1 end-1 w-4 h-4 bg-foreground text-background text-[10px] flex items-center justify-center rounded-full font-medium">
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-0.5 -end-0.5 w-4 h-4 bg-foreground text-background text-[9px] flex items-center justify-center rounded-full font-medium"
+                  >
                     {itemCount}
-                  </span>
+                  </motion.span>
                 )}
               </Link>
             </div>
           </div>
-
-          {/* Mobile Icons */}
-          <div className="flex lg:hidden items-center gap-1">
-            <button
-              onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
-              className="p-2 text-muted-foreground"
-            >
-              <Globe className="w-5 h-5" />
-            </button>
-            <Link to="/cart" className="relative p-2 text-muted-foreground">
-              <ShoppingBag className="w-5 h-5" />
-              {itemCount > 0 && (
-                <span className="absolute top-0.5 end-0.5 w-4 h-4 bg-foreground text-background text-[10px] flex items-center justify-center rounded-full font-medium">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
-          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t border-border/30 overflow-hidden"
-          >
-            <nav className="container-luxury py-6 space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block py-3 text-base transition-colors ${
-                    isActive(item.href)
-                      ? 'text-foreground font-medium'
-                      : 'text-muted-foreground'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="pt-4 mt-4 border-t border-border/30 flex gap-4">
-                <Link
-                  to={user ? '/account' : '/auth'}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-2 text-muted-foreground"
-                >
-                  <User className="w-5 h-5" />
-                  {t('حسابي', 'Account')}
-                </Link>
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsSearchOpen(true);
-                  }}
-                  className="flex items-center gap-2 text-muted-foreground"
-                >
-                  <Search className="w-5 h-5" />
-                  {t('بحث', 'Search')}
-                </button>
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: language === 'ar' ? '100%' : '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: language === 'ar' ? '100%' : '-100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className={`fixed top-0 ${language === 'ar' ? 'right-0' : 'left-0'} h-full w-80 max-w-[85vw] bg-background z-50 shadow-2xl`}
+            >
+              <div className="flex flex-col h-full">
+                {/* Menu Header */}
+                <div className="flex items-center justify-between p-5 border-b border-border/30">
+                  <span className="font-display text-lg tracking-[0.15em]">CALAPRES</span>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-1 text-foreground/60 hover:text-foreground"
+                  >
+                    <X className="w-5 h-5" strokeWidth={1.5} />
+                  </button>
+                </div>
+
+                {/* Menu Links */}
+                <nav className="flex-1 py-6 px-5 space-y-1">
+                  <Link
+                    to="/"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block py-3 text-sm uppercase tracking-[0.15em] transition-colors ${
+                      location.pathname === '/' ? 'text-foreground' : 'text-foreground/60'
+                    }`}
+                  >
+                    {t('الرئيسية', 'Home')}
+                  </Link>
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block py-3 text-sm uppercase tracking-[0.15em] transition-colors ${
+                        isActive(item.href) ? 'text-foreground' : 'text-foreground/60'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+
+                {/* Menu Footer */}
+                <div className="p-5 border-t border-border/30 space-y-4">
+                  <Link
+                    to={user ? '/account' : '/auth'}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 text-foreground/60 hover:text-foreground transition-colors"
+                  >
+                    <User className="w-4 h-4" strokeWidth={1.5} />
+                    <span className="text-sm">{t('حسابي', 'My Account')}</span>
+                  </Link>
+                  <button
+                    onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
+                    className="flex items-center gap-3 text-foreground/60 hover:text-foreground transition-colors w-full"
+                  >
+                    <span className="w-4 h-4 flex items-center justify-center text-xs font-medium">
+                      {language === 'ar' ? 'EN' : 'ع'}
+                    </span>
+                    <span className="text-sm">{language === 'ar' ? 'English' : 'العربية'}</span>
+                  </button>
+                </div>
               </div>
-            </nav>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -225,44 +253,42 @@ const Header: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/98 backdrop-blur-xl z-50 flex items-start justify-center pt-[20vh]"
             onClick={() => setIsSearchOpen(false)}
           >
             <motion.div
-              initial={{ y: -50, opacity: 0 }}
+              initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="bg-white w-full"
+              exit={{ y: 20, opacity: 0 }}
+              transition={{ delay: 0.1 }}
+              className="w-full max-w-xl px-6"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="container-luxury py-8">
-                <div className="max-w-2xl mx-auto">
-                  <div className="relative">
-                    <Search className="absolute start-0 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder={t('ابحث عن الهدايا المثالية...', 'Search for the perfect gift...')}
-                      className="w-full ps-10 pe-4 py-4 bg-transparent border-b-2 border-foreground/20 focus:border-foreground text-lg focus:outline-none transition-colors font-display"
-                      autoFocus
-                    />
-                    <button
-                      onClick={() => setIsSearchOpen(false)}
-                      className="absolute end-0 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-4 text-center">
-                    {t('اضغط Enter للبحث أو Esc للإغلاق', 'Press Enter to search or Esc to close')}
-                  </p>
-                </div>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder={t('ابحث...', 'Search...')}
+                  className="w-full px-0 py-4 bg-transparent border-b border-foreground/20 focus:border-foreground text-2xl lg:text-3xl font-display tracking-wide focus:outline-none transition-colors text-center placeholder:text-foreground/30"
+                  autoFocus
+                />
               </div>
+              <p className="text-xs text-foreground/40 mt-6 text-center tracking-widest uppercase">
+                {t('اضغط Esc للإغلاق', 'Press Esc to close')}
+              </p>
             </motion.div>
+            <button
+              onClick={() => setIsSearchOpen(false)}
+              className="absolute top-6 end-6 p-2 text-foreground/40 hover:text-foreground transition-colors"
+            >
+              <X className="w-6 h-6" strokeWidth={1} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+
+      {/* Header Spacer */}
+      <div className={`${isScrolled ? 'h-14 lg:h-16' : 'h-[calc(2rem+3.5rem)] lg:h-[calc(2rem+4rem)]'} transition-all duration-300`} />
+    </>
   );
 };
 
