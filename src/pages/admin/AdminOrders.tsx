@@ -13,6 +13,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
+import OrderDetailModal from '@/components/admin/OrderDetailModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -40,6 +41,8 @@ type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'deliver
 const AdminOrders: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: orders = [], isLoading } = useQuery({
@@ -133,6 +136,11 @@ const AdminOrders: React.FC = () => {
     });
   };
 
+  const handleViewOrder = (orderId: string) => {
+    setSelectedOrderId(orderId);
+    setDetailModalOpen(true);
+  };
+
   return (
     <AdminLayout title="Orders">
       {/* Status tabs - horizontal scroll on mobile */}
@@ -213,7 +221,9 @@ const AdminOrders: React.FC = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem><Eye className="w-4 h-4 mr-2" /> View</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleViewOrder(order.id)}>
+                            <Eye className="w-4 h-4 mr-2" /> View Details
+                          </DropdownMenuItem>
                           <DropdownMenuItem><Printer className="w-4 h-4 mr-2" /> Print</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -287,7 +297,13 @@ const AdminOrders: React.FC = () => {
                         </SelectContent>
                       </Select>
                       <div className="flex items-center gap-1">
-                        <Button variant="outline" size="icon"><Eye className="w-4 h-4" /></Button>
+                        <Button 
+                          variant="outline" 
+                          size="icon"
+                          onClick={() => handleViewOrder(order.id)}
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
                         <Button variant="outline" size="icon"><Printer className="w-4 h-4" /></Button>
                       </div>
                     </div>
@@ -311,6 +327,13 @@ const AdminOrders: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Order Detail Modal */}
+      <OrderDetailModal
+        orderId={selectedOrderId}
+        open={detailModalOpen}
+        onOpenChange={setDetailModalOpen}
+      />
     </AdminLayout>
   );
 };

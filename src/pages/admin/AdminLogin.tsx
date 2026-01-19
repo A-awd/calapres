@@ -1,35 +1,104 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 import logo from '@/assets/logo.png';
 
 const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
+  const { user, isLoading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Check if user is already logged in and has admin role
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      if (authLoading || !user) return;
+
+      try {
+        const { data: roles, error: rolesError } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', user.id);
+
+        if (rolesError) throw rolesError;
+
+        if (roles && roles.length > 0) {
+          navigate('/admin/dashboard');
+        }
+      } catch (err) {
+        console.error('Error checking admin status:', err);
+      }
+    };
+
+    checkAdminAccess();
+  }, [user, authLoading, navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Demo login - in production, this would be authenticated via Supabase
-    if (email === 'admin@calapres.com' && password === 'admin123') {
-      setTimeout(() => {
-        navigate('/admin/dashboard');
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setError('Invalid email or password');
+    try {
+      // Sign in with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) {
+        if (authError.message.includes('Invalid login credentials')) {
+          setError('Invalid email or password');
+        } else {
+          setError(authError.message);
+        }
         setIsLoading(false);
-      }, 1000);
+        return;
+      }
+
+      if (!authData.user) {
+        setError('Login failed. Please try again.');
+        setIsLoading(false);
+        return;
+      }
+
+      // Check if user has admin role
+      const { data: roles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', authData.user.id);
+
+      if (rolesError) {
+        console.error('Error checking roles:', rolesError);
+        setError('Failed to verify admin access');
+        await supabase.auth.signOut();
+        setIsLoading(false);
+        return;
+      }
+
+      if (!roles || roles.length === 0) {
+        setError('Access denied. You do not have admin privileges.');
+        await supabase.auth.signOut();
+        setIsLoading(false);
+        return;
+      }
+
+      // User is authenticated and has admin role
+      toast.success('Welcome back!');
+      navigate('/admin/dashboard');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred');
+      setIsLoading(false);
     }
   };
 
@@ -61,11 +130,12 @@ const AdminLogin: React.FC = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@calapres.com"
+                  placeholder="admin@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="ps-10"
                   required
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -82,6 +152,7 @@ const AdminLogin: React.FC = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="ps-10 pe-10"
                   required
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
@@ -94,20 +165,21 @@ const AdminLogin: React.FC = () => {
             </div>
 
             {error && (
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-destructive text-sm text-center"
+                className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg"
               >
-                {error}
-              </motion.p>
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <p>{error}</p>
+              </motion.div>
             )}
 
             <Button
               type="submit"
               className="w-full"
               size="lg"
-              disabled={isLoading}
+              disabled={isLoading || authLoading}
             >
               {isLoading ? (
                 <motion.div
@@ -124,13 +196,12 @@ const AdminLogin: React.FC = () => {
             </Button>
           </form>
 
-          {/* Demo credentials */}
+          {/* Info note */}
           <div className="mt-8 p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground text-center mb-2">
-              Demo credentials:
-            </p>
-            <p className="text-sm text-center font-mono">
-              admin@calapres.com / admin123
+            <p className="text-sm text-muted-foreground text-center">
+              Only authorized administrators can access this panel.
+              <br />
+              Contact support if you need access.
             </p>
           </div>
         </div>

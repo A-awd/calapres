@@ -8,12 +8,12 @@ import {
   LogOut,
   Bell,
   Menu,
-  X,
-  ChevronLeft,
-  Store
+  Store,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import logo from '@/assets/logo.png';
 
 interface AdminLayoutProps {
@@ -32,6 +32,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { adminUser, isAdmin, loading, logout } = useAdminAuth();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -40,8 +41,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleLogout = () => {
-    navigate('/admin');
+  // Redirect to login if not admin
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      navigate('/admin');
+    }
+  }, [loading, isAdmin, navigate]);
+
+  const handleLogout = async () => {
+    await logout();
   };
 
   const isActive = (href: string) => {
@@ -50,6 +58,23 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     }
     return location.pathname === href;
   };
+
+  // Show loading state while checking auth
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if not admin
+  if (!isAdmin) {
+    return null;
+  }
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -89,11 +114,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       <div className="p-3 lg:p-4 border-t border-sidebar-border">
         <div className="flex items-center gap-3 mb-3 lg:mb-4">
           <div className="w-8 h-8 lg:w-10 lg:h-10 bg-sidebar-primary rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-sidebar-primary-foreground font-bold text-sm lg:text-base">A</span>
+            <span className="text-sidebar-primary-foreground font-bold text-sm lg:text-base">
+              {adminUser?.email?.charAt(0).toUpperCase() || 'A'}
+            </span>
           </div>
           <div className="min-w-0">
-            <p className="font-medium text-sm truncate">Admin User</p>
-            <p className="text-xs text-sidebar-foreground/60 truncate">Administrator</p>
+            <p className="font-medium text-sm truncate">{adminUser?.email || 'Admin'}</p>
+            <p className="text-xs text-sidebar-foreground/60 truncate capitalize">
+              {adminUser?.roles.join(', ') || 'Administrator'}
+            </p>
           </div>
         </div>
         <Button
