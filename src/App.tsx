@@ -22,6 +22,7 @@ import AdminProducts from "./pages/admin/AdminProductsNew";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminBundles from "./pages/admin/AdminBundles";
 import AdminOccasions from "./pages/admin/AdminOccasions";
+import AdminCategories from "./pages/admin/AdminCategories";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
                 <Route path="/admin/orders" element={<AdminOrders />} />
                 <Route path="/admin/bundles" element={<AdminBundles />} />
                 <Route path="/admin/occasions" element={<AdminOccasions />} />
+                <Route path="/admin/categories" element={<AdminCategories />} />
                 
                 {/* Catch-all */}
                 <Route path="*" element={<NotFound />} />
