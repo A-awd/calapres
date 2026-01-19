@@ -15,6 +15,7 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import OrderTracking from "./pages/OrderTracking";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Account from "./pages/Account";
 import Ramadan from "./pages/Ramadan";
 import OccasionLanding from "./pages/OccasionLanding";
@@ -48,6 +49,7 @@ const App = () => (
                 <Route path="/order-success" element={<OrderSuccess />} />
                 <Route path="/track-order" element={<OrderTracking />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/ramadan" element={<Ramadan />} />
                 <Route path="/occasion/:slug" element={<OccasionLanding />} />
