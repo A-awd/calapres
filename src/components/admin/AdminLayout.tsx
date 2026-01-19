@@ -10,10 +10,11 @@ import {
   FileText, 
   Settings, 
   LogOut,
-  ChevronLeft,
-  ChevronRight,
   Bell,
-  Search
+  Search,
+  Gift,
+  Calendar,
+  FolderOpen
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,7 +33,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
     { icon: ShoppingCart, label: 'Orders', href: '/admin/orders' },
     { icon: Package, label: 'Products', href: '/admin/products' },
-    { icon: Package, label: 'Bundles', href: '/admin/bundles' },
+    { icon: Gift, label: 'Bundles', href: '/admin/bundles' },
+    { icon: FolderOpen, label: 'Categories', href: '/admin/categories' },
+    { icon: Calendar, label: 'Occasions', href: '/admin/occasions' },
     { icon: Users, label: 'Customers', href: '/admin/customers' },
     { icon: Tag, label: 'Coupons', href: '/admin/coupons' },
     { icon: FileText, label: 'Content', href: '/admin/content' },
