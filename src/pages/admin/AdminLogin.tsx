@@ -57,7 +57,7 @@ const AdminLogin: React.FC = () => {
 
       if (authError) {
         if (authError.message.includes('Invalid login credentials')) {
-          setError('Invalid email or password');
+          setError('البريد الإلكتروني أو كلمة المرور غير صحيحة');
         } else {
           setError(authError.message);
         }
@@ -66,7 +66,7 @@ const AdminLogin: React.FC = () => {
       }
 
       if (!authData.user) {
-        setError('Login failed. Please try again.');
+        setError('فشل تسجيل الدخول. حاول مرة أخرى.');
         setIsLoading(false);
         return;
       }
@@ -79,31 +79,31 @@ const AdminLogin: React.FC = () => {
 
       if (rolesError) {
         console.error('Error checking roles:', rolesError);
-        setError('Failed to verify admin access');
+        setError('فشل التحقق من صلاحيات الوصول');
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
       if (!roles || roles.length === 0) {
-        setError('Access denied. You do not have admin privileges.');
+        setError('الوصول مرفوض. ليس لديك صلاحيات الإدارة.');
         await supabase.auth.signOut();
         setIsLoading(false);
         return;
       }
 
       // User is authenticated and has admin role
-      toast.success('Welcome back!');
+      toast.success('مرحباً بعودتك!');
       navigate('/admin/dashboard');
     } catch (err: any) {
       console.error('Login error:', err);
-      setError('An unexpected error occurred');
+      setError('حدث خطأ غير متوقع');
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-sidebar flex items-center justify-center p-4">
+    <div className="min-h-screen bg-sidebar flex items-center justify-center p-4" dir="rtl">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -112,25 +112,25 @@ const AdminLogin: React.FC = () => {
         <div className="bg-background rounded-2xl shadow-elegant p-8">
           {/* Logo */}
           <div className="text-center mb-8">
-            <img src={logo} alt="Calapres" className="h-20 w-auto mx-auto mb-4" />
+            <img src={logo} alt="كالابريز" className="h-20 w-auto mx-auto mb-4" />
             <h1 className="font-display text-2xl font-bold text-foreground">
-              Calapres Admin
+              لوحة تحكم كالابريز
             </h1>
             <p className="text-muted-foreground mt-2">
-              Sign in to manage your store
+              سجل دخولك لإدارة المتجر
             </p>
           </div>
 
           {/* Login form */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">البريد الإلكتروني</Label>
               <div className="relative">
                 <Mail className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@example.com"
+                  placeholder="admin@calapres.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="ps-10"
@@ -141,7 +141,7 @@ const AdminLogin: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">كلمة المرور</Label>
               <div className="relative">
                 <Lock className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
@@ -190,7 +190,7 @@ const AdminLogin: React.FC = () => {
               ) : (
                 <>
                   <ShieldCheck className="w-5 h-5 me-2" />
-                  Sign In
+                  تسجيل الدخول
                 </>
               )}
             </Button>
@@ -199,9 +199,9 @@ const AdminLogin: React.FC = () => {
           {/* Info note */}
           <div className="mt-8 p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground text-center">
-              Only authorized administrators can access this panel.
+              يمكن للمسؤولين المصرح لهم فقط الوصول إلى هذه اللوحة.
               <br />
-              Contact support if you need access.
+              تواصل مع الدعم إذا كنت بحاجة للوصول.
             </p>
           </div>
         </div>

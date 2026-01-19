@@ -26,7 +26,8 @@ const AdminOccasions: React.FC = () => {
   const deleteOccasion = useDeleteOccasion();
 
   const filteredOccasions = occasions.filter(occasion =>
-    occasion.name.toLowerCase().includes(searchQuery.toLowerCase())
+    occasion.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    occasion.name_ar.includes(searchQuery)
   );
 
   const handleEdit = (occasion: Occasion) => {
@@ -48,33 +49,33 @@ const AdminOccasions: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Occasions">
+    <AdminLayout title="المناسبات">
       <div className="flex flex-col md:flex-row gap-4 justify-between mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Search occasions..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-9" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input placeholder="البحث في المناسبات..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pr-9" />
         </div>
         <Button className="gap-2" onClick={() => { setEditingOccasion(null); setFormOpen(true); }}>
-          <Plus className="w-4 h-4" /> Add Occasion
+          <Plus className="w-4 h-4" /> إضافة مناسبة
         </Button>
       </div>
 
       <Card>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="p-8 text-center text-muted-foreground">Loading occasions...</div>
+            <div className="p-8 text-center text-muted-foreground">جاري تحميل المناسبات...</div>
           ) : filteredOccasions.length === 0 ? (
-            <div className="p-8 text-center text-muted-foreground">No occasions found</div>
+            <div className="p-8 text-center text-muted-foreground">لا توجد مناسبات</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-secondary/50">
                   <tr>
-                    <th className="p-4 text-left font-medium">Occasion</th>
-                    <th className="p-4 text-left font-medium">Slug</th>
-                    <th className="p-4 text-left font-medium">Order</th>
-                    <th className="p-4 text-left font-medium">Status</th>
-                    <th className="p-4 text-left font-medium">Actions</th>
+                    <th className="p-4 text-right font-medium">المناسبة</th>
+                    <th className="p-4 text-right font-medium">الرابط</th>
+                    <th className="p-4 text-right font-medium">الترتيب</th>
+                    <th className="p-4 text-right font-medium">الحالة</th>
+                    <th className="p-4 text-right font-medium">الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -84,8 +85,8 @@ const AdminOccasions: React.FC = () => {
                         <div className="flex items-center gap-3">
                           {occasion.icon && <span className="text-2xl">{occasion.icon}</span>}
                           <div>
-                            <p className="font-medium">{occasion.name}</p>
-                            <p className="text-sm text-muted-foreground">{occasion.name_ar}</p>
+                            <p className="font-medium">{occasion.name_ar}</p>
+                            <p className="text-sm text-muted-foreground">{occasion.name}</p>
                           </div>
                         </div>
                       </td>
@@ -93,7 +94,7 @@ const AdminOccasions: React.FC = () => {
                       <td className="p-4">{occasion.display_order}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded text-sm ${occasion.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                          {occasion.is_active ? 'Active' : 'Hidden'}
+                          {occasion.is_active ? 'نشط' : 'مخفي'}
                         </span>
                       </td>
                       <td className="p-4">
@@ -102,8 +103,8 @@ const AdminOccasions: React.FC = () => {
                             <Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => handleEdit(occasion)}><Edit className="w-4 h-4 mr-2" /> Edit</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(occasion.id)}><Trash2 className="w-4 h-4 mr-2" /> Delete</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEdit(occasion)}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(occasion.id)}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </td>
@@ -117,7 +118,7 @@ const AdminOccasions: React.FC = () => {
       </Card>
 
       <OccasionFormDialog open={formOpen} onOpenChange={setFormOpen} occasion={editingOccasion} />
-      <DeleteConfirmDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen} onConfirm={confirmDelete} title="Delete Occasion" description="Are you sure? This cannot be undone." isDeleting={deleteOccasion.isPending} />
+      <DeleteConfirmDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen} onConfirm={confirmDelete} title="حذف المناسبة" description="هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء." isDeleting={deleteOccasion.isPending} />
     </AdminLayout>
   );
 };

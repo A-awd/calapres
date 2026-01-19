@@ -26,7 +26,8 @@ const AdminCategories: React.FC = () => {
   const deleteCategory = useDeleteCategory();
 
   const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(searchQuery.toLowerCase())
+    category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    category.name_ar.includes(searchQuery)
   );
 
   const handleEdit = (category: Category) => {
@@ -48,33 +49,33 @@ const AdminCategories: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Categories">
+    <AdminLayout title="التصنيفات">
       <div className="flex flex-col md:flex-row gap-4 justify-between mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Search categories..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-9" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input placeholder="البحث في التصنيفات..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pr-9" />
         </div>
         <Button className="gap-2" onClick={() => { setEditingCategory(null); setFormOpen(true); }}>
-          <Plus className="w-4 h-4" /> Add Category
+          <Plus className="w-4 h-4" /> إضافة تصنيف
         </Button>
       </div>
 
       <Card>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="p-8 text-center text-muted-foreground">Loading categories...</div>
+            <div className="p-8 text-center text-muted-foreground">جاري تحميل التصنيفات...</div>
           ) : filteredCategories.length === 0 ? (
-            <div className="p-8 text-center text-muted-foreground">No categories found</div>
+            <div className="p-8 text-center text-muted-foreground">لا توجد تصنيفات</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-secondary/50">
                   <tr>
-                    <th className="p-4 text-left font-medium">Category</th>
-                    <th className="p-4 text-left font-medium">Slug</th>
-                    <th className="p-4 text-left font-medium">Order</th>
-                    <th className="p-4 text-left font-medium">Status</th>
-                    <th className="p-4 text-left font-medium">Actions</th>
+                    <th className="p-4 text-right font-medium">التصنيف</th>
+                    <th className="p-4 text-right font-medium">الرابط</th>
+                    <th className="p-4 text-right font-medium">الترتيب</th>
+                    <th className="p-4 text-right font-medium">الحالة</th>
+                    <th className="p-4 text-right font-medium">الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -83,15 +84,15 @@ const AdminCategories: React.FC = () => {
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           {category.image ? (
-                            <img src={category.image} alt={category.name} className="w-10 h-10 rounded object-cover" />
+                            <img src={category.image} alt={category.name_ar} className="w-10 h-10 rounded object-cover" />
                           ) : (
                             <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center">
                               <Image className="w-5 h-5 text-muted-foreground" />
                             </div>
                           )}
                           <div>
-                            <p className="font-medium">{category.name}</p>
-                            <p className="text-sm text-muted-foreground">{category.name_ar}</p>
+                            <p className="font-medium">{category.name_ar}</p>
+                            <p className="text-sm text-muted-foreground">{category.name}</p>
                           </div>
                         </div>
                       </td>
@@ -99,7 +100,7 @@ const AdminCategories: React.FC = () => {
                       <td className="p-4">{category.display_order}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded text-sm ${category.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                          {category.is_active ? 'Active' : 'Hidden'}
+                          {category.is_active ? 'نشط' : 'مخفي'}
                         </span>
                       </td>
                       <td className="p-4">
@@ -108,8 +109,8 @@ const AdminCategories: React.FC = () => {
                             <Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => handleEdit(category)}><Edit className="w-4 h-4 mr-2" /> Edit</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(category.id)}><Trash2 className="w-4 h-4 mr-2" /> Delete</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEdit(category)}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(category.id)}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </td>
@@ -123,7 +124,7 @@ const AdminCategories: React.FC = () => {
       </Card>
 
       <CategoryFormDialog open={formOpen} onOpenChange={setFormOpen} category={editingCategory} />
-      <DeleteConfirmDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen} onConfirm={confirmDelete} title="Delete Category" description="Are you sure? Products in this category may become uncategorized." isDeleting={deleteCategory.isPending} />
+      <DeleteConfirmDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen} onConfirm={confirmDelete} title="حذف التصنيف" description="هل أنت متأكد؟ المنتجات في هذا التصنيف قد تصبح بدون تصنيف." isDeleting={deleteCategory.isPending} />
     </AdminLayout>
   );
 };
