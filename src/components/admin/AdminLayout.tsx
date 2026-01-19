@@ -9,7 +9,8 @@ import {
   Bell,
   Menu,
   Store,
-  Loader2
+  Loader2,
+  Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -25,6 +26,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: 'لوحة التحكم', href: '/admin/dashboard' },
   { icon: ShoppingCart, label: 'الطلبات', href: '/admin/orders' },
   { icon: Package, label: 'الكتالوج', href: '/admin/catalog' },
+  { icon: Users, label: 'المستخدمون', href: '/admin/users' },
 ];
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
