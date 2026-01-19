@@ -38,6 +38,16 @@ import { toast } from 'sonner';
 
 type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
+const statusLabels: Record<string, string> = {
+  all: 'الكل',
+  pending: 'قيد الانتظار',
+  confirmed: 'مؤكد',
+  processing: 'قيد التجهيز',
+  shipped: 'تم الشحن',
+  delivered: 'تم التوصيل',
+  cancelled: 'ملغي',
+};
+
 const AdminOrders: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -67,10 +77,10 @@ const AdminOrders: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
-      toast.success('Order status updated');
+      toast.success('تم تحديث حالة الطلب');
     },
     onError: () => {
-      toast.error('Failed to update status');
+      toast.error('فشل تحديث الحالة');
     },
   });
 
@@ -127,8 +137,18 @@ const AdminOrders: React.FC = () => {
     return colors[status] || 'bg-gray-100 text-gray-800';
   };
 
+  const getPaymentLabel = (status: string) => {
+    const labels: Record<string, string> = {
+      paid: 'مدفوع',
+      pending: 'قيد الانتظار',
+      failed: 'فشل',
+      refunded: 'مسترد',
+    };
+    return labels[status] || status;
+  };
+
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
+    return new Date(date).toLocaleDateString('ar-SA', {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
@@ -142,7 +162,7 @@ const AdminOrders: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Orders">
+    <AdminLayout title="الطلبات">
       {/* Status tabs - horizontal scroll on mobile */}
       <div className="flex gap-2 mb-4 lg:mb-6 overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0">
         {Object.entries(statusCounts).map(([status, count]) => (
@@ -151,9 +171,9 @@ const AdminOrders: React.FC = () => {
             variant={statusFilter === status ? 'default' : 'outline'}
             size="sm"
             onClick={() => setStatusFilter(status)}
-            className="capitalize whitespace-nowrap flex-shrink-0 text-xs lg:text-sm"
+            className="whitespace-nowrap flex-shrink-0 text-xs lg:text-sm"
           >
-            {status} <Badge variant="secondary" className="ml-1.5 text-[10px]">{count}</Badge>
+            {statusLabels[status]} <Badge variant="secondary" className="mr-1.5 text-[10px]">{count}</Badge>
           </Button>
         ))}
       </div>
@@ -161,21 +181,21 @@ const AdminOrders: React.FC = () => {
       {/* Search */}
       <div className="flex flex-col sm:flex-row gap-3 mb-4 lg:mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Search orders..."
+            placeholder="البحث في الطلبات..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className="pr-9"
           />
         </div>
         <Select defaultValue="newest">
           <SelectTrigger className="w-full sm:w-40">
-            <SelectValue placeholder="Sort by" />
+            <SelectValue placeholder="ترتيب حسب" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="newest">Newest first</SelectItem>
-            <SelectItem value="oldest">Oldest first</SelectItem>
+            <SelectItem value="newest">الأحدث أولاً</SelectItem>
+            <SelectItem value="oldest">الأقدم أولاً</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -188,7 +208,7 @@ const AdminOrders: React.FC = () => {
       ) : filteredOrders.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
-            No orders found
+            لا توجد طلبات
           </CardContent>
         </Card>
       ) : (
@@ -209,7 +229,7 @@ const AdminOrders: React.FC = () => {
                         <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="font-bold text-sm">{order.order_number}</h3>
                           <Badge variant="outline" className={`text-[10px] ${getPaymentColor(order.payment_status)}`}>
-                            {order.payment_status}
+                            {getPaymentLabel(order.payment_status)}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground mt-1">{order.recipient_name}</p>
@@ -222,16 +242,16 @@ const AdminOrders: React.FC = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem onClick={() => handleViewOrder(order.id)}>
-                            <Eye className="w-4 h-4 mr-2" /> View Details
+                            <Eye className="w-4 h-4 ml-2" /> عرض التفاصيل
                           </DropdownMenuItem>
-                          <DropdownMenuItem><Printer className="w-4 h-4 mr-2" /> Print</DropdownMenuItem>
+                          <DropdownMenuItem><Printer className="w-4 h-4 ml-2" /> طباعة</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4 text-sm">
-                        <span className="font-medium">{order.total} SAR</span>
+                        <span className="font-medium">{order.total} ر.س</span>
                         <span className="text-muted-foreground text-xs">{formatDate(order.created_at)}</span>
                       </div>
                       <Select
@@ -242,12 +262,12 @@ const AdminOrders: React.FC = () => {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="confirmed">Confirmed</SelectItem>
-                          <SelectItem value="processing">Processing</SelectItem>
-                          <SelectItem value="shipped">Shipped</SelectItem>
-                          <SelectItem value="delivered">Delivered</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                          <SelectItem value="pending">قيد الانتظار</SelectItem>
+                          <SelectItem value="confirmed">مؤكد</SelectItem>
+                          <SelectItem value="processing">قيد التجهيز</SelectItem>
+                          <SelectItem value="shipped">تم الشحن</SelectItem>
+                          <SelectItem value="delivered">تم التوصيل</SelectItem>
+                          <SelectItem value="cancelled">ملغي</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -263,7 +283,7 @@ const AdminOrders: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <h3 className="font-bold">{order.order_number}</h3>
                           <Badge variant="outline" className={getPaymentColor(order.payment_status)}>
-                            {order.payment_status}
+                            {getPaymentLabel(order.payment_status)}
                           </Badge>
                         </div>
                         <p className="text-muted-foreground truncate">{order.recipient_name}</p>
@@ -273,11 +293,11 @@ const AdminOrders: React.FC = () => {
 
                     <div className="flex items-center gap-6">
                       <div className="text-center">
-                        <p className="text-sm text-muted-foreground">Total</p>
-                        <p className="font-bold">{order.total} SAR</p>
+                        <p className="text-sm text-muted-foreground">الإجمالي</p>
+                        <p className="font-bold">{order.total} ر.س</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-sm text-muted-foreground">Date</p>
+                        <p className="text-sm text-muted-foreground">التاريخ</p>
                         <p className="text-sm">{formatDate(order.created_at)}</p>
                       </div>
                       <Select
@@ -288,12 +308,12 @@ const AdminOrders: React.FC = () => {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="confirmed">Confirmed</SelectItem>
-                          <SelectItem value="processing">Processing</SelectItem>
-                          <SelectItem value="shipped">Shipped</SelectItem>
-                          <SelectItem value="delivered">Delivered</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                          <SelectItem value="pending">قيد الانتظار</SelectItem>
+                          <SelectItem value="confirmed">مؤكد</SelectItem>
+                          <SelectItem value="processing">قيد التجهيز</SelectItem>
+                          <SelectItem value="shipped">تم الشحن</SelectItem>
+                          <SelectItem value="delivered">تم التوصيل</SelectItem>
+                          <SelectItem value="cancelled">ملغي</SelectItem>
                         </SelectContent>
                       </Select>
                       <div className="flex items-center gap-1">
@@ -319,11 +339,11 @@ const AdminOrders: React.FC = () => {
       {filteredOrders.length > 0 && (
         <div className="flex items-center justify-between mt-4 lg:mt-6">
           <p className="text-xs lg:text-sm text-muted-foreground">
-            Showing {filteredOrders.length} of {orders.length} orders
+            عرض {filteredOrders.length} من {orders.length} طلب
           </p>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled>Previous</Button>
-            <Button variant="outline" size="sm">Next</Button>
+            <Button variant="outline" size="sm" disabled>السابق</Button>
+            <Button variant="outline" size="sm">التالي</Button>
           </div>
         </div>
       )}

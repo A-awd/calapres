@@ -9,7 +9,7 @@ import {
   DollarSign,
   AlertTriangle,
   Clock,
-  ArrowRight,
+  ArrowLeft,
   Gift
 } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -62,7 +62,7 @@ const AdminDashboard: React.FC = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from('products')
-        .select('id, name, stock_count')
+        .select('id, name, name_ar, stock_count')
         .lte('stock_count', 5)
         .eq('is_active', true)
         .order('stock_count', { ascending: true })
@@ -72,10 +72,10 @@ const AdminDashboard: React.FC = () => {
   });
 
   const statCards = [
-    { title: 'Total Revenue', value: `${stats?.revenue?.toLocaleString() || 0} SAR`, icon: DollarSign, color: 'text-green-600' },
-    { title: 'Orders', value: stats?.orders || 0, icon: ShoppingCart, color: 'text-blue-600' },
-    { title: 'Products', value: stats?.products || 0, icon: Package, color: 'text-purple-600' },
-    { title: 'Bundles', value: stats?.bundles || 0, icon: Gift, color: 'text-orange-600' },
+    { title: 'إجمالي الإيرادات', value: `${stats?.revenue?.toLocaleString() || 0} ر.س`, icon: DollarSign, color: 'text-green-600' },
+    { title: 'الطلبات', value: stats?.orders || 0, icon: ShoppingCart, color: 'text-blue-600' },
+    { title: 'المنتجات', value: stats?.products || 0, icon: Package, color: 'text-purple-600' },
+    { title: 'الباقات', value: stats?.bundles || 0, icon: Gift, color: 'text-orange-600' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -90,17 +90,29 @@ const AdminDashboard: React.FC = () => {
     return colors[status] || 'bg-gray-100 text-gray-800';
   };
 
+  const getStatusLabel = (status: string) => {
+    const labels: Record<string, string> = {
+      pending: 'قيد الانتظار',
+      confirmed: 'مؤكد',
+      processing: 'قيد التجهيز',
+      shipped: 'تم الشحن',
+      delivered: 'تم التوصيل',
+      cancelled: 'ملغي',
+    };
+    return labels[status] || status;
+  };
+
   const formatTimeAgo = (date: string) => {
     const diff = Date.now() - new Date(date).getTime();
     const minutes = Math.floor(diff / 60000);
-    if (minutes < 60) return `${minutes}m ago`;
+    if (minutes < 60) return `منذ ${minutes} دقيقة`;
     const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    return `${Math.floor(hours / 24)}d ago`;
+    if (hours < 24) return `منذ ${hours} ساعة`;
+    return `منذ ${Math.floor(hours / 24)} يوم`;
   };
 
   return (
-    <AdminLayout title="Dashboard">
+    <AdminLayout title="لوحة التحكم">
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-6 lg:mb-8">
         {statCards.map((stat, index) => (
@@ -138,11 +150,11 @@ const AdminDashboard: React.FC = () => {
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="flex items-center gap-2 text-base lg:text-lg">
                 <ShoppingCart className="w-5 h-5" />
-                Recent Orders
+                الطلبات الأخيرة
               </CardTitle>
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/admin/orders" className="text-xs">
-                  View all <ArrowRight className="w-3 h-3 ml-1" />
+                  عرض الكل <ArrowLeft className="w-3 h-3 mr-1" />
                 </Link>
               </Button>
             </CardHeader>
@@ -152,7 +164,7 @@ const AdminDashboard: React.FC = () => {
                   {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-16" />)}
                 </div>
               ) : recentOrders.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">No orders yet</p>
+                <p className="text-muted-foreground text-center py-8">لا توجد طلبات بعد</p>
               ) : (
                 <div className="space-y-3">
                   {recentOrders.map((order) => (
@@ -162,11 +174,11 @@ const AdminDashboard: React.FC = () => {
                         <p className="text-xs lg:text-sm text-muted-foreground truncate">{order.recipient_name}</p>
                       </div>
                       <div className="flex items-center gap-2 lg:gap-4 flex-shrink-0">
-                        <span className={`px-2 py-1 rounded text-[10px] lg:text-xs font-medium capitalize ${getStatusColor(order.status)}`}>
-                          {order.status}
+                        <span className={`px-2 py-1 rounded text-[10px] lg:text-xs font-medium ${getStatusColor(order.status)}`}>
+                          {getStatusLabel(order.status)}
                         </span>
                         <div className="text-right hidden sm:block">
-                          <p className="font-medium text-sm">{order.total} SAR</p>
+                          <p className="font-medium text-sm">{order.total} ر.س</p>
                           <p className="text-[10px] text-muted-foreground">{formatTimeAgo(order.created_at)}</p>
                         </div>
                       </div>
@@ -185,7 +197,7 @@ const AdminDashboard: React.FC = () => {
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-amber-600 text-base lg:text-lg">
                 <AlertTriangle className="w-5 h-5" />
-                Low Stock
+                مخزون منخفض
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -194,12 +206,12 @@ const AdminDashboard: React.FC = () => {
                   {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-12" />)}
                 </div>
               ) : lowStockProducts.length === 0 ? (
-                <p className="text-muted-foreground text-center py-4 text-sm">All products well stocked</p>
+                <p className="text-muted-foreground text-center py-4 text-sm">جميع المنتجات متوفرة</p>
               ) : (
                 <div className="space-y-2">
                   {lowStockProducts.map((product) => (
                     <div key={product.id} className="flex items-center justify-between p-2 lg:p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                      <p className="font-medium text-amber-800 text-xs lg:text-sm truncate flex-1 mr-2">{product.name}</p>
+                      <p className="font-medium text-amber-800 text-xs lg:text-sm truncate flex-1 ml-2">{product.name_ar || product.name}</p>
                       <span className="px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-bold flex-shrink-0">
                         {product.stock_count}
                       </span>
@@ -213,22 +225,22 @@ const AdminDashboard: React.FC = () => {
           {/* Quick Actions */}
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-base lg:text-lg">Quick Actions</CardTitle>
+              <CardTitle className="text-base lg:text-lg">إجراءات سريعة</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button variant="outline" className="w-full justify-start text-sm" asChild>
                 <Link to="/admin/catalog">
-                  <Package className="w-4 h-4 mr-2" /> Manage Products
+                  <Package className="w-4 h-4 ml-2" /> إدارة المنتجات
                 </Link>
               </Button>
               <Button variant="outline" className="w-full justify-start text-sm" asChild>
                 <Link to="/admin/orders">
-                  <ShoppingCart className="w-4 h-4 mr-2" /> View Orders
+                  <ShoppingCart className="w-4 h-4 ml-2" /> عرض الطلبات
                 </Link>
               </Button>
               <Button variant="outline" className="w-full justify-start text-sm" asChild>
                 <Link to="/">
-                  <TrendingUp className="w-4 h-4 mr-2" /> View Store
+                  <TrendingUp className="w-4 h-4 ml-2" /> عرض المتجر
                 </Link>
               </Button>
             </CardContent>

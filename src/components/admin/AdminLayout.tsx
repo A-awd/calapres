@@ -22,9 +22,9 @@ interface AdminLayoutProps {
 }
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
-  { icon: ShoppingCart, label: 'Orders', href: '/admin/orders' },
-  { icon: Package, label: 'Catalog', href: '/admin/catalog' },
+  { icon: LayoutDashboard, label: 'لوحة التحكم', href: '/admin/dashboard' },
+  { icon: ShoppingCart, label: 'الطلبات', href: '/admin/orders' },
+  { icon: Package, label: 'الكتالوج', href: '/admin/catalog' },
 ];
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
@@ -65,7 +65,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Loading...</p>
+          <p className="text-muted-foreground">جاري التحميل...</p>
         </div>
       </div>
     );
@@ -81,9 +81,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       {/* Logo */}
       <div className="p-4 lg:p-6 border-b border-sidebar-border">
         <Link to="/admin/dashboard" className="flex items-center gap-3" onClick={() => setSidebarOpen(false)}>
-          <img src={logo} alt="Calapres" className="h-8 lg:h-10 w-auto brightness-150" />
+          <img src={logo} alt="كالابريز" className="h-8 lg:h-10 w-auto brightness-150" />
           <span className="font-display text-base lg:text-lg font-bold text-white">
-            Calapres
+            كالابريز
           </span>
         </Link>
       </div>
@@ -119,9 +119,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
             </span>
           </div>
           <div className="min-w-0">
-            <p className="font-medium text-sm truncate">{adminUser?.email || 'Admin'}</p>
+            <p className="font-medium text-sm truncate">{adminUser?.email || 'مدير'}</p>
             <p className="text-xs text-sidebar-foreground/60 truncate capitalize">
-              {adminUser?.roles.join(', ') || 'Administrator'}
+              {adminUser?.roles.join(', ') || 'مدير النظام'}
             </p>
           </div>
         </div>
@@ -132,14 +132,14 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
           onClick={handleLogout}
         >
           <LogOut className="w-4 h-4 me-2" />
-          Logout
+          تسجيل الخروج
         </Button>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-background" dir="ltr">
+    <div className="min-h-screen bg-background" dir="rtl">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-60 bg-sidebar text-sidebar-foreground flex-col fixed h-full z-40">
         <SidebarContent />
@@ -154,11 +154,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 p-0 bg-sidebar border-sidebar-border">
+            <SheetContent side="right" className="w-72 p-0 bg-sidebar border-sidebar-border">
               <SidebarContent />
             </SheetContent>
           </Sheet>
-          <img src={logo} alt="Calapres" className="h-7 w-auto brightness-150" />
+          <img src={logo} alt="كالابريز" className="h-7 w-auto brightness-150" />
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" className="text-white/70 hover:text-white hover:bg-sidebar-accent relative">
@@ -172,7 +172,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       </header>
 
       {/* Main content */}
-      <main className="lg:ms-60 min-h-screen">
+      <main className="lg:me-60 min-h-screen">
         {/* Desktop Top bar */}
         <header className="hidden lg:flex bg-card border-b border-border sticky top-0 z-40 items-center justify-between px-6 py-4">
           <h1 className="text-xl font-display font-bold">{title}</h1>
@@ -184,7 +184,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
             <Button variant="outline" size="sm" asChild>
               <Link to="/">
                 <Store className="w-4 h-4 me-2" />
-                View Store
+                عرض المتجر
               </Link>
             </Button>
           </div>
