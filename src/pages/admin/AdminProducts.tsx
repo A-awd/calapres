@@ -50,27 +50,27 @@ const AdminProducts: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Products">
+    <AdminLayout title="المنتجات">
       {/* Header actions */}
-      <div className="flex flex-col md:flex-row gap-4 justify-between mb-6">
+      <div className="flex flex-col md:flex-row gap-4 justify-between mb-6" dir="rtl">
         <div className="flex items-center gap-4 flex-1">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search products..."
+              placeholder="البحث في المنتجات..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pr-9"
             />
           </div>
           <Button variant="outline" className="gap-2">
             <Filter className="w-4 h-4" />
-            Filter
+            تصفية
           </Button>
         </div>
         <Button className="gap-2">
           <Plus className="w-4 h-4" />
-          Add Product
+          إضافة منتج
         </Button>
       </div>
 
@@ -78,22 +78,22 @@ const AdminProducts: React.FC = () => {
       <Card>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full" dir="rtl">
               <thead className="bg-secondary/50">
                 <tr>
-                  <th className="p-4 text-left">
+                  <th className="p-4 text-right">
                     <Checkbox
                       checked={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
                       onCheckedChange={toggleSelectAll}
                     />
                   </th>
-                  <th className="p-4 text-left font-medium">Product</th>
-                  <th className="p-4 text-left font-medium">SKU</th>
-                  <th className="p-4 text-left font-medium">Category</th>
-                  <th className="p-4 text-left font-medium">Price</th>
-                  <th className="p-4 text-left font-medium">Stock</th>
-                  <th className="p-4 text-left font-medium">Status</th>
-                  <th className="p-4 text-left font-medium">Actions</th>
+                  <th className="p-4 text-right font-medium">المنتج</th>
+                  <th className="p-4 text-right font-medium">رمز المنتج</th>
+                  <th className="p-4 text-right font-medium">الفئة</th>
+                  <th className="p-4 text-right font-medium">السعر</th>
+                  <th className="p-4 text-right font-medium">المخزون</th>
+                  <th className="p-4 text-right font-medium">الحالة</th>
+                  <th className="p-4 text-right font-medium">الإجراءات</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,13 +122,13 @@ const AdminProducts: React.FC = () => {
                           <p className="font-medium">{product.name}</p>
                           <div className="flex gap-1 mt-1">
                             {product.isBestseller && (
-                              <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">Bestseller</span>
+                              <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">الأكثر مبيعاً</span>
                             )}
                             {product.isNew && (
-                              <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">New</span>
+                              <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">جديد</span>
                             )}
                             {product.isExpress && (
-                              <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Express</span>
+                              <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">توصيل سريع</span>
                             )}
                           </div>
                         </div>
@@ -138,10 +138,10 @@ const AdminProducts: React.FC = () => {
                     <td className="p-4">{product.category}</td>
                     <td className="p-4">
                       <div>
-                        <p className="font-medium">{product.price} SAR</p>
+                        <p className="font-medium">{product.price} ر.س</p>
                         {product.originalPrice && (
                           <p className="text-sm text-muted-foreground line-through">
-                            {product.originalPrice} SAR
+                            {product.originalPrice} ر.س
                           </p>
                         )}
                       </div>
@@ -163,7 +163,7 @@ const AdminProducts: React.FC = () => {
                           ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
                       }`}>
-                        {product.inStock ? 'Active' : 'Hidden'}
+                        {product.inStock ? 'نشط' : 'مخفي'}
                       </span>
                     </td>
                     <td className="p-4">
@@ -173,18 +173,18 @@ const AdminProducts: React.FC = () => {
                             <MoreVertical className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="start">
                           <DropdownMenuItem>
-                            <Eye className="w-4 h-4 mr-2" />
-                            View
+                            <Eye className="w-4 h-4 ml-2" />
+                            عرض
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Edit className="w-4 h-4 mr-2" />
-                            Edit
+                            <Edit className="w-4 h-4 ml-2" />
+                            تعديل
                           </DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive">
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Delete
+                            <Trash2 className="w-4 h-4 ml-2" />
+                            حذف
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -198,13 +198,13 @@ const AdminProducts: React.FC = () => {
       </Card>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between mt-6" dir="rtl">
         <p className="text-sm text-muted-foreground">
-          Showing {filteredProducts.length} of {products.length} products
+          عرض {filteredProducts.length} من {products.length} منتج
         </p>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" disabled>Previous</Button>
-          <Button variant="outline" size="sm">Next</Button>
+          <Button variant="outline" size="sm" disabled>السابق</Button>
+          <Button variant="outline" size="sm">التالي</Button>
         </div>
       </div>
     </AdminLayout>

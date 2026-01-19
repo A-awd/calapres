@@ -57,49 +57,49 @@ const AdminProductsNew: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Products">
-      <div className="flex flex-col md:flex-row gap-4 justify-between mb-6">
+    <AdminLayout title="المنتجات">
+      <div className="flex flex-col md:flex-row gap-4 justify-between mb-6" dir="rtl">
         <div className="flex items-center gap-4 flex-1">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search products..."
+              placeholder="البحث في المنتجات..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pr-9"
             />
           </div>
         </div>
         <Button className="gap-2" onClick={() => { setEditingProduct(null); setFormOpen(true); }}>
           <Plus className="w-4 h-4" />
-          Add Product
+          إضافة منتج
         </Button>
       </div>
 
       <Card>
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="p-8 text-center text-muted-foreground">Loading products...</div>
+            <div className="p-8 text-center text-muted-foreground">جاري تحميل المنتجات...</div>
           ) : filteredProducts.length === 0 ? (
-            <div className="p-8 text-center text-muted-foreground">No products found</div>
+            <div className="p-8 text-center text-muted-foreground">لم يتم العثور على منتجات</div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full" dir="rtl">
                 <thead className="bg-secondary/50">
                   <tr>
-                    <th className="p-4 text-left">
+                    <th className="p-4 text-right">
                       <Checkbox
                         checked={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
                         onCheckedChange={toggleSelectAll}
                       />
                     </th>
-                    <th className="p-4 text-left font-medium">Product</th>
-                    <th className="p-4 text-left font-medium">SKU</th>
-                    <th className="p-4 text-left font-medium">Category</th>
-                    <th className="p-4 text-left font-medium">Price</th>
-                    <th className="p-4 text-left font-medium">Stock</th>
-                    <th className="p-4 text-left font-medium">Status</th>
-                    <th className="p-4 text-left font-medium">Actions</th>
+                    <th className="p-4 text-right font-medium">المنتج</th>
+                    <th className="p-4 text-right font-medium">رمز المنتج</th>
+                    <th className="p-4 text-right font-medium">الفئة</th>
+                    <th className="p-4 text-right font-medium">السعر</th>
+                    <th className="p-4 text-right font-medium">المخزون</th>
+                    <th className="p-4 text-right font-medium">الحالة</th>
+                    <th className="p-4 text-right font-medium">الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -131,15 +131,15 @@ const AdminProductsNew: React.FC = () => {
                           <div>
                             <p className="font-medium">{product.name}</p>
                             <div className="flex gap-1 mt-1">
-                              {product.is_bestseller && <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">Bestseller</span>}
-                              {product.is_new && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">New</span>}
+                              {product.is_bestseller && <span className="text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">الأكثر مبيعاً</span>}
+                              {product.is_new && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">جديد</span>}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="p-4 font-mono text-sm">{product.sku}</td>
                       <td className="p-4">{product.category?.name || '-'}</td>
-                      <td className="p-4">{product.price} SAR</td>
+                      <td className="p-4">{product.price} ر.س</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded text-sm font-medium ${
                           product.stock_count <= 5 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
@@ -151,7 +151,7 @@ const AdminProductsNew: React.FC = () => {
                         <span className={`px-2 py-1 rounded text-sm ${
                           product.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}>
-                          {product.is_active ? 'Active' : 'Hidden'}
+                          {product.is_active ? 'نشط' : 'مخفي'}
                         </span>
                       </td>
                       <td className="p-4">
@@ -159,12 +159,12 @@ const AdminProductsNew: React.FC = () => {
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleEdit(product)}>
-                              <Edit className="w-4 h-4 mr-2" /> Edit
+                              <Edit className="w-4 h-4 ml-2" /> تعديل
                             </DropdownMenuItem>
                             <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(product.id)}>
-                              <Trash2 className="w-4 h-4 mr-2" /> Delete
+                              <Trash2 className="w-4 h-4 ml-2" /> حذف
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -183,8 +183,8 @@ const AdminProductsNew: React.FC = () => {
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={confirmDelete}
-        title="Delete Product"
-        description="Are you sure you want to delete this product? This action cannot be undone."
+        title="حذف المنتج"
+        description="هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء."
         isDeleting={deleteProduct.isPending}
       />
     </AdminLayout>
