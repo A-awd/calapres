@@ -34,7 +34,7 @@ const Ramadan: React.FC = () => {
         <section className="relative min-h-[70vh] flex items-center overflow-hidden">
           <div className="absolute inset-0">
             <img
-              src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=1920&q=90"
+              src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=1920&q=90"
               alt="Ramadan"
               className="w-full h-full object-cover"
             />
