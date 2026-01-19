@@ -34,6 +34,7 @@ const Header: React.FC = () => {
 
   const navItems = useMemo(
     () => [
+      { label: t("رمضان", "Ramadan"), href: "/ramadan" },
       { label: t("المجموعات", "Shop"), href: "/collections" },
       { label: t("صمم هديتك", "Build"), href: "/bundle-builder" },
       { label: t("تتبع", "Track"), href: "/track-order" },
