@@ -349,6 +349,7 @@ export type Database = {
           id: string
           internal_notes: string | null
           is_gift: boolean | null
+          lookup_token: string | null
           notes: string | null
           order_number: string
           payment_method: string
@@ -383,6 +384,7 @@ export type Database = {
           id?: string
           internal_notes?: string | null
           is_gift?: boolean | null
+          lookup_token?: string | null
           notes?: string | null
           order_number: string
           payment_method: string
@@ -417,6 +419,7 @@ export type Database = {
           id?: string
           internal_notes?: string | null
           is_gift?: boolean | null
+          lookup_token?: string | null
           notes?: string | null
           order_number?: string
           payment_method?: string
