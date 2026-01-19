@@ -4,20 +4,41 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Zap, Clock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { expressProducts } from '@/data/mockData';
+import { useExpressProducts } from '@/hooks/useStorefrontData';
 import ProductCard from './ProductCard';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ExpressSection: React.FC = () => {
   const { t, direction } = useLanguage();
   const isMobile = useIsMobile();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
+  const { data: products = [], isLoading } = useExpressProducts();
 
-  // On mobile, load immediately without scroll-triggered animations
   const viewportConfig = isMobile ? undefined : { once: true };
   const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
 
+  if (isLoading) {
+    return (
+      <section className="section-padding bg-gradient-to-b from-green-50 to-white">
+        <div className="container-luxury">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="aspect-[3/4] w-full" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (products.length === 0) return null;
+
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-gradient-to-b from-green-50 to-white">
       <div className="container-luxury">
         {/* Section header */}
         <div className="flex items-center justify-between mb-12">
@@ -35,19 +56,19 @@ const ExpressSection: React.FC = () => {
                 initial={initialState}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportConfig}
-                className="font-display text-3xl md:text-4xl font-bold text-foreground mb-1"
+                className="font-display text-2xl md:text-3xl font-medium text-foreground mb-1"
               >
                 {t('توصيل سريع', 'Express Delivery')}
               </motion.h2>
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-muted-foreground text-sm">
                 <Clock className="w-4 h-4" />
                 <span>{t('توصيل خلال ساعتين', 'Delivered within 2 hours')}</span>
               </div>
             </div>
           </div>
           <Link
-            to="/collections"
-            className="hidden md:flex items-center gap-2 text-primary hover:gap-3 transition-all"
+            to="/collections?express=true"
+            className="hidden md:flex items-center gap-2 text-sm tracking-wider uppercase text-foreground hover:text-green-600 transition-colors border-b border-foreground pb-1"
           >
             {t('عرض الكل', 'View All')}
             <Arrow className="w-4 h-4" />
@@ -55,9 +76,9 @@ const ExpressSection: React.FC = () => {
         </div>
 
         {/* Products grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {expressProducts.slice(0, 4).map((product, index) => (
-            <ProductCard key={product.id} product={product} index={isMobile ? 0 : index} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {products.slice(0, 4).map((product, index) => (
+            <ProductCard key={product.id} product={product as any} index={isMobile ? 0 : index} />
           ))}
         </div>
       </div>

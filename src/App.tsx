@@ -16,6 +16,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 import OrderTracking from "./pages/OrderTracking";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
+import Ramadan from "./pages/Ramadan";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProductsNew";
@@ -49,6 +50,7 @@ const App = () => (
                 <Route path="/track-order" element={<OrderTracking />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/ramadan" element={<Ramadan />} />
                 
                 {/* Admin */}
                 <Route path="/admin" element={<AdminLogin />} />

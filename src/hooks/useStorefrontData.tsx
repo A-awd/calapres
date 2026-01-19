@@ -223,3 +223,168 @@ export const useStorefrontBundles = () => {
     },
   });
 };
+
+// Fetch express products
+export const useExpressProducts = () => {
+  return useQuery({
+    queryKey: ['storefront-express'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .eq('is_express', true)
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+      })) as StorefrontProduct[];
+    },
+  });
+};
+
+// Fetch products by occasion
+export const useOccasionProducts = (occasionId: string) => {
+  return useQuery({
+    queryKey: ['occasion-products', occasionId],
+    queryFn: async () => {
+      const { data: productOccasions, error: poError } = await supabase
+        .from('product_occasions')
+        .select('product_id')
+        .eq('occasion_id', occasionId);
+
+      if (poError) throw poError;
+
+      const productIds = (productOccasions || []).map((po: any) => po.product_id);
+      
+      if (productIds.length === 0) {
+        // Fallback: get all active products
+        const { data, error } = await supabase
+          .from('products')
+          .select(`
+            id, name, name_ar, slug, price, original_price, image,
+            is_bestseller, is_new, is_express, in_stock,
+            categories:category_id (name, name_ar)
+          `)
+          .eq('is_active', true)
+          .limit(8);
+
+        if (error) throw error;
+
+        return (data || []).map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          nameAr: p.name_ar,
+          slug: p.slug,
+          price: p.price,
+          originalPrice: p.original_price,
+          image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+          category: p.categories?.name || null,
+          categoryAr: p.categories?.name_ar || null,
+          isBestseller: p.is_bestseller,
+          isNew: p.is_new,
+          isExpress: p.is_express,
+          inStock: p.in_stock,
+        })) as StorefrontProduct[];
+      }
+
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .in('id', productIds);
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+      })) as StorefrontProduct[];
+    },
+    enabled: !!occasionId,
+  });
+};
+
+// Fetch bundles by occasion
+export const useOccasionBundles = (occasionId: string) => {
+  return useQuery({
+    queryKey: ['occasion-bundles', occasionId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('bundles')
+        .select(`
+          id, name, name_ar, slug, description, description_ar,
+          price, original_price, tier, image, tags,
+          occasions:occasion_id (name)
+        `)
+        .eq('is_active', true)
+        .eq('occasion_id', occasionId)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      // Get bundle item counts
+      const bundleIds = (data || []).map((b: any) => b.id);
+      const { data: items } = await supabase
+        .from('bundle_items')
+        .select('bundle_id')
+        .in('bundle_id', bundleIds.length > 0 ? bundleIds : ['none']);
+
+      const counts: Record<string, number> = {};
+      (items || []).forEach((i: any) => {
+        counts[i.bundle_id] = (counts[i.bundle_id] || 0) + 1;
+      });
+
+      return (data || []).map((b: any) => ({
+        id: b.id,
+        name: b.name,
+        nameAr: b.name_ar,
+        slug: b.slug,
+        description: b.description,
+        descriptionAr: b.description_ar,
+        price: b.price,
+        originalPrice: b.original_price,
+        tier: b.tier,
+        image: b.image || 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=600',
+        tags: b.tags || [],
+        occasionName: b.occasions?.name || null,
+        productCount: counts[b.id] || 0,
+      })) as StorefrontBundle[];
+    },
+    enabled: !!occasionId,
+  });
+};
