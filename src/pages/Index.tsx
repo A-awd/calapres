@@ -8,6 +8,7 @@ import CategoriesSection from '@/components/storefront/CategoriesSection';
 import BestsellersSection from '@/components/storefront/BestsellersSection';
 import ExpressSection from '@/components/storefront/ExpressSection';
 import BundlesSection from '@/components/storefront/BundlesSection';
+import SeasonalSection from '@/components/storefront/SeasonalSection';
 import TestimonialsSection from '@/components/storefront/TestimonialsSection';
 
 const Index: React.FC = () => {
@@ -21,6 +22,7 @@ const Index: React.FC = () => {
         <CategoriesSection />
         <BestsellersSection />
         <ExpressSection />
+        <SeasonalSection />
         <BundlesSection />
         <TestimonialsSection />
       </main>
