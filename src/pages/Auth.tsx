@@ -213,7 +213,7 @@ const Auth = () => {
     setForgotLoading(true);
 
     const { error: authError } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
-      redirectTo: `${window.location.origin}/auth?reset=true`,
+      redirectTo: `${window.location.origin}/reset-password`,
     });
 
     if (authError) {
