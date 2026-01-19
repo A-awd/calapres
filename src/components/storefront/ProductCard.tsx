@@ -31,12 +31,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewportConfig}
       transition={{ delay: isMobile ? 0 : index * 0.1, duration: 0.5 }}
-      className="group"
+      className="group h-full flex flex-col"
     >
-      <div className="relative">
-        {/* Image Container */}
-        <div className="relative aspect-[3/4] overflow-hidden bg-sand mb-4">
-          <Link to={`/product/${product.id}`}>
+      <div className="relative flex flex-col h-full">
+        {/* Image Container - Fixed aspect ratio */}
+        <div className="relative aspect-[3/4] overflow-hidden bg-sand flex-shrink-0">
+          <Link to={`/product/${product.id}`} className="block w-full h-full">
             <img
               src={product.image}
               alt={language === 'ar' ? product.nameAr : product.name}
@@ -88,17 +88,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="space-y-2">
-          <p className="text-xs tracking-wider text-muted-foreground uppercase">
+        {/* Content - Fixed height for consistency */}
+        <div className="pt-4 flex flex-col flex-grow min-h-[100px]">
+          <p className="text-xs tracking-wider text-muted-foreground uppercase mb-1">
             {language === 'ar' ? product.categoryAr : product.category}
           </p>
-          <Link to={`/product/${product.id}`}>
-            <h3 className="font-medium text-foreground hover:text-muted-foreground transition-colors line-clamp-1">
+          <Link to={`/product/${product.id}`} className="flex-grow">
+            <h3 className="font-medium text-foreground hover:text-muted-foreground transition-colors line-clamp-2 leading-tight min-h-[2.5rem]">
               {language === 'ar' ? product.nameAr : product.name}
             </h3>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mt-auto pt-2">
             <span className="text-foreground font-medium">
               {product.price} {t('ر.س', 'SAR')}
             </span>
