@@ -1,116 +1,162 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import heroImage from '@/assets/hero-bg.jpg';
+
+const heroSlides = [
+  {
+    image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1920&q=90',
+    titleEn: 'Luxury Flowers',
+    titleAr: 'زهور فاخرة',
+    subtitleEn: 'FRESH & ELEGANT',
+    subtitleAr: 'طازجة وأنيقة',
+    descEn: 'Hand-picked premium blooms for every occasion',
+    descAr: 'زهور مميزة منتقاة بعناية لكل مناسبة',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=1920&q=90',
+    titleEn: 'Fine Chocolates',
+    titleAr: 'شوكولاتة فاخرة',
+    subtitleEn: 'HANDCRAFTED DELIGHTS',
+    subtitleAr: 'حلويات مصنوعة يدوياً',
+    descEn: 'Belgian chocolate collections for moments of indulgence',
+    descAr: 'مجموعات شوكولاتة بلجيكية للحظات الاستمتاع',
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=1920&q=90',
+    titleEn: 'Exclusive Perfumes',
+    titleAr: 'عطور حصرية',
+    subtitleEn: 'SIGNATURE SCENTS',
+    subtitleAr: 'روائح مميزة',
+    descEn: 'Luxury fragrances from renowned houses',
+    descAr: 'عطور فاخرة من أشهر دور العطور',
+  },
+];
 
 const HeroSection: React.FC = () => {
   const { t, direction } = useLanguage();
-
+  const [currentSlide, setCurrentSlide] = useState(0);
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-sand">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Luxury gifts"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-white/30 rtl:bg-gradient-to-l" />
-      </div>
+    <section className="relative h-[85vh] md:h-[90vh] overflow-hidden">
+      {/* Background Slides */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={heroSlides[currentSlide].image}
+            alt="Hero"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent rtl:bg-gradient-to-l" />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Content */}
-      <div className="container-luxury relative z-10">
+      <div className="container-luxury relative z-10 h-full flex items-center">
         <div className="max-w-xl">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block text-xs tracking-luxury text-gold uppercase mb-8"
-          >
-            {t('مجموعة الربيع الجديدة', 'NEW SPRING COLLECTION')}
-          </motion.span>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-[1.1] mb-6"
-          >
-            {t(
-              'أهدِ لحظات لا تُنسى مع كالابريز',
-              'Gift Unforgettable Moments with Calapres'
-            )}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-base md:text-lg mb-10 leading-relaxed max-w-md"
-          >
-            {t(
-              'اكتشف مجموعتنا الفاخرة من الهدايا المميزة للمناسبات الخاصة. زهور طازجة، شوكولاتة فاخرة، وعطور راقية.',
-              'Discover our luxury collection of premium gifts for special occasions. Fresh flowers, fine chocolates, and exquisite perfumes.'
-            )}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-4"
-          >
-            <Link
-              to="/collections"
-              className="inline-flex items-center gap-3 bg-charcoal text-white px-8 py-4 text-sm tracking-wider uppercase hover:bg-charcoal/90 transition-colors"
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.6 }}
             >
-              {t('تسوق الآن', 'Shop Now')}
-              <Arrow className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/bundle-builder"
-              className="inline-flex items-center gap-3 bg-transparent border border-charcoal text-charcoal px-8 py-4 text-sm tracking-wider uppercase hover:bg-charcoal hover:text-white transition-all"
-            >
-              {t('صمم هديتك', 'Build Your Gift')}
-            </Link>
-          </motion.div>
+              <span className="inline-block text-xs tracking-luxury text-gold uppercase mb-6">
+                {t(heroSlides[currentSlide].subtitleAr, heroSlides[currentSlide].subtitleEn)}
+              </span>
 
-          {/* Features */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-border"
-          >
-            <div className="flex flex-col">
-              <span className="text-xs tracking-wider text-muted-foreground uppercase mb-1">
-                {t('توصيل', 'Delivery')}
-              </span>
-              <span className="text-sm font-medium">
-                {t('في نفس اليوم', 'Same Day')}
-              </span>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-[1.1] mb-6">
+                {t(heroSlides[currentSlide].titleAr, heroSlides[currentSlide].titleEn)}
+              </h1>
+
+              <p className="text-white/80 text-base md:text-lg mb-8 leading-relaxed max-w-md">
+                {t(heroSlides[currentSlide].descAr, heroSlides[currentSlide].descEn)}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/collections"
+                  className="inline-flex items-center gap-3 bg-white text-charcoal px-8 py-4 text-sm tracking-wider uppercase hover:bg-gold hover:text-white transition-colors"
+                >
+                  {t('تسوق الآن', 'Shop Now')}
+                  <Arrow className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/bundle-builder"
+                  className="inline-flex items-center gap-3 bg-transparent border border-white text-white px-8 py-4 text-sm tracking-wider uppercase hover:bg-white hover:text-charcoal transition-all"
+                >
+                  {t('صمم هديتك', 'Build Your Gift')}
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Slide Controls */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
+        <button
+          onClick={prevSlide}
+          className="w-10 h-10 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-charcoal transition-all"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <div className="flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentSlide ? 'bg-gold w-8' : 'bg-white/50 hover:bg-white'
+              }`}
+            />
+          ))}
+        </div>
+        <button
+          onClick={nextSlide}
+          className="w-10 h-10 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-charcoal transition-all"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Quick Features */}
+      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent py-6 hidden md:block">
+        <div className="container-luxury">
+          <div className="flex justify-center gap-16 text-white">
+            <div className="text-center">
+              <span className="block text-2xl font-display mb-1">{t('٢', '2')}</span>
+              <span className="text-xs tracking-wider uppercase opacity-80">{t('ساعات توصيل', 'Hour Delivery')}</span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xs tracking-wider text-muted-foreground uppercase mb-1">
-                {t('توصيل سريع', 'Express')}
-              </span>
-              <span className="text-sm font-medium">
-                {t('خلال ساعتين', 'Within 2 Hours')}
-              </span>
+            <div className="text-center">
+              <span className="block text-2xl font-display mb-1">{t('تغليف', 'Gift')}</span>
+              <span className="text-xs tracking-wider uppercase opacity-80">{t('فاخر مجاني', 'Wrap Free')}</span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xs tracking-wider text-muted-foreground uppercase mb-1">
-                {t('تغليف', 'Wrapping')}
-              </span>
-              <span className="text-sm font-medium">
-                {t('تغليف فاخر', 'Premium Gift Wrap')}
-              </span>
+            <div className="text-center">
+              <span className="block text-2xl font-display mb-1">{t('+٥٠٠', '+500')}</span>
+              <span className="text-xs tracking-wider uppercase opacity-80">{t('منتج مميز', 'Unique Gifts')}</span>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

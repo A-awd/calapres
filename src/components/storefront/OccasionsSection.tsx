@@ -3,21 +3,40 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { occasions } from '@/data/mockData';
+import { useStorefrontOccasions } from '@/hooks/useStorefrontData';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const OccasionsSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
+  const { data: occasions = [], isLoading } = useStorefrontOccasions();
 
-  // On mobile, load immediately without scroll-triggered animations
   const viewportConfig = isMobile ? undefined : { once: true };
   const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
+
+  if (isLoading) {
+    return (
+      <section className="section-padding bg-white">
+        <div className="container-luxury">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="text-center">
+                <Skeleton className="w-16 h-16 mx-auto rounded-full mb-3" />
+                <Skeleton className="h-4 w-20 mx-auto" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (occasions.length === 0) return null;
 
   return (
     <section className="section-padding bg-white">
       <div className="container-luxury">
-        {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.span
             initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
@@ -31,46 +50,32 @@ const OccasionsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewportConfig}
             transition={{ delay: isMobile ? 0 : 0.1 }}
-            className="font-display text-3xl md:text-4xl font-medium text-foreground mb-6"
+            className="font-display text-3xl md:text-4xl font-medium text-foreground"
           >
             {t('تسوق حسب المناسبة', 'Shop by Occasion')}
           </motion.h2>
-          <motion.div
-            initial={isMobile ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={viewportConfig}
-            transition={{ delay: isMobile ? 0 : 0.2 }}
-            className="divider-elegant mx-auto"
-          />
         </div>
 
-        {/* Occasions grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        {/* Compact Icon Grid */}
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
           {occasions.map((occasion, index) => (
             <motion.div
               key={occasion.id}
               initial={initialState}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportConfig}
-              transition={{ delay: isMobile ? 0 : index * 0.1 }}
+              transition={{ delay: isMobile ? 0 : index * 0.05 }}
             >
               <Link
                 to={`/collections?occasion=${occasion.slug}`}
                 className="group block text-center"
               >
-                <div className="relative aspect-square overflow-hidden bg-sand mb-4">
-                  <img
-                    src={occasion.image}
-                    alt={language === 'ar' ? occasion.nameAr : occasion.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-4">
-                    <h3 className="text-white font-medium text-sm md:text-base">
-                      {language === 'ar' ? occasion.nameAr : occasion.name}
-                    </h3>
-                  </div>
+                <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-sand flex items-center justify-center text-3xl group-hover:bg-gold/20 transition-colors">
+                  {occasion.icon || '🎁'}
                 </div>
+                <h3 className="font-medium text-sm text-foreground group-hover:text-gold transition-colors">
+                  {language === 'ar' ? occasion.nameAr : occasion.name}
+                </h3>
               </Link>
             </motion.div>
           ))}
