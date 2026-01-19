@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, X, Moon } from "lucide-react";
 
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/hooks/useAuth";
+import { Badge } from "@/components/ui/badge";
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -73,19 +74,31 @@ const Header: React.FC = () => {
                   to={item.href}
                   className="group relative py-1"
                 >
-                  <span
-                    className={`text-[11px] tracking-[0.2em] uppercase transition-colors duration-200 ${
-                      isActive(item.href)
-                        ? "text-foreground"
-                        : "text-foreground/50 group-hover:text-foreground"
-                    }`}
-                  >
-                    {item.label}
+                  <span className="flex items-center gap-1.5">
+                    {item.href === '/ramadan' && (
+                      <Moon className="w-3 h-3 text-gold" />
+                    )}
+                    <span
+                      className={`text-[11px] tracking-[0.2em] uppercase transition-colors duration-200 ${
+                        isActive(item.href)
+                          ? "text-foreground"
+                          : item.href === '/ramadan' 
+                            ? "text-gold group-hover:text-gold/80"
+                            : "text-foreground/50 group-hover:text-foreground"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                    {item.href === '/ramadan' && (
+                      <span className="px-1.5 py-0.5 text-[8px] bg-gold text-charcoal rounded-full font-medium tracking-wider">
+                        {t('موسمي', 'SEASON')}
+                      </span>
+                    )}
                   </span>
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 bottom-0 h-px bg-foreground transition-all duration-200 ${
-                      isActive(item.href) ? "w-4" : "w-0 group-hover:w-4"
-                    }`}
+                    className={`absolute left-1/2 -translate-x-1/2 bottom-0 h-px transition-all duration-200 ${
+                      item.href === '/ramadan' ? 'bg-gold' : 'bg-foreground'
+                    } ${isActive(item.href) ? "w-4" : "w-0 group-hover:w-4"}`}
                   />
                 </Link>
               ))}
@@ -200,11 +213,21 @@ const Header: React.FC = () => {
                       key={item.href}
                       to={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`block py-2.5 text-sm tracking-[0.12em] transition-colors ${
-                        isActive(item.href) ? "text-foreground" : "text-foreground/50"
+                      className={`flex items-center gap-2 py-2.5 text-sm tracking-[0.12em] transition-colors ${
+                        item.href === '/ramadan'
+                          ? "text-gold"
+                          : isActive(item.href) 
+                            ? "text-foreground" 
+                            : "text-foreground/50"
                       }`}
                     >
+                      {item.href === '/ramadan' && <Moon className="w-4 h-4" />}
                       {item.label}
+                      {item.href === '/ramadan' && (
+                        <span className="px-1.5 py-0.5 text-[8px] bg-gold text-charcoal rounded-full font-medium">
+                          {t('موسمي', 'SEASON')}
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </nav>
