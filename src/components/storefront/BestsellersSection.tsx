@@ -4,22 +4,42 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { bestsellers } from '@/data/mockData';
+import { useBestsellerProducts } from '@/hooks/useStorefrontData';
 import ProductCard from './ProductCard';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const BestsellersSection: React.FC = () => {
   const { t, direction } = useLanguage();
   const isMobile = useIsMobile();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
+  const { data: products = [], isLoading } = useBestsellerProducts();
 
-  // On mobile, load immediately without scroll-triggered animations
   const viewportConfig = isMobile ? undefined : { once: true };
   const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
+
+  if (isLoading) {
+    return (
+      <section className="section-padding bg-white">
+        <div className="container-luxury">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="aspect-[3/4] w-full" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (products.length === 0) return null;
 
   return (
     <section className="section-padding bg-white">
       <div className="container-luxury">
-        {/* Section header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <motion.span
@@ -56,10 +76,9 @@ const BestsellersSection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Products grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-          {bestsellers.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={isMobile ? 0 : index} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {products.slice(0, 4).map((product, index) => (
+            <ProductCard key={product.id} product={product as any} index={isMobile ? 0 : index} />
           ))}
         </div>
       </div>
