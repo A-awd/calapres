@@ -61,6 +61,9 @@ export interface Occasion {
   color: string;
 }
 
+export type BundleTier = 'basic' | 'premium' | 'luxury';
+export type BundleTag = 'corporate' | 'fast-gifting' | 'emotional' | 'seasonal';
+
 export interface Bundle {
   id: string;
   name: string;
@@ -71,6 +74,11 @@ export interface Bundle {
   products: Product[];
   description: string;
   descriptionAr: string;
+  tier?: BundleTier;
+  tags?: BundleTag[];
+  occasion?: string;
+  occasionAr?: string;
+  isSeasonal?: boolean;
 }
 
 export interface Order {
