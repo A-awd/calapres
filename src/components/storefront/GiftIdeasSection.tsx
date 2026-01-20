@@ -4,18 +4,42 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useStorefrontOccasions } from '@/hooks/useStorefrontData';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 
-const OccasionsSection: React.FC = () => {
+interface GiftIdea {
+  id: string;
+  name: string;
+  nameAr: string;
+  slug: string;
+  emoji: string;
+}
+
+const GiftIdeasSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
-  const { data: occasions = [], isLoading } = useStorefrontOccasions();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const viewportConfig = isMobile ? undefined : { once: true };
   const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
+
+  const giftIdeas: GiftIdea[] = [
+    { id: 'flowers', name: 'Hand Bouquets', nameAr: 'باقات يد', slug: 'flowers', emoji: '💐' },
+    { id: 'vases', name: 'Flowers in Vases', nameAr: 'زهور في المزهريات', slug: 'vases', emoji: '🌸' },
+    { id: 'chocolates', name: 'Chocolates', nameAr: 'شوكولاتة', slug: 'chocolates', emoji: '🍫' },
+    { id: 'cakes', name: 'Cakes', nameAr: 'كيك', slug: 'cakes', emoji: '🎂' },
+    { id: 'perfumes', name: 'Perfumes', nameAr: 'عطور', slug: 'perfumes', emoji: '🌹' },
+    { id: 'jewelry', name: 'Jewelry', nameAr: 'مجوهرات', slug: 'jewelry', emoji: '💍' },
+    { id: 'balloons', name: 'Balloons', nameAr: 'بالونات', slug: 'balloons', emoji: '🎈' },
+    { id: 'plants', name: 'Plants', nameAr: 'نباتات', slug: 'plants', emoji: '🌿' },
+    { id: 'watches', name: 'Watches', nameAr: 'ساعات يد', slug: 'watches', emoji: '⌚' },
+    { id: 'fashion', name: 'Fashion', nameAr: 'الأزياء', slug: 'fashion', emoji: '👔' },
+    { id: 'toys', name: 'Kids Toys', nameAr: 'ألعاب الأطفال', slug: 'toys', emoji: '🧸' },
+    { id: 'luxury', name: 'Luxury Gifts', nameAr: 'هدايا فاخرة', slug: 'luxury', emoji: '🎁' },
+    { id: 'home', name: 'Home Decor', nameAr: 'ديكور المنزل', slug: 'home-decor', emoji: '🏠' },
+    { id: 'skincare', name: 'Skincare', nameAr: 'العناية بالبشرة', slug: 'skincare', emoji: '✨' },
+    { id: 'coffee', name: 'Coffee & Tea', nameAr: 'قهوة وشاي', slug: 'coffee-tea', emoji: '☕' },
+    { id: 'vouchers', name: 'Vouchers', nameAr: 'قسائم وبطاقات', slug: 'vouchers', emoji: '🎟️' },
+  ];
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -27,25 +51,6 @@ const OccasionsSection: React.FC = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <section className="section-padding bg-white">
-        <div className="container-luxury">
-          <div className="flex gap-6 overflow-hidden">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="text-center flex-shrink-0">
-                <Skeleton className="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full mb-3" />
-                <Skeleton className="h-4 w-20 mx-auto" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (occasions.length === 0) return null;
-
   return (
     <section className="section-padding bg-white">
       <div className="container-luxury">
@@ -56,7 +61,7 @@ const OccasionsSection: React.FC = () => {
           viewport={viewportConfig}
           className="font-display text-2xl sm:text-3xl md:text-4xl text-primary text-center mb-8 md:mb-12"
         >
-          {t('هدايا لكل لحظة', 'Gifts for Every Moment')}
+          {t('اكتشف أفكار هدايا رائعة', 'Discover Great Gift Ideas')}
         </motion.h2>
 
         {/* Scrollable Container */}
@@ -79,30 +84,30 @@ const OccasionsSection: React.FC = () => {
             <ChevronLeft className="w-5 h-5" />
           </Button>
 
-          {/* Occasions Carousel */}
+          {/* Ideas Carousel */}
           <div
             ref={scrollRef}
             className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {occasions.map((occasion, index) => (
+            {giftIdeas.map((idea, index) => (
               <motion.div
-                key={occasion.id}
+                key={idea.id}
                 initial={initialState}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportConfig}
-                transition={{ delay: isMobile ? 0 : index * 0.05 }}
+                transition={{ delay: isMobile ? 0 : index * 0.03 }}
                 className="flex-shrink-0"
               >
                 <Link
-                  to={`/collections?occasion=${occasion.slug}`}
+                  to={`/collections/${idea.slug}`}
                   className="group block text-center"
                 >
                   <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl group-hover:scale-105 transition-transform duration-300 shadow-sm">
-                    {occasion.icon || '🎁'}
+                    {idea.emoji}
                   </div>
                   <h3 className="font-medium text-sm md:text-base text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                    {language === 'ar' ? occasion.nameAr : occasion.name}
+                    {language === 'ar' ? idea.nameAr : idea.name}
                   </h3>
                 </Link>
               </motion.div>
@@ -111,7 +116,7 @@ const OccasionsSection: React.FC = () => {
 
           {/* Progress Line */}
           <div className="h-0.5 bg-gray-100 mt-4 rounded-full overflow-hidden">
-            <div className="h-full w-1/3 bg-primary rounded-full" />
+            <div className="h-full w-2/3 bg-primary rounded-full" />
           </div>
         </div>
       </div>
@@ -119,4 +124,4 @@ const OccasionsSection: React.FC = () => {
   );
 };
 
-export default OccasionsSection;
+export default GiftIdeasSection;
