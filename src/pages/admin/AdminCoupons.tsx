@@ -12,7 +12,8 @@ import {
   Copy,
   Check,
   Users,
-  ShoppingBag
+  MoreHorizontal,
+  Filter
 } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -44,6 +45,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -124,7 +131,7 @@ const AdminCoupons: React.FC = () => {
       
       return { totalDiscount, totalUsages, activeCoupons };
     },
-    enabled: coupons.length > 0,
+    enabled: coupons.length >= 0,
   });
 
   const createMutation = useMutation({
@@ -262,6 +269,7 @@ const AdminCoupons: React.FC = () => {
   const copyCode = (code: string) => {
     navigator.clipboard.writeText(code);
     setCopiedCode(code);
+    toast.success('تم نسخ الكود');
     setTimeout(() => setCopiedCode(null), 2000);
   };
 
@@ -271,17 +279,17 @@ const AdminCoupons: React.FC = () => {
   );
 
   const getCouponStatus = (coupon: Coupon) => {
-    if (!coupon.is_active) return { label: 'معطل', color: 'bg-muted text-muted-foreground' };
+    if (!coupon.is_active) return { label: 'معطل', bg: 'bg-gray-100', text: 'text-gray-600' };
     if (coupon.end_date && new Date(coupon.end_date) < new Date()) {
-      return { label: 'منتهي', color: 'bg-red-50 text-red-600 border-red-200' };
+      return { label: 'منتهي', bg: 'bg-red-100', text: 'text-red-600' };
     }
     if (coupon.start_date && new Date(coupon.start_date) > new Date()) {
-      return { label: 'مجدول', color: 'bg-blue-50 text-blue-600 border-blue-200' };
+      return { label: 'مجدول', bg: 'bg-blue-100', text: 'text-blue-600' };
     }
     if (coupon.max_uses && coupon.used_count >= coupon.max_uses) {
-      return { label: 'مستنفد', color: 'bg-amber-50 text-amber-600 border-amber-200' };
+      return { label: 'مستنفد', bg: 'bg-amber-100', text: 'text-amber-600' };
     }
-    return { label: 'نشط', color: 'bg-emerald-50 text-emerald-600 border-emerald-200' };
+    return { label: 'نشط', bg: 'bg-emerald-100', text: 'text-emerald-600' };
   };
 
   return (
@@ -289,10 +297,10 @@ const AdminCoupons: React.FC = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'إجمالي الكوبونات', value: coupons.length, icon: Ticket, color: 'text-gold' },
-          { label: 'الكوبونات النشطة', value: stats?.activeCoupons || 0, icon: Check, color: 'text-emerald-600' },
-          { label: 'مرات الاستخدام', value: stats?.totalUsages || 0, icon: Users, color: 'text-blue-600' },
-          { label: 'إجمالي الخصومات', value: `${(stats?.totalDiscount || 0).toLocaleString()} ر.س`, icon: DollarSign, color: 'text-purple-600' },
+          { label: 'إجمالي الكوبونات', value: coupons.length, icon: Ticket, bg: 'bg-[#4a6b5d]/10', color: 'text-[#4a6b5d]' },
+          { label: 'الكوبونات النشطة', value: stats?.activeCoupons || 0, icon: Check, bg: 'bg-emerald-50', color: 'text-emerald-600' },
+          { label: 'مرات الاستخدام', value: stats?.totalUsages || 0, icon: Users, bg: 'bg-blue-50', color: 'text-blue-600' },
+          { label: 'إجمالي الخصومات', value: `${(stats?.totalDiscount || 0).toLocaleString()}`, icon: DollarSign, bg: 'bg-purple-50', color: 'text-purple-600' },
         ].map((stat, i) => (
           <motion.div
             key={i}
@@ -300,40 +308,42 @@ const AdminCoupons: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <div className="card-luxury p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+            <Card className="bg-white border border-gray-100 shadow-sm">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 ${stat.bg} rounded-lg flex items-center justify-center`}>
+                    <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-[#2d3b36]">{stat.value}</p>
+                    <p className="text-xs text-[#6b7c74]">{stat.label}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-foreground">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </motion.div>
         ))}
       </div>
 
-      {/* Header */}
-      <Card className="card-luxury mb-6">
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/50">
-          <CardTitle className="text-base font-medium flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-gold" />
-            إدارة الكوبونات
+      {/* Main Table */}
+      <Card className="bg-white border border-gray-100 shadow-sm">
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100">
+          <CardTitle className="text-base font-semibold text-[#2d3b36] flex items-center gap-2">
+            <Ticket className="w-5 h-5 text-[#4a6b5d]" />
+            قائمة الكوبونات
           </CardTitle>
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca8a3]" />
               <Input
                 placeholder="بحث..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pr-9 w-full sm:w-64"
+                className="pr-9 w-full sm:w-56 bg-[#f8fafb] border-gray-200"
               />
             </div>
             <Button 
-              className="btn-luxury gap-2"
+              className="bg-[#4a6b5d] hover:bg-[#3d5a4c] text-white gap-2"
               onClick={() => {
                 resetForm();
                 setIsDialogOpen(true);
@@ -344,110 +354,122 @@ const AdminCoupons: React.FC = () => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="pt-4">
+        <CardContent className="p-0">
           {isLoading ? (
-            <div className="space-y-3">
+            <div className="p-6 space-y-4">
               {[...Array(3)].map((_, i) => (
-                <Skeleton key={i} className="h-20 w-full" />
+                <Skeleton key={i} className="h-16 w-full" />
               ))}
             </div>
           ) : filteredCoupons.length === 0 ? (
-            <div className="text-center py-12">
-              <Ticket className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-              <p className="text-muted-foreground">لا توجد كوبونات</p>
+            <div className="text-center py-16">
+              <Ticket className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-[#6b7c74]">لا توجد كوبونات</p>
+              <p className="text-sm text-[#9ca8a3] mt-1">أضف كوبون جديد للبدء</p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {filteredCoupons.map((coupon, i) => {
-                const status = getCouponStatus(coupon);
-                return (
-                  <motion.div
-                    key={coupon.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="p-4 rounded-lg bg-secondary/20 border border-border/30 hover:border-border/60 transition-all"
-                  >
-                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                          {coupon.type === 'percentage' ? (
-                            <Percent className="w-6 h-6 text-gold" />
-                          ) : (
-                            <DollarSign className="w-6 h-6 text-gold" />
-                          )}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-[#f8fafb] border-b border-gray-100">
+                  <tr>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الكود</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">النوع</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">القيمة</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الاستخدام</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الحالة</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">مفعل</th>
+                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {filteredCoupons.map((coupon) => {
+                    const status = getCouponStatus(coupon);
+                    return (
+                      <tr key={coupon.id} className="hover:bg-[#f8fafb]/50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
                             <button
                               onClick={() => copyCode(coupon.code)}
-                              className="font-mono font-bold text-foreground bg-charcoal/5 px-2 py-0.5 rounded hover:bg-charcoal/10 transition-colors flex items-center gap-1"
+                              className="font-mono font-bold text-[#2d3b36] bg-[#f8fafb] px-2.5 py-1 rounded-md hover:bg-[#4a6b5d]/10 transition-colors flex items-center gap-1.5 text-sm"
                             >
                               {coupon.code}
                               {copiedCode === coupon.code ? (
-                                <Check className="w-3 h-3 text-emerald-600" />
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
                               ) : (
-                                <Copy className="w-3 h-3 text-muted-foreground" />
+                                <Copy className="w-3.5 h-3.5 text-[#9ca8a3]" />
                               )}
                             </button>
-                            <Badge className={`text-[10px] border ${status.color}`}>
-                              {status.label}
-                            </Badge>
                           </div>
-                          <p className="text-sm text-foreground mb-1">{coupon.name_ar}</p>
-                          <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
+                          <p className="text-xs text-[#6b7c74] mt-1">{coupon.name_ar}</p>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${coupon.type === 'percentage' ? 'bg-amber-50' : 'bg-blue-50'}`}>
                               {coupon.type === 'percentage' ? (
-                                <>{coupon.value}% خصم</>
+                                <Percent className="w-3.5 h-3.5 text-amber-600" />
                               ) : (
-                                <>{coupon.value} ر.س خصم</>
+                                <DollarSign className="w-3.5 h-3.5 text-blue-600" />
                               )}
+                            </div>
+                            <span className="text-sm text-[#6b7c74]">
+                              {coupon.type === 'percentage' ? 'نسبة' : 'مبلغ'}
                             </span>
-                            {coupon.min_order_amount > 0 && (
-                              <span>• الحد الأدنى: {coupon.min_order_amount} ر.س</span>
-                            )}
-                            {coupon.max_uses && (
-                              <span>• {coupon.used_count}/{coupon.max_uses} استخدام</span>
-                            )}
-                            {coupon.end_date && (
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3" />
-                                حتى {format(new Date(coupon.end_date), 'd MMM', { locale: ar })}
-                              </span>
-                            )}
                           </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Switch
-                          checked={coupon.is_active}
-                          onCheckedChange={(checked) => 
-                            toggleActiveMutation.mutate({ id: coupon.id, is_active: checked })
-                          }
-                        />
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => openEditDialog(coupon)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-destructive hover:text-destructive"
-                          onClick={() => {
-                            setSelectedCoupon(coupon);
-                            setIsDeleteOpen(true);
-                          }}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm font-semibold text-[#2d3b36]">
+                            {coupon.value}{coupon.type === 'percentage' ? '%' : ' ر.س'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-[#6b7c74]">
+                            {coupon.used_count}/{coupon.max_uses || '∞'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <Badge className={`${status.bg} ${status.text} border-0 text-[11px] font-medium`}>
+                            {status.label}
+                          </Badge>
+                        </td>
+                        <td className="px-6 py-4">
+                          <Switch
+                            checked={coupon.is_active}
+                            onCheckedChange={(checked) => 
+                              toggleActiveMutation.mutate({ id: coupon.id, is_active: checked })
+                            }
+                            className="data-[state=checked]:bg-[#4a6b5d]"
+                          />
+                        </td>
+                        <td className="px-6 py-4">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="text-[#9ca8a3] hover:text-[#4a6b5d]">
+                                <MoreHorizontal className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => openEditDialog(coupon)}>
+                                <Pencil className="w-4 h-4 ml-2" />
+                                تعديل
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => {
+                                  setSelectedCoupon(coupon);
+                                  setIsDeleteOpen(true);
+                                }}
+                                className="text-red-600"
+                              >
+                                <Trash2 className="w-4 h-4 ml-2" />
+                                حذف
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           )}
         </CardContent>
@@ -457,29 +479,29 @@ const AdminCoupons: React.FC = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-display">
+            <DialogTitle className="text-lg font-semibold text-[#2d3b36]">
               {selectedCoupon ? 'تعديل الكوبون' : 'إضافة كوبون جديد'}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>كود الكوبون *</Label>
+                <Label className="text-[#2d3b36]">كود الكوبون *</Label>
                 <Input
                   value={formData.code}
                   onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
                   placeholder="مثال: SAVE20"
-                  className="font-mono uppercase"
+                  className="font-mono uppercase bg-[#f8fafb]"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label>نوع الخصم *</Label>
+                <Label className="text-[#2d3b36]">نوع الخصم *</Label>
                 <Select
                   value={formData.type}
                   onValueChange={(value: 'percentage' | 'fixed') => setFormData({ ...formData, type: value })}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-[#f8fafb]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -492,19 +514,21 @@ const AdminCoupons: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>الاسم (إنجليزي)</Label>
+                <Label className="text-[#2d3b36]">الاسم (إنجليزي)</Label>
                 <Input
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Summer Sale"
+                  className="bg-[#f8fafb]"
                 />
               </div>
               <div className="space-y-2">
-                <Label>الاسم (عربي) *</Label>
+                <Label className="text-[#2d3b36]">الاسم (عربي) *</Label>
                 <Input
                   value={formData.name_ar}
                   onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
                   placeholder="تخفيضات الصيف"
+                  className="bg-[#f8fafb]"
                   required
                 />
               </div>
@@ -512,122 +536,103 @@ const AdminCoupons: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label>قيمة الخصم *</Label>
+                <Label className="text-[#2d3b36]">قيمة الخصم *</Label>
                 <Input
                   type="number"
                   min="0"
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
                   placeholder="20"
+                  className="bg-[#f8fafb]"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label>الحد الأدنى للطلب</Label>
+                <Label className="text-[#2d3b36]">الحد الأدنى للطلب</Label>
                 <Input
                   type="number"
                   min="0"
                   value={formData.min_order_amount}
                   onChange={(e) => setFormData({ ...formData, min_order_amount: Number(e.target.value) })}
                   placeholder="0"
+                  className="bg-[#f8fafb]"
                 />
               </div>
               <div className="space-y-2">
-                <Label>أقصى خصم</Label>
+                <Label className="text-[#2d3b36]">أقصى خصم</Label>
                 <Input
                   type="number"
                   min="0"
                   value={formData.max_discount}
                   onChange={(e) => setFormData({ ...formData, max_discount: e.target.value })}
                   placeholder="اختياري"
+                  className="bg-[#f8fafb]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>عدد الاستخدامات الكلي</Label>
+                <Label className="text-[#2d3b36]">تاريخ البداية</Label>
+                <Input
+                  type="date"
+                  value={formData.start_date}
+                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  className="bg-[#f8fafb]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[#2d3b36]">تاريخ الانتهاء</Label>
+                <Input
+                  type="date"
+                  value={formData.end_date}
+                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  className="bg-[#f8fafb]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-[#2d3b36]">عدد الاستخدامات الكلي</Label>
                 <Input
                   type="number"
                   min="0"
                   value={formData.max_uses}
                   onChange={(e) => setFormData({ ...formData, max_uses: e.target.value })}
                   placeholder="غير محدود"
+                  className="bg-[#f8fafb]"
                 />
               </div>
               <div className="space-y-2">
-                <Label>لكل مستخدم</Label>
+                <Label className="text-[#2d3b36]">لكل مستخدم</Label>
                 <Input
                   type="number"
                   min="1"
                   value={formData.max_uses_per_user}
                   onChange={(e) => setFormData({ ...formData, max_uses_per_user: Number(e.target.value) })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>يطبق على</Label>
-                <Select
-                  value={formData.applies_to}
-                  onValueChange={(value) => setFormData({ ...formData, applies_to: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">جميع المنتجات</SelectItem>
-                    <SelectItem value="products">منتجات محددة</SelectItem>
-                    <SelectItem value="bundles">باقات محددة</SelectItem>
-                    <SelectItem value="categories">فئات محددة</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>تاريخ البداية</Label>
-                <Input
-                  type="date"
-                  value={formData.start_date}
-                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>تاريخ الانتهاء</Label>
-                <Input
-                  type="date"
-                  value={formData.end_date}
-                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  className="bg-[#f8fafb]"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>الوصف (عربي)</Label>
-              <Textarea
-                value={formData.description_ar}
-                onChange={(e) => setFormData({ ...formData, description_ar: e.target.value })}
-                placeholder="وصف اختياري للكوبون..."
-                rows={2}
-              />
-            </div>
-
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 pt-2">
               <Switch
                 id="is_active"
                 checked={formData.is_active}
                 onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })}
+                className="data-[state=checked]:bg-[#4a6b5d]"
               />
-              <Label htmlFor="is_active">الكوبون نشط</Label>
+              <Label htmlFor="is_active" className="text-[#2d3b36]">الكوبون نشط</Label>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t">
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                 إلغاء
               </Button>
               <Button 
                 type="submit" 
-                className="btn-luxury"
+                className="bg-[#4a6b5d] hover:bg-[#3d5a4c] text-white"
                 disabled={createMutation.isPending || updateMutation.isPending}
               >
                 {createMutation.isPending || updateMutation.isPending ? 'جاري الحفظ...' : 'حفظ'}
@@ -649,7 +654,7 @@ const AdminCoupons: React.FC = () => {
           <AlertDialogFooter>
             <AlertDialogCancel>إلغاء</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-600 text-white hover:bg-red-700"
               onClick={() => selectedCoupon && deleteMutation.mutate(selectedCoupon.id)}
             >
               حذف
