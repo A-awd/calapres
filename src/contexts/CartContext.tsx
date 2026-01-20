@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { CartItem, Product, ProductVariant } from '@/types';
+import { CartItem, CartProduct, ProductVariant } from '@/types';
 
 interface CartContextType {
   items: CartItem[];
   itemCount: number;
   total: number;
-  addItem: (product: Product, quantity?: number, options?: Partial<CartItem>) => void;
+  addItem: (product: CartProduct, quantity?: number, options?: Partial<CartItem>) => void;
   removeItem: (productId: string, variantId?: string) => void;
   updateQuantity: (productId: string, quantity: number, variantId?: string) => void;
   updateItemOptions: (productId: string, options: Partial<CartItem>, variantId?: string) => void;
@@ -28,7 +28,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, 0);
 
   const addItem = useCallback((
-    product: Product, 
+    product: CartProduct, 
     quantity = 1, 
     options?: Partial<CartItem>
   ) => {
