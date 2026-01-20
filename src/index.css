@@ -361,4 +361,18 @@
   .tracking-luxury {
     letter-spacing: 0.2em;
   }
+
+  /* Marquee Animation */
+  @keyframes marquee-infinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-marquee-infinite {
+    animation: marquee-infinite 25s linear infinite;
+  }
 }
