@@ -202,6 +202,186 @@ export type Database = {
         }
         Relationships: []
       }
+      gift_boxes: {
+        Row: {
+          created_at: string
+          dimensions: string | null
+          dimensions_ar: string | null
+          display_order: number | null
+          id: string
+          image: string | null
+          is_active: boolean
+          max_items: number
+          name: string
+          name_ar: string
+          price: number
+          size: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dimensions?: string | null
+          dimensions_ar?: string | null
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          max_items?: number
+          name: string
+          name_ar: string
+          price: number
+          size: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dimensions?: string | null
+          dimensions_ar?: string | null
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          max_items?: number
+          name?: string
+          name_ar?: string
+          price?: number
+          size?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gift_items: {
+        Row: {
+          category: string
+          category_ar: string
+          created_at: string
+          display_order: number | null
+          id: string
+          image: string | null
+          is_active: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          category_ar: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          category_ar?: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name?: string
+          name_ar?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gift_wraps: {
+        Row: {
+          color: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          image: string | null
+          is_active: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name?: string
+          name_ar?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      occasion_reminders: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          is_recurring: boolean
+          last_reminded_at: string | null
+          notes: string | null
+          occasion_date: string
+          occasion_type: string | null
+          recipient_name: string | null
+          reminder_days_before: number
+          title: string
+          title_ar: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_recurring?: boolean
+          last_reminded_at?: string | null
+          notes?: string | null
+          occasion_date: string
+          occasion_type?: string | null
+          recipient_name?: string | null
+          reminder_days_before?: number
+          title: string
+          title_ar: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_recurring?: boolean
+          last_reminded_at?: string | null
+          notes?: string | null
+          occasion_date?: string
+          occasion_type?: string | null
+          recipient_name?: string | null
+          reminder_days_before?: number
+          title?: string
+          title_ar?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       occasions: {
         Row: {
           created_at: string
@@ -594,6 +774,42 @@ export type Database = {
           id?: string
           last_name?: string | null
           phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ribbons: {
+        Row: {
+          color: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          is_active: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean
+          name: string
+          name_ar: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          name_ar?: string
+          price?: number
           updated_at?: string
         }
         Relationships: []
