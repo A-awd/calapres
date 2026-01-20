@@ -51,10 +51,10 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-10 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? "bg-background/95 backdrop-blur-lg shadow-[0_1px_0_0_hsl(var(--border)/0.15)]"
-            : "bg-transparent"
+            : "bg-background/80 backdrop-blur-sm"
         }`}
       >
         <div className="container-luxury">
@@ -298,8 +298,8 @@ const Header: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Spacer */}
-      <div className="h-14 sm:h-16 lg:h-18" />
+      {/* Spacer - account for announcement bar */}
+      <div className="h-[calc(56px+40px)] sm:h-[calc(64px+40px)] lg:h-[calc(72px+40px)]" />
     </>
   );
 };
