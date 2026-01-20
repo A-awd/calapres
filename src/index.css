@@ -362,17 +362,34 @@
     letter-spacing: 0.2em;
   }
 
-  /* Marquee Animation */
-  @keyframes marquee-infinite {
+  /* Marquee Animation - Luxury Slow Infinite Loop */
+  .announcement-bar {
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 40s linear infinite;
+  }
+
+  .marquee-content {
+    display: flex;
+    align-items: center;
+    padding-right: 0;
+  }
+
+  @keyframes marquee-scroll {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
   }
 
-  .animate-marquee-infinite {
-    animation: marquee-infinite 25s linear infinite;
+  /* Pause on hover for accessibility */
+  .announcement-bar:hover .marquee-track {
+    animation-play-state: paused;
   }
 }
