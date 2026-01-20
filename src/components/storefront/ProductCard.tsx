@@ -61,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           </Link>
 
           {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none" />
 
           {/* Badges - Top */}
           <div className="absolute top-3 start-3 flex flex-col gap-2">
