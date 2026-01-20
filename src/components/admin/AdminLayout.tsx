@@ -86,10 +86,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8fafb] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-[#3d5a4c] border-t-transparent rounded-full animate-spin" />
-          <p className="text-[#6b7c74] font-medium text-sm">جاري التحميل...</p>
+          <div className="w-10 h-10 border-2 border-gray-800 border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-500 font-medium text-sm">جاري التحميل...</p>
         </div>
       </div>
     );
@@ -100,27 +100,27 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
   }
 
   const SidebarContent = ({ mobile = false }: { mobile?: boolean }) => (
-    <div className="flex flex-col h-full bg-[#2d3b36] text-white">
+    <div className="flex flex-col h-full bg-white border-l border-gray-100">
       {/* Logo */}
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
+      <div className="p-4 border-b border-gray-100 flex items-center justify-between">
         <Link 
           to="/admin/dashboard" 
           className="flex items-center gap-3" 
           onClick={() => mobile && setSidebarOpen(false)}
         >
-          <div className="w-9 h-9 bg-[#4a6b5d] rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-gray-900 rounded-lg flex items-center justify-center">
             <img src={logo} alt="كالابريز" className="h-6 w-auto brightness-150" />
           </div>
           {(!sidebarCollapsed || mobile) && (
-            <span className="font-bold text-lg text-white">كالابريز</span>
+            <span className="font-bold text-lg text-gray-900">كالابريز</span>
           )}
         </Link>
         {!mobile && (
           <button 
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            {sidebarCollapsed ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            {sidebarCollapsed ? <ChevronLeft className="w-4 h-4 text-gray-600" /> : <ChevronRight className="w-4 h-4 text-gray-600" />}
           </button>
         )}
       </div>
@@ -130,7 +130,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         {menuGroups.map((group, gi) => (
           <div key={gi} className="mb-4">
             {(!sidebarCollapsed || mobile) && (
-              <p className="px-4 mb-2 text-[10px] font-medium text-white/40 uppercase tracking-wider">
+              <p className="px-4 mb-2 text-[10px] font-medium text-gray-400 uppercase tracking-wider">
                 {group.title}
               </p>
             )}
@@ -146,12 +146,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
                       if (disabled) e.preventDefault();
                       else if (mobile) setSidebarOpen(false);
                     }}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                       active
-                        ? 'bg-[#4a6b5d] text-white'
+                        ? 'bg-gray-900 text-white'
                         : disabled
-                        ? 'text-white/30 cursor-not-allowed'
-                        : 'text-white/70 hover:bg-white/5 hover:text-white'
+                        ? 'text-gray-300 cursor-not-allowed'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
                     <item.icon className={`w-[18px] h-[18px] flex-shrink-0 ${active ? 'text-white' : ''}`} />
@@ -167,11 +167,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       </nav>
 
       {/* Footer */}
-      <div className="p-3 border-t border-white/10">
+      <div className="p-3 border-t border-gray-100">
         {/* Settings link */}
         <Link
           to="#"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/70 hover:bg-white/5 hover:text-white transition-colors mb-2"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors mb-2"
         >
           <Settings className="w-[18px] h-[18px]" />
           {(!sidebarCollapsed || mobile) && <span className="text-sm font-medium">الإعدادات</span>}
@@ -179,13 +179,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         
         {/* User info */}
         {(!sidebarCollapsed || mobile) && (
-          <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg mb-2">
-            <div className="w-9 h-9 bg-gradient-to-br from-[#4a6b5d] to-[#3d5a4c] rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-2">
+            <div className="w-9 h-9 bg-gray-900 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold text-white">
               {adminUser?.email?.charAt(0).toUpperCase() || 'A'}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-medium text-sm text-white truncate">{adminUser?.email?.split('@')[0] || 'مدير'}</p>
-              <p className="text-[11px] text-white/50 truncate">
+              <p className="font-medium text-sm text-gray-900 truncate">{adminUser?.email?.split('@')[0] || 'مدير'}</p>
+              <p className="text-[11px] text-gray-500 truncate">
                 {adminUser?.roles[0] || 'مدير النظام'}
               </p>
             </div>
@@ -194,7 +194,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-white/60 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors"
         >
           <LogOut className="w-[18px] h-[18px]" />
           {(!sidebarCollapsed || mobile) && <span className="text-sm font-medium">تسجيل الخروج</span>}
@@ -204,7 +204,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
   );
 
   return (
-    <div className="min-h-screen bg-[#f8fafb] flex" dir="rtl">
+    <div className="min-h-screen bg-gray-50 flex" dir="rtl">
       {/* Desktop Sidebar */}
       <aside 
         className={`hidden lg:flex flex-col fixed h-full z-40 transition-all duration-300 ${
@@ -219,7 +219,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         <div className="flex items-center gap-3">
           <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-[#2d3b36]">
+              <Button variant="ghost" size="icon" className="text-gray-900">
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
@@ -227,14 +227,14 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
               <SidebarContent mobile />
             </SheetContent>
           </Sheet>
-          <span className="font-bold text-[#2d3b36]">كالابريز</span>
+          <span className="font-bold text-gray-900">كالابريز</span>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="relative text-[#6b7c74]">
+          <Button variant="ghost" size="icon" className="relative text-gray-500">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-[#4a6b5d] rounded-full" />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
           </Button>
-          <Button variant="ghost" size="icon" asChild className="text-[#6b7c74]">
+          <Button variant="ghost" size="icon" asChild className="text-gray-500">
             <Link to="/"><Store className="w-5 h-5" /></Link>
           </Button>
         </div>
@@ -249,27 +249,27 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         {/* Desktop Top bar */}
         <header className="hidden lg:flex bg-white border-b border-gray-100 sticky top-0 z-40 items-center justify-between px-6 py-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-[#2d3b36]">{title}</h1>
-            <span className="text-sm text-[#6b7c74]">القائمة الرئيسية &gt; {title}</span>
+            <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+            <span className="text-sm text-gray-500">القائمة الرئيسية &gt; {title}</span>
           </div>
           <div className="flex items-center gap-3">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca8a3]" />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input 
                 placeholder="بحث..." 
-                className="w-64 pr-9 bg-[#f8fafb] border-gray-200 text-sm focus:ring-[#4a6b5d] focus:border-[#4a6b5d]"
+                className="w-64 pr-9 bg-gray-50 border-gray-200 text-sm rounded-xl focus:ring-gray-900 focus:border-gray-900"
               />
             </div>
             
             {/* Notifications */}
-            <button className="relative p-2.5 hover:bg-[#f8fafb] rounded-lg transition-colors border border-gray-200">
-              <Bell className="w-5 h-5 text-[#6b7c74]" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-[#4a6b5d] rounded-full" />
+            <button className="relative p-2.5 hover:bg-gray-100 rounded-xl transition-colors border border-gray-200">
+              <Bell className="w-5 h-5 text-gray-500" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
             </button>
             
             {/* View store */}
-            <Button variant="outline" size="sm" asChild className="border-[#4a6b5d] text-[#4a6b5d] hover:bg-[#4a6b5d] hover:text-white">
+            <Button variant="outline" size="sm" asChild className="border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-xl">
               <Link to="/">
                 <Store className="w-4 h-4 me-2" />
                 عرض المتجر
@@ -280,7 +280,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
 
         {/* Mobile title bar */}
         <div className="lg:hidden bg-white border-b border-gray-100 sticky top-14 z-30 px-4 py-3">
-          <h1 className="text-lg font-bold text-[#2d3b36]">{title}</h1>
+          <h1 className="text-lg font-bold text-gray-900">{title}</h1>
         </div>
 
         {/* Page content */}

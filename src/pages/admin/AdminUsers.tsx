@@ -59,10 +59,10 @@ interface UserWithRoles {
 }
 
 const roleLabels: Record<string, { label: string; color: string; icon: React.ElementType }> = {
-  admin: { label: 'مدير النظام', color: 'bg-red-100 text-red-800', icon: ShieldCheck },
-  orders_manager: { label: 'مدير الطلبات', color: 'bg-blue-100 text-blue-800', icon: ShieldAlert },
-  content_editor: { label: 'محرر المحتوى', color: 'bg-green-100 text-green-800', icon: Edit },
-  customer_support: { label: 'دعم العملاء', color: 'bg-purple-100 text-purple-800', icon: User },
+  admin: { label: 'مدير النظام', color: 'bg-red-100 text-red-700', icon: ShieldCheck },
+  orders_manager: { label: 'مدير الطلبات', color: 'bg-blue-100 text-blue-700', icon: ShieldAlert },
+  content_editor: { label: 'محرر المحتوى', color: 'bg-green-100 text-green-700', icon: Edit },
+  customer_support: { label: 'دعم العملاء', color: 'bg-purple-100 text-purple-700', icon: User },
 };
 
 type AppRole = 'admin' | 'orders_manager' | 'content_editor' | 'customer_support';
@@ -80,18 +80,15 @@ const AdminUsers: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  // جلب المستخدمين مع أدوارهم
   const { data: users = [], isLoading } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      // جلب جميع المستخدمين الذين لديهم أدوار
       const { data: rolesData, error: rolesError } = await supabase
         .from('user_roles')
         .select('user_id, role');
 
       if (rolesError) throw rolesError;
 
-      // جلب بيانات الملفات الشخصية
       const userIds = [...new Set(rolesData.map(r => r.user_id))];
       
       if (userIds.length === 0) return [];
@@ -103,13 +100,12 @@ const AdminUsers: React.FC = () => {
 
       if (profilesError) throw profilesError;
 
-      // دمج البيانات
       const usersMap = new Map<string, UserWithRoles>();
       
       for (const profile of profilesData || []) {
         usersMap.set(profile.id, {
           id: profile.id,
-          email: '', // سنحتاج edge function لجلب البريد
+          email: '',
           first_name: profile.first_name,
           last_name: profile.last_name,
           phone: profile.phone,
@@ -129,9 +125,8 @@ const AdminUsers: React.FC = () => {
     }
   });
 
-  // إضافة دور لمستخدم موجود
   const addRoleMutation = useMutation({
-    mutationFn: async ({ userId, role }: { userId: string; role: 'admin' | 'orders_manager' | 'content_editor' | 'customer_support' }) => {
+    mutationFn: async ({ userId, role }: { userId: string; role: AppRole }) => {
       const { error } = await supabase
         .from('user_roles')
         .insert({ user_id: userId, role });
@@ -140,21 +135,20 @@ const AdminUsers: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
-      toast.success('تم إضافة الدور بنجاح');
+      toast.success('تم إضافة الصلاحية بنجاح');
       setAddRoleDialogOpen(false);
       setSelectedUserId(null);
       setSelectedRole('');
     },
     onError: (error: any) => {
       if (error.message?.includes('duplicate')) {
-        toast.error('هذا المستخدم لديه هذا الدور بالفعل');
+        toast.error('هذا المستخدم لديه هذه الصلاحية بالفعل');
       } else {
-        toast.error('فشل في إضافة الدور');
+        toast.error('فشل في إضافة الصلاحية');
       }
     }
   });
 
-  // حذف دور من مستخدم
   const removeRoleMutation = useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: AppRole }) => {
       const { error } = await supabase
@@ -167,16 +161,15 @@ const AdminUsers: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
-      toast.success('تم حذف الدور بنجاح');
+      toast.success('تم حذف الصلاحية بنجاح');
       setDeleteDialogOpen(false);
       setRoleToDelete(null);
     },
     onError: () => {
-      toast.error('فشل في حذف الدور');
+      toast.error('فشل في حذف الصلاحية');
     }
   });
 
-  // تصفية المستخدمين
   const filteredUsers = users.filter(user => {
     const searchLower = searchQuery.toLowerCase();
     return (
@@ -189,7 +182,7 @@ const AdminUsers: React.FC = () => {
 
   const handleAddRole = () => {
     if (selectedUserId && selectedRole) {
-      addRoleMutation.mutate({ userId: selectedUserId, role: selectedRole as AppRole });
+      addRoleMutation.mutate({ userId: selectedUserId, role: selectedRole });
     }
   };
 
@@ -214,15 +207,15 @@ const AdminUsers: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row gap-3 justify-between mb-6" dir="rtl">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
             placeholder="البحث عن مستخدم..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pr-9"
+            className="pr-9 bg-gray-50 border-gray-200 rounded-xl"
           />
         </div>
-        <Button className="gap-2" onClick={() => setAddUserDialogOpen(true)}>
+        <Button className="gap-2 bg-gray-900 hover:bg-gray-800 rounded-xl" onClick={() => setAddUserDialogOpen(true)}>
           <Plus className="w-4 h-4" />
           إضافة مستخدم جديد
         </Button>
@@ -230,54 +223,54 @@ const AdminUsers: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" dir="rtl">
-        <Card>
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-red-100 rounded-lg">
+              <div className="p-2 bg-red-100 rounded-xl">
                 <ShieldCheck className="w-5 h-5 text-red-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{users.filter(u => u.roles.includes('admin')).length}</p>
-                <p className="text-sm text-muted-foreground">مدراء النظام</p>
+                <p className="text-2xl font-bold text-gray-900">{users.filter(u => u.roles.includes('admin')).length}</p>
+                <p className="text-sm text-gray-500">مدراء النظام</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
+              <div className="p-2 bg-blue-100 rounded-xl">
                 <ShieldAlert className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{users.filter(u => u.roles.includes('orders_manager')).length}</p>
-                <p className="text-sm text-muted-foreground">مدراء الطلبات</p>
+                <p className="text-2xl font-bold text-gray-900">{users.filter(u => u.roles.includes('orders_manager')).length}</p>
+                <p className="text-sm text-gray-500">مدراء الطلبات</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
+              <div className="p-2 bg-green-100 rounded-xl">
                 <Edit className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{users.filter(u => u.roles.includes('content_editor')).length}</p>
-                <p className="text-sm text-muted-foreground">محررو المحتوى</p>
+                <p className="text-2xl font-bold text-gray-900">{users.filter(u => u.roles.includes('content_editor')).length}</p>
+                <p className="text-sm text-gray-500">محررو المحتوى</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
+              <div className="p-2 bg-purple-100 rounded-xl">
                 <User className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{users.filter(u => u.roles.includes('customer_support')).length}</p>
-                <p className="text-sm text-muted-foreground">دعم العملاء</p>
+                <p className="text-2xl font-bold text-gray-900">{users.filter(u => u.roles.includes('customer_support')).length}</p>
+                <p className="text-sm text-gray-500">دعم العملاء</p>
               </div>
             </div>
           </CardContent>
@@ -285,61 +278,61 @@ const AdminUsers: React.FC = () => {
       </div>
 
       {/* Users Table */}
-      <Card>
+      <Card className="bg-white border border-gray-200 shadow-sm">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-gray-900">
             <UserCog className="w-5 h-5" />
             المستخدمون والصلاحيات
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-gray-500">
             إدارة صلاحيات المستخدمين في لوحة التحكم
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex items-center justify-center p-12">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
             </div>
           ) : filteredUsers.length === 0 ? (
-            <div className="text-center p-12 text-muted-foreground">
-              <Shield className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium">لا يوجد مستخدمون بعد</p>
-              <p className="text-sm">أضف مستخدماً جديداً للبدء</p>
+            <div className="text-center p-12">
+              <Shield className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+              <p className="text-lg font-medium text-gray-900">لا يوجد مستخدمون بعد</p>
+              <p className="text-sm text-gray-500">أضف مستخدماً جديداً للبدء</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full" dir="rtl">
-                <thead className="bg-secondary/50">
+                <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    <th className="p-4 text-right font-medium">المستخدم</th>
-                    <th className="p-4 text-right font-medium">الصلاحيات</th>
-                    <th className="p-4 text-right font-medium">تاريخ الانضمام</th>
-                    <th className="p-4 text-right font-medium">الإجراءات</th>
+                    <th className="p-4 text-right font-medium text-gray-500">المستخدم</th>
+                    <th className="p-4 text-right font-medium text-gray-500">الصلاحيات</th>
+                    <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">تاريخ الانضمام</th>
+                    <th className="p-4 text-right font-medium text-gray-500">الإجراءات</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-100">
                   {filteredUsers.map((user, index) => (
                     <motion.tr
                       key={user.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="border-b border-border hover:bg-secondary/30"
+                      className="hover:bg-gray-50/50 transition-colors"
                     >
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                            <User className="w-5 h-5 text-primary" />
+                          <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                            <User className="w-5 h-5 text-gray-600" />
                           </div>
                           <div>
-                            <p className="font-medium">
+                            <p className="font-medium text-gray-900">
                               {user.first_name && user.last_name 
                                 ? `${user.first_name} ${user.last_name}`
                                 : 'مستخدم'
                               }
                             </p>
                             {user.phone && (
-                              <p className="text-sm text-muted-foreground" dir="ltr">{user.phone}</p>
+                              <p className="text-sm text-gray-500" dir="ltr">{user.phone}</p>
                             )}
                           </div>
                         </div>
@@ -353,8 +346,7 @@ const AdminUsers: React.FC = () => {
                             return (
                               <Badge 
                                 key={role} 
-                                variant="secondary" 
-                                className={`${roleInfo.color} gap-1`}
+                                className={`${roleInfo.color} gap-1 border-0`}
                               >
                                 <Icon className="w-3 h-3" />
                                 {roleInfo.label}
@@ -363,8 +355,8 @@ const AdminUsers: React.FC = () => {
                           })}
                         </div>
                       </td>
-                      <td className="p-4">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <td className="p-4 hidden md:table-cell">
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
                           <Calendar className="w-4 h-4" />
                           {new Date(user.created_at).toLocaleDateString('ar-SA')}
                         </div>
@@ -372,7 +364,7 @@ const AdminUsers: React.FC = () => {
                       <td className="p-4">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900">
                               <MoreVertical className="w-4 h-4" />
                             </Button>
                           </DropdownMenuTrigger>
@@ -385,7 +377,7 @@ const AdminUsers: React.FC = () => {
                             {user.roles.map((role) => (
                               <DropdownMenuItem 
                                 key={role}
-                                className="text-destructive"
+                                className="text-red-600"
                                 onClick={() => openRemoveRoleDialog(user.id, role)}
                               >
                                 <Trash2 className="w-4 h-4 ml-2" />
@@ -408,8 +400,8 @@ const AdminUsers: React.FC = () => {
       <Dialog open={addRoleDialogOpen} onOpenChange={setAddRoleDialogOpen}>
         <DialogContent dir="rtl">
           <DialogHeader>
-            <DialogTitle>إضافة صلاحية جديدة</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-gray-900">إضافة صلاحية جديدة</DialogTitle>
+            <DialogDescription className="text-gray-500">
               اختر الصلاحية التي تريد إضافتها لهذا المستخدم
             </DialogDescription>
           </DialogHeader>
@@ -440,6 +432,7 @@ const AdminUsers: React.FC = () => {
             <Button 
               onClick={handleAddRole} 
               disabled={!selectedRole || addRoleMutation.isPending}
+              className="bg-gray-900 hover:bg-gray-800"
             >
               {addRoleMutation.isPending && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
               إضافة الصلاحية
@@ -452,23 +445,20 @@ const AdminUsers: React.FC = () => {
       <Dialog open={addUserDialogOpen} onOpenChange={setAddUserDialogOpen}>
         <DialogContent dir="rtl">
           <DialogHeader>
-            <DialogTitle>إضافة مستخدم جديد</DialogTitle>
-            <DialogDescription>
-              لإضافة مستخدم كأدمن، يجب أن يكون مسجلاً في النظام أولاً. أدخل معرف المستخدم (UUID) من قاعدة البيانات.
+            <DialogTitle className="text-gray-900">إضافة مستخدم جديد</DialogTitle>
+            <DialogDescription className="text-gray-500">
+              أدخل بريد المستخدم الموجود لإضافته كمدير
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label>معرف المستخدم (UUID)</Label>
+              <Label>البريد الإلكتروني</Label>
               <Input
-                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                type="email"
                 value={newUserEmail}
                 onChange={(e) => setNewUserEmail(e.target.value)}
-                dir="ltr"
+                placeholder="admin@example.com"
               />
-              <p className="text-xs text-muted-foreground">
-                يمكنك الحصول على معرف المستخدم من جدول profiles في قاعدة البيانات
-              </p>
             </div>
             <div className="space-y-2">
               <Label>الصلاحية</Label>
@@ -495,35 +485,24 @@ const AdminUsers: React.FC = () => {
             </Button>
             <Button 
               onClick={() => {
-                if (newUserEmail && newUserRole) {
-                  addRoleMutation.mutate(
-                    { userId: newUserEmail, role: newUserRole },
-                    {
-                      onSuccess: () => {
-                        setAddUserDialogOpen(false);
-                        setNewUserEmail('');
-                        setNewUserRole('orders_manager');
-                      }
-                    }
-                  );
-                }
+                toast.info('يجب على المستخدم التسجيل أولاً ثم يمكنك إضافته من القائمة');
+                setAddUserDialogOpen(false);
               }}
-              disabled={!newUserEmail || addRoleMutation.isPending}
+              className="bg-gray-900 hover:bg-gray-800"
             >
-              {addRoleMutation.isPending && <Loader2 className="w-4 h-4 ml-2 animate-spin" />}
               إضافة المستخدم
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Dialog */}
+      {/* Delete Role Confirmation */}
       <DeleteConfirmDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleRemoveRole}
         title="حذف الصلاحية"
-        description="هل أنت متأكد من حذف هذه الصلاحية من المستخدم؟ سيفقد المستخدم إمكانية الوصول إلى الميزات المرتبطة بهذه الصلاحية."
+        description="هل أنت متأكد من حذف هذه الصلاحية من المستخدم؟"
         isDeleting={removeRoleMutation.isPending}
       />
     </AdminLayout>

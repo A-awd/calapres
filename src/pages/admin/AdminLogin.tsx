@@ -19,7 +19,6 @@ const AdminLogin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Check if user is already logged in and has admin role
   useEffect(() => {
     const checkAdminAccess = async () => {
       if (authLoading || !user) return;
@@ -49,7 +48,6 @@ const AdminLogin: React.FC = () => {
     setError('');
 
     try {
-      // Sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -71,7 +69,6 @@ const AdminLogin: React.FC = () => {
         return;
       }
 
-      // Check if user has admin role
       const { data: roles, error: rolesError } = await supabase
         .from('user_roles')
         .select('role')
@@ -92,7 +89,6 @@ const AdminLogin: React.FC = () => {
         return;
       }
 
-      // User is authenticated and has admin role
       toast.success('مرحباً بعودتك!');
       navigate('/admin/dashboard');
     } catch (err: any) {
@@ -103,20 +99,22 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sidebar flex items-center justify-center p-4" dir="rtl">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4" dir="rtl">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <div className="bg-background rounded-2xl shadow-elegant p-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
           {/* Logo */}
           <div className="text-center mb-8">
-            <img src={logo} alt="كالابريز" className="h-20 w-auto mx-auto mb-4" />
-            <h1 className="font-display text-2xl font-bold text-foreground">
+            <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <img src={logo} alt="كالابريز" className="h-10 w-auto brightness-150" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">
               لوحة تحكم كالابريز
             </h1>
-            <p className="text-muted-foreground mt-2">
+            <p className="text-gray-500 mt-2">
               سجل دخولك لإدارة المتجر
             </p>
           </div>
@@ -124,16 +122,16 @@ const AdminLogin: React.FC = () => {
           {/* Login form */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email">البريد الإلكتروني</Label>
+              <Label htmlFor="email" className="text-gray-700">البريد الإلكتروني</Label>
               <div className="relative">
-                <Mail className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <Input
                   id="email"
                   type="email"
                   placeholder="admin@calapres.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="ps-10"
+                  className="ps-10 border-gray-200 rounded-xl"
                   required
                   autoComplete="email"
                 />
@@ -141,23 +139,23 @@ const AdminLogin: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">كلمة المرور</Label>
+              <Label htmlFor="password" className="text-gray-700">كلمة المرور</Label>
               <div className="relative">
-                <Lock className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Lock className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="ps-10 pe-10"
+                  className="ps-10 pe-10 border-gray-200 rounded-xl"
                   required
                   autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -168,7 +166,7 @@ const AdminLogin: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex items-center gap-2 text-destructive text-sm bg-destructive/10 p-3 rounded-lg"
+                className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-3 rounded-xl"
               >
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <p>{error}</p>
@@ -177,15 +175,14 @@ const AdminLogin: React.FC = () => {
 
             <Button
               type="submit"
-              className="w-full"
-              size="lg"
+              className="w-full bg-gray-900 hover:bg-gray-800 rounded-xl h-11"
               disabled={isLoading || authLoading}
             >
               {isLoading ? (
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
+                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                 />
               ) : (
                 <>
@@ -197,8 +194,8 @@ const AdminLogin: React.FC = () => {
           </form>
 
           {/* Info note */}
-          <div className="mt-8 p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground text-center">
+          <div className="mt-8 p-4 bg-gray-50 rounded-xl">
+            <p className="text-sm text-gray-500 text-center">
               يمكن للمسؤولين المصرح لهم فقط الوصول إلى هذه اللوحة.
               <br />
               تواصل مع الدعم إذا كنت بحاجة للوصول.
