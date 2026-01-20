@@ -33,12 +33,12 @@ const CategoriesSection: React.FC = () => {
   return (
     <section className="section-padding bg-sand">
       <div className="container-luxury">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <motion.span
             initial={initialState}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewportConfig}
-            className="inline-block text-xs tracking-luxury text-gold uppercase mb-4"
+            className="inline-block text-[10px] sm:text-xs tracking-luxury text-gold uppercase mb-3 sm:mb-4"
           >
             {t('تصفح مجموعاتنا', 'EXPLORE OUR COLLECTIONS')}
           </motion.span>
@@ -47,14 +47,14 @@ const CategoriesSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewportConfig}
             transition={{ delay: isMobile ? 0 : 0.1 }}
-            className="font-display text-3xl md:text-4xl font-medium text-foreground"
+            className="font-display text-2xl sm:text-3xl md:text-4xl font-medium text-foreground"
           >
             {t('التصنيفات', 'Categories')}
           </motion.h2>
         </div>
 
         {/* Compact Grid - 3 columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {categories.slice(0, 6).map((category, index) => (
             <motion.div
               key={category.id}
@@ -67,18 +67,18 @@ const CategoriesSection: React.FC = () => {
                 to={`/collections/${category.slug}`}
                 className="group block relative"
               >
-                <div className="relative overflow-hidden bg-white aspect-[4/3]">
+                <div className="relative overflow-hidden bg-white aspect-[4/3] rounded-sm sm:rounded-md">
                   <img
                     src={category.image}
                     alt={language === 'ar' ? category.nameAr : category.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-4 md:p-6">
-                    <h3 className="text-white font-display text-lg md:text-xl font-medium mb-1">
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 md:p-6">
+                    <h3 className="text-white font-display text-sm sm:text-base md:text-lg lg:text-xl font-medium mb-0.5 sm:mb-1">
                       {language === 'ar' ? category.nameAr : category.name}
                     </h3>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white/70 text-[10px] sm:text-xs md:text-sm">
                       {category.productCount} {t('منتج', 'Products')}
                     </p>
                   </div>

@@ -40,13 +40,13 @@ const BestsellersSection: React.FC = () => {
   return (
     <section className="section-padding bg-white">
       <div className="container-luxury">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
           <div>
             <motion.span
               initial={initialState}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportConfig}
-              className="inline-block text-xs tracking-luxury text-gold uppercase mb-4"
+              className="inline-block text-[10px] sm:text-xs tracking-luxury text-gold uppercase mb-3 sm:mb-4"
             >
               {t('المفضلة لدى العملاء', 'CUSTOMER FAVORITES')}
             </motion.span>
@@ -55,7 +55,7 @@ const BestsellersSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportConfig}
               transition={{ delay: isMobile ? 0 : 0.1 }}
-              className="font-display text-3xl md:text-4xl font-medium text-foreground"
+              className="font-display text-2xl sm:text-3xl md:text-4xl font-medium text-foreground"
             >
               {t('الأكثر مبيعاً', 'Bestsellers')}
             </motion.h2>
@@ -68,15 +68,15 @@ const BestsellersSection: React.FC = () => {
           >
             <Link
               to="/collections"
-              className="inline-flex items-center gap-2 text-sm tracking-wider uppercase text-foreground hover:text-muted-foreground transition-colors border-b border-foreground pb-1"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm tracking-wider uppercase text-foreground hover:text-muted-foreground transition-colors border-b border-foreground pb-0.5 sm:pb-1"
             >
               {t('عرض الكل', 'View All')}
-              <Arrow className="w-4 h-4" />
+              <Arrow className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Link>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {products.slice(0, 4).map((product, index) => (
             <ProductCard key={product.id} product={product as any} index={isMobile ? 0 : index} />
           ))}
