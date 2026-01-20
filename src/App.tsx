@@ -21,6 +21,7 @@ import Ramadan from "./pages/Ramadan";
 import OccasionLanding from "./pages/OccasionLanding";
 import DesignYourGift from "./pages/DesignYourGift";
 import OccasionReminders from "./pages/OccasionReminders";
+import FAQ from "./pages/FAQ";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminCatalog from "./pages/admin/AdminCatalog";
@@ -58,6 +59,7 @@ const App = () => (
                 <Route path="/occasion/:slug" element={<OccasionLanding />} />
                 <Route path="/design-your-gift" element={<DesignYourGift />} />
                 <Route path="/occasion-reminders" element={<OccasionReminders />} />
+                <Route path="/faq" element={<FAQ />} />
                 
                 {/* Admin */}
                 <Route path="/admin" element={<AdminLogin />} />
