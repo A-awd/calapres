@@ -58,10 +58,10 @@ const Header: React.FC = () => {
         }`}
       >
         <div className="container-luxury">
-          <div className="flex items-center justify-between h-12 lg:h-14">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18">
             {/* Left - Logo */}
             <Link to="/" className="flex-shrink-0" aria-label="CALAPRES">
-              <span className="font-display text-base lg:text-lg tracking-[0.25em] text-foreground font-light">
+              <span className="font-display text-sm sm:text-base lg:text-lg tracking-[0.2em] sm:tracking-[0.25em] text-foreground font-light">
                 CALAPRES
               </span>
             </Link>
@@ -299,7 +299,7 @@ const Header: React.FC = () => {
       </AnimatePresence>
 
       {/* Spacer */}
-      <div className="h-12 lg:h-14" />
+      <div className="h-14 sm:h-16 lg:h-18" />
     </>
   );
 };
