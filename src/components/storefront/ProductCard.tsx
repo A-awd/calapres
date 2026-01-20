@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Simplified product interface for the card
+// Simplified product interface for the card (compatible with CartProduct)
 interface ProductCardData {
   id: string;
   name: string;
@@ -92,7 +92,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           {/* Quick actions on hover */}
           <div className="absolute bottom-0 inset-x-0 p-4 flex gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
             <button
-              onClick={() => addItem(product)}
+              onClick={() => addItem({
+                id: product.id,
+                name: product.name,
+                nameAr: product.nameAr,
+                price: product.price,
+                originalPrice: product.originalPrice,
+                image: product.image,
+                category: product.category,
+                categoryAr: product.categoryAr,
+              })}
               className="flex-1 bg-white/95 backdrop-blur-sm text-charcoal py-3 text-xs tracking-wider uppercase hover:bg-charcoal hover:text-white transition-all flex items-center justify-center gap-2"
             >
               <ShoppingBag className="w-4 h-4" />

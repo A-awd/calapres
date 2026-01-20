@@ -1,13 +1,18 @@
-export interface Product {
+// Minimal product data needed for cart operations
+export interface CartProduct {
   id: string;
   name: string;
   nameAr: string;
   price: number;
-  originalPrice?: number;
-  image: string;
+  originalPrice?: number | null;
+  image?: string | null;
+  category?: string | null;
+  categoryAr?: string | null;
+}
+
+// Full product interface
+export interface Product extends CartProduct {
   images?: string[];
-  category: string;
-  categoryAr: string;
   occasion?: string;
   occasionAr?: string;
   description: string;
@@ -32,7 +37,7 @@ export interface ProductVariant {
 }
 
 export interface CartItem {
-  product: Product;
+  product: CartProduct;
   quantity: number;
   variant?: ProductVariant;
   giftWrap?: boolean;
