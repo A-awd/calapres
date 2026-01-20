@@ -39,6 +39,7 @@ const Header: React.FC = () => {
       { label: t("المجموعات", "Shop"), href: "/collections" },
       { label: t("صمم هديتك", "Build"), href: "/bundle-builder" },
       { label: t("تتبع", "Track"), href: "/track-order" },
+      { label: t("من نحن", "About"), href: "/about" },
     ],
     [t]
   );
