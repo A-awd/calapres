@@ -20,34 +20,33 @@ const AnnouncementBar: React.FC = () => {
     },
   ];
 
-  // Duplicate items multiple times for seamless infinite scroll
-  const items = [...announcements, ...announcements, ...announcements, ...announcements];
+  // Create the content block that will be repeated
+  const ContentBlock = () => (
+    <>
+      {announcements.map((item, index) => (
+        <div
+          key={index}
+          className="flex items-center gap-2 shrink-0"
+        >
+          <item.icon className="w-4 h-4 shrink-0" />
+          <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{item.text}</span>
+          <span className="text-charcoal/40 mx-6 sm:mx-8">✦</span>
+        </div>
+      ))}
+    </>
+  );
 
   return (
-    <div className="bg-gold text-charcoal overflow-hidden h-10 fixed top-0 left-0 right-0 z-[60] flex items-center">
-      <div className="flex animate-marquee-infinite">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 px-6 whitespace-nowrap"
-          >
-            <item.icon className="w-4 h-4 flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-medium">{item.text}</span>
-            <span className="text-charcoal/30 px-4">✦</span>
-          </div>
-        ))}
-      </div>
-      <div className="flex animate-marquee-infinite" aria-hidden="true">
-        {items.map((item, index) => (
-          <div
-            key={`dup-${index}`}
-            className="flex items-center gap-2 px-6 whitespace-nowrap"
-          >
-            <item.icon className="w-4 h-4 flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-medium">{item.text}</span>
-            <span className="text-charcoal/30 px-4">✦</span>
-          </div>
-        ))}
+    <div className="announcement-bar bg-gold text-charcoal h-10 fixed top-0 left-0 right-0 z-[60] flex items-center overflow-hidden">
+      <div className="marquee-track flex">
+        {/* First copy */}
+        <div className="marquee-content flex items-center">
+          <ContentBlock />
+        </div>
+        {/* Second copy for seamless loop */}
+        <div className="marquee-content flex items-center" aria-hidden="true">
+          <ContentBlock />
+        </div>
       </div>
     </div>
   );
