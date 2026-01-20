@@ -362,24 +362,52 @@
     letter-spacing: 0.2em;
   }
 
-  /* Marquee Animation - Luxury Slow Infinite Loop */
-  .announcement-bar {
+  /* ========================================
+     MARQUEE - Seamless Infinite Loop
+     ======================================== */
+  
+  .marquee-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    height: 40px;
+    background-color: hsl(var(--gold));
+    color: hsl(var(--charcoal));
     overflow: hidden;
+    display: flex;
+    align-items: center;
   }
 
   .marquee-track {
     display: flex;
     width: max-content;
-    animation: marquee-scroll 40s linear infinite;
+    animation: marquee-seamless 60s linear infinite;
   }
 
-  .marquee-content {
+  .marquee-track-inner {
     display: flex;
     align-items: center;
+  }
+
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 500;
+    padding-left: 0;
     padding-right: 0;
   }
 
-  @keyframes marquee-scroll {
+  .marquee-separator {
+    opacity: 0.4;
+    margin: 0 24px;
+  }
+
+  @keyframes marquee-seamless {
     0% {
       transform: translateX(0);
     }
@@ -388,8 +416,18 @@
     }
   }
 
-  /* Pause on hover for accessibility */
-  .announcement-bar:hover .marquee-track {
+  /* Pause on hover */
+  .marquee-container:hover .marquee-track {
     animation-play-state: paused;
+  }
+
+  /* Responsive font */
+  @media (max-width: 640px) {
+    .marquee-item {
+      font-size: 12px;
+    }
+    .marquee-separator {
+      margin: 0 16px;
+    }
   }
 }
