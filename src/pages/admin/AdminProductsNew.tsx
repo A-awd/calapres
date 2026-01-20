@@ -33,6 +33,7 @@ import { useProducts, useDeleteProduct, Product } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import ProductFormDialog from '@/components/admin/ProductFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
+import BulkActionsBar from '@/components/admin/BulkActionsBar';
 
 interface Filters {
   category: string;
@@ -629,6 +630,10 @@ const AdminProductsNew: React.FC = () => {
         title="حذف المنتج"
         description="هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء."
         isDeleting={deleteProduct.isPending}
+      />
+      <BulkActionsBar
+        selectedIds={selectedProducts}
+        onClearSelection={() => setSelectedProducts([])}
       />
     </AdminLayout>
   );

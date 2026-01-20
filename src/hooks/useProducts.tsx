@@ -166,3 +166,56 @@ export const useDeleteProduct = () => {
     },
   });
 };
+
+export interface BulkUpdateData {
+  is_active?: boolean;
+  is_bestseller?: boolean;
+  is_new?: boolean;
+  is_express?: boolean;
+  category_id?: string | null;
+  in_stock?: boolean;
+}
+
+export const useBulkUpdateProducts = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ ids, data }: { ids: string[]; data: BulkUpdateData }) => {
+      const { error } = await supabase
+        .from('products')
+        .update(data)
+        .in('id', ids);
+
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success(`تم تحديث ${variables.ids.length} منتج بنجاح`);
+    },
+    onError: (error: Error) => {
+      toast.error(`فشل التحديث: ${error.message}`);
+    },
+  });
+};
+
+export const useBulkDeleteProducts = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (ids: string[]) => {
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .in('id', ids);
+
+      if (error) throw error;
+    },
+    onSuccess: (_, ids) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success(`تم حذف ${ids.length} منتج بنجاح`);
+    },
+    onError: (error: Error) => {
+      toast.error(`فشل الحذف: ${error.message}`);
+    },
+  });
+};
