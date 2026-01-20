@@ -15,6 +15,9 @@ export interface StorefrontProduct {
   isNew: boolean;
   isExpress: boolean;
   inStock: boolean;
+  priceTier?: string;
+  isLastMinute?: boolean;
+  orderCount?: number;
 }
 
 export interface StorefrontCategory {
@@ -89,7 +92,7 @@ export const useBestsellerProducts = () => {
   });
 };
 
-// Fetch categories with product counts
+// Fetch categories with product counts - now fetches more for the new layout
 export const useStorefrontCategories = () => {
   return useQuery({
     queryKey: ['storefront-categories'],
@@ -99,7 +102,7 @@ export const useStorefrontCategories = () => {
         .select('id, name, name_ar, slug, image')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
-        .limit(6);
+        .limit(16);
 
       if (error) throw error;
 
@@ -123,6 +126,15 @@ export const useStorefrontCategories = () => {
         gifts: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800',
         cakes: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800',
         plants: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800',
+        'ready-boxes': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800',
+        candles: 'https://images.unsplash.com/photo-1602607974160-09d5ecb61132?w=800',
+        incense: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=800',
+        religious: 'https://images.unsplash.com/photo-1585036156171-384164a8c465?w=800',
+        'mens-gifts': 'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=800',
+        'womens-gifts': 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800',
+        'kids-gifts': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800',
+        corporate: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
+        'quick-gifts': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800',
       };
 
       return (categories || []).map((c: any) => ({
@@ -137,7 +149,7 @@ export const useStorefrontCategories = () => {
   });
 };
 
-// Fetch occasions
+// Fetch occasions - fetch all for mega menu
 export const useStorefrontOccasions = () => {
   return useQuery({
     queryKey: ['storefront-occasions'],
@@ -147,7 +159,7 @@ export const useStorefrontOccasions = () => {
         .select('id, name, name_ar, slug, icon')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
-        .limit(6);
+        .limit(20);
 
       if (error) throw error;
 
@@ -160,6 +172,12 @@ export const useStorefrontOccasions = () => {
         'teachers-day': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600',
         'mothers-day': 'https://images.unsplash.com/photo-1462275646964-a0e3571f4f5e?w=600',
         graduation: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600',
+        engagement: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600',
+        'employee-appreciation': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600',
+        'national-day': 'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600',
+        'back-to-school': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600',
+        housewarming: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600',
+        'self-care': 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600',
       };
 
       return (data || []).map((o: any) => ({
@@ -258,6 +276,164 @@ export const useExpressProducts = () => {
         isExpress: p.is_express,
         inStock: p.in_stock,
       })) as StorefrontProduct[];
+    },
+  });
+};
+
+// Fetch most ordered products (الأكثر طلباً)
+export const useMostOrderedProducts = () => {
+  return useQuery({
+    queryKey: ['storefront-most-ordered'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock, order_count,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .order('order_count', { ascending: false })
+        .limit(8);
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+        orderCount: p.order_count || 0,
+      })) as StorefrontProduct[];
+    },
+  });
+};
+
+// Fetch last minute gifts (هدايا آخر لحظة)
+export const useLastMinuteProducts = () => {
+  return useQuery({
+    queryKey: ['storefront-last-minute'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock, is_last_minute,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .or('is_last_minute.eq.true,is_express.eq.true')
+        .order('created_at', { ascending: false })
+        .limit(8);
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+        isLastMinute: p.is_last_minute,
+      })) as StorefrontProduct[];
+    },
+  });
+};
+
+// Fetch products by price range
+export const useProductsByPriceRange = (minPrice: number, maxPrice: number) => {
+  return useQuery({
+    queryKey: ['storefront-price-range', minPrice, maxPrice],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .gte('price', minPrice)
+        .lte('price', maxPrice)
+        .order('price', { ascending: true })
+        .limit(12);
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+      })) as StorefrontProduct[];
+    },
+    enabled: minPrice >= 0 && maxPrice > minPrice,
+  });
+};
+
+// Fetch all products for collections page
+export const useAllProducts = () => {
+  return useQuery({
+    queryKey: ['storefront-all-products'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          id, name, name_ar, slug, price, original_price, image,
+          is_bestseller, is_new, is_express, in_stock, order_count,
+          price_tier, is_last_minute, category_id,
+          categories:category_id (name, name_ar)
+        `)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      return (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        nameAr: p.name_ar,
+        slug: p.slug,
+        price: p.price,
+        originalPrice: p.original_price,
+        image: p.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=600',
+        category: p.categories?.name || null,
+        categoryAr: p.categories?.name_ar || null,
+        categoryId: p.category_id,
+        isBestseller: p.is_bestseller,
+        isNew: p.is_new,
+        isExpress: p.is_express,
+        inStock: p.in_stock,
+        orderCount: p.order_count || 0,
+        priceTier: p.price_tier || 'standard',
+        isLastMinute: p.is_last_minute || false,
+      })) as (StorefrontProduct & { categoryId?: string })[];
     },
   });
 };

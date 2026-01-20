@@ -489,16 +489,21 @@ export type Database = {
           is_active: boolean | null
           is_bestseller: boolean | null
           is_express: boolean | null
+          is_last_minute: boolean | null
           is_new: boolean | null
           name: string
           name_ar: string
+          order_count: number | null
           original_price: number | null
           price: number
+          price_tier: string | null
           sku: string
           slug: string
           stock_count: number | null
           tags: string[] | null
+          target_audience: string[] | null
           updated_at: string
+          view_count: number | null
         }
         Insert: {
           category_id?: string | null
@@ -512,16 +517,21 @@ export type Database = {
           is_active?: boolean | null
           is_bestseller?: boolean | null
           is_express?: boolean | null
+          is_last_minute?: boolean | null
           is_new?: boolean | null
           name: string
           name_ar: string
+          order_count?: number | null
           original_price?: number | null
           price: number
+          price_tier?: string | null
           sku: string
           slug: string
           stock_count?: number | null
           tags?: string[] | null
+          target_audience?: string[] | null
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
           category_id?: string | null
@@ -535,16 +545,21 @@ export type Database = {
           is_active?: boolean | null
           is_bestseller?: boolean | null
           is_express?: boolean | null
+          is_last_minute?: boolean | null
           is_new?: boolean | null
           name?: string
           name_ar?: string
+          order_count?: number | null
           original_price?: number | null
           price?: number
+          price_tier?: string | null
           sku?: string
           slug?: string
           stock_count?: number | null
           tags?: string[] | null
+          target_audience?: string[] | null
           updated_at?: string
+          view_count?: number | null
         }
         Relationships: [
           {

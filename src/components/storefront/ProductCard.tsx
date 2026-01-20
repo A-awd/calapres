@@ -5,10 +5,26 @@ import { ShoppingBag, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Product } from '@/types';
+
+// Simplified product interface for the card
+interface ProductCardData {
+  id: string;
+  name: string;
+  nameAr: string;
+  slug?: string;
+  price: number;
+  originalPrice?: number | null;
+  image?: string | null;
+  category?: string | null;
+  categoryAr?: string | null;
+  isBestseller?: boolean;
+  isNew?: boolean;
+  isExpress?: boolean;
+  inStock?: boolean;
+}
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductCardData;
   index?: number;
 }
 
