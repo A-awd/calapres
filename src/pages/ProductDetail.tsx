@@ -181,7 +181,7 @@ const ProductDetail: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Product Images with Gallery */}
-          <div className="relative">
+          <div className="relative z-0">
             <ProductImageGallery
               images={images}
               productName={product.name}
@@ -189,7 +189,7 @@ const ProductDetail: React.FC = () => {
             />
 
             {/* Badges */}
-            <div className="absolute top-4 start-4 flex flex-col gap-2 z-10 pointer-events-none">
+            <div className="absolute top-4 start-4 flex flex-col gap-2 z-[5] pointer-events-none">
               {product.is_new && (
                 <Badge className="bg-green-500 text-white pointer-events-auto">
                   {t('جديد', 'New')}
@@ -213,7 +213,7 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {/* Wishlist & Share */}
-            <div className="absolute top-4 end-4 flex flex-col gap-2 z-10">
+            <div className="absolute top-4 end-4 flex flex-col gap-2 z-[5]">
               <button
                 onClick={() => setIsWishlisted(!isWishlisted)}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
