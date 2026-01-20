@@ -84,21 +84,21 @@ const StatCard = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+      className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100"
     >
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-gray-500 text-sm mb-1">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          <p className="text-gray-500 text-xs md:text-sm mb-1 truncate">{title}</p>
+          <p className="text-lg md:text-2xl font-bold text-gray-900 truncate">{value}</p>
           {trend && (
-            <p className="text-emerald-500 text-sm mt-1 flex items-center gap-1">
-              <TrendingUp className="w-3 h-3" />
+            <p className="text-emerald-500 text-xs mt-1 flex items-center gap-1">
+              <TrendingUp className="w-3 h-3 flex-shrink-0" />
               {trend}
             </p>
           )}
         </div>
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses[color]}`}>
-          <Icon className="w-6 h-6" />
+        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${colorClasses[color]}`}>
+          <Icon className="w-5 h-5 md:w-6 md:h-6" />
         </div>
       </div>
     </motion.div>
@@ -226,19 +226,19 @@ const AdminOrders: React.FC = () => {
   return (
     <AdminLayout title="إدارة الطلبات">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         <StatCard
           title="إجمالي الطلبات"
           value={orders.length}
           icon={ShoppingBag}
-          trend="+12% هذا الشهر"
+          trend="+12%"
           color="primary"
         />
         <StatCard
           title="الإيرادات"
           value={`${totalRevenue.toLocaleString()} ر.س`}
           icon={DollarSign}
-          trend="+8% هذا الشهر"
+          trend="+8%"
           color="success"
         />
         <StatCard

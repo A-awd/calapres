@@ -173,20 +173,20 @@ const Checkout: React.FC = () => {
     <div className="min-h-screen bg-background" dir={direction}>
       <Header />
 
-      <main className="container-luxury py-8 md:py-12">
+      <main className="container-luxury py-6 md:py-8 lg:py-12 px-4 md:px-6">
         {/* Back link */}
         <Link
           to="/cart"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors mb-4 md:mb-8"
         >
           <BackArrow className="w-4 h-4" />
           {t('العودة للسلة', 'Back to Cart')}
         </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-12">
           {/* Form Column */}
-          <div className="lg:col-span-2">
-            <h1 className="font-display text-3xl md:text-4xl font-medium mb-8">
+          <div className="lg:col-span-2 order-2 lg:order-1">
+            <h1 className="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-4 md:mb-8">
               {t('إتمام الطلب', 'Checkout')}
             </h1>
 
@@ -574,29 +574,30 @@ const Checkout: React.FC = () => {
           </div>
 
           {/* Order Summary - Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-sand rounded-lg p-6">
-              <h2 className="font-display text-xl font-medium mb-6">
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <div className="lg:sticky lg:top-24 bg-sand rounded-xl p-4 md:p-6 mb-4 lg:mb-0">
+              <h2 className="font-display text-lg md:text-xl font-medium mb-4 md:mb-6">
                 {t('ملخص الطلب', 'Order Summary')}
               </h2>
 
-              {/* Items */}
-              <div className="space-y-4 mb-6">
+              {/* Items - Scrollable on mobile */}
+              <div className="space-y-3 md:space-y-4 mb-4 md:mb-6 max-h-48 lg:max-h-none overflow-y-auto">
                 {items.map((item) => (
                   <div key={item.product.id} className="flex gap-3">
                     <img
                       src={item.product.image}
                       alt={language === 'ar' ? item.product.nameAr : item.product.name}
-                      className="w-16 h-16 object-cover rounded"
+                      loading="lazy"
+                      className="w-14 h-14 md:w-16 md:h-16 object-cover rounded-lg"
                     />
-                    <div className="flex-1">
-                      <p className="font-medium text-sm line-clamp-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-xs md:text-sm line-clamp-1">
                         {language === 'ar' ? item.product.nameAr : item.product.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs md:text-sm text-muted-foreground">
                         {t('الكمية:', 'Qty:')} {item.quantity}
                       </p>
-                      <p className="text-sm font-medium">
+                      <p className="text-xs md:text-sm font-medium">
                         {item.product.price * item.quantity} {t('ر.س', 'SAR')}
                       </p>
                     </div>
@@ -604,29 +605,29 @@ const Checkout: React.FC = () => {
                 ))}
               </div>
 
-              <div className="border-t border-border/50 pt-4 space-y-3">
-                <div className="flex justify-between text-sm">
+              <div className="border-t border-border/50 pt-3 md:pt-4 space-y-2 md:space-y-3">
+                <div className="flex justify-between text-xs md:text-sm">
                   <span className="text-muted-foreground">{t('المجموع الفرعي', 'Subtotal')}</span>
                   <span>{subtotal} {t('ر.س', 'SAR')}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs md:text-sm">
                   <span className="text-muted-foreground">{t('التوصيل', 'Delivery')}</span>
                   <span>{deliveryPrice} {t('ر.س', 'SAR')}</span>
                 </div>
                 {addGiftWrap && (
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs md:text-sm">
                     <span className="text-muted-foreground">{t('تغليف الهدية', 'Gift Wrap')}</span>
                     <span>{giftWrapPrice} {t('ر.س', 'SAR')}</span>
                   </div>
                 )}
-                <div className="border-t border-border/50 pt-3 flex justify-between font-medium text-lg">
+                <div className="border-t border-border/50 pt-2 md:pt-3 flex justify-between font-medium text-base md:text-lg">
                   <span>{t('الإجمالي', 'Total')}</span>
-                  <span>{total} {t('ر.س', 'SAR')}</span>
+                  <span className="text-primary">{total} {t('ر.س', 'SAR')}</span>
                 </div>
               </div>
 
               {/* Submit Button - Desktop */}
-              <div className="hidden lg:block mt-6">
+              <div className="hidden lg:block mt-4 md:mt-6">
                 <Button
                   type="submit"
                   form="checkout-form"
@@ -646,14 +647,14 @@ const Checkout: React.FC = () => {
                 </Button>
               </div>
 
-              {/* Trust badges */}
-              <div className="mt-6 pt-6 border-t border-border/50">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                  <Truck className="w-4 h-4" />
+              {/* Trust badges - Hidden on mobile */}
+              <div className="hidden md:block mt-4 md:mt-6 pt-4 md:pt-6 border-t border-border/50">
+                <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground mb-2">
+                  <Truck className="w-3 h-3 md:w-4 md:h-4" />
                   <span>{t('توصيل آمن ومضمون', 'Safe & guaranteed delivery')}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4" />
                   <span>{t('دفع آمن 100%', '100% secure payment')}</span>
                 </div>
               </div>
