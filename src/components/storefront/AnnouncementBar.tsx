@@ -3,12 +3,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Truck, Gift, Percent } from 'lucide-react';
 
 const AnnouncementBar: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const announcements = [
     {
       icon: Truck,
-      text: t('توصيل سريع خلال ساعة واحدة', 'Fast delivery within 1 hour'),
+      text: t('توصيل سريع خلال ساعة', 'Fast delivery within 1 hour'),
     },
     {
       icon: Gift,
@@ -20,45 +20,32 @@ const AnnouncementBar: React.FC = () => {
     },
   ];
 
-  // Duplicate for seamless loop
-  const items = [...announcements, ...announcements, ...announcements];
+  // Duplicate items multiple times for seamless infinite scroll
+  const items = [...announcements, ...announcements, ...announcements, ...announcements];
 
   return (
-    <div className="bg-gold text-charcoal overflow-hidden py-2.5 fixed top-0 left-0 right-0 z-[60]">
-      <div 
-        className="flex animate-marquee whitespace-nowrap"
-        style={{
-          animationDuration: '30s',
-        }}
-      >
+    <div className="bg-gold text-charcoal overflow-hidden h-10 fixed top-0 left-0 right-0 z-[60] flex items-center">
+      <div className="flex animate-marquee-infinite">
         {items.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-2 mx-8 text-xs sm:text-sm font-medium"
+            className="flex items-center gap-2 px-6 whitespace-nowrap"
           >
             <item.icon className="w-4 h-4 flex-shrink-0" />
-            <span>{item.text}</span>
-            <span className="mx-4 text-charcoal/30">•</span>
+            <span className="text-xs sm:text-sm font-medium">{item.text}</span>
+            <span className="text-charcoal/30 px-4">✦</span>
           </div>
         ))}
       </div>
-      
-      {/* Duplicate for seamless loop */}
-      <div 
-        className="flex animate-marquee whitespace-nowrap absolute top-2.5"
-        style={{
-          animationDuration: '30s',
-          animationDelay: '-15s',
-        }}
-      >
+      <div className="flex animate-marquee-infinite" aria-hidden="true">
         {items.map((item, index) => (
           <div
             key={`dup-${index}`}
-            className="flex items-center gap-2 mx-8 text-xs sm:text-sm font-medium"
+            className="flex items-center gap-2 px-6 whitespace-nowrap"
           >
             <item.icon className="w-4 h-4 flex-shrink-0" />
-            <span>{item.text}</span>
-            <span className="mx-4 text-charcoal/30">•</span>
+            <span className="text-xs sm:text-sm font-medium">{item.text}</span>
+            <span className="text-charcoal/30 px-4">✦</span>
           </div>
         ))}
       </div>
