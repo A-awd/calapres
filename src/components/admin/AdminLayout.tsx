@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
   ShoppingCart, 
@@ -10,7 +10,8 @@ import {
   Menu,
   Store,
   Loader2,
-  Users
+  Users,
+  ChevronLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -43,7 +44,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Redirect to login if not admin
   useEffect(() => {
     if (!loading && !isAdmin) {
       navigate('/admin');
@@ -61,37 +61,38 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     return location.pathname === href;
   };
 
-  // Show loading state while checking auth
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-ivory flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">جاري التحميل...</p>
+          <div className="w-12 h-12 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+          <p className="text-muted-foreground font-medium">جاري التحميل...</p>
         </div>
       </div>
     );
   }
 
-  // Don't render if not admin
   if (!isAdmin) {
     return null;
   }
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-charcoal">
       {/* Logo */}
-      <div className="p-4 lg:p-6 border-b border-sidebar-border">
+      <div className="p-6 border-b border-white/10">
         <Link to="/admin/dashboard" className="flex items-center gap-3" onClick={() => setSidebarOpen(false)}>
-          <img src={logo} alt="كالابريز" className="h-8 lg:h-10 w-auto brightness-150" />
-          <span className="font-display text-base lg:text-lg font-bold text-white">
-            كالابريز
-          </span>
+          <img src={logo} alt="كالابريز" className="h-10 w-auto brightness-150" />
+          <div>
+            <span className="font-display text-lg font-bold text-white block">
+              كالابريز
+            </span>
+            <span className="text-[10px] text-white/50 tracking-widest uppercase">لوحة التحكم</span>
+          </div>
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-3 lg:p-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const active = isActive(item.href);
           return (
@@ -99,30 +100,31 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
               key={item.href}
               to={item.href}
               onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-lg transition-colors text-sm lg:text-base ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                 active
-                  ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                  : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                  ? 'bg-gold/20 text-gold'
+                  : 'text-white/60 hover:bg-white/5 hover:text-white'
               }`}
             >
-              <item.icon className="w-5 h-5 flex-shrink-0" />
-              <span>{item.label}</span>
+              <item.icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${active ? 'text-gold' : ''}`} />
+              <span className="font-medium">{item.label}</span>
+              {active && <ChevronLeft className="w-4 h-4 mr-auto" />}
             </Link>
           );
         })}
       </nav>
 
       {/* User section */}
-      <div className="p-3 lg:p-4 border-t border-sidebar-border">
-        <div className="flex items-center gap-3 mb-3 lg:mb-4">
-          <div className="w-8 h-8 lg:w-10 lg:h-10 bg-sidebar-primary rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-sidebar-primary-foreground font-bold text-sm lg:text-base">
+      <div className="p-4 border-t border-white/10">
+        <div className="flex items-center gap-3 mb-4 p-3 bg-white/5 rounded-lg">
+          <div className="w-10 h-10 bg-gradient-to-br from-gold to-gold-light rounded-full flex items-center justify-center flex-shrink-0">
+            <span className="text-charcoal font-bold">
               {adminUser?.email?.charAt(0).toUpperCase() || 'A'}
             </span>
           </div>
-          <div className="min-w-0">
-            <p className="font-medium text-sm truncate">{adminUser?.email || 'مدير'}</p>
-            <p className="text-xs text-sidebar-foreground/60 truncate capitalize">
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-sm text-white truncate">{adminUser?.email || 'مدير'}</p>
+            <p className="text-xs text-white/40 truncate capitalize">
               {adminUser?.roles.join(', ') || 'مدير النظام'}
             </p>
           </div>
@@ -130,7 +132,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         <Button
           variant="ghost"
           size="sm"
-          className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+          className="w-full justify-start text-white/50 hover:text-white hover:bg-white/5 border border-white/10"
           onClick={handleLogout}
         >
           <LogOut className="w-4 h-4 me-2" />
@@ -141,49 +143,49 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
   );
 
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
+    <div className="min-h-screen bg-ivory" dir="rtl">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-60 bg-sidebar text-sidebar-foreground flex-col fixed h-full z-40">
+      <aside className="hidden lg:flex w-64 bg-charcoal flex-col fixed h-full z-40 shadow-elegant">
         <SidebarContent />
       </aside>
 
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar h-14 flex items-center justify-between px-4">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-charcoal h-16 flex items-center justify-between px-4 shadow-lg">
         <div className="flex items-center gap-3">
           <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-white hover:bg-sidebar-accent">
+              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 p-0 bg-sidebar border-sidebar-border">
+            <SheetContent side="right" className="w-72 p-0 bg-charcoal border-charcoal-light">
               <SidebarContent />
             </SheetContent>
           </Sheet>
-          <img src={logo} alt="كالابريز" className="h-7 w-auto brightness-150" />
+          <img src={logo} alt="كالابريز" className="h-8 w-auto brightness-150" />
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="text-white/70 hover:text-white hover:bg-sidebar-accent relative">
+          <Button variant="ghost" size="icon" className="text-white/60 hover:text-white hover:bg-white/10 relative">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full" />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full" />
           </Button>
-          <Button variant="ghost" size="icon" asChild className="text-white/70 hover:text-white hover:bg-sidebar-accent">
+          <Button variant="ghost" size="icon" asChild className="text-white/60 hover:text-white hover:bg-white/10">
             <Link to="/"><Store className="w-5 h-5" /></Link>
           </Button>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="lg:me-60 min-h-screen">
+      <main className="lg:me-64 min-h-screen">
         {/* Desktop Top bar */}
-        <header className="hidden lg:flex bg-card border-b border-border sticky top-0 z-40 items-center justify-between px-6 py-4">
-          <h1 className="text-xl font-display font-bold">{title}</h1>
-          <div className="flex items-center gap-3">
-            <button className="relative p-2 hover:bg-secondary rounded-lg transition-colors">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
+        <header className="hidden lg:flex bg-white border-b border-border/50 sticky top-0 z-40 items-center justify-between px-8 py-5 shadow-soft">
+          <h1 className="text-2xl font-display font-bold text-charcoal">{title}</h1>
+          <div className="flex items-center gap-4">
+            <button className="relative p-2.5 hover:bg-secondary rounded-lg transition-colors border border-border/50">
+              <Bell className="w-5 h-5 text-muted-foreground" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full" />
             </button>
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" className="btn-gold" asChild>
               <Link to="/">
                 <Store className="w-4 h-4 me-2" />
                 عرض المتجر
@@ -193,16 +195,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         </header>
 
         {/* Mobile title bar */}
-        <div className="lg:hidden bg-card border-b border-border sticky top-14 z-30 px-4 py-3">
-          <h1 className="text-lg font-display font-bold">{title}</h1>
+        <div className="lg:hidden bg-white border-b border-border/50 sticky top-16 z-30 px-4 py-4 shadow-soft">
+          <h1 className="text-lg font-display font-bold text-charcoal">{title}</h1>
         </div>
 
         {/* Page content */}
-        <div className="p-4 lg:p-6 pt-4 lg:pt-6">
+        <div className="p-4 lg:p-8 pt-6 lg:pt-8 bg-ivory min-h-[calc(100vh-80px)]">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3 }}
           >
             {children}
           </motion.div>
