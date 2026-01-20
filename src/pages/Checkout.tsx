@@ -25,8 +25,10 @@ import { z } from 'zod';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useCoupon } from '@/hooks/useCoupon';
 import Header from '@/components/storefront/Header';
 import Footer from '@/components/storefront/Footer';
+import CouponInput from '@/components/storefront/CouponInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -92,6 +94,7 @@ const cities = [
 const Checkout: React.FC = () => {
   const { t, language, direction } = useLanguage();
   const { items, total: cartTotal, clearCart } = useCart();
+  const { appliedCoupon, isValidating, error: couponError, validateCoupon, calculateDiscount, removeCoupon } = useCoupon();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
@@ -130,7 +133,13 @@ const Checkout: React.FC = () => {
   const subtotal = cartTotal;
   const giftWrapPrice = addGiftWrap ? 25 : 0;
   const deliveryPrice = deliveryType === 'express' ? 35 : deliveryType === 'scheduled' ? 20 : 15;
-  const total = subtotal + giftWrapPrice + deliveryPrice;
+  const couponDiscount = calculateDiscount(subtotal);
+  const total = subtotal + giftWrapPrice + deliveryPrice - couponDiscount;
+
+  const handleApplyCoupon = async (code: string): Promise<boolean> => {
+    const result = await validateCoupon(code, subtotal);
+    return result.valid;
+  };
 
   const onSubmit = async (data: CheckoutFormData) => {
     setIsSubmitting(true);
@@ -605,6 +614,18 @@ const Checkout: React.FC = () => {
                 ))}
               </div>
 
+              {/* Coupon Section */}
+              <div className="border-t border-border/50 pt-4 mb-4">
+                <CouponInput
+                  onApply={handleApplyCoupon}
+                  onRemove={removeCoupon}
+                  appliedCoupon={appliedCoupon}
+                  discountAmount={couponDiscount}
+                  isValidating={isValidating}
+                  error={couponError}
+                />
+              </div>
+
               <div className="border-t border-border/50 pt-3 md:pt-4 space-y-2 md:space-y-3">
                 <div className="flex justify-between text-xs md:text-sm">
                   <span className="text-muted-foreground">{t('المجموع الفرعي', 'Subtotal')}</span>
@@ -620,9 +641,15 @@ const Checkout: React.FC = () => {
                     <span>{giftWrapPrice} {t('ر.س', 'SAR')}</span>
                   </div>
                 )}
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-xs md:text-sm text-green-600">
+                    <span>{t('خصم الكوبون', 'Coupon Discount')}</span>
+                    <span>-{couponDiscount.toFixed(2)} {t('ر.س', 'SAR')}</span>
+                  </div>
+                )}
                 <div className="border-t border-border/50 pt-2 md:pt-3 flex justify-between font-medium text-base md:text-lg">
                   <span>{t('الإجمالي', 'Total')}</span>
-                  <span className="text-primary">{total} {t('ر.س', 'SAR')}</span>
+                  <span className="text-primary">{total.toFixed(2)} {t('ر.س', 'SAR')}</span>
                 </div>
               </div>
 
