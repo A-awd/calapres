@@ -55,7 +55,6 @@ const AdminDashboard: React.FC = () => {
       const monthOrders = orders.filter(o => new Date(o.created_at) >= monthStart);
       const monthRevenue = monthOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
 
-      // Last 7 days revenue for chart
       const last7Days = Array.from({ length: 7 }, (_, i) => {
         const date = subDays(today, 6 - i);
         const dayOrders = orders.filter(o => {
@@ -144,8 +143,8 @@ const AdminDashboard: React.FC = () => {
     icon: Icon, 
     change, 
     changeLabel = 'خلال 24 ساعة',
-    iconBg = 'bg-[#4a6b5d]/10',
-    iconColor = 'text-[#4a6b5d]'
+    iconBg = 'bg-gray-100',
+    iconColor = 'text-gray-900'
   }: { 
     title: string; 
     value: number | string; 
@@ -156,10 +155,10 @@ const AdminDashboard: React.FC = () => {
     iconBg?: string;
     iconColor?: string;
   }) => (
-    <Card className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+    <Card className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
-          <div className={`w-10 h-10 ${iconBg} rounded-lg flex items-center justify-center`}>
+          <div className={`w-10 h-10 ${iconBg} rounded-xl flex items-center justify-center`}>
             <Icon className={`w-5 h-5 ${iconColor}`} />
           </div>
           <button className="p-1 hover:bg-gray-100 rounded transition-colors">
@@ -167,15 +166,15 @@ const AdminDashboard: React.FC = () => {
           </button>
         </div>
         <div className="mt-4">
-          <p className="text-xs text-[#6b7c74] mb-1">{title}</p>
+          <p className="text-xs text-gray-500 mb-1">{title}</p>
           {statsLoading ? (
             <Skeleton className="h-8 w-24" />
           ) : (
             <div className="flex items-baseline gap-2">
-              <h3 className="text-2xl font-bold text-[#2d3b36]">
+              <h3 className="text-2xl font-bold text-gray-900">
                 {typeof value === 'number' ? value.toLocaleString() : value}
               </h3>
-              {suffix && <span className="text-sm text-[#6b7c74]">{suffix}</span>}
+              {suffix && <span className="text-sm text-gray-500">{suffix}</span>}
             </div>
           )}
         </div>
@@ -187,7 +186,7 @@ const AdminDashboard: React.FC = () => {
               {change >= 0 ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
               {Math.abs(change)}%
             </span>
-            <span className="text-[11px] text-[#9ca8a3]">{changeLabel}</span>
+            <span className="text-[11px] text-gray-400">{changeLabel}</span>
           </div>
         )}
       </CardContent>
@@ -244,16 +243,16 @@ const AdminDashboard: React.FC = () => {
           transition={{ delay: 0.4 }}
           className="lg:col-span-2"
         >
-          <Card className="bg-white border border-gray-100 shadow-sm">
+          <Card className="bg-white border border-gray-200 shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div>
-                <CardTitle className="text-base font-semibold text-[#2d3b36]">نظرة على أداء المبيعات</CardTitle>
-                <p className="text-2xl font-bold text-[#2d3b36] mt-1">
-                  {(stats?.monthRevenue || 0).toLocaleString()} <span className="text-sm font-normal text-[#6b7c74]">ر.س</span>
+                <CardTitle className="text-base font-semibold text-gray-900">نظرة على أداء المبيعات</CardTitle>
+                <p className="text-2xl font-bold text-gray-900 mt-1">
+                  {(stats?.monthRevenue || 0).toLocaleString()} <span className="text-sm font-normal text-gray-500">ر.س</span>
                 </p>
-                <p className="text-xs text-[#9ca8a3]">إجمالي الإيرادات</p>
+                <p className="text-xs text-gray-400">إجمالي الإيرادات</p>
               </div>
-              <select className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-[#6b7c74]">
+              <select className="text-sm border border-gray-200 rounded-xl px-3 py-1.5 bg-white text-gray-600">
                 <option>آخر 7 أيام</option>
                 <option>آخر 30 يوم</option>
               </select>
@@ -264,8 +263,8 @@ const AdminDashboard: React.FC = () => {
                   <AreaChart data={stats?.last7Days || []}>
                     <defs>
                       <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4a6b5d" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#4a6b5d" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#111827" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="#111827" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
@@ -273,17 +272,17 @@ const AdminDashboard: React.FC = () => {
                       dataKey="date" 
                       axisLine={false} 
                       tickLine={false} 
-                      tick={{ fontSize: 11, fill: '#9ca8a3' }}
+                      tick={{ fontSize: 11, fill: '#9ca3af' }}
                     />
                     <YAxis 
                       axisLine={false} 
                       tickLine={false} 
-                      tick={{ fontSize: 11, fill: '#9ca8a3' }}
+                      tick={{ fontSize: 11, fill: '#9ca3af' }}
                       tickFormatter={(v) => `${v}`}
                     />
                     <Tooltip 
                       contentStyle={{ 
-                        backgroundColor: '#2d3b36', 
+                        backgroundColor: '#111827', 
                         border: 'none', 
                         borderRadius: '8px',
                         color: 'white',
@@ -294,7 +293,7 @@ const AdminDashboard: React.FC = () => {
                     <Area 
                       type="monotone" 
                       dataKey="revenue" 
-                      stroke="#4a6b5d" 
+                      stroke="#111827" 
                       strokeWidth={2}
                       fill="url(#colorRevenue)" 
                     />
@@ -311,9 +310,9 @@ const AdminDashboard: React.FC = () => {
           animate={{ opacity: 1, y: 0 }} 
           transition={{ delay: 0.5 }}
         >
-          <Card className="bg-white border border-gray-100 shadow-sm h-full">
+          <Card className="bg-white border border-gray-200 shadow-sm h-full">
             <CardHeader className="pb-2">
-              <CardTitle className="text-base font-semibold text-[#2d3b36]">حالة الطلبات</CardTitle>
+              <CardTitle className="text-base font-semibold text-gray-900">حالة الطلبات</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-[160px] relative">
@@ -336,8 +335,8 @@ const AdminDashboard: React.FC = () => {
                 </ResponsiveContainer>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-[#2d3b36]">{totalOrders}</p>
-                    <p className="text-[10px] text-[#9ca8a3]">طلب</p>
+                    <p className="text-2xl font-bold text-gray-900">{totalOrders}</p>
+                    <p className="text-[10px] text-gray-400">طلب</p>
                   </div>
                 </div>
               </div>
@@ -345,8 +344,8 @@ const AdminDashboard: React.FC = () => {
                 {pieData.slice(0, 4).map((item) => (
                   <div key={item.name} className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                    <span className="text-xs text-[#6b7c74]">{item.name}</span>
-                    <span className="text-xs font-medium text-[#2d3b36] mr-auto">{item.value}</span>
+                    <span className="text-xs text-gray-500">{item.name}</span>
+                    <span className="text-xs font-medium text-gray-900 mr-auto">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -361,10 +360,10 @@ const AdminDashboard: React.FC = () => {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ delay: 0.6 }}
       >
-        <Card className="bg-white border border-gray-100 shadow-sm">
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-4">
-            <CardTitle className="text-base font-semibold text-[#2d3b36]">أحدث الطلبات</CardTitle>
-            <Button variant="ghost" size="sm" asChild className="text-[#4a6b5d] hover:text-[#3d5a4c]">
+            <CardTitle className="text-base font-semibold text-gray-900">أحدث الطلبات</CardTitle>
+            <Button variant="ghost" size="sm" asChild className="text-gray-600 hover:text-gray-900">
               <Link to="/admin/orders" className="gap-1 text-sm">
                 عرض الكل
                 <ChevronLeft className="w-4 h-4" />
@@ -381,47 +380,39 @@ const AdminDashboard: React.FC = () => {
             ) : recentOrders.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingCart className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-                <p className="text-[#9ca8a3] text-sm">لا توجد طلبات حتى الآن</p>
+                <p className="text-gray-400 text-sm">لا توجد طلبات حتى الآن</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-[#f8fafb] border-y border-gray-100">
+                  <thead className="bg-gray-50 border-y border-gray-100">
                     <tr>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الطلب</th>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">العميل</th>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">التاريخ</th>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الحالة</th>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">المبلغ</th>
-                      <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3"></th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">الطلب</th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">العميل</th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">التاريخ</th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">الحالة</th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">المبلغ</th>
+                      <th className="text-right text-xs font-medium text-gray-500 px-6 py-3"></th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {recentOrders.map((order) => {
                       const statusStyle = getStatusStyle(order.status);
                       return (
-                        <tr key={order.id} className="hover:bg-[#f8fafb]/50 transition-colors">
+                        <tr key={order.id} className="hover:bg-gray-50/50 transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 bg-[#4a6b5d]/10 rounded-lg flex items-center justify-center">
-                                <Package className="w-4 h-4 text-[#4a6b5d]" />
+                              <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <Package className="w-4 h-4 text-gray-600" />
                               </div>
-                              <span className="font-medium text-sm text-[#2d3b36]">#{order.order_number}</span>
+                              <span className="font-medium text-sm text-gray-900">#{order.order_number}</span>
                             </div>
                           </td>
                           <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 bg-gradient-to-br from-[#4a6b5d] to-[#3d5a4c] rounded-full flex items-center justify-center text-white text-xs font-bold">
-                                {order.recipient_name?.charAt(0) || 'ع'}
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium text-[#2d3b36]">{order.recipient_name}</p>
-                                <p className="text-[11px] text-[#9ca8a3]">{order.guest_email || '-'}</p>
-                              </div>
-                            </div>
+                            <span className="text-sm text-gray-600">{order.recipient_name}</span>
                           </td>
                           <td className="px-6 py-4">
-                            <span className="text-sm text-[#6b7c74]">{formatDate(order.created_at)}</span>
+                            <span className="text-sm text-gray-500">{formatDate(order.created_at)}</span>
                           </td>
                           <td className="px-6 py-4">
                             <Badge className={`${statusStyle.bg} ${statusStyle.text} border-0 text-[11px] font-medium`}>
@@ -429,11 +420,11 @@ const AdminDashboard: React.FC = () => {
                             </Badge>
                           </td>
                           <td className="px-6 py-4">
-                            <span className="text-sm font-semibold text-[#2d3b36]">{order.total?.toLocaleString()} ر.س</span>
+                            <span className="font-semibold text-sm text-gray-900">{order.total} ر.س</span>
                           </td>
                           <td className="px-6 py-4">
-                            <Button variant="ghost" size="icon" asChild className="text-[#9ca8a3] hover:text-[#4a6b5d]">
-                              <Link to="/admin/orders">
+                            <Button variant="ghost" size="icon" asChild className="h-8 w-8 text-gray-400 hover:text-gray-900">
+                              <Link to={`/admin/orders?id=${order.id}`}>
                                 <Eye className="w-4 h-4" />
                               </Link>
                             </Button>

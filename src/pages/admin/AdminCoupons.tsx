@@ -297,7 +297,7 @@ const AdminCoupons: React.FC = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'إجمالي الكوبونات', value: coupons.length, icon: Ticket, bg: 'bg-[#4a6b5d]/10', color: 'text-[#4a6b5d]' },
+          { label: 'إجمالي الكوبونات', value: coupons.length, icon: Ticket, bg: 'bg-gray-100', color: 'text-gray-900' },
           { label: 'الكوبونات النشطة', value: stats?.activeCoupons || 0, icon: Check, bg: 'bg-emerald-50', color: 'text-emerald-600' },
           { label: 'مرات الاستخدام', value: stats?.totalUsages || 0, icon: Users, bg: 'bg-blue-50', color: 'text-blue-600' },
           { label: 'إجمالي الخصومات', value: `${(stats?.totalDiscount || 0).toLocaleString()}`, icon: DollarSign, bg: 'bg-purple-50', color: 'text-purple-600' },
@@ -308,15 +308,15 @@ const AdminCoupons: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="bg-white border border-gray-100 shadow-sm">
+            <Card className="bg-white border border-gray-200 shadow-sm">
               <CardContent className="p-5">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 ${stat.bg} rounded-lg flex items-center justify-center`}>
+                  <div className={`w-10 h-10 ${stat.bg} rounded-xl flex items-center justify-center`}>
                     <stat.icon className={`w-5 h-5 ${stat.color}`} />
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-[#2d3b36]">{stat.value}</p>
-                    <p className="text-xs text-[#6b7c74]">{stat.label}</p>
+                    <p className="text-xl font-bold text-gray-900">{stat.value}</p>
+                    <p className="text-xs text-gray-500">{stat.label}</p>
                   </div>
                 </div>
               </CardContent>
@@ -326,24 +326,24 @@ const AdminCoupons: React.FC = () => {
       </div>
 
       {/* Main Table */}
-      <Card className="bg-white border border-gray-100 shadow-sm">
+      <Card className="bg-white border border-gray-200 shadow-sm">
         <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100">
-          <CardTitle className="text-base font-semibold text-[#2d3b36] flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-[#4a6b5d]" />
+          <CardTitle className="text-base font-semibold text-gray-900 flex items-center gap-2">
+            <Ticket className="w-5 h-5 text-gray-600" />
             قائمة الكوبونات
           </CardTitle>
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca8a3]" />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 placeholder="بحث..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pr-9 w-full sm:w-56 bg-[#f8fafb] border-gray-200"
+                className="pr-9 w-full sm:w-56 bg-gray-50 border-gray-200 rounded-xl"
               />
             </div>
             <Button 
-              className="bg-[#4a6b5d] hover:bg-[#3d5a4c] text-white gap-2"
+              className="bg-gray-900 hover:bg-gray-800 text-white gap-2 rounded-xl"
               onClick={() => {
                 resetForm();
                 setIsDialogOpen(true);
@@ -364,43 +364,43 @@ const AdminCoupons: React.FC = () => {
           ) : filteredCoupons.length === 0 ? (
             <div className="text-center py-16">
               <Ticket className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-[#6b7c74]">لا توجد كوبونات</p>
-              <p className="text-sm text-[#9ca8a3] mt-1">أضف كوبون جديد للبدء</p>
+              <p className="text-gray-500">لا توجد كوبونات</p>
+              <p className="text-sm text-gray-400 mt-1">أضف كوبون جديد للبدء</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#f8fafb] border-b border-gray-100">
+                <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الكود</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">النوع</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">القيمة</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الاستخدام</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">الحالة</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3">مفعل</th>
-                    <th className="text-right text-xs font-medium text-[#6b7c74] px-6 py-3"></th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">الكود</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">النوع</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">القيمة</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">الاستخدام</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">الحالة</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3">مفعل</th>
+                    <th className="text-right text-xs font-medium text-gray-500 px-6 py-3"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {filteredCoupons.map((coupon) => {
                     const status = getCouponStatus(coupon);
                     return (
-                      <tr key={coupon.id} className="hover:bg-[#f8fafb]/50 transition-colors">
+                      <tr key={coupon.id} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => copyCode(coupon.code)}
-                              className="font-mono font-bold text-[#2d3b36] bg-[#f8fafb] px-2.5 py-1 rounded-md hover:bg-[#4a6b5d]/10 transition-colors flex items-center gap-1.5 text-sm"
+                              className="font-mono font-bold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5 text-sm"
                             >
                               {coupon.code}
                               {copiedCode === coupon.code ? (
                                 <Check className="w-3.5 h-3.5 text-emerald-600" />
                               ) : (
-                                <Copy className="w-3.5 h-3.5 text-[#9ca8a3]" />
+                                <Copy className="w-3.5 h-3.5 text-gray-400" />
                               )}
                             </button>
                           </div>
-                          <p className="text-xs text-[#6b7c74] mt-1">{coupon.name_ar}</p>
+                          <p className="text-xs text-gray-500 mt-1">{coupon.name_ar}</p>
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
@@ -411,18 +411,18 @@ const AdminCoupons: React.FC = () => {
                                 <DollarSign className="w-3.5 h-3.5 text-blue-600" />
                               )}
                             </div>
-                            <span className="text-sm text-[#6b7c74]">
+                            <span className="text-sm text-gray-500">
                               {coupon.type === 'percentage' ? 'نسبة' : 'مبلغ'}
                             </span>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm font-semibold text-[#2d3b36]">
+                          <span className="text-sm font-semibold text-gray-900">
                             {coupon.value}{coupon.type === 'percentage' ? '%' : ' ر.س'}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-[#6b7c74]">
+                          <span className="text-sm text-gray-500">
                             {coupon.used_count}/{coupon.max_uses || '∞'}
                           </span>
                         </td>
@@ -437,13 +437,13 @@ const AdminCoupons: React.FC = () => {
                             onCheckedChange={(checked) => 
                               toggleActiveMutation.mutate({ id: coupon.id, is_active: checked })
                             }
-                            className="data-[state=checked]:bg-[#4a6b5d]"
+                            className="data-[state=checked]:bg-gray-900"
                           />
                         </td>
                         <td className="px-6 py-4">
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon" className="text-[#9ca8a3] hover:text-[#4a6b5d]">
+                              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900">
                                 <MoreHorizontal className="w-4 h-4" />
                               </Button>
                             </DropdownMenuTrigger>
@@ -453,11 +453,11 @@ const AdminCoupons: React.FC = () => {
                                 تعديل
                               </DropdownMenuItem>
                               <DropdownMenuItem 
+                                className="text-red-600"
                                 onClick={() => {
                                   setSelectedCoupon(coupon);
                                   setIsDeleteOpen(true);
                                 }}
-                                className="text-red-600"
                               >
                                 <Trash2 className="w-4 h-4 ml-2" />
                                 حذف
@@ -475,33 +475,48 @@ const AdminCoupons: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Create/Edit Dialog */}
+      {/* Coupon Form Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" dir="rtl">
           <DialogHeader>
-            <DialogTitle className="text-lg font-semibold text-[#2d3b36]">
+            <DialogTitle className="text-gray-900">
               {selectedCoupon ? 'تعديل الكوبون' : 'إضافة كوبون جديد'}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">كود الكوبون *</Label>
+                <Label>كود الكوبون *</Label>
                 <Input
                   value={formData.code}
                   onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                  placeholder="مثال: SAVE20"
-                  className="font-mono uppercase bg-[#f8fafb]"
-                  required
+                  placeholder="SUMMER2024"
+                  className="font-mono uppercase"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">نوع الخصم *</Label>
+                <Label>الاسم (عربي) *</Label>
+                <Input
+                  value={formData.name_ar}
+                  onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
+                  placeholder="خصم الصيف"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>الاسم (إنجليزي)</Label>
+                <Input
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Summer Sale"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>نوع الخصم</Label>
                 <Select
                   value={formData.type}
                   onValueChange={(value: 'percentage' | 'fixed') => setFormData({ ...formData, type: value })}
                 >
-                  <SelectTrigger className="bg-[#f8fafb]">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -510,132 +525,80 @@ const AdminCoupons: React.FC = () => {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">الاسم (إنجليزي)</Label>
-                <Input
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Summer Sale"
-                  className="bg-[#f8fafb]"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[#2d3b36]">الاسم (عربي) *</Label>
-                <Input
-                  value={formData.name_ar}
-                  onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
-                  placeholder="تخفيضات الصيف"
-                  className="bg-[#f8fafb]"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label className="text-[#2d3b36]">قيمة الخصم *</Label>
+                <Label>قيمة الخصم *</Label>
                 <Input
                   type="number"
-                  min="0"
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
-                  placeholder="20"
-                  className="bg-[#f8fafb]"
-                  required
+                  min={0}
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">الحد الأدنى للطلب</Label>
+                <Label>الحد الأدنى للطلب</Label>
                 <Input
                   type="number"
-                  min="0"
                   value={formData.min_order_amount}
                   onChange={(e) => setFormData({ ...formData, min_order_amount: Number(e.target.value) })}
-                  placeholder="0"
-                  className="bg-[#f8fafb]"
+                  min={0}
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">أقصى خصم</Label>
+                <Label>الحد الأقصى للخصم</Label>
                 <Input
                   type="number"
-                  min="0"
                   value={formData.max_discount}
                   onChange={(e) => setFormData({ ...formData, max_discount: e.target.value })}
-                  placeholder="اختياري"
-                  className="bg-[#f8fafb]"
+                  placeholder="بدون حد"
                 />
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">تاريخ البداية</Label>
+                <Label>الحد الأقصى للاستخدام</Label>
+                <Input
+                  type="number"
+                  value={formData.max_uses}
+                  onChange={(e) => setFormData({ ...formData, max_uses: e.target.value })}
+                  placeholder="غير محدود"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>تاريخ البداية</Label>
                 <Input
                   type="date"
                   value={formData.start_date}
                   onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                  className="bg-[#f8fafb]"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[#2d3b36]">تاريخ الانتهاء</Label>
+                <Label>تاريخ الانتهاء</Label>
                 <Input
                   type="date"
                   value={formData.end_date}
                   onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                  className="bg-[#f8fafb]"
                 />
               </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-[#2d3b36]">عدد الاستخدامات الكلي</Label>
-                <Input
-                  type="number"
-                  min="0"
-                  value={formData.max_uses}
-                  onChange={(e) => setFormData({ ...formData, max_uses: e.target.value })}
-                  placeholder="غير محدود"
-                  className="bg-[#f8fafb]"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[#2d3b36]">لكل مستخدم</Label>
-                <Input
-                  type="number"
-                  min="1"
-                  value={formData.max_uses_per_user}
-                  onChange={(e) => setFormData({ ...formData, max_uses_per_user: Number(e.target.value) })}
-                  className="bg-[#f8fafb]"
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>الوصف (عربي)</Label>
+              <Textarea
+                value={formData.description_ar}
+                onChange={(e) => setFormData({ ...formData, description_ar: e.target.value })}
+                placeholder="وصف الكوبون..."
+              />
             </div>
-
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-2">
               <Switch
-                id="is_active"
                 checked={formData.is_active}
                 onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })}
-                className="data-[state=checked]:bg-[#4a6b5d]"
               />
-              <Label htmlFor="is_active" className="text-[#2d3b36]">الكوبون نشط</Label>
+              <Label>الكوبون مفعل</Label>
             </div>
-
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+            <div className="flex gap-3 justify-end">
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                 إلغاء
               </Button>
-              <Button 
-                type="submit" 
-                className="bg-[#4a6b5d] hover:bg-[#3d5a4c] text-white"
-                disabled={createMutation.isPending || updateMutation.isPending}
-              >
-                {createMutation.isPending || updateMutation.isPending ? 'جاري الحفظ...' : 'حفظ'}
+              <Button type="submit" className="bg-gray-900 hover:bg-gray-800">
+                {selectedCoupon ? 'حفظ التغييرات' : 'إنشاء الكوبون'}
               </Button>
             </div>
           </form>
@@ -644,18 +607,18 @@ const AdminCoupons: React.FC = () => {
 
       {/* Delete Confirmation */}
       <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent dir="rtl">
           <AlertDialogHeader>
-            <AlertDialogTitle>حذف الكوبون</AlertDialogTitle>
+            <AlertDialogTitle>هل أنت متأكد؟</AlertDialogTitle>
             <AlertDialogDescription>
-              هل أنت متأكد من حذف الكوبون "{selectedCoupon?.code}"؟ لا يمكن التراجع عن هذا الإجراء.
+              سيتم حذف الكوبون "{selectedCoupon?.name_ar}" نهائياً. لا يمكن التراجع عن هذا الإجراء.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className="gap-2">
             <AlertDialogCancel>إلغاء</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-600 text-white hover:bg-red-700"
               onClick={() => selectedCoupon && deleteMutation.mutate(selectedCoupon.id)}
+              className="bg-red-600 hover:bg-red-700"
             >
               حذف
             </AlertDialogAction>
