@@ -20,33 +20,31 @@ const AnnouncementBar: React.FC = () => {
     },
   ];
 
-  // Create the content block that will be repeated
-  const ContentBlock = () => (
-    <>
+  // Single item component with trailing separator (ensures consistent spacing)
+  const AnnouncementItem = ({ icon: Icon, text }: { icon: React.ElementType; text: string }) => (
+    <div className="marquee-item">
+      <Icon className="w-4 h-4 shrink-0" />
+      <span>{text}</span>
+      <span className="marquee-separator">✦</span>
+    </div>
+  );
+
+  // Full track with all items - will be duplicated for seamless loop
+  const Track = () => (
+    <div className="marquee-track-inner">
       {announcements.map((item, index) => (
-        <div
-          key={index}
-          className="flex items-center gap-2 shrink-0"
-        >
-          <item.icon className="w-4 h-4 shrink-0" />
-          <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{item.text}</span>
-          <span className="text-charcoal/40 mx-6 sm:mx-8">✦</span>
-        </div>
+        <AnnouncementItem key={index} icon={item.icon} text={item.text} />
       ))}
-    </>
+    </div>
   );
 
   return (
-    <div className="announcement-bar bg-gold text-charcoal h-10 fixed top-0 left-0 right-0 z-[60] flex items-center overflow-hidden">
-      <div className="marquee-track flex">
-        {/* First copy */}
-        <div className="marquee-content flex items-center">
-          <ContentBlock />
-        </div>
-        {/* Second copy for seamless loop */}
-        <div className="marquee-content flex items-center" aria-hidden="true">
-          <ContentBlock />
-        </div>
+    <div className="marquee-container">
+      <div className="marquee-track">
+        <Track />
+        <Track />
+        <Track />
+        <Track />
       </div>
     </div>
   );
