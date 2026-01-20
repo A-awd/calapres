@@ -4,22 +4,50 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useStorefrontOccasions } from '@/hooks/useStorefrontData';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import ProductCard from './ProductCard';
+import { useBestsellerProducts, useExpressProducts, StorefrontProduct } from '@/hooks/useStorefrontData';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const OccasionsSection: React.FC = () => {
+interface FeaturedProductsSectionProps {
+  title: string;
+  titleAr: string;
+  filter?: 'bestseller' | 'new' | 'express';
+  categorySlug?: string;
+}
+
+const FeaturedProductsSection: React.FC<FeaturedProductsSectionProps> = ({
+  title,
+  titleAr,
+  filter,
+  categorySlug,
+}) => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
-  const { data: occasions = [], isLoading } = useStorefrontOccasions();
   const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // Use appropriate hook based on filter
+  const { data: bestsellers = [], isLoading: loadingBestsellers } = useBestsellerProducts();
+  const { data: expressProducts = [], isLoading: loadingExpress } = useExpressProducts();
+  
+  const isLoading = filter === 'express' ? loadingExpress : loadingBestsellers;
 
   const viewportConfig = isMobile ? undefined : { once: true };
   const initialState = isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
 
+  // Get products based on filter
+  const getProducts = (): StorefrontProduct[] => {
+    if (filter === 'bestseller') return bestsellers;
+    if (filter === 'express') return expressProducts;
+    if (filter === 'new') return bestsellers.filter(p => p.isNew);
+    return bestsellers;
+  };
+  
+  const products = getProducts().slice(0, 8);
+
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = 200;
+      const scrollAmount = 320;
       scrollRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
@@ -31,12 +59,10 @@ const OccasionsSection: React.FC = () => {
     return (
       <section className="section-padding bg-white">
         <div className="container-luxury">
-          <div className="flex gap-6 overflow-hidden">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="text-center flex-shrink-0">
-                <Skeleton className="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full mb-3" />
-                <Skeleton className="h-4 w-20 mx-auto" />
-              </div>
+          <Skeleton className="h-10 w-64 mx-auto mb-8" />
+          <div className="flex gap-4 overflow-hidden">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="w-72 h-96 flex-shrink-0 rounded-xl" />
             ))}
           </div>
         </div>
@@ -44,20 +70,28 @@ const OccasionsSection: React.FC = () => {
     );
   }
 
-  if (occasions.length === 0) return null;
+  if (products.length === 0) return null;
 
   return (
     <section className="section-padding bg-white">
       <div className="container-luxury">
         {/* Header */}
-        <motion.h2
-          initial={initialState}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={viewportConfig}
-          className="font-display text-2xl sm:text-3xl md:text-4xl text-primary text-center mb-8 md:mb-12"
-        >
-          {t('هدايا لكل لحظة', 'Gifts for Every Moment')}
-        </motion.h2>
+        <div className="flex items-center justify-between mb-8 md:mb-12">
+          <motion.h2
+            initial={initialState}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportConfig}
+            className="font-display text-2xl sm:text-3xl md:text-4xl text-primary"
+          >
+            {language === 'ar' ? titleAr : title}
+          </motion.h2>
+          <Link
+            to={`/collections${categorySlug ? `/${categorySlug}` : ''}`}
+            className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+          >
+            {t('اكتشف تشكيلتنا', 'Explore Collection')}
+          </Link>
+        </div>
 
         {/* Scrollable Container */}
         <div className="relative group">
@@ -79,39 +113,29 @@ const OccasionsSection: React.FC = () => {
             <ChevronLeft className="w-5 h-5" />
           </Button>
 
-          {/* Occasions Carousel */}
+          {/* Products Carousel */}
           <div
             ref={scrollRef}
-            className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+            className="flex gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {occasions.map((occasion, index) => (
+            {products.map((product, index) => (
               <motion.div
-                key={occasion.id}
+                key={product.id}
                 initial={initialState}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportConfig}
                 transition={{ delay: isMobile ? 0 : index * 0.05 }}
-                className="flex-shrink-0"
+                className="flex-shrink-0 w-64 md:w-72"
               >
-                <Link
-                  to={`/collections?occasion=${occasion.slug}`}
-                  className="group block text-center"
-                >
-                  <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl group-hover:scale-105 transition-transform duration-300 shadow-sm">
-                    {occasion.icon || '🎁'}
-                  </div>
-                  <h3 className="font-medium text-sm md:text-base text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                    {language === 'ar' ? occasion.nameAr : occasion.name}
-                  </h3>
-                </Link>
+                <ProductCard product={product} />
               </motion.div>
             ))}
           </div>
 
           {/* Progress Line */}
           <div className="h-0.5 bg-gray-100 mt-4 rounded-full overflow-hidden">
-            <div className="h-full w-1/3 bg-primary rounded-full" />
+            <div className="h-full w-1/2 bg-primary rounded-full" />
           </div>
         </div>
       </div>
@@ -119,4 +143,4 @@ const OccasionsSection: React.FC = () => {
   );
 };
 
-export default OccasionsSection;
+export default FeaturedProductsSection;
