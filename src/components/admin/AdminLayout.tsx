@@ -11,7 +11,8 @@ import {
   Store,
   Loader2,
   Users,
-  ChevronLeft
+  ChevronLeft,
+  Ticket
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -27,6 +28,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: 'لوحة التحكم', href: '/admin/dashboard' },
   { icon: ShoppingCart, label: 'الطلبات', href: '/admin/orders' },
   { icon: Package, label: 'الكتالوج', href: '/admin/catalog' },
+  { icon: Ticket, label: 'الكوبونات', href: '/admin/coupons' },
   { icon: Users, label: 'المستخدمون', href: '/admin/users' },
 ];
 

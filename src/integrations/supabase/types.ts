@@ -163,6 +163,117 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_usages: {
+        Row: {
+          coupon_id: string
+          created_at: string
+          discount_amount: number
+          id: string
+          order_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          coupon_id: string
+          created_at?: string
+          discount_amount: number
+          id?: string
+          order_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          coupon_id?: string
+          created_at?: string
+          discount_amount?: number
+          id?: string
+          order_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_usages_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupon_usages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          applies_to: string | null
+          applies_to_ids: string[] | null
+          code: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          end_date: string | null
+          id: string
+          is_active: boolean | null
+          max_discount: number | null
+          max_uses: number | null
+          max_uses_per_user: number | null
+          min_order_amount: number | null
+          name: string
+          name_ar: string
+          start_date: string | null
+          type: string
+          updated_at: string
+          used_count: number | null
+          value: number
+        }
+        Insert: {
+          applies_to?: string | null
+          applies_to_ids?: string[] | null
+          code: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          end_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          max_discount?: number | null
+          max_uses?: number | null
+          max_uses_per_user?: number | null
+          min_order_amount?: number | null
+          name: string
+          name_ar: string
+          start_date?: string | null
+          type?: string
+          updated_at?: string
+          used_count?: number | null
+          value: number
+        }
+        Update: {
+          applies_to?: string | null
+          applies_to_ids?: string[] | null
+          code?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          end_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          max_discount?: number | null
+          max_uses?: number | null
+          max_uses_per_user?: number | null
+          min_order_amount?: number | null
+          name?: string
+          name_ar?: string
+          start_date?: string | null
+          type?: string
+          updated_at?: string
+          used_count?: number | null
+          value?: number
+        }
+        Relationships: []
+      }
       customer_addresses: {
         Row: {
           apartment: string | null
@@ -517,6 +628,8 @@ export type Database = {
       }
       orders: {
         Row: {
+          coupon_code: string | null
+          coupon_discount: number | null
           created_at: string
           delivery_type: string
           discount: number
@@ -552,6 +665,8 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          coupon_code?: string | null
+          coupon_discount?: number | null
           created_at?: string
           delivery_type?: string
           discount?: number
@@ -587,6 +702,8 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          coupon_code?: string | null
+          coupon_discount?: number | null
           created_at?: string
           delivery_type?: string
           discount?: number
