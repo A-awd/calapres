@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 
 export interface AppliedCoupon {
   id: string;
@@ -21,7 +22,8 @@ interface CouponValidationResult {
 }
 
 export const useCoupon = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { toast } = useToast();
   const [isValidating, setIsValidating] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -119,6 +121,14 @@ export const useCoupon = () => {
       setAppliedCoupon(appliedCouponData);
       setError(null);
 
+      // Show success toast
+      toast({
+        title: language === 'ar' ? '✨ تم تطبيق الكوبون!' : '✨ Coupon Applied!',
+        description: language === 'ar' 
+          ? `تم تطبيق كوبون "${appliedCouponData.nameAr}" بنجاح` 
+          : `Coupon "${appliedCouponData.name}" applied successfully`,
+      });
+
       return { valid: true, coupon: appliedCouponData };
     } catch (err) {
       const result = { 
@@ -131,7 +141,7 @@ export const useCoupon = () => {
     } finally {
       setIsValidating(false);
     }
-  }, [t]);
+  }, [t, language, toast]);
 
   const calculateDiscount = useCallback((orderTotal: number): number => {
     if (!appliedCoupon) return 0;
