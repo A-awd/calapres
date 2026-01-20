@@ -7,8 +7,6 @@ import {
   Heart, 
   Share2, 
   ShoppingBag, 
-  Gift, 
-  MessageSquare, 
   Truck, 
   Clock, 
   Shield,
@@ -16,56 +14,85 @@ import {
   Minus,
   Plus,
   Star,
-  Eye,
-  EyeOff,
-  FileText
+  FileText,
+  Loader2
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import Header from '@/components/storefront/Header';
 import Footer from '@/components/storefront/Footer';
 import ProductCard from '@/components/storefront/ProductCard';
-import { products } from '@/data/mockData';
-import { ProductVariant } from '@/types';
+import ProductImageGallery from '@/components/storefront/ProductImageGallery';
+import ProductCustomizationOptions from '@/components/storefront/ProductCustomizationOptions';
+import { useProduct } from '@/hooks/useProducts';
+import { useBestsellerProducts } from '@/hooks/useStorefrontData';
+import { GiftWrap, Ribbon } from '@/hooks/useGiftBuilder';
 import { toast } from 'sonner';
-
-// Mock variants for demo
-const mockVariants: ProductVariant[] = [
-  { id: 'v1', name: 'Standard', nameAr: 'عادي', price: 0 },
-  { id: 'v2', name: 'Premium', nameAr: 'فاخر', price: 50 },
-  { id: 'v3', name: 'Deluxe', nameAr: 'ديلوكس', price: 100 },
-];
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t, language, direction } = useLanguage();
-  const { addItem, isInCart } = useCart();
+  const { addItem } = useCart();
 
-  const product = products.find((p) => p.id === id);
+  // Fetch product from database
+  const { data: product, isLoading, error } = useProduct(id || '');
+  const { data: relatedProducts } = useBestsellerProducts();
   
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
-  const [giftWrap, setGiftWrap] = useState(false);
-  const [greetingCard, setGreetingCard] = useState('');
-  const [showCardInput, setShowCardInput] = useState(false);
-  const [hideInvoice, setHideInvoice] = useState(false);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  
+  // Customization state
+  const [customization, setCustomization] = useState({
+    selectedWrap: null as GiftWrap | null,
+    selectedRibbon: null as Ribbon | null,
+    greetingCard: '',
+    showCardInput: false,
+    hideInvoice: false,
+  });
+  
+  // Recipient state
+  const [showRecipientFields, setShowRecipientFields] = useState(false);
   const [recipientName, setRecipientName] = useState('');
   const [recipientPhone, setRecipientPhone] = useState('');
   const [recipientAddress, setRecipientAddress] = useState('');
-  const [showRecipientFields, setShowRecipientFields] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
 
-  if (!product) {
+  const Arrow = direction === 'rtl' ? ChevronLeft : ChevronRight;
+  const BackArrow = direction === 'rtl' ? ChevronRight : ChevronLeft;
+
+  // Loading state
+  if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-background" dir={direction}>
+        <Header />
+        <main className="container-luxury section-padding">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <Skeleton className="aspect-square rounded-2xl" />
+            <div className="space-y-6">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-10 w-3/4" />
+              <Skeleton className="h-8 w-32" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-12 w-full" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Error or not found state
+  if (error || !product) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center" dir={direction}>
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">{t('المنتج غير موجود', 'Product not found')}</h1>
           <Button onClick={() => navigate('/')}>
@@ -76,39 +103,54 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  const images = product.images || [product.image];
-  const relatedProducts = products.filter(
-    (p) => p.category === product.category && p.id !== product.id
-  ).slice(0, 4);
+  // Product data
+  const images = product.images?.length ? product.images : [product.image || 'https://images.unsplash.com/photo-1518882605630-8eb574205f0f?w=800'];
+  const filteredRelated = relatedProducts?.filter(p => p.id !== product.id).slice(0, 4) || [];
 
-  const basePrice = product.price + (selectedVariant?.price || 0);
-  const giftWrapPrice = giftWrap ? 15 : 0;
-  const cardPrice = greetingCard.trim() ? 10 : 0;
-  const totalPrice = (basePrice + giftWrapPrice + cardPrice) * quantity;
+  // Price tiers/variants
+  const variants = [
+    { id: 'standard', name: 'Standard', nameAr: 'عادي', priceAdd: 0 },
+    { id: 'premium', name: 'Premium', nameAr: 'فاخر', priceAdd: 50 },
+    { id: 'deluxe', name: 'Deluxe', nameAr: 'ديلوكس', priceAdd: 100 },
+  ];
+  const selectedVariant = variants[selectedVariantIndex];
+  
+  // Calculate total price
+  const basePrice = product.price + selectedVariant.priceAdd;
+  const wrapPrice = customization.selectedWrap?.price || 0;
+  const ribbonPrice = customization.selectedRibbon?.price || 0;
+  const cardPrice = customization.greetingCard.trim() ? 10 : 0;
+  const totalPrice = (basePrice + wrapPrice + ribbonPrice + cardPrice) * quantity;
 
   const handleAddToCart = () => {
-    addItem(product, quantity, {
-      variant: selectedVariant || undefined,
-      giftWrap,
-      greetingCard: greetingCard || undefined,
-      hideInvoice,
-      recipientName: recipientName || undefined,
-      recipientPhone: recipientPhone || undefined,
-      recipientAddress: recipientAddress || undefined,
-    });
+    addItem({
+      id: product.id,
+      name: product.name,
+      nameAr: product.name_ar,
+      price: basePrice + wrapPrice + ribbonPrice + cardPrice,
+      originalPrice: product.original_price,
+      image: product.image,
+      category: product.category?.name || null,
+      categoryAr: product.category?.name_ar || null,
+    }, quantity);
     toast.success(t('تمت الإضافة إلى السلة', 'Added to cart'));
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  const handleShare = async () => {
+    const url = window.location.href;
+    const title = language === 'ar' ? product.name_ar : product.name;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch (err) {
+        // User cancelled or error
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast.success(t('تم نسخ الرابط', 'Link copied'));
+    }
   };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-
-  const Arrow = direction === 'rtl' ? ChevronLeft : ChevronRight;
-  const BackArrow = direction === 'rtl' ? ChevronRight : ChevronLeft;
 
   return (
     <div className="min-h-screen bg-background" dir={direction}>
@@ -121,114 +163,74 @@ const ProductDetail: React.FC = () => {
             {t('الرئيسية', 'Home')}
           </button>
           <Arrow className="w-4 h-4" />
-          <button onClick={() => navigate('/categories')} className="hover:text-primary transition-colors">
-            {language === 'ar' ? product.categoryAr : product.category}
-          </button>
-          <Arrow className="w-4 h-4" />
+          {product.category && (
+            <>
+              <button 
+                onClick={() => navigate(`/collections/${product.category?.name?.toLowerCase().replace(/\s+/g, '-')}`)} 
+                className="hover:text-primary transition-colors"
+              >
+                {language === 'ar' ? product.category.name_ar : product.category.name}
+              </button>
+              <Arrow className="w-4 h-4" />
+            </>
+          )}
           <span className="text-foreground">
-            {language === 'ar' ? product.nameAr : product.name}
+            {language === 'ar' ? product.name_ar : product.name}
           </span>
         </nav>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Product Images */}
-          <div className="space-y-4">
-            {/* Main Image */}
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-secondary">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentImageIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  src={images[currentImageIndex]}
-                  alt={language === 'ar' ? product.nameAr : product.name}
-                  className="w-full h-full object-cover"
-                />
-              </AnimatePresence>
+          {/* Product Images with Gallery */}
+          <div className="relative">
+            <ProductImageGallery
+              images={images}
+              productName={product.name}
+              productNameAr={product.name_ar}
+            />
 
-              {/* Navigation Arrows */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute start-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors"
-                  >
-                    <BackArrow className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute end-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors"
-                  >
-                    <Arrow className="w-5 h-5" />
-                  </button>
-                </>
+            {/* Badges */}
+            <div className="absolute top-4 start-4 flex flex-col gap-2 z-10 pointer-events-none">
+              {product.is_new && (
+                <Badge className="bg-green-500 text-white pointer-events-auto">
+                  {t('جديد', 'New')}
+                </Badge>
               )}
-
-              {/* Badges */}
-              <div className="absolute top-4 start-4 flex flex-col gap-2">
-                {product.isNew && (
-                  <Badge className="bg-green-500 text-white">
-                    {t('جديد', 'New')}
-                  </Badge>
-                )}
-                {product.isBestseller && (
-                  <Badge className="bg-amber-500 text-white">
-                    {t('الأكثر مبيعاً', 'Bestseller')}
-                  </Badge>
-                )}
-                {product.isExpress && (
-                  <Badge className="bg-blue-500 text-white">
-                    {t('توصيل سريع', 'Express')}
-                  </Badge>
-                )}
-                {product.originalPrice && (
-                  <Badge className="bg-red-500 text-white">
-                    -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                  </Badge>
-                )}
-              </div>
-
-              {/* Wishlist & Share */}
-              <div className="absolute top-4 end-4 flex flex-col gap-2">
-                <button
-                  onClick={() => setIsWishlisted(!isWishlisted)}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                    isWishlisted
-                      ? 'bg-red-500 text-white'
-                      : 'bg-background/80 backdrop-blur-sm hover:bg-background'
-                  }`}
-                >
-                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
-                </button>
-                <button className="w-10 h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors">
-                  <Share2 className="w-5 h-5" />
-                </button>
-              </div>
+              {product.is_bestseller && (
+                <Badge className="bg-amber-500 text-white pointer-events-auto">
+                  {t('الأكثر مبيعاً', 'Bestseller')}
+                </Badge>
+              )}
+              {product.is_express && (
+                <Badge className="bg-blue-500 text-white pointer-events-auto">
+                  {t('توصيل سريع', 'Express')}
+                </Badge>
+              )}
+              {product.original_price && (
+                <Badge className="bg-red-500 text-white pointer-events-auto">
+                  -{Math.round(((product.original_price - product.price) / product.original_price) * 100)}%
+                </Badge>
+              )}
             </div>
 
-            {/* Thumbnail Gallery */}
-            {images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                      currentImageIndex === index
-                        ? 'border-primary ring-2 ring-primary/20'
-                        : 'border-transparent hover:border-primary/50'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${language === 'ar' ? product.nameAr : product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Wishlist & Share */}
+            <div className="absolute top-4 end-4 flex flex-col gap-2 z-10">
+              <button
+                onClick={() => setIsWishlisted(!isWishlisted)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                  isWishlisted
+                    ? 'bg-red-500 text-white'
+                    : 'bg-background/80 backdrop-blur-sm hover:bg-background'
+                }`}
+              >
+                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
+              </button>
+              <button 
+                onClick={handleShare}
+                className="w-10 h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-background transition-colors"
+              >
+                <Share2 className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Product Info */}
@@ -236,10 +238,10 @@ const ProductDetail: React.FC = () => {
             {/* Title & Price */}
             <div>
               <p className="text-sm text-muted-foreground mb-2">
-                {language === 'ar' ? product.categoryAr : product.category}
+                {language === 'ar' ? product.category?.name_ar : product.category?.name}
               </p>
               <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                {language === 'ar' ? product.nameAr : product.name}
+                {language === 'ar' ? product.name_ar : product.name}
               </h1>
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-1">
@@ -258,26 +260,29 @@ const ProductDetail: React.FC = () => {
                 <span className="text-3xl font-bold text-primary">
                   {basePrice} {t('ر.س', 'SAR')}
                 </span>
-                {product.originalPrice && (
+                {product.original_price && (
                   <span className="text-lg text-muted-foreground line-through">
-                    {product.originalPrice + (selectedVariant?.price || 0)} {t('ر.س', 'SAR')}
+                    {product.original_price + selectedVariant.priceAdd} {t('ر.س', 'SAR')}
                   </span>
                 )}
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-muted-foreground leading-relaxed">
-              {language === 'ar' ? product.descriptionAr : product.description}
-            </p>
+            {(product.description || product.description_ar) && (
+              <p className="text-muted-foreground leading-relaxed">
+                {language === 'ar' ? product.description_ar : product.description}
+              </p>
+            )}
 
             {/* Stock Status */}
             <div className="flex items-center gap-2">
-              {product.inStock ? (
+              {product.in_stock ? (
                 <>
                   <Check className="w-5 h-5 text-green-500" />
                   <span className="text-green-600 font-medium">
-                    {t('متوفر', 'In Stock')} ({product.stockCount} {t('قطعة', 'units')})
+                    {t('متوفر', 'In Stock')} 
+                    {product.stock_count > 0 && ` (${product.stock_count} ${t('قطعة', 'units')})`}
                   </span>
                 </>
               ) : (
@@ -287,36 +292,26 @@ const ProductDetail: React.FC = () => {
               )}
             </div>
 
-            {/* Variants */}
+            {/* Variants / Options */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">
+              <p className="text-sm font-semibold">
                 {t('اختر الخيار', 'Choose Option')}
-              </Label>
+              </p>
               <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => setSelectedVariant(null)}
-                  className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                    !selectedVariant
-                      ? 'border-primary bg-primary/10 text-primary'
-                      : 'border-border hover:border-primary/50'
-                  }`}
-                >
-                  {t('عادي', 'Standard')}
-                </button>
-                {mockVariants.slice(1).map((variant) => (
+                {variants.map((variant, index) => (
                   <button
                     key={variant.id}
-                    onClick={() => setSelectedVariant(variant)}
+                    onClick={() => setSelectedVariantIndex(index)}
                     className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                      selectedVariant?.id === variant.id
+                      selectedVariantIndex === index
                         ? 'border-primary bg-primary/10 text-primary'
                         : 'border-border hover:border-primary/50'
                     }`}
                   >
                     {language === 'ar' ? variant.nameAr : variant.name}
-                    {variant.price > 0 && (
+                    {variant.priceAdd > 0 && (
                       <span className="ms-1 text-sm">
-                        (+{variant.price} {t('ر.س', 'SAR')})
+                        (+{variant.priceAdd} {t('ر.س', 'SAR')})
                       </span>
                     )}
                   </button>
@@ -324,80 +319,15 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Gift Options */}
-            <div className="space-y-4 p-4 bg-secondary rounded-xl">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Gift className="w-5 h-5 text-primary" />
-                {t('خيارات الهدية', 'Gift Options')}
-              </h3>
-
-              {/* Gift Wrap */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Checkbox
-                    id="giftWrap"
-                    checked={giftWrap}
-                    onCheckedChange={(checked) => setGiftWrap(checked as boolean)}
-                  />
-                  <Label htmlFor="giftWrap" className="cursor-pointer">
-                    {t('تغليف هدية فاخر', 'Premium Gift Wrapping')}
-                  </Label>
-                </div>
-                <span className="text-sm font-medium text-primary">
-                  +15 {t('ر.س', 'SAR')}
-                </span>
-              </div>
-
-              {/* Greeting Card */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={() => setShowCardInput(!showCardInput)}
-                    className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    {t('إضافة بطاقة تهنئة', 'Add Greeting Card')}
-                  </button>
-                  <span className="text-sm text-muted-foreground">
-                    +10 {t('ر.س', 'SAR')}
-                  </span>
-                </div>
-                <AnimatePresence>
-                  {showCardInput && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <Textarea
-                        value={greetingCard}
-                        onChange={(e) => setGreetingCard(e.target.value)}
-                        placeholder={t('اكتب رسالتك هنا...', 'Write your message here...')}
-                        className="mt-2"
-                        maxLength={200}
-                      />
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {greetingCard.length}/200
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Hide Invoice */}
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  id="hideInvoice"
-                  checked={hideInvoice}
-                  onCheckedChange={(checked) => setHideInvoice(checked as boolean)}
-                />
-                <Label htmlFor="hideInvoice" className="cursor-pointer flex items-center gap-2">
-                  {hideInvoice ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  {t('إخفاء الفاتورة', 'Hide Invoice')}
-                </Label>
-              </div>
-            </div>
+            {/* Customization Options */}
+            <ProductCustomizationOptions
+              state={customization}
+              onWrapChange={(wrap) => setCustomization(prev => ({ ...prev, selectedWrap: wrap }))}
+              onRibbonChange={(ribbon) => setCustomization(prev => ({ ...prev, selectedRibbon: ribbon }))}
+              onCardChange={(card) => setCustomization(prev => ({ ...prev, greetingCard: card }))}
+              onToggleCardInput={() => setCustomization(prev => ({ ...prev, showCardInput: !prev.showCardInput }))}
+              onHideInvoiceChange={(hide) => setCustomization(prev => ({ ...prev, hideInvoice: hide }))}
+            />
 
             {/* Send to Recipient */}
             <div className="space-y-3">
@@ -464,7 +394,7 @@ const ProductDetail: React.FC = () => {
               {/* Add to Cart Button */}
               <Button
                 onClick={handleAddToCart}
-                disabled={!product.inStock}
+                disabled={!product.in_stock}
                 className="flex-1 gap-2"
                 size="lg"
                 variant="luxury"
@@ -502,27 +432,29 @@ const ProductDetail: React.FC = () => {
             {/* SKU & Tags */}
             <div className="text-sm text-muted-foreground space-y-1">
               <p>SKU: {product.sku}</p>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span>{t('الوسوم:', 'Tags:')}</span>
-                {product.tags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              {product.tags && product.tags.length > 0 && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span>{t('الوسوم:', 'Tags:')}</span>
+                  {product.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Related Products */}
-        {relatedProducts.length > 0 && (
+        {filteredRelated.length > 0 && (
           <section className="mt-20">
             <h2 className="font-display text-2xl font-bold mb-8">
               {t('منتجات ذات صلة', 'Related Products')}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {filteredRelated.map((relProduct, index) => (
+                <ProductCard key={relProduct.id} product={relProduct} index={index} />
               ))}
             </div>
           </section>
