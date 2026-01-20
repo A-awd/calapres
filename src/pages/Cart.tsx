@@ -5,8 +5,10 @@ import { Minus, Plus, Trash2, ArrowLeft, ArrowRight, Gift, MessageSquare, Eye, E
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useCoupon } from '@/hooks/useCoupon';
 import Header from '@/components/storefront/Header';
 import Footer from '@/components/storefront/Footer';
+import CouponInput from '@/components/storefront/CouponInput';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,6 +18,7 @@ const Cart: React.FC = () => {
   const { t, direction } = useLanguage();
   const { items, total, updateQuantity, removeItem, updateItemOptions, clearCart } = useCart();
   const isMobile = useIsMobile();
+  const { appliedCoupon, isValidating, error, validateCoupon, calculateDiscount, removeCoupon } = useCoupon();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
 
   if (items.length === 0) {
@@ -51,7 +54,13 @@ const Cart: React.FC = () => {
   }
 
   const shippingFee = total >= 500 ? 0 : 35;
-  const grandTotal = total + shippingFee;
+  const couponDiscount = calculateDiscount(total);
+  const grandTotal = total + shippingFee - couponDiscount;
+
+  const handleApplyCoupon = async (code: string): Promise<boolean> => {
+    const result = await validateCoupon(code, total);
+    return result.valid;
+  };
 
   return (
     <div className="min-h-screen">
@@ -244,6 +253,26 @@ const Cart: React.FC = () => {
                   </p>
                 )}
               </div>
+
+              {/* Coupon Section */}
+              <div className="border-t border-border pt-4 mb-4">
+                <CouponInput
+                  onApply={handleApplyCoupon}
+                  onRemove={removeCoupon}
+                  appliedCoupon={appliedCoupon}
+                  discountAmount={couponDiscount}
+                  isValidating={isValidating}
+                  error={error}
+                />
+              </div>
+
+              {/* Discount Row */}
+              {couponDiscount > 0 && (
+                <div className="flex justify-between text-sm md:text-base text-green-600 mb-4">
+                  <span>{t('الخصم', 'Discount')}</span>
+                  <span>-{couponDiscount.toFixed(2)} {t('ر.س', 'SAR')}</span>
+                </div>
+              )}
 
               <div className="border-t border-border pt-3 md:pt-4 mb-4 md:mb-6">
                 <div className="flex justify-between text-base md:text-lg font-bold">
