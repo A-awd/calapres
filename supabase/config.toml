@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.track-guest-order]
 verify_jwt = false
+
+[functions.resend-webhook]
+verify_jwt = false
