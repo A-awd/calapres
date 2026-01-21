@@ -378,17 +378,23 @@
     overflow: hidden;
     display: flex;
     align-items: center;
+    /* Ensure marquee is visible in RTL pages (avoid starting off-screen) */
+    direction: ltr;
   }
 
   .marquee-track {
     display: flex;
     width: max-content;
     animation: marquee-seamless 60s linear infinite;
+    will-change: transform;
+    /* Ensure we always have some visible content at start */
+    padding-inline: 24px;
   }
 
   .marquee-track-inner {
     display: flex;
     align-items: center;
+    gap: 24px;
   }
 
   .marquee-item {
@@ -398,8 +404,17 @@
     white-space: nowrap;
     font-size: 13px;
     font-weight: 500;
-    padding-left: 0;
-    padding-right: 0;
+    padding-inline: 8px;
+  }
+
+  /* Force readable foreground inside marquee (prevents inherited overrides) */
+  .marquee-container,
+  .marquee-container * {
+    color: hsl(var(--charcoal));
+  }
+
+  .marquee-container svg {
+    stroke: currentColor;
   }
 
   .marquee-separator {
