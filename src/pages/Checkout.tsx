@@ -90,10 +90,6 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
 const cities = [
   { value: 'riyadh', labelAr: 'الرياض', labelEn: 'Riyadh' },
-  { value: 'jeddah', labelAr: 'جدة', labelEn: 'Jeddah' },
-  { value: 'dammam', labelAr: 'الدمام', labelEn: 'Dammam' },
-  { value: 'makkah', labelAr: 'مكة المكرمة', labelEn: 'Makkah' },
-  { value: 'madinah', labelAr: 'المدينة المنورة', labelEn: 'Madinah' },
 ];
 
 const Checkout: React.FC = () => {
