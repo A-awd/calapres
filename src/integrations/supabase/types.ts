@@ -313,6 +313,50 @@ export type Database = {
         }
         Relationships: []
       }
+      email_events: {
+        Row: {
+          created_at: string
+          email_id: string
+          email_type: string
+          event_type: string
+          id: string
+          metadata: Json | null
+          order_id: string | null
+          recipient_email: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_id: string
+          email_type: string
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          order_id?: string | null
+          recipient_email: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_id?: string
+          email_type?: string
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          order_id?: string | null
+          recipient_email?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       gift_boxes: {
         Row: {
           created_at: string
@@ -954,7 +998,19 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      email_stats: {
+        Row: {
+          bounced_count: number | null
+          click_rate: number | null
+          clicked_count: number | null
+          delivered_count: number | null
+          email_type: string | null
+          open_rate: number | null
+          opened_count: number | null
+          sent_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {

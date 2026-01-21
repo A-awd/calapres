@@ -19,7 +19,8 @@ import {
   Gift,
   Calendar,
   Search,
-  X
+  X,
+  Mail
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,6 +56,12 @@ const menuGroups = [
     items: [
       { icon: Ticket, label: 'الكوبونات والعروض', href: '/admin/coupons' },
       { icon: Calendar, label: 'الحملات', href: '/admin/campaigns', disabled: true },
+    ]
+  },
+  {
+    title: 'التقارير',
+    items: [
+      { icon: Mail, label: 'إحصائيات الإيميلات', href: '/admin/email-stats' },
     ]
   },
 ];
