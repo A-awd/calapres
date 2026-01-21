@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      abandoned_carts: {
+        Row: {
+          cart_items: Json
+          cart_total: number
+          converted: boolean
+          converted_at: string | null
+          created_at: string
+          email: string
+          id: string
+          reminder_sent: boolean
+          reminder_sent_at: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          cart_items?: Json
+          cart_total?: number
+          converted?: boolean
+          converted_at?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          reminder_sent?: boolean
+          reminder_sent_at?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          cart_items?: Json
+          cart_total?: number
+          converted?: boolean
+          converted_at?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          reminder_sent?: boolean
+          reminder_sent_at?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       bundle_items: {
         Row: {
           bundle_id: string
