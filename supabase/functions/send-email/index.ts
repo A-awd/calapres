@@ -24,7 +24,7 @@ const getWelcomeEmailHtml = (name: string) => `
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); padding: 40px 30px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">مرحباً بك في كالابريس 🎁</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">مرحباً بك في كالابريز 🎁</h1>
             </td>
           </tr>
           <!-- Content -->
@@ -34,7 +34,7 @@ const getWelcomeEmailHtml = (name: string) => `
                 أهلاً ${name}،
               </p>
               <p style="color: #6B7280; font-size: 16px; line-height: 1.8; margin: 0 0 20px;">
-                نحن سعداء بانضمامك إلينا! كالابريس هو وجهتك الأولى للهدايا الفاخرة والمميزة.
+                نحن سعداء بانضمامك إلينا! كالابريز هو وجهتك الأولى للهدايا الفاخرة والمميزة.
               </p>
               <p style="color: #6B7280; font-size: 16px; line-height: 1.8; margin: 0 0 30px;">
                 استمتع بتجربة تسوق فريدة واكتشف مجموعتنا المتميزة من الهدايا لجميع المناسبات.
@@ -50,7 +50,7 @@ const getWelcomeEmailHtml = (name: string) => `
           <tr>
             <td style="background-color: #F9FAFB; padding: 25px 30px; text-align: center; border-top: 1px solid #E5E7EB;">
               <p style="color: #9CA3AF; font-size: 14px; margin: 0;">
-                © 2024 كالابريس. جميع الحقوق محفوظة.
+                © 2024 كالابريز. جميع الحقوق محفوظة.
               </p>
             </td>
           </tr>
@@ -138,7 +138,7 @@ const getOrderConfirmationHtml = (
           <tr>
             <td style="background-color: #F9FAFB; padding: 25px 30px; text-align: center; border-top: 1px solid #E5E7EB;">
               <p style="color: #9CA3AF; font-size: 14px; margin: 0;">
-                © 2024 كالابريس. جميع الحقوق محفوظة.
+                © 2024 كالابريز. جميع الحقوق محفوظة.
               </p>
             </td>
           </tr>
@@ -210,7 +210,7 @@ const getStatusUpdateHtml = (
           <tr>
             <td style="background-color: #F9FAFB; padding: 25px 30px; text-align: center; border-top: 1px solid #E5E7EB;">
               <p style="color: #9CA3AF; font-size: 14px; margin: 0;">
-                © 2024 كالابريس. جميع الحقوق محفوظة.
+                © 2024 كالابريز. جميع الحقوق محفوظة.
               </p>
             </td>
           </tr>
@@ -260,12 +260,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     switch (type) {
       case 'welcome':
-        subject = 'مرحباً بك في كالابريس 🎁';
+        subject = 'مرحباً بك في كالابريز 🎁';
         html = getWelcomeEmailHtml(data.name || 'عزيزي العميل');
         break;
 
       case 'order_confirmation':
-        subject = `تأكيد الطلب ${data.orderNumber} - كالابريس`;
+        subject = `تأكيد الطلب ${data.orderNumber} - كالابريز`;
         html = getOrderConfirmationHtml(
           data.orderNumber || '',
           data.recipientName || 'عزيزي العميل',
@@ -298,7 +298,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: "كالابريس <onboarding@resend.dev>",
+      from: "كالابريز <onboarding@resend.dev>",
       to: [to],
       subject,
       html,
