@@ -223,17 +223,149 @@ const getStatusUpdateHtml = (
 `;
 };
 
+const getAdminNotificationHtml = (
+  orderNumber: string,
+  customerName: string,
+  customerPhone: string,
+  customerEmail: string,
+  city: string,
+  total: number,
+  items: Array<{ product_name: string; quantity: number; unit_price: number }>,
+  paymentMethod: string,
+  deliveryType: string
+) => `
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f9fa; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); padding: 40px 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">🔔 طلب جديد!</h1>
+            </td>
+          </tr>
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px 30px;">
+              <div style="background-color: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 15px; margin-bottom: 25px; text-align: center;">
+                <p style="color: #92400E; font-size: 18px; font-weight: 600; margin: 0;">
+                  طلب جديد برقم: ${orderNumber}
+                </p>
+              </div>
+              
+              <!-- Customer Info -->
+              <h3 style="color: #374151; font-size: 18px; margin: 0 0 15px; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px;">
+                📋 بيانات العميل
+              </h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 25px;">
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-size: 14px; width: 120px;">الاسم:</td>
+                  <td style="padding: 8px 0; color: #374151; font-size: 15px; font-weight: 500;">${customerName}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-size: 14px;">الهاتف:</td>
+                  <td style="padding: 8px 0; color: #374151; font-size: 15px; font-weight: 500;">
+                    <a href="tel:${customerPhone}" style="color: #8B5CF6; text-decoration: none;">${customerPhone}</a>
+                  </td>
+                </tr>
+                ${customerEmail ? `
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-size: 14px;">البريد:</td>
+                  <td style="padding: 8px 0; color: #374151; font-size: 15px; font-weight: 500;">
+                    <a href="mailto:${customerEmail}" style="color: #8B5CF6; text-decoration: none;">${customerEmail}</a>
+                  </td>
+                </tr>
+                ` : ''}
+                <tr>
+                  <td style="padding: 8px 0; color: #6B7280; font-size: 14px;">المدينة:</td>
+                  <td style="padding: 8px 0; color: #374151; font-size: 15px; font-weight: 500;">${city}</td>
+                </tr>
+              </table>
+
+              <!-- Order Details -->
+              <h3 style="color: #374151; font-size: 18px; margin: 0 0 15px; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px;">
+                🛍️ تفاصيل الطلب
+              </h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                ${items.map(item => `
+                  <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #E5E7EB; color: #374151; font-size: 15px;">
+                      ${item.product_name} × ${item.quantity}
+                    </td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #E5E7EB; color: #6B7280; font-size: 15px; text-align: left;">
+                      ${(item.unit_price * item.quantity).toFixed(2)} ر.س
+                    </td>
+                  </tr>
+                `).join('')}
+                <tr>
+                  <td style="padding: 15px 0; color: #374151; font-size: 17px; font-weight: 600;">
+                    الإجمالي
+                  </td>
+                  <td style="padding: 15px 0; color: #10B981; font-size: 20px; font-weight: 700; text-align: left;">
+                    ${total.toFixed(2)} ر.س
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Payment & Delivery -->
+              <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                <div style="flex: 1; background-color: #F3F4F6; border-radius: 8px; padding: 15px; text-align: center;">
+                  <p style="color: #6B7280; font-size: 12px; margin: 0 0 5px;">طريقة الدفع</p>
+                  <p style="color: #374151; font-size: 14px; font-weight: 600; margin: 0;">${paymentMethod === 'cash' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان'}</p>
+                </div>
+                <div style="flex: 1; background-color: #F3F4F6; border-radius: 8px; padding: 15px; text-align: center;">
+                  <p style="color: #6B7280; font-size: 12px; margin: 0 0 5px;">نوع التوصيل</p>
+                  <p style="color: #374151; font-size: 14px; font-weight: 600; margin: 0;">${deliveryType === 'express' ? 'توصيل سريع' : 'توصيل عادي'}</p>
+                </div>
+              </div>
+
+              <div style="text-align: center;">
+                <a href="https://calapres.lovable.app/admin/orders" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600;">
+                  عرض الطلب في لوحة التحكم
+                </a>
+              </div>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #F9FAFB; padding: 25px 30px; text-align: center; border-top: 1px solid #E5E7EB;">
+              <p style="color: #9CA3AF; font-size: 14px; margin: 0;">
+                © 2024 كالابريز - إشعار داخلي للإدارة
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
+
 interface EmailRequest {
-  type: 'welcome' | 'order_confirmation' | 'status_update';
+  type: 'welcome' | 'order_confirmation' | 'status_update' | 'admin_notification';
   to: string;
   data: {
     name?: string;
     orderNumber?: string;
     recipientName?: string;
+    customerName?: string;
+    customerPhone?: string;
+    customerEmail?: string;
+    city?: string;
     total?: number;
     items?: Array<{ product_name: string; quantity: number; unit_price: number }>;
     status?: string;
     statusMessage?: string;
+    paymentMethod?: string;
+    deliveryType?: string;
   };
 }
 
@@ -287,6 +419,21 @@ const handler = async (req: Request): Promise<Response> => {
           data.recipientName || 'عزيزي العميل',
           data.status || 'processing',
           data.statusMessage || 'تم تحديث حالة طلبك.'
+        );
+        break;
+
+      case 'admin_notification':
+        subject = `🔔 طلب جديد: ${data.orderNumber} - ${data.customerName}`;
+        html = getAdminNotificationHtml(
+          data.orderNumber || '',
+          data.customerName || 'عميل',
+          data.customerPhone || '',
+          data.customerEmail || '',
+          data.city || '',
+          data.total || 0,
+          data.items || [],
+          data.paymentMethod || 'cash',
+          data.deliveryType || 'standard'
         );
         break;
 

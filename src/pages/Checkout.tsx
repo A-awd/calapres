@@ -49,7 +49,10 @@ import {
 } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { sendOrderConfirmationEmail } from '@/lib/emailService';
+import { sendOrderConfirmationEmail, sendAdminNotificationEmail } from '@/lib/emailService';
+
+// Admin email for order notifications
+const ADMIN_EMAIL = 'calapres.perfumes@gmail.com';
 
 // Form validation schema
 const checkoutSchema = z.object({
@@ -223,23 +226,41 @@ const Checkout: React.FC = () => {
         });
       }
 
-      // Send order confirmation email (non-blocking)
+      // Send order confirmation email to customer (non-blocking)
       const customerEmail = user?.email || data.email;
+      const emailItems = orderItems.map(item => ({
+        product_name: item.product_name,
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+      }));
+
       if (customerEmail) {
         sendOrderConfirmationEmail(
           customerEmail,
           orderData.order_number,
           `${data.firstName} ${data.lastName}`,
           total,
-          orderItems.map(item => ({
-            product_name: item.product_name,
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-          }))
+          emailItems
         ).catch(err => {
           console.error('Failed to send order confirmation email:', err);
         });
       }
+
+      // Send admin notification email (non-blocking)
+      sendAdminNotificationEmail(
+        ADMIN_EMAIL,
+        orderData.order_number,
+        `${data.firstName} ${data.lastName}`,
+        data.phone,
+        customerEmail || '',
+        cities.find(c => c.value === data.city)?.labelAr || data.city,
+        total,
+        emailItems,
+        data.paymentMethod,
+        data.deliveryType
+      ).catch(err => {
+        console.error('Failed to send admin notification email:', err);
+      });
       
       toast.success(t('تم تأكيد طلبك بنجاح!', 'Your order has been confirmed!'));
       clearCart();

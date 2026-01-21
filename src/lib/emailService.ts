@@ -4,13 +4,19 @@ interface EmailData {
   name?: string;
   orderNumber?: string;
   recipientName?: string;
+  customerName?: string;
+  customerPhone?: string;
+  customerEmail?: string;
+  city?: string;
   total?: number;
   items?: Array<{ product_name: string; quantity: number; unit_price: number }>;
   status?: string;
   statusMessage?: string;
+  paymentMethod?: string;
+  deliveryType?: string;
 }
 
-type EmailType = 'welcome' | 'order_confirmation' | 'status_update';
+type EmailType = 'welcome' | 'order_confirmation' | 'status_update' | 'admin_notification';
 
 /**
  * Send transactional email via backend edge function
@@ -79,5 +85,33 @@ export const sendStatusUpdateEmail = async (
     recipientName,
     status,
     statusMessage
+  });
+};
+
+/**
+ * Send admin notification email for new orders
+ */
+export const sendAdminNotificationEmail = async (
+  adminEmail: string,
+  orderNumber: string,
+  customerName: string,
+  customerPhone: string,
+  customerEmail: string,
+  city: string,
+  total: number,
+  items: Array<{ product_name: string; quantity: number; unit_price: number }>,
+  paymentMethod: string,
+  deliveryType: string
+) => {
+  return sendEmail('admin_notification', adminEmail, {
+    orderNumber,
+    customerName,
+    customerPhone,
+    customerEmail,
+    city,
+    total,
+    items,
+    paymentMethod,
+    deliveryType
   });
 };
