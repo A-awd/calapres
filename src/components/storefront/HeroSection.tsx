@@ -113,8 +113,28 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Slide Controls */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 sm:gap-4">
+      {/* Quick Features - positioned first so controls can be above */}
+      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent py-4 md:py-6 z-10">
+        <div className="container-luxury">
+          <div className="flex justify-center gap-6 sm:gap-10 md:gap-16 text-white flex-wrap">
+            <div className="text-center min-w-[70px] sm:min-w-[80px]">
+              <span className="block text-lg sm:text-xl md:text-2xl font-display mb-0.5 sm:mb-1">{t('٢', '2')}</span>
+              <span className="text-[10px] sm:text-xs tracking-wider uppercase opacity-80">{t('ساعات توصيل', 'Hour Delivery')}</span>
+            </div>
+            <div className="text-center min-w-[70px] sm:min-w-[80px]">
+              <span className="block text-lg sm:text-xl md:text-2xl font-display mb-0.5 sm:mb-1">{t('تغليف', 'Gift')}</span>
+              <span className="text-[10px] sm:text-xs tracking-wider uppercase opacity-80">{t('فاخر مجاني', 'Wrap Free')}</span>
+            </div>
+            <div className="text-center min-w-[70px] sm:min-w-[80px]">
+              <span className="block text-lg sm:text-xl md:text-2xl font-display mb-0.5 sm:mb-1">{t('+٥٠٠', '+500')}</span>
+              <span className="text-[10px] sm:text-xs tracking-wider uppercase opacity-80">{t('منتج مميز', 'Unique Gifts')}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Slide Controls - positioned above features */}
+      <div className="absolute bottom-[70px] sm:bottom-[80px] md:bottom-[90px] left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 sm:gap-4">
         <button
           onClick={prevSlide}
           className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white hover:text-charcoal transition-all"
@@ -138,26 +158,6 @@ const HeroSection: React.FC = () => {
         >
           <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
-      </div>
-
-      {/* Quick Features */}
-      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent py-6 hidden md:block">
-        <div className="container-luxury">
-          <div className="flex justify-center gap-16 text-white">
-            <div className="text-center">
-              <span className="block text-2xl font-display mb-1">{t('٢', '2')}</span>
-              <span className="text-xs tracking-wider uppercase opacity-80">{t('ساعات توصيل', 'Hour Delivery')}</span>
-            </div>
-            <div className="text-center">
-              <span className="block text-2xl font-display mb-1">{t('تغليف', 'Gift')}</span>
-              <span className="text-xs tracking-wider uppercase opacity-80">{t('فاخر مجاني', 'Wrap Free')}</span>
-            </div>
-            <div className="text-center">
-              <span className="block text-2xl font-display mb-1">{t('+٥٠٠', '+500')}</span>
-              <span className="text-xs tracking-wider uppercase opacity-80">{t('منتج مميز', 'Unique Gifts')}</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
