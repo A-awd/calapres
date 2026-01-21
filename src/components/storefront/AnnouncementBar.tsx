@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Truck, Gift, Percent } from 'lucide-react';
+import { Truck, Gift, Percent, Star, Heart, Clock, Sparkles, BadgeCheck, ShieldCheck } from 'lucide-react';
 
 const AnnouncementBar: React.FC = () => {
   const { t } = useLanguage();
@@ -17,6 +17,38 @@ const AnnouncementBar: React.FC = () => {
     {
       icon: Percent,
       text: t('خصم 15% على أول طلب', '15% off your first order'),
+    },
+    {
+      icon: Star,
+      text: t('هدايا فاخرة لجميع المناسبات', 'Luxury gifts for all occasions'),
+    },
+    {
+      icon: Heart,
+      text: t('تغليف هدايا مجاني', 'Free gift wrapping'),
+    },
+    {
+      icon: Clock,
+      text: t('توصيل في نفس اليوم', 'Same day delivery'),
+    },
+    {
+      icon: Sparkles,
+      text: t('منتجات أصلية 100%', '100% authentic products'),
+    },
+    {
+      icon: BadgeCheck,
+      text: t('ضمان جودة المنتجات', 'Quality guarantee'),
+    },
+    {
+      icon: ShieldCheck,
+      text: t('دفع آمن ومضمون', 'Secure payment'),
+    },
+    {
+      icon: Gift,
+      text: t('أفكار هدايا مميزة', 'Unique gift ideas'),
+    },
+    {
+      icon: Truck,
+      text: t('توصيل لجميع مناطق المملكة', 'Delivery to all regions'),
     },
   ];
 
