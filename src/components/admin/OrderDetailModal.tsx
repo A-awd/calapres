@@ -47,6 +47,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { sendStatusUpdateEmail } from '@/lib/emailService';
 
 interface OrderDetailModalProps {
   orderId: string | null;
@@ -144,15 +145,77 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
   const updateStatus = useMutation({
     mutationFn: async ({ status }: { status: OrderStatus }) => {
-      if (!orderId) return;
+      if (!orderId || !order) return;
       const { error } = await supabase
         .from('orders')
         .update({ status })
         .eq('id', orderId);
       if (error) throw error;
+      
+      // Add timeline entry
+      const statusMessages: Record<string, { status: string; statusAr: string; message: string; messageAr: string }> = {
+        confirmed: {
+          status: 'confirmed',
+          statusAr: 'تم التأكيد',
+          message: 'Your order has been confirmed and is being prepared.',
+          messageAr: 'تم تأكيد طلبك وجاري تجهيزه.'
+        },
+        processing: {
+          status: 'processing',
+          statusAr: 'جاري التجهيز',
+          message: 'Your order is being prepared.',
+          messageAr: 'جاري تجهيز طلبك.'
+        },
+        shipped: {
+          status: 'shipped',
+          statusAr: 'تم الشحن',
+          message: 'Your order has been shipped and is on its way.',
+          messageAr: 'تم شحن طلبك وهو في الطريق إليك.'
+        },
+        delivered: {
+          status: 'delivered',
+          statusAr: 'تم التوصيل',
+          message: 'Your order has been delivered. Thank you for shopping with us!',
+          messageAr: 'تم توصيل طلبك. شكراً لتسوقك معنا!'
+        },
+        cancelled: {
+          status: 'cancelled',
+          statusAr: 'ملغي',
+          message: 'Your order has been cancelled.',
+          messageAr: 'تم إلغاء طلبك.'
+        },
+      };
+      
+      const statusInfo = statusMessages[status];
+      if (statusInfo) {
+        await supabase.from('order_timeline').insert({
+          order_id: orderId,
+          status: statusInfo.status,
+          status_ar: statusInfo.statusAr,
+          message: statusInfo.message,
+          message_ar: statusInfo.messageAr,
+        });
+        
+        // Send email for shipped/delivered status
+        if (['shipped', 'delivered'].includes(status)) {
+          const customerEmail = order.guest_email;
+          if (customerEmail) {
+            sendStatusUpdateEmail(
+              customerEmail,
+              order.order_number,
+              order.recipient_name,
+              status,
+              statusInfo.messageAr
+            ).catch(err => {
+              console.error('Failed to send status update email:', err);
+            });
+          }
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['order-detail', orderId] });
+      queryClient.invalidateQueries({ queryKey: ['order-timeline', orderId] });
       queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
       toast.success('تم تحديث حالة الطلب');
     },

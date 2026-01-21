@@ -1,1 +1,7 @@
 project_id = "vozaayivzggkpazehdxr"
+
+[functions.send-email]
+verify_jwt = false
+
+[functions.track-guest-order]
+verify_jwt = false

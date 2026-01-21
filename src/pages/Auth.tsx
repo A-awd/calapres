@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import logo from '@/assets/logo.png';
+import { sendWelcomeEmail } from '@/lib/emailService';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -178,6 +179,11 @@ const Auth = () => {
         last_name: lastName,
         phone: phone,
       }).eq('id', user.id);
+      
+      // Send welcome email (non-blocking)
+      sendWelcomeEmail(signupEmail, `${firstName} ${lastName}`).catch(err => {
+        console.error('Failed to send welcome email:', err);
+      });
     }
 
     toast.success(t('تم إنشاء الحساب بنجاح', 'Account created successfully'));

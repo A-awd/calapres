@@ -48,6 +48,8 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { sendOrderConfirmationEmail } from '@/lib/emailService';
 
 // Form validation schema
 const checkoutSchema = z.object({
@@ -145,13 +147,105 @@ const Checkout: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate order submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Get current user (optional for guest checkout)
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Create order in database
+      const orderPayload: any = {
+        recipient_name: isGift && data.recipientName ? data.recipientName : `${data.firstName} ${data.lastName}`,
+        recipient_phone: isGift && data.recipientPhone ? data.recipientPhone : data.phone,
+        shipping_city: data.city,
+        shipping_district: data.district,
+        shipping_street: data.street,
+        shipping_building: data.building || null,
+        shipping_apartment: data.apartment || null,
+        shipping_notes: data.notes || null,
+        delivery_type: data.deliveryType,
+        scheduled_date: data.scheduledDate || null,
+        scheduled_time: data.scheduledTime || null,
+        is_gift: isGift,
+        gift_message: data.giftMessage || null,
+        hide_invoice: data.hideInvoice,
+        gift_wrap_fee: giftWrapPrice,
+        shipping_fee: deliveryPrice,
+        subtotal: subtotal,
+        discount: couponDiscount,
+        coupon_code: appliedCoupon?.code || null,
+        coupon_discount: couponDiscount,
+        total: total,
+        payment_method: data.paymentMethod,
+        notes: data.notes || null,
+      };
+
+      // Add user_id only if authenticated
+      if (user?.id) {
+        orderPayload.user_id = user.id;
+      } else {
+        orderPayload.guest_email = data.email;
+        orderPayload.guest_phone = data.phone;
+      }
+
+      const { data: orderData, error: orderError } = await supabase
+        .from('orders')
+        .insert(orderPayload)
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      // Create order items
+      const orderItems = items.map(item => ({
+        order_id: orderData.id,
+        product_id: item.product.id,
+        product_name: item.product.name,
+        product_name_ar: item.product.nameAr,
+        product_image: item.product.image || null,
+        quantity: item.quantity,
+        unit_price: item.product.price,
+        total_price: item.product.price * item.quantity,
+        variant_id: item.variant?.id || null,
+        variant_name: item.variant?.name || null,
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      // Record coupon usage if applied
+      if (appliedCoupon) {
+        await supabase.from('coupon_usages').insert({
+          coupon_id: appliedCoupon.id,
+          order_id: orderData.id,
+          user_id: user?.id || null,
+          discount_amount: couponDiscount,
+        });
+      }
+
+      // Send order confirmation email (non-blocking)
+      const customerEmail = user?.email || data.email;
+      if (customerEmail) {
+        sendOrderConfirmationEmail(
+          customerEmail,
+          orderData.order_number,
+          `${data.firstName} ${data.lastName}`,
+          total,
+          orderItems.map(item => ({
+            product_name: item.product_name,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+          }))
+        ).catch(err => {
+          console.error('Failed to send order confirmation email:', err);
+        });
+      }
       
       toast.success(t('تم تأكيد طلبك بنجاح!', 'Your order has been confirmed!'));
       clearCart();
-      navigate('/order-success');
-    } catch (error) {
+      navigate('/order-success', { state: { orderNumber: orderData.order_number } });
+    } catch (error: any) {
+      console.error('Order submission error:', error);
       toast.error(t('حدث خطأ، يرجى المحاولة مرة أخرى', 'An error occurred, please try again'));
     } finally {
       setIsSubmitting(false);
