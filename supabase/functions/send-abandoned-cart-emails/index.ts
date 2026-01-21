@@ -96,7 +96,7 @@ const getAbandonedCartEmailHtml = (
                 إذا كنت لا ترغب في استلام هذه الرسائل، يمكنك إلغاء الاشتراك
               </p>
               <p style="color: #9CA3AF; font-size: 12px; margin: 0;">
-                © 2024 كالابريس. جميع الحقوق محفوظة.
+                © 2024 كالابريز. جميع الحقوق محفوظة.
               </p>
             </td>
           </tr>
@@ -159,9 +159,9 @@ Deno.serve(async (req: Request) => {
 
         // Send the email
         const { error: emailError } = await resend.emails.send({
-          from: "كالابريس <onboarding@resend.dev>",
+          from: "كالابريز <onboarding@resend.dev>",
           to: [cart.email],
-          subject: "🛒 نسيت شيئاً في سلتك! - كالابريس",
+          subject: "🛒 نسيت شيئاً في سلتك! - كالابريز",
           html: getAbandonedCartEmailHtml(items, cart.cart_total),
           tags: [
             { name: "email_type", value: "abandoned_cart" },
