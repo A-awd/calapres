@@ -30,6 +30,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminCoupons from "./pages/admin/AdminCoupons";
 import AdminEmailStats from "./pages/admin/AdminEmailStats";
+import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -72,6 +73,7 @@ const App = () => (
                 <Route path="/admin/users" element={<AdminUsers />} />
                 <Route path="/admin/coupons" element={<AdminCoupons />} />
                 <Route path="/admin/email-stats" element={<AdminEmailStats />} />
+                <Route path="/admin/announcements" element={<AdminAnnouncements />} />
                 
                 {/* Catch-all */}
                 <Route path="*" element={<NotFound />} />
