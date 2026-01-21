@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.send-abandoned-cart-emails]
 verify_jwt = false
+
+[functions.send-occasion-reminders]
+verify_jwt = false
