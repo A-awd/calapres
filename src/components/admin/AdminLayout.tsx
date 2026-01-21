@@ -64,6 +64,12 @@ const menuGroups = [
       { icon: Mail, label: 'إحصائيات الإيميلات', href: '/admin/email-stats' },
     ]
   },
+  {
+    title: 'المحتوى',
+    items: [
+      { icon: LayoutDashboard, label: 'الشريط العلوي', href: '/admin/announcements' },
+    ]
+  },
 ];
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
