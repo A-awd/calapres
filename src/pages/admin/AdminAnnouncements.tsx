@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Plus, Pencil, Trash2, GripVertical, Eye, EyeOff } from 'lucide-react';
+import { Plus, Gauge } from 'lucide-react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { Slider } from '@/components/ui/slider';
 import {
   Dialog,
   DialogContent,
@@ -16,7 +31,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -29,6 +43,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useAnnouncements, Announcement, AnnouncementInsert } from '@/hooks/useAnnouncements';
+import { useAnnouncementSettings } from '@/hooks/useAnnouncementSettings';
+import SortableAnnouncementRow from '@/components/admin/SortableAnnouncementRow';
 import * as LucideIcons from 'lucide-react';
 
 const iconOptions = [
@@ -58,7 +74,11 @@ const AdminAnnouncements: React.FC = () => {
     isDeleting,
   } = useAnnouncements();
 
+  const { speed, updateSpeed, isUpdating: isSpeedUpdating } = useAnnouncementSettings();
+
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [speedDialogOpen, setSpeedDialogOpen] = useState(false);
+  const [tempSpeed, setTempSpeed] = useState(speed);
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [announcementToDelete, setAnnouncementToDelete] = useState<Announcement | null>(null);
@@ -70,6 +90,31 @@ const AdminAnnouncements: React.FC = () => {
     display_order: 0,
     is_active: true,
   });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = announcements.findIndex((a) => a.id === active.id);
+      const newIndex = announcements.findIndex((a) => a.id === over.id);
+      
+      const reordered = arrayMove(announcements, oldIndex, newIndex);
+      
+      // Update display_order for all affected items
+      reordered.forEach((announcement, index) => {
+        if (announcement.display_order !== index + 1) {
+          updateAnnouncement({ id: announcement.id, display_order: index + 1 });
+        }
+      });
+    }
+  };
 
   const handleOpenCreate = () => {
     setEditingAnnouncement(null);
@@ -116,6 +161,16 @@ const AdminAnnouncements: React.FC = () => {
     updateAnnouncement({ id: announcement.id, is_active: !announcement.is_active });
   };
 
+  const handleOpenSpeedDialog = () => {
+    setTempSpeed(speed);
+    setSpeedDialogOpen(true);
+  };
+
+  const handleSaveSpeed = () => {
+    updateSpeed(tempSpeed);
+    setSpeedDialogOpen(false);
+  };
+
   if (isLoading) {
     return (
       <AdminLayout title="إدارة الإعلانات">
@@ -130,99 +185,111 @@ const AdminAnnouncements: React.FC = () => {
     <AdminLayout title="إدارة الإعلانات">
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
             <p className="text-gray-500 text-sm">
               إدارة الجمل التسويقية في الشريط العلوي
             </p>
           </div>
-          <Button onClick={handleOpenCreate} className="gap-2">
-            <Plus className="w-4 h-4" />
-            إضافة إعلان جديد
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleOpenSpeedDialog} className="gap-2">
+              <Gauge className="w-4 h-4" />
+              سرعة الشريط
+            </Button>
+            <Button onClick={handleOpenCreate} className="gap-2">
+              <Plus className="w-4 h-4" />
+              إضافة إعلان جديد
+            </Button>
+          </div>
         </div>
 
-        {/* Announcements Table */}
+        {/* Announcements Table with Drag & Drop */}
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12 text-right">الترتيب</TableHead>
-                <TableHead className="w-12 text-right">الأيقونة</TableHead>
-                <TableHead className="text-right">النص بالعربية</TableHead>
-                <TableHead className="text-right">النص بالإنجليزية</TableHead>
-                <TableHead className="w-20 text-center">الحالة</TableHead>
-                <TableHead className="w-32 text-center">الإجراءات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {announcements.map((announcement) => {
-                const IconComponent = getIconComponent(announcement.icon);
-                return (
-                  <TableRow key={announcement.id}>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <GripVertical className="w-4 h-4 text-gray-400" />
-                        <span>{announcement.display_order}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                        <IconComponent className="w-4 h-4 text-gray-600" />
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium">{announcement.text_ar}</TableCell>
-                    <TableCell className="text-gray-500">{announcement.text}</TableCell>
-                    <TableCell className="text-center">
-                      <button
-                        onClick={() => handleToggleActive(announcement)}
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                          announcement.is_active
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}
-                      >
-                        {announcement.is_active ? (
-                          <>
-                            <Eye className="w-3 h-3" />
-                            نشط
-                          </>
-                        ) : (
-                          <>
-                            <EyeOff className="w-3 h-3" />
-                            مخفي
-                          </>
-                        )}
-                      </button>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center justify-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleOpenEdit(announcement)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                          onClick={() => {
-                            setAnnouncementToDelete(announcement);
-                            setDeleteDialogOpen(true);
-                          }}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-20 text-right">الترتيب</TableHead>
+                  <TableHead className="w-12 text-right">الأيقونة</TableHead>
+                  <TableHead className="text-right">النص بالعربية</TableHead>
+                  <TableHead className="text-right">النص بالإنجليزية</TableHead>
+                  <TableHead className="w-20 text-center">الحالة</TableHead>
+                  <TableHead className="w-32 text-center">الإجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <SortableContext
+                  items={announcements.map((a) => a.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {announcements.map((announcement) => (
+                    <SortableAnnouncementRow
+                      key={announcement.id}
+                      announcement={announcement}
+                      onEdit={handleOpenEdit}
+                      onDelete={(a) => {
+                        setAnnouncementToDelete(a);
+                        setDeleteDialogOpen(true);
+                      }}
+                      onToggleActive={handleToggleActive}
+                    />
+                  ))}
+                </SortableContext>
+              </TableBody>
+            </Table>
+          </DndContext>
         </div>
+
+        <p className="text-xs text-gray-400 text-center">
+          اسحب الصفوف لإعادة ترتيب الإعلانات
+        </p>
+
+        {/* Speed Control Dialog */}
+        <Dialog open={speedDialogOpen} onOpenChange={setSpeedDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Gauge className="w-5 h-5" />
+                سرعة شريط الإعلانات
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-4">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>السرعة (بالثواني)</Label>
+                  <span className="text-lg font-bold text-primary">{tempSpeed}s</span>
+                </div>
+                <Slider
+                  value={[tempSpeed]}
+                  onValueChange={([value]) => setTempSpeed(value)}
+                  min={20}
+                  max={120}
+                  step={5}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>سريع (20ث)</span>
+                  <span>بطيء (120ث)</span>
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg text-sm text-gray-600">
+                💡 القيمة تمثل الوقت الذي يستغرقه الشريط لإكمال دورة كاملة
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSpeedDialogOpen(false)}>
+                إلغاء
+              </Button>
+              <Button onClick={handleSaveSpeed} disabled={isSpeedUpdating}>
+                حفظ السرعة
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {/* Create/Edit Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
