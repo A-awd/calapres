@@ -45,6 +45,7 @@ import {
 import { useAnnouncements, Announcement, AnnouncementInsert } from '@/hooks/useAnnouncements';
 import { useAnnouncementSettings } from '@/hooks/useAnnouncementSettings';
 import SortableAnnouncementRow from '@/components/admin/SortableAnnouncementRow';
+import AnnouncementBarPreview from '@/components/admin/AnnouncementBarPreview';
 import * as LucideIcons from 'lucide-react';
 
 const iconOptions = [
@@ -184,6 +185,9 @@ const AdminAnnouncements: React.FC = () => {
   return (
     <AdminLayout title="إدارة الإعلانات">
       <div className="space-y-6">
+        {/* Live Preview */}
+        <AnnouncementBarPreview announcements={announcements} speed={speed} />
+
         {/* Header */}
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
