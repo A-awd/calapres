@@ -1,6 +1,7 @@
 import React from 'react';
 import * as LucideIcons from 'lucide-react';
 import { useActiveAnnouncements } from '@/hooks/useAnnouncements';
+import { useAnnouncementSettings } from '@/hooks/useAnnouncementSettings';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const getIconComponent = (iconName: string) => {
@@ -14,6 +15,7 @@ const getIconComponent = (iconName: string) => {
 
 const AnnouncementBar: React.FC = () => {
   const { announcements, isLoading } = useActiveAnnouncements();
+  const { speed } = useAnnouncementSettings();
   const { language } = useLanguage();
 
   if (isLoading || announcements.length === 0) {
@@ -45,6 +47,11 @@ const AnnouncementBar: React.FC = () => {
 
   return (
     <div className="marquee-container bg-gold text-charcoal py-2">
+      <style>{`
+        .marquee-track {
+          animation-duration: ${speed}s !important;
+        }
+      `}</style>
       <div className="marquee-track">
         <Track />
         <Track />
