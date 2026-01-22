@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag, User, X, Moon } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, X, Moon, Settings } from "lucide-react";
 
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Badge } from "@/components/ui/badge";
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
   const { itemCount } = useCart();
   const { user } = useAuth();
+  const { isAdmin } = useAdminAuth();
   const location = useLocation();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -107,6 +109,18 @@ const Header: React.FC = () => {
 
             {/* Right - Icons */}
             <div className="flex items-center gap-0.5 lg:gap-1">
+              {/* Admin Quick Access */}
+              {isAdmin && (
+                <Link
+                  to="/admin/announcements"
+                  className="hidden lg:flex h-8 w-8 items-center justify-center text-gold hover:text-gold/80 transition-colors"
+                  aria-label={t("لوحة التحكم", "Admin Panel")}
+                  title={t("لوحة التحكم", "Admin Panel")}
+                >
+                  <Settings className="w-4 h-4" strokeWidth={1.5} />
+                </Link>
+              )}
+
               {/* Language (desktop) */}
               <button
                 onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
@@ -234,6 +248,17 @@ const Header: React.FC = () => {
                 </nav>
 
                 <div className="px-5 py-5 border-t border-border/20 space-y-3">
+                  {isAdmin && (
+                    <Link
+                      to="/admin/announcements"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 text-gold hover:text-gold/80 transition-colors"
+                    >
+                      <Settings className="w-4 h-4" strokeWidth={1.5} />
+                      <span className="text-sm">{t("لوحة التحكم", "Admin Panel")}</span>
+                    </Link>
+                  )}
+
                   <Link
                     to={user ? "/account" : "/auth"}
                     onClick={() => setIsMenuOpen(false)}
