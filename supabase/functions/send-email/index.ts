@@ -8,7 +8,72 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-// Email templates
+// ============ Input Sanitization ============
+// Sanitize user input to prevent XSS, HTML injection, and email header injection
+function sanitizeInput(input: string | undefined | null, maxLength: number = 200): string {
+  if (!input || typeof input !== 'string') return '';
+  return input
+    .replace(/[<>]/g, '') // Remove HTML angle brackets
+    .replace(/["'`]/g, '') // Remove quotes that could break attributes
+    .replace(/javascript:/gi, '') // Remove javascript: protocol
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .replace(/\r?\n/g, ' ') // Remove newlines (prevent header injection)
+    .trim()
+    .slice(0, maxLength);
+}
+
+function sanitizeEmail(email: string | undefined | null): string {
+  if (!email || typeof email !== 'string') return '';
+  // Basic email validation - remove anything that's not a valid email character
+  const sanitized = email
+    .replace(/[<>'"`;|\r\n]/g, '') // Remove dangerous characters
+    .trim()
+    .toLowerCase()
+    .slice(0, 254); // Max email length per RFC
+  
+  // Simple email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(sanitized) ? sanitized : '';
+}
+
+function sanitizePhone(phone: string | undefined | null): string {
+  if (!phone || typeof phone !== 'string') return '';
+  // Only allow digits, plus sign, spaces, and dashes
+  return phone
+    .replace(/[^0-9+\-\s()]/g, '')
+    .trim()
+    .slice(0, 20);
+}
+
+function sanitizeOrderNumber(orderNumber: string | undefined | null): string {
+  if (!orderNumber || typeof orderNumber !== 'string') return '';
+  // Order numbers should only contain alphanumeric and dashes
+  return orderNumber
+    .replace(/[^A-Za-z0-9\-]/g, '')
+    .trim()
+    .slice(0, 50);
+}
+
+function sanitizeNumber(value: number | undefined | null): number {
+  if (value === undefined || value === null || typeof value !== 'number' || isNaN(value)) {
+    return 0;
+  }
+  // Ensure reasonable bounds for monetary values
+  return Math.max(0, Math.min(value, 1000000));
+}
+
+function sanitizeItems(items: Array<{ product_name: string; quantity: number; unit_price: number }> | undefined | null): Array<{ product_name: string; quantity: number; unit_price: number }> {
+  if (!items || !Array.isArray(items)) return [];
+  
+  // Limit to reasonable number of items
+  return items.slice(0, 50).map(item => ({
+    product_name: sanitizeInput(item.product_name, 100),
+    quantity: Math.max(0, Math.min(Math.floor(Number(item.quantity) || 0), 1000)),
+    unit_price: sanitizeNumber(item.unit_price),
+  }));
+}
+
+// ============ Email Templates ============
 const getWelcomeEmailHtml = (name: string) => `
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -378,14 +443,44 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { type, to, data }: EmailRequest = await req.json();
 
-    console.log(`Processing email request: type=${type}, to=${to}`);
+    console.log(`Processing email request: type=${type}`);
 
-    if (!to || !type) {
+    // Validate and sanitize email address
+    const sanitizedTo = sanitizeEmail(to);
+    if (!sanitizedTo || !type) {
+      console.error("Invalid email address or missing type");
       return new Response(
-        JSON.stringify({ error: "Missing required fields: to, type" }),
+        JSON.stringify({ error: "Missing or invalid required fields: to, type" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
+
+    // Validate email type
+    const validTypes = ['welcome', 'order_confirmation', 'status_update', 'admin_notification'];
+    if (!validTypes.includes(type)) {
+      console.error(`Invalid email type: ${type}`);
+      return new Response(
+        JSON.stringify({ error: "Invalid email type" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Sanitize all input data
+    const sanitizedData = {
+      name: sanitizeInput(data.name, 100) || 'عزيزي العميل',
+      orderNumber: sanitizeOrderNumber(data.orderNumber),
+      recipientName: sanitizeInput(data.recipientName, 100) || 'عزيزي العميل',
+      customerName: sanitizeInput(data.customerName, 100) || 'عميل',
+      customerPhone: sanitizePhone(data.customerPhone),
+      customerEmail: sanitizeEmail(data.customerEmail),
+      city: sanitizeInput(data.city, 50),
+      total: sanitizeNumber(data.total),
+      items: sanitizeItems(data.items),
+      status: sanitizeInput(data.status, 20) || 'processing',
+      statusMessage: sanitizeInput(data.statusMessage, 500) || 'تم تحديث حالة طلبك.',
+      paymentMethod: ['cash', 'card'].includes(data.paymentMethod || '') ? data.paymentMethod : 'cash',
+      deliveryType: ['standard', 'express'].includes(data.deliveryType || '') ? data.deliveryType : 'standard',
+    };
 
     let subject: string;
     let html: string;
@@ -393,16 +488,16 @@ const handler = async (req: Request): Promise<Response> => {
     switch (type) {
       case 'welcome':
         subject = 'مرحباً بك في كالابريز 🎁';
-        html = getWelcomeEmailHtml(data.name || 'عزيزي العميل');
+        html = getWelcomeEmailHtml(sanitizedData.name);
         break;
 
       case 'order_confirmation':
-        subject = `تأكيد الطلب ${data.orderNumber} - كالابريز`;
+        subject = `تأكيد الطلب ${sanitizedData.orderNumber} - كالابريز`;
         html = getOrderConfirmationHtml(
-          data.orderNumber || '',
-          data.recipientName || 'عزيزي العميل',
-          data.total || 0,
-          data.items || []
+          sanitizedData.orderNumber,
+          sanitizedData.recipientName,
+          sanitizedData.total,
+          sanitizedData.items
         );
         break;
 
@@ -413,27 +508,27 @@ const handler = async (req: Request): Promise<Response> => {
           processing: 'جاري تجهيز طلبك',
           confirmed: 'تم تأكيد طلبك',
         };
-        subject = `${statusTitles[data.status || ''] || 'تحديث الطلب'} - ${data.orderNumber}`;
+        subject = `${statusTitles[sanitizedData.status] || 'تحديث الطلب'} - ${sanitizedData.orderNumber}`;
         html = getStatusUpdateHtml(
-          data.orderNumber || '',
-          data.recipientName || 'عزيزي العميل',
-          data.status || 'processing',
-          data.statusMessage || 'تم تحديث حالة طلبك.'
+          sanitizedData.orderNumber,
+          sanitizedData.recipientName,
+          sanitizedData.status,
+          sanitizedData.statusMessage
         );
         break;
 
       case 'admin_notification':
-        subject = `🔔 طلب جديد: ${data.orderNumber} - ${data.customerName}`;
+        subject = `🔔 طلب جديد: ${sanitizedData.orderNumber} - ${sanitizedData.customerName}`;
         html = getAdminNotificationHtml(
-          data.orderNumber || '',
-          data.customerName || 'عميل',
-          data.customerPhone || '',
-          data.customerEmail || '',
-          data.city || '',
-          data.total || 0,
-          data.items || [],
-          data.paymentMethod || 'cash',
-          data.deliveryType || 'standard'
+          sanitizedData.orderNumber,
+          sanitizedData.customerName,
+          sanitizedData.customerPhone,
+          sanitizedData.customerEmail,
+          sanitizedData.city,
+          sanitizedData.total,
+          sanitizedData.items,
+          sanitizedData.paymentMethod!,
+          sanitizedData.deliveryType!
         );
         break;
 
@@ -446,7 +541,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send({
       from: "كالابريز <onboarding@resend.dev>",
-      to: [to],
+      to: [sanitizedTo],
       subject,
       html,
     });
