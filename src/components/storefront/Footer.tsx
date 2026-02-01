@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="col-span-2 sm:col-span-2 lg:col-span-1 space-y-5">
             <Link to="/" className="flex flex-col items-start gap-2">
-              <img src={logo} alt="Calapres" className="h-12 w-auto" />
+              <img src={logo} alt="Calapres" className="h-12 w-auto" width="45" height="48" />
               <span className="font-display text-lg tracking-wider text-charcoal">CALAPRES</span>
             </Link>
             <p className="text-charcoal/50 text-sm leading-relaxed">
@@ -224,8 +224,8 @@ const Footer: React.FC = () => {
           <div className="flex items-center gap-3">
             <span className="text-charcoal/40 text-xs">{t('طرق الدفع', 'Payments')}:</span>
             <div className="flex items-center gap-2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" className="h-5 opacity-70" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" className="h-4 opacity-70" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" className="h-5 opacity-70" width="33" height="20" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" className="h-4 opacity-70" width="49" height="16" />
               <span className="text-charcoal text-[10px] font-medium bg-charcoal/10 px-2 py-0.5 rounded">mada</span>
               <span className="text-charcoal text-[10px] font-medium bg-charcoal/10 px-2 py-0.5 rounded">Tabby</span>
             </div>

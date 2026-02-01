@@ -61,6 +61,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
               alt={language === 'ar' ? product.nameAr : product.name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
+              width="280"
+              height="373"
             />
           </Link>
 
