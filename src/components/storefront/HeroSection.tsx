@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { optimizeUnsplashUrl, generateSrcSet } from '@/lib/imageUtils';
 
 const heroSlides = [
   {
-    image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1920&q=90',
+    image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d',
     titleEn: 'Luxury Flowers',
     titleAr: 'زهور فاخرة',
     subtitleEn: 'FRESH & ELEGANT',
@@ -15,7 +16,7 @@ const heroSlides = [
     descAr: 'زهور مميزة منتقاة بعناية لكل مناسبة',
   },
   {
-    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=1920&q=90',
+    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b',
     titleEn: 'Fine Chocolates',
     titleAr: 'شوكولاتة فاخرة',
     subtitleEn: 'HANDCRAFTED DELIGHTS',
@@ -24,7 +25,7 @@ const heroSlides = [
     descAr: 'مجموعات شوكولاتة بلجيكية للحظات الاستمتاع',
   },
   {
-    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=1920&q=90',
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601',
     titleEn: 'Exclusive Perfumes',
     titleAr: 'عطور حصرية',
     subtitleEn: 'SIGNATURE SCENTS',
@@ -62,7 +63,9 @@ const HeroSection: React.FC = () => {
           className="absolute inset-0"
         >
           <img
-            src={heroSlides[currentSlide].image}
+            src={optimizeUnsplashUrl(heroSlides[currentSlide].image, 1344, 80)}
+            srcSet={generateSrcSet(heroSlides[currentSlide].image, [640, 960, 1344, 1920])}
+            sizes="100vw"
             alt="Hero"
             className="w-full h-full object-cover"
             fetchPriority={currentSlide === 0 ? "high" : "auto"}

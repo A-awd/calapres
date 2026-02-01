@@ -5,6 +5,7 @@ import { ShoppingBag, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { optimizeUnsplashUrl, generateSrcSet } from '@/lib/imageUtils';
 
 // Simplified product interface for the card (compatible with CartProduct)
 interface ProductCardData {
@@ -54,9 +55,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
         <div className="relative aspect-[3/4] overflow-hidden bg-sand flex-shrink-0 rounded-sm sm:rounded-md">
           <Link to={`/product/${product.id}`} className="block w-full h-full">
             <img
-              src={product.image}
+              src={optimizeUnsplashUrl(product.image, 400, 80)}
+              srcSet={generateSrcSet(product.image, [280, 400, 600])}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
               alt={language === 'ar' ? product.nameAr : product.name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
             />
           </Link>
 
