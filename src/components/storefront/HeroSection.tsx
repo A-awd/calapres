@@ -70,6 +70,8 @@ const HeroSection: React.FC = () => {
             className="w-full h-full object-cover"
             fetchPriority={currentSlide === 0 ? "high" : "auto"}
             loading={currentSlide === 0 ? "eager" : "lazy"}
+            width="1344"
+            height="846"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent rtl:bg-gradient-to-l" />
         </motion.div>
