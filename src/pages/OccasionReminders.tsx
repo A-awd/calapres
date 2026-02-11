@@ -211,7 +211,7 @@ const OccasionReminders = () => {
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-12 bg-gradient-to-br from-primary/5 to-secondary/5">
-          <div className="container mx-auto px-4 text-center">
+          <div className="container-luxury text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -232,7 +232,7 @@ const OccasionReminders = () => {
 
         {/* Main Content */}
         <section className="py-12">
-          <div className="container mx-auto px-4 max-w-4xl">
+          <div className="container-luxury max-w-4xl">
             {/* Add Button */}
             <div className="flex justify-end mb-6">
               <Button onClick={openCreateDialog} className="gap-2">

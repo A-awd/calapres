@@ -122,7 +122,7 @@ const Account = () => {
     return (
       <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
         <Header />
-        <main className="container mx-auto px-4 py-8 mt-20 flex justify-center items-center min-h-[60vh]">
+        <main className="container-luxury py-8 flex justify-center items-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </main>
         <Footer />
@@ -134,7 +134,7 @@ const Account = () => {
     <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <Header />
       
-      <main className="container mx-auto px-4 py-8 mt-20">
+      <main className="container-luxury py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

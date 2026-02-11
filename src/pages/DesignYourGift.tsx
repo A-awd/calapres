@@ -144,7 +144,7 @@ const DesignYourGift = () => {
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-12 bg-gradient-to-br from-primary/5 to-secondary/5">
-          <div className="container mx-auto px-4 text-center">
+          <div className="container-luxury text-center">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ const DesignYourGift = () => {
 
         {/* Progress Steps */}
         <section className="py-6 border-b bg-background sticky top-16 z-40">
-          <div className="container mx-auto px-4">
+          <div className="container-luxury">
             <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
               {STEPS.map((step, index) => {
                 const isActive = step.key === currentStep;
@@ -199,7 +199,7 @@ const DesignYourGift = () => {
 
         {/* Main Content */}
         <section className="py-12">
-          <div className="container mx-auto px-4">
+          <div className="container-luxury">
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Step Content */}
               <div className="lg:col-span-2">
