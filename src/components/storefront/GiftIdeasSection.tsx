@@ -99,7 +99,7 @@ const GiftIdeasSection: React.FC = () => {
                   to={`/collections/${idea.slug}`}
                   className="group block text-center"
                 >
-                  <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl group-hover:scale-105 transition-transform duration-300 shadow-sm">
+                  <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl transition-all duration-300 shadow-sm group-hover:scale-110 group-hover:shadow-md group-hover:bg-primary/10 group-hover:-translate-y-1">
                     {idea.emoji}
                   </div>
                   <h3 className="font-medium text-sm md:text-base text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
