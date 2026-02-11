@@ -107,9 +107,12 @@ const About = () => {
             >
               <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-elegant">
                 <img 
-                  src="https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?w=800&q=80" 
+                  src="https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?w=800&q=80&fm=webp&auto=format" 
                   alt="Luxury Gift Box"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  width="800"
+                  height="1000"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-gold text-charcoal p-6 rounded-xl shadow-lg">
