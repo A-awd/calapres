@@ -47,7 +47,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-gold/10 to-transparent" />
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container-luxury relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ const About = () => {
 
       {/* Story Section */}
       <section className="py-20 bg-cream/50">
-        <div className="container mx-auto px-4">
+        <div className="container-luxury">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -123,7 +123,7 @@ const About = () => {
 
       {/* Vision & Mission */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container-luxury">
           <div className="grid md:grid-cols-2 gap-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -160,7 +160,7 @@ const About = () => {
 
       {/* Values Section */}
       <section className="py-20 bg-cream/50">
-        <div className="container mx-auto px-4">
+        <div className="container-luxury">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +196,7 @@ const About = () => {
 
       {/* Timeline Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container-luxury">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -240,7 +240,7 @@ const About = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-charcoal to-charcoal/95">
-        <div className="container mx-auto px-4">
+        <div className="container-luxury">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

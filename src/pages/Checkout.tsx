@@ -293,7 +293,7 @@ const Checkout: React.FC = () => {
     <div className="min-h-screen bg-background" dir={direction}>
       <Header />
 
-      <main className="container-luxury py-6 md:py-8 lg:py-12 px-4 md:px-6">
+      <main className="container-luxury py-6 md:py-8 lg:py-12">
         {/* Back link */}
         <Link
           to="/cart"

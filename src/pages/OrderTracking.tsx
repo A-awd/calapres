@@ -210,7 +210,7 @@ const OrderTracking = () => {
     <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <Header />
       
-      <main className="container mx-auto px-4 py-8 mt-20">
+      <main className="container-luxury py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

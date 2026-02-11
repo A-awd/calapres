@@ -156,7 +156,7 @@ const ProductDetail: React.FC = () => {
     <div className="min-h-screen bg-background" dir={direction}>
       <Header />
 
-      <main className="container-luxury py-6 sm:py-8 md:py-12 lg:section-padding">
+      <main className="container-luxury py-6 md:py-8 lg:py-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 md:mb-8 overflow-x-auto whitespace-nowrap">
           <button onClick={() => navigate('/')} className="hover:text-primary transition-colors flex-shrink-0">
