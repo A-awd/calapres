@@ -90,13 +90,9 @@ const GiftIdeasSection: React.FC = () => {
             className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {giftIdeas.map((idea, index) => (
-              <motion.div
+            {giftIdeas.map((idea) => (
+              <div
                 key={idea.id}
-                initial={initialState}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportConfig}
-                transition={{ delay: isMobile ? 0 : index * 0.03 }}
                 className="flex-shrink-0"
               >
                 <Link
@@ -110,7 +106,7 @@ const GiftIdeasSection: React.FC = () => {
                     {language === 'ar' ? idea.nameAr : idea.name}
                   </h3>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
 
