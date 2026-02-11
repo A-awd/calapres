@@ -85,27 +85,23 @@ const OccasionsSection: React.FC = () => {
             className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {occasions.map((occasion, index) => (
-              <motion.div
+            {occasions.map((occasion) => (
+              <div
                 key={occasion.id}
-                initial={initialState}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportConfig}
-                transition={{ delay: isMobile ? 0 : index * 0.05 }}
                 className="flex-shrink-0"
               >
                 <Link
                   to={`/collections?occasion=${occasion.slug}`}
                   className="group block text-center"
                 >
-                  <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl group-hover:scale-105 transition-transform duration-300 shadow-sm">
+                  <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-3 rounded-full bg-[#f5f0ea] flex items-center justify-center text-4xl md:text-5xl transition-all duration-300 shadow-sm group-hover:scale-110 group-hover:shadow-md group-hover:bg-primary/10 group-hover:-translate-y-1">
                     {occasion.icon || '🎁'}
                   </div>
                   <h3 className="font-medium text-sm md:text-base text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
                     {language === 'ar' ? occasion.nameAr : occasion.name}
                   </h3>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
 
