@@ -65,6 +65,7 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
   const createProduct = useCreateProduct();
   const updateProduct = useUpdateProduct();
   const isEditing = !!product;
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
