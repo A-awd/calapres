@@ -79,6 +79,35 @@ const AdminCatalog: React.FC = () => {
   const deleteBundle = useDeleteBundle();
   const deleteCategory = useDeleteCategory();
   const deleteOccasion = useDeleteOccasion();
+  const reorderCategories = useReorderCategories();
+  const reorderOccasions = useReorderOccasions();
+
+  // Local ordered state for DnD
+  const [localCategories, setLocalCategories] = useState<Category[]>([]);
+  const [localOccasions, setLocalOccasions] = useState<Occasion[]>([]);
+
+  React.useEffect(() => { setLocalCategories(categories); }, [categories]);
+  React.useEffect(() => { setLocalOccasions(occasions); }, [occasions]);
+
+  const handleCategoryDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = localCategories.findIndex(c => c.id === active.id);
+    const newIndex = localCategories.findIndex(c => c.id === over.id);
+    const newOrder = arrayMove(localCategories, oldIndex, newIndex);
+    setLocalCategories(newOrder);
+    reorderCategories.mutate(newOrder.map(c => c.id));
+  };
+
+  const handleOccasionDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = localOccasions.findIndex(o => o.id === active.id);
+    const newIndex = localOccasions.findIndex(o => o.id === over.id);
+    const newOrder = arrayMove(localOccasions, oldIndex, newIndex);
+    setLocalOccasions(newOrder);
+    reorderOccasions.mutate(newOrder.map(o => o.id));
+  };
 
   // Filtered data
   const filteredProducts = products.filter(p => 
