@@ -5,7 +5,10 @@ import { useCity, City } from '@/contexts/CityContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const CitySelector: React.FC = () => {
-  const { cities, selectedCity, setCity, showCityModal, setShowCityModal, isFirstVisit } = useCity();
+  const { selectedCity, showCityModal, setShowCityModal } = useCity();
+  const cities: any[] = [];
+  const isFirstVisit = false;
+  const setCity = (_city: City) => {};
   const { t, language } = useLanguage();
 
   const handleSelect = (city: City) => {

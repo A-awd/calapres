@@ -5,6 +5,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useGiftBoxes, useGiftItems, useGiftWraps, useRibbons, GiftBox, GiftItem, GiftWrap, Ribbon } from '@/hooks/useGiftBuilder';
 import Header from '@/components/storefront/Header';
 import Footer from '@/components/storefront/Footer';
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';

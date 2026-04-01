@@ -197,7 +197,7 @@ const Ramadan: React.FC = () => {
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {products.slice(0, 8).map((product, index) => (
-                  <ProductCard key={product.id} product={product as any} index={index} />
+                  <ProductCard key={product.id} product={product as any} />
                 ))}
               </div>
             )}

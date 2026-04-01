@@ -457,7 +457,7 @@ const ProductDetail: React.FC = () => {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {filteredRelated.map((relProduct, index) => (
-                <ProductCard key={relProduct.id} product={relProduct} index={index} />
+                <ProductCard key={relProduct.id} product={relProduct} />
               ))}
             </div>
           </section>
