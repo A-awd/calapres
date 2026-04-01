@@ -396,11 +396,30 @@ const AdminProductsNew: React.FC = () => {
 
         {/* Products Grid/Table */}
         <div className="flex-1 min-w-0">
-          {/* Products Count */}
-          <div className="flex items-center justify-between mb-4 bg-white rounded-xl p-3 shadow-sm border border-gray-100">
-            <p className="text-sm text-gray-600">
-              عرض <span className="font-bold text-gray-900">{filteredProducts.length}</span> من <span className="font-bold text-gray-900">{products.length}</span> منتج
-            </p>
+          {/* Products Count & Select All */}
+          <div className="flex items-center justify-between mb-4 bg-white rounded-xl p-3 shadow-sm border border-gray-100" dir="rtl">
+            <div className="flex items-center gap-3">
+              <Checkbox
+                checked={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
+                onCheckedChange={toggleSelectAll}
+              />
+              <p className="text-sm text-gray-600">
+                {selectedProducts.length > 0 ? (
+                  <>
+                    <span className="font-bold text-[hsl(var(--admin-primary))]">{selectedProducts.length}</span> محدد من <span className="font-bold text-gray-900">{filteredProducts.length}</span> منتج
+                  </>
+                ) : (
+                  <>
+                    عرض <span className="font-bold text-gray-900">{filteredProducts.length}</span> من <span className="font-bold text-gray-900">{products.length}</span> منتج
+                  </>
+                )}
+              </p>
+              {selectedProducts.length > 0 && selectedProducts.length < filteredProducts.length && (
+                <Button variant="link" size="sm" className="text-xs p-0 h-auto text-[hsl(var(--admin-primary))]" onClick={toggleSelectAll}>
+                  تحديد الكل ({filteredProducts.length})
+                </Button>
+              )}
+            </div>
             <Select defaultValue="newest">
               <SelectTrigger className="w-36 h-9 rounded-lg border-gray-200 text-sm">
                 <SelectValue placeholder="ترتيب حسب" />
