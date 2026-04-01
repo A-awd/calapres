@@ -115,8 +115,8 @@ const AdminCatalog: React.FC = () => {
     p.sku.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const filteredBundles = bundles.filter(b => b.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  const filteredCategories = categories.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  const filteredOccasions = occasions.filter(o => o.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredCategories = localCategories.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredOccasions = localOccasions.filter(o => o.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleAddNew = () => {
     switch (activeTab) {
