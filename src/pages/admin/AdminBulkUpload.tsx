@@ -103,7 +103,7 @@ const AdminBulkUpload: React.FC = () => {
     }
 
     // Create image entries
-    const newImages: UploadedImage[] = validFiles.map(file => ({
+    const newImages: UploadedImage[] = compressedFiles.map(file => ({
       file,
       preview: URL.createObjectURL(file),
       status: 'pending',
