@@ -29,7 +29,94 @@ import OccasionFormDialog from '@/components/admin/OccasionFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import BulkActionsBar, { EntityType } from '@/components/admin/BulkActionsBar';
 
-const AdminCatalog: React.FC = () => {
+// Sortable Row Components
+const SortableCategoryRow: React.FC<{
+  category: Category; isSelected: boolean;
+  onToggleSelect: () => void; onEdit: () => void; onDelete: () => void;
+}> = ({ category, isSelected, onToggleSelect, onEdit, onDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: category.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  return (
+    <tr ref={setNodeRef} style={style} className={`hover:bg-gray-50/50 transition-colors ${isSelected ? 'bg-blue-50/50' : ''}`}>
+      <td className="p-3 w-8 cursor-grab" {...attributes} {...listeners}>
+        <GripVertical className="w-4 h-4 text-muted-foreground" />
+      </td>
+      <td className="p-3"><Checkbox checked={isSelected} onCheckedChange={onToggleSelect} /></td>
+      <td className="p-3">
+        <div className="flex items-center gap-3">
+          {category.image ? (
+            <img src={category.image} alt={category.name} className="w-10 h-10 object-cover rounded-lg flex-shrink-0" />
+          ) : (
+            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Image className="w-5 h-5 text-muted-foreground" />
+            </div>
+          )}
+          <div>
+            <p className="font-medium">{category.name_ar}</p>
+            <p className="text-xs text-muted-foreground">{category.name}</p>
+          </div>
+        </div>
+      </td>
+      <td className="p-3 hidden md:table-cell text-muted-foreground">{category.display_order}</td>
+      <td className="p-3">
+        <span className={`px-2 py-1 rounded text-xs ${category.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {category.is_active ? 'نشط' : 'مخفي'}
+        </span>
+      </td>
+      <td className="p-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={onEdit}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive" onClick={onDelete}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </td>
+    </tr>
+  );
+};
+
+const SortableOccasionRow: React.FC<{
+  occasion: Occasion; isSelected: boolean;
+  onToggleSelect: () => void; onEdit: () => void; onDelete: () => void;
+}> = ({ occasion, isSelected, onToggleSelect, onEdit, onDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: occasion.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  return (
+    <tr ref={setNodeRef} style={style} className={`hover:bg-gray-50/50 transition-colors ${isSelected ? 'bg-blue-50/50' : ''}`}>
+      <td className="p-3 w-8 cursor-grab" {...attributes} {...listeners}>
+        <GripVertical className="w-4 h-4 text-muted-foreground" />
+      </td>
+      <td className="p-3"><Checkbox checked={isSelected} onCheckedChange={onToggleSelect} /></td>
+      <td className="p-3">
+        <div className="flex items-center gap-3">
+          {occasion.icon && <span className="text-2xl">{occasion.icon}</span>}
+          <div>
+            <p className="font-medium">{occasion.name_ar}</p>
+            <p className="text-sm text-muted-foreground">{occasion.name}</p>
+          </div>
+        </div>
+      </td>
+      <td className="p-3 hidden md:table-cell"><span className="font-mono text-xs text-muted-foreground">{occasion.slug}</span></td>
+      <td className="p-3 hidden md:table-cell text-muted-foreground">{occasion.display_order}</td>
+      <td className="p-3">
+        <span className={`px-2 py-1 rounded text-xs ${occasion.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {occasion.is_active ? 'نشط' : 'مخفي'}
+        </span>
+      </td>
+      <td className="p-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={onEdit}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive" onClick={onDelete}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </td>
+    </tr>
+  );
+};
+
   // DnD sensors
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
