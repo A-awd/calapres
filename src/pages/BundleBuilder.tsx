@@ -1,3 +1,4 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,8 +23,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import { giftBoxes, giftItems, giftWraps, ribbons } from '@/data/bundleBuilderData';
 import { GiftBox, GiftItem, GiftWrap, Ribbon as RibbonType, BundleBuilderPricing } from '@/types/bundleBuilder';
 import { toast } from 'sonner';
@@ -31,6 +30,8 @@ import { toast } from 'sonner';
 type Step = 'box' | 'items' | 'wrap' | 'details';
 
 const BundleBuilder: React.FC = () => {
+  usePageMeta(PAGE_METAS.bundleBuilder);
+
   const { t, language, direction } = useLanguage();
   const { addItem } = useCart();
   

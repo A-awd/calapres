@@ -13,8 +13,6 @@ import {
   OccasionReminderFormData
 } from '@/hooks/useOccasionReminders';
 import { useOccasions } from '@/hooks/useOccasions';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';

@@ -1,11 +1,11 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import { motion } from "framer-motion";
 import { Heart, Gift, Star, Users, Award, Sparkles } from "lucide-react";
-import Header from "@/components/storefront/Header";
-import Footer from "@/components/storefront/Footer";
-import WhatsAppButton from "@/components/storefront/WhatsAppButton";
 
 const About = () => {
+  usePageMeta(PAGE_METAS.about);
+
   const values = [
     {
       icon: Heart,

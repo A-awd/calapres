@@ -1,3 +1,4 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -7,8 +8,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useCoupon } from '@/hooks/useCoupon';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import CouponInput from '@/components/storefront/CouponInput';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -16,6 +15,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 
 const Cart: React.FC = () => {
+  usePageMeta(PAGE_METAS.cart);
+
   const { t, direction } = useLanguage();
   const { items, total, updateQuantity, removeItem, updateItemOptions, clearCart } = useCart();
   const isMobile = useIsMobile();

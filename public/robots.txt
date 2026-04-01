@@ -1,14 +1,9 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /auth
+Disallow: /reset-password
+Disallow: /checkout
+Disallow: /order-success
+
+Sitemap: https://calapres.com/sitemap.xml

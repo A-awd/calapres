@@ -1,4 +1,3 @@
-import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';

@@ -1,11 +1,9 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Moon, Gift, ArrowLeft, ArrowRight, Crown, Sparkles, Package } from 'lucide-react';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
-import WhatsAppButton from '@/components/storefront/WhatsAppButton';
 import ProductCard from '@/components/storefront/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -21,6 +19,8 @@ const tierConfig: Record<string, { icon: any; label: string; labelAr: string; co
 };
 
 const Ramadan: React.FC = () => {
+  usePageMeta(PAGE_METAS.ramadan);
+
   const { t, language, direction } = useLanguage();
   const Arrow = direction === 'rtl' ? ArrowLeft : ArrowRight;
   const { data: products = [], isLoading: productsLoading } = useOccasionProducts(RAMADAN_OCCASION_ID);

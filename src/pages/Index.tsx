@@ -1,3 +1,4 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import React from 'react';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import HeroSection from '@/components/storefront/HeroSection';
@@ -11,6 +12,8 @@ import BrandsSection from '@/components/storefront/BrandsSection';
 import TestimonialsSection from '@/components/storefront/TestimonialsSection';
 
 const Index: React.FC = () => {
+  usePageMeta(PAGE_METAS.home);
+
   return (
     <StorefrontLayout>
       <HeroSection />

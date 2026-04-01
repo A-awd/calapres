@@ -1,3 +1,4 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,12 +28,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useCoupon } from '@/hooks/useCoupon';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import CouponInput from '@/components/storefront/CouponInput';
 import DeliveryPicker from '@/components/storefront/DeliveryPicker';
-import CitySelector from '@/components/storefront/CitySelector';
-import AnnouncementBar from '@/components/storefront/AnnouncementBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -97,6 +94,8 @@ const cities = [
 ];
 
 const Checkout: React.FC = () => {
+  usePageMeta(PAGE_METAS.checkout);
+
   const { t, language, direction } = useLanguage();
   const { items, total: cartTotal, clearCart } = useCart();
   const { appliedCoupon, isValidating, error: couponError, validateCoupon, calculateDiscount, removeCoupon } = useCoupon();

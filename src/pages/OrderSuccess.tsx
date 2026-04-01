@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Package, ArrowLeft, ArrowRight, Home } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import { Button } from '@/components/ui/button';
 
 const OrderSuccess: React.FC = () => {

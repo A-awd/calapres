@@ -1,9 +1,7 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
-import WhatsAppButton from '@/components/storefront/WhatsAppButton';
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +11,8 @@ import {
 import { Truck, CreditCard, RotateCcw, Gift, Clock, HelpCircle } from 'lucide-react';
 
 const FAQ: React.FC = () => {
+  usePageMeta(PAGE_METAS.faq);
+
   const { t, language } = useLanguage();
 
   const faqCategories = [

@@ -26,14 +26,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import ProductCard from '@/components/storefront/ProductCard';
 import ProductImageGallery from '@/components/storefront/ProductImageGallery';
 import ProductCustomizationOptions from '@/components/storefront/ProductCustomizationOptions';
 import ReviewsSection from '@/components/storefront/ReviewsSection';
-import CitySelector from '@/components/storefront/CitySelector';
-import AnnouncementBar from '@/components/storefront/AnnouncementBar';
 import { useProduct } from '@/hooks/useProducts';
 import { useBestsellerProducts } from '@/hooks/useStorefrontData';
 import { GiftWrap, Ribbon } from '@/hooks/useGiftBuilder';
@@ -88,22 +84,23 @@ const ProductDetail: React.FC = () => {
             </div>
           </div>
         </main>
-        <Footer />
-      </div>
+      </StorefrontLayout>
     );
   }
 
   // Error or not found state
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center" dir={direction}>
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">{t('المنتج غير موجود', 'Product not found')}</h1>
-          <Button onClick={() => navigate('/')}>
-            {t('العودة للرئيسية', 'Go Home')}
-          </Button>
+      <StorefrontLayout>
+        <div className="flex items-center justify-center py-32">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">{t('المنتج غير موجود', 'Product not found')}</h1>
+            <Button onClick={() => navigate('/')}>
+              {t('العودة للرئيسية', 'Go Home')}
+            </Button>
+          </div>
         </div>
-      </div>
+      </StorefrontLayout>
     );
   }
 

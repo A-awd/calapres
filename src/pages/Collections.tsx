@@ -1,13 +1,11 @@
+import { usePageMeta, PAGE_METAS } from '@/hooks/usePageMeta';
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SlidersHorizontal, X, ChevronDown, Search, Clock, TrendingUp, Zap, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/storefront/Header';
-import Footer from '@/components/storefront/Footer';
 import ProductCard from '@/components/storefront/ProductCard';
-import WhatsAppButton from '@/components/storefront/WhatsAppButton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -43,6 +41,8 @@ type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'name-asc' | 'name-des
 type QuickFilter = 'last-minute' | 'most-ordered' | 'express' | 'new' | null;
 
 const Collections: React.FC = () => {
+  usePageMeta(PAGE_METAS.collections);
+
   const { t, language, direction } = useLanguage();
   const { categorySlug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
