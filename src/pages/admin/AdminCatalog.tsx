@@ -30,6 +30,12 @@ import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import BulkActionsBar, { EntityType } from '@/components/admin/BulkActionsBar';
 
 const AdminCatalog: React.FC = () => {
+  // DnD sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
   const [activeTab, setActiveTab] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
 
