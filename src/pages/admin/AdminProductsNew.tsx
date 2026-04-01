@@ -653,6 +653,7 @@ const AdminProductsNew: React.FC = () => {
       <BulkActionsBar
         selectedIds={selectedProducts}
         onClearSelection={() => setSelectedProducts([])}
+        entityType="products"
       />
     </AdminLayout>
   );

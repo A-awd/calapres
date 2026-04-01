@@ -23,12 +23,17 @@ import BundleFormDialog from '@/components/admin/BundleFormDialog';
 import CategoryFormDialog from '@/components/admin/CategoryFormDialog';
 import OccasionFormDialog from '@/components/admin/OccasionFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
-import BulkActionsBar from '@/components/admin/BulkActionsBar';
+import BulkActionsBar, { EntityType } from '@/components/admin/BulkActionsBar';
 
 const AdminCatalog: React.FC = () => {
   const [activeTab, setActiveTab] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Selection state for each entity
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [selectedBundles, setSelectedBundles] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   
   // Products state
   const [productFormOpen, setProductFormOpen] = useState(false);
@@ -122,6 +127,27 @@ const AdminCatalog: React.FC = () => {
     }
   };
 
+  // Get the active selection info
+  const getActiveSelection = (): { ids: string[]; clear: () => void; entityType: EntityType } => {
+    switch (activeTab) {
+      case 'bundles': return { ids: selectedBundles, clear: () => setSelectedBundles([]), entityType: 'bundles' };
+      case 'categories': return { ids: selectedCategories, clear: () => setSelectedCategories([]), entityType: 'categories' };
+      case 'occasions': return { ids: selectedOccasions, clear: () => setSelectedOccasions([]), entityType: 'occasions' };
+      default: return { ids: selectedProducts, clear: () => setSelectedProducts([]), entityType: 'products' };
+    }
+  };
+
+  const activeSelection = getActiveSelection();
+
+  // Selection toggle helpers
+  const toggleSelection = (id: string, selected: string[], setSelected: React.Dispatch<React.SetStateAction<string[]>>) => {
+    setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const toggleAllSelection = (items: { id: string }[], selected: string[], setSelected: React.Dispatch<React.SetStateAction<string[]>>) => {
+    setSelected(selected.length === items.length ? [] : items.map(i => i.id));
+  };
+
   return (
     <AdminLayout title="الكتالوج">
       {/* Header */}
@@ -175,11 +201,7 @@ const AdminCatalog: React.FC = () => {
                         <th className="p-4 text-right w-10">
                           <Checkbox
                             checked={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
-                            onCheckedChange={() => {
-                              setSelectedProducts(
-                                selectedProducts.length === filteredProducts.length ? [] : filteredProducts.map(p => p.id)
-                              );
-                            }}
+                            onCheckedChange={() => toggleAllSelection(filteredProducts, selectedProducts, setSelectedProducts)}
                           />
                         </th>
                         <th className="p-4 text-right font-medium text-gray-500">المنتج</th>
@@ -196,13 +218,7 @@ const AdminCatalog: React.FC = () => {
                           <td className="p-4">
                             <Checkbox
                               checked={selectedProducts.includes(product.id)}
-                              onCheckedChange={() => {
-                                setSelectedProducts(prev =>
-                                  prev.includes(product.id)
-                                    ? prev.filter(id => id !== product.id)
-                                    : [...prev, product.id]
-                                );
-                              }}
+                              onCheckedChange={() => toggleSelection(product.id, selectedProducts, setSelectedProducts)}
                             />
                           </td>
                           <td className="p-4">
@@ -272,6 +288,12 @@ const AdminCatalog: React.FC = () => {
                   <table className="w-full text-sm" dir="rtl">
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
+                        <th className="p-4 text-right w-10">
+                          <Checkbox
+                            checked={selectedBundles.length === filteredBundles.length && filteredBundles.length > 0}
+                            onCheckedChange={() => toggleAllSelection(filteredBundles, selectedBundles, setSelectedBundles)}
+                          />
+                        </th>
                         <th className="p-4 text-right font-medium text-gray-500">الباقة</th>
                         <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">المناسبة</th>
                         <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">المستوى</th>
@@ -282,7 +304,13 @@ const AdminCatalog: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {filteredBundles.map((bundle) => (
-                        <tr key={bundle.id} className="hover:bg-gray-50/50 transition-colors">
+                        <tr key={bundle.id} className={`hover:bg-gray-50/50 transition-colors ${selectedBundles.includes(bundle.id) ? 'bg-blue-50/50' : ''}`}>
+                          <td className="p-4">
+                            <Checkbox
+                              checked={selectedBundles.includes(bundle.id)}
+                              onCheckedChange={() => toggleSelection(bundle.id, selectedBundles, setSelectedBundles)}
+                            />
+                          </td>
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               {bundle.image && <img src={bundle.image} alt={bundle.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />}
@@ -338,45 +366,71 @@ const AdminCatalog: React.FC = () => {
               ) : filteredCategories.length === 0 ? (
                 <div className="p-8 text-center text-gray-500">لم يتم العثور على فئات</div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4" dir="rtl">
-                  {filteredCategories.map((category) => (
-                    <Card key={category.id} className="overflow-hidden border border-gray-200">
-                      <div className="relative h-32 bg-gray-100">
-                        {category.image ? (
-                          <img src={category.image} alt={category.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Image className="w-8 h-8 text-gray-400" />
-                          </div>
-                        )}
-                        <div className="absolute top-2 left-2">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="secondary" size="icon" className="h-8 w-8 bg-white/90"><MoreVertical className="w-4 h-4" /></Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start">
-                              <DropdownMenuItem onClick={() => { setEditingCategory(category); setCategoryFormOpen(true); }}>
-                                <Edit className="w-4 h-4 ml-2" /> تعديل
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-red-600" onClick={() => { setCategoryToDelete(category.id); setCategoryDeleteOpen(true); }}>
-                                <Trash2 className="w-4 h-4 ml-2" /> حذف
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-gray-900">{category.name_ar}</h3>
-                        <p className="text-sm text-gray-500">{category.name}</p>
-                        <div className="flex items-center justify-between mt-3">
-                          <span className="text-xs text-gray-400">الترتيب: {category.display_order}</span>
-                          <span className={`px-2 py-1 rounded text-xs ${category.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                            {category.is_active ? 'نشط' : 'مخفي'}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm" dir="rtl">
+                    <thead className="bg-gray-50 border-b border-gray-100">
+                      <tr>
+                        <th className="p-4 text-right w-10">
+                          <Checkbox
+                            checked={selectedCategories.length === filteredCategories.length && filteredCategories.length > 0}
+                            onCheckedChange={() => toggleAllSelection(filteredCategories, selectedCategories, setSelectedCategories)}
+                          />
+                        </th>
+                        <th className="p-4 text-right font-medium text-gray-500">الفئة</th>
+                        <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الترتيب</th>
+                        <th className="p-4 text-right font-medium text-gray-500">الحالة</th>
+                        <th className="p-4 text-right font-medium text-gray-500">الإجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {filteredCategories.map((category) => (
+                        <tr key={category.id} className={`hover:bg-gray-50/50 transition-colors ${selectedCategories.includes(category.id) ? 'bg-blue-50/50' : ''}`}>
+                          <td className="p-4">
+                            <Checkbox
+                              checked={selectedCategories.includes(category.id)}
+                              onCheckedChange={() => toggleSelection(category.id, selectedCategories, setSelectedCategories)}
+                            />
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-3">
+                              {category.image ? (
+                                <img src={category.image} alt={category.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />
+                              ) : (
+                                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <Image className="w-5 h-5 text-gray-400" />
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-medium text-gray-900">{category.name_ar}</p>
+                                <p className="text-xs text-gray-500">{category.name}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-4 hidden md:table-cell text-gray-500">{category.display_order}</td>
+                          <td className="p-4">
+                            <span className={`px-2 py-1 rounded text-xs ${category.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                              {category.is_active ? 'نشط' : 'مخفي'}
+                            </span>
+                          </td>
+                          <td className="p-4">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900"><MoreVertical className="w-4 h-4" /></Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="start">
+                                <DropdownMenuItem onClick={() => { setEditingCategory(category); setCategoryFormOpen(true); }}>
+                                  <Edit className="w-4 h-4 ml-2" /> تعديل
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="text-red-600" onClick={() => { setCategoryToDelete(category.id); setCategoryDeleteOpen(true); }}>
+                                  <Trash2 className="w-4 h-4 ml-2" /> حذف
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </CardContent>
@@ -396,6 +450,12 @@ const AdminCatalog: React.FC = () => {
                   <table className="w-full text-sm" dir="rtl">
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
+                        <th className="p-4 text-right w-10">
+                          <Checkbox
+                            checked={selectedOccasions.length === filteredOccasions.length && filteredOccasions.length > 0}
+                            onCheckedChange={() => toggleAllSelection(filteredOccasions, selectedOccasions, setSelectedOccasions)}
+                          />
+                        </th>
                         <th className="p-4 text-right font-medium text-gray-500">المناسبة</th>
                         <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الرابط</th>
                         <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الترتيب</th>
@@ -405,7 +465,13 @@ const AdminCatalog: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {filteredOccasions.map((occasion) => (
-                        <tr key={occasion.id} className="hover:bg-gray-50/50 transition-colors">
+                        <tr key={occasion.id} className={`hover:bg-gray-50/50 transition-colors ${selectedOccasions.includes(occasion.id) ? 'bg-blue-50/50' : ''}`}>
+                          <td className="p-4">
+                            <Checkbox
+                              checked={selectedOccasions.includes(occasion.id)}
+                              onCheckedChange={() => toggleSelection(occasion.id, selectedOccasions, setSelectedOccasions)}
+                            />
+                          </td>
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               {occasion.icon && <span className="text-2xl">{occasion.icon}</span>}
@@ -515,9 +581,11 @@ const AdminCatalog: React.FC = () => {
         description="هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء."
         isDeleting={deleteOccasion.isPending}
       />
+
       <BulkActionsBar
-        selectedIds={selectedProducts}
-        onClearSelection={() => setSelectedProducts([])}
+        selectedIds={activeSelection.ids}
+        onClearSelection={activeSelection.clear}
+        entityType={activeSelection.entityType}
       />
     </AdminLayout>
   );
