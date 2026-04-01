@@ -31,6 +31,7 @@ interface ProductGroup {
   category: string;
   description: string;
   description_ar: string;
+  price: number;
   imageIndices: number[];
   saved?: boolean;
 }
