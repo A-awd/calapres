@@ -75,6 +75,7 @@ const App = () => (
                 <Route path="/admin/coupons" element={<AdminCoupons />} />
                 <Route path="/admin/email-stats" element={<AdminEmailStats />} />
                 <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+                <Route path="/admin/bulk-upload" element={<AdminBulkUpload />} />
                 
                 {/* Catch-all */}
                 <Route path="*" element={<NotFound />} />
