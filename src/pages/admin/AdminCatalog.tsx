@@ -23,10 +23,12 @@ import BundleFormDialog from '@/components/admin/BundleFormDialog';
 import CategoryFormDialog from '@/components/admin/CategoryFormDialog';
 import OccasionFormDialog from '@/components/admin/OccasionFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
+import BulkActionsBar from '@/components/admin/BulkActionsBar';
 
 const AdminCatalog: React.FC = () => {
   const [activeTab, setActiveTab] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   
   // Products state
   const [productFormOpen, setProductFormOpen] = useState(false);
@@ -168,8 +170,18 @@ const AdminCatalog: React.FC = () => {
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm" dir="rtl">
-                    <thead className="bg-gray-50 border-b border-gray-100">
+                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
+                        <th className="p-4 text-right w-10">
+                          <Checkbox
+                            checked={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
+                            onCheckedChange={() => {
+                              setSelectedProducts(
+                                selectedProducts.length === filteredProducts.length ? [] : filteredProducts.map(p => p.id)
+                              );
+                            }}
+                          />
+                        </th>
                         <th className="p-4 text-right font-medium text-gray-500">المنتج</th>
                         <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">رمز المنتج</th>
                         <th className="p-4 text-right font-medium text-gray-500">السعر</th>
@@ -180,7 +192,19 @@ const AdminCatalog: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {filteredProducts.map((product) => (
-                        <tr key={product.id} className="hover:bg-gray-50/50 transition-colors">
+                        <tr key={product.id} className={`hover:bg-gray-50/50 transition-colors ${selectedProducts.includes(product.id) ? 'bg-blue-50/50' : ''}`}>
+                          <td className="p-4">
+                            <Checkbox
+                              checked={selectedProducts.includes(product.id)}
+                              onCheckedChange={() => {
+                                setSelectedProducts(prev =>
+                                  prev.includes(product.id)
+                                    ? prev.filter(id => id !== product.id)
+                                    : [...prev, product.id]
+                                );
+                              }}
+                            />
+                          </td>
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               {product.image && <img src={product.image} alt={product.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />}
@@ -490,6 +514,10 @@ const AdminCatalog: React.FC = () => {
         title="حذف المناسبة"
         description="هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء."
         isDeleting={deleteOccasion.isPending}
+      />
+      <BulkActionsBar
+        selectedIds={selectedProducts}
+        onClearSelection={() => setSelectedProducts([])}
       />
     </AdminLayout>
   );
