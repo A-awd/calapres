@@ -150,10 +150,15 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
 
   const onSubmit = async (data: ProductFormData) => {
     try {
+      const submitData = {
+        ...data,
+        image: uploadedImages[0] || data.image || '',
+        images: uploadedImages.length > 1 ? uploadedImages.slice(1) : [],
+      };
       if (isEditing && product) {
-        await updateProduct.mutateAsync({ id: product.id, ...data });
+        await updateProduct.mutateAsync({ id: product.id, ...submitData });
       } else {
-        await createProduct.mutateAsync(data);
+        await createProduct.mutateAsync(submitData);
       }
       onOpenChange(false);
     } catch (error) {
