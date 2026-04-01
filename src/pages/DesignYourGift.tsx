@@ -138,8 +138,7 @@ const DesignYourGift = () => {
   const isLoading = loadingBoxes || loadingItems || loadingWraps || loadingRibbons;
 
   return (
-    <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-      <Header />
+    <StorefrontLayout>
       
       <main className="pt-20">
         {/* Hero Section */}

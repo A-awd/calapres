@@ -207,8 +207,7 @@ const OrderTracking = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-      <Header />
+    <StorefrontLayout>
       
       <main className="container-luxury py-8">
         <motion.div
