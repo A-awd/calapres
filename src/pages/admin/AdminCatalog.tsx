@@ -205,6 +205,7 @@ const AdminCatalog: React.FC = () => {
                               }}
                             />
                           </td>
+                          <td className="p-4">
                             <div className="flex items-center gap-3">
                               {product.image && <img src={product.image} alt={product.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />}
                               <div className="min-w-0">
