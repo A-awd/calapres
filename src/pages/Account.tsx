@@ -261,7 +261,7 @@ const Account = () => {
           </Tabs>
         </motion.div>
       </main>
-    </StorefrontLayout>
+    </div>
   );
 };
 
