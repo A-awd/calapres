@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import imageCompression from 'browser-image-compression';
 import { Upload, Loader2, Trash2, Check, X, Wand2, Save, AlertCircle, Image as ImageIcon, Package } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
