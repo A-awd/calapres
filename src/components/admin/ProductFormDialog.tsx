@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { Product, ProductFormData, useCreateProduct, useUpdateProduct } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
+import ImageUpload from './ImageUpload';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Name is required'),
