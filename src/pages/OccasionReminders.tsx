@@ -524,7 +524,7 @@ const OccasionReminders = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </StorefrontLayout>
   );
 };
 
