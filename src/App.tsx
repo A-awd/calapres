@@ -31,6 +31,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminCoupons from "./pages/admin/AdminCoupons";
 import AdminEmailStats from "./pages/admin/AdminEmailStats";
 import AdminAnnouncements from "./pages/admin/AdminAnnouncements";
+import AdminBulkUpload from "./pages/admin/AdminBulkUpload";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,6 +75,7 @@ const App = () => (
                 <Route path="/admin/coupons" element={<AdminCoupons />} />
                 <Route path="/admin/email-stats" element={<AdminEmailStats />} />
                 <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+                <Route path="/admin/bulk-upload" element={<AdminBulkUpload />} />
                 
                 {/* Catch-all */}
                 <Route path="*" element={<NotFound />} />
