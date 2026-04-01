@@ -192,8 +192,19 @@ const AdminCatalog: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {filteredProducts.map((product) => (
-                        <tr key={product.id} className="hover:bg-gray-50/50 transition-colors">
+                        <tr key={product.id} className={`hover:bg-gray-50/50 transition-colors ${selectedProducts.includes(product.id) ? 'bg-blue-50/50' : ''}`}>
                           <td className="p-4">
+                            <Checkbox
+                              checked={selectedProducts.includes(product.id)}
+                              onCheckedChange={() => {
+                                setSelectedProducts(prev =>
+                                  prev.includes(product.id)
+                                    ? prev.filter(id => id !== product.id)
+                                    : [...prev, product.id]
+                                );
+                              }}
+                            />
+                          </td>
                             <div className="flex items-center gap-3">
                               {product.image && <img src={product.image} alt={product.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />}
                               <div className="min-w-0">
