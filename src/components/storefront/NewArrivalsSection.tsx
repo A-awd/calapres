@@ -2,14 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useStorefrontProducts } from '@/hooks/useStorefrontData';
+import { useAllProducts } from '@/hooks/useStorefrontData';
 import ProductCard from './ProductCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const NewArrivalsSection: React.FC = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
-  const { data: products = [], isLoading } = useStorefrontProducts();
+  const { data: products = [], isLoading } = useAllProducts();
 
   const newProducts = products.filter(p => p.isNew).slice(0, 8);
 
