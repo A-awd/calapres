@@ -125,7 +125,7 @@ const Account = () => {
         <main className="container-luxury py-8 flex justify-center items-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </main>
-    </StorefrontLayout>
+    </div>
   );
   }
 
@@ -260,7 +260,7 @@ const Account = () => {
           </Tabs>
         </motion.div>
       </main>
-    </StorefrontLayout>
+    </div>
   );
 };
 

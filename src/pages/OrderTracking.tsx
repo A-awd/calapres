@@ -508,7 +508,7 @@ const OrderTracking = () => {
           )}
         </motion.div>
       </main>
-    </StorefrontLayout>
+    </div>
   );
 };
 
