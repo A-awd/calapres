@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import { Upload, Loader2, Trash2, Check, X, Wand2, Save, AlertCircle } from 'lucide-react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { Upload, Loader2, Trash2, Check, X, Wand2, Save, AlertCircle, Image as ImageIcon, Package } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useCategories } from '@/hooks/useCategories';
@@ -21,7 +22,7 @@ interface UploadedImage {
   file: File;
   preview: string;
   url?: string;
-  uploading?: boolean;
+  status: 'pending' | 'uploading' | 'uploaded' | 'failed';
 }
 
 interface ProductGroup {
@@ -34,35 +35,154 @@ interface ProductGroup {
   saved?: boolean;
 }
 
+type PipelineStep = 'idle' | 'uploading' | 'analyzing' | 'done';
+
+const BATCH_SIZE = 20; // images per AI analysis batch
+
 const AdminBulkUpload: React.FC = () => {
   const [images, setImages] = useState<UploadedImage[]>([]);
-  const [uploading, setUploading] = useState(false);
-  const [analyzing, setAnalyzing] = useState(false);
   const [groups, setGroups] = useState<ProductGroup[]>([]);
   const [savingAll, setSavingAll] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [pipelineStep, setPipelineStep] = useState<PipelineStep>('idle');
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [analyzeProgress, setAnalyzeProgress] = useState(0);
+  const [rejectedCount, setRejectedCount] = useState(0);
+  const abortRef = useRef(false);
 
   const { data: categories = [] } = useCategories();
   const createProduct = useCreateProduct();
 
-  const handleFiles = useCallback(async (files: FileList | File[]) => {
-    const fileArray = Array.from(files).filter(f => 
-      f.type.startsWith('image/') && f.size <= 5 * 1024 * 1024
-    );
+  // Full automatic pipeline
+  const runPipeline = useCallback(async (fileArray: File[]) => {
+    abortRef.current = false;
 
-    if (fileArray.length === 0) {
+    // Step 1: Filter valid files
+    const validFiles: File[] = [];
+    let rejected = 0;
+    for (const f of fileArray) {
+      if (!f.type.startsWith('image/')) { rejected++; continue; }
+      if (f.size > 5 * 1024 * 1024) { rejected++; continue; }
+      validFiles.push(f);
+    }
+    setRejectedCount(rejected);
+
+    if (validFiles.length === 0) {
       toast.error('لم يتم العثور على صور صالحة (JPG, PNG, WebP - حد أقصى 5MB)');
       return;
     }
 
-    const newImages: UploadedImage[] = fileArray.map(file => ({
+    // Create image entries
+    const newImages: UploadedImage[] = validFiles.map(file => ({
       file,
       preview: URL.createObjectURL(file),
+      status: 'pending',
     }));
+    setImages(newImages);
+    setGroups([]);
 
-    setImages(prev => [...prev, ...newImages]);
-    toast.success(`تم إضافة ${fileArray.length} صورة`);
+    // Step 2: Upload all to storage
+    setPipelineStep('uploading');
+    setUploadProgress(0);
+    const updatedImages = [...newImages];
+
+    for (let i = 0; i < updatedImages.length; i++) {
+      if (abortRef.current) { setPipelineStep('idle'); return; }
+
+      updatedImages[i].status = 'uploading';
+      setImages([...updatedImages]);
+
+      const file = updatedImages[i].file;
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const fileName = `products/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
+
+      try {
+        const { error } = await supabase.storage
+          .from('product-images')
+          .upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+        if (error) {
+          updatedImages[i].status = 'failed';
+        } else {
+          const { data: urlData } = supabase.storage.from('product-images').getPublicUrl(fileName);
+          updatedImages[i].url = urlData.publicUrl;
+          updatedImages[i].status = 'uploaded';
+        }
+      } catch {
+        updatedImages[i].status = 'failed';
+      }
+
+      setUploadProgress(Math.round(((i + 1) / updatedImages.length) * 100));
+      setImages([...updatedImages]);
+    }
+
+    const uploadedImages = updatedImages.filter(img => img.status === 'uploaded');
+    const failedCount = updatedImages.filter(img => img.status === 'failed').length;
+
+    if (failedCount > 0) {
+      toast.warning(`فشل رفع ${failedCount} صورة`);
+    }
+
+    if (uploadedImages.length === 0) {
+      toast.error('فشل رفع جميع الصور');
+      setPipelineStep('idle');
+      return;
+    }
+
+    toast.success(`تم رفع ${uploadedImages.length} صورة بنجاح`);
+
+    // Step 3: AI Analysis in batches
+    setPipelineStep('analyzing');
+    setAnalyzeProgress(0);
+
+    const uploadedUrls = uploadedImages.map(img => img.url!);
+    const totalBatches = Math.ceil(uploadedUrls.length / BATCH_SIZE);
+    const allGroups: ProductGroup[] = [];
+    let globalOffset = 0;
+
+    for (let batchIdx = 0; batchIdx < totalBatches; batchIdx++) {
+      if (abortRef.current) { setPipelineStep('idle'); return; }
+
+      const batchUrls = uploadedUrls.slice(batchIdx * BATCH_SIZE, (batchIdx + 1) * BATCH_SIZE);
+
+      try {
+        const { data, error } = await supabase.functions.invoke('analyze-product-images', {
+          body: { imageUrls: batchUrls, batchIndex: batchIdx, totalBatches },
+        });
+
+        if (error) throw error;
+
+        if (data?.groups) {
+          // Adjust image indices to global offset
+          const adjustedGroups = data.groups.map((g: ProductGroup) => ({
+            ...g,
+            imageIndices: g.imageIndices.map((idx: number) => idx + globalOffset),
+          }));
+          allGroups.push(...adjustedGroups);
+        }
+      } catch (error: any) {
+        console.error(`Batch ${batchIdx + 1} analysis error:`, error);
+        toast.error(`فشل تحليل الدفعة ${batchIdx + 1}: ${error.message || 'خطأ'}`);
+      }
+
+      globalOffset += batchUrls.length;
+      setAnalyzeProgress(Math.round(((batchIdx + 1) / totalBatches) * 100));
+    }
+
+    setGroups(allGroups);
+    setPipelineStep('done');
+
+    if (allGroups.length > 0) {
+      toast.success(`تم تصنيف الصور إلى ${allGroups.length} منتج! راجع النتائج وعدّل ما تريد ثم احفظ.`);
+    } else {
+      toast.error('لم يتم التعرف على أي منتجات');
+    }
   }, []);
+
+  const handleFiles = useCallback((files: FileList | File[]) => {
+    const fileArray = Array.from(files);
+    runPipeline(fileArray);
+  }, [runPipeline]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -70,100 +190,66 @@ const AdminBulkUpload: React.FC = () => {
     if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
   }, [handleFiles]);
 
-  const removeImage = (index: number) => {
-    setImages(prev => {
-      const newImages = [...prev];
-      URL.revokeObjectURL(newImages[index].preview);
-      newImages.splice(index, 1);
-      return newImages;
-    });
-    setGroups([]);
+  const cancelPipeline = () => {
+    abortRef.current = true;
+    setPipelineStep('idle');
   };
 
   const clearAll = () => {
+    abortRef.current = true;
     images.forEach(img => URL.revokeObjectURL(img.preview));
     setImages([]);
     setGroups([]);
+    setPipelineStep('idle');
+    setRejectedCount(0);
   };
 
-  // Upload all images to storage
-  const uploadAllImages = async () => {
-    setUploading(true);
-    const updatedImages = [...images];
+  // Re-analyze with AI (manual trigger)
+  const reAnalyze = async () => {
+    const uploadedImages = images.filter(img => img.status === 'uploaded');
+    if (uploadedImages.length === 0) return;
 
-    try {
-      for (let i = 0; i < updatedImages.length; i++) {
-        if (updatedImages[i].url) continue;
-        
-        updatedImages[i].uploading = true;
-        setImages([...updatedImages]);
+    setPipelineStep('analyzing');
+    setAnalyzeProgress(0);
+    setGroups([]);
 
-        const file = updatedImages[i].file;
-        const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-        const fileName = `products/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
+    const uploadedUrls = uploadedImages.map(img => img.url!);
+    const totalBatches = Math.ceil(uploadedUrls.length / BATCH_SIZE);
+    const allGroups: ProductGroup[] = [];
+    let globalOffset = 0;
 
-        const { error } = await supabase.storage
-          .from('product-images')
-          .upload(fileName, file, { cacheControl: '3600', upsert: false });
-
-        if (error) {
-          toast.error(`فشل رفع الصورة ${i + 1}: ${error.message}`);
-          updatedImages[i].uploading = false;
-          continue;
+    for (let batchIdx = 0; batchIdx < totalBatches; batchIdx++) {
+      const batchUrls = uploadedUrls.slice(batchIdx * BATCH_SIZE, (batchIdx + 1) * BATCH_SIZE);
+      try {
+        const { data, error } = await supabase.functions.invoke('analyze-product-images', {
+          body: { imageUrls: batchUrls },
+        });
+        if (error) throw error;
+        if (data?.groups) {
+          const adjustedGroups = data.groups.map((g: ProductGroup) => ({
+            ...g,
+            imageIndices: g.imageIndices.map((idx: number) => idx + globalOffset),
+          }));
+          allGroups.push(...adjustedGroups);
         }
-
-        const { data: urlData } = supabase.storage
-          .from('product-images')
-          .getPublicUrl(fileName);
-
-        updatedImages[i].url = urlData.publicUrl;
-        updatedImages[i].uploading = false;
-        setImages([...updatedImages]);
+      } catch (error: any) {
+        toast.error(`فشل تحليل الدفعة ${batchIdx + 1}`);
       }
-
-      const uploadedCount = updatedImages.filter(img => img.url).length;
-      toast.success(`تم رفع ${uploadedCount} صورة بنجاح`);
-    } catch (error) {
-      toast.error('فشل في رفع الصور');
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  // Analyze images with AI
-  const analyzeImages = async () => {
-    const uploadedImages = images.filter(img => img.url);
-    if (uploadedImages.length === 0) {
-      toast.error('يرجى رفع الصور أولاً');
-      return;
+      globalOffset += batchUrls.length;
+      setAnalyzeProgress(Math.round(((batchIdx + 1) / totalBatches) * 100));
     }
 
-    setAnalyzing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('analyze-product-images', {
-        body: { imageUrls: uploadedImages.map(img => img.url) },
-      });
-
-      if (error) throw error;
-      
-      if (data.groups) {
-        setGroups(data.groups);
-        toast.success(`تم تصنيف الصور إلى ${data.groups.length} منتج`);
-      } else {
-        toast.error('لم يتم التعرف على أي منتجات');
-      }
-    } catch (error: any) {
-      console.error('Analysis error:', error);
-      toast.error(`فشل التحليل: ${error.message || 'خطأ غير معروف'}`);
-    } finally {
-      setAnalyzing(false);
+    setGroups(allGroups);
+    setPipelineStep('done');
+    if (allGroups.length > 0) {
+      toast.success(`تم تصنيف الصور إلى ${allGroups.length} منتج`);
     }
   };
 
   // Save a single product group
   const saveGroup = async (groupIndex: number) => {
     const group = groups[groupIndex];
-    const uploadedImages = images.filter(img => img.url);
+    const uploadedImages = images.filter(img => img.status === 'uploaded');
     const groupImages = group.imageIndices
       .map(i => uploadedImages[i]?.url)
       .filter(Boolean) as string[];
@@ -171,7 +257,6 @@ const AdminBulkUpload: React.FC = () => {
     if (groupImages.length === 0) return;
 
     const categoryId = categories.find(c => c.slug === group.category)?.id;
-
     const slug = group.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     const sku = `PRD-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
 
@@ -192,7 +277,7 @@ const AdminBulkUpload: React.FC = () => {
         is_bestseller: false,
         is_new: true,
         is_express: false,
-        is_active: false, // Draft mode
+        is_active: false,
       });
 
       setGroups(prev => prev.map((g, i) => i === groupIndex ? { ...g, saved: true } : g));
@@ -202,15 +287,12 @@ const AdminBulkUpload: React.FC = () => {
     }
   };
 
-  // Save all groups
   const saveAllGroups = async () => {
     setSavingAll(true);
-    const unsavedGroups = groups.map((g, i) => ({ group: g, index: i })).filter(({ group }) => !group.saved);
-    
-    for (const { index } of unsavedGroups) {
+    const unsaved = groups.map((g, i) => ({ group: g, index: i })).filter(({ group }) => !group.saved);
+    for (const { index } of unsaved) {
       await saveGroup(index);
     }
-    
     setSavingAll(false);
     toast.success('تم حفظ جميع المنتجات!');
   };
@@ -219,142 +301,139 @@ const AdminBulkUpload: React.FC = () => {
     setGroups(prev => prev.map((g, i) => i === groupIndex ? { ...g, [field]: value } : g));
   };
 
-  const uploadedImages = images.filter(img => img.url);
+  const uploadedImages = images.filter(img => img.status === 'uploaded');
+  const isProcessing = pipelineStep === 'uploading' || pipelineStep === 'analyzing';
 
   return (
     <AdminLayout title="رفع جماعي للصور">
       <div className="max-w-6xl mx-auto space-y-6" dir="rtl">
-        {/* Upload Area */}
-        <div
-          onDrop={handleDrop}
-          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-          onDragLeave={() => setDragOver(false)}
-          className={cn(
-            "border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-colors bg-white",
-            dragOver ? "border-primary bg-primary/5" : "border-gray-300 hover:border-primary/50"
-          )}
-          onClick={() => document.getElementById('bulk-upload-input')?.click()}
-        >
-          <input
-            id="bulk-upload-input"
-            type="file"
-            multiple
-            accept="image/jpeg,image/png,image/webp"
-            className="hidden"
-            onChange={(e) => e.target.files && handleFiles(e.target.files)}
-          />
-          <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">
-            اسحب الصور هنا أو اضغط للاختيار
-          </h3>
-          <p className="text-sm text-gray-500">
-            JPG, PNG, WebP - حد أقصى 5MB لكل صورة • يمكنك رفع مئات الصور دفعة واحدة
-          </p>
-        </div>
 
-        {/* Images Preview */}
-        {images.length > 0 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <h3 className="font-semibold text-gray-900">الصور المرفوعة</h3>
-                <Badge variant="secondary">{images.length} صورة</Badge>
-                {uploadedImages.length > 0 && (
-                  <Badge className="bg-emerald-100 text-emerald-700">{uploadedImages.length} جاهزة</Badge>
-                )}
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={clearAll} className="gap-1 rounded-xl text-red-600 hover:text-red-700">
-                  <Trash2 className="w-4 h-4" />
-                  مسح الكل
-                </Button>
-                {uploadedImages.length < images.length && (
-                  <Button size="sm" onClick={uploadAllImages} disabled={uploading} className="gap-1 rounded-xl bg-[hsl(var(--admin-primary))]">
-                    {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-                    رفع الصور ({images.length - uploadedImages.length})
-                  </Button>
-                )}
-                {uploadedImages.length > 0 && groups.length === 0 && (
-                  <Button size="sm" onClick={analyzeImages} disabled={analyzing} className="gap-1 rounded-xl bg-purple-600 hover:bg-purple-700">
-                    {analyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Wand2 className="w-4 h-4" />}
-                    تصنيف بالذكاء الاصطناعي
-                  </Button>
-                )}
-              </div>
+        {/* Upload Area - only show when idle */}
+        {pipelineStep === 'idle' && images.length === 0 && (
+          <div
+            onDrop={handleDrop}
+            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            className={cn(
+              "border-2 border-dashed rounded-2xl p-16 text-center cursor-pointer transition-all bg-white",
+              dragOver ? "border-primary bg-primary/5 scale-[1.01]" : "border-gray-300 hover:border-primary/50"
+            )}
+            onClick={() => document.getElementById('bulk-upload-input')?.click()}
+          >
+            <input
+              id="bulk-upload-input"
+              type="file"
+              multiple
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              onChange={(e) => e.target.files && handleFiles(e.target.files)}
+            />
+            <div className="bg-primary/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <Upload className="h-10 w-10 text-primary" />
             </div>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
+              اسحب الصور هنا أو اضغط للاختيار
+            </h3>
+            <p className="text-sm text-gray-500 mb-4">
+              JPG, PNG, WebP - حد أقصى 5MB لكل صورة
+            </p>
+            <div className="flex items-center justify-center gap-6 text-xs text-gray-400">
+              <span className="flex items-center gap-1"><Upload className="w-3.5 h-3.5" /> رفع تلقائي</span>
+              <span className="flex items-center gap-1"><Wand2 className="w-3.5 h-3.5" /> تصنيف بالذكاء الاصطناعي</span>
+              <span className="flex items-center gap-1"><Package className="w-3.5 h-3.5" /> إنشاء منتجات</span>
+            </div>
+          </div>
+        )}
 
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
-              {images.map((img, index) => (
-                <div key={index} className="relative group aspect-square rounded-lg overflow-hidden border border-gray-200">
-                  <img src={img.preview} alt={`Image ${index + 1}`} className="w-full h-full object-cover" loading="lazy" />
-                  {img.uploading && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                      <Loader2 className="w-5 h-5 text-white animate-spin" />
-                    </div>
-                  )}
-                  {img.url && (
-                    <div className="absolute top-1 right-1">
-                      <Check className="w-4 h-4 text-emerald-500 bg-white rounded-full" />
-                    </div>
-                  )}
-                  <button
-                    onClick={(e) => { e.stopPropagation(); removeImage(index); }}
-                    className="absolute top-1 left-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                  <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] text-center py-0.5">
-                    {index + 1}
+        {/* Pipeline Progress */}
+        {isProcessing && (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+            <div className="max-w-md mx-auto text-center">
+              <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto mb-4" />
+
+              {pipelineStep === 'uploading' && (
+                <>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">جاري رفع الصور...</h3>
+                  <p className="text-sm text-gray-500 mb-4">
+                    {uploadedImages.length} / {images.length} صورة
+                  </p>
+                  <Progress value={uploadProgress} className="h-2 mb-3" />
+                  <p className="text-xs text-gray-400">{uploadProgress}%</p>
+                </>
+              )}
+
+              {pipelineStep === 'analyzing' && (
+                <>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">جاري التصنيف بالذكاء الاصطناعي...</h3>
+                  <p className="text-sm text-gray-500 mb-4">
+                    يتم تحليل الصور وتجميع المنتجات المتشابهة
+                  </p>
+                  <Progress value={analyzeProgress} className="h-2 mb-3" />
+                  <p className="text-xs text-gray-400">{analyzeProgress}%</p>
+                </>
+              )}
+
+              <Button variant="outline" size="sm" onClick={cancelPipeline} className="mt-4 rounded-xl">
+                إلغاء
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Rejected files notice */}
+        {rejectedCount > 0 && pipelineStep !== 'idle' && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center gap-2 text-sm text-amber-700">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            تم تجاهل {rejectedCount} ملف (حجم أكبر من 5MB أو نوع غير مدعوم)
+          </div>
+        )}
+
+        {/* Results: Images grid + Groups */}
+        {pipelineStep === 'done' && (
+          <>
+            {/* Summary bar */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="bg-emerald-100 p-2.5 rounded-xl">
+                    <ImageIcon className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">تم رفع {uploadedImages.length} صورة</h3>
+                    <p className="text-sm text-gray-500">تم تصنيفها إلى {groups.length} منتج</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* AI Analysis Results */}
-        {analyzing && (
-          <div className="bg-white rounded-2xl border border-purple-200 shadow-sm p-12 text-center">
-            <Loader2 className="w-12 h-12 text-purple-600 animate-spin mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">جاري تحليل الصور بالذكاء الاصطناعي...</h3>
-            <p className="text-sm text-gray-500">يتم تصنيف الصور وتجميع المنتجات المتشابهة</p>
-          </div>
-        )}
-
-        {groups.length > 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <h3 className="text-lg font-semibold text-gray-900">المنتجات المصنفة</h3>
-                <Badge variant="secondary">{groups.length} منتج</Badge>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  onClick={() => { setGroups([]); }}
-                  variant="outline"
-                  size="sm"
-                  className="gap-1 rounded-xl"
-                >
-                  <Wand2 className="w-4 h-4" />
-                  إعادة التصنيف
-                </Button>
-                <Button
-                  onClick={saveAllGroups}
-                  disabled={savingAll || groups.every(g => g.saved)}
-                  size="sm"
-                  className="gap-1 rounded-xl bg-emerald-600 hover:bg-emerald-700"
-                >
-                  {savingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                  حفظ الكل كمسودة
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={clearAll} className="gap-1 rounded-xl text-red-600 hover:text-red-700">
+                    <Trash2 className="w-4 h-4" />
+                    مسح الكل
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={reAnalyze} className="gap-1 rounded-xl">
+                    <Wand2 className="w-4 h-4" />
+                    إعادة التصنيف
+                  </Button>
+                  {groups.length > 0 && (
+                    <Button
+                      onClick={saveAllGroups}
+                      disabled={savingAll || groups.every(g => g.saved)}
+                      size="sm"
+                      className="gap-1 rounded-xl bg-emerald-600 hover:bg-emerald-700"
+                    >
+                      {savingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                      حفظ الكل كمسودة ({groups.filter(g => !g.saved).length})
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center gap-2 text-sm text-amber-700">
+            {/* Info banner */}
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-center gap-2 text-sm text-blue-700">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
-              المنتجات ستُحفظ كمسودة (غير نشطة) بسعر 0 ر.س. يمكنك تعديل الأسعار والتفاصيل لاحقاً من صفحة المنتجات.
+              المنتجات ستُحفظ كمسودة (غير نشطة) بسعر 0 ر.س. يمكنك تعديل الأسعار والتفاصيل لاحقاً من صفحة إدارة المنتجات.
             </div>
 
+            {/* Product Groups */}
             {groups.map((group, groupIndex) => {
               const groupImages = group.imageIndices
                 .map(i => uploadedImages[i])
@@ -364,10 +443,24 @@ const AdminBulkUpload: React.FC = () => {
                 <div
                   key={groupIndex}
                   className={cn(
-                    "bg-white rounded-2xl border shadow-sm p-5",
-                    group.saved ? "border-emerald-200 bg-emerald-50/30" : "border-gray-100"
+                    "bg-white rounded-2xl border shadow-sm p-5 transition-colors",
+                    group.saved ? "border-emerald-300 bg-emerald-50/30" : "border-gray-100"
                   )}
                 >
+                  <div className="flex items-center gap-2 mb-4">
+                    <Badge variant="outline" className="rounded-lg">
+                      منتج {groupIndex + 1}
+                    </Badge>
+                    <Badge variant="secondary" className="rounded-lg">
+                      {groupImages.length} صور
+                    </Badge>
+                    {group.saved && (
+                      <Badge className="bg-emerald-100 text-emerald-700 gap-1 rounded-lg">
+                        <Check className="w-3 h-3" /> تم الحفظ
+                      </Badge>
+                    )}
+                  </div>
+
                   <div className="flex flex-col lg:flex-row gap-5">
                     {/* Images */}
                     <div className="flex-shrink-0">
@@ -382,7 +475,6 @@ const AdminBulkUpload: React.FC = () => {
                           />
                         ))}
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">{groupImages.length} صور</p>
                     </div>
 
                     {/* Product Details */}
@@ -424,19 +516,15 @@ const AdminBulkUpload: React.FC = () => {
                         </Select>
                       </div>
                       <div className="flex items-end">
-                        {group.saved ? (
-                          <Badge className="bg-emerald-100 text-emerald-700 gap-1">
-                            <Check className="w-3 h-3" /> تم الحفظ
-                          </Badge>
-                        ) : (
+                        {!group.saved && (
                           <Button
                             onClick={() => saveGroup(groupIndex)}
                             size="sm"
-                            className="gap-1 rounded-xl bg-[hsl(var(--admin-primary))]"
+                            className="gap-1 rounded-xl"
                             disabled={createProduct.isPending}
                           >
                             <Save className="w-4 h-4" />
-                            حفظ
+                            حفظ كمسودة
                           </Button>
                         )}
                       </div>
@@ -445,7 +533,21 @@ const AdminBulkUpload: React.FC = () => {
                 </div>
               );
             })}
-          </div>
+
+            {/* Upload more */}
+            <div className="text-center py-6">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  clearAll();
+                }}
+                className="gap-2 rounded-xl"
+              >
+                <Upload className="w-4 h-4" />
+                رفع مجموعة صور جديدة
+              </Button>
+            </div>
+          </>
         )}
       </div>
     </AdminLayout>
