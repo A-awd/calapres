@@ -31,6 +31,7 @@ interface ProductGroup {
   category: string;
   description: string;
   description_ar: string;
+  price: number;
   imageIndices: number[];
   saved?: boolean;
 }
@@ -268,7 +269,7 @@ const AdminBulkUpload: React.FC = () => {
         sku,
         description: group.description,
         description_ar: group.description_ar,
-        price: 0,
+        price: group.price || 0,
         category_id: categoryId,
         image: groupImages[0],
         images: groupImages.slice(1),
@@ -515,7 +516,23 @@ const AdminBulkUpload: React.FC = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div className="flex items-end">
+                      <div>
+                        <label className="text-xs text-gray-500 mb-1 block">السعر (ر.س)</label>
+                        <Input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={group.price || ''}
+                          onChange={(e) => {
+                            const val = parseFloat(e.target.value) || 0;
+                            setGroups(prev => prev.map((g, i) => i === groupIndex ? { ...g, price: val } : g));
+                          }}
+                          placeholder="0.00"
+                          className="rounded-xl h-9"
+                          disabled={group.saved}
+                        />
+                      </div>
+                      <div className="flex items-end col-span-full">
                         {!group.saved && (
                           <Button
                             onClick={() => saveGroup(groupIndex)}
