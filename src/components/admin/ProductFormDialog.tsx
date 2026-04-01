@@ -347,20 +347,19 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Image URL</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="https://..." />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+            </div>
+
+            {/* Image Upload Section */}
+            <div>
+              <FormLabel className="mb-2 block">صور المنتج</FormLabel>
+              <ImageUpload
+                images={uploadedImages}
+                onImagesChange={setUploadedImages}
+                maxImages={10}
               />
             </div>
+
+            <div className="grid grid-cols-2 gap-4">
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <FormField
