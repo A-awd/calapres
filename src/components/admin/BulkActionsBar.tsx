@@ -60,160 +60,161 @@ const BulkActionsBar: React.FC<BulkActionsBarProps> = ({ selectedIds, onClearSel
   };
 
   const isLoading = bulkUpdate.isPending || bulkDelete.isPending;
+  const actionButtonClass =
+    'h-9 gap-2 rounded-xl border-border/60 bg-background/80 text-muted-foreground hover:bg-accent hover:text-accent-foreground';
+  const destructiveButtonClass =
+    'h-9 gap-2 rounded-xl border-destructive/30 bg-background text-destructive hover:bg-destructive/10 hover:text-destructive';
 
   return (
     <>
       <AnimatePresence>
         {selectedIds.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
-          >
-            <div className="bg-gray-900 text-white rounded-2xl shadow-2xl p-4 flex items-center gap-4" dir="rtl">
-              {/* Selection Count */}
-              <div className="flex items-center gap-2 pe-4 border-e border-gray-700">
-                <div className="bg-[hsl(var(--admin-primary))] rounded-full w-8 h-8 flex items-center justify-center">
-                  <Check className="w-4 h-4" />
+          <>
+            <div className="h-24 sm:h-20" aria-hidden="true" />
+            <motion.div
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.98 }}
+              transition={{ duration: 0.18 }}
+              className="fixed inset-x-3 bottom-3 z-40 sm:bottom-4"
+            >
+              <div
+                className="mx-auto flex w-full max-w-6xl items-center gap-3 overflow-hidden rounded-2xl border border-border bg-background/95 px-3 py-3 text-foreground shadow-2xl backdrop-blur supports-[backdrop-filter]:bg-background/90 sm:px-4"
+                dir="rtl"
+              >
+                <div className="flex shrink-0 items-center gap-2 pe-3 border-e border-border">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <span className="whitespace-nowrap text-sm font-medium">
+                    {selectedIds.length} منتج محدد
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 rounded-full text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={onClearSelection}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
                 </div>
-                <span className="font-medium whitespace-nowrap">
-                  {selectedIds.length} منتج محدد
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 text-gray-400 hover:text-white hover:bg-gray-800"
-                  onClick={onClearSelection}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+
+                <div className="flex-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  <div className="flex min-w-max items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ is_active: true })}
+                      disabled={isLoading}
+                    >
+                      <Eye className="w-4 h-4" />
+                      <span className="hidden md:inline">تفعيل</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ is_active: false })}
+                      disabled={isLoading}
+                    >
+                      <EyeOff className="w-4 h-4" />
+                      <span className="hidden md:inline">إخفاء</span>
+                    </Button>
+
+                    <div className="h-6 w-px bg-border" />
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ is_bestseller: true })}
+                      disabled={isLoading}
+                    >
+                      <Star className="w-4 h-4" />
+                      <span className="hidden lg:inline">الأكثر مبيعاً</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ is_new: true })}
+                      disabled={isLoading}
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      <span className="hidden sm:inline">جديد</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ is_express: true })}
+                      disabled={isLoading}
+                    >
+                      <Zap className="w-4 h-4" />
+                      <span className="hidden sm:inline">سريع</span>
+                    </Button>
+
+                    <div className="h-6 w-px bg-border" />
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ in_stock: true })}
+                      disabled={isLoading}
+                    >
+                      <Package className="w-4 h-4" />
+                      <span className="hidden md:inline">متوفر</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={actionButtonClass}
+                      onClick={() => handleBulkUpdate({ in_stock: false })}
+                      disabled={isLoading}
+                    >
+                      <Package className="w-4 h-4" />
+                      <span className="hidden md:inline">نفد</span>
+                    </Button>
+
+                    <div className="h-6 w-px bg-border" />
+
+                    <Select value={selectedCategory} onValueChange={handleCategoryChange} disabled={isLoading}>
+                      <SelectTrigger className="h-9 w-[136px] rounded-xl border-border/60 bg-background/80 text-muted-foreground sm:w-[152px]">
+                        <FolderOpen className="ms-2 w-4 h-4" />
+                        <SelectValue placeholder="تغيير الفئة" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="remove">إزالة الفئة</SelectItem>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat.id} value={cat.id}>
+                            {cat.name_ar}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={destructiveButtonClass}
+                      onClick={() => setDeleteDialogOpen(true)}
+                      disabled={isLoading}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      <span className="hidden sm:inline">حذف</span>
+                    </Button>
+                  </div>
+                </div>
               </div>
-
-              {/* Quick Actions */}
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* Status Actions */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ is_active: true })}
-                  disabled={isLoading}
-                >
-                  <Eye className="w-4 h-4" />
-                  <span className="hidden sm:inline">تفعيل</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ is_active: false })}
-                  disabled={isLoading}
-                >
-                  <EyeOff className="w-4 h-4" />
-                  <span className="hidden sm:inline">إخفاء</span>
-                </Button>
-
-                <div className="w-px h-6 bg-gray-700 hidden sm:block" />
-
-                {/* Flag Actions */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-amber-400 hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ is_bestseller: true })}
-                  disabled={isLoading}
-                >
-                  <Star className="w-4 h-4" />
-                  <span className="hidden md:inline">الأكثر مبيعاً</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-blue-400 hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ is_new: true })}
-                  disabled={isLoading}
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span className="hidden md:inline">جديد</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-green-400 hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ is_express: true })}
-                  disabled={isLoading}
-                >
-                  <Zap className="w-4 h-4" />
-                  <span className="hidden md:inline">سريع</span>
-                </Button>
-
-                <div className="w-px h-6 bg-gray-700 hidden sm:block" />
-
-                {/* Stock Actions */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-emerald-400 hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ in_stock: true })}
-                  disabled={isLoading}
-                >
-                  <Package className="w-4 h-4" />
-                  <span className="hidden sm:inline">متوفر</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-gray-300 hover:text-red-400 hover:bg-gray-800 rounded-xl"
-                  onClick={() => handleBulkUpdate({ in_stock: false })}
-                  disabled={isLoading}
-                >
-                  <Package className="w-4 h-4" />
-                  <span className="hidden sm:inline">نفد</span>
-                </Button>
-
-                <div className="w-px h-6 bg-gray-700" />
-
-                {/* Category Change */}
-                <Select value={selectedCategory} onValueChange={handleCategoryChange} disabled={isLoading}>
-                  <SelectTrigger className="w-[130px] sm:w-[160px] bg-gray-800 border-gray-700 text-gray-300 rounded-xl h-9">
-                    <FolderOpen className="w-4 h-4 ms-2" />
-                    <SelectValue placeholder="تغيير الفئة" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="remove">
-                      <span className="text-gray-500">إزالة الفئة</span>
-                    </SelectItem>
-                    {categories.map(cat => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.name_ar}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <div className="w-px h-6 bg-gray-700" />
-
-                {/* Delete Action */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-red-400 hover:text-red-300 hover:bg-red-950 rounded-xl"
-                  onClick={() => setDeleteDialogOpen(true)}
-                  disabled={isLoading}
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span className="hidden sm:inline">حذف</span>
-                </Button>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
-      {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent dir="rtl">
+        <AlertDialogContent dir="rtl" className="max-w-md rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>حذف المنتجات المحددة</AlertDialogTitle>
             <AlertDialogDescription>
@@ -224,7 +225,7 @@ const BulkActionsBar: React.FC<BulkActionsBarProps> = ({ selectedIds, onClearSel
             <AlertDialogCancel className="rounded-xl">إلغاء</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleBulkDelete}
-              className="bg-red-600 hover:bg-red-700 rounded-xl"
+              className="rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={bulkDelete.isPending}
             >
               {bulkDelete.isPending ? 'جاري الحذف...' : 'حذف'}
