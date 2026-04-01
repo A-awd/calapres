@@ -117,6 +117,7 @@ const SortableOccasionRow: React.FC<{
   );
 };
 
+const AdminCatalog: React.FC = () => {
   // DnD sensors
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
