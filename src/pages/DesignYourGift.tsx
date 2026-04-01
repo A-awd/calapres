@@ -661,7 +661,7 @@ const DesignYourGift = () => {
           </div>
         </section>
       </main>
-    </div>
+    </StorefrontLayout>
   );
 };
 
