@@ -23,6 +23,7 @@ import BundleFormDialog from '@/components/admin/BundleFormDialog';
 import CategoryFormDialog from '@/components/admin/CategoryFormDialog';
 import OccasionFormDialog from '@/components/admin/OccasionFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
+import BulkActionsBar from '@/components/admin/BulkActionsBar';
 
 const AdminCatalog: React.FC = () => {
   const [activeTab, setActiveTab] = useState('products');
