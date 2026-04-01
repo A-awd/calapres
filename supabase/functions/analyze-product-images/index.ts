@@ -1,5 +1,10 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+};
 
 const AI_GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
@@ -22,7 +27,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Verify user is admin
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_ANON_KEY")!,
@@ -45,7 +49,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { imageUrls } = await req.json();
+    const { imageUrls, batchIndex, totalBatches } = await req.json();
 
     if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0) {
       return new Response(JSON.stringify({ error: "imageUrls array is required" }), {
@@ -54,8 +58,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Build content with image URLs for AI analysis
-    const imageContent = imageUrls.map((url: string, index: number) => ({
+    const imageContent = imageUrls.map((url: string) => ({
       type: "image_url" as const,
       image_url: { url, detail: "low" as const },
     }));
@@ -110,6 +113,20 @@ IMPORTANT: Every image index must be assigned to exactly one group. If an image 
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error(`AI Gateway error [${response.status}]:`, errorText);
+      
+      if (response.status === 429) {
+        return new Response(JSON.stringify({ error: "تم تجاوز حد الطلبات، يرجى المحاولة لاحقاً" }), {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "يرجى إضافة رصيد للاستمرار" }), {
+          status: 402,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
       throw new Error(`AI Gateway error [${response.status}]: ${errorText}`);
     }
 
@@ -124,7 +141,6 @@ IMPORTANT: Every image index must be assigned to exactly one group. If an image 
     try {
       parsed = JSON.parse(content);
     } catch {
-      // Try extracting JSON from markdown code block
       const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (jsonMatch) {
         parsed = JSON.parse(jsonMatch[1].trim());
