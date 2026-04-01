@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useStorefrontProducts } from '@/hooks/useStorefrontData';
+import { useAllProducts } from '@/hooks/useStorefrontData';
 import ProductCard from './ProductCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
