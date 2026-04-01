@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import imageCompression from 'browser-image-compression';
 import { Upload, Loader2, Trash2, Check, X, Wand2, Save, AlertCircle, Image as ImageIcon, Package } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -58,23 +59,51 @@ const AdminBulkUpload: React.FC = () => {
   const runPipeline = useCallback(async (fileArray: File[]) => {
     abortRef.current = false;
 
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB max accepted
+    const COMPRESS_THRESHOLD = 5 * 1024 * 1024; // compress if > 5MB
+
     // Step 1: Filter valid files
     const validFiles: File[] = [];
     let rejected = 0;
     for (const f of fileArray) {
       if (!f.type.startsWith('image/')) { rejected++; continue; }
-      if (f.size > 5 * 1024 * 1024) { rejected++; continue; }
+      if (f.size > MAX_FILE_SIZE) { rejected++; continue; }
       validFiles.push(f);
     }
     setRejectedCount(rejected);
 
     if (validFiles.length === 0) {
-      toast.error('لم يتم العثور على صور صالحة (JPG, PNG, WebP - حد أقصى 5MB)');
+      toast.error('لم يتم العثور على صور صالحة (JPG, PNG, WebP - حد أقصى 20MB)');
       return;
     }
 
+    // Compress large files
+    const compressedFiles: File[] = [];
+    let compressedCount = 0;
+    for (const file of validFiles) {
+      if (file.size > COMPRESS_THRESHOLD) {
+        try {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: 4.5,
+            maxWidthOrHeight: 2048,
+            useWebWorker: true,
+          });
+          compressedFiles.push(new File([compressed], file.name, { type: compressed.type }));
+          compressedCount++;
+        } catch {
+          compressedFiles.push(file); // fallback to original
+        }
+      } else {
+        compressedFiles.push(file);
+      }
+    }
+
+    if (compressedCount > 0) {
+      toast.info(`تم ضغط ${compressedCount} صورة تلقائياً`);
+    }
+
     // Create image entries
-    const newImages: UploadedImage[] = validFiles.map(file => ({
+    const newImages: UploadedImage[] = compressedFiles.map(file => ({
       file,
       preview: URL.createObjectURL(file),
       status: 'pending',
@@ -336,7 +365,7 @@ const AdminBulkUpload: React.FC = () => {
               اسحب الصور هنا أو اضغط للاختيار
             </h3>
             <p className="text-sm text-gray-500 mb-4">
-              JPG, PNG, WebP - حد أقصى 5MB لكل صورة
+              JPG, PNG, WebP - حد أقصى 20MB لكل صورة (يتم ضغطها تلقائياً)
             </p>
             <div className="flex items-center justify-center gap-6 text-xs text-gray-400">
               <span className="flex items-center gap-1"><Upload className="w-3.5 h-3.5" /> رفع تلقائي</span>
