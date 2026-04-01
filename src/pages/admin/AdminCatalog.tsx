@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, MoreVertical, Edit, Trash2, Image, Package, Gift, FolderOpen, Calendar } from 'lucide-react';
+import { Plus, Search, MoreVertical, Edit, Trash2, Image, Package, Gift, FolderOpen, Calendar, GripVertical } from 'lucide-react';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers' ;
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,8 +20,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useProducts, useDeleteProduct, Product } from '@/hooks/useProducts';
 import { useBundles, useDeleteBundle, Bundle } from '@/hooks/useBundles';
-import { useCategories, useDeleteCategory, Category } from '@/hooks/useCategories';
-import { useOccasions, useDeleteOccasion, Occasion } from '@/hooks/useOccasions';
+import { useCategories, useDeleteCategory, useReorderCategories, Category } from '@/hooks/useCategories';
+import { useOccasions, useDeleteOccasion, useReorderOccasions, Occasion } from '@/hooks/useOccasions';
 import ProductFormDialog from '@/components/admin/ProductFormDialog';
 import BundleFormDialog from '@/components/admin/BundleFormDialog';
 import CategoryFormDialog from '@/components/admin/CategoryFormDialog';
