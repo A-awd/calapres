@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, MoreVertical, Edit, Trash2, Image, Package, Gift, FolderOpen, Calendar } from 'lucide-react';
+import { Plus, Search, MoreVertical, Edit, Trash2, Image, Package, Gift, FolderOpen, Calendar, GripVertical } from 'lucide-react';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers' ;
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,8 +20,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useProducts, useDeleteProduct, Product } from '@/hooks/useProducts';
 import { useBundles, useDeleteBundle, Bundle } from '@/hooks/useBundles';
-import { useCategories, useDeleteCategory, Category } from '@/hooks/useCategories';
-import { useOccasions, useDeleteOccasion, Occasion } from '@/hooks/useOccasions';
+import { useCategories, useDeleteCategory, useReorderCategories, Category } from '@/hooks/useCategories';
+import { useOccasions, useDeleteOccasion, useReorderOccasions, Occasion } from '@/hooks/useOccasions';
 import ProductFormDialog from '@/components/admin/ProductFormDialog';
 import BundleFormDialog from '@/components/admin/BundleFormDialog';
 import CategoryFormDialog from '@/components/admin/CategoryFormDialog';
@@ -25,7 +29,101 @@ import OccasionFormDialog from '@/components/admin/OccasionFormDialog';
 import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import BulkActionsBar, { EntityType } from '@/components/admin/BulkActionsBar';
 
+// Sortable Row Components
+const SortableCategoryRow: React.FC<{
+  category: Category; isSelected: boolean;
+  onToggleSelect: () => void; onEdit: () => void; onDelete: () => void;
+}> = ({ category, isSelected, onToggleSelect, onEdit, onDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: category.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  return (
+    <tr ref={setNodeRef} style={style} className={`hover:bg-gray-50/50 transition-colors ${isSelected ? 'bg-blue-50/50' : ''}`}>
+      <td className="p-3 w-8 cursor-grab" {...attributes} {...listeners}>
+        <GripVertical className="w-4 h-4 text-muted-foreground" />
+      </td>
+      <td className="p-3"><Checkbox checked={isSelected} onCheckedChange={onToggleSelect} /></td>
+      <td className="p-3">
+        <div className="flex items-center gap-3">
+          {category.image ? (
+            <img src={category.image} alt={category.name} className="w-10 h-10 object-cover rounded-lg flex-shrink-0" />
+          ) : (
+            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Image className="w-5 h-5 text-muted-foreground" />
+            </div>
+          )}
+          <div>
+            <p className="font-medium">{category.name_ar}</p>
+            <p className="text-xs text-muted-foreground">{category.name}</p>
+          </div>
+        </div>
+      </td>
+      <td className="p-3 hidden md:table-cell text-muted-foreground">{category.display_order}</td>
+      <td className="p-3">
+        <span className={`px-2 py-1 rounded text-xs ${category.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {category.is_active ? 'نشط' : 'مخفي'}
+        </span>
+      </td>
+      <td className="p-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={onEdit}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive" onClick={onDelete}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </td>
+    </tr>
+  );
+};
+
+const SortableOccasionRow: React.FC<{
+  occasion: Occasion; isSelected: boolean;
+  onToggleSelect: () => void; onEdit: () => void; onDelete: () => void;
+}> = ({ occasion, isSelected, onToggleSelect, onEdit, onDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: occasion.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  return (
+    <tr ref={setNodeRef} style={style} className={`hover:bg-gray-50/50 transition-colors ${isSelected ? 'bg-blue-50/50' : ''}`}>
+      <td className="p-3 w-8 cursor-grab" {...attributes} {...listeners}>
+        <GripVertical className="w-4 h-4 text-muted-foreground" />
+      </td>
+      <td className="p-3"><Checkbox checked={isSelected} onCheckedChange={onToggleSelect} /></td>
+      <td className="p-3">
+        <div className="flex items-center gap-3">
+          {occasion.icon && <span className="text-2xl">{occasion.icon}</span>}
+          <div>
+            <p className="font-medium">{occasion.name_ar}</p>
+            <p className="text-sm text-muted-foreground">{occasion.name}</p>
+          </div>
+        </div>
+      </td>
+      <td className="p-3 hidden md:table-cell"><span className="font-mono text-xs text-muted-foreground">{occasion.slug}</span></td>
+      <td className="p-3 hidden md:table-cell text-muted-foreground">{occasion.display_order}</td>
+      <td className="p-3">
+        <span className={`px-2 py-1 rounded text-xs ${occasion.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {occasion.is_active ? 'نشط' : 'مخفي'}
+        </span>
+      </td>
+      <td className="p-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={onEdit}><Edit className="w-4 h-4 ml-2" /> تعديل</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive" onClick={onDelete}><Trash2 className="w-4 h-4 ml-2" /> حذف</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </td>
+    </tr>
+  );
+};
+
 const AdminCatalog: React.FC = () => {
+  // DnD sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
   const [activeTab, setActiveTab] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -69,6 +167,35 @@ const AdminCatalog: React.FC = () => {
   const deleteBundle = useDeleteBundle();
   const deleteCategory = useDeleteCategory();
   const deleteOccasion = useDeleteOccasion();
+  const reorderCategories = useReorderCategories();
+  const reorderOccasions = useReorderOccasions();
+
+  // Local ordered state for DnD
+  const [localCategories, setLocalCategories] = useState<Category[]>([]);
+  const [localOccasions, setLocalOccasions] = useState<Occasion[]>([]);
+
+  React.useEffect(() => { setLocalCategories(categories); }, [categories]);
+  React.useEffect(() => { setLocalOccasions(occasions); }, [occasions]);
+
+  const handleCategoryDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = localCategories.findIndex(c => c.id === active.id);
+    const newIndex = localCategories.findIndex(c => c.id === over.id);
+    const newOrder = arrayMove(localCategories, oldIndex, newIndex);
+    setLocalCategories(newOrder);
+    reorderCategories.mutate(newOrder.map(c => c.id));
+  };
+
+  const handleOccasionDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = localOccasions.findIndex(o => o.id === active.id);
+    const newIndex = localOccasions.findIndex(o => o.id === over.id);
+    const newOrder = arrayMove(localOccasions, oldIndex, newIndex);
+    setLocalOccasions(newOrder);
+    reorderOccasions.mutate(newOrder.map(o => o.id));
+  };
 
   // Filtered data
   const filteredProducts = products.filter(p => 
@@ -76,8 +203,8 @@ const AdminCatalog: React.FC = () => {
     p.sku.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const filteredBundles = bundles.filter(b => b.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  const filteredCategories = categories.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  const filteredOccasions = occasions.filter(o => o.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredCategories = localCategories.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredOccasions = localOccasions.filter(o => o.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleAddNew = () => {
     switch (activeTab) {
@@ -362,76 +489,45 @@ const AdminCatalog: React.FC = () => {
           <Card className="bg-white border border-gray-200 shadow-sm">
             <CardContent className="p-0">
               {categoriesLoading ? (
-                <div className="p-8 text-center text-gray-500">جاري التحميل...</div>
+                <div className="p-8 text-center text-muted-foreground">جاري التحميل...</div>
               ) : filteredCategories.length === 0 ? (
-                <div className="p-8 text-center text-gray-500">لم يتم العثور على فئات</div>
+                <div className="p-8 text-center text-muted-foreground">لم يتم العثور على فئات</div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm" dir="rtl">
-                    <thead className="bg-gray-50 border-b border-gray-100">
-                      <tr>
-                        <th className="p-4 text-right w-10">
-                          <Checkbox
-                            checked={selectedCategories.length === filteredCategories.length && filteredCategories.length > 0}
-                            onCheckedChange={() => toggleAllSelection(filteredCategories, selectedCategories, setSelectedCategories)}
-                          />
-                        </th>
-                        <th className="p-4 text-right font-medium text-gray-500">الفئة</th>
-                        <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الترتيب</th>
-                        <th className="p-4 text-right font-medium text-gray-500">الحالة</th>
-                        <th className="p-4 text-right font-medium text-gray-500">الإجراءات</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {filteredCategories.map((category) => (
-                        <tr key={category.id} className={`hover:bg-gray-50/50 transition-colors ${selectedCategories.includes(category.id) ? 'bg-blue-50/50' : ''}`}>
-                          <td className="p-4">
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleCategoryDragEnd} modifiers={[restrictToVerticalAxis]}>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm" dir="rtl">
+                      <thead className="bg-gray-50 border-b border-gray-100">
+                        <tr>
+                          <th className="p-3 w-8"></th>
+                          <th className="p-3 text-right w-10">
                             <Checkbox
-                              checked={selectedCategories.includes(category.id)}
-                              onCheckedChange={() => toggleSelection(category.id, selectedCategories, setSelectedCategories)}
+                              checked={selectedCategories.length === filteredCategories.length && filteredCategories.length > 0}
+                              onCheckedChange={() => toggleAllSelection(filteredCategories, selectedCategories, setSelectedCategories)}
                             />
-                          </td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-3">
-                              {category.image ? (
-                                <img src={category.image} alt={category.name} className="w-10 h-10 lg:w-12 lg:h-12 object-cover rounded-lg flex-shrink-0" />
-                              ) : (
-                                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                  <Image className="w-5 h-5 text-gray-400" />
-                                </div>
-                              )}
-                              <div>
-                                <p className="font-medium text-gray-900">{category.name_ar}</p>
-                                <p className="text-xs text-gray-500">{category.name}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="p-4 hidden md:table-cell text-gray-500">{category.display_order}</td>
-                          <td className="p-4">
-                            <span className={`px-2 py-1 rounded text-xs ${category.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                              {category.is_active ? 'نشط' : 'مخفي'}
-                            </span>
-                          </td>
-                          <td className="p-4">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900"><MoreVertical className="w-4 h-4" /></Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="start">
-                                <DropdownMenuItem onClick={() => { setEditingCategory(category); setCategoryFormOpen(true); }}>
-                                  <Edit className="w-4 h-4 ml-2" /> تعديل
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="text-red-600" onClick={() => { setCategoryToDelete(category.id); setCategoryDeleteOpen(true); }}>
-                                  <Trash2 className="w-4 h-4 ml-2" /> حذف
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </td>
+                          </th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">الفئة</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground hidden md:table-cell">الترتيب</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">الحالة</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">الإجراءات</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <SortableContext items={filteredCategories.map(c => c.id)} strategy={verticalListSortingStrategy}>
+                        <tbody className="divide-y divide-gray-100">
+                          {filteredCategories.map((category) => (
+                            <SortableCategoryRow
+                              key={category.id}
+                              category={category}
+                              isSelected={selectedCategories.includes(category.id)}
+                              onToggleSelect={() => toggleSelection(category.id, selectedCategories, setSelectedCategories)}
+                              onEdit={() => { setEditingCategory(category); setCategoryFormOpen(true); }}
+                              onDelete={() => { setCategoryToDelete(category.id); setCategoryDeleteOpen(true); }}
+                            />
+                          ))}
+                        </tbody>
+                      </SortableContext>
+                    </table>
+                  </div>
+                </DndContext>
               )}
             </CardContent>
           </Card>
@@ -442,74 +538,46 @@ const AdminCatalog: React.FC = () => {
           <Card className="bg-white border border-gray-200 shadow-sm">
             <CardContent className="p-0">
               {occasionsLoading ? (
-                <div className="p-8 text-center text-gray-500">جاري التحميل...</div>
+                <div className="p-8 text-center text-muted-foreground">جاري التحميل...</div>
               ) : filteredOccasions.length === 0 ? (
-                <div className="p-8 text-center text-gray-500">لم يتم العثور على مناسبات</div>
+                <div className="p-8 text-center text-muted-foreground">لم يتم العثور على مناسبات</div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm" dir="rtl">
-                    <thead className="bg-gray-50 border-b border-gray-100">
-                      <tr>
-                        <th className="p-4 text-right w-10">
-                          <Checkbox
-                            checked={selectedOccasions.length === filteredOccasions.length && filteredOccasions.length > 0}
-                            onCheckedChange={() => toggleAllSelection(filteredOccasions, selectedOccasions, setSelectedOccasions)}
-                          />
-                        </th>
-                        <th className="p-4 text-right font-medium text-gray-500">المناسبة</th>
-                        <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الرابط</th>
-                        <th className="p-4 text-right font-medium text-gray-500 hidden md:table-cell">الترتيب</th>
-                        <th className="p-4 text-right font-medium text-gray-500">الحالة</th>
-                        <th className="p-4 text-right font-medium text-gray-500">الإجراءات</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {filteredOccasions.map((occasion) => (
-                        <tr key={occasion.id} className={`hover:bg-gray-50/50 transition-colors ${selectedOccasions.includes(occasion.id) ? 'bg-blue-50/50' : ''}`}>
-                          <td className="p-4">
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleOccasionDragEnd} modifiers={[restrictToVerticalAxis]}>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm" dir="rtl">
+                      <thead className="bg-gray-50 border-b border-gray-100">
+                        <tr>
+                          <th className="p-3 w-8"></th>
+                          <th className="p-3 text-right w-10">
                             <Checkbox
-                              checked={selectedOccasions.includes(occasion.id)}
-                              onCheckedChange={() => toggleSelection(occasion.id, selectedOccasions, setSelectedOccasions)}
+                              checked={selectedOccasions.length === filteredOccasions.length && filteredOccasions.length > 0}
+                              onCheckedChange={() => toggleAllSelection(filteredOccasions, selectedOccasions, setSelectedOccasions)}
                             />
-                          </td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-3">
-                              {occasion.icon && <span className="text-2xl">{occasion.icon}</span>}
-                              <div>
-                                <p className="font-medium text-gray-900">{occasion.name_ar}</p>
-                                <p className="text-sm text-gray-500">{occasion.name}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="p-4 hidden md:table-cell">
-                            <span className="font-mono text-xs text-gray-500">{occasion.slug}</span>
-                          </td>
-                          <td className="p-4 hidden md:table-cell text-gray-500">{occasion.display_order}</td>
-                          <td className="p-4">
-                            <span className={`px-2 py-1 rounded text-xs ${occasion.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                              {occasion.is_active ? 'نشط' : 'مخفي'}
-                            </span>
-                          </td>
-                          <td className="p-4">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900"><MoreVertical className="w-4 h-4" /></Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="start">
-                                <DropdownMenuItem onClick={() => { setEditingOccasion(occasion); setOccasionFormOpen(true); }}>
-                                  <Edit className="w-4 h-4 ml-2" /> تعديل
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="text-red-600" onClick={() => { setOccasionToDelete(occasion.id); setOccasionDeleteOpen(true); }}>
-                                  <Trash2 className="w-4 h-4 ml-2" /> حذف
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </td>
+                          </th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">المناسبة</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground hidden md:table-cell">الرابط</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground hidden md:table-cell">الترتيب</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">الحالة</th>
+                          <th className="p-3 text-right font-medium text-muted-foreground">الإجراءات</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <SortableContext items={filteredOccasions.map(o => o.id)} strategy={verticalListSortingStrategy}>
+                        <tbody className="divide-y divide-gray-100">
+                          {filteredOccasions.map((occasion) => (
+                            <SortableOccasionRow
+                              key={occasion.id}
+                              occasion={occasion}
+                              isSelected={selectedOccasions.includes(occasion.id)}
+                              onToggleSelect={() => toggleSelection(occasion.id, selectedOccasions, setSelectedOccasions)}
+                              onEdit={() => { setEditingOccasion(occasion); setOccasionFormOpen(true); }}
+                              onDelete={() => { setOccasionToDelete(occasion.id); setOccasionDeleteOpen(true); }}
+                            />
+                          ))}
+                        </tbody>
+                      </SortableContext>
+                    </table>
+                  </div>
+                </DndContext>
               )}
             </CardContent>
           </Card>
