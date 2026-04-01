@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import { motion } from "framer-motion";
 import { Heart, Gift, Star, Users, Award, Sparkles } from "lucide-react";
 import Header from "@/components/storefront/Header";

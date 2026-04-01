@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -29,6 +30,9 @@ import Footer from '@/components/storefront/Footer';
 import ProductCard from '@/components/storefront/ProductCard';
 import ProductImageGallery from '@/components/storefront/ProductImageGallery';
 import ProductCustomizationOptions from '@/components/storefront/ProductCustomizationOptions';
+import ReviewsSection from '@/components/storefront/ReviewsSection';
+import CitySelector from '@/components/storefront/CitySelector';
+import AnnouncementBar from '@/components/storefront/AnnouncementBar';
 import { useProduct } from '@/hooks/useProducts';
 import { useBestsellerProducts } from '@/hooks/useStorefrontData';
 import { GiftWrap, Ribbon } from '@/hooks/useGiftBuilder';
@@ -39,6 +43,7 @@ const ProductDetail: React.FC = () => {
   const navigate = useNavigate();
   const { t, language, direction } = useLanguage();
   const { addItem } = useCart();
+  const { isInWishlist, toggleItem: toggleWishlist } = useWishlist();
 
   // Fetch product from database
   const { data: product, isLoading, error } = useProduct(id || '');
@@ -46,7 +51,6 @@ const ProductDetail: React.FC = () => {
   
   const [quantity, setQuantity] = useState(1);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   
   // Customization state
   const [customization, setCustomization] = useState({
@@ -154,7 +158,9 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background" dir={direction}>
+      <AnnouncementBar />
       <Header />
+      <CitySelector />
 
       <main className="container-luxury py-6 md:py-8 lg:py-12">
         {/* Breadcrumb */}
@@ -215,14 +221,14 @@ const ProductDetail: React.FC = () => {
             {/* Wishlist & Share */}
             <div className="absolute top-4 end-4 flex flex-col gap-2 z-[5]">
               <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                onClick={() => product && toggleWishlist(product.id)}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                  isWishlisted
+                  product && isInWishlist(product.id)
                     ? 'bg-red-500 text-white'
                     : 'bg-background/80 backdrop-blur-sm hover:bg-background'
                 }`}
               >
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
+                <Heart className={`w-5 h-5 ${product && isInWishlist(product.id) ? 'fill-current' : ''}`} />
               </button>
               <button 
                 onClick={handleShare}
@@ -445,6 +451,9 @@ const ProductDetail: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Reviews */}
+        <ReviewsSection productId={product.id} />
 
         {/* Related Products */}
         {filteredRelated.length > 0 && (
