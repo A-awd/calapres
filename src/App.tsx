@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { CityProvider } from "@/contexts/CityContext";
+import { WishlistProvider } from "@/contexts/WishlistContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Cart from "./pages/Cart";
@@ -40,49 +42,53 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
       <AuthProvider>
-        <CartProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* Storefront */}
-                <Route path="/" element={<Index />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/bundle-builder" element={<BundleBuilder />} />
-                <Route path="/collections" element={<Collections />} />
-                <Route path="/collections/:categorySlug" element={<Collections />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/order-success" element={<OrderSuccess />} />
-                <Route path="/track-order" element={<OrderTracking />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/ramadan" element={<Ramadan />} />
-                <Route path="/occasion/:slug" element={<OccasionLanding />} />
-                <Route path="/design-your-gift" element={<DesignYourGift />} />
-                <Route path="/occasion-reminders" element={<OccasionReminders />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/about" element={<About />} />
-                
-                {/* Admin */}
-                <Route path="/admin" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/orders" element={<AdminOrders />} />
-                <Route path="/admin/catalog" element={<AdminCatalog />} />
-                <Route path="/admin/users" element={<AdminUsers />} />
-                <Route path="/admin/coupons" element={<AdminCoupons />} />
-                <Route path="/admin/email-stats" element={<AdminEmailStats />} />
-                <Route path="/admin/announcements" element={<AdminAnnouncements />} />
-                <Route path="/admin/bulk-upload" element={<AdminBulkUpload />} />
-                
-                {/* Catch-all */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </CartProvider>
+        <CityProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <Routes>
+                    {/* Storefront */}
+                    <Route path="/" element={<Index />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/bundle-builder" element={<BundleBuilder />} />
+                    <Route path="/collections" element={<Collections />} />
+                    <Route path="/collections/:categorySlug" element={<Collections />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/order-success" element={<OrderSuccess />} />
+                    <Route path="/track-order" element={<OrderTracking />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/ramadan" element={<Ramadan />} />
+                    <Route path="/occasion/:slug" element={<OccasionLanding />} />
+                    <Route path="/design-your-gift" element={<DesignYourGift />} />
+                    <Route path="/occasion-reminders" element={<OccasionReminders />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/about" element={<About />} />
+                    
+                    {/* Admin */}
+                    <Route path="/admin" element={<AdminLogin />} />
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/catalog" element={<AdminCatalog />} />
+                    <Route path="/admin/users" element={<AdminUsers />} />
+                    <Route path="/admin/coupons" element={<AdminCoupons />} />
+                    <Route path="/admin/email-stats" element={<AdminEmailStats />} />
+                    <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+                    <Route path="/admin/bulk-upload" element={<AdminBulkUpload />} />
+                    
+                    {/* Catch-all */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+              </TooltipProvider>
+            </CartProvider>
+          </WishlistProvider>
+        </CityProvider>
       </AuthProvider>
     </LanguageProvider>
   </QueryClientProvider>

@@ -3,15 +3,15 @@ import Header from '@/components/storefront/Header';
 import Footer from '@/components/storefront/Footer';
 import WhatsAppButton from '@/components/storefront/WhatsAppButton';
 import AnnouncementBar from '@/components/storefront/AnnouncementBar';
+import CitySelector from '@/components/storefront/CitySelector';
 import HeroSection from '@/components/storefront/HeroSection';
+import QuickCategoriesSection from '@/components/storefront/QuickCategoriesSection';
 import OccasionsSection from '@/components/storefront/OccasionsSection';
-import GiftIdeasSection from '@/components/storefront/GiftIdeasSection';
-import InspirationSection from '@/components/storefront/InspirationSection';
-import BrandsSection from '@/components/storefront/BrandsSection';
-import BudgetSection from '@/components/storefront/BudgetSection';
 import BestsellersSection from '@/components/storefront/BestsellersSection';
-import ExpressSection from '@/components/storefront/ExpressSection';
+import NewArrivalsSection from '@/components/storefront/NewArrivalsSection';
+import BudgetSection from '@/components/storefront/BudgetSection';
 import BundlesSection from '@/components/storefront/BundlesSection';
+import BrandsSection from '@/components/storefront/BrandsSection';
 import TestimonialsSection from '@/components/storefront/TestimonialsSection';
 
 const Index: React.FC = () => {
@@ -19,17 +19,34 @@ const Index: React.FC = () => {
     <div className="min-h-screen">
       <AnnouncementBar />
       <Header />
+      <CitySelector />
       
       <main>
+        {/* 1. Hero - seasonal offers */}
         <HeroSection />
+
+        {/* 2. Quick Categories - icon strip (flowers, cakes, gifts, perfumes, chocolates) */}
+        <QuickCategoriesSection />
+
+        {/* 3. Occasions - horizontal strip (birthday, congrats, thank you, apology) */}
         <OccasionsSection />
-        <GiftIdeasSection />
-        <InspirationSection />
+
+        {/* 4. Bestsellers - most popular products */}
         <BestsellersSection />
-        <BrandsSection />
+
+        {/* 5. New Arrivals */}
+        <NewArrivalsSection />
+
+        {/* 6. Shop by Budget */}
         <BudgetSection />
-        <ExpressSection />
+
+        {/* 7. Bundles - ready gift packages */}
         <BundlesSection />
+
+        {/* 8. Brands */}
+        <BrandsSection />
+
+        {/* 9. Testimonials */}
         <TestimonialsSection />
       </main>
 
