@@ -50,6 +50,7 @@ const menuGroups = [
       { icon: Package, label: 'إدارة المنتجات', href: '/admin/catalog' },
       { icon: FolderTree, label: 'الفئات', href: '/admin/catalog' },
       { icon: Gift, label: 'الباقات', href: '/admin/catalog' },
+      { icon: ImagePlus, label: 'رفع جماعي للصور', href: '/admin/bulk-upload' },
     ]
   },
   {
