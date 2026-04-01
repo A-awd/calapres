@@ -220,3 +220,33 @@ export const useDeleteBundle = () => {
     },
   });
 };
+
+export const useBulkUpdateBundles = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ ids, data }: { ids: string[]; data: { is_active?: boolean; is_featured?: boolean } }) => {
+      const { error } = await supabase.from('bundles').update(data).in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['bundles'] });
+      toast.success(`تم تحديث ${variables.ids.length} باقة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل التحديث: ${error.message}`),
+  });
+};
+
+export const useBulkDeleteBundles = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (ids: string[]) => {
+      const { error } = await supabase.from('bundles').delete().in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, ids) => {
+      queryClient.invalidateQueries({ queryKey: ['bundles'] });
+      toast.success(`تم حذف ${ids.length} باقة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل الحذف: ${error.message}`),
+  });
+};
