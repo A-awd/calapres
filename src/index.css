@@ -367,18 +367,15 @@
      ======================================== */
   
   .marquee-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 60;
+    position: relative;
+    z-index: 10;
     height: 40px;
     background-color: hsl(var(--gold));
     color: hsl(var(--charcoal));
     overflow: hidden;
     display: flex;
     align-items: center;
-    /* Ensure marquee is visible in RTL pages (avoid starting off-screen) */
+    /* Ensure marquee is visible in RTL pages */
     direction: ltr;
   }
 
