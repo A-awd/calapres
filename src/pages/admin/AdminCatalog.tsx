@@ -28,6 +28,7 @@ import BulkActionsBar from '@/components/admin/BulkActionsBar';
 const AdminCatalog: React.FC = () => {
   const [activeTab, setActiveTab] = useState('products');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   
   // Products state
   const [productFormOpen, setProductFormOpen] = useState(false);
