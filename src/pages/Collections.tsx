@@ -419,8 +419,7 @@ const Collections: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background" dir={direction}>
-        <Header />
+      <StorefrontLayout>
         <section className="bg-sand py-16 md:py-24">
           <div className="container-luxury text-center">
             <Skeleton className="h-8 w-64 mx-auto mb-4" />
@@ -434,14 +433,12 @@ const Collections: React.FC = () => {
             ))}
           </div>
         </main>
-        <Footer />
-      </div>
+      </StorefrontLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background" dir={direction}>
-      <Header />
+    <StorefrontLayout>
 
       {/* Hero Banner */}
       <section className="bg-sand py-16 md:py-24">
@@ -648,9 +645,7 @@ const Collections: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    </StorefrontLayout>
   );
 };
 

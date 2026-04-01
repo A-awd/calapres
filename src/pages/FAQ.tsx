@@ -236,8 +236,7 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <Header />
+    <StorefrontLayout>
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#F8F5F0] to-[#EDE8E0] py-16 sm:py-20">
@@ -338,10 +337,7 @@ const FAQ: React.FC = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    </StorefrontLayout>
   );
 };
 

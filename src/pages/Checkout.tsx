@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -274,9 +275,8 @@ const Checkout: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-background" dir={direction}>
-        <Header />
-        <main className="container-luxury py-20 text-center">
+      <StorefrontLayout>
+<main className="container-luxury py-20 text-center">
           <h1 className="font-display text-3xl font-medium mb-4">
             {t('السلة فارغة', 'Your cart is empty')}
           </h1>
@@ -287,16 +287,13 @@ const Checkout: React.FC = () => {
             <Link to="/collections">{t('تسوق الآن', 'Shop Now')}</Link>
           </Button>
         </main>
-        <Footer />
-      </div>
-    );
+    </StorefrontLayout>
+  );
   }
 
   return (
-    <div className="min-h-screen bg-background" dir={direction}>
-      <Header />
-
-      <main className="container-luxury py-6 md:py-8 lg:py-12">
+    <StorefrontLayout>
+<main className="container-luxury py-6 md:py-8 lg:py-12">
         {/* Back link */}
         <Link
           to="/cart"
@@ -803,9 +800,7 @@ const Checkout: React.FC = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 

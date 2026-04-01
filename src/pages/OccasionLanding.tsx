@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -94,10 +95,8 @@ const OccasionLanding: React.FC = () => {
   const OccasionIcon = config.icon;
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
-      <main>
+    <StorefrontLayout>
+<main>
         {/* Hero Section */}
         <section className="relative min-h-[70vh] flex items-center overflow-hidden">
           <div className="absolute inset-0">
@@ -304,10 +303,7 @@ const OccasionLanding: React.FC = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    </StorefrontLayout>
   );
 };
 

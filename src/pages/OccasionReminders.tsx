@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -205,8 +206,7 @@ const OccasionReminders = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
-      <Header />
+    <StorefrontLayout>
       
       <main className="pt-20">
         {/* Hero Section */}

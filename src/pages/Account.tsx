@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
@@ -125,9 +126,8 @@ const Account = () => {
         <main className="container-luxury py-8 flex justify-center items-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </main>
-        <Footer />
-      </div>
-    );
+    </StorefrontLayout>
+  );
   }
 
   return (
@@ -261,9 +261,7 @@ const Account = () => {
           </Tabs>
         </motion.div>
       </main>
-
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 

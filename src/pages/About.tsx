@@ -42,8 +42,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <StorefrontLayout>
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -267,10 +266,7 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    </StorefrontLayout>
   );
 };
 

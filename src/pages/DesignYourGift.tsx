@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -662,9 +663,7 @@ const DesignYourGift = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 

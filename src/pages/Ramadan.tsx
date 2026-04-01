@@ -27,8 +27,7 @@ const Ramadan: React.FC = () => {
   const { data: bundles = [], isLoading: bundlesLoading } = useOccasionBundles(RAMADAN_OCCASION_ID);
 
   return (
-    <div className="min-h-screen">
-      <Header />
+    <StorefrontLayout>
       
       <main>
         {/* Hero Section */}
@@ -238,10 +237,7 @@ const Ramadan: React.FC = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    </StorefrontLayout>
   );
 };
 

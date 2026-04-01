@@ -152,8 +152,7 @@ const BundleBuilder: React.FC = () => {
   const BackArrow = direction === 'rtl' ? ChevronRight : ChevronLeft;
 
   return (
-    <div className="min-h-screen bg-background" dir={direction}>
-      <Header />
+    <StorefrontLayout>
       
       <main className="container-luxury section-padding">
         {/* Page Header */}
@@ -657,9 +656,7 @@ const BundleBuilder: React.FC = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 

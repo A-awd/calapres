@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -73,8 +74,7 @@ const ProductDetail: React.FC = () => {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background" dir={direction}>
-        <Header />
+      <StorefrontLayout>
         <main className="container-luxury section-padding">
           <div className="grid lg:grid-cols-2 gap-12">
             <Skeleton className="aspect-square rounded-2xl" />
@@ -157,10 +157,7 @@ const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background" dir={direction}>
-      <AnnouncementBar />
-      <Header />
-      <CitySelector />
+    <StorefrontLayout>
 
       <main className="container-luxury py-6 md:py-8 lg:py-12">
         {/* Breadcrumb */}
@@ -470,8 +467,7 @@ const ProductDetail: React.FC = () => {
         )}
       </main>
 
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 

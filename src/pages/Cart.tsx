@@ -24,9 +24,8 @@ const Cart: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen">
-        <Header />
-        <main className="container-luxury section-padding">
+      <StorefrontLayout>
+        <div className="container-luxury section-padding">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,9 +47,8 @@ const Cart: React.FC = () => {
               </Link>
             </Button>
           </motion.div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </StorefrontLayout>
     );
   }
 
@@ -64,10 +62,8 @@ const Cart: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
-      <main className="container-luxury section-padding">
+    <StorefrontLayout>
+      <div className="container-luxury section-padding">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -303,10 +299,8 @@ const Cart: React.FC = () => {
             </motion.div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </StorefrontLayout>
   );
 };
 

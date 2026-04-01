@@ -1,3 +1,4 @@
+import StorefrontLayout from '@/components/storefront/StorefrontLayout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -15,10 +16,8 @@ const OrderSuccess: React.FC = () => {
   const orderNumber = `CAL-${Date.now().toString().slice(-8)}`;
 
   return (
-    <div className="min-h-screen bg-background" dir={direction}>
-      <Header />
-
-      <main className="container-luxury py-16 md:py-24">
+    <StorefrontLayout>
+<main className="container-luxury py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,9 +78,7 @@ const OrderSuccess: React.FC = () => {
           </div>
         </motion.div>
       </main>
-
-      <Footer />
-    </div>
+    </StorefrontLayout>
   );
 };
 
