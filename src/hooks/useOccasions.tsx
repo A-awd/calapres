@@ -165,3 +165,21 @@ export const useBulkDeleteOccasions = () => {
     onError: (error: Error) => toast.error(`فشل الحذف: ${error.message}`),
   });
 };
+
+export const useReorderOccasions = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (orderedIds: string[]) => {
+      const updates = orderedIds.map((id, index) =>
+        supabase.from('occasions').update({ display_order: index }).eq('id', id)
+      );
+      const results = await Promise.all(updates);
+      const failed = results.find(r => r.error);
+      if (failed?.error) throw failed.error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['occasions'] });
+    },
+    onError: (error: Error) => toast.error(`فشل إعادة الترتيب: ${error.message}`),
+  });
+};
