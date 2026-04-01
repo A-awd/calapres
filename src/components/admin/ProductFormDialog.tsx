@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { Product, ProductFormData, useCreateProduct, useUpdateProduct } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
+import ImageUpload from './ImageUpload';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -64,6 +65,7 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
   const createProduct = useCreateProduct();
   const updateProduct = useUpdateProduct();
   const isEditing = !!product;
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -107,6 +109,15 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
         is_express: product.is_express,
         is_active: product.is_active,
       });
+      // Load existing images
+      const existingImages: string[] = [];
+      if (product.image) existingImages.push(product.image);
+      if (product.images?.length) {
+        product.images.forEach(img => {
+          if (img && !existingImages.includes(img)) existingImages.push(img);
+        });
+      }
+      setUploadedImages(existingImages);
     } else {
       form.reset({
         name: '',
@@ -126,6 +137,7 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
         is_express: false,
         is_active: true,
       });
+      setUploadedImages([]);
     }
   }, [product, form]);
 
@@ -138,10 +150,15 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
 
   const onSubmit = async (data: ProductFormData) => {
     try {
+      const submitData = {
+        ...data,
+        image: uploadedImages[0] || data.image || '',
+        images: uploadedImages.length > 1 ? uploadedImages.slice(1) : [],
+      };
       if (isEditing && product) {
-        await updateProduct.mutateAsync({ id: product.id, ...data });
+        await updateProduct.mutateAsync({ id: product.id, ...submitData });
       } else {
-        await createProduct.mutateAsync(data);
+        await createProduct.mutateAsync(submitData);
       }
       onOpenChange(false);
     } catch (error) {
@@ -330,20 +347,18 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Image URL</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="https://..." />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+            </div>
+
+            {/* Image Upload Section */}
+            <div>
+              <FormLabel className="mb-2 block">صور المنتج</FormLabel>
+              <ImageUpload
+                images={uploadedImages}
+                onImagesChange={setUploadedImages}
+                maxImages={10}
               />
             </div>
+
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <FormField
