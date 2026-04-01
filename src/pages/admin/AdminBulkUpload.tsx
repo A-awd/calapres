@@ -365,7 +365,7 @@ const AdminBulkUpload: React.FC = () => {
               اسحب الصور هنا أو اضغط للاختيار
             </h3>
             <p className="text-sm text-gray-500 mb-4">
-              JPG, PNG, WebP - حد أقصى 5MB لكل صورة
+              JPG, PNG, WebP - حد أقصى 20MB لكل صورة (يتم ضغطها تلقائياً)
             </p>
             <div className="flex items-center justify-center gap-6 text-xs text-gray-400">
               <span className="flex items-center gap-1"><Upload className="w-3.5 h-3.5" /> رفع تلقائي</span>
