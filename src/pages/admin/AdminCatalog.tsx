@@ -514,6 +514,10 @@ const AdminCatalog: React.FC = () => {
         description="هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء."
         isDeleting={deleteOccasion.isPending}
       />
+      <BulkActionsBar
+        selectedIds={selectedProducts}
+        onClearSelection={() => setSelectedProducts([])}
+      />
     </AdminLayout>
   );
 };
