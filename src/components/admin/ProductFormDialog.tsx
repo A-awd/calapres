@@ -109,6 +109,15 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
         is_express: product.is_express,
         is_active: product.is_active,
       });
+      // Load existing images
+      const existingImages: string[] = [];
+      if (product.image) existingImages.push(product.image);
+      if (product.images?.length) {
+        product.images.forEach(img => {
+          if (img && !existingImages.includes(img)) existingImages.push(img);
+        });
+      }
+      setUploadedImages(existingImages);
     } else {
       form.reset({
         name: '',
@@ -128,6 +137,7 @@ const ProductFormDialog: React.FC<ProductFormDialogProps> = ({
         is_express: false,
         is_active: true,
       });
+      setUploadedImages([]);
     }
   }, [product, form]);
 
