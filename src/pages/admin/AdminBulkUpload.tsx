@@ -269,7 +269,7 @@ const AdminBulkUpload: React.FC = () => {
         sku,
         description: group.description,
         description_ar: group.description_ar,
-        price: 0,
+        price: group.price || 0,
         category_id: categoryId,
         image: groupImages[0],
         images: groupImages.slice(1),
