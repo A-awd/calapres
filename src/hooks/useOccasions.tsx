@@ -135,3 +135,33 @@ export const useDeleteOccasion = () => {
     },
   });
 };
+
+export const useBulkUpdateOccasions = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ ids, data }: { ids: string[]; data: { is_active?: boolean } }) => {
+      const { error } = await supabase.from('occasions').update(data).in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['occasions'] });
+      toast.success(`تم تحديث ${variables.ids.length} مناسبة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل التحديث: ${error.message}`),
+  });
+};
+
+export const useBulkDeleteOccasions = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (ids: string[]) => {
+      const { error } = await supabase.from('occasions').delete().in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, ids) => {
+      queryClient.invalidateQueries({ queryKey: ['occasions'] });
+      toast.success(`تم حذف ${ids.length} مناسبة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل الحذف: ${error.message}`),
+  });
+};

@@ -135,3 +135,33 @@ export const useDeleteCategory = () => {
     },
   });
 };
+
+export const useBulkUpdateCategories = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ ids, data }: { ids: string[]; data: { is_active?: boolean } }) => {
+      const { error } = await supabase.from('categories').update(data).in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success(`تم تحديث ${variables.ids.length} فئة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل التحديث: ${error.message}`),
+  });
+};
+
+export const useBulkDeleteCategories = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (ids: string[]) => {
+      const { error } = await supabase.from('categories').delete().in('id', ids);
+      if (error) throw error;
+    },
+    onSuccess: (_, ids) => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success(`تم حذف ${ids.length} فئة بنجاح`);
+    },
+    onError: (error: Error) => toast.error(`فشل الحذف: ${error.message}`),
+  });
+};
