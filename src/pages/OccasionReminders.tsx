@@ -1,4 +1,5 @@
 import StorefrontLayout from '@/components/storefront/StorefrontLayout';
+import Footer from '@/components/storefront/Footer';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';

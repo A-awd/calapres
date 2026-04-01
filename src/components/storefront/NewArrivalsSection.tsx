@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const NewArrivalsSection: React.FC = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
-  const { data: products = [], isLoading } = useStorefrontProducts();
+  const { data: products = [], isLoading } = useAllProducts();
 
   const newProducts = products.filter(p => p.isNew).slice(0, 8);
 
