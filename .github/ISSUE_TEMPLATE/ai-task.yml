@@ -1,0 +1,32 @@
+name: AI Task
+about: Structured AI task for this React/Supabase repository
+title: "[AI Task]: "
+labels: ["ai-task"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+    validations:
+      required: true
+  - type: dropdown
+    id: primary_agent
+    attributes:
+      label: Primary agent
+      options:
+        - Claude architect
+        - Codex execution engineer
+        - Gemini research/review
+        - MCP/tool automation
+        - Human/manual
+    validations:
+      required: true
+  - type: textarea
+    id: supabase_scope
+    attributes:
+      label: Supabase/data scope
+      description: Note schema, RLS, auth, storage, or data-risk impact.
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification expectations
