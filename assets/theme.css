@@ -673,4 +673,16 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .rel-grid{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; }
 }
+@media (max-width:768px){
+  .site-header .bar{ position:relative; }
+  .site-header .bar .brand{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    margin:0;
+    font-size:24px;
+    pointer-events:auto;
+  }
+  [dir="rtl"] .site-header .bar .brand{ font-size:26px; }
+}
 /* sync-probe-A1 */
