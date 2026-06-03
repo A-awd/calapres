@@ -21,12 +21,14 @@ Run this before the first recurring sync. The live store has 18 imported product
    - Preserve the existing Arabic imported tag `مستورد-نوادر-ديور` on products that already have it.
    - Do not write price, images, description, status, vendor, inventory, or SEO.
    - Review `needsManualMatch[]` before executing any backfill request.
+   - Review `notFoundAtSupplier[]` separately; those rows get no backfill writes and are handled by the recurring missing-supplier draft/out-of-stock path.
 
 3. Run one offline dry run and inspect `sync/dry-run-output.json`.
    - `preSyncSetup.metafieldDefinitionRequests` shows the two definition-create requests.
    - `preSyncSetup.backfillPlan` shows matched and manual-review products.
    - `preSyncSetup.duplicateRiskBeforeBackfill` shows why the setup must run first.
    - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for high/medium-confidence existing products.
+   - `preSyncSetup.notFoundAtSupplier` must list only deliberate `not_found` map rows.
 
 ## 2. Shopify Admin API Surface
 

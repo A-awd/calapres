@@ -11,6 +11,7 @@ const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
 const IMPORTED_TAGS = [CANONICAL_IMPORTED_TAG, ARABIC_IMPORTED_TAG];
 const SUPPLIER_ID_TAG_PREFIX = 'supplier-id-p';
 const CONFIDENT_MATCHES = { high: true, medium: true };
+const NOT_FOUND_CONFIDENCE = 'not_found';
 
 function planBackfillExistingProducts(existingProducts, backfillMap, options) {
   return planBackfillFromMap(backfillMap, {
@@ -26,10 +27,16 @@ function planBackfillFromMap(backfillMap, options) {
   const plan = {
     toBackfill: [],
     alreadyBackfilled: [],
+    notFoundAtSupplier: [],
     needsManualMatch: []
   };
 
   for (const entry of entries) {
+    if (entry.confidence === NOT_FOUND_CONFIDENCE) {
+      plan.notFoundAtSupplier.push(review(entry, entry.reason || 'not_found_at_supplier'));
+      continue;
+    }
+
     const product = existingIndex.byId[entry.shopifyLegacyId];
     if (!product) {
       plan.needsManualMatch.push(review(entry, 'missing_shopify_product_snapshot'));
@@ -81,6 +88,7 @@ function planBackfillFromMap(backfillMap, options) {
       highConfidence: entries.filter((entry) => entry.confidence === 'high').length,
       mediumConfidence: entries.filter((entry) => entry.confidence === 'medium').length,
       lowConfidence: entries.filter((entry) => entry.confidence === 'low').length,
+      notFoundAtSupplier: plan.notFoundAtSupplier.length,
       confidentlyMatched: plan.toBackfill.length + plan.alreadyBackfilled.length,
       toBackfill: plan.toBackfill.length,
       alreadyBackfilled: plan.alreadyBackfilled.length,
@@ -360,7 +368,7 @@ function requestHeaders(accessToken) {
 
 function normalizeConfidence(value) {
   const raw = cleanString(value).toLowerCase();
-  if (raw === 'high' || raw === 'medium' || raw === 'low') return raw;
+  if (raw === 'high' || raw === 'medium' || raw === 'low' || raw === NOT_FOUND_CONFIDENCE) return raw;
   return 'low';
 }
 
@@ -428,6 +436,7 @@ if (typeof module !== 'undefined' && module.exports) {
     ARABIC_IMPORTED_TAG,
     IMPORTED_TAGS,
     SUPPLIER_ID_TAG_PREFIX,
+    NOT_FOUND_CONFIDENCE,
     METAFIELDS_SET_MUTATION,
     planBackfillExistingProducts,
     planBackfillFromMap,

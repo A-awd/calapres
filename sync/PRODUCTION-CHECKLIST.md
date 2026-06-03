@@ -24,11 +24,13 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Preserve the Arabic tag `مستورد-نوادر-ديور` on the seven Arabic-tagged products.
    - Do not write price, images, description, status, vendor, inventory, or SEO.
    - Stop and manually review any product listed in `needsManualMatch[]`.
+   - Products listed in `notFoundAtSupplier[]` receive no backfill writes and move through the recurring missing-supplier draft/out-of-stock path.
 
 3. Confirm duplicate prevention before enabling recurring sync.
    - Run `node sync/run-local-dry.js`.
    - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `18`.
-   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` matches the unresolved low-confidence rows in `sync/backfill-map.json`.
+   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` is `0`, or resolve every manual item before go-live.
+   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` matches any deliberate `not_found` rows in `sync/backfill-map.json`.
    - Confirm `preSyncSetup.postBackfillReconcilePlan.toCreate` is `0` for high/medium-confidence existing products.
 
 ## 2. Required n8n Credentials
@@ -91,7 +93,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Confirm `generatedPayloads` is `20`.
    - Confirm `preSyncSetup.metafieldDefinitionRequests` contains `source_url` and `product_id`.
    - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `18`.
-   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` equals the low-confidence/unmatched rows that will receive no writes.
+   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` is `0`.
+   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` equals the deliberate not-found rows that will receive no writes.
    - Confirm `reconcilePlan` includes create/update/out-of-stock/skip-enriched buckets.
    - Confirm `shopifyRequests.actionRequests` contains the REST request bodies to review.
    - Confirm `payloads[].action` is `create_or_update` for real supplier products.

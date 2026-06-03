@@ -25,12 +25,12 @@
     "shopifyLegacyId": "9468830122240",
     "title": "Caron Santal Pirieux 100ml",
     "brand": "Caron",
-    "matchedSourceUrl": null,
-    "supplierProductId": null,
+    "matchedSourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+    "supplierProductId": "p1034058830",
     "concentration": null,
     "sizeMl": 100,
-    "confidence": "low",
-    "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
+    "confidence": "high",
+    "reason": "Full crawl found a stale-slug page whose parsed content is Caron Santal Pirieux 100ml; rejected p2091748280 because it parses as Lady Caron 100ml."
   },
   {
     "shopifyLegacyId": "9468830515456",
@@ -80,12 +80,12 @@
     "shopifyLegacyId": "9468840673536",
     "title": "Matière Première Crystal Saffron 100ml",
     "brand": "Matière Première",
-    "matchedSourceUrl": null,
-    "supplierProductId": null,
-    "concentration": null,
+    "matchedSourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+    "supplierProductId": "p917062112",
+    "concentration": "Eau de Parfum",
     "sizeMl": 100,
-    "confidence": "low",
-    "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
+    "confidence": "high",
+    "reason": "Matched the base Crystal Saffron Eau de Parfum 100ml page; rejected p524862751 because it is Crystal Saffron Extrait de Parfum 100ml, a different concentration."
   },
   {
     "shopifyLegacyId": "9468840870144",
@@ -113,12 +113,12 @@
     "shopifyLegacyId": "9468841558272",
     "title": "Tom Ford Black Orchid 100ml",
     "brand": "Tom Ford",
-    "matchedSourceUrl": null,
-    "supplierProductId": null,
-    "concentration": null,
+    "matchedSourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+    "supplierProductId": "p1729559829",
+    "concentration": "Eau de Parfum",
     "sizeMl": 100,
-    "confidence": "low",
-    "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
+    "confidence": "high",
+    "reason": "User clarified the Shopify product is Black Orchid EDP 100ml; matched the Eau de Parfum 100ml page and rejected p1528593137 because it is Parfum 100ml."
   },
   {
     "shopifyLegacyId": "9468843819264",
@@ -190,11 +190,11 @@
     "shopifyLegacyId": "9468845785344",
     "title": "Xerjoff P.33 100ml",
     "brand": "Xerjoff",
-    "matchedSourceUrl": null,
-    "supplierProductId": null,
-    "concentration": null,
+    "matchedSourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+    "supplierProductId": "p1673700127",
+    "concentration": "Eau de Parfum",
     "sizeMl": 100,
-    "confidence": "low",
-    "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
+    "confidence": "high",
+    "reason": "Full crawl contains p1673700127 under a misleading Dior slug; live page content is Xerjoff P.33 Unisex EDP 100ml."
   }
 ]

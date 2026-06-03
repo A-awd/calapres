@@ -94,12 +94,12 @@
         "shopifyLegacyId": "9468830122240",
         "title": "Caron Santal Pirieux 100ml",
         "brand": "Caron",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
+        "matchedSourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+        "supplierProductId": "p1034058830",
         "concentration": null,
         "sizeMl": 100,
-        "confidence": "low",
-        "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
+        "confidence": "high",
+        "reason": "Full crawl found a stale-slug page whose parsed content is Caron Santal Pirieux 100ml; rejected p2091748280 because it parses as Lady Caron 100ml."
       },
       {
         "shopifyLegacyId": "9468830515456",
@@ -149,12 +149,12 @@
         "shopifyLegacyId": "9468840673536",
         "title": "Matière Première Crystal Saffron 100ml",
         "brand": "Matière Première",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "concentration": null,
+        "matchedSourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+        "supplierProductId": "p917062112",
+        "concentration": "Eau de Parfum",
         "sizeMl": 100,
-        "confidence": "low",
-        "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
+        "confidence": "high",
+        "reason": "Matched the base Crystal Saffron Eau de Parfum 100ml page; rejected p524862751 because it is Crystal Saffron Extrait de Parfum 100ml, a different concentration."
       },
       {
         "shopifyLegacyId": "9468840870144",
@@ -182,12 +182,12 @@
         "shopifyLegacyId": "9468841558272",
         "title": "Tom Ford Black Orchid 100ml",
         "brand": "Tom Ford",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "concentration": null,
+        "matchedSourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+        "supplierProductId": "p1729559829",
+        "concentration": "Eau de Parfum",
         "sizeMl": 100,
-        "confidence": "low",
-        "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
+        "confidence": "high",
+        "reason": "User clarified the Shopify product is Black Orchid EDP 100ml; matched the Eau de Parfum 100ml page and rejected p1528593137 because it is Parfum 100ml."
       },
       {
         "shopifyLegacyId": "9468843819264",
@@ -259,20 +259,21 @@
         "shopifyLegacyId": "9468845785344",
         "title": "Xerjoff P.33 100ml",
         "brand": "Xerjoff",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "concentration": null,
+        "matchedSourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+        "supplierProductId": "p1673700127",
+        "concentration": "Eau de Parfum",
         "sizeMl": 100,
-        "confidence": "low",
-        "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
+        "confidence": "high",
+        "reason": "Full crawl contains p1673700127 under a misleading Dior slug; live page content is Xerjoff P.33 Unisex EDP 100ml."
       }
     ],
     "backfillMapSummary": {
       "total": 18,
       "counts": {
-        "high": 14,
+        "high": 18,
         "medium": 0,
-        "low": 4
+        "low": 0,
+        "not_found": 0
       },
       "products": [
         {
@@ -290,8 +291,8 @@
         {
           "shopifyLegacyId": "9468830122240",
           "title": "Caron Santal Pirieux 100ml",
-          "supplierProductId": null,
-          "confidence": "low"
+          "supplierProductId": "p1034058830",
+          "confidence": "high"
         },
         {
           "shopifyLegacyId": "9468830515456",
@@ -320,8 +321,8 @@
         {
           "shopifyLegacyId": "9468840673536",
           "title": "Matière Première Crystal Saffron 100ml",
-          "supplierProductId": null,
-          "confidence": "low"
+          "supplierProductId": "p917062112",
+          "confidence": "high"
         },
         {
           "shopifyLegacyId": "9468840870144",
@@ -338,8 +339,8 @@
         {
           "shopifyLegacyId": "9468841558272",
           "title": "Tom Ford Black Orchid 100ml",
-          "supplierProductId": null,
-          "confidence": "low"
+          "supplierProductId": "p1729559829",
+          "confidence": "high"
         },
         {
           "shopifyLegacyId": "9468843819264",
@@ -380,8 +381,8 @@
         {
           "shopifyLegacyId": "9468845785344",
           "title": "Xerjoff P.33 100ml",
-          "supplierProductId": null,
-          "confidence": "low"
+          "supplierProductId": "p1673700127",
+          "confidence": "high"
         }
       ]
     },
@@ -834,6 +835,66 @@
           }
         },
         {
+          "shopifyLegacyId": "9468830122240",
+          "productId": "9468830122240",
+          "title": "Caron Santal Pirieux 100ml",
+          "brand": "Caron",
+          "confidence": "high",
+          "reason": "Full crawl found a stale-slug page whose parsed content is Caron Santal Pirieux 100ml; rejected p2091748280 because it parses as Lady Caron 100ml.",
+          "sourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+          "matchedSourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+          "supplierProductId": "p1034058830",
+          "supplierId": "1034058830",
+          "addedTags": [
+            "supplier-id-p1034058830"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/9468830122240",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/9468830122240",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1034058830"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/9468830122240.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "9468830122240",
+                  "tags": "imported-nader-dior, supplier-id-p1034058830"
+                }
+              }
+            }
+          }
+        },
+        {
           "shopifyLegacyId": "9468830515456",
           "productId": "9468830515456",
           "title": "Nautica Voyage EDT 100ml",
@@ -1074,6 +1135,66 @@
           }
         },
         {
+          "shopifyLegacyId": "9468840673536",
+          "productId": "9468840673536",
+          "title": "Matière Première Crystal Saffron 100ml",
+          "brand": "Matière Première",
+          "confidence": "high",
+          "reason": "Matched the base Crystal Saffron Eau de Parfum 100ml page; rejected p524862751 because it is Crystal Saffron Extrait de Parfum 100ml, a different concentration.",
+          "sourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+          "matchedSourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+          "supplierProductId": "p917062112",
+          "supplierId": "917062112",
+          "addedTags": [
+            "supplier-id-p917062112"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/9468840673536",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/9468840673536",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "917062112"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/9468840673536.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "9468840673536",
+                  "tags": "imported-nader-dior, supplier-id-p917062112"
+                }
+              }
+            }
+          }
+        },
+        {
           "shopifyLegacyId": "9468840870144",
           "productId": "9468840870144",
           "title": "Kenzo Homme EDP 110ml",
@@ -1188,6 +1309,66 @@
                 "product": {
                   "id": "9468841197824",
                   "tags": "imported-nader-dior, supplier-id-p1029424509"
+                }
+              }
+            }
+          }
+        },
+        {
+          "shopifyLegacyId": "9468841558272",
+          "productId": "9468841558272",
+          "title": "Tom Ford Black Orchid 100ml",
+          "brand": "Tom Ford",
+          "confidence": "high",
+          "reason": "User clarified the Shopify product is Black Orchid EDP 100ml; matched the Eau de Parfum 100ml page and rejected p1528593137 because it is Parfum 100ml.",
+          "sourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+          "matchedSourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+          "supplierProductId": "p1729559829",
+          "supplierId": "1729559829",
+          "addedTags": [
+            "supplier-id-p1729559829"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/9468841558272",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/9468841558272",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1729559829"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/9468841558272.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "9468841558272",
+                  "tags": "imported-nader-dior, supplier-id-p1729559829"
                 }
               }
             }
@@ -1558,137 +1739,90 @@
               }
             }
           }
+        },
+        {
+          "shopifyLegacyId": "9468845785344",
+          "productId": "9468845785344",
+          "title": "Xerjoff P.33 100ml",
+          "brand": "Xerjoff",
+          "confidence": "high",
+          "reason": "Full crawl contains p1673700127 under a misleading Dior slug; live page content is Xerjoff P.33 Unisex EDP 100ml.",
+          "sourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+          "matchedSourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+          "supplierProductId": "p1673700127",
+          "supplierId": "1673700127",
+          "addedTags": [
+            "imported-nader-dior",
+            "supplier-id-p1673700127"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/9468845785344",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/9468845785344",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1673700127"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/9468845785344.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "9468845785344",
+                  "tags": "مستورد-نوادر-ديور, imported-nader-dior, supplier-id-p1673700127"
+                }
+              }
+            }
+          }
         }
       ],
       "alreadyBackfilled": [],
-      "needsManualMatch": [
-        {
-          "shopifyLegacyId": "9468830122240",
-          "title": "Caron Santal Pirieux 100ml",
-          "brand": "Caron",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
-        },
-        {
-          "shopifyLegacyId": "9468840673536",
-          "title": "Matière Première Crystal Saffron 100ml",
-          "brand": "Matière Première",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
-        },
-        {
-          "shopifyLegacyId": "9468841558272",
-          "title": "Tom Ford Black Orchid 100ml",
-          "brand": "Tom Ford",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
-        },
-        {
-          "shopifyLegacyId": "9468845785344",
-          "title": "Xerjoff P.33 100ml",
-          "brand": "Xerjoff",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
-        }
-      ],
-      "manualReview": [
-        {
-          "shopifyLegacyId": "9468830122240",
-          "title": "Caron Santal Pirieux 100ml",
-          "brand": "Caron",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
-        },
-        {
-          "shopifyLegacyId": "9468840673536",
-          "title": "Matière Première Crystal Saffron 100ml",
-          "brand": "Matière Première",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
-        },
-        {
-          "shopifyLegacyId": "9468841558272",
-          "title": "Tom Ford Black Orchid 100ml",
-          "brand": "Tom Ford",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
-        },
-        {
-          "shopifyLegacyId": "9468845785344",
-          "title": "Xerjoff P.33 100ml",
-          "brand": "Xerjoff",
-          "matchedSourceUrl": null,
-          "supplierProductId": null,
-          "confidence": "low",
-          "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
-        }
-      ],
+      "notFoundAtSupplier": [],
+      "needsManualMatch": [],
+      "manualReview": [],
       "summary": {
         "totalExisting": 18,
-        "highConfidence": 14,
+        "highConfidence": 18,
         "mediumConfidence": 0,
-        "lowConfidence": 4,
-        "confidentlyMatched": 14,
-        "toBackfill": 14,
+        "lowConfidence": 0,
+        "notFoundAtSupplier": 0,
+        "confidentlyMatched": 18,
+        "toBackfill": 18,
         "alreadyBackfilled": 0,
-        "needsManualMatch": 4,
-        "manualReview": 4
+        "needsManualMatch": 0,
+        "manualReview": 0
       }
     },
-    "needsManualMatch": [
-      {
-        "shopifyLegacyId": "9468830122240",
-        "title": "Caron Santal Pirieux 100ml",
-        "brand": "Caron",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "confidence": "low",
-        "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
-      },
-      {
-        "shopifyLegacyId": "9468840673536",
-        "title": "Matière Première Crystal Saffron 100ml",
-        "brand": "Matière Première",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "confidence": "low",
-        "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
-      },
-      {
-        "shopifyLegacyId": "9468841558272",
-        "title": "Tom Ford Black Orchid 100ml",
-        "brand": "Tom Ford",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "confidence": "low",
-        "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
-      },
-      {
-        "shopifyLegacyId": "9468845785344",
-        "title": "Xerjoff P.33 100ml",
-        "brand": "Xerjoff",
-        "matchedSourceUrl": null,
-        "supplierProductId": null,
-        "confidence": "low",
-        "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
-      }
-    ],
+    "needsManualMatch": [],
+    "notFoundAtSupplier": [],
     "duplicateRiskBeforeBackfill": {
-      "toCreate": 14,
+      "toCreate": 18,
       "toUpdate": 0,
       "toMarkOutOfStock": 18,
       "toSkipEnriched": 0,
@@ -1768,6 +1902,20 @@
           {
             "reason": "create_new_imported_product",
             "supplierProduct": {
+              "name": "Matière Première Crystal Saffron 100ml",
+              "brand": "Matière Première",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+              "supplierId": "917062112",
+              "category": ""
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
               "name": "Givenchy Pour Homme EDT 100ml",
               "brand": "Givenchy",
               "supplierPrice": 100,
@@ -1789,6 +1937,20 @@
               "availability": "in_stock",
               "sourceUrl": "https://nawadirdior.sa/tom-ford-tuscan-leather-eau-de-parfum/p1029424509",
               "supplierId": "1029424509",
+              "category": ""
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "Caron Santal Pirieux 100ml",
+              "brand": "Caron",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+              "supplierId": "1034058830",
               "category": ""
             },
             "shopifyProduct": null
@@ -1859,6 +2021,34 @@
               "availability": "in_stock",
               "sourceUrl": "https://nawadirdior.sa/dior-sauvage-le-parfum-100ml/p1442610703",
               "supplierId": "1442610703",
+              "category": ""
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "Xerjoff P.33 100ml",
+              "brand": "Xerjoff",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+              "supplierId": "1673700127",
+              "category": ""
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "Tom Ford Black Orchid 100ml",
+              "brand": "Tom Ford",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+              "supplierId": "1729559829",
               "category": ""
             },
             "shopifyProduct": null
@@ -2441,8 +2631,8 @@
     },
     "postBackfillReconcilePlan": {
       "toCreate": 0,
-      "toUpdate": 14,
-      "toMarkOutOfStock": 4,
+      "toUpdate": 18,
+      "toMarkOutOfStock": 0,
       "toSkipEnriched": 0,
       "unchanged": 0,
       "actions": {
@@ -2815,6 +3005,78 @@
           {
             "reason": "update_imported_product",
             "supplierProduct": {
+              "name": "Matière Première Crystal Saffron 100ml",
+              "brand": "Matière Première",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+              "supplierId": "917062112",
+              "category": ""
+            },
+            "shopifyProduct": {
+              "id": "9468840673536",
+              "title": "Matière Première Crystal Saffron 100ml",
+              "vendor": "Matière Première",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier-id-p917062112"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "917062112",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "810007",
+                  "price": null,
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112",
+              "supplierId": "917062112",
+              "variantId": "810007",
+              "price": null,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D9%83%D8%B1%D9%8A%D8%B3%D8%AA%D8%A7%D9%84-%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D9%86-%D8%B9%D8%B7%D9%88%D8%B1-%D8%A7%D9%84%D9%86%D9%8A%D8%B4-matiere-premiere/p917062112"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "price",
+                "current": null,
+                "desired": 200
+              },
+              {
+                "field": "tags",
+                "current": [
+                  "imported-nader-dior",
+                  "supplier-id-p917062112"
+                ],
+                "desired": [
+                  "imported-nader-dior",
+                  "supplier:nawadirdior",
+                  "supplier-id-p917062112"
+                ]
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
               "name": "Givenchy Pour Homme EDT 100ml",
               "brand": "Givenchy",
               "supplierPrice": 100,
@@ -2954,6 +3216,78 @@
                   "imported-nader-dior",
                   "supplier:nawadirdior",
                   "supplier-id-p1029424509"
+                ]
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "Caron Santal Pirieux 100ml",
+              "brand": "Caron",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+              "supplierId": "1034058830",
+              "category": ""
+            },
+            "shopifyProduct": {
+              "id": "9468830122240",
+              "title": "Caron Santal Pirieux 100ml",
+              "vendor": "Caron",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier-id-p1034058830"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1034058830",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "810002",
+                  "price": null,
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830",
+              "supplierId": "1034058830",
+              "variantId": "810002",
+              "price": null,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/caron-bellodgia-100ml/p1034058830"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "price",
+                "current": null,
+                "desired": 200
+              },
+              {
+                "field": "tags",
+                "current": [
+                  "imported-nader-dior",
+                  "supplier-id-p1034058830"
+                ],
+                "desired": [
+                  "imported-nader-dior",
+                  "supplier:nawadirdior",
+                  "supplier-id-p1034058830"
                 ]
               }
             ]
@@ -3327,6 +3661,152 @@
           {
             "reason": "update_imported_product",
             "supplierProduct": {
+              "name": "Xerjoff P.33 100ml",
+              "brand": "Xerjoff",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+              "supplierId": "1673700127",
+              "category": ""
+            },
+            "shopifyProduct": {
+              "id": "9468845785344",
+              "title": "Xerjoff P.33 100ml",
+              "vendor": "Xerjoff",
+              "status": "active",
+              "tags": [
+                "مستورد-نوادر-ديور",
+                "imported-nader-dior",
+                "supplier-id-p1673700127"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1673700127",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "810017",
+                  "price": null,
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127",
+              "supplierId": "1673700127",
+              "variantId": "810017",
+              "price": null,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/dior-la-colle-noire-eau-de-parfum/p1673700127"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "price",
+                "current": null,
+                "desired": 200
+              },
+              {
+                "field": "tags",
+                "current": [
+                  "مستورد-نوادر-ديور",
+                  "imported-nader-dior",
+                  "supplier-id-p1673700127"
+                ],
+                "desired": [
+                  "imported-nader-dior",
+                  "supplier:nawadirdior",
+                  "supplier-id-p1673700127"
+                ]
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "Tom Ford Black Orchid 100ml",
+              "brand": "Tom Ford",
+              "supplierPrice": 100,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "sourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+              "supplierId": "1729559829",
+              "category": ""
+            },
+            "shopifyProduct": {
+              "id": "9468841558272",
+              "title": "Tom Ford Black Orchid 100ml",
+              "vendor": "Tom Ford",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier-id-p1729559829"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1729559829",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "810010",
+                  "price": null,
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829",
+              "supplierId": "1729559829",
+              "variantId": "810010",
+              "price": null,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/tom-ford-black-orchid-eau-de-parfum/p1729559829"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "price",
+                "current": null,
+                "desired": 200
+              },
+              {
+                "field": "tags",
+                "current": [
+                  "imported-nader-dior",
+                  "supplier-id-p1729559829"
+                ],
+                "desired": [
+                  "imported-nader-dior",
+                  "supplier:nawadirdior",
+                  "supplier-id-p1729559829"
+                ]
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
               "name": "Van Cleef & Arpels Rêve d'Ylang EDP 125ml",
               "brand": "Van Cleef & Arpels",
               "supplierPrice": 100,
@@ -3469,128 +3949,7 @@
             ]
           }
         ],
-        "toMarkOutOfStock": [
-          {
-            "reason": "missing_from_supplier",
-            "supplierProduct": null,
-            "shopifyProduct": {
-              "id": "9468830122240",
-              "title": "Caron Santal Pirieux 100ml",
-              "vendor": "Caron",
-              "status": "active",
-              "tags": [
-                "imported-nader-dior"
-              ],
-              "metafields": [],
-              "variants": [
-                {
-                  "id": "810002",
-                  "price": null,
-                  "compare_at_price": null,
-                  "inventory_policy": "continue"
-                }
-              ],
-              "sourceUrl": "",
-              "supplierId": "",
-              "variantId": "810002",
-              "price": null,
-              "compareAtPrice": null,
-              "inventoryPolicy": "continue",
-              "matchKey": "9468830122240"
-            },
-            "updateMode": "price_availability_only"
-          },
-          {
-            "reason": "missing_from_supplier",
-            "supplierProduct": null,
-            "shopifyProduct": {
-              "id": "9468840673536",
-              "title": "Matière Première Crystal Saffron 100ml",
-              "vendor": "Matière Première",
-              "status": "active",
-              "tags": [
-                "imported-nader-dior"
-              ],
-              "metafields": [],
-              "variants": [
-                {
-                  "id": "810007",
-                  "price": null,
-                  "compare_at_price": null,
-                  "inventory_policy": "continue"
-                }
-              ],
-              "sourceUrl": "",
-              "supplierId": "",
-              "variantId": "810007",
-              "price": null,
-              "compareAtPrice": null,
-              "inventoryPolicy": "continue",
-              "matchKey": "9468840673536"
-            },
-            "updateMode": "price_availability_only"
-          },
-          {
-            "reason": "missing_from_supplier",
-            "supplierProduct": null,
-            "shopifyProduct": {
-              "id": "9468841558272",
-              "title": "Tom Ford Black Orchid 100ml",
-              "vendor": "Tom Ford",
-              "status": "active",
-              "tags": [
-                "imported-nader-dior"
-              ],
-              "metafields": [],
-              "variants": [
-                {
-                  "id": "810010",
-                  "price": null,
-                  "compare_at_price": null,
-                  "inventory_policy": "continue"
-                }
-              ],
-              "sourceUrl": "",
-              "supplierId": "",
-              "variantId": "810010",
-              "price": null,
-              "compareAtPrice": null,
-              "inventoryPolicy": "continue",
-              "matchKey": "9468841558272"
-            },
-            "updateMode": "price_availability_only"
-          },
-          {
-            "reason": "missing_from_supplier",
-            "supplierProduct": null,
-            "shopifyProduct": {
-              "id": "9468845785344",
-              "title": "Xerjoff P.33 100ml",
-              "vendor": "Xerjoff",
-              "status": "active",
-              "tags": [
-                "مستورد-نوادر-ديور"
-              ],
-              "metafields": [],
-              "variants": [
-                {
-                  "id": "810017",
-                  "price": null,
-                  "compare_at_price": null,
-                  "inventory_policy": "continue"
-                }
-              ],
-              "sourceUrl": "",
-              "supplierId": "",
-              "variantId": "810017",
-              "price": null,
-              "compareAtPrice": null,
-              "inventoryPolicy": "continue",
-              "matchKey": "9468845785344"
-            },
-            "updateMode": "price_availability_only"
-          }
-        ],
+        "toMarkOutOfStock": [],
         "toSkipEnriched": [],
         "unchanged": []
       }

@@ -664,23 +664,24 @@ test('setup-metafield-definitions executes through an injected fetch-like functi
   assert.equal(response.json.data.metafieldDefinitionCreate.userErrors.length, 0);
 });
 
-test('backfill-map contains exactly the 18 verified live products with strict low rows unwritable', () => {
+test('backfill-map contains exactly the 18 verified live products with all four resolved rows high', () => {
   const map = JSON.parse(fs.readFileSync(path.join(syncDir, 'backfill-map.json'), 'utf8'));
   assert.equal(map.length, 18);
   assert.equal(new Set(map.map((entry) => entry.shopifyLegacyId)).size, 18);
-  assert.equal(map.filter((entry) => entry.confidence === 'high').length, 14);
+  assert.equal(map.filter((entry) => entry.confidence === 'high').length, 18);
   assert.equal(map.filter((entry) => entry.confidence === 'medium').length, 0);
-  assert.equal(map.filter((entry) => entry.confidence === 'low').length, 4);
-  for (const entry of map.filter((item) => item.confidence === 'low')) {
-    assert.equal(entry.matchedSourceUrl, null);
-    assert.equal(entry.supplierProductId, null);
-  }
+  assert.equal(map.filter((entry) => entry.confidence === 'low').length, 0);
+  assert.equal(map.filter((entry) => entry.confidence === 'not_found').length, 0);
   const polo = map.find((entry) => entry.title.includes('Polo 67'));
   assert.equal(polo.supplierProductId, 'p278426097');
   assert.equal(polo.confidence, 'high');
+  assert.equal(map.find((entry) => entry.shopifyLegacyId === '9468830122240').supplierProductId, 'p1034058830');
+  assert.equal(map.find((entry) => entry.shopifyLegacyId === '9468840673536').supplierProductId, 'p917062112');
+  assert.equal(map.find((entry) => entry.shopifyLegacyId === '9468841558272').supplierProductId, 'p1729559829');
+  assert.equal(map.find((entry) => entry.shopifyLegacyId === '9468845785344').supplierProductId, 'p1673700127');
 });
 
-test('backfill-existing-products uses high and medium map entries and buckets low entries for manual match', () => {
+test('backfill-existing-products uses high and medium entries, separates low manual and not_found supplier rows', () => {
   const testMap = [
     {
       shopifyLegacyId: '1001',
@@ -714,12 +715,24 @@ test('backfill-existing-products uses high and medium map entries and buckets lo
       sizeMl: 100,
       confidence: 'low',
       reason: 'Ambiguous concentration.'
+    },
+    {
+      shopifyLegacyId: '1004',
+      title: 'Not Found Product',
+      brand: 'Brand D',
+      matchedSourceUrl: null,
+      supplierProductId: null,
+      concentration: null,
+      sizeMl: 100,
+      confidence: 'not_found',
+      reason: 'No strict supplier match in crawl.'
     }
   ];
   const existing = [
     { id: '1001', title: 'High Product', tags: ['imported-nader-dior', 'legacy'], metafields: [] },
     { id: '1002', title: 'Medium Product', tags: ['مستورد-نوادر-ديور', 'luxury'], metafields: [] },
-    { id: '1003', title: 'Low Product', tags: ['imported-nader-dior'], metafields: [] }
+    { id: '1003', title: 'Low Product', tags: ['imported-nader-dior'], metafields: [] },
+    { id: '1004', title: 'Not Found Product', tags: ['imported-nader-dior'], metafields: [] }
   ];
   const plan = backfillModule.planBackfillExistingProducts(existing, testMap, {
     shopDomain: 'calapres.myshopify.com'
@@ -727,9 +740,12 @@ test('backfill-existing-products uses high and medium map entries and buckets lo
   assert.equal(plan.summary.highConfidence, 1);
   assert.equal(plan.summary.mediumConfidence, 1);
   assert.equal(plan.summary.lowConfidence, 1);
+  assert.equal(plan.summary.notFoundAtSupplier, 1);
   assert.equal(plan.toBackfill.length, 2);
   assert.equal(plan.needsManualMatch.length, 1);
+  assert.equal(plan.notFoundAtSupplier.length, 1);
   assert.equal(plan.needsManualMatch[0].shopifyLegacyId, '1003');
+  assert.equal(plan.notFoundAtSupplier[0].shopifyLegacyId, '1004');
 
   const arabicAction = plan.toBackfill.find((action) => action.shopifyLegacyId === '1002');
   assert.deepEqual(Array.from(arabicAction.addedTags), ['imported-nader-dior', 'supplier-id-p222']);
@@ -808,14 +824,15 @@ test('backfill-existing-products plans the real 18-product map and preserves dua
   }));
   const plan = backfillModule.planBackfillExistingProducts(existing, map);
   assert.equal(plan.summary.totalExisting, 18);
-  assert.equal(plan.toBackfill.length, 14);
-  assert.equal(plan.needsManualMatch.length, 4);
-  assert.equal(plan.toBackfill.filter((action) => action.addedTags.includes('imported-nader-dior')).length, 6);
+  assert.equal(plan.toBackfill.length, 18);
+  assert.equal(plan.needsManualMatch.length, 0);
+  assert.equal(plan.notFoundAtSupplier.length, 0);
+  assert.equal(plan.toBackfill.filter((action) => action.addedTags.includes('imported-nader-dior')).length, 7);
   for (const action of plan.toBackfill.filter((item) => Number(item.shopifyLegacyId) >= 9468843819264)) {
     assert.ok(action.requests.tagUpdate.body.product.tags.includes('مستورد-نوادر-ديور'));
   }
   const supplierProducts = map
-    .filter((entry) => entry.confidence !== 'low')
+    .filter((entry) => entry.confidence === 'high' || entry.confidence === 'medium')
     .map((entry) => ({
       name: entry.title,
       brand: entry.brand,

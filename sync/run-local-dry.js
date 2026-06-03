@@ -178,6 +178,7 @@ async function runDryRun(options = {}) {
       existingImportedProductsNeedingBackfill,
       backfillPlan,
       needsManualMatch: backfillPlan.needsManualMatch,
+      notFoundAtSupplier: backfillPlan.notFoundAtSupplier,
       duplicateRiskBeforeBackfill: summarizePlan(duplicateRiskBeforeBackfill),
       postBackfillReconcilePlan: summarizePlan(postBackfillReconcilePlan)
     },
@@ -397,7 +398,7 @@ function indexActions(plan) {
 }
 
 function summarizeBackfillMap(backfillMap) {
-  const counts = { high: 0, medium: 0, low: 0 };
+  const counts = { high: 0, medium: 0, low: 0, not_found: 0 };
   const products = backfillMap.map((entry) => {
     counts[entry.confidence] = (counts[entry.confidence] || 0) + 1;
     return {
@@ -474,6 +475,7 @@ if (isDirectRun) {
       }));
       console.log('Backfill plan: ' + JSON.stringify(output.preSyncSetup.backfillPlan.summary));
       console.log('Backfill needsManualMatch: ' + output.preSyncSetup.needsManualMatch.length);
+      console.log('Backfill notFoundAtSupplier: ' + output.preSyncSetup.notFoundAtSupplier.length);
     })
     .catch((error) => {
       console.error(error && error.stack ? error.stack : String(error));
