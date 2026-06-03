@@ -1,75 +1,102 @@
 /**
- * Plans the one-time pre-sync backfill for existing imported Calapres products.
+ * Plans the one-time pre-sync backfill for the 18 live imported Calapres products.
  *
- * The planner only emits tag/metafield request shapes. It never writes price,
- * images, descriptions, inventory, or status.
+ * The audited source of truth is sync/backfill-map.json. This planner only emits
+ * supplier metafield writes and tag updates; it never writes price, images,
+ * descriptions, inventory, status, vendor, SEO, or product presentation fields.
  */
 const DEFAULT_API_VERSION = '2026-04';
-const IMPORTED_TAG = 'imported-nader-dior';
-const SUPPLIER_TAG = 'supplier:nawadirdior';
+const CANONICAL_IMPORTED_TAG = 'imported-nader-dior';
+const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const IMPORTED_TAGS = [CANONICAL_IMPORTED_TAG, ARABIC_IMPORTED_TAG];
 const SUPPLIER_ID_TAG_PREFIX = 'supplier-id-p';
+const CONFIDENT_MATCHES = { high: true, medium: true };
 
-function planBackfillExistingProducts(existingProducts, supplierProducts, options) {
+function planBackfillExistingProducts(existingProducts, backfillMap, options) {
+  return planBackfillFromMap(backfillMap, {
+    ...(options || {}),
+    existingProducts
+  });
+}
+
+function planBackfillFromMap(backfillMap, options) {
   const config = normalizeOptions(options);
-  const supplierIndex = indexSupplierProducts(supplierProducts);
+  const entries = normalizeBackfillMap(backfillMap);
+  const existingIndex = indexExistingProducts(config.existingProducts || config.products || []);
   const plan = {
     toBackfill: [],
     alreadyBackfilled: [],
-    manualReview: []
+    needsManualMatch: []
   };
 
-  for (const product of normalizeExistingProducts(existingProducts)) {
-    if (!hasTag(product.tags, IMPORTED_TAG)) {
-      plan.manualReview.push(review(product, 'missing_imported_tag', []));
+  for (const entry of entries) {
+    const product = existingIndex.byId[entry.shopifyLegacyId];
+    if (!product) {
+      plan.needsManualMatch.push(review(entry, 'missing_shopify_product_snapshot'));
+      continue;
+    }
+    if (!hasAnyTag(product.tags, IMPORTED_TAGS)) {
+      plan.needsManualMatch.push(review(entry, 'missing_imported_tag_on_shopify_product'));
+      continue;
+    }
+    if (!isConfidentMapEntry(entry)) {
+      plan.needsManualMatch.push(review(entry, entry.reason || 'low_confidence_or_unmatched'));
       continue;
     }
 
-    const match = findBestMatch(product, supplierIndex);
-    if (!match || !match.supplierProduct) {
-      plan.manualReview.push(review(product, 'no_confident_supplier_match', match ? match.candidates : []));
-      continue;
-    }
-    if (!match.confident) {
-      plan.manualReview.push(review(product, match.reason || 'weak_or_ambiguous_supplier_match', match.candidates));
+    const supplierId = supplierIdDigits(entry.supplierProductId || productIdFromUrl(entry.matchedSourceUrl));
+    if (!entry.matchedSourceUrl || !supplierId) {
+      plan.needsManualMatch.push(review(entry, 'matched_entry_missing_source_url_or_supplier_id'));
       continue;
     }
 
-    if (isBackfilled(product, match.supplierProduct)) {
-      plan.alreadyBackfilled.push(action(product, match.supplierProduct, match, null));
+    if (isBackfilled(product, entry.matchedSourceUrl, supplierId)) {
+      plan.alreadyBackfilled.push(action(entry, product, supplierId, null));
       continue;
     }
 
     plan.toBackfill.push(
-      action(product, match.supplierProduct, match, buildBackfillRequests(product, match.supplierProduct, config))
+      action(
+        entry,
+        product,
+        supplierId,
+        buildBackfillRequests({
+          shopDomain: config.shopDomain,
+          apiVersion: config.apiVersion,
+          accessToken: config.accessToken,
+          productId: product.id || entry.shopifyLegacyId,
+          sourceUrl: entry.matchedSourceUrl,
+          supplierId,
+          currentTags: product.tags
+        })
+      )
     );
   }
 
   return {
     ...plan,
+    manualReview: plan.needsManualMatch,
     summary: {
-      totalExisting: normalizeExistingProducts(existingProducts).length,
+      totalExisting: entries.length,
+      highConfidence: entries.filter((entry) => entry.confidence === 'high').length,
+      mediumConfidence: entries.filter((entry) => entry.confidence === 'medium').length,
+      lowConfidence: entries.filter((entry) => entry.confidence === 'low').length,
       confidentlyMatched: plan.toBackfill.length + plan.alreadyBackfilled.length,
       toBackfill: plan.toBackfill.length,
       alreadyBackfilled: plan.alreadyBackfilled.length,
-      manualReview: plan.manualReview.length
+      needsManualMatch: plan.needsManualMatch.length,
+      manualReview: plan.needsManualMatch.length
     }
   };
 }
 
-function buildBackfillRequests(product, supplierProduct, config) {
+function buildBackfillRequests(options) {
+  const config = normalizeOptions(options);
   return {
-    metafieldsSet: buildMetafieldsSetRequest({
-      shopDomain: config.shopDomain,
-      apiVersion: config.apiVersion,
-      productId: product.id,
-      sourceUrl: supplierProduct.sourceUrl,
-      supplierId: supplierProduct.supplierId
-    }),
+    metafieldsSet: buildMetafieldsSetRequest(config),
     tagUpdate: buildTagUpdateRequest({
-      shopDomain: config.shopDomain,
-      apiVersion: config.apiVersion,
-      productId: product.id,
-      tags: addRequiredTags(product.tags, supplierProduct.supplierId)
+      ...config,
+      tags: addBackfillTags(config.currentTags, config.supplierId)
     })
   };
 }
@@ -77,9 +104,9 @@ function buildBackfillRequests(product, supplierProduct, config) {
 function buildMetafieldsSetRequest(options) {
   const config = normalizeOptions(options);
   const ownerId = toGraphqlProductId(config.productId || config.id);
-  if (!ownerId) throw new Error('buildMetafieldsSetRequest requires productId');
   const sourceUrl = cleanString(config.sourceUrl);
-  const supplierId = cleanString(config.supplierId || productIdFromUrl(sourceUrl));
+  const supplierId = supplierIdDigits(config.supplierId || config.supplierProductId || productIdFromUrl(sourceUrl));
+  if (!ownerId) throw new Error('buildMetafieldsSetRequest requires productId');
   if (!sourceUrl || !supplierId) throw new Error('buildMetafieldsSetRequest requires sourceUrl and supplierId');
   return {
     method: 'POST',
@@ -126,111 +153,23 @@ function buildTagUpdateRequest(options) {
   };
 }
 
-function findBestMatch(product, supplierIndex) {
-  const exact = exactMatch(product, supplierIndex);
-  if (exact) return exact;
-
-  const candidates = [];
-  for (const supplierProduct of supplierIndex.products) {
-    const score = titleSimilarity(product.title, supplierProduct.name);
-    if (score >= 0.72) {
-      candidates.push({
-        supplierProduct,
-        method: 'title_similarity',
-        confidence: roundScore(score)
-      });
-    }
-  }
-  candidates.sort((a, b) => b.confidence - a.confidence);
-  if (!candidates.length) return { confident: false, reason: 'no_confident_supplier_match', candidates: [] };
-  if (candidates.length > 1 && candidates[0].confidence === candidates[1].confidence) {
-    return { confident: false, reason: 'ambiguous_supplier_match', candidates: summarizeCandidates(candidates.slice(0, 5)) };
-  }
-  if (candidates[0].confidence < 0.78) {
-    return { confident: false, reason: 'weak_supplier_match', candidates: summarizeCandidates(candidates.slice(0, 5)) };
-  }
-  return {
-    confident: true,
-    method: candidates[0].method,
-    confidence: candidates[0].confidence,
-    supplierProduct: candidates[0].supplierProduct,
-    candidates: summarizeCandidates(candidates.slice(0, 5))
-  };
-}
-
-function exactMatch(product, supplierIndex) {
-  const sourceUrl = readMetafield(product, 'supplier', 'source_url') || product.sourceUrl;
-  const supplierId = readMetafield(product, 'supplier', 'product_id') || supplierIdFromTags(product.tags);
-  if (sourceUrl && supplierIndex.bySourceUrl[sourceUrl]) {
-    return confident('source_url', 1, supplierIndex.bySourceUrl[sourceUrl]);
-  }
-  if (supplierId && supplierIndex.bySupplierId[supplierId]) {
-    return confident('supplier_id', 1, supplierIndex.bySupplierId[supplierId]);
-  }
-
-  const handle = normalizeHandle(product.handle || handleFromUrl(product.onlineStoreUrl || product.url));
-  if (handle && supplierIndex.byHandle[handle] && supplierIndex.byHandle[handle].length === 1) {
-    return confident('handle', 0.96, supplierIndex.byHandle[handle][0]);
-  }
-
-  const titleKey = normalizeTitle(product.title);
-  if (titleKey && supplierIndex.byTitle[titleKey] && supplierIndex.byTitle[titleKey].length === 1) {
-    return confident('title_exact', 0.92, supplierIndex.byTitle[titleKey][0]);
-  }
-  if (titleKey && supplierIndex.byTitle[titleKey] && supplierIndex.byTitle[titleKey].length > 1) {
+function normalizeBackfillMap(backfillMap) {
+  return (backfillMap || []).map((raw) => {
+    const item = raw && typeof raw === 'object' ? raw : {};
+    const matchedSourceUrl = cleanString(item.matchedSourceUrl);
+    const supplierProductId = normalizeSupplierProductId(item.supplierProductId || productIdFromUrl(matchedSourceUrl));
     return {
-      confident: false,
-      reason: 'ambiguous_title_match',
-      candidates: summarizeCandidates(supplierIndex.byTitle[titleKey].slice(0, 5).map((supplierProduct) => ({ supplierProduct, confidence: 0.92, method: 'title_exact' })))
+      shopifyLegacyId: cleanString(item.shopifyLegacyId),
+      title: cleanString(item.title),
+      brand: cleanString(item.brand),
+      matchedSourceUrl: matchedSourceUrl || null,
+      supplierProductId: supplierProductId || null,
+      concentration: item.concentration === null || item.concentration === undefined ? null : cleanString(item.concentration),
+      sizeMl: item.sizeMl === null || item.sizeMl === undefined ? null : Number(item.sizeMl),
+      confidence: normalizeConfidence(item.confidence),
+      reason: cleanString(item.reason)
     };
-  }
-
-  return null;
-}
-
-function confident(method, confidence, supplierProduct) {
-  return {
-    confident: true,
-    method,
-    confidence,
-    supplierProduct,
-    candidates: summarizeCandidates([{ supplierProduct, method, confidence }])
-  };
-}
-
-function indexSupplierProducts(products) {
-  const index = {
-    products: [],
-    bySourceUrl: {},
-    bySupplierId: {},
-    byHandle: {},
-    byTitle: {}
-  };
-  const seen = {};
-  for (const raw of products || []) {
-    const supplierProduct = normalizeSupplierProduct(raw);
-    if (!supplierProduct.sourceUrl || !supplierProduct.supplierId || !supplierProduct.name) continue;
-    if (seen[supplierProduct.supplierId]) continue;
-    seen[supplierProduct.supplierId] = true;
-    index.products.push(supplierProduct);
-    index.bySourceUrl[supplierProduct.sourceUrl] = supplierProduct;
-    index.bySupplierId[supplierProduct.supplierId] = supplierProduct;
-    pushIndex(index.byHandle, supplierProduct.handle, supplierProduct);
-    pushIndex(index.byTitle, normalizeTitle(supplierProduct.name), supplierProduct);
-  }
-  return index;
-}
-
-function normalizeSupplierProduct(raw) {
-  const item = raw && typeof raw === 'object' ? raw : {};
-  const sourceUrl = cleanString(item.sourceUrl);
-  return {
-    ...item,
-    sourceUrl,
-    supplierId: cleanString(item.supplierId || productIdFromUrl(sourceUrl)),
-    handle: normalizeHandle(item.handle || handleFromUrl(sourceUrl)),
-    name: cleanString(item.name)
-  };
+  });
 }
 
 function normalizeExistingProducts(products) {
@@ -238,83 +177,68 @@ function normalizeExistingProducts(products) {
     const item = raw && typeof raw === 'object' ? raw : {};
     return {
       ...item,
-      id: cleanString(item.id),
+      id: cleanString(item.shopifyLegacyId || item.legacyResourceId || item.id),
       title: cleanString(item.title),
-      handle: normalizeHandle(item.handle || handleFromUrl(item.onlineStoreUrl || item.url)),
+      brand: cleanString(item.brand || item.vendor),
       tags: normalizeTags(item.tags),
       metafields: Array.isArray(item.metafields) ? item.metafields.slice() : []
     };
   });
 }
 
-function action(product, supplierProduct, match, requests) {
+function indexExistingProducts(products) {
+  const byId = {};
+  for (const product of normalizeExistingProducts(products)) {
+    if (product.id) byId[product.id] = product;
+  }
+  return { byId };
+}
+
+function isConfidentMapEntry(entry) {
+  return Boolean(entry && CONFIDENT_MATCHES[entry.confidence] && entry.matchedSourceUrl && entry.supplierProductId);
+}
+
+function isBackfilled(product, sourceUrl, supplierId) {
+  return (
+    readMetafield(product, 'supplier', 'source_url') === sourceUrl &&
+    supplierIdDigits(readMetafield(product, 'supplier', 'product_id')) === supplierId &&
+    hasTag(product.tags, CANONICAL_IMPORTED_TAG) &&
+    hasTag(product.tags, supplierIdTag(supplierId))
+  );
+}
+
+function action(entry, product, supplierId, requests) {
+  const addedTags = addBackfillTags(product.tags, supplierId).filter((tag) => !hasTag(product.tags, tag));
   return {
-    productId: product.id,
-    title: product.title,
-    matchMethod: match.method,
-    confidence: match.confidence,
-    sourceUrl: supplierProduct.sourceUrl,
-    supplierId: supplierProduct.supplierId,
-    addedTags: addRequiredTags(product.tags, supplierProduct.supplierId).filter((tag) => !hasTag(product.tags, tag)),
+    shopifyLegacyId: entry.shopifyLegacyId,
+    productId: product.id || entry.shopifyLegacyId,
+    title: entry.title || product.title,
+    brand: entry.brand || product.brand,
+    confidence: entry.confidence,
+    reason: entry.reason,
+    sourceUrl: entry.matchedSourceUrl,
+    matchedSourceUrl: entry.matchedSourceUrl,
+    supplierProductId: normalizeSupplierProductId(entry.supplierProductId || supplierId),
+    supplierId,
+    addedTags,
     requests
   };
 }
 
-function review(product, reason, candidates) {
+function review(entry, reason) {
   return {
-    productId: product.id,
-    title: product.title,
-    handle: product.handle || '',
-    reason,
-    candidates: candidates || []
+    shopifyLegacyId: entry.shopifyLegacyId,
+    title: entry.title,
+    brand: entry.brand,
+    matchedSourceUrl: entry.matchedSourceUrl,
+    supplierProductId: entry.supplierProductId,
+    confidence: entry.confidence,
+    reason
   };
 }
 
-function isBackfilled(product, supplierProduct) {
-  return (
-    readMetafield(product, 'supplier', 'source_url') === supplierProduct.sourceUrl &&
-    readMetafield(product, 'supplier', 'product_id') === supplierProduct.supplierId &&
-    hasTag(product.tags, SUPPLIER_ID_TAG_PREFIX + supplierProduct.supplierId) &&
-    hasTag(product.tags, SUPPLIER_TAG)
-  );
-}
-
-function addRequiredTags(tags, supplierId) {
-  return uniqueTags(normalizeTags(tags).concat([IMPORTED_TAG, SUPPLIER_TAG, SUPPLIER_ID_TAG_PREFIX + supplierId]));
-}
-
-function titleSimilarity(left, right) {
-  const leftTokens = tokenSet(left);
-  const rightTokens = tokenSet(right);
-  if (!leftTokens.length || !rightTokens.length) return 0;
-  const rightMap = {};
-  for (const token of rightTokens) rightMap[token] = true;
-  let intersection = 0;
-  for (const token of leftTokens) if (rightMap[token]) intersection += 1;
-  const union = uniqueTags(leftTokens.concat(rightTokens)).length;
-  return union ? intersection / union : 0;
-}
-
-function tokenSet(value) {
-  const normalized = normalizeTitle(value);
-  const tokens = normalized.match(/[\p{L}\p{N}]+/gu) || normalized.split(/\s+/);
-  return uniqueTags(tokens.filter((token) => token.length > 1));
-}
-
-function summarizeCandidates(candidates) {
-  return (candidates || []).map((candidate) => ({
-    method: candidate.method,
-    confidence: candidate.confidence,
-    supplierId: candidate.supplierProduct.supplierId,
-    sourceUrl: candidate.supplierProduct.sourceUrl,
-    name: candidate.supplierProduct.name
-  }));
-}
-
-function pushIndex(index, key, value) {
-  if (!key) return;
-  if (!index[key]) index[key] = [];
-  index[key].push(value);
+function addBackfillTags(tags, supplierId) {
+  return uniqueTags(normalizeTags(tags).concat([CANONICAL_IMPORTED_TAG, supplierIdTag(supplierId)]));
 }
 
 function readMetafield(product, namespace, key) {
@@ -323,12 +247,20 @@ function readMetafield(product, namespace, key) {
   return found && found.value !== undefined && found.value !== null ? String(found.value) : '';
 }
 
-function supplierIdFromTags(tags) {
-  for (const tag of normalizeTags(tags)) {
-    const match = tag.match(/^supplier-id-p(\d+)$/i);
-    if (match) return match[1];
-  }
-  return '';
+function supplierIdTag(value) {
+  const id = supplierIdDigits(value);
+  return id ? SUPPLIER_ID_TAG_PREFIX + id : '';
+}
+
+function supplierIdDigits(value) {
+  const raw = cleanString(value);
+  const match = raw.match(/^p?(\d+)$/i) || raw.match(/\/p(\d+)(?=$|[/?#])/i);
+  return match ? match[1] : raw.replace(/\D/g, '');
+}
+
+function normalizeSupplierProductId(value) {
+  const id = supplierIdDigits(value);
+  return id ? 'p' + id : '';
 }
 
 function productIdFromUrl(value) {
@@ -348,15 +280,6 @@ function handleFromUrl(value) {
   }
 }
 
-function normalizeHandle(value) {
-  const raw = cleanString(value).replace(/^\/+|\/+$/g, '');
-  try {
-    return decodeURIComponent(raw).toLowerCase();
-  } catch (error) {
-    return raw.toLowerCase();
-  }
-}
-
 function normalizeTitle(value) {
   return cleanString(value)
     .toLowerCase()
@@ -367,6 +290,24 @@ function normalizeTitle(value) {
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function titleSimilarity(left, right) {
+  const leftTokens = tokenSet(left);
+  const rightTokens = tokenSet(right);
+  if (!leftTokens.length || !rightTokens.length) return 0;
+  const rightMap = {};
+  for (const token of rightTokens) rightMap[token] = true;
+  let intersection = 0;
+  for (const token of leftTokens) if (rightMap[token]) intersection += 1;
+  const union = uniqueTags(leftTokens.concat(rightTokens)).length;
+  return union ? Math.round((intersection / union) * 1000) / 1000 : 0;
+}
+
+function tokenSet(value) {
+  const normalized = normalizeTitle(value);
+  const tokens = normalized.match(/[\p{L}\p{N}]+/gu) || normalized.split(/\s+/);
+  return uniqueTags(tokens.filter((token) => token.length > 1));
 }
 
 function toGraphqlProductId(value) {
@@ -417,6 +358,16 @@ function requestHeaders(accessToken) {
   return headers;
 }
 
+function normalizeConfidence(value) {
+  const raw = cleanString(value).toLowerCase();
+  if (raw === 'high' || raw === 'medium' || raw === 'low') return raw;
+  return 'low';
+}
+
+function hasAnyTag(tags, targets) {
+  return (targets || []).some((tag) => hasTag(tags, tag));
+}
+
 function hasTag(tags, target) {
   const key = cleanString(target).toLowerCase();
   return normalizeTags(tags).some((tag) => tag.toLowerCase() === key);
@@ -447,10 +398,6 @@ function cleanString(value) {
   return String(value || '').trim();
 }
 
-function roundScore(value) {
-  return Math.round(Number(value) * 1000) / 1000;
-}
-
 const METAFIELDS_SET_MUTATION = `
 mutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {
   metafieldsSet(metafields: $metafields) {
@@ -477,15 +424,23 @@ mutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     DEFAULT_API_VERSION,
-    IMPORTED_TAG,
-    SUPPLIER_TAG,
+    CANONICAL_IMPORTED_TAG,
+    ARABIC_IMPORTED_TAG,
+    IMPORTED_TAGS,
+    SUPPLIER_ID_TAG_PREFIX,
     METAFIELDS_SET_MUTATION,
     planBackfillExistingProducts,
+    planBackfillFromMap,
+    buildBackfillRequests,
     buildMetafieldsSetRequest,
     buildTagUpdateRequest,
-    findBestMatch,
-    normalizeSupplierProduct,
+    normalizeBackfillMap,
     normalizeExistingProducts,
+    addBackfillTags,
+    supplierIdTag,
+    supplierIdDigits,
+    normalizeSupplierProductId,
+    productIdFromUrl,
     handleFromUrl,
     normalizeTitle,
     titleSimilarity,

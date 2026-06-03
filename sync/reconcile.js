@@ -4,6 +4,10 @@
  * reconcile(supplierProducts, shopifyProducts) returns the five operational
  * buckets n8n needs: create, update, mark out of stock, skip enriched, unchanged.
  */
+const CANONICAL_IMPORTED_TAG = 'imported-nader-dior';
+const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const IMPORTED_TAGS = [CANONICAL_IMPORTED_TAG, ARABIC_IMPORTED_TAG];
+
 function reconcile(supplierProducts, shopifyProducts) {
   const plan = {
     toCreate: [],
@@ -68,7 +72,7 @@ function reconcile(supplierProducts, shopifyProducts) {
 
   for (const product of shopifyIndex.products) {
     if (matchedShopifyKeys[product.matchKey]) continue;
-    if (!hasTag(product.tags, 'imported-nader-dior')) continue;
+    if (!isImportedProduct(product)) continue;
     const stock = currentState(product);
     if (stock.status === 'draft' && stock.inventoryPolicy === 'deny') {
       plan.unchanged.push(action('already_out_of_stock_missing_supplier', null, product));
@@ -138,7 +142,9 @@ function normalizeShopifyProduct(raw) {
   const item = raw && typeof raw === 'object' ? raw : {};
   const tags = normalizeTags(item.tags);
   const sourceUrl = cleanString(item.sourceUrl || readMetafield(item, 'supplier', 'source_url'));
-  const supplierId = cleanString(item.supplierId || readMetafield(item, 'supplier', 'product_id') || supplierIdFromTags(tags) || productIdFromUrl(sourceUrl));
+  const supplierId = normalizeSupplierProductId(
+    item.supplierId || readMetafield(item, 'supplier', 'product_id') || supplierIdFromTags(tags) || productIdFromUrl(sourceUrl)
+  );
   const firstVariant = readFirstVariant(item);
   return {
     ...item,
@@ -177,7 +183,7 @@ function desiredState(supplier) {
     compareAtPrice,
     inventoryPolicy: inStock ? 'continue' : 'deny',
     tags: [
-      'imported-nader-dior',
+      CANONICAL_IMPORTED_TAG,
       'supplier:nawadirdior',
       supplier.supplierId ? 'supplier-id-p' + supplier.supplierId : ''
     ].filter(Boolean)
@@ -243,6 +249,10 @@ function containsAllTags(current, desired) {
   return normalizeTags(desired).every((tag) => currentSet[tag.toLowerCase()]);
 }
 
+function isImportedProduct(product) {
+  return IMPORTED_TAGS.some((tag) => hasTag(product && product.tags, tag));
+}
+
 function hasTag(tags, target) {
   const key = String(target || '').toLowerCase();
   return normalizeTags(tags).some((tag) => tag.toLowerCase() === key);
@@ -270,6 +280,10 @@ function supplierIdFromTags(tags) {
 function productIdFromUrl(value) {
   const match = String(value || '').match(/\/p(\d+)(?=$|[/?#])/i);
   return match ? match[1] : '';
+}
+
+function normalizeSupplierProductId(value) {
+  return String(value || '').replace(/^p/i, '').replace(/\D/g, '');
 }
 
 function normalizeAvailability(value) {
@@ -336,10 +350,15 @@ function cleanString(value) {
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    CANONICAL_IMPORTED_TAG,
+    ARABIC_IMPORTED_TAG,
+    IMPORTED_TAGS,
     reconcile,
     desiredState,
     normalizeSupplierProduct,
     normalizeShopifyProduct,
+    isImportedProduct,
+    normalizeSupplierProductId,
     productIdFromUrl,
     supplierIdFromTags
   };

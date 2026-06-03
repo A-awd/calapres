@@ -6,6 +6,9 @@
  */
 const DEFAULT_API_VERSION = '2026-04';
 const IMPORTED_TAG = 'imported-nader-dior';
+const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const IMPORTED_TAGS = [IMPORTED_TAG, ARABIC_IMPORTED_TAG];
+const IMPORTED_PRODUCTS_SEARCH_QUERY = 'tag:imported-nader-dior OR tag:مستورد-نوادر-ديور';
 const SUPPLIER_TAG = 'supplier:nawadirdior';
 const SUPPLIER_ID_TAG_PREFIX = 'supplier-id-p';
 const SOURCE_NAMESPACE = 'supplier';
@@ -20,7 +23,7 @@ function buildLookupProductRequest(options) {
     ? 'metafields.' + SOURCE_NAMESPACE + '.' + SOURCE_URL_KEY + ':' + quoteSearchValue(sourceUrl)
     : '';
   const tagFilter = supplierId ? 'tag:' + quoteSearchValue(supplierIdTag(supplierId)) : '';
-  const query = [sourceFilter, tagFilter].filter(Boolean).join(' OR ') || 'tag:' + quoteSearchValue(IMPORTED_TAG);
+  const query = [sourceFilter, tagFilter, IMPORTED_PRODUCTS_SEARCH_QUERY].filter(Boolean).join(' OR ');
 
   return buildGraphqlRequest({
     shopDomain: config.shopDomain,
@@ -99,7 +102,7 @@ function buildListImportedProductsRequest(options) {
       variables: {
         first: clampFirst(config.first || 250),
         after: config.after || null,
-        query: 'tag:' + quoteSearchValue(IMPORTED_TAG)
+        query: buildImportedProductsSearchQuery()
       }
     }
   });
@@ -186,7 +189,9 @@ function normalizeGraphqlProduct(node) {
   if (!node || typeof node !== 'object') return null;
   const sourceUrl = readMetafieldValue(node.metafield) || readMetafieldValue(node.sourceUrlMetafield);
   const supplierProductId =
-    readMetafieldValue(node.productIdMetafield) || supplierIdFromTags(node.tags || []) || productIdFromUrl(sourceUrl);
+    normalizeSupplierProductId(
+      readMetafieldValue(node.productIdMetafield) || supplierIdFromTags(node.tags || []) || productIdFromUrl(sourceUrl)
+    );
   const variants = readGraphqlVariantNodes(node.variants).map((variant) => ({
     id: toRestId(variant.legacyResourceId || variant.id),
     graphqlId: variant.id,
@@ -279,9 +284,17 @@ function clampFirst(value) {
   return Math.max(1, Math.min(250, Math.floor(number)));
 }
 
+function buildImportedProductsSearchQuery() {
+  return IMPORTED_PRODUCTS_SEARCH_QUERY;
+}
+
 function supplierIdTag(value) {
-  const id = String(value || '').replace(/^p/i, '').replace(/\D/g, '');
+  const id = normalizeSupplierProductId(value);
   return id ? SUPPLIER_ID_TAG_PREFIX + id : '';
+}
+
+function normalizeSupplierProductId(value) {
+  return String(value || '').replace(/^p/i, '').replace(/\D/g, '');
 }
 
 function supplierIdFromTags(tags) {
@@ -412,6 +425,9 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     DEFAULT_API_VERSION,
     IMPORTED_TAG,
+    ARABIC_IMPORTED_TAG,
+    IMPORTED_TAGS,
+    IMPORTED_PRODUCTS_SEARCH_QUERY,
     SUPPLIER_TAG,
     SOURCE_NAMESPACE,
     SOURCE_URL_KEY,
@@ -430,7 +446,9 @@ if (typeof module !== 'undefined' && module.exports) {
     normalizeGraphqlProduct,
     adminGraphqlUrl,
     adminRestUrl,
+    buildImportedProductsSearchQuery,
     supplierIdTag,
+    normalizeSupplierProductId,
     supplierIdFromTags,
     productIdFromUrl,
     toGraphqlProductId,

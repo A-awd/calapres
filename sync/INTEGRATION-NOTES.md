@@ -4,7 +4,7 @@ These notes define the exact field mapping and API contract for wiring the suppl
 
 ## 1. Pre-Sync Setup
 
-Run this before the first recurring sync. The live store currently has no product metafield definitions, and the existing imported products do not yet have `supplier.source_url`, `supplier.product_id`, or `supplier-id-p<id>` matching data. Skipping this setup can make the first recurring sync create duplicates.
+Run this before the first recurring sync. The live store has 18 imported products, split across `imported-nader-dior` and `مستورد-نوادر-ديور`. The existing imported products do not yet have `supplier.source_url`, `supplier.product_id`, or `supplier-id-p<id>` matching data. Skipping this setup can make the first recurring sync create duplicates.
 
 1. Create product metafield definitions using `sync/setup-metafield-definitions.js`.
    - Create `supplier.source_url`.
@@ -15,17 +15,18 @@ Run this before the first recurring sync. The live store currently has no produc
    - Both definitions set Admin API access to `MERCHANT_READ_WRITE`.
    - Both definitions enable `capabilities.adminFilterable.enabled`.
 
-2. Backfill the 19 existing imported products using `sync/backfill-existing-products.js`.
-   - Match existing imported products to Nawadirdior products by exact `source_url` or supplier-id if present, then exact handle, exact normalized title, then unique high-confidence title similarity.
-   - Add only `supplier.source_url`, `supplier.product_id`, `supplier:nawadirdior`, and `supplier-id-p<id>`.
+2. Backfill the 18 existing imported products using `sync/backfill-existing-products.js` and `sync/backfill-map.json`.
+   - Use the audited brand/name/concentration/size map; do not infer supplier URLs from Shopify descriptions or metafields because those fields are clean/empty on the live store.
+   - Add only `supplier.source_url`, `supplier.product_id`, `imported-nader-dior`, and `supplier-id-p<id>`.
+   - Preserve the existing Arabic imported tag `مستورد-نوادر-ديور` on products that already have it.
    - Do not write price, images, description, status, vendor, inventory, or SEO.
-   - Review `manualReview[]` before executing any backfill request.
+   - Review `needsManualMatch[]` before executing any backfill request.
 
 3. Run one offline dry run and inspect `sync/dry-run-output.json`.
    - `preSyncSetup.metafieldDefinitionRequests` shows the two definition-create requests.
    - `preSyncSetup.backfillPlan` shows matched and manual-review products.
    - `preSyncSetup.duplicateRiskBeforeBackfill` shows why the setup must run first.
-   - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for the 19 existing products.
+   - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for high/medium-confidence existing products.
 
 ## 2. Shopify Admin API Surface
 
@@ -52,7 +53,7 @@ Default Admin API version in code: `2026-04`.
 | `availability` | `product.variants[0].inventory_policy` | `in_stock` becomes `continue`; `out_of_stock` or supplier-missing becomes `deny`. |
 | `imageUrl` | `product.images[0].src` | Only written for new or non-enriched products. |
 | fixed import marker | `product.tags` | Adds `imported-nader-dior`. |
-| supplier marker | `product.tags` | Adds `supplier:nawadirdior`. |
+| supplier marker | `product.tags` | Adds `supplier:nawadirdior` for recurring create/full-update payloads. |
 | Salla product id | `product.tags` | Adds `supplier-id-p<id>`. |
 | `sourceUrl` | `product.metafields[].namespace=supplier,key=source_url` | Type: `single_line_text_field`. |
 | Salla product id | `product.metafields[].namespace=supplier,key=product_id` | Type: `single_line_text_field`. |
@@ -99,8 +100,11 @@ Use both match paths:
 
 - `metafields.supplier.source_url:"<sourceUrl>"`
 - `tag:"supplier-id-p<id>"`
+- Imported fallback query `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`
 
 The response includes `supplier.source_url`, `supplier.product_id`, tags, status, and first variant fields so `sync/reconcile.js` can decide the action offline.
+
+When listing imported products, use exactly `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`. Canonical writes continue to add the English `imported-nader-dior` tag.
 
 ## 6. Reconcile Action Plan
 

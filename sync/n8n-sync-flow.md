@@ -2,7 +2,7 @@
 
 This workflow keeps Calapres Shopify products aligned with Nawadirdior Salla products. It never deletes Shopify products. Supplier items missing from the latest crawl are marked out of stock.
 
-Pre-sync requirement: before this recurring workflow is enabled, run the setup from `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js`. The live store currently needs `supplier.source_url` / `supplier.product_id` definitions and supplier-id tags backfilled onto the 19 existing imported products, otherwise the first recurring sync can create duplicates.
+Pre-sync requirement: before this recurring workflow is enabled, run the setup from `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js`. The live store currently has 18 imported products split across two imported-tag conventions: `imported-nader-dior` and `مستورد-نوادر-ديور`. Those products need `supplier.source_url` / `supplier.product_id` definitions and supplier-id tags backfilled from `sync/backfill-map.json`, otherwise the first recurring sync can create duplicates.
 
 Implementation note: keep Shopify decision logic and request bodies centralized in `sync/reconcile.js`, `sync/build-shopify-payload.js`, `sync/validate-shopify-shape.js`, and `sync/shopify-client.js`. In n8n, Code nodes should call those helpers and pass the returned request objects to HTTP Request nodes instead of hand-building Shopify field names.
 
@@ -180,9 +180,10 @@ const sourceUrl = $json.parsed.sourceUrl || $json.sourceUrl;
 const idMatch = String(sourceUrl || '').match(/\/p(\d+)(?=$|[/?#])/);
 const supplierProductId = $json.supplierProductId || (idMatch ? idMatch[1] : '');
 const supplierIdTag = supplierProductId ? `supplier-id-p${supplierProductId}` : '';
+const importedQuery = 'tag:imported-nader-dior OR tag:مستورد-نوادر-ديور';
 const query = supplierIdTag
-  ? `tag:imported-nader-dior tag:${supplierIdTag}`
-  : 'tag:imported-nader-dior';
+  ? `${importedQuery} OR tag:${supplierIdTag}`
+  : importedQuery;
 
 return {
   json: {
@@ -215,7 +216,7 @@ return {
 
 ```json
 {
-  "query": "query LookupProduct($query: String!) { products(first: 25, query: $query) { nodes { id legacyResourceId title handle tags metafield(namespace: \"supplier\", key: \"source_url\") { value } variants(first: 1) { nodes { id legacyResourceId } } } } }",
+  "query": "query LookupProduct($query: String!) { products(first: 25, query: $query) { nodes { id legacyResourceId title handle tags sourceUrlMetafield: metafield(namespace: \"supplier\", key: \"source_url\") { value } productIdMetafield: metafield(namespace: \"supplier\", key: \"product_id\") { value } variants(first: 1) { nodes { id legacyResourceId } } } } }",
   "variables": {
     "query": "={{$json.lookup.query}}"
   }
@@ -231,10 +232,16 @@ return {
 
 ```js
 const sourceUrl = $node['Code: Build Shopify Lookup'].json.lookup.sourceUrl;
+const supplierProductId = $node['Code: Build Shopify Lookup'].json.lookup.supplierProductId;
+const supplierIdTag = $node['Code: Build Shopify Lookup'].json.lookup.supplierIdTag;
 const nodes = $json.data?.products?.nodes || [];
-const exact = nodes.find((product) => product.metafield?.value === sourceUrl);
-const fallback = nodes.find((product) => (product.tags || []).includes('imported-nader-dior'));
-const product = exact || fallback || null;
+const exact = nodes.find((product) => product.sourceUrlMetafield?.value === sourceUrl);
+const byProductId = nodes.find((product) => {
+  const value = String(product.productIdMetafield?.value || '').replace(/^p/i, '');
+  return supplierProductId && value === String(supplierProductId);
+});
+const bySupplierTag = nodes.find((product) => supplierIdTag && (product.tags || []).includes(supplierIdTag));
+const product = exact || byProductId || bySupplierTag || null;
 const variant = product?.variants?.nodes?.[0] || null;
 
 return {
@@ -338,7 +345,7 @@ return {
 
 ```json
 {
-  "query": "query ImportedProducts { products(first: 250, query: \"tag:imported-nader-dior\") { nodes { id legacyResourceId title tags status metafield(namespace: \"supplier\", key: \"source_url\") { value } variants(first: 1) { nodes { id legacyResourceId } } } } }"
+  "query": "query ImportedProducts { products(first: 250, query: \"tag:imported-nader-dior OR tag:مستورد-نوادر-ديور\") { nodes { id legacyResourceId title tags status metafield(namespace: \"supplier\", key: \"source_url\") { value } variants(first: 1) { nodes { id legacyResourceId } } } } }"
 }
 ```
 

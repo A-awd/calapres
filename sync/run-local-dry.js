@@ -56,6 +56,10 @@ function readDryRunManifest() {
   return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 }
 
+function readBackfillMap() {
+  return JSON.parse(fs.readFileSync(path.join(__dirname, 'backfill-map.json'), 'utf8'));
+}
+
 function readCachedProductHtml(sourceUrl) {
   const manifest = readDryRunManifest();
   const entry = manifest.find((item) => item.sourceUrl === sourceUrl);
@@ -131,21 +135,20 @@ async function runDryRun(options = {}) {
   const reconcilePlan = reconcileModule.reconcile(supplierProducts, syntheticShopifyProducts);
   const actionRequests = buildActionRequests(reconcilePlan, shopDomain);
   const actionIndex = indexActions(reconcilePlan);
-  const validSupplierProducts = supplierProducts.filter(
-    (item) => item.sourceUrl && item.supplierPrice !== null && item.availability !== 'missing'
-  );
-  const existingImportedProductsNeedingBackfill = buildExistingImportedProductsNeedingBackfill(validSupplierProducts.slice(0, 19));
+  const backfillMap = readBackfillMap();
+  const backfillSupplierProducts = buildSupplierProductsFromBackfillMap(backfillMap);
+  const existingImportedProductsNeedingBackfill = buildExistingImportedProductsFromBackfillMap(backfillMap);
   const backfillPlan = backfillModule.planBackfillExistingProducts(
     existingImportedProductsNeedingBackfill,
-    validSupplierProducts,
+    backfillMap,
     { shopDomain }
   );
   const duplicateRiskBeforeBackfill = reconcileModule.reconcile(
-    validSupplierProducts.slice(0, 19),
+    backfillSupplierProducts,
     existingImportedProductsNeedingBackfill
   );
   const postBackfillShopifyProducts = applyBackfillPlanForDryRun(existingImportedProductsNeedingBackfill, backfillPlan);
-  const postBackfillReconcilePlan = reconcileModule.reconcile(validSupplierProducts.slice(0, 19), postBackfillShopifyProducts);
+  const postBackfillReconcilePlan = reconcileModule.reconcile(backfillSupplierProducts, postBackfillShopifyProducts);
 
   for (const entry of entries) {
     const action = actionIndex[entry.sourceUrl] || actionIndex[entry.productId] || null;
@@ -170,8 +173,11 @@ async function runDryRun(options = {}) {
     missingSupplierPages: entries.filter((entry) => entry.action === 'skip_missing_supplier_page').length,
     preSyncSetup: {
       metafieldDefinitionRequests: setupDefinitions.buildSupplierMetafieldDefinitionRequests({ shopDomain }),
+      backfillMap,
+      backfillMapSummary: summarizeBackfillMap(backfillMap),
       existingImportedProductsNeedingBackfill,
       backfillPlan,
+      needsManualMatch: backfillPlan.needsManualMatch,
       duplicateRiskBeforeBackfill: summarizePlan(duplicateRiskBeforeBackfill),
       postBackfillReconcilePlan: summarizePlan(postBackfillReconcilePlan)
     },
@@ -234,27 +240,43 @@ function buildSyntheticShopifyProducts(supplierProducts) {
   return products;
 }
 
-function buildExistingImportedProductsNeedingBackfill(supplierProducts) {
-  return supplierProducts.map((supplierProduct, index) => {
-    const payload = payloads.buildPayload(supplierProduct).product;
-    const variant = payload.variants && payload.variants[0] ? payload.variants[0] : {};
+function buildExistingImportedProductsFromBackfillMap(backfillMap) {
+  return backfillMap.map((entry, index) => {
+    const tags =
+      index < 11
+        ? [backfillModule.CANONICAL_IMPORTED_TAG]
+        : [backfillModule.ARABIC_IMPORTED_TAG];
     return {
-      id: String(700001 + index),
-      title: payload.title || supplierProduct.name,
-      handle: handleFromSourceUrl(supplierProduct.sourceUrl),
-      status: payload.status || 'active',
-      tags: ['imported-nader-dior'],
+      id: String(entry.shopifyLegacyId),
+      title: entry.title,
+      vendor: entry.brand,
+      status: 'active',
+      tags,
       metafields: [],
       variants: [
         {
-          id: String(710001 + index),
-          price: variant.price || null,
-          compare_at_price: variant.compare_at_price || null,
-          inventory_policy: variant.inventory_policy || 'continue'
+          id: String(810000 + index),
+          price: null,
+          compare_at_price: null,
+          inventory_policy: 'continue'
         }
       ]
     };
   });
+}
+
+function buildSupplierProductsFromBackfillMap(backfillMap) {
+  return backfillMap
+    .filter((entry) => (entry.confidence === 'high' || entry.confidence === 'medium') && entry.matchedSourceUrl)
+    .map((entry) => ({
+      name: entry.title,
+      brand: entry.brand,
+      supplierPrice: 100,
+      supplierCompareAtPrice: null,
+      availability: 'in_stock',
+      sourceUrl: entry.matchedSourceUrl,
+      supplierId: String(entry.supplierProductId || '').replace(/^p/i, '').replace(/\D/g, '')
+    }));
 }
 
 function applyBackfillPlanForDryRun(existingProducts, backfillPlan) {
@@ -374,6 +396,24 @@ function indexActions(plan) {
   return out;
 }
 
+function summarizeBackfillMap(backfillMap) {
+  const counts = { high: 0, medium: 0, low: 0 };
+  const products = backfillMap.map((entry) => {
+    counts[entry.confidence] = (counts[entry.confidence] || 0) + 1;
+    return {
+      shopifyLegacyId: entry.shopifyLegacyId,
+      title: entry.title,
+      supplierProductId: entry.supplierProductId,
+      confidence: entry.confidence
+    };
+  });
+  return {
+    total: backfillMap.length,
+    counts,
+    products
+  };
+}
+
 function summarizePlan(plan) {
   return {
     toCreate: plan.toCreate.length,
@@ -433,6 +473,7 @@ if (isDirectRun) {
         unchanged: output.reconcilePlan.unchanged
       }));
       console.log('Backfill plan: ' + JSON.stringify(output.preSyncSetup.backfillPlan.summary));
+      console.log('Backfill needsManualMatch: ' + output.preSyncSetup.needsManualMatch.length);
     })
     .catch((error) => {
       console.error(error && error.stack ? error.stack : String(error));

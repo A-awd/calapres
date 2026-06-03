@@ -1,0 +1,200 @@
+[
+  {
+    "shopifyLegacyId": "9468829270272",
+    "title": "Nishane Hacivat Extrait de Parfum",
+    "brand": "Nishane",
+    "matchedSourceUrl": "https://nawadirdior.sa/nishane-hacivat-extraits-de-parfum/p263557422",
+    "supplierProductId": "p263557422",
+    "concentration": "Extrait de Parfum",
+    "sizeMl": null,
+    "confidence": "high",
+    "reason": "Supplier page content matches Nishane Hacivat Extrait de Parfum; duplicate same-slug page p1838124831 parses as Nishane Ege and is excluded."
+  },
+  {
+    "shopifyLegacyId": "9468829729024",
+    "title": "Clinique Aromatics in White 100ml",
+    "brand": "Clinique",
+    "matchedSourceUrl": "https://nawadirdior.sa/clinique-aromatics-in-white-perfume-100ml/p190886911",
+    "supplierProductId": "p190886911",
+    "concentration": "Perfume",
+    "sizeMl": 100,
+    "confidence": "high",
+    "reason": "Supplier page content matches Clinique Aromatics in White Perfume 100 ml."
+  },
+  {
+    "shopifyLegacyId": "9468830122240",
+    "title": "Caron Santal Pirieux 100ml",
+    "brand": "Caron",
+    "matchedSourceUrl": null,
+    "supplierProductId": null,
+    "concentration": null,
+    "sizeMl": 100,
+    "confidence": "low",
+    "reason": "Only Caron/Santal sitemap candidate p2091748280 parses as Lady Caron 100ml, not Santal Pirieux; no strict name match found."
+  },
+  {
+    "shopifyLegacyId": "9468830515456",
+    "title": "Nautica Voyage EDT 100ml",
+    "brand": "Nautica",
+    "matchedSourceUrl": "https://nawadirdior.sa/nautica-voyage-eau-de-toilette-100ml/p1263986731",
+    "supplierProductId": "p1263986731",
+    "concentration": "Eau de Toilette",
+    "sizeMl": 100,
+    "confidence": "high",
+    "reason": "Supplier page content matches Nautica Voyage Eau de Toilette 100ml."
+  },
+  {
+    "shopifyLegacyId": "9468831105280",
+    "title": "Dior Sauvage Elixir 100ml",
+    "brand": "Dior",
+    "matchedSourceUrl": "https://nawadirdior.sa/dior-sauvage-le-parfum-100ml/p1442610703",
+    "supplierProductId": "p1442610703",
+    "concentration": "Eau de Parfum",
+    "sizeMl": 100,
+    "confidence": "high",
+    "reason": "Supplier slug is misleading, but parsed page content is Dior Sauvage Elixir Eau de Parfum 100ml."
+  },
+  {
+    "shopifyLegacyId": "9468831498496",
+    "title": "Jean Paul Gaultier Le Male Le Parfum 125ml",
+    "brand": "Jean Paul Gaultier",
+    "matchedSourceUrl": "https://nawadirdior.sa/jean-paul-gaultier-le-male-parfum-125ml/p2034308773",
+    "supplierProductId": "p2034308773",
+    "concentration": "Le Parfum",
+    "sizeMl": 125,
+    "confidence": "high",
+    "reason": "Supplier page p2034308773 matches Le Male Le Parfum 125ml; same-name slug p1524737638 parses as Le Male Elixir and is excluded."
+  },
+  {
+    "shopifyLegacyId": "9468831924480",
+    "title": "Van Cleef & Arpels Rêve d'Ylang EDP 125ml",
+    "brand": "Van Cleef & Arpels",
+    "matchedSourceUrl": "https://nawadirdior.sa/van-cleef-arpels-reve-de-ylang-eau-de-parfum-125ml/p1829045357",
+    "supplierProductId": "p1829045357",
+    "concentration": "Eau de Parfum",
+    "sizeMl": 125,
+    "confidence": "high",
+    "reason": "Supplier page content matches Rêve de Ylang Eau de Parfum 125ml."
+  },
+  {
+    "shopifyLegacyId": "9468840673536",
+    "title": "Matière Première Crystal Saffron 100ml",
+    "brand": "Matière Première",
+    "matchedSourceUrl": null,
+    "supplierProductId": null,
+    "concentration": null,
+    "sizeMl": 100,
+    "confidence": "low",
+    "reason": "Two supplier pages match Crystal Saffron 100ml but conflict on concentration: p524862751 is Extrait de Parfum and p917062112 is EDP; Shopify title omits concentration."
+  },
+  {
+    "shopifyLegacyId": "9468840870144",
+    "title": "Kenzo Homme EDP 110ml",
+    "brand": "Kenzo",
+    "matchedSourceUrl": "https://nawadirdior.sa/kenzo-homme-eau-de-parfum-2022/p850406833",
+    "supplierProductId": "p850406833",
+    "concentration": "Eau de Parfum",
+    "sizeMl": 110,
+    "confidence": "high",
+    "reason": "Supplier page content matches Kenzo Homme Eau de Parfum 110ml; 100ml and EDT Intense candidates are excluded."
+  },
+  {
+    "shopifyLegacyId": "9468841197824",
+    "title": "Tom Ford Tuscan Leather EDP",
+    "brand": "Tom Ford",
+    "matchedSourceUrl": "https://nawadirdior.sa/tom-ford-tuscan-leather-eau-de-parfum/p1029424509",
+    "supplierProductId": "p1029424509",
+    "concentration": "Eau de Parfum",
+    "sizeMl": null,
+    "confidence": "high",
+    "reason": "Supplier page content matches Tom Ford Tuscan Leather Eau de Parfum; Shopify title does not specify size and no contradicted size was found."
+  },
+  {
+    "shopifyLegacyId": "9468841558272",
+    "title": "Tom Ford Black Orchid 100ml",
+    "brand": "Tom Ford",
+    "matchedSourceUrl": null,
+    "supplierProductId": null,
+    "concentration": null,
+    "sizeMl": 100,
+    "confidence": "low",
+    "reason": "Supplier has both Black Orchid Eau de Parfum 100ml p1729559829 and Black Orchid Parfum 100ml p1528593137; Shopify title omits concentration."
+  },
+  {
+    "shopifyLegacyId": "9468843819264",
+    "title": "Givenchy Pour Homme EDT 100ml",
+    "brand": "Givenchy",
+    "matchedSourceUrl": "https://nawadirdior.sa/givenchy-pour-homme-eau-de-toilette-100ml/p974369211",
+    "supplierProductId": "p974369211",
+    "concentration": "Eau de Toilette",
+    "sizeMl": 100,
+    "confidence": "high",
+    "reason": "Supplier page content matches Givenchy Pour Homme Eau de Toilette 100ml."
+  },
+  {
+    "shopifyLegacyId": "9468844146944",
+    "title": "Joop Homme EDT 125ml",
+    "brand": "Joop",
+    "matchedSourceUrl": "https://nawadirdior.sa/joop-homme-eau-de-toilette-125ml/p1186950270",
+    "supplierProductId": "p1186950270",
+    "concentration": "Eau de Toilette",
+    "sizeMl": 125,
+    "confidence": "high",
+    "reason": "Supplier page content matches Joop Homme Eau de Toilette 125ml."
+  },
+  {
+    "shopifyLegacyId": "9468844507392",
+    "title": "Jean Paul Gaultier Ultra Male Intense 125ml",
+    "brand": "Jean Paul Gaultier",
+    "matchedSourceUrl": "https://nawadirdior.sa/jean-paul-gaultier-ultra-male-eau-de-toilette-125ml/p589024697",
+    "supplierProductId": "p589024697",
+    "concentration": "Eau de Toilette Intense",
+    "sizeMl": 125,
+    "confidence": "high",
+    "reason": "Supplier page content matches Ultra Male Intense Eau de Toilette 125ml."
+  },
+  {
+    "shopifyLegacyId": "9468844802304",
+    "title": "Ralph Lauren Polo 67 EDP 125ml",
+    "brand": "Ralph Lauren",
+    "matchedSourceUrl": "https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D8%A8%D9%88%D9%84%D9%88-67-%D8%AC%D8%AF%D9%8A%D8%AF-%D8%A7%D9%84%D9%85%D8%AA%D8%AC%D8%B1-%D8%B1%D8%A7%D9%84%D9%81-%D9%84%D9%88%D8%B1%D9%8A%D9%86-ralph-lauren/p278426097",
+    "supplierProductId": "p278426097",
+    "concentration": "Eau de Parfum",
+    "sizeMl": 125,
+    "confidence": "high",
+    "reason": "Supplier page p278426097 matches Polo 67 Eau de Parfum 125ml; same-slug p726857801 is Eau de Toilette and is excluded."
+  },
+  {
+    "shopifyLegacyId": "9468845129984",
+    "title": "Tom Ford Métallique EDP 100ml",
+    "brand": "Tom Ford",
+    "matchedSourceUrl": "https://nawadirdior.sa/tom-ford-metallic-eau-de-parfum-100ml/p1390684321",
+    "supplierProductId": "p1390684321",
+    "concentration": "Eau de Parfum",
+    "sizeMl": 100,
+    "confidence": "high",
+    "reason": "Supplier page content matches Tom Ford Métallique Eau de Parfum 100ml."
+  },
+  {
+    "shopifyLegacyId": "9468845490432",
+    "title": "Maison Crivelli Tubéreuse Astrale Extrait 50ml",
+    "brand": "Maison Crivelli",
+    "matchedSourceUrl": "https://nawadirdior.sa/tubereuse-astrale-2024/p1128366865",
+    "supplierProductId": "p1128366865",
+    "concentration": "Extrait de Parfum",
+    "sizeMl": 50,
+    "confidence": "high",
+    "reason": "Supplier page content matches Maison Crivelli Tubéreuse Astrale Extrait de Parfum 50ml."
+  },
+  {
+    "shopifyLegacyId": "9468845785344",
+    "title": "Xerjoff P.33 100ml",
+    "brand": "Xerjoff",
+    "matchedSourceUrl": null,
+    "supplierProductId": null,
+    "concentration": null,
+    "sizeMl": 100,
+    "confidence": "low",
+    "reason": "No strict P.33 supplier page found in saved or live Nawadirdior sitemap/search; Xerjoff sitemap candidates are other products or samples."
+  }
+]

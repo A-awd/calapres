@@ -50,7 +50,7 @@ Optional recurring alternative:
 
 ```json
 {
-  "query": "query ImportedProductsForEnrichment { products(first: 100, query: \"tag:imported-nader-dior -tag:enriched\") { nodes { id legacyResourceId title handle vendor tags descriptionHtml onlineStoreUrl metafield(namespace: \"supplier\", key: \"source_url\") { value } featuredImage { url altText } images(first: 5) { nodes { url altText } } variants(first: 1) { nodes { id legacyResourceId price compareAtPrice } } } } }"
+  "query": "query ImportedProductsForEnrichment { products(first: 100, query: \"(tag:imported-nader-dior OR tag:مستورد-نوادر-ديور) -tag:enriched\") { nodes { id legacyResourceId title handle vendor tags descriptionHtml onlineStoreUrl metafield(namespace: \"supplier\", key: \"source_url\") { value } featuredImage { url altText } images(first: 5) { nodes { url altText } } variants(first: 1) { nodes { id legacyResourceId price compareAtPrice } } } } }"
 }
 ```
 
@@ -230,4 +230,3 @@ function escapeHtml(value) {
   - Send Body: `true`
   - Body Content Type: `JSON`
   - JSON Body: `={{$json.payload}}`
-
