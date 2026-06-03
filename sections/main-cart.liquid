@@ -8,7 +8,7 @@
           {%- for item in cart.items -%}
             <div class="cart-page-item">
               {%- if item.image -%}
-                <img src="{{ item.image | img_url: '200x250', crop: 'center' }}" alt="{{ item.title | escape }}" loading="lazy" />
+                <img src="{{ item.image | img_url: '200x250', crop: 'center' }}" alt="{{ item.title | escape }}" width="200" height="250" loading="lazy" />
               {%- endif -%}
               <div class="cpi-info">
                 <div class="cpi-title">{{ item.product.title }}</div>

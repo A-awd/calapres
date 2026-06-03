@@ -5,7 +5,7 @@
     </button>
     <a class="brand" href="/">
       {% if settings.logo_image %}
-        <img src="{{ settings.logo_image | img_url: '240x' }}" alt="{{ shop.name }}" style="height:40px;width:auto;" />
+        <img src="{{ settings.logo_image | img_url: '240x' }}" alt="{{ shop.name }}" width="240" height="40" style="height:40px;width:auto;" />
       {% else %}
         <span data-ar>كالابريز</span><span data-en>Calapres</span>
       {% endif %}

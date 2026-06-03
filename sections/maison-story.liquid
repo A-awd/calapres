@@ -14,9 +14,9 @@
     </div>
     <div class="figure reveal d1">
       {%- if section.settings.image -%}
-        <img src="{{ section.settings.image | img_url: '900x1125', crop: 'center' }}" alt="" />
+        <img src="{{ section.settings.image | img_url: '900x1125', crop: 'center' }}" alt="" width="900" height="1125" />
       {%- else -%}
-        <img src="{{ 'm-maison.jpg' | asset_url }}" alt="" />
+        <img src="{{ 'm-maison.jpg' | asset_url }}" alt="" width="1120" height="1400" />
       {%- endif -%}
       <span class="seal"><span data-ar>منذ<br/>الرياض</span><span data-en>Est.<br/>Riyadh</span></span>
     </div>

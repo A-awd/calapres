@@ -5,14 +5,14 @@
     <div class="pdp-gallery" data-gallery>
       <div class="gallery-main">
         {%- if product.featured_image -%}
-          <img src="{{ product.featured_image | img_url: '900x1125', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" data-main-img fetchpriority="high" />
+          <img src="{{ product.featured_image | img_url: '900x1125', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" data-main-img fetchpriority="high" />
         {%- endif -%}
       </div>
       {%- if product.images.size > 1 -%}
         <div class="gallery-thumbs">
           {%- for img in product.images limit: 5 -%}
             <button class="thumb{% if forloop.first %} active{% endif %}" data-thumb="{{ img | img_url: '900x1125', crop: 'center' }}" aria-label="صورة {{ forloop.index }}">
-              <img src="{{ img | img_url: '120x150', crop: 'center' }}" alt="" loading="lazy" />
+              <img src="{{ img | img_url: '120x150', crop: 'center' }}" alt="" width="120" height="150" loading="lazy" />
             </button>
           {%- endfor -%}
         </div>

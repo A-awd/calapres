@@ -35,7 +35,6 @@
   --ease: cubic-bezier(.22,.61,.36,1);
   --slow: 560ms;
 }
-
 *{ box-sizing:border-box; }
 html{ -webkit-text-size-adjust:100%; }
 body{
@@ -674,3 +673,4 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .rel-grid{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; }
 }
+/* sync-probe-A1 */
