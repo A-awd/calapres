@@ -1,182 +1,56 @@
-<section class="hero-section" aria-label="Hero">
-  {% if section.settings.hero_image %}
-    <img
-      src="{{ section.settings.hero_image | img_url: '1920x' }}"
-      alt="{{ section.settings.hero_image.alt | default: shop.name }}"
-      class="hero-bg-image"
-      loading="eager"
-      fetchpriority="high"
-    >
-  {% endif %}
-
-  <div class="hero-overlay"></div>
-
-  <div class="container">
-    <div class="hero-content animate-fade-in">
-      {% if section.settings.hero_badge != blank %}
-        <span class="hero-badge">{{ section.settings.hero_badge }}</span>
-      {% endif %}
-
-      <h1 class="hero-title">
-        {{ section.settings.hero_heading_line1 | default: 'اكتشف عالماً' }}
-        {% if section.settings.hero_heading_line2 != blank %}
-          <span>{{ section.settings.hero_heading_line2 }}</span>
-        {% endif %}
-      </h1>
-
-      <p class="hero-subtitle">
-        {{ section.settings.hero_subtitle | default: 'تشكيلة حصرية من أرقى العطور العربية والعالمية، مستوحاة من سحر الطبيعة وروعة الشرق.' }}
-      </p>
-
-      <div class="hero-actions">
-        {% if section.settings.cta_primary_label != blank %}
-          <a href="{{ section.settings.cta_primary_url | default: '/collections/all' }}" class="btn btn-accent">
-            {{ section.settings.cta_primary_label }}
-          </a>
-        {% endif %}
-        {% if section.settings.cta_secondary_label != blank %}
-          <a href="{{ section.settings.cta_secondary_url | default: '/pages/about' }}" class="btn btn-outline-light">
-            {{ section.settings.cta_secondary_label }}
-          </a>
-        {% endif %}
-      </div>
-
-      {% if section.settings.show_stats %}
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <span class="hero-stat-number">{{ section.settings.stat_1_number | default: '+٢٠٠' }}</span>
-            <span class="hero-stat-label">{{ section.settings.stat_1_label | default: 'عطر فريد' }}</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number">{{ section.settings.stat_2_number | default: '+٥٠' }}</span>
-            <span class="hero-stat-label">{{ section.settings.stat_2_label | default: 'عائلة عطرية' }}</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number">{{ section.settings.stat_3_number | default: '١٠٠٪' }}</span>
-            <span class="hero-stat-label">{{ section.settings.stat_3_label | default: 'طبيعي وفاخر' }}</span>
-          </div>
-        </div>
-      {% endif %}
+<section class="hero" data-hero-sentinel data-screen-label="hero">
+  <div class="hero__img">
+    {%- if section.settings.hero_image -%}
+      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" fetchpriority="high" />
+    {%- else -%}
+      <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" fetchpriority="high" />
+    {%- endif -%}
+  </div>
+  <div class="hero__inner wrap">
+    <span class="eyebrow reveal">
+      <span data-ar>{{ section.settings.eyebrow_ar | default: 'بيت العطور النيش · الرياض' }}</span>
+      <span data-en>{{ section.settings.eyebrow_en | default: 'Maison de Parfums Niche · Riyadh' }}</span>
+    </span>
+    <div class="hero-title reveal d1">
+      <h1 class="display d-hero hero-title__ar">{{ section.settings.heading_ar | default: 'رائحة تُروى ولا تُنسى' }}</h1>
+      <p class="hero-title__en">{{ section.settings.heading_en | default: 'A scent that is told, never forgotten' }}</p>
+    </div>
+    <p class="sub reveal d2">
+      <span data-ar>{{ section.settings.sub_ar | default: 'عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في الرياض. فنّ العطر، مُتقَنًا.' }}</span>
+      <span data-en>{{ section.settings.sub_en | default: 'Niche perfumes, rare oud and bukhoor — curated with care for the scent-led, in Riyadh. The art of perfume, perfected.' }}</span>
+    </p>
+    <div class="cta reveal d3">
+      <a class="btn btn-primary" href="{{ section.settings.cta1_url | default: '/collections' }}">
+        <span data-ar>{{ section.settings.cta1_ar | default: 'اكتشف المجموعات' }}</span>
+        <span data-en>{{ section.settings.cta1_en | default: 'Discover collections' }}</span>
+      </a>
+      <a class="btn btn-secondary on-dark" href="{{ section.settings.cta2_url | default: '#signature' }}">
+        <span data-ar>{{ section.settings.cta2_ar | default: 'العود والمباخر' }}</span>
+        <span data-en>{{ section.settings.cta2_en | default: 'Oud & Bukhoor' }}</span>
+      </a>
     </div>
   </div>
+  <div class="scroll-hint"><span class="ln"></span><span data-ar>اسحب للأسفل</span><span data-en>Scroll</span></div>
 </section>
 
 {% schema %}
 {
   "name": "Hero",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero Background Image"
-    },
-    {
-      "type": "text",
-      "id": "hero_badge",
-      "label": "Badge Text",
-      "default": "✦ مجموعة ٢٠٢٥ ✦"
-    },
-    {
-      "type": "text",
-      "id": "hero_heading_line1",
-      "label": "Heading Line 1",
-      "default": "اكتشف عالماً من"
-    },
-    {
-      "type": "text",
-      "id": "hero_heading_line2",
-      "label": "Heading Line 2 (accent color)",
-      "default": "العطور الفاخرة"
-    },
-    {
-      "type": "textarea",
-      "id": "hero_subtitle",
-      "label": "Subtitle",
-      "default": "تشكيلة حصرية من أرقى العطور العربية والعالمية، مستوحاة من سحر الطبيعة وروعة الشرق."
-    },
-    {
-      "type": "header",
-      "content": "Primary CTA"
-    },
-    {
-      "type": "text",
-      "id": "cta_primary_label",
-      "label": "Primary Button Label",
-      "default": "تسوق الآن"
-    },
-    {
-      "type": "url",
-      "id": "cta_primary_url",
-      "label": "Primary Button URL",
-      "default": "/collections/all"
-    },
-    {
-      "type": "header",
-      "content": "Secondary CTA"
-    },
-    {
-      "type": "text",
-      "id": "cta_secondary_label",
-      "label": "Secondary Button Label",
-      "default": "اعرف أكثر"
-    },
-    {
-      "type": "url",
-      "id": "cta_secondary_url",
-      "label": "Secondary Button URL",
-      "default": "/pages/about"
-    },
-    {
-      "type": "header",
-      "content": "Stats"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_stats",
-      "label": "Show Stats",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "stat_1_number",
-      "label": "Stat 1 Number",
-      "default": "+٢٠٠"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_label",
-      "label": "Stat 1 Label",
-      "default": "عطر فريد"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_number",
-      "label": "Stat 2 Number",
-      "default": "+٥٠"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_label",
-      "label": "Stat 2 Label",
-      "default": "عائلة عطرية"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_number",
-      "label": "Stat 3 Number",
-      "default": "١٠٠٪"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_label",
-      "label": "Stat 3 Label",
-      "default": "طبيعي وفاخر"
-    }
+    { "type": "image_picker", "id": "hero_image", "label": "Hero Background Image" },
+    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "بيت العطور النيش · الرياض" },
+    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "Maison de Parfums Niche · Riyadh" },
+    { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "رائحة تُروى ولا تُنسى" },
+    { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "A scent that is told, never forgotten" },
+    { "type": "textarea", "id": "sub_ar", "label": "Subtext (Arabic)" },
+    { "type": "textarea", "id": "sub_en", "label": "Subtext (English)" },
+    { "type": "text", "id": "cta1_ar", "label": "CTA 1 (Arabic)", "default": "اكتشف المجموعات" },
+    { "type": "text", "id": "cta1_en", "label": "CTA 1 (English)", "default": "Discover collections" },
+    { "type": "url",  "id": "cta1_url", "label": "CTA 1 URL" },
+    { "type": "text", "id": "cta2_ar", "label": "CTA 2 (Arabic)", "default": "العود والمباخر" },
+    { "type": "text", "id": "cta2_en", "label": "CTA 2 (English)", "default": "Oud & Bukhoor" },
+    { "type": "url",  "id": "cta2_url", "label": "CTA 2 URL" }
   ],
-  "presets": [
-    {
-      "name": "Hero"
-    }
-  ]
+  "presets": [{ "name": "Hero" }]
 }
 {% endschema %}

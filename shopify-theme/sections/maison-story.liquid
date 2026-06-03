@@ -1,0 +1,41 @@
+<section class="section maison" id="maison">
+  <div class="wrap grid">
+    <div class="copy reveal">
+      <span class="eyebrow"><span data-ar>الميزون</span><span data-en>The Maison</span></span>
+      <h2 class="display d-1"><span data-ar>{{ section.settings.heading_ar | default: 'العطر بوصفه حِرفة' }}</span><span data-en>{{ section.settings.heading_en | default: 'Perfume, made a craft' }}</span></h2>
+      <p><span data-ar>{{ section.settings.body_ar | default: 'وُلدت كالابريز في الرياض من شغفٍ واحد: أن تكون الرائحة لحظةً تُروى. ننتقي كل عطرٍ نيش وكل قطعة عودٍ بعناية، من أرقى دور العالم، لنقدّمها كما يجب أن تُقدَّم الروائح النادرة — أصيلةً ومكتملة.' }}</span><span data-en>{{ section.settings.body_en | default: 'Calapres was born in Riyadh from a single passion: that a scent should be a moment worth telling. Every niche perfume and piece of oud is chosen with care, from the world\'s finest houses — presented the way rare scents should be: authentic and complete.' }}</span></p>
+      <div style="margin-top:var(--s4)">
+        <a class="link" href="{{ section.settings.cta_url | default: '/pages/maison' }}" style="color:var(--gold)">
+          <span data-ar>{{ section.settings.cta_ar | default: 'قصّتنا' }}</span>
+          <span data-en>{{ section.settings.cta_en | default: 'Our story' }}</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="figure reveal d1">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | img_url: '900x1125', crop: 'center' }}" alt="" />
+      {%- else -%}
+        <img src="{{ 'm-maison.jpg' | asset_url }}" alt="" />
+      {%- endif -%}
+      <span class="seal"><span data-ar>منذ<br/>الرياض</span><span data-en>Est.<br/>Riyadh</span></span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maison Story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Maison Image" },
+    { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "العطر بوصفه حِرفة" },
+    { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "Perfume, made a craft" },
+    { "type": "textarea", "id": "body_ar", "label": "Body (Arabic)" },
+    { "type": "textarea", "id": "body_en", "label": "Body (English)" },
+    { "type": "text", "id": "cta_ar", "label": "CTA (Arabic)", "default": "قصّتنا" },
+    { "type": "text", "id": "cta_en", "label": "CTA (English)", "default": "Our story" },
+    { "type": "url",  "id": "cta_url", "label": "CTA URL" }
+  ],
+  "presets": [{ "name": "Maison Story" }]
+}
+{% endschema %}
