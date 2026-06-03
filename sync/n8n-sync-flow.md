@@ -2,6 +2,8 @@
 
 This workflow keeps Calapres Shopify products aligned with Nawadirdior Salla products. It never deletes Shopify products. Supplier items missing from the latest crawl are marked out of stock.
 
+Pre-sync requirement: before this recurring workflow is enabled, run the setup from `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js`. The live store currently needs `supplier.source_url` / `supplier.product_id` definitions and supplier-id tags backfilled onto the 19 existing imported products, otherwise the first recurring sync can create duplicates.
+
 Implementation note: keep Shopify decision logic and request bodies centralized in `sync/reconcile.js`, `sync/build-shopify-payload.js`, `sync/validate-shopify-shape.js`, and `sync/shopify-client.js`. In n8n, Code nodes should call those helpers and pass the returned request objects to HTTP Request nodes instead of hand-building Shopify field names.
 
 Credential:

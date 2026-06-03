@@ -12,6 +12,8 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 - `shopify-client.js`: pure Shopify Admin GraphQL/REST request-shape builder for lookup, create, update, pagination, tag reads, and offline execution tests.
 - `reconcile.js`: pure action planner returning `{ toCreate, toUpdate, toMarkOutOfStock, toSkipEnriched, unchanged }`.
 - `validate-shopify-shape.js`: REST Admin field-name guard for every product payload the sync writes.
+- `setup-metafield-definitions.js`: pure GraphQL `metafieldDefinitionCreate` request-shape builder for `supplier.source_url` and `supplier.product_id`.
+- `backfill-existing-products.js`: pure planner that matches existing imported Shopify products to supplier products and emits tag/metafield-only backfill requests.
 - `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` with payloads, reconcile plan, and exact Shopify request bodies. It never writes to Shopify.
 - `n8n-sync-flow.md`: complete recurring sync workflow spec, including crawl, parse, pricing, availability, matching, create/update, and missing-product out-of-stock handling.
 - `n8n-enrich-flow.md`: complete one-time enrichment workflow spec using Higgsfield images plus protected Arabic SEO/presentation updates.
@@ -22,7 +24,7 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 
 ## Data Flow
 
-`sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with enriched products routed through a price/availability-only guard and supplier-missing products drafted out of stock instead of deleted.
+Pre-sync setup runs first: `setup-metafield-definitions -> backfill-existing-products -> dry-run duplicate check`. Recurring sync then runs: `sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with enriched products routed through a price/availability-only guard and supplier-missing products drafted out of stock instead of deleted.
 
 ## Local Validation
 
@@ -34,7 +36,7 @@ node sync/__tests__/run-tests.js
 node sync/run-local-dry.js
 ```
 
-The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
+The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, pre-sync metafield/backfill requests, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
 
 ## n8n Flow
 

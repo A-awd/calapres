@@ -2,18 +2,44 @@
 
 These notes define the exact field mapping and API contract for wiring the supplier sync into n8n while the storefront remains closed.
 
-## 1. Shopify Admin API Surface
+## 1. Pre-Sync Setup
+
+Run this before the first recurring sync. The live store currently has no product metafield definitions, and the existing imported products do not yet have `supplier.source_url`, `supplier.product_id`, or `supplier-id-p<id>` matching data. Skipping this setup can make the first recurring sync create duplicates.
+
+1. Create product metafield definitions using `sync/setup-metafield-definitions.js`.
+   - Create `supplier.source_url`.
+   - Create `supplier.product_id`.
+   - Both definitions use `single_line_text_field`.
+   - Both definitions use owner type `PRODUCT`.
+   - Both definitions set `pin: true`.
+   - Both definitions set Admin API access to `MERCHANT_READ_WRITE`.
+   - Both definitions enable `capabilities.adminFilterable.enabled`.
+
+2. Backfill the 19 existing imported products using `sync/backfill-existing-products.js`.
+   - Match existing imported products to Nawadirdior products by exact `source_url` or supplier-id if present, then exact handle, exact normalized title, then unique high-confidence title similarity.
+   - Add only `supplier.source_url`, `supplier.product_id`, `supplier:nawadirdior`, and `supplier-id-p<id>`.
+   - Do not write price, images, description, status, vendor, inventory, or SEO.
+   - Review `manualReview[]` before executing any backfill request.
+
+3. Run one offline dry run and inspect `sync/dry-run-output.json`.
+   - `preSyncSetup.metafieldDefinitionRequests` shows the two definition-create requests.
+   - `preSyncSetup.backfillPlan` shows matched and manual-review products.
+   - `preSyncSetup.duplicateRiskBeforeBackfill` shows why the setup must run first.
+   - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for the 19 existing products.
+
+## 2. Shopify Admin API Surface
 
 The recurring sync uses:
 
 - GraphQL Admin API for reads and pagination.
+- GraphQL Admin API for metafield definition creation and `metafieldsSet` backfill writes.
 - REST Admin API for product create/update writes.
 - `sync/shopify-client.js` for all request-shape construction.
 - `sync/validate-shopify-shape.js` before any REST write payload is trusted.
 
 Default Admin API version in code: `2026-04`.
 
-## 2. Supplier Field to Shopify Field Mapping
+## 3. Supplier Field to Shopify Field Mapping
 
 | Supplier or Sync Field | Shopify REST Admin Field | Notes |
 | --- | --- | --- |
@@ -39,7 +65,7 @@ The sync never writes:
 - Shopify customer data
 - secrets or credential values
 
-## 3. Enriched Guard Contract
+## 4. Enriched Guard Contract
 
 When an existing Shopify product has the exact tag `enriched`, recurring sync may write only:
 
@@ -62,7 +88,7 @@ It must not write:
 
 This keeps Higgsfield imagery, Arabic SEO, and luxury descriptions intact while still allowing price and availability to stay current.
 
-## 4. Product Matching
+## 5. Product Matching
 
 Use both match paths:
 
@@ -76,7 +102,7 @@ Use both match paths:
 
 The response includes `supplier.source_url`, `supplier.product_id`, tags, status, and first variant fields so `sync/reconcile.js` can decide the action offline.
 
-## 5. Reconcile Action Plan
+## 6. Reconcile Action Plan
 
 `sync/reconcile.js` returns:
 
@@ -88,7 +114,7 @@ The response includes `supplier.source_url`, `supplier.product_id`, tags, status
 
 Supplier-missing products auto-return when they reappear because a matching supplier product moves them back through `toUpdate`.
 
-## 6. Required n8n Credentials
+## 7. Required n8n Credentials
 
 1. `Shopify-Calapres OAuth2`
    - Credential id: `QLsvwO73GFsQfy0w`
@@ -98,7 +124,7 @@ Supplier-missing products auto-return when they reappear because a matching supp
    - Header Auth credential id: `G31rYKMmDk8hyh2G`
    - Used only by the one-time enrichment workflow.
 
-## 7. Required n8n Variables
+## 8. Required n8n Variables
 
 1. `SHOPIFY_SHOP_DOMAIN`
    - Example: `calapres.myshopify.com`
@@ -115,7 +141,7 @@ Supplier-missing products auto-return when they reappear because a matching supp
 5. `HIGGSFIELD_IMAGE_MODEL`
    - Example: `higgsfield-soul`
 
-## 8. Offline Verification Path
+## 9. Offline Verification Path
 
 Run:
 
@@ -128,6 +154,8 @@ node sync/run-local-dry.js
 Then inspect `sync/dry-run-output.json`:
 
 - `payloads[]` shows parsed supplier data and per-product reconcile bucket.
+- `preSyncSetup.metafieldDefinitionRequests` shows GraphQL `metafieldDefinitionCreate` request bodies.
+- `preSyncSetup.backfillPlan` shows exact metafield/tag backfill requests and manual-review flags.
 - `reconcilePlan` shows the complete action plan.
 - `shopifyRequests.lookupFirst20[]` shows GraphQL lookup request shapes.
 - `shopifyRequests.actionRequests` shows REST create/update/out-of-stock request shapes.

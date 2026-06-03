@@ -47,6 +47,8 @@ const payloads = loadSyncModule('build-shopify-payload.js');
 const shopifyClient = loadSyncModule('shopify-client.js');
 const reconcileModule = loadSyncModule('reconcile.js');
 const shapeValidator = loadSyncModule('validate-shopify-shape.js');
+const setupDefinitions = loadSyncModule('setup-metafield-definitions.js');
+const backfillModule = loadSyncModule('backfill-existing-products.js');
 
 function productId(url) {
   return crawl.productIdFromUrl(url);
@@ -82,6 +84,33 @@ function shopifyProduct(overrides) {
     ],
     variants: [{ id: '8001', price: '200', compare_at_price: null, inventory_policy: 'continue' }],
     ...(overrides || {})
+  };
+}
+
+function existingNeedingBackfill(sourceUrl, overrides) {
+  const base = supplier({ sourceUrl });
+  const built = payloads.buildPayload(base).product;
+  return {
+    id: '9101',
+    title: built.title,
+    handle: backfillModule.handleFromUrl(sourceUrl),
+    tags: ['imported-nader-dior'],
+    metafields: [],
+    variants: [{ id: '8101', price: built.variants[0].price, compare_at_price: null, inventory_policy: 'continue' }],
+    ...(overrides || {})
+  };
+}
+
+function applyBackfillForTest(product, action) {
+  return {
+    ...product,
+    tags: product.tags.concat(action.addedTags),
+    sourceUrl: action.sourceUrl,
+    supplierId: action.supplierId,
+    metafields: [
+      { namespace: 'supplier', key: 'source_url', value: action.sourceUrl, type: 'single_line_text_field' },
+      { namespace: 'supplier', key: 'product_id', value: action.supplierId, type: 'single_line_text_field' }
+    ]
   };
 }
 
@@ -579,6 +608,149 @@ test('validate-shopify-shape flags invalid status, inventory policy, and malform
   assert.ok(result.errors.some((error) => error.includes('inventory_policy')));
   assert.ok(result.errors.some((error) => error.includes('key is required')));
   assert.ok(result.errors.some((error) => error.includes('value is required')));
+});
+
+test('setup-metafield-definitions builds two admin-filterable pinned PRODUCT definitions', () => {
+  const requests = setupDefinitions.buildSupplierMetafieldDefinitionRequests({
+    shopDomain: 'calapres.myshopify.com'
+  });
+  assert.equal(requests.length, 2);
+  const keys = requests.map((request) => request.body.variables.definition.key).sort();
+  assert.deepEqual(Array.from(keys), ['product_id', 'source_url']);
+  for (const request of requests) {
+    const definition = request.body.variables.definition;
+    assert.equal(request.method, 'POST');
+    assert.equal(request.url, 'https://calapres.myshopify.com/admin/api/2026-04/graphql.json');
+    assert.ok(request.body.query.includes('metafieldDefinitionCreate'));
+    assert.equal(definition.namespace, 'supplier');
+    assert.equal(definition.ownerType, 'PRODUCT');
+    assert.equal(definition.type, 'single_line_text_field');
+    assert.equal(definition.pin, true);
+    assert.deepEqual(plain(definition.access), { admin: 'MERCHANT_READ_WRITE' });
+    assert.deepEqual(plain(definition.capabilities), { adminFilterable: { enabled: true } });
+  }
+});
+
+test('setup-metafield-definitions executes through an injected fetch-like function only', async () => {
+  const request = setupDefinitions.buildMetafieldDefinitionCreateRequest({ key: 'source_url' });
+  const calls = [];
+  const response = await setupDefinitions.executeSetupRequest(request, async (url, init) => {
+    calls.push({ url, init });
+    return {
+      ok: true,
+      status: 200,
+      text: async () => '{"data":{"metafieldDefinitionCreate":{"userErrors":[]}}}'
+    };
+  });
+  assert.equal(calls.length, 1);
+  assert.equal(JSON.parse(calls[0].init.body).variables.definition.key, 'source_url');
+  assert.equal(response.json.data.metafieldDefinitionCreate.userErrors.length, 0);
+});
+
+test('backfill-existing-products confidently matches by handle and emits metafieldsSet plus tag update requests', () => {
+  const supplierProduct = supplier({
+    sourceUrl: 'https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737',
+    name: 'عطر اراميس كلاسيك 110 مل',
+    supplierPrice: 172.5
+  });
+  const existing = existingNeedingBackfill(supplierProduct.sourceUrl, {
+    id: '12345',
+    title: 'عطر اراميس كلاسيك 110 مل',
+    tags: ['imported-nader-dior', 'legacy']
+  });
+  const plan = backfillModule.planBackfillExistingProducts([existing], [supplierProduct], {
+    shopDomain: 'calapres.myshopify.com'
+  });
+  assert.equal(plan.summary.confidentlyMatched, 1);
+  assert.equal(plan.summary.manualReview, 0);
+  assert.equal(plan.toBackfill[0].matchMethod, 'handle');
+  assert.equal(plan.toBackfill[0].supplierId, '735368737');
+  assert.ok(plan.toBackfill[0].addedTags.includes('supplier-id-p735368737'));
+  assert.ok(plan.toBackfill[0].addedTags.includes('supplier:nawadirdior'));
+  const metafields = plan.toBackfill[0].requests.metafieldsSet.body.variables.metafields;
+  assert.deepEqual(Array.from(metafields.map((field) => field.key).sort()), ['product_id', 'source_url']);
+  assert.equal(metafields[0].ownerId, 'gid://shopify/Product/12345');
+  assert.equal(plan.toBackfill[0].requests.tagUpdate.body.product.tags, 'imported-nader-dior, legacy, supplier:nawadirdior, supplier-id-p735368737');
+});
+
+test('backfill-existing-products matches Arabic encoded supplier URLs and exact titles', () => {
+  const supplierProduct = {
+    name: 'عطر ايسي مياكي ليو ديسي أور إينسنز 100مل',
+    supplierPrice: 500,
+    availability: 'in_stock',
+    sourceUrl:
+      'https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-%D8%A7%D9%8A%D8%B3%D9%8A-%D9%85%D9%8A%D8%A7%D9%83%D9%8A-%D9%84%D9%8A%D9%88-%D8%AF%D9%8A%D8%B3%D9%8A-%D8%A3%D9%88%D8%B1-%D8%A5%D9%8A%D9%86%D8%B3%D9%86%D8%B2-100%D9%85%D9%84/p1625888751'
+  };
+  const existing = {
+    id: '45678',
+    title: 'عطر ايسي مياكي ليو ديسي أور إينسنز 100مل',
+    tags: 'imported-nader-dior',
+    metafields: []
+  };
+  const plan = backfillModule.planBackfillExistingProducts([existing], [supplierProduct]);
+  assert.equal(plan.toBackfill.length, 1);
+  assert.equal(plan.toBackfill[0].matchMethod, 'title_exact');
+  assert.equal(plan.toBackfill[0].supplierId, '1625888751');
+  assert.ok(plan.toBackfill[0].sourceUrl.includes('%D8'));
+});
+
+test('backfill-existing-products flags unmatched products for manual review', () => {
+  const plan = backfillModule.planBackfillExistingProducts(
+    [{ id: '999', title: 'No Such Product', handle: 'no-such-product', tags: ['imported-nader-dior'], metafields: [] }],
+    [supplier({ sourceUrl: 'https://nawadirdior.sa/real-product/p111' })]
+  );
+  assert.equal(plan.toBackfill.length, 0);
+  assert.equal(plan.manualReview.length, 1);
+  assert.equal(plan.manualReview[0].reason, 'no_confident_supplier_match');
+});
+
+test('backfill-existing-products detects already backfilled products', () => {
+  const sourceUrl = 'https://nawadirdior.sa/already/p2222';
+  const existing = {
+    id: '2222',
+    title: 'Already Backfilled',
+    handle: 'already',
+    tags: ['imported-nader-dior', 'supplier:nawadirdior', 'supplier-id-p2222'],
+    metafields: [
+      { namespace: 'supplier', key: 'source_url', value: sourceUrl },
+      { namespace: 'supplier', key: 'product_id', value: '2222' }
+    ]
+  };
+  const plan = backfillModule.planBackfillExistingProducts([existing], [supplier({ name: 'Already Backfilled', sourceUrl })]);
+  assert.equal(plan.toBackfill.length, 0);
+  assert.equal(plan.alreadyBackfilled.length, 1);
+});
+
+test('backfill-existing-products plans all 19 existing imported products from dry-run supplier fixtures', () => {
+  const manifest = JSON.parse(readFixture('dry-run-manifest.json'));
+  const supplierProducts = [];
+  for (const entry of manifest) {
+    const parsed = parser.parseProduct(readFixture(entry.file));
+    if (parsed.name && parsed.supplierPrice !== null && parsed.sourceUrl && parsed.sourceUrl !== 'https://nawadirdior.sa') {
+      supplierProducts.push({ ...parsed, sourceUrl: entry.sourceUrl });
+    }
+  }
+  const first19 = supplierProducts.slice(0, 19);
+  const existing = first19.map((item, index) =>
+    existingNeedingBackfill(item.sourceUrl, {
+      id: String(600000 + index),
+      title: item.name,
+      handle: backfillModule.handleFromUrl(item.sourceUrl)
+    })
+  );
+  const backfillPlan = backfillModule.planBackfillExistingProducts(existing, first19);
+  assert.equal(first19.length, 19);
+  assert.equal(backfillPlan.summary.confidentlyMatched, 19);
+  assert.equal(backfillPlan.summary.manualReview, 0);
+  const before = reconcileModule.reconcile(first19, existing);
+  assert.equal(before.toCreate.length, 19);
+  const afterProducts = existing.map((product) => {
+    const action = backfillPlan.toBackfill.find((item) => item.productId === product.id);
+    return applyBackfillForTest(product, action);
+  });
+  const after = reconcileModule.reconcile(first19, afterProducts);
+  assert.equal(after.toCreate.length, 0);
+  assert.equal(after.toUpdate.length + after.unchanged.length, 19);
 });
 
 async function main() {

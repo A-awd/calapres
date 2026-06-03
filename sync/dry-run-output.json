@@ -4,6 +4,3650 @@
   "productLimit": 20,
   "generatedPayloads": 20,
   "missingSupplierPages": 1,
+  "preSyncSetup": {
+    "metafieldDefinitionRequests": [
+      {
+        "method": "POST",
+        "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "query": "\nmutation CalapresCreateSupplierMetafieldDefinition($definition: MetafieldDefinitionInput!) {\n  metafieldDefinitionCreate(definition: $definition) {\n    createdDefinition {\n      id\n      name\n      namespace\n      key\n      ownerType\n      pinnedPosition\n      type {\n        name\n      }\n      access {\n        admin\n      }\n      capabilities {\n        adminFilterable {\n          eligible\n          enabled\n          status\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+          "variables": {
+            "definition": {
+              "name": "Supplier Source URL",
+              "namespace": "supplier",
+              "key": "source_url",
+              "description": "Canonical Nawadirdior product URL used by the Calapres supplier sync.",
+              "type": "single_line_text_field",
+              "ownerType": "PRODUCT",
+              "pin": true,
+              "access": {
+                "admin": "MERCHANT_READ_WRITE"
+              },
+              "capabilities": {
+                "adminFilterable": {
+                  "enabled": true
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "query": "\nmutation CalapresCreateSupplierMetafieldDefinition($definition: MetafieldDefinitionInput!) {\n  metafieldDefinitionCreate(definition: $definition) {\n    createdDefinition {\n      id\n      name\n      namespace\n      key\n      ownerType\n      pinnedPosition\n      type {\n        name\n      }\n      access {\n        admin\n      }\n      capabilities {\n        adminFilterable {\n          eligible\n          enabled\n          status\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+          "variables": {
+            "definition": {
+              "name": "Supplier Product ID",
+              "namespace": "supplier",
+              "key": "product_id",
+              "description": "Nawadirdior Salla product id parsed from the supplier product URL.",
+              "type": "single_line_text_field",
+              "ownerType": "PRODUCT",
+              "pin": true,
+              "access": {
+                "admin": "MERCHANT_READ_WRITE"
+              },
+              "capabilities": {
+                "adminFilterable": {
+                  "enabled": true
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "existingImportedProductsNeedingBackfill": [
+      {
+        "id": "700001",
+        "title": "عطر اراميس كلاسيك 110 مل",
+        "handle": "aramis-classic-eau-de-toilette-110ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710001",
+            "price": "272.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700002",
+        "title": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+        "handle": "armand-basi-in-red-eau-de-parfum-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710002",
+            "price": "249.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700003",
+        "title": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+        "handle": "armand-basi-in-red-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710003",
+            "price": "249.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700004",
+        "title": "عطر ازارو بور هوم او دو تواليت 100مل",
+        "handle": "azzaro-pour-homme-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710004",
+            "price": "387.50",
+            "compare_at_price": "445",
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700005",
+        "title": "عطر ازارو كروم او دو تواليت 100 مل",
+        "handle": "azzaro-chrome-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710005",
+            "price": "289.75",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700006",
+        "title": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+        "handle": "azzaro-chrome-legend-eau-de-toilette-125ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710006",
+            "price": "272.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700007",
+        "title": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+        "handle": "azzaro-chrome-united-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710007",
+            "price": "272.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700008",
+        "title": "عطر ازارو وانتد او دو تواليت 100مل",
+        "handle": "azzaro-wanted-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710008",
+            "price": "330",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700009",
+        "title": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+        "handle": "azzaro-wanted-by-night-eau-de-parfum-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710009",
+            "price": "396.70",
+            "compare_at_price": "445",
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700010",
+        "title": "عطر اسكادا ماجنيتزم 75مل",
+        "handle": "escada-magnetism-perfume-75-ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710010",
+            "price": "330",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700011",
+        "title": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+        "handle": "la-rive-blue-lady-eau-de-parfum-40ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710011",
+            "price": "192",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700012",
+        "title": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+        "handle": "romance-by-la-rive-for-women-eau-de-parfum-45ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710012",
+            "price": "162.10",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700013",
+        "title": "الرصاصي رويال بلو 75 مل",
+        "handle": "la-rive-royal-blue-75ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710013",
+            "price": "162.10",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700014",
+        "title": "الرصاصي شهرة 90مل",
+        "handle": "rasasi-shuhrah-90-ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710014",
+            "price": "202.35",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700015",
+        "title": "الرصاصي شهرة90مل",
+        "handle": "rasasi-shuhrah-90-ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710015",
+            "price": "212.70",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700016",
+        "title": "الرصاصي وايل ان لاف فورايفر 80مل",
+        "handle": "rasasi-la-yuqawam-pour-homme-80-ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710016",
+            "price": "180.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700017",
+        "title": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+        "handle": "elizabeth-arden-red-door-eau-de-toilette-100ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710017",
+            "price": "266.75",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700018",
+        "title": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+        "handle": "elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710018",
+            "price": "579.55",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      },
+      {
+        "id": "700019",
+        "title": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+        "handle": "elizabeth-arden-5th-avenue-eau-de-parfum",
+        "status": "active",
+        "tags": [
+          "imported-nader-dior"
+        ],
+        "metafields": [],
+        "variants": [
+          {
+            "id": "710019",
+            "price": "249.50",
+            "compare_at_price": null,
+            "inventory_policy": "continue"
+          }
+        ]
+      }
+    ],
+    "backfillPlan": {
+      "toBackfill": [
+        {
+          "productId": "700001",
+          "title": "عطر اراميس كلاسيك 110 مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737",
+          "supplierId": "735368737",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p735368737"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700001",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700001",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "735368737"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700001.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700001",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p735368737"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700002",
+          "title": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020",
+          "supplierId": "331832020",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p331832020"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700002",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700002",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "331832020"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700002.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700002",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p331832020"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700003",
+          "title": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706",
+          "supplierId": "107743706",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p107743706"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700003",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700003",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "107743706"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700003.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700003",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p107743706"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700004",
+          "title": "عطر ازارو بور هوم او دو تواليت 100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416",
+          "supplierId": "592165416",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p592165416"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700004",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700004",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "592165416"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700004.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700004",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p592165416"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700005",
+          "title": "عطر ازارو كروم او دو تواليت 100 مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735",
+          "supplierId": "74367735",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p74367735"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700005",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700005",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "74367735"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700005.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700005",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p74367735"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700006",
+          "title": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704",
+          "supplierId": "88811704",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p88811704"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700006",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700006",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "88811704"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700006.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700006",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p88811704"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700007",
+          "title": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847",
+          "supplierId": "905281847",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p905281847"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700007",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700007",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "905281847"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700007.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700007",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p905281847"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700008",
+          "title": "عطر ازارو وانتد او دو تواليت 100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597",
+          "supplierId": "601033597",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p601033597"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700008",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700008",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "601033597"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700008.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700008",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p601033597"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700009",
+          "title": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845",
+          "supplierId": "1277915845",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1277915845"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700009",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700009",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1277915845"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700009.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700009",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1277915845"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700010",
+          "title": "عطر اسكادا ماجنيتزم 75مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820",
+          "supplierId": "1170422820",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1170422820"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700010",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700010",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1170422820"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700010.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700010",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1170422820"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700011",
+          "title": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790",
+          "supplierId": "453576790",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p453576790"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700011",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700011",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "453576790"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700011.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700011",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p453576790"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700012",
+          "title": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269",
+          "supplierId": "114610269",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p114610269"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700012",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700012",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "114610269"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700012.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700012",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p114610269"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700013",
+          "title": "الرصاصي رويال بلو 75 مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250",
+          "supplierId": "1147593250",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1147593250"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700013",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700013",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1147593250"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700013.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700013",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1147593250"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700014",
+          "title": "الرصاصي شهرة 90مل",
+          "matchMethod": "title_exact",
+          "confidence": 0.92,
+          "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116",
+          "supplierId": "1877260116",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1877260116"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700014",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700014",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1877260116"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700014.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700014",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1877260116"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700015",
+          "title": "الرصاصي شهرة90مل",
+          "matchMethod": "title_exact",
+          "confidence": 0.92,
+          "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280",
+          "supplierId": "519412280",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p519412280"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700015",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700015",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "519412280"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700015.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700015",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p519412280"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700016",
+          "title": "الرصاصي وايل ان لاف فورايفر 80مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793",
+          "supplierId": "1257459793",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1257459793"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700016",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700016",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1257459793"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700016.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700016",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1257459793"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700017",
+          "title": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117",
+          "supplierId": "1618181117",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1618181117"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700017",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700017",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1618181117"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700017.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700017",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1618181117"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700018",
+          "title": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745",
+          "supplierId": "1865129745",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1865129745"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700018",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700018",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1865129745"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700018.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700018",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1865129745"
+                }
+              }
+            }
+          }
+        },
+        {
+          "productId": "700019",
+          "title": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+          "matchMethod": "handle",
+          "confidence": 0.96,
+          "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100",
+          "supplierId": "1008522100",
+          "addedTags": [
+            "supplier:nawadirdior",
+            "supplier-id-p1008522100"
+          ],
+          "requests": {
+            "metafieldsSet": {
+              "method": "POST",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/graphql.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "query": "\nmutation CalapresBackfillSupplierMetafields($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      namespace\n      key\n      value\n      type\n      owner {\n        ... on Product {\n          id\n        }\n      }\n    }\n    userErrors {\n      field\n      message\n      code\n    }\n  }\n}",
+                "variables": {
+                  "metafields": [
+                    {
+                      "ownerId": "gid://shopify/Product/700019",
+                      "namespace": "supplier",
+                      "key": "source_url",
+                      "type": "single_line_text_field",
+                      "value": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100"
+                    },
+                    {
+                      "ownerId": "gid://shopify/Product/700019",
+                      "namespace": "supplier",
+                      "key": "product_id",
+                      "type": "single_line_text_field",
+                      "value": "1008522100"
+                    }
+                  ]
+                }
+              }
+            },
+            "tagUpdate": {
+              "method": "PUT",
+              "url": "https://calapres.myshopify.com/admin/api/2026-04/products/700019.json",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "product": {
+                  "id": "700019",
+                  "tags": "imported-nader-dior, supplier:nawadirdior, supplier-id-p1008522100"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "alreadyBackfilled": [],
+      "manualReview": [],
+      "summary": {
+        "totalExisting": 19,
+        "confidentlyMatched": 19,
+        "toBackfill": 19,
+        "alreadyBackfilled": 0,
+        "manualReview": 0
+      }
+    },
+    "duplicateRiskBeforeBackfill": {
+      "toCreate": 19,
+      "toUpdate": 0,
+      "toMarkOutOfStock": 19,
+      "toSkipEnriched": 0,
+      "unchanged": 0,
+      "actions": {
+        "toCreate": [
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم او دو تواليت 100 مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 189.75,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/fdae89e7-a9b5-424a-98cf-d7cf981a5849-500x500-iI2TRYnFMb4Apjy30EcYr4XPEN98Qu6vSJIdC4Fq.jpg",
+              "description": "ابرز المكونات:برغموت، ليمون الأمالفي، برتقال اليوسفي، أناناس,سيكلامين، كزبرة، ياسمين، طحلب البلوط,خشب الصندل، حبوب التونكا، مسك، طحلب البلوط، خشب الأرز، خشب الو...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735",
+              "supplierId": "74367735"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/ee25edd5-b979-427c-bd61-864534375670-500x500-Ed7czXMU1bIEOa9FLU7N1QHlt83J5Fkm68fyvYqm.jpg",
+              "description": "ابرز المكونات:ليمون إيطالي، كشمش أسود,طحلب البلوط، مسك، رذاذ البحر,حشب الأرز، حبو التونكا، نجيل الهند، عنبرالخط العطري: اروما.عن العطر:كروم ليجيند من آزارو هو ع...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704",
+              "supplierId": "88811704"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+              "brand": "ارماند باسي Armand Basi",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/ece9fa83-0b2c-4eec-a4e7-d1a9bc8107cb-500x500-qjyCCKLmYZ274Yetz1CEjqzSBVoxeL4cxCgUwwgi.jpg",
+              "description": "ابرز المكونات:الزنجبيل, البرغموت,الياسمين, أوراق البنفسج, الفلفل الوردي, الورد, الكشمش الأسود ,الأخشاب, الأواكموس- طحلب البلوط, المسك الأبيض, العنبر, الفانيلياا...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706",
+              "supplierId": "107743706"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 62.1,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/5180ee74-7e7b-4fb4-a34a-cac63b7d34c3-500x500-dsYHh1kfODt75RlEbZs8G8S9sENeH171avbmXBxs.jpg",
+              "description": "ابرز المكونات:زهرة الياقوتية، الخزامى، يلانغ يلانغ، المشمش، توت العليق، الخوخ، الورد، الياسمين، العنبر، المسك، مكونات من البودرة ، الأرز، خشب الصندلالخط العطري:...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269",
+              "supplierId": "114610269"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+              "brand": "ارماند باسي Armand Basi",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0f5d56f1-bdaa-4b3d-9cf3-1ed83ad635c8-500x500-BiZwJsvXv3SsIMgaCBevKSnGkAifI1opWNcHKu6d.jpg",
+              "description": "ابرز المكونات,الزنجبيل, البرغموت, الياسمين, أوراق البنفسج, زنابق الوادي , الورد, الأخشاب ,المسك الأبيضالخط العطري,زهري,عن المنتج:عطر بطابع زهور الربيع يأتي بمقد...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020",
+              "supplierId": "331832020"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 92,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/de7f5e05-db27-470b-96ff-3d741e97f6f6-500x500-hf8wPpmnhjyje269lSGCM3FnDY0WVi4auOvbBuQh.jpg",
+              "description": "ابرز المكونات:ورقة البنفسج، يلانغ يلانغ، مسك الروم، زهر البرتقال، الخوخ، البرقوق، النرجس، الياسمين، خشب الصندل، نجيل الهند، الفانيليا، العنبر، المسكالخط العطري:...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790",
+              "supplierId": "453576790"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي شهرة90مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 112.7,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/80629ad3-a58c-4d20-8778-dee1cbdffa18-500x500-D0tpXO6ehJCjo93MUdNmGW4HHZeXEjaXaMVBTkJX.jpg",
+              "description": "ابرز المكونات:الورد، أوراق الطماطم، زهور الفريجيا، أخشاب الصندل، أخشاب الارز، الياسمين، العنبر، المسك، طحالب البلوط، العود، الجلودالخط العطري: زهري.عن العطر:مع...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280",
+              "supplierId": "519412280"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو بور هوم او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 287.5,
+              "supplierCompareAtPrice": 345,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0ec2c111-4ede-47e1-b20f-f3c06fe3cc8a-1000x1000-sHfEiIvO44B4nhdnBBileMIvustqEcU6RwIb0yQa.jpg",
+              "description": "ابرز المكونات:غريب فروت، عنبر، كشمش أسود، خوخ,نجيل الهند، بتشول، هال، توت العرعر، خشب الصندل,مسك، عنبر، خشب الأرز، طحلب البلوط، حبوب التونكا، جلدالخط العطري: شر...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416",
+              "supplierId": "592165416"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو وانتد او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 230,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/7a1e2df6-e345-466a-8b0c-24d5343f9099-500x500-CA6KpvW1XBwrzXgom86RrTbr07RtnWQ27YJ2KTGe.jpg",
+              "description": "ابرز المكونات:برغموت، يوسفي، ليمون، مريمية,هال غواتيمالي، زنجبيل، تفاح، زهرة الغرنوقي,نجيل الهند، حبوب التونكا، خشب العنبرالخط العطري: خشبي.عن العطر:وانتيد من أ...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597",
+              "supplierId": "601033597"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر اراميس كلاسيك 110 مل",
+              "brand": "اراميس Aramis",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/cfffb9af-f843-41e0-b143-01b2461cde90-500x500-ywxJBPk2FqfrAvCk5EanKDwapgpES8SqlzXSPEhi.jpg",
+              "description": "ابرز المكونات:يوسفي، زعفران، أفسنتين، زنجبيل، كمون,بتشول، مرمرية، ساق السوسن، حبهان,جلد، خشب الصندل، صنوبر، مسك، جوز الهند، نجيل الهند، إيفرينا خوخيةالخط العطري...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737",
+              "supplierId": "735368737"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/2fca1cb1-8128-40d8-82d0-69eb2ac0a3b6-500x500-TLbP1Z7vzHLl7MVMoqcwXldmBH3VaLlslTOIe4p9.jpg",
+              "description": "ابرز المكونات:برتقال دموي، برتقال اليوسفي، كشمش أسود، خوخ، ببايا,شاي أسود، ورق البنفسج,خشب الأرز، مسك أبيضالخط العطري:خشبي - حارعن العطر:كروم يونايتد من أزاره ه...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847",
+              "supplierId": "905281847"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/18a35100-d2fd-4e8c-8114-c6cc6042a5a0-500x500-acARrmGx0GdN2isGdr1GxIWDlHupJY9EOBv1nnX6.jpg",
+              "description": "ابرز المكونات:زهر الزيزفون, زنابق الوادي, الليلك, المغنوليا, البرغموت , اليوسفي,الياسمين, مسك الروم, البلغاري,البنفسج, زهر القرنفل , جوزه الطيب, المسك, السوسن,...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100",
+              "supplierId": "1008522100"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي رويال بلو 75 مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 62.1,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/c68afddd-9583-4348-baf2-0e3a88bfa771-500x500-oBRRi8ohv8r9O5a7ZZdZIGw7qSgMuxi0CnSA1nxg.jpg",
+              "description": "ابرز المكونات:مكونات بحرية، البرغموت، البطيخ، الخزامى، البنفسج، الورد، الياسمين، الباتشولي، الأرز، خشب الصندل، العنبر، المسكالخط العطري:خشبي.عطر رويال بلو (Roya...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250",
+              "supplierId": "1147593250"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر اسكادا ماجنيتزم 75مل",
+              "brand": "اسكادا Escada",
+              "supplierPrice": 230,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/73aaf270-d64f-4267-9797-6658a286d2a4-500x500-4CNjNE6Akima1giQMy0pmzxGjEZAUiu2PvbyxswM.jpg",
+              "description": "ابرز المكونات:التوت , الكشمش , القرفة, الليتشي, الأناناس , شمام,الريحان, زهر اللوز, السوسن, الفريزيا, الياسمين, الكاراوية, الورد ,الكاراميل, الفانيليا, الباتشول...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820",
+              "supplierId": "1170422820"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي وايل ان لاف فورايفر 80مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 80.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0a960d63-91fc-4d14-ad12-d61a2051d657-500x500-YcaRsra4a9efdKxdC3atjlJZyz7tSDu4GSYL3u96.jpg",
+              "description": "ابرز المكونات:التفاح، ليمون، الياسمين، الورد الأبيض، الخيزران، الشيح، العنبر، المسكالخط العطري: زهريعن العطر:عطر خاص بالنساء من مجموعة العطور الزهرية الخضراء، ي...",
+              "category": "عطور نسائية,عطور قديمة ونادرة",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793",
+              "supplierId": "1257459793"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 296.7,
+              "supplierCompareAtPrice": 345,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/82401b3e-ba37-408b-a583-8eaf4d7d4b03-1000x1000-jYeVuuSQdOfdoGzd9Equ4ZnTHiLnUOlfJgIapmru.jpg",
+              "description": "ابرز المكونات:آس، كاشميران، فلفل أسود، هال,روائح فاكهية، كمون، خشب الأرز الأحمر، بخور,خشب الأرز، تبغ، خشب السرو، جاوي، آيزو إي سوبر، جلد، بتشول، فانيلياالخط الع...",
+              "category": "عطور رجالية,ترشيحات صيفيه",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845",
+              "supplierId": "1277915845"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 166.75,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0c0333b7-9869-4ef5-be3f-cbae4f7518f8-500x500-A4iWbnU9FlJCZdWYHjFLGws90t9GC2ZOfQh9p3jZ.jpg",
+              "description": "ابرز المكونات:إكليل الجبل، شيح، كزبرة، غالبانوم، ليمون,ورود حمراء، زهر البرتقال المغربي، ياسمين، زهرة يلانغ يلانغ,عسل، طحلب البلوط، خشب الصندلالخط العطري:تشيبر...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117",
+              "supplierId": "1618181117"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 479.55,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/d43a8432-e57c-4939-8604-11366dcbd967-500x500-Kxircyul1YFMx3wzJYSwvbcbMWkeouRv7QKd5fMi.jpg",
+              "description": "ابرز المكونات:توت العليق, براعم البرتقال , البرغموت الصقلي,الباتشولي, اللبان, خشب الأرز ,السيبرول, جلد الغزال, اللابدانوم, خشب العنبر , المسك.الخط العطري:شرقي.ع...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745",
+              "supplierId": "1865129745"
+            },
+            "shopifyProduct": null
+          },
+          {
+            "reason": "create_new_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي شهرة 90مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 102.35,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/9ef617e1-4fd2-4b3b-a7ec-9c78caf9892c-500x500-Nb0dOH2GlGyl30n5SbhyufUns4ZqtZ1RRwj2rlre.jpg",
+              "description": "ابرز المكونات:المريمية، الليمون، زهور السوسن، الياسمين، زنابق الوادي، العود، الباتشولي، العنبر والمسكالخط العطري:تشيبر - زهريعن العطر:من أهم العطور الشرقية النس...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116",
+              "supplierId": "1877260116"
+            },
+            "shopifyProduct": null
+          }
+        ],
+        "toUpdate": [],
+        "toMarkOutOfStock": [
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700001",
+              "title": "عطر اراميس كلاسيك 110 مل",
+              "handle": "aramis-classic-eau-de-toilette-110ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710001",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710001",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700001"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700002",
+              "title": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+              "handle": "armand-basi-in-red-eau-de-parfum-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710002",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710002",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700002"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700003",
+              "title": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+              "handle": "armand-basi-in-red-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710003",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710003",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700003"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700004",
+              "title": "عطر ازارو بور هوم او دو تواليت 100مل",
+              "handle": "azzaro-pour-homme-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710004",
+                  "price": "387.50",
+                  "compare_at_price": "445",
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710004",
+              "price": 387.5,
+              "compareAtPrice": 445,
+              "inventoryPolicy": "continue",
+              "matchKey": "700004"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700005",
+              "title": "عطر ازارو كروم او دو تواليت 100 مل",
+              "handle": "azzaro-chrome-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710005",
+                  "price": "289.75",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710005",
+              "price": 289.75,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700005"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700006",
+              "title": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+              "handle": "azzaro-chrome-legend-eau-de-toilette-125ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710006",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710006",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700006"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700007",
+              "title": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+              "handle": "azzaro-chrome-united-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710007",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710007",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700007"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700008",
+              "title": "عطر ازارو وانتد او دو تواليت 100مل",
+              "handle": "azzaro-wanted-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710008",
+                  "price": "330",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710008",
+              "price": 330,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700008"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700009",
+              "title": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+              "handle": "azzaro-wanted-by-night-eau-de-parfum-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710009",
+                  "price": "396.70",
+                  "compare_at_price": "445",
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710009",
+              "price": 396.7,
+              "compareAtPrice": 445,
+              "inventoryPolicy": "continue",
+              "matchKey": "700009"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700010",
+              "title": "عطر اسكادا ماجنيتزم 75مل",
+              "handle": "escada-magnetism-perfume-75-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710010",
+                  "price": "330",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710010",
+              "price": 330,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700010"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700011",
+              "title": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+              "handle": "la-rive-blue-lady-eau-de-parfum-40ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710011",
+                  "price": "192",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710011",
+              "price": 192,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700011"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700012",
+              "title": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+              "handle": "romance-by-la-rive-for-women-eau-de-parfum-45ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710012",
+                  "price": "162.10",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710012",
+              "price": 162.1,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700012"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700013",
+              "title": "الرصاصي رويال بلو 75 مل",
+              "handle": "la-rive-royal-blue-75ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710013",
+                  "price": "162.10",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710013",
+              "price": 162.1,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700013"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700014",
+              "title": "الرصاصي شهرة 90مل",
+              "handle": "rasasi-shuhrah-90-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710014",
+                  "price": "202.35",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710014",
+              "price": 202.35,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700014"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700015",
+              "title": "الرصاصي شهرة90مل",
+              "handle": "rasasi-shuhrah-90-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710015",
+                  "price": "212.70",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710015",
+              "price": 212.7,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700015"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700016",
+              "title": "الرصاصي وايل ان لاف فورايفر 80مل",
+              "handle": "rasasi-la-yuqawam-pour-homme-80-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710016",
+                  "price": "180.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710016",
+              "price": 180.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700016"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700017",
+              "title": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+              "handle": "elizabeth-arden-red-door-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710017",
+                  "price": "266.75",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710017",
+              "price": 266.75,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700017"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700018",
+              "title": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+              "handle": "elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710018",
+                  "price": "579.55",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710018",
+              "price": 579.55,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700018"
+            },
+            "updateMode": "price_availability_only"
+          },
+          {
+            "reason": "missing_from_supplier",
+            "supplierProduct": null,
+            "shopifyProduct": {
+              "id": "700019",
+              "title": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+              "handle": "elizabeth-arden-5th-avenue-eau-de-parfum",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior"
+              ],
+              "metafields": [],
+              "variants": [
+                {
+                  "id": "710019",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "vendor": "",
+              "sourceUrl": "",
+              "supplierId": "",
+              "variantId": "710019",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "700019"
+            },
+            "updateMode": "price_availability_only"
+          }
+        ],
+        "toSkipEnriched": [],
+        "unchanged": []
+      }
+    },
+    "postBackfillReconcilePlan": {
+      "toCreate": 0,
+      "toUpdate": 19,
+      "toMarkOutOfStock": 0,
+      "toSkipEnriched": 0,
+      "unchanged": 0,
+      "actions": {
+        "toCreate": [],
+        "toUpdate": [
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم او دو تواليت 100 مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 189.75,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/fdae89e7-a9b5-424a-98cf-d7cf981a5849-500x500-iI2TRYnFMb4Apjy30EcYr4XPEN98Qu6vSJIdC4Fq.jpg",
+              "description": "ابرز المكونات:برغموت، ليمون الأمالفي، برتقال اليوسفي، أناناس,سيكلامين، كزبرة، ياسمين، طحلب البلوط,خشب الصندل، حبوب التونكا، مسك، طحلب البلوط، خشب الأرز، خشب الو...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735",
+              "supplierId": "74367735"
+            },
+            "shopifyProduct": {
+              "id": "700005",
+              "title": "عطر ازارو كروم او دو تواليت 100 مل",
+              "handle": "azzaro-chrome-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p74367735"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "74367735",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710005",
+                  "price": "289.75",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735",
+              "supplierId": "74367735",
+              "vendor": "",
+              "variantId": "710005",
+              "price": 289.75,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-chrome-eau-de-toilette-100ml/p74367735"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/ee25edd5-b979-427c-bd61-864534375670-500x500-Ed7czXMU1bIEOa9FLU7N1QHlt83J5Fkm68fyvYqm.jpg",
+              "description": "ابرز المكونات:ليمون إيطالي، كشمش أسود,طحلب البلوط، مسك، رذاذ البحر,حشب الأرز، حبو التونكا، نجيل الهند، عنبرالخط العطري: اروما.عن العطر:كروم ليجيند من آزارو هو ع...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704",
+              "supplierId": "88811704"
+            },
+            "shopifyProduct": {
+              "id": "700006",
+              "title": "عطر ازارو كروم ليجند او دو تواليت 125مل",
+              "handle": "azzaro-chrome-legend-eau-de-toilette-125ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p88811704"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "88811704",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710006",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704",
+              "supplierId": "88811704",
+              "vendor": "",
+              "variantId": "710006",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-chrome-legend-eau-de-toilette-125ml/p88811704"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+              "brand": "ارماند باسي Armand Basi",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/ece9fa83-0b2c-4eec-a4e7-d1a9bc8107cb-500x500-qjyCCKLmYZ274Yetz1CEjqzSBVoxeL4cxCgUwwgi.jpg",
+              "description": "ابرز المكونات:الزنجبيل, البرغموت,الياسمين, أوراق البنفسج, الفلفل الوردي, الورد, الكشمش الأسود ,الأخشاب, الأواكموس- طحلب البلوط, المسك الأبيض, العنبر, الفانيلياا...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706",
+              "supplierId": "107743706"
+            },
+            "shopifyProduct": {
+              "id": "700003",
+              "title": "عطر ارماند باسي ان ريد او دو تواليت-100مل",
+              "handle": "armand-basi-in-red-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p107743706"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "107743706",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710003",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706",
+              "supplierId": "107743706",
+              "vendor": "",
+              "variantId": "710003",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/armand-basi-in-red-eau-de-toilette-100ml/p107743706"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ارماند باسي Armand Basi"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 62.1,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/5180ee74-7e7b-4fb4-a34a-cac63b7d34c3-500x500-dsYHh1kfODt75RlEbZs8G8S9sENeH171avbmXBxs.jpg",
+              "description": "ابرز المكونات:زهرة الياقوتية، الخزامى، يلانغ يلانغ، المشمش، توت العليق، الخوخ، الورد، الياسمين، العنبر، المسك، مكونات من البودرة ، الأرز، خشب الصندلالخط العطري:...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269",
+              "supplierId": "114610269"
+            },
+            "shopifyProduct": {
+              "id": "700012",
+              "title": "عطر رومانس الرصاصي للنساء او دو بارفيوم-45مل",
+              "handle": "romance-by-la-rive-for-women-eau-de-parfum-45ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p114610269"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "114610269",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710012",
+                  "price": "162.10",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269",
+              "supplierId": "114610269",
+              "vendor": "",
+              "variantId": "710012",
+              "price": 162.1,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/romance-by-la-rive-for-women-eau-de-parfum-45ml/p114610269"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+              "brand": "ارماند باسي Armand Basi",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0f5d56f1-bdaa-4b3d-9cf3-1ed83ad635c8-500x500-BiZwJsvXv3SsIMgaCBevKSnGkAifI1opWNcHKu6d.jpg",
+              "description": "ابرز المكونات,الزنجبيل, البرغموت, الياسمين, أوراق البنفسج, زنابق الوادي , الورد, الأخشاب ,المسك الأبيضالخط العطري,زهري,عن المنتج:عطر بطابع زهور الربيع يأتي بمقد...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020",
+              "supplierId": "331832020"
+            },
+            "shopifyProduct": {
+              "id": "700002",
+              "title": "عطر ارماند باسي ان ريد او دو بارفيوم-100مل",
+              "handle": "armand-basi-in-red-eau-de-parfum-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p331832020"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "331832020",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710002",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020",
+              "supplierId": "331832020",
+              "vendor": "",
+              "variantId": "710002",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/armand-basi-in-red-eau-de-parfum-100ml/p331832020"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ارماند باسي Armand Basi"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 92,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/de7f5e05-db27-470b-96ff-3d741e97f6f6-500x500-hf8wPpmnhjyje269lSGCM3FnDY0WVi4auOvbBuQh.jpg",
+              "description": "ابرز المكونات:ورقة البنفسج، يلانغ يلانغ، مسك الروم، زهر البرتقال، الخوخ، البرقوق، النرجس، الياسمين، خشب الصندل، نجيل الهند، الفانيليا، العنبر، المسكالخط العطري:...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790",
+              "supplierId": "453576790"
+            },
+            "shopifyProduct": {
+              "id": "700011",
+              "title": "عطر الرصاصي بلو ليدي او دو بارفيوم- 40مل",
+              "handle": "la-rive-blue-lady-eau-de-parfum-40ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p453576790"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "453576790",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710011",
+                  "price": "192",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790",
+              "supplierId": "453576790",
+              "vendor": "",
+              "variantId": "710011",
+              "price": 192,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/la-rive-blue-lady-eau-de-parfum-40ml/p453576790"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي شهرة90مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 112.7,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/80629ad3-a58c-4d20-8778-dee1cbdffa18-500x500-D0tpXO6ehJCjo93MUdNmGW4HHZeXEjaXaMVBTkJX.jpg",
+              "description": "ابرز المكونات:الورد، أوراق الطماطم، زهور الفريجيا، أخشاب الصندل، أخشاب الارز، الياسمين، العنبر، المسك، طحالب البلوط، العود، الجلودالخط العطري: زهري.عن العطر:مع...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280",
+              "supplierId": "519412280"
+            },
+            "shopifyProduct": {
+              "id": "700015",
+              "title": "الرصاصي شهرة90مل",
+              "handle": "rasasi-shuhrah-90-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p519412280"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "519412280",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710015",
+                  "price": "212.70",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280",
+              "supplierId": "519412280",
+              "vendor": "",
+              "variantId": "710015",
+              "price": 212.7,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p519412280"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو بور هوم او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 287.5,
+              "supplierCompareAtPrice": 345,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0ec2c111-4ede-47e1-b20f-f3c06fe3cc8a-1000x1000-sHfEiIvO44B4nhdnBBileMIvustqEcU6RwIb0yQa.jpg",
+              "description": "ابرز المكونات:غريب فروت، عنبر، كشمش أسود، خوخ,نجيل الهند، بتشول، هال، توت العرعر، خشب الصندل,مسك، عنبر، خشب الأرز، طحلب البلوط، حبوب التونكا، جلدالخط العطري: شر...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416",
+              "supplierId": "592165416"
+            },
+            "shopifyProduct": {
+              "id": "700004",
+              "title": "عطر ازارو بور هوم او دو تواليت 100مل",
+              "handle": "azzaro-pour-homme-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p592165416"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "592165416",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710004",
+                  "price": "387.50",
+                  "compare_at_price": "445",
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416",
+              "supplierId": "592165416",
+              "vendor": "",
+              "variantId": "710004",
+              "price": 387.5,
+              "compareAtPrice": 445,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-pour-homme-eau-de-toilette-100ml/p592165416"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو وانتد او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 230,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/7a1e2df6-e345-466a-8b0c-24d5343f9099-500x500-CA6KpvW1XBwrzXgom86RrTbr07RtnWQ27YJ2KTGe.jpg",
+              "description": "ابرز المكونات:برغموت، يوسفي، ليمون، مريمية,هال غواتيمالي، زنجبيل، تفاح، زهرة الغرنوقي,نجيل الهند، حبوب التونكا، خشب العنبرالخط العطري: خشبي.عن العطر:وانتيد من أ...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597",
+              "supplierId": "601033597"
+            },
+            "shopifyProduct": {
+              "id": "700008",
+              "title": "عطر ازارو وانتد او دو تواليت 100مل",
+              "handle": "azzaro-wanted-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p601033597"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "601033597",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710008",
+                  "price": "330",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597",
+              "supplierId": "601033597",
+              "vendor": "",
+              "variantId": "710008",
+              "price": 330,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-wanted-eau-de-toilette-100ml/p601033597"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر اراميس كلاسيك 110 مل",
+              "brand": "اراميس Aramis",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/cfffb9af-f843-41e0-b143-01b2461cde90-500x500-ywxJBPk2FqfrAvCk5EanKDwapgpES8SqlzXSPEhi.jpg",
+              "description": "ابرز المكونات:يوسفي، زعفران، أفسنتين، زنجبيل، كمون,بتشول، مرمرية، ساق السوسن، حبهان,جلد، خشب الصندل، صنوبر، مسك، جوز الهند، نجيل الهند، إيفرينا خوخيةالخط العطري...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737",
+              "supplierId": "735368737"
+            },
+            "shopifyProduct": {
+              "id": "700001",
+              "title": "عطر اراميس كلاسيك 110 مل",
+              "handle": "aramis-classic-eau-de-toilette-110ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p735368737"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "735368737",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710001",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737",
+              "supplierId": "735368737",
+              "vendor": "",
+              "variantId": "710001",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/aramis-classic-eau-de-toilette-110ml/p735368737"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "اراميس Aramis"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 172.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/2fca1cb1-8128-40d8-82d0-69eb2ac0a3b6-500x500-TLbP1Z7vzHLl7MVMoqcwXldmBH3VaLlslTOIe4p9.jpg",
+              "description": "ابرز المكونات:برتقال دموي، برتقال اليوسفي، كشمش أسود، خوخ، ببايا,شاي أسود، ورق البنفسج,خشب الأرز، مسك أبيضالخط العطري:خشبي - حارعن العطر:كروم يونايتد من أزاره ه...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847",
+              "supplierId": "905281847"
+            },
+            "shopifyProduct": {
+              "id": "700007",
+              "title": "عطر ازارو كروم يونايتد او دو تواليت 100مل",
+              "handle": "azzaro-chrome-united-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p905281847"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "905281847",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710007",
+                  "price": "272.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847",
+              "supplierId": "905281847",
+              "vendor": "",
+              "variantId": "710007",
+              "price": 272.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-chrome-united-eau-de-toilette-100ml/p905281847"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 149.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/18a35100-d2fd-4e8c-8114-c6cc6042a5a0-500x500-acARrmGx0GdN2isGdr1GxIWDlHupJY9EOBv1nnX6.jpg",
+              "description": "ابرز المكونات:زهر الزيزفون, زنابق الوادي, الليلك, المغنوليا, البرغموت , اليوسفي,الياسمين, مسك الروم, البلغاري,البنفسج, زهر القرنفل , جوزه الطيب, المسك, السوسن,...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100",
+              "supplierId": "1008522100"
+            },
+            "shopifyProduct": {
+              "id": "700019",
+              "title": "عطر اليزابيث اردن فيفث افينيو او دو بارفيوم",
+              "handle": "elizabeth-arden-5th-avenue-eau-de-parfum",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1008522100"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1008522100",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710019",
+                  "price": "249.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100",
+              "supplierId": "1008522100",
+              "vendor": "",
+              "variantId": "710019",
+              "price": 249.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-eau-de-parfum/p1008522100"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "اليزابيث اردن Elizabeth Arden"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي رويال بلو 75 مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 62.1,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/c68afddd-9583-4348-baf2-0e3a88bfa771-500x500-oBRRi8ohv8r9O5a7ZZdZIGw7qSgMuxi0CnSA1nxg.jpg",
+              "description": "ابرز المكونات:مكونات بحرية، البرغموت، البطيخ، الخزامى، البنفسج، الورد، الياسمين، الباتشولي، الأرز، خشب الصندل، العنبر، المسكالخط العطري:خشبي.عطر رويال بلو (Roya...",
+              "category": "عطور رجالية",
+              "sourceUrl": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250",
+              "supplierId": "1147593250"
+            },
+            "shopifyProduct": {
+              "id": "700013",
+              "title": "الرصاصي رويال بلو 75 مل",
+              "handle": "la-rive-royal-blue-75ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1147593250"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1147593250",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710013",
+                  "price": "162.10",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250",
+              "supplierId": "1147593250",
+              "vendor": "",
+              "variantId": "710013",
+              "price": 162.1,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/la-rive-royal-blue-75ml/p1147593250"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر اسكادا ماجنيتزم 75مل",
+              "brand": "اسكادا Escada",
+              "supplierPrice": 230,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/73aaf270-d64f-4267-9797-6658a286d2a4-500x500-4CNjNE6Akima1giQMy0pmzxGjEZAUiu2PvbyxswM.jpg",
+              "description": "ابرز المكونات:التوت , الكشمش , القرفة, الليتشي, الأناناس , شمام,الريحان, زهر اللوز, السوسن, الفريزيا, الياسمين, الكاراوية, الورد ,الكاراميل, الفانيليا, الباتشول...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820",
+              "supplierId": "1170422820"
+            },
+            "shopifyProduct": {
+              "id": "700010",
+              "title": "عطر اسكادا ماجنيتزم 75مل",
+              "handle": "escada-magnetism-perfume-75-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1170422820"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1170422820",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710010",
+                  "price": "330",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820",
+              "supplierId": "1170422820",
+              "vendor": "",
+              "variantId": "710010",
+              "price": 330,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/escada-magnetism-perfume-75-ml/p1170422820"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "اسكادا Escada"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي وايل ان لاف فورايفر 80مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 80.5,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0a960d63-91fc-4d14-ad12-d61a2051d657-500x500-YcaRsra4a9efdKxdC3atjlJZyz7tSDu4GSYL3u96.jpg",
+              "description": "ابرز المكونات:التفاح، ليمون، الياسمين، الورد الأبيض، الخيزران، الشيح، العنبر، المسكالخط العطري: زهريعن العطر:عطر خاص بالنساء من مجموعة العطور الزهرية الخضراء، ي...",
+              "category": "عطور نسائية,عطور قديمة ونادرة",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793",
+              "supplierId": "1257459793"
+            },
+            "shopifyProduct": {
+              "id": "700016",
+              "title": "الرصاصي وايل ان لاف فورايفر 80مل",
+              "handle": "rasasi-la-yuqawam-pour-homme-80-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1257459793"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1257459793",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710016",
+                  "price": "180.50",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793",
+              "supplierId": "1257459793",
+              "vendor": "",
+              "variantId": "710016",
+              "price": 180.5,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/rasasi-la-yuqawam-pour-homme-80-ml/p1257459793"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+              "brand": "ازارو Azzaro",
+              "supplierPrice": 296.7,
+              "supplierCompareAtPrice": 345,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/82401b3e-ba37-408b-a583-8eaf4d7d4b03-1000x1000-jYeVuuSQdOfdoGzd9Equ4ZnTHiLnUOlfJgIapmru.jpg",
+              "description": "ابرز المكونات:آس، كاشميران، فلفل أسود، هال,روائح فاكهية، كمون، خشب الأرز الأحمر، بخور,خشب الأرز، تبغ، خشب السرو، جاوي، آيزو إي سوبر، جلد، بتشول، فانيلياالخط الع...",
+              "category": "عطور رجالية,ترشيحات صيفيه",
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845",
+              "supplierId": "1277915845"
+            },
+            "shopifyProduct": {
+              "id": "700009",
+              "title": "عطر ازارو وانتد باي نايت او دو بارفيوم 100مل",
+              "handle": "azzaro-wanted-by-night-eau-de-parfum-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1277915845"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1277915845",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710009",
+                  "price": "396.70",
+                  "compare_at_price": "445",
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845",
+              "supplierId": "1277915845",
+              "vendor": "",
+              "variantId": "710009",
+              "price": 396.7,
+              "compareAtPrice": 445,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/azzaro-wanted-by-night-eau-de-parfum-100ml/p1277915845"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "ازارو Azzaro"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 166.75,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/0c0333b7-9869-4ef5-be3f-cbae4f7518f8-500x500-A4iWbnU9FlJCZdWYHjFLGws90t9GC2ZOfQh9p3jZ.jpg",
+              "description": "ابرز المكونات:إكليل الجبل، شيح، كزبرة، غالبانوم، ليمون,ورود حمراء، زهر البرتقال المغربي، ياسمين، زهرة يلانغ يلانغ,عسل، طحلب البلوط، خشب الصندلالخط العطري:تشيبر...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117",
+              "supplierId": "1618181117"
+            },
+            "shopifyProduct": {
+              "id": "700017",
+              "title": "عطر اليزابيث اردن ريد دور او دو تواليت-100مل",
+              "handle": "elizabeth-arden-red-door-eau-de-toilette-100ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1618181117"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1618181117",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710017",
+                  "price": "266.75",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117",
+              "supplierId": "1618181117",
+              "vendor": "",
+              "variantId": "710017",
+              "price": 266.75,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/elizabeth-arden-red-door-eau-de-toilette-100ml/p1618181117"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "اليزابيث اردن Elizabeth Arden"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+              "brand": "اليزابيث اردن Elizabeth Arden",
+              "supplierPrice": 479.55,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/d43a8432-e57c-4939-8604-11366dcbd967-500x500-Kxircyul1YFMx3wzJYSwvbcbMWkeouRv7QKd5fMi.jpg",
+              "description": "ابرز المكونات:توت العليق, براعم البرتقال , البرغموت الصقلي,الباتشولي, اللبان, خشب الأرز ,السيبرول, جلد الغزال, اللابدانوم, خشب العنبر , المسك.الخط العطري:شرقي.ع...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745",
+              "supplierId": "1865129745"
+            },
+            "shopifyProduct": {
+              "id": "700018",
+              "title": "عطر اليزابيث اردن فيفث افينيو ان واي سي او دو بارفيوم-125مل",
+              "handle": "elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1865129745"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1865129745",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710018",
+                  "price": "579.55",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745",
+              "supplierId": "1865129745",
+              "vendor": "",
+              "variantId": "710018",
+              "price": 579.55,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/elizabeth-arden-5th-avenue-nyc-eau-de-parfum-125ml/p1865129745"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "اليزابيث اردن Elizabeth Arden"
+              }
+            ]
+          },
+          {
+            "reason": "update_imported_product",
+            "supplierProduct": {
+              "name": "الرصاصي شهرة 90مل",
+              "brand": "الرصاصي",
+              "supplierPrice": 102.35,
+              "supplierCompareAtPrice": null,
+              "availability": "in_stock",
+              "imageUrl": "https://cdn.salla.sa/DdneD/9ef617e1-4fd2-4b3b-a7ec-9c78caf9892c-500x500-Nb0dOH2GlGyl30n5SbhyufUns4ZqtZ1RRwj2rlre.jpg",
+              "description": "ابرز المكونات:المريمية، الليمون، زهور السوسن، الياسمين، زنابق الوادي، العود، الباتشولي، العنبر والمسكالخط العطري:تشيبر - زهريعن العطر:من أهم العطور الشرقية النس...",
+              "category": "عطور نسائية",
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116",
+              "supplierId": "1877260116"
+            },
+            "shopifyProduct": {
+              "id": "700014",
+              "title": "الرصاصي شهرة 90مل",
+              "handle": "rasasi-shuhrah-90-ml",
+              "status": "active",
+              "tags": [
+                "imported-nader-dior",
+                "supplier:nawadirdior",
+                "supplier-id-p1877260116"
+              ],
+              "metafields": [
+                {
+                  "namespace": "supplier",
+                  "key": "source_url",
+                  "value": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116",
+                  "type": "single_line_text_field"
+                },
+                {
+                  "namespace": "supplier",
+                  "key": "product_id",
+                  "value": "1877260116",
+                  "type": "single_line_text_field"
+                }
+              ],
+              "variants": [
+                {
+                  "id": "710014",
+                  "price": "202.35",
+                  "compare_at_price": null,
+                  "inventory_policy": "continue"
+                }
+              ],
+              "sourceUrl": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116",
+              "supplierId": "1877260116",
+              "vendor": "",
+              "variantId": "710014",
+              "price": 202.35,
+              "compareAtPrice": null,
+              "inventoryPolicy": "continue",
+              "matchKey": "https://nawadirdior.sa/rasasi-shuhrah-90-ml/p1877260116"
+            },
+            "updateMode": "full_product",
+            "changes": [
+              {
+                "field": "vendor",
+                "current": "",
+                "desired": "الرصاصي"
+              }
+            ]
+          }
+        ],
+        "toMarkOutOfStock": [],
+        "toSkipEnriched": [],
+        "unchanged": []
+      }
+    }
+  },
   "reconcilePlan": {
     "toCreate": 15,
     "toUpdate": 2,

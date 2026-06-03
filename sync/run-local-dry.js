@@ -33,6 +33,8 @@ const payloads = loadSyncModule('build-shopify-payload.js');
 const reconcileModule = loadSyncModule('reconcile.js');
 const shopifyClient = loadSyncModule('shopify-client.js');
 const shapeValidator = loadSyncModule('validate-shopify-shape.js');
+const setupDefinitions = loadSyncModule('setup-metafield-definitions.js');
+const backfillModule = loadSyncModule('backfill-existing-products.js');
 
 function readFixture(fileName) {
   return fs.readFileSync(path.join(fixturesDir, fileName), 'utf8');
@@ -129,6 +131,21 @@ async function runDryRun(options = {}) {
   const reconcilePlan = reconcileModule.reconcile(supplierProducts, syntheticShopifyProducts);
   const actionRequests = buildActionRequests(reconcilePlan, shopDomain);
   const actionIndex = indexActions(reconcilePlan);
+  const validSupplierProducts = supplierProducts.filter(
+    (item) => item.sourceUrl && item.supplierPrice !== null && item.availability !== 'missing'
+  );
+  const existingImportedProductsNeedingBackfill = buildExistingImportedProductsNeedingBackfill(validSupplierProducts.slice(0, 19));
+  const backfillPlan = backfillModule.planBackfillExistingProducts(
+    existingImportedProductsNeedingBackfill,
+    validSupplierProducts,
+    { shopDomain }
+  );
+  const duplicateRiskBeforeBackfill = reconcileModule.reconcile(
+    validSupplierProducts.slice(0, 19),
+    existingImportedProductsNeedingBackfill
+  );
+  const postBackfillShopifyProducts = applyBackfillPlanForDryRun(existingImportedProductsNeedingBackfill, backfillPlan);
+  const postBackfillReconcilePlan = reconcileModule.reconcile(validSupplierProducts.slice(0, 19), postBackfillShopifyProducts);
 
   for (const entry of entries) {
     const action = actionIndex[entry.sourceUrl] || actionIndex[entry.productId] || null;
@@ -151,6 +168,13 @@ async function runDryRun(options = {}) {
     productLimit: limit,
     generatedPayloads: entries.length,
     missingSupplierPages: entries.filter((entry) => entry.action === 'skip_missing_supplier_page').length,
+    preSyncSetup: {
+      metafieldDefinitionRequests: setupDefinitions.buildSupplierMetafieldDefinitionRequests({ shopDomain }),
+      existingImportedProductsNeedingBackfill,
+      backfillPlan,
+      duplicateRiskBeforeBackfill: summarizePlan(duplicateRiskBeforeBackfill),
+      postBackfillReconcilePlan: summarizePlan(postBackfillReconcilePlan)
+    },
     reconcilePlan: summarizePlan(reconcilePlan),
     syntheticShopifyProducts,
     shopifyRequests: {
@@ -208,6 +232,48 @@ function buildSyntheticShopifyProducts(supplierProducts) {
     )
   );
   return products;
+}
+
+function buildExistingImportedProductsNeedingBackfill(supplierProducts) {
+  return supplierProducts.map((supplierProduct, index) => {
+    const payload = payloads.buildPayload(supplierProduct).product;
+    const variant = payload.variants && payload.variants[0] ? payload.variants[0] : {};
+    return {
+      id: String(700001 + index),
+      title: payload.title || supplierProduct.name,
+      handle: handleFromSourceUrl(supplierProduct.sourceUrl),
+      status: payload.status || 'active',
+      tags: ['imported-nader-dior'],
+      metafields: [],
+      variants: [
+        {
+          id: String(710001 + index),
+          price: variant.price || null,
+          compare_at_price: variant.compare_at_price || null,
+          inventory_policy: variant.inventory_policy || 'continue'
+        }
+      ]
+    };
+  });
+}
+
+function applyBackfillPlanForDryRun(existingProducts, backfillPlan) {
+  const byId = {};
+  for (const action of backfillPlan.toBackfill) byId[String(action.productId)] = action;
+  return existingProducts.map((product) => {
+    const action = byId[String(product.id)];
+    if (!action) return product;
+    return {
+      ...product,
+      tags: uniqueTags(normalizeTags(product.tags).concat(action.addedTags)),
+      sourceUrl: action.sourceUrl,
+      supplierId: action.supplierId,
+      metafields: [
+        { namespace: 'supplier', key: 'source_url', value: action.sourceUrl, type: 'single_line_text_field' },
+        { namespace: 'supplier', key: 'product_id', value: action.supplierId, type: 'single_line_text_field' }
+      ]
+    };
+  });
 }
 
 function productFromSupplier(supplierProduct, productId, variantId, overrides = {}) {
@@ -340,6 +406,18 @@ function uniqueTags(tags) {
   return out;
 }
 
+function handleFromSourceUrl(sourceUrl) {
+  try {
+    const parsed = new URL(String(sourceUrl || ''));
+    const parts = parsed.pathname.split('/').filter(Boolean);
+    const productIndex = parts.findIndex((part) => /^p\d+$/i.test(part));
+    return productIndex > 0 ? parts[productIndex - 1] : parts[0] || '';
+  } catch (error) {
+    const match = String(sourceUrl || '').match(/\/([^/?#]+)\/p\d+(?=$|[/?#])/i);
+    return match ? match[1] : '';
+  }
+}
+
 const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
 if (isDirectRun) {
@@ -354,6 +432,7 @@ if (isDirectRun) {
         skipEnriched: output.reconcilePlan.toSkipEnriched,
         unchanged: output.reconcilePlan.unchanged
       }));
+      console.log('Backfill plan: ' + JSON.stringify(output.preSyncSetup.backfillPlan.summary));
     })
     .catch((error) => {
       console.error(error && error.stack ? error.stack : String(error));

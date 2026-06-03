@@ -2,7 +2,34 @@
 
 Use this checklist when the Shopify storefront is open and the n8n workflows are ready to run against the live shop.
 
-## 1. Required n8n Credentials
+## 1. Pre-Sync Setup: Must Run Before Recurring Sync
+
+1. Create Shopify product metafield definitions.
+   - Use request shapes from `sync/setup-metafield-definitions.js`.
+   - Create `supplier.source_url`.
+   - Create `supplier.product_id`.
+   - Confirm both are `single_line_text_field`.
+   - Confirm both are owner type `PRODUCT`.
+   - Confirm both are pinned.
+   - Confirm both have Admin access `MERCHANT_READ_WRITE`.
+   - Confirm both have `adminFilterable.enabled: true`.
+
+2. Backfill the 19 existing imported products.
+   - Use `sync/backfill-existing-products.js`.
+   - Add `supplier.source_url` metafield.
+   - Add `supplier.product_id` metafield.
+   - Add `supplier:nawadirdior` tag if missing.
+   - Add `supplier-id-p<id>` tag.
+   - Do not write price, images, description, status, vendor, inventory, or SEO.
+   - Stop and manually review any product listed in `manualReview[]`.
+
+3. Confirm duplicate prevention before enabling recurring sync.
+   - Run `node sync/run-local-dry.js`.
+   - Confirm `preSyncSetup.backfillPlan.summary.confidentlyMatched` is `19`.
+   - Confirm `preSyncSetup.backfillPlan.summary.manualReview` is `0`, or resolve each manual-review item.
+   - Confirm `preSyncSetup.postBackfillReconcilePlan.toCreate` is `0` for the existing imported products.
+
+## 2. Required n8n Credentials
 
 1. Shopify Admin OAuth2 credential:
    - Name: `Shopify-Calapres OAuth2`
@@ -17,7 +44,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Header name should match Higgsfield account requirements, normally `Authorization`.
    - Header value should be the active Higgsfield API key or bearer token.
 
-## 2. Required n8n Variables
+## 3. Required n8n Variables
 
 1. `SHOPIFY_SHOP_DOMAIN`
    - Example: `calapres.myshopify.com`
@@ -36,7 +63,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 5. `HIGGSFIELD_IMAGE_MODEL`
    - Value used by the enrichment workflow, for example `higgsfield-soul`.
 
-## 3. Local Validation Before n8n Import
+## 4. Local Validation Before n8n Import
 
 1. Run syntax checks:
    - `node --check sync/crawl-supplier.js`
@@ -47,6 +74,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `node --check sync/shopify-client.js`
    - `node --check sync/reconcile.js`
    - `node --check sync/validate-shopify-shape.js`
+   - `node --check sync/setup-metafield-definitions.js`
+   - `node --check sync/backfill-existing-products.js`
    - `node --check sync/run-local-dry.js`
    - `node --check sync/__tests__/run-tests.js`
 
@@ -58,6 +87,9 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 
 4. Inspect `sync/dry-run-output.json`:
    - Confirm `generatedPayloads` is `20`.
+   - Confirm `preSyncSetup.metafieldDefinitionRequests` contains `source_url` and `product_id`.
+   - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `19`.
+   - Confirm `preSyncSetup.backfillPlan.summary.manualReview` is `0`, or resolve manual-review items before go-live.
    - Confirm `reconcilePlan` includes create/update/out-of-stock/skip-enriched buckets.
    - Confirm `shopifyRequests.actionRequests` contains the REST request bodies to review.
    - Confirm `payloads[].action` is `create_or_update` for real supplier products.
@@ -66,7 +98,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Confirm source metafields include `supplier.source_url` and `supplier.product_id`.
    - Confirm no payload contains customer data or Shopify credentials.
 
-## 4. n8n Recurring Sync Import
+## 5. n8n Recurring Sync Import
 
 1. Create the recurring workflow from `sync/n8n-sync-flow.md`.
 2. Paste each helper file into the matching n8n Code node:
@@ -78,6 +110,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `sync/shopify-client.js`
    - `sync/reconcile.js`
    - `sync/validate-shopify-shape.js`
+   - `sync/setup-metafield-definitions.js`
+   - `sync/backfill-existing-products.js`
 3. Configure all Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
 4. Set all Shopify request URLs to use `{{$vars.SHOPIFY_SHOP_DOMAIN}}`.
 5. Set the Split In Batches node to batch size `1`.
@@ -87,7 +121,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `imported-nader-dior` plus `supplier-id-p<id>` tags.
 8. Confirm missing supplier products are marked draft/out of stock and are never deleted.
 
-## 5. n8n Enrichment Import
+## 6. n8n Enrichment Import
 
 1. Create the enrichment workflow from `sync/n8n-enrich-flow.md`.
 2. Configure Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
@@ -100,34 +134,36 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 5. Confirm the Shopify update appends the `enriched` tag.
 6. Confirm enriched products are excluded from future presentation overwrites by `buildPayload`.
 
-## 6. Go-Live Sequence
+## 7. Go-Live Sequence
 
 1. Open the Shopify storefront and confirm Admin API access still works.
-2. Run the recurring sync manually with a limit of 5 supplier products.
-3. Verify in Shopify Admin:
+2. Run the pre-sync setup sequence in section 1.
+3. Verify the 19 existing imported products now have supplier metafields and supplier-id tags.
+4. Run the recurring sync manually with a limit of 5 supplier products.
+5. Verify in Shopify Admin:
    - Product titles are correct.
    - Vendor is correct.
    - Price is supplier price plus 100 SAR.
    - Discounted products have compare-at price plus 100 SAR.
    - Tags include `imported-nader-dior`, `supplier:nawadirdior`, and `supplier-id-p<id>`.
    - Supplier metafields are present.
-4. Run the enrichment workflow manually for one new product.
-5. Verify the enriched product:
+6. Run the enrichment workflow manually for one new product.
+7. Verify the enriched product:
    - Has generated images.
    - Has Arabic SEO fields.
    - Has the `enriched` tag.
-6. Re-run recurring sync for that enriched product.
-7. Verify price and inventory update while title, description, images, and SEO stay unchanged.
-8. Enable the recurring Schedule Trigger.
-9. Monitor the first full run:
+8. Re-run recurring sync for that enriched product.
+9. Verify price and inventory update while title, description, images, and SEO stay unchanged.
+10. Enable the recurring Schedule Trigger.
+11. Monitor the first full run:
    - Products created.
    - Products updated.
    - Missing products drafted/out of stock.
    - Shopify HTTP errors.
    - Higgsfield HTTP errors.
-10. Leave deletion disabled permanently for supplier-missing products.
+12. Leave deletion disabled permanently for supplier-missing products.
 
-## 7. Rollback
+## 8. Rollback
 
 1. Disable both n8n workflows.
 2. In Shopify Admin, filter products by `imported-nader-dior`.
