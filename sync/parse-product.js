@@ -13,96 +13,39 @@ function parseProduct(html) {
   try {
     const source = typeof html === 'string' ? html : '';
     const meta = collectMeta(source);
-    const jsonLd = collectJsonLd(source);
-    const product = findJsonLdProduct(jsonLd) || {};
-    const offer = firstOffer(product.offers) || {};
-    const dataProduct = extractDataLayerProduct(source) || {};
-
-    const sourceUrl = cleanUrl(
-      getMeta(meta, 'og:url') ||
-        getMeta(meta, 'twitter:url') ||
-        getCanonical(source) ||
-        offer.url ||
-        dataProduct.url ||
-        null
+    const sources = [
+      sourceFromJsonLd(source),
+      sourceFromMeta(source, meta),
+      sourceFromSallaInline(source)
+    ];
+    const merged = mergeSources(sources);
+    const supplierPrice = firstNumber(
+      merged.supplierPrice,
+      merged.salePrice,
+      merged.price,
+      merged.amount
     );
-
-    const name = cleanText(
-      product.name ||
-        getMeta(meta, 'og:title') ||
-        getMeta(meta, 'twitter:title') ||
-        dataProduct.name ||
-        ''
+    const compareCandidate = firstNumber(
+      merged.supplierCompareAtPrice,
+      merged.compareAtPrice,
+      merged.originalPrice,
+      merged.regularPrice
     );
-
-    const brand = cleanText(
-      readName(product.brand) ||
-        dataProduct.brand ||
-        getMeta(meta, 'product:brand') ||
-        ''
-    );
-
-    const metaPrice = parseMoney(getMeta(meta, 'product:price:amount'));
-    const salePrice = parseMoney(getMeta(meta, 'product:sale_price:amount'));
-    const jsonPrice = parseMoney(offer.price);
-    const dataPrice = parseMoney(dataProduct.price);
-    const explicitCompareAt = firstNumber(
-      parseMoney(getMeta(meta, 'product:compare_at_price:amount')),
-      parseMoney(getMeta(meta, 'product:original_price:amount')),
-      parseMoney(getMeta(meta, 'product:regular_price:amount')),
-      parseMoney(getMeta(meta, 'product:retail_price:amount'))
-    );
-
-    const supplierPrice = firstNumber(salePrice, metaPrice, jsonPrice, dataPrice);
-    let supplierCompareAtPrice = null;
-    if (supplierPrice !== null) {
-      if (explicitCompareAt !== null && explicitCompareAt > supplierPrice) {
-        supplierCompareAtPrice = explicitCompareAt;
-      } else if (salePrice !== null && metaPrice !== null && salePrice < metaPrice) {
-        supplierCompareAtPrice = metaPrice;
-      }
-    }
-
-    const availability = normalizeAvailability(
-      getMeta(meta, 'product:availability') ||
-        offer.availability ||
-        dataProduct.availability ||
-        dataProduct.quantity
-    );
-
-    const imageUrl = pickBestImage([
-      product.image,
-      dataProduct.image_url,
-      dataProduct.image,
-      getMeta(meta, 'og:image'),
-      getMeta(meta, 'twitter:image')
-    ]);
-
-    const description = cleanText(
-      product.description ||
-        getMeta(meta, 'og:description') ||
-        getMeta(meta, 'twitter:description') ||
-        getMeta(meta, 'description') ||
-        ''
-    );
-
-    const category = cleanText(
-      getMeta(meta, 'product:category') ||
-        dataProduct.category ||
-        readCategory(dataProduct.categories) ||
-        ''
-    );
+    const supplierCompareAtPrice =
+      supplierPrice !== null && compareCandidate !== null && compareCandidate > supplierPrice
+        ? compareCandidate
+        : null;
 
     return {
-      name,
-      brand,
+      name: cleanText(merged.name),
+      brand: cleanText(merged.brand),
       supplierPrice,
       supplierCompareAtPrice,
-      availability,
-      imageUrl,
-      description,
-      category,
-      sourceUrl
+      availability: normalizeAvailability(merged.availability),
+      imageUrl: pickBestImage(merged.images || [merged.imageUrl]),
+      description: cleanText(merged.description),
+      category: cleanText(merged.category),
+      sourceUrl: cleanUrl(merged.sourceUrl)
     };
   } catch (error) {
     return emptyProduct();
@@ -123,6 +66,83 @@ function emptyProduct() {
   };
 }
 
+function sourceFromJsonLd(html) {
+  const product = findJsonLdProduct(collectJsonLd(html)) || {};
+  const offer = firstOffer(product.offers) || {};
+  return {
+    name: product.name,
+    brand: readName(product.brand),
+    supplierPrice: parseMoney(offer.price),
+    availability: offer.availability,
+    imageUrl: firstImage(product.image),
+    images: flatten([product.image]),
+    description: product.description,
+    category: readCategory(product.category),
+    sourceUrl: offer.url || product.url
+  };
+}
+
+function sourceFromMeta(html, meta) {
+  const price = parseMoney(getMeta(meta, 'product:price:amount'));
+  const salePrice = parseMoney(getMeta(meta, 'product:sale_price:amount'));
+  const compareAt = firstNumber(
+    parseMoney(getMeta(meta, 'product:compare_at_price:amount')),
+    parseMoney(getMeta(meta, 'product:original_price:amount')),
+    parseMoney(getMeta(meta, 'product:regular_price:amount')),
+    parseMoney(getMeta(meta, 'product:retail_price:amount'))
+  );
+  return {
+    name: getMeta(meta, 'og:title') || getMeta(meta, 'twitter:title'),
+    brand: getMeta(meta, 'product:brand'),
+    supplierPrice: firstNumber(salePrice, price),
+    supplierCompareAtPrice: compareAt || (salePrice !== null && price !== null && salePrice < price ? price : null),
+    availability: getMeta(meta, 'product:availability'),
+    imageUrl: getMeta(meta, 'og:image') || getMeta(meta, 'twitter:image'),
+    images: [getMeta(meta, 'og:image'), getMeta(meta, 'twitter:image')],
+    description:
+      getMeta(meta, 'og:description') ||
+      getMeta(meta, 'twitter:description') ||
+      getMeta(meta, 'description'),
+    category: getMeta(meta, 'product:category'),
+    sourceUrl: getMeta(meta, 'og:url') || getMeta(meta, 'twitter:url') || getCanonical(html)
+  };
+}
+
+function sourceFromSallaInline(html) {
+  const products = []
+    .concat(extractDataLayerProducts(html))
+    .concat(extractSallaViewedProducts(html))
+    .filter(Boolean);
+  const product = products[0] || {};
+  const button = extractSallaButton(html);
+  return {
+    name: product.name,
+    brand: product.brand || extractVisibleBrand(html),
+    supplierPrice: parseMoney(product.price || button.amount),
+    availability: product.availability || product.quantity || button.status,
+    imageUrl: product.image_url || product.image,
+    images: [product.image_url, product.image],
+    description: product.description,
+    category: product.category || readCategory(product.categories),
+    sourceUrl: product.url || product.link
+  };
+}
+
+function mergeSources(sources) {
+  const out = { images: [] };
+  for (const source of sources) {
+    if (!source || typeof source !== 'object') continue;
+    for (const key of Object.keys(source)) {
+      if (key === 'images') {
+        out.images = out.images.concat(flatten(source.images));
+      } else if (isEmpty(out[key]) && !isEmpty(source[key])) {
+        out[key] = source[key];
+      }
+    }
+  }
+  return out;
+}
+
 function collectMeta(html) {
   const meta = {};
   const tagPattern = /<meta\b[^>]*>/gi;
@@ -130,9 +150,7 @@ function collectMeta(html) {
   while ((match = tagPattern.exec(html))) {
     const attrs = parseAttributes(match[0]);
     const key = (attrs.property || attrs.name || attrs.itemprop || '').toLowerCase();
-    if (key && attrs.content !== undefined) {
-      meta[key] = decodeEntities(attrs.content);
-    }
+    if (key && attrs.content !== undefined) meta[key] = decodeEntities(attrs.content);
   }
   return meta;
 }
@@ -145,14 +163,14 @@ function collectJsonLd(html) {
     try {
       blocks.push(JSON.parse(decodeEntities(match[1].trim())));
     } catch (error) {
-      // Ignore malformed supplier blocks; other meta tags still provide data.
+      // Ignore malformed supplier JSON-LD blocks; other sources still provide data.
     }
   }
   return blocks;
 }
 
 function findJsonLdProduct(blocks) {
-  const queue = blocks.slice();
+  const queue = flatten(blocks).slice();
   while (queue.length) {
     const item = queue.shift();
     if (!item || typeof item !== 'object') continue;
@@ -162,6 +180,67 @@ function findJsonLdProduct(blocks) {
     if (Array.isArray(item.itemListElement)) queue.push.apply(queue, item.itemListElement);
   }
   return null;
+}
+
+function extractDataLayerProducts(html) {
+  const products = [];
+  const payloads = extractFunctionJsonArgs(html, 'window.dataLayer.push').concat(
+    extractFunctionJsonArgs(html, 'dataLayer.push')
+  );
+  for (const payload of payloads) {
+    const detailProducts =
+      payload &&
+      payload.ecommerce &&
+      payload.ecommerce.detail &&
+      payload.ecommerce.detail.products;
+    if (Array.isArray(detailProducts)) products.push.apply(products, detailProducts);
+  }
+  return products;
+}
+
+function extractSallaViewedProducts(html) {
+  const products = [];
+  const payloads = extractFunctionJsonArgs(html, 'salla.event.dispatchEvents');
+  for (const payload of payloads) {
+    const viewed = payload && payload.events && payload.events['Product Viewed'];
+    if (Array.isArray(viewed)) products.push.apply(products, viewed);
+  }
+  return products;
+}
+
+function extractFunctionJsonArgs(html, marker) {
+  const out = [];
+  let index = 0;
+  while ((index = html.indexOf(marker, index)) !== -1) {
+    const open = html.indexOf('(', index + marker.length);
+    if (open === -1) break;
+    const arg = extractBalanced(html, open, '(', ')');
+    if (!arg) break;
+    try {
+      out.push(JSON.parse(arg.slice(1, -1)));
+    } catch (error) {
+      // Not a clean JSON argument; skip it.
+    }
+    index = open + arg.length;
+  }
+  return out;
+}
+
+function extractSallaButton(html) {
+  const match = html.match(/<salla-add-product-button\b[^>]*>/i);
+  if (!match) return {};
+  const attrs = parseAttributes(match[0]);
+  return {
+    amount: attrs.amount,
+    status: attrs['product-status']
+  };
+}
+
+function extractVisibleBrand(html) {
+  const brandLink = html.match(/<a\b[^>]*aria-label=["']brand["'][^>]*>/i);
+  if (!brandLink) return '';
+  const attrs = parseAttributes(brandLink[0]);
+  return attrs.title || '';
 }
 
 function firstOffer(offers) {
@@ -174,7 +253,7 @@ function parseAttributes(tag) {
   const attrPattern = /([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g;
   let match;
   while ((match = attrPattern.exec(tag))) {
-    attrs[match[1].toLowerCase()] = match[2] ?? match[3] ?? match[4] ?? '';
+    attrs[match[1].toLowerCase()] = decodeEntities(match[2] ?? match[3] ?? match[4] ?? '');
   }
   return attrs;
 }
@@ -186,28 +265,10 @@ function getMeta(meta, key) {
 function getCanonical(html) {
   const match = html.match(/<link\b[^>]*rel=["']canonical["'][^>]*>/i);
   if (!match) return null;
-  return decodeEntities(parseAttributes(match[0]).href || '');
+  return parseAttributes(match[0]).href || null;
 }
 
-function extractDataLayerProduct(html) {
-  const marker = '"Product Viewed":';
-  const start = html.indexOf(marker);
-  if (start === -1) return null;
-  const slice = html.slice(start + marker.length);
-  const arrayStart = slice.indexOf('[');
-  if (arrayStart === -1) return null;
-  const productStart = slice.indexOf('{', arrayStart);
-  if (productStart === -1) return null;
-  const json = extractBalancedObject(slice, productStart);
-  if (!json) return null;
-  try {
-    return JSON.parse(json);
-  } catch (error) {
-    return null;
-  }
-}
-
-function extractBalancedObject(text, start) {
+function extractBalanced(text, start, openChar, closeChar) {
   let depth = 0;
   let inString = false;
   let quote = '';
@@ -215,21 +276,17 @@ function extractBalancedObject(text, start) {
   for (let i = start; i < text.length; i += 1) {
     const char = text[i];
     if (inString) {
-      if (escaped) {
-        escaped = false;
-      } else if (char === '\\') {
-        escaped = true;
-      } else if (char === quote) {
-        inString = false;
-      }
+      if (escaped) escaped = false;
+      else if (char === '\\') escaped = true;
+      else if (char === quote) inString = false;
       continue;
     }
     if (char === '"' || char === "'") {
       inString = true;
       quote = char;
-    } else if (char === '{') {
+    } else if (char === openChar) {
       depth += 1;
-    } else if (char === '}') {
+    } else if (char === closeChar) {
       depth -= 1;
       if (depth === 0) return text.slice(start, i + 1);
     }
@@ -244,29 +301,33 @@ function readName(value) {
   return '';
 }
 
-function readCategory(categories) {
-  if (!Array.isArray(categories)) return '';
-  return categories.map(readName).filter(Boolean).join('/');
+function readCategory(value) {
+  if (!value) return '';
+  if (typeof value === 'string') return value;
+  if (!Array.isArray(value)) return readName(value);
+  return value.map(readName).filter(Boolean).join('/');
+}
+
+function firstImage(value) {
+  return flatten([value]).filter(Boolean)[0] || null;
 }
 
 function pickBestImage(values) {
-  const candidates = flatten(values)
-    .map((value) => cleanUrl(value))
-    .filter(Boolean);
+  const candidates = flatten(values).map(cleanUrl).filter(Boolean);
   if (!candidates.length) return null;
   candidates.sort((a, b) => imageScore(b) - imageScore(a));
   return candidates[0];
 }
 
 function imageScore(url) {
-  const match = String(url).match(/(\d{2,5})x(\d{2,5})/);
-  if (!match) return 0;
-  return Number(match[1]) * Number(match[2]);
+  const size = String(url).match(/(\d{2,5}(?:\.\d+)?)x(\d{2,5}(?:\.\d+)?)/);
+  if (size) return Number(size[1]) * Number(size[2]);
+  return String(url).includes('cdn.salla.sa') ? 1 : 0;
 }
 
 function flatten(values) {
   const out = [];
-  for (const value of values) {
+  for (const value of values || []) {
     if (Array.isArray(value)) out.push.apply(out, flatten(value));
     else if (value && typeof value === 'object' && value.url) out.push(value.url);
     else out.push(value);
@@ -276,7 +337,18 @@ function flatten(values) {
 
 function normalizeAvailability(value) {
   const raw = String(value ?? '').toLowerCase();
-  if (raw.includes('instock') || raw.includes('in stock') || raw === 'true') return 'in_stock';
+  if (
+    raw === 'in_stock' ||
+    raw === 'available' ||
+    raw === 'sale' ||
+    raw === 'true' ||
+    raw.includes('instock') ||
+    raw.includes('in stock') ||
+    raw.includes('/instock') ||
+    raw.includes('product-status="sale"')
+  ) {
+    return 'in_stock';
+  }
   if (Number(raw) > 0) return 'in_stock';
   return 'out_of_stock';
 }
@@ -311,6 +383,10 @@ function cleanUrl(value) {
 
 function stripTags(value) {
   return value.replace(/<[^>]*>/g, ' ');
+}
+
+function isEmpty(value) {
+  return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0);
 }
 
 function decodeEntities(value) {

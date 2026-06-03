@@ -16,16 +16,18 @@ function buildPayload(parsed) {
   const existingProduct = item.existingProduct || item.shopifyProduct || {};
   const existingTags = normalizeTags(item.existingTags || existingProduct.tags || item.tags);
   const enriched = hasTag(existingTags, 'enriched');
+  const statusOnly = enriched || isMissingAvailability(item.availability);
 
   const variant = compactObject({
     id: item.existingVariantId || existingProduct.variantId || readFirstVariantId(existingProduct),
-    price: formatMoney(pricing.price),
-    compare_at_price: pricing.compareAtPrice === null ? null : formatMoney(pricing.compareAtPrice),
+    price: pricing.price === null ? undefined : formatMoney(pricing.price),
+    compare_at_price:
+      pricing.price === null ? undefined : pricing.compareAtPrice === null ? null : formatMoney(pricing.compareAtPrice),
     inventory_policy: stock.inventoryPolicy
   });
 
-  if (enriched) {
-    // ENRICHED GUARD: do not emit title, body_html, images, SEO, vendor, or tags.
+  if (statusOnly) {
+    // ENRICHED/MISSING GUARD: do not emit title, body_html, images, SEO, vendor, tags, or metafields.
     return {
       product: compactObject({
         id: item.existingProductId || existingProduct.id,
@@ -38,6 +40,7 @@ function buildPayload(parsed) {
   const tags = uniqueTags([
     'imported-nader-dior',
     'supplier:nawadirdior',
+    supplierIdTag(item.sourceUrl),
     item.brand ? 'brand:' + item.brand : '',
     item.category ? 'category:' + item.category : ''
   ]);
@@ -51,6 +54,7 @@ function buildPayload(parsed) {
       tags: tags.join(', '),
       status: stock.productStatus,
       images: item.imageUrl ? [{ src: String(item.imageUrl).trim() }] : undefined,
+      metafields: supplierMetafields(item),
       variants: [variant]
     })
   };
@@ -83,6 +87,11 @@ function mapAvailabilityForPayload(value) {
   };
 }
 
+function isMissingAvailability(value) {
+  const raw = String(value ?? '').trim().toLowerCase();
+  return raw === 'missing' || raw === 'not_found' || raw === 'not found';
+}
+
 function normalizeTags(value) {
   if (Array.isArray(value)) return value.map(String).map((tag) => tag.trim()).filter(Boolean);
   return String(value || '')
@@ -106,6 +115,38 @@ function uniqueTags(tags) {
     }
   }
   return out;
+}
+
+function supplierIdTag(sourceUrl) {
+  const id = productIdFromUrl(sourceUrl);
+  return id ? 'supplier-id-p' + id : '';
+}
+
+function productIdFromUrl(value) {
+  const match = String(value || '').match(/\/p(\d+)(?=$|[/?#])/i);
+  return match ? match[1] : '';
+}
+
+function supplierMetafields(item) {
+  const metafields = [];
+  if (item.sourceUrl) {
+    metafields.push({
+      namespace: 'supplier',
+      key: 'source_url',
+      value: String(item.sourceUrl),
+      type: 'single_line_text_field'
+    });
+  }
+  const id = productIdFromUrl(item.sourceUrl);
+  if (id) {
+    metafields.push({
+      namespace: 'supplier',
+      key: 'product_id',
+      value: id,
+      type: 'single_line_text_field'
+    });
+  }
+  return metafields.length ? metafields : undefined;
 }
 
 function readFirstVariantId(product) {
