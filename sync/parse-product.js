@@ -36,16 +36,24 @@ function parseProduct(html) {
         ? compareCandidate
         : null;
 
+    const name = cleanText(merged.name);
+    const brand = cleanText(merged.brand);
+    const category = cleanText(merged.category);
+    const sourceUrl = cleanUrl(merged.sourceUrl);
+    if (supplierPrice === null && !brand && !category && !isProductUrl(sourceUrl)) {
+      return emptyProduct();
+    }
+
     return {
-      name: cleanText(merged.name),
-      brand: cleanText(merged.brand),
+      name,
+      brand,
       supplierPrice,
       supplierCompareAtPrice,
       availability: normalizeAvailability(merged.availability),
       imageUrl: pickBestImage(merged.images || [merged.imageUrl]),
       description: cleanText(merged.description),
-      category: cleanText(merged.category),
-      sourceUrl: cleanUrl(merged.sourceUrl)
+      category,
+      sourceUrl
     };
   } catch (error) {
     return emptyProduct();
@@ -118,8 +126,8 @@ function sourceFromSallaInline(html) {
   return {
     name: product.name,
     brand: product.brand || extractVisibleBrand(html),
-    supplierPrice: parseMoney(product.price || button.amount),
-    availability: product.availability || product.quantity || button.status,
+    supplierPrice: parseMoney(firstValue(product.price, button.amount)),
+    availability: firstValue(product.availability, product.quantity, button.status),
     imageUrl: product.image_url || product.image,
     images: [product.image_url, product.image],
     description: product.description,
@@ -188,12 +196,7 @@ function extractDataLayerProducts(html) {
     extractFunctionJsonArgs(html, 'dataLayer.push')
   );
   for (const payload of payloads) {
-    const detailProducts =
-      payload &&
-      payload.ecommerce &&
-      payload.ecommerce.detail &&
-      payload.ecommerce.detail.products;
-    if (Array.isArray(detailProducts)) products.push.apply(products, detailProducts);
+    products.push.apply(products, collectInlineProducts(payload));
   }
   return products;
 }
@@ -204,8 +207,27 @@ function extractSallaViewedProducts(html) {
   for (const payload of payloads) {
     const viewed = payload && payload.events && payload.events['Product Viewed'];
     if (Array.isArray(viewed)) products.push.apply(products, viewed);
+    products.push.apply(products, collectInlineProducts(payload));
   }
   return products;
+}
+
+function collectInlineProducts(payload) {
+  const products = [];
+  if (!payload || typeof payload !== 'object') return products;
+  pushProducts(products, payload.product);
+  pushProducts(products, payload.item);
+  pushProducts(products, payload.data && payload.data.product);
+  pushProducts(products, payload.ecommerce && payload.ecommerce.items);
+  pushProducts(products, payload.ecommerce && payload.ecommerce.products);
+  pushProducts(products, payload.ecommerce && payload.ecommerce.detail && payload.ecommerce.detail.products);
+  return products;
+}
+
+function pushProducts(products, value) {
+  if (!value) return;
+  if (Array.isArray(value)) products.push.apply(products, value.filter(Boolean));
+  else if (typeof value === 'object') products.push(value);
 }
 
 function extractFunctionJsonArgs(html, marker) {
@@ -358,6 +380,17 @@ function firstNumber() {
     if (typeof arguments[i] === 'number' && Number.isFinite(arguments[i])) return arguments[i];
   }
   return null;
+}
+
+function firstValue() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    if (arguments[i] !== null && arguments[i] !== undefined && arguments[i] !== '') return arguments[i];
+  }
+  return null;
+}
+
+function isProductUrl(value) {
+  return /\/[^/?#\s<>]+\/p\d+(?=$|[/?#])/i.test(String(value || ''));
 }
 
 function parseMoney(value) {

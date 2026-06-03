@@ -26,10 +26,12 @@ function normalizeAvailability(value) {
   if (
     raw === 'in_stock' ||
     raw === 'available' ||
+    raw === 'sale' ||
     raw === 'true' ||
     raw.includes('instock') ||
     raw.includes('in stock') ||
-    raw.includes('/instock')
+    raw.includes('/instock') ||
+    raw.includes('product-status="sale"')
   ) {
     return 'in_stock';
   }

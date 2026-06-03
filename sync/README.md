@@ -9,8 +9,24 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 - `pricing.js`: `applyPricing({ supplierPrice, supplierCompareAtPrice })` adds the exact Calapres `+100 SAR` markup and clears `compareAtPrice` when it would equal `price`.
 - `inventory.js`: `mapAvailability(availability)` maps supplier state to status-only Shopify fields. It never emits numeric inventory quantities and never deletes missing supplier products.
 - `build-shopify-payload.js`: `buildPayload(parsed)` assembles a Shopify product payload with title, body HTML, vendor, tags, image, and one variant. If an existing product is tagged `enriched`, the explicit guard returns only price and availability fields so the luxury presentation layer is protected.
+- `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` and never writes to Shopify.
 - `n8n-sync-flow.md`: complete recurring sync workflow spec, including crawl, parse, pricing, availability, matching, create/update, and missing-product out-of-stock handling.
 - `n8n-enrich-flow.md`: complete one-time enrichment workflow spec using Higgsfield images plus protected Arabic SEO/presentation updates.
+- `PRODUCTION-CHECKLIST.md`: ordered launch checklist for credentials, variables, validation, go-live, monitoring, and rollback.
+- `fixtures/`: real Nawadirdior sitemap and product-page samples used for offline tests and dry runs.
+- `__tests__/run-tests.js`: dependency-free Node test runner using `node:assert`.
+
+## Local Validation
+
+Run the syntax checks, offline tests, and first-20 dry run before importing or changing n8n workflows:
+
+```bash
+for file in sync/*.js sync/__tests__/*.js; do node --check "$file"; done
+node sync/__tests__/run-tests.js
+node sync/run-local-dry.js
+```
+
+The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
 
 ## n8n Flow
 

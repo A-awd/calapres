@@ -156,8 +156,14 @@ function readFirstVariantId(product) {
 function toBodyHtml(value) {
   const text = String(value || '').trim();
   if (!text) return '';
-  if (/<[a-z][\s\S]*>/i.test(text)) return text;
+  if (looksLikeTrustedHtml(text)) return text;
   return '<p>' + escapeHtml(text).replace(/\n+/g, '</p><p>') + '</p>';
+}
+
+function looksLikeTrustedHtml(value) {
+  return /<\/?(p|br|div|ul|ol|li|strong|em|b|i|span|h[1-6]|table|thead|tbody|tr|td|th|blockquote|a)\b[\s\S]*>/i.test(
+    String(value || '')
+  );
 }
 
 function cleanText(value) {
