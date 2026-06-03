@@ -1,0 +1,75 @@
+<section class="product-section featured-collection" aria-labelledby="featured-collection-title-{{ section.id }}">
+  <div class="container">
+    <div class="product-section-header">
+      <div>
+        <h2 class="section-title" id="featured-collection-title-{{ section.id }}">
+          {{ section.settings.heading | default: 'المجموعة المميزة' }}
+        </h2>
+        {% if section.settings.subheading != blank %}
+          <p class="section-subtitle">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+      {% if section.settings.collection != blank %}
+        <a href="{{ section.settings.collection.url }}" class="btn btn-outline">
+          {{ 'products.view_all' | t }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% assign featured = section.settings.collection %}
+    {% if featured != blank %}
+      <div class="product-grid">
+        {% for product in featured.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% else %}
+          <p>{{ 'products.no_products' | t }}</p>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="product-grid">
+        {% for i in (1..4) %}
+          {% render 'product-card-placeholder', index: i %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "المجموعة المميزة"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "اكتشف أحدث إصداراتنا من العطور الفاخرة"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to Show",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>
+    {% if page_title == blank %}
+      {{ shop.name }}
+    {% elsif template == 'index' %}
+      {{ shop.name }} — {{ 'hero.subheadline' | t }}
+    {% else %}
+      {{ page_title }} | {{ shop.name }}
+    {% endif %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | default: shop.name }}">
+  {% if page_description %}
+    <meta property="og:description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Theme CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <!-- Shopify required tags -->
+  {{ content_for_header }}
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body class="template-{{ template.name }}{% if customer %} customer-logged-in{% endif %}">
+
+  <a href="#main-content" class="skip-link">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  <!-- Announcement Bar -->
+  {% render 'announcement-bar' %}
+
+  <!-- Header -->
+  {% section 'header' %}
+
+  <!-- Mobile Menu -->
+  {% render 'mobile-menu' %}
+
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Footer -->
+  {% section 'footer' %}
+
+  <!-- Theme JS -->
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+</body>
+</html>

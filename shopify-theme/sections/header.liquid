@@ -1,0 +1,179 @@
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-inner">
+
+      <!-- Header Actions (left in RTL) -->
+      <div class="header-actions">
+        <a href="/cart" class="header-action-btn" aria-label="{{ 'navigation.cart' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count" aria-live="polite" style="display:none;">0</span>
+          <span class="visually-hidden">{{ 'navigation.cart' | t }}</span>
+        </a>
+
+        {% if shop.customer_accounts_enabled %}
+          <a href="/account" class="header-action-btn" aria-label="{{ 'navigation.account' | t }}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span class="visually-hidden">{{ 'navigation.account' | t }}</span>
+          </a>
+        {% endif %}
+
+        <button class="header-action-btn" id="search-toggle" aria-label="{{ 'general.search' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span class="visually-hidden">{{ 'general.search' | t }}</span>
+        </button>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="{{ 'navigation.menu' | t }}" aria-expanded="false" aria-controls="mobile-menu-drawer">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Navigation (center) -->
+      <nav class="site-nav" role="navigation" aria-label="Main">
+        <ul class="nav-list">
+          {% if section.settings.nav_link_1_label != blank %}
+            <li class="nav-item">
+              <a href="{{ section.settings.nav_link_1_url }}" class="nav-link{% if request.path == section.settings.nav_link_1_url %} active{% endif %}">
+                {{ section.settings.nav_link_1_label }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_2_label != blank %}
+            <li class="nav-item">
+              <a href="{{ section.settings.nav_link_2_url }}" class="nav-link{% if request.path == section.settings.nav_link_2_url %} active{% endif %}">
+                {{ section.settings.nav_link_2_label }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_3_label != blank %}
+            <li class="nav-item">
+              <a href="{{ section.settings.nav_link_3_url }}" class="nav-link{% if request.path == section.settings.nav_link_3_url %} active{% endif %}">
+                {{ section.settings.nav_link_3_label }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_4_label != blank %}
+            <li class="nav-item">
+              <a href="{{ section.settings.nav_link_4_url }}" class="nav-link{% if request.path == section.settings.nav_link_4_url %} active{% endif %}">
+                {{ section.settings.nav_link_4_label }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_5_label != blank %}
+            <li class="nav-item">
+              <a href="{{ section.settings.nav_link_5_url }}" class="nav-link{% if request.path == section.settings.nav_link_5_url %} active{% endif %}">
+                {{ section.settings.nav_link_5_label }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <!-- Logo (right in RTL) -->
+      <div class="site-logo">
+        <a href="/" aria-label="{{ shop.name }}">
+          {% if settings.logo_image %}
+            <img
+              src="{{ settings.logo_image | img_url: '300x' }}"
+              alt="{{ shop.name }}"
+              class="logo-image"
+              width="{{ settings.logo_width }}"
+              loading="eager"
+            >
+          {% else %}
+            <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Navigation Links"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_1_label",
+      "label": "Link 1 Label",
+      "default": "مجموعات"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_1_url",
+      "label": "Link 1 URL",
+      "default": "/collections"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_2_label",
+      "label": "Link 2 Label",
+      "default": "العائلات العطرية"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_2_url",
+      "label": "Link 2 URL",
+      "default": "/collections/fragrance-families"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_3_label",
+      "label": "Link 3 Label",
+      "default": "العود والمباخر"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_3_url",
+      "label": "Link 3 URL",
+      "default": "/collections/oud-bakhour"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_4_label",
+      "label": "Link 4 Label",
+      "default": "الميزان"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_4_url",
+      "label": "Link 4 URL",
+      "default": "/collections/maison"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_5_label",
+      "label": "Link 5 Label",
+      "default": "النظام"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_5_url",
+      "label": "Link 5 URL",
+      "default": "/pages/system"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

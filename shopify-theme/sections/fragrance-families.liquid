@@ -1,0 +1,94 @@
+<div class="families-bar" aria-label="{{ 'fragrance_families.title' | t }}">
+  <ul class="families-list" role="list">
+    <li>
+      <a href="{{ section.settings.family_rosy_url | default: '/collections/rosy' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">🌹</span>
+        {{ 'fragrance_families.rosy' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_woody_url | default: '/collections/woody' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">🪵</span>
+        {{ 'fragrance_families.woody' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_amber_url | default: '/collections/amber' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">🟡</span>
+        {{ 'fragrance_families.amber' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_musky_url | default: '/collections/musky' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">☁️</span>
+        {{ 'fragrance_families.musky' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_citrus_url | default: '/collections/citrus' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">🍋</span>
+        {{ 'fragrance_families.citrus' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_oriental_url | default: '/collections/oriental' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">✨</span>
+        {{ 'fragrance_families.oriental' | t }}
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.family_floral_url | default: '/collections/floral' }}" class="family-pill">
+        <span class="family-icon" aria-hidden="true">🌸</span>
+        {{ 'fragrance_families.floral' | t }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Fragrance Families Bar",
+  "settings": [
+    {
+      "type": "url",
+      "id": "family_rosy_url",
+      "label": "Rosy Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_woody_url",
+      "label": "Woody Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_amber_url",
+      "label": "Amber Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_musky_url",
+      "label": "Musky Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_citrus_url",
+      "label": "Citrus Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_oriental_url",
+      "label": "Oriental Collection URL"
+    },
+    {
+      "type": "url",
+      "id": "family_floral_url",
+      "label": "Floral Collection URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fragrance Families Bar"
+    }
+  ]
+}
+{% endschema %}

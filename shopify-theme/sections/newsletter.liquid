@@ -1,0 +1,57 @@
+<section class="newsletter-section" aria-labelledby="newsletter-title-{{ section.id }}">
+  <div class="container">
+    <h2 class="newsletter-title" id="newsletter-title-{{ section.id }}">
+      {{ section.settings.heading | default: 'اشترك في نشرتنا البريدية' }}
+    </h2>
+    <p class="newsletter-subtitle">
+      {{ section.settings.subheading | default: 'كن أول من يعرف عن مجموعاتنا الجديدة والعروض الحصرية' }}
+    </p>
+    {% form 'customer', id: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-form">
+        <input
+          type="email"
+          name="contact[email]"
+          class="newsletter-input"
+          placeholder="{{ 'footer.newsletter_placeholder' | t }}"
+          required
+          aria-label="{{ 'footer.newsletter_placeholder' | t }}"
+        >
+        <button type="submit" class="newsletter-submit">
+          {{ 'footer.subscribe' | t }}
+        </button>
+      </div>
+      {% if form.posted_successfully? %}
+        <p style="color:#c9a96e;margin-top:1rem;text-align:center;font-size:0.9rem;">شكراً للاشتراك! سنبقيك على اطلاع بأحدث العروض.</p>
+      {% endif %}
+      {% if form.errors %}
+        <p style="color:#e74c3c;margin-top:1rem;text-align:center;font-size:0.9rem;">{{ form.errors | default_errors }}</p>
+      {% endif %}
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "اشترك في نشرتنا البريدية"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "كن أول من يعرف عن مجموعاتنا الجديدة والعروض الحصرية"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

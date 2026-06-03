@@ -1,0 +1,85 @@
+{% comment %}
+  Filter sidebar for collection pages.
+  Usage: {% render 'filter-sidebar', collection: collection, current_filters: current_tags %}
+{% endcomment %}
+
+<aside class="filter-sidebar" aria-label="{{ 'products.filter' | t }}">
+  <h2 class="filter-sidebar-title">{{ 'products.filter' | t }}</h2>
+
+  <form data-filter-form action="{{ collection.url }}" method="GET">
+
+    <!-- Fragrance Family Filter -->
+    <div class="filter-group">
+      <p class="filter-group-title">{{ 'fragrance_families.title' | t }}</p>
+      <div class="filter-options">
+        {%- assign family_options = 'ورديّ,خشبيّ,عنبريّ,مسكيّ,حمضيّ,شرقيّ,زهريّ' | split: ',' -%}
+        {%- for family in family_options -%}
+          <label class="filter-option">
+            <input
+              type="checkbox"
+              name="filter.p.tag"
+              value="عائلة:{{ family }}"
+              {% if current_tags contains family %}checked{% endif %}
+            >
+            <span class="filter-option-label">{{ family }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-group">
+      <p class="filter-group-title">السعر (ر.س)</p>
+      <div class="price-range-inputs">
+        <input
+          type="number"
+          name="filter.v.price.gte"
+          class="price-range-input"
+          placeholder="من"
+          value="{{ current_tags | where: 'filter.v.price.gte' | first }}"
+          min="0"
+        >
+        <span class="price-range-sep">—</span>
+        <input
+          type="number"
+          name="filter.v.price.lte"
+          class="price-range-input"
+          placeholder="إلى"
+          value="{{ current_tags | where: 'filter.v.price.lte' | first }}"
+          min="0"
+        >
+      </div>
+    </div>
+
+    <!-- Availability -->
+    <div class="filter-group">
+      <p class="filter-group-title">التوفر</p>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" name="filter.v.availability" value="1">
+          <span class="filter-option-label">متوفر</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Product Type -->
+    <div class="filter-group">
+      <p class="filter-group-title">النوع</p>
+      <div class="filter-options">
+        {%- assign type_options = 'عطر,بخور,زيت عطري,كولونيا' | split: ',' -%}
+        {%- for ptype in type_options -%}
+          <label class="filter-option">
+            <input type="checkbox" name="filter.p.product_type" value="{{ ptype }}">
+            <span class="filter-option-label">{{ ptype }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Apply / Clear -->
+    <div style="display:flex;gap:0.5rem;margin-top:1.5rem;">
+      <button type="submit" class="btn btn-primary" style="flex:1;padding:0.6rem;">تطبيق</button>
+      <a href="{{ collection.url }}" class="btn btn-ghost" style="flex:1;padding:0.6rem;">مسح</a>
+    </div>
+  </form>
+</aside>

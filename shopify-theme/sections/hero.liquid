@@ -1,0 +1,182 @@
+<section class="hero-section" aria-label="Hero">
+  {% if section.settings.hero_image %}
+    <img
+      src="{{ section.settings.hero_image | img_url: '1920x' }}"
+      alt="{{ section.settings.hero_image.alt | default: shop.name }}"
+      class="hero-bg-image"
+      loading="eager"
+      fetchpriority="high"
+    >
+  {% endif %}
+
+  <div class="hero-overlay"></div>
+
+  <div class="container">
+    <div class="hero-content animate-fade-in">
+      {% if section.settings.hero_badge != blank %}
+        <span class="hero-badge">{{ section.settings.hero_badge }}</span>
+      {% endif %}
+
+      <h1 class="hero-title">
+        {{ section.settings.hero_heading_line1 | default: 'اكتشف عالماً' }}
+        {% if section.settings.hero_heading_line2 != blank %}
+          <span>{{ section.settings.hero_heading_line2 }}</span>
+        {% endif %}
+      </h1>
+
+      <p class="hero-subtitle">
+        {{ section.settings.hero_subtitle | default: 'تشكيلة حصرية من أرقى العطور العربية والعالمية، مستوحاة من سحر الطبيعة وروعة الشرق.' }}
+      </p>
+
+      <div class="hero-actions">
+        {% if section.settings.cta_primary_label != blank %}
+          <a href="{{ section.settings.cta_primary_url | default: '/collections/all' }}" class="btn btn-accent">
+            {{ section.settings.cta_primary_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.cta_secondary_label != blank %}
+          <a href="{{ section.settings.cta_secondary_url | default: '/pages/about' }}" class="btn btn-outline-light">
+            {{ section.settings.cta_secondary_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_stats %}
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_1_number | default: '+٢٠٠' }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_1_label | default: 'عطر فريد' }}</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_2_number | default: '+٥٠' }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_2_label | default: 'عائلة عطرية' }}</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_3_number | default: '١٠٠٪' }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_3_label | default: 'طبيعي وفاخر' }}</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Badge Text",
+      "default": "✦ مجموعة ٢٠٢٥ ✦"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line1",
+      "label": "Heading Line 1",
+      "default": "اكتشف عالماً من"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line2",
+      "label": "Heading Line 2 (accent color)",
+      "default": "العطور الفاخرة"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Subtitle",
+      "default": "تشكيلة حصرية من أرقى العطور العربية والعالمية، مستوحاة من سحر الطبيعة وروعة الشرق."
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary Button Label",
+      "default": "تسوق الآن"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primary Button URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Secondary CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary Button Label",
+      "default": "اعرف أكثر"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Secondary Button URL",
+      "default": "/pages/about"
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show Stats",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 Number",
+      "default": "+٢٠٠"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 Label",
+      "default": "عطر فريد"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 Number",
+      "default": "+٥٠"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 Label",
+      "default": "عائلة عطرية"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 Number",
+      "default": "١٠٠٪"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 Label",
+      "default": "طبيعي وفاخر"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,196 @@
+{% render 'breadcrumb' %}
+
+<div class="product-page">
+  <div class="container">
+    <div class="product-page-grid">
+
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-main-image">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | img_url: '800x1066', crop: 'center' }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              id="main-product-image"
+              data-main-image
+              loading="eager"
+              fetchpriority="high"
+              width="800"
+              height="1066"
+            >
+          {%- else -%}
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-border);font-size:5rem;">🌿</div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-thumbnails">
+            {%- for image in product.images -%}
+              <button
+                class="product-thumbnail{% if forloop.first %} active{% endif %}"
+                data-thumbnail="{{ image | img_url: '800x1066', crop: 'center' }}"
+                aria-label="صورة المنتج {{ forloop.index }}"
+              >
+                <img
+                  src="{{ image | img_url: '144x192', crop: 'center' }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="72"
+                  height="90"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        {%- if product.vendor != blank -%}
+          <p class="product-vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product-title">{{ product.title }}</h1>
+
+        <!-- Price -->
+        <div class="product-price-area">
+          <span class="product-price" data-product-price>
+            {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+              <span style="color:var(--color-error);">{{ product.selected_or_first_available_variant.price | money }}</span>
+            {%- else -%}
+              {{ product.selected_or_first_available_variant.price | money }}
+            {%- endif -%}
+          </span>
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <span class="product-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        <!-- Badges -->
+        {%- assign has_new = false -%}
+        {%- assign has_sig = false -%}
+        {%- for tag in product.tags -%}
+          {%- if tag contains 'جديد' or tag contains 'new' -%}{%- assign has_new = true -%}{%- endif -%}
+          {%- if tag contains 'توقيع' or tag contains 'signature' -%}{%- assign has_sig = true -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if has_new or has_sig -%}
+          <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;">
+            {%- if has_new -%}<span class="badge badge-new">{{ 'products.new' | t }}</span>{%- endif -%}
+            {%- if has_sig -%}<span class="badge badge-signature">{{ 'products.signature' | t }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <!-- Variants -->
+        {%- assign variants_json = product.variants | json -%}
+        <script type="application/json" data-variants-json>{{ variants_json }}</script>
+
+        <form action="/cart/add" method="post" data-product-form enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-selected-variant>
+
+          {%- if product.variants.size > 1 -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product-variants">
+                <div class="variant-label">
+                  <span>{{ option.name }}: <strong>{{ option.selected_value }}</strong></span>
+                </div>
+                <div class="variant-options">
+                  {%- for value in option.values -%}
+                    <button
+                      type="button"
+                      class="variant-btn{% if option.selected_value == value %} active{% endif %}"
+                      data-variant-option
+                      data-option-group="option{{ forloop.parentloop.index }}"
+                      data-option-value="{{ value }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+
+          <!-- Quantity -->
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+            <label for="product-qty" style="font-size:0.875rem;font-weight:600;">{{ 'products.size' | t }}:</label>
+            <div class="cart-item-qty">
+              <button type="button" class="qty-btn" onclick="let i=this.nextElementSibling;i.value=Math.max(1,+i.value-1)" aria-label="تقليل">−</button>
+              <input type="number" name="quantity" id="product-qty" value="1" min="1" max="99" class="qty-input" aria-label="{{ 'products.size' | t }}">
+              <button type="button" class="qty-btn" onclick="let i=this.previousElementSibling;i.value=+i.value+1" aria-label="زيادة">+</button>
+            </div>
+          </div>
+
+          <div class="product-add-to-cart">
+            {%- if product.available -%}
+              <button
+                type="submit"
+                class="btn btn-primary btn-full"
+                data-add-to-cart-btn
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                data-label="{{ 'products.add_to_cart' | t }}"
+              >
+                {{ 'products.add_to_cart' | t }}
+              </button>
+            {%- else -%}
+              <button type="button" class="btn btn-primary btn-full" disabled>{{ 'products.sold_out' | t }}</button>
+            {%- endif -%}
+          </div>
+        </form>
+
+        <!-- Fragrance Notes -->
+        {%- assign top_notes = product.metafields.perfume.top_notes | default: '' -%}
+        {%- assign heart_notes = product.metafields.perfume.heart_notes | default: '' -%}
+        {%- assign base_notes = product.metafields.perfume.base_notes | default: '' -%}
+        {%- if top_notes != '' or heart_notes != '' or base_notes != '' -%}
+          <div class="product-meta">
+            <h3 style="font-family:var(--font-heading);font-size:1rem;margin-bottom:1rem;color:var(--color-primary);">{{ 'product.notes' | t }}</h3>
+            <div class="product-notes">
+              {%- if top_notes != '' -%}
+                <div class="note-group">
+                  <p class="note-group-title">{{ 'product.top_notes' | t }}</p>
+                  <p class="note-group-value">{{ top_notes }}</p>
+                </div>
+              {%- endif -%}
+              {%- if heart_notes != '' -%}
+                <div class="note-group">
+                  <p class="note-group-title">{{ 'product.heart_notes' | t }}</p>
+                  <p class="note-group-value">{{ heart_notes }}</p>
+                </div>
+              {%- endif -%}
+              {%- if base_notes != '' -%}
+                <div class="note-group">
+                  <p class="note-group-title">{{ 'product.base_notes' | t }}</p>
+                  <p class="note-group-value">{{ base_notes }}</p>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- Description -->
+        {%- if product.description != blank -%}
+          <div class="product-meta">
+            <h3 style="font-family:var(--font-heading);font-size:1rem;margin-bottom:0.75rem;color:var(--color-primary);">{{ 'product.description' | t }}</h3>
+            <div class="product-description">{{ product.description }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    {%- if product.collections.first -%}
+      {%- assign related_collection = product.collections.first -%}
+      {%- assign related_products = related_collection.products | where: 'id', '!=' , product.id -%}
+      {%- if related_products.size > 0 -%}
+        <div style="margin-top:4rem;">
+          <h2 class="section-title">{{ 'product.you_may_also_like' | t }}</h2>
+          <div class="product-grid" style="margin-top:1.5rem;">
+            {%- for rp in related_products limit: 4 -%}
+              {% render 'product-card', product: rp %}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
