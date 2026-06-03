@@ -44,6 +44,9 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `node --check sync/pricing.js`
    - `node --check sync/inventory.js`
    - `node --check sync/build-shopify-payload.js`
+   - `node --check sync/shopify-client.js`
+   - `node --check sync/reconcile.js`
+   - `node --check sync/validate-shopify-shape.js`
    - `node --check sync/run-local-dry.js`
    - `node --check sync/__tests__/run-tests.js`
 
@@ -55,6 +58,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 
 4. Inspect `sync/dry-run-output.json`:
    - Confirm `generatedPayloads` is `20`.
+   - Confirm `reconcilePlan` includes create/update/out-of-stock/skip-enriched buckets.
+   - Confirm `shopifyRequests.actionRequests` contains the REST request bodies to review.
    - Confirm `payloads[].action` is `create_or_update` for real supplier products.
    - Confirm stale supplier pages use `skip_missing_supplier_page`.
    - Confirm payload tags include `imported-nader-dior`.
@@ -70,6 +75,9 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `sync/pricing.js`
    - `sync/inventory.js`
    - `sync/build-shopify-payload.js`
+   - `sync/shopify-client.js`
+   - `sync/reconcile.js`
+   - `sync/validate-shopify-shape.js`
 3. Configure all Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
 4. Set all Shopify request URLs to use `{{$vars.SHOPIFY_SHOP_DOMAIN}}`.
 5. Set the Split In Batches node to batch size `1`.

@@ -3,6 +3,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
+// Offline first-20 pipeline preview: fixtures in, reconcile plan and Shopify request shapes out.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixturesDir = path.join(__dirname, 'fixtures');
 const outputPath = path.join(__dirname, 'dry-run-output.json');
@@ -29,6 +30,9 @@ const parser = loadSyncModule('parse-product.js');
 const pricing = loadSyncModule('pricing.js');
 const inventory = loadSyncModule('inventory.js');
 const payloads = loadSyncModule('build-shopify-payload.js');
+const reconcileModule = loadSyncModule('reconcile.js');
+const shopifyClient = loadSyncModule('shopify-client.js');
+const shapeValidator = loadSyncModule('validate-shopify-shape.js');
 
 function readFixture(fileName) {
   return fs.readFileSync(path.join(fixturesDir, fileName), 'utf8');
@@ -88,8 +92,10 @@ function normalizeForPayload(parsed, sourceUrl) {
 
 async function runDryRun(options = {}) {
   const limit = Number.isFinite(Number(options.limit)) ? Number(options.limit) : defaultLimit;
+  const shopDomain = options.shopDomain || process.env.SHOPIFY_SHOP_DOMAIN || 'calapres.myshopify.com';
   const urls = (await crawlOfflineProducts()).slice(0, limit);
   const entries = [];
+  const supplierProducts = [];
 
   for (let index = 0; index < urls.length; index += 1) {
     const sourceUrl = urls[index];
@@ -100,6 +106,7 @@ async function runDryRun(options = {}) {
     const priced = pricing.applyPricing(normalized);
     const mappedInventory = inventory.mapAvailability(normalized.availability);
     const payload = payloads.buildPayload(normalized);
+    supplierProducts.push(normalized);
 
     entries.push({
       index: index + 1,
@@ -113,19 +120,224 @@ async function runDryRun(options = {}) {
       parsed: normalized,
       pricing: priced,
       inventory: mappedInventory,
-      payload
+      payload,
+      lookupRequest: shopifyClient.buildLookupProductRequest({ shopDomain, sourceUrl })
     });
+  }
+
+  const syntheticShopifyProducts = buildSyntheticShopifyProducts(supplierProducts);
+  const reconcilePlan = reconcileModule.reconcile(supplierProducts, syntheticShopifyProducts);
+  const actionRequests = buildActionRequests(reconcilePlan, shopDomain);
+  const actionIndex = indexActions(reconcilePlan);
+
+  for (const entry of entries) {
+    const action = actionIndex[entry.sourceUrl] || actionIndex[entry.productId] || null;
+    entry.reconcile = action
+      ? {
+          bucket: action.bucket,
+          reason: action.reason,
+          updateMode: action.updateMode || null
+        }
+      : {
+          bucket: 'unchanged',
+          reason: 'not_in_reconcile_action_index',
+          updateMode: null
+        };
   }
 
   const output = {
     mode: 'offline-fixtures',
+    shopDomain,
     productLimit: limit,
     generatedPayloads: entries.length,
     missingSupplierPages: entries.filter((entry) => entry.action === 'skip_missing_supplier_page').length,
+    reconcilePlan: summarizePlan(reconcilePlan),
+    syntheticShopifyProducts,
+    shopifyRequests: {
+      lookupFirst20: entries.map((entry) => entry.lookupRequest),
+      listImportedFirstPage: shopifyClient.buildListImportedProductsRequest({ shopDomain, first: 250 }),
+      actionRequests
+    },
     payloads: entries
   };
   fs.writeFileSync(outputPath, JSON.stringify(output, null, 2) + '\n');
   return output;
+}
+
+function buildSyntheticShopifyProducts(supplierProducts) {
+  const valid = supplierProducts.filter((item) => item.sourceUrl && item.supplierPrice !== null && item.availability !== 'missing');
+  const products = [];
+  if (valid[0]) {
+    products.push(productFromSupplier(valid[0], 9001, 8001, { price: '1', status: 'draft', inventory_policy: 'deny' }));
+  }
+  if (valid[1]) {
+    products.push(productFromSupplier(valid[1], 9002, 8002, { extraTags: ['enriched'] }));
+  }
+  if (valid[2]) {
+    products.push(productFromSupplier(valid[2], 9003, 8003, { extraTags: ['enriched'], price: '1' }));
+  }
+  if (valid[3]) {
+    products.push(productFromSupplier(valid[3], 9004, 8004));
+  }
+  products.push(
+    productFromSupplier(
+      {
+        name: 'Missing Active',
+        brand: 'Maison Missing',
+        supplierPrice: 210,
+        supplierCompareAtPrice: null,
+        availability: 'in_stock',
+        sourceUrl: 'https://nawadirdior.sa/missing-active/p990001'
+      },
+      990001,
+      980001
+    )
+  );
+  products.push(
+    productFromSupplier(
+      {
+        name: 'Missing Draft',
+        brand: 'Maison Missing',
+        supplierPrice: 210,
+        supplierCompareAtPrice: null,
+        availability: 'out_of_stock',
+        sourceUrl: 'https://nawadirdior.sa/missing-draft/p990002'
+      },
+      990002,
+      980002
+    )
+  );
+  return products;
+}
+
+function productFromSupplier(supplierProduct, productId, variantId, overrides = {}) {
+  const payload = payloads.buildPayload(supplierProduct).product;
+  const variant = payload.variants && payload.variants[0] ? payload.variants[0] : {};
+  const tags = normalizeTags(payload.tags).concat(overrides.extraTags || []);
+  return {
+    id: String(productId),
+    title: payload.title || supplierProduct.name || '',
+    vendor: payload.vendor || supplierProduct.brand || '',
+    status: overrides.status || payload.status || 'active',
+    tags: uniqueTags(tags),
+    sourceUrl: supplierProduct.sourceUrl,
+    metafields: payload.metafields || [
+      { namespace: 'supplier', key: 'source_url', value: supplierProduct.sourceUrl, type: 'single_line_text_field' },
+      { namespace: 'supplier', key: 'product_id', value: crawl.productIdFromUrl(supplierProduct.sourceUrl), type: 'single_line_text_field' }
+    ],
+    variants: [
+      {
+        id: String(variantId),
+        price: overrides.price || variant.price,
+        compare_at_price:
+          overrides.compare_at_price !== undefined ? overrides.compare_at_price : variant.compare_at_price || null,
+        inventory_policy: overrides.inventory_policy || variant.inventory_policy || 'continue'
+      }
+    ]
+  };
+}
+
+function buildActionRequests(plan, shopDomain) {
+  return {
+    toCreate: plan.toCreate.map((entry) => {
+      const payload = payloads.buildPayload(entry.supplierProduct);
+      shapeValidator.assertValidShopifyProductShape(payload);
+      return {
+        reason: entry.reason,
+        sourceUrl: entry.supplierProduct.sourceUrl,
+        request: shopifyClient.buildCreateProductRequest({ shopDomain, payload })
+      };
+    }),
+    toUpdate: plan.toUpdate.map((entry) => {
+      const payload = payloads.buildPayload({
+        ...entry.supplierProduct,
+        existingProduct: entry.shopifyProduct
+      });
+      const mode = entry.updateMode === 'price_availability_only' ? 'price_availability_only' : 'full_product';
+      shapeValidator.assertValidShopifyProductShape(payload, mode === 'price_availability_only' ? { mode } : {});
+      const request =
+        mode === 'price_availability_only'
+          ? shopifyClient.buildUpdatePriceAvailabilityRequest({ shopDomain, product: payload.product })
+          : shopifyClient.buildUpdateProductRequest({ shopDomain, payload });
+      return {
+        reason: entry.reason,
+        updateMode: mode,
+        sourceUrl: entry.supplierProduct.sourceUrl,
+        request
+      };
+    }),
+    toMarkOutOfStock: plan.toMarkOutOfStock.map((entry) => {
+      const payload = payloads.buildPayload({
+        availability: 'missing',
+        existingProduct: entry.shopifyProduct
+      });
+      shapeValidator.assertValidShopifyProductShape(payload, { mode: 'price_availability_only' });
+      return {
+        reason: entry.reason,
+        sourceUrl: entry.shopifyProduct.sourceUrl,
+        request: shopifyClient.buildUpdatePriceAvailabilityRequest({ shopDomain, product: payload.product })
+      };
+    }),
+    toSkipEnriched: plan.toSkipEnriched.map((entry) => ({
+      reason: entry.reason,
+      sourceUrl: entry.supplierProduct.sourceUrl,
+      request: null
+    }))
+  };
+}
+
+function indexActions(plan) {
+  const out = {};
+  for (const bucket of ['toCreate', 'toUpdate', 'toMarkOutOfStock', 'toSkipEnriched', 'unchanged']) {
+    for (const action of plan[bucket]) {
+      const sourceUrl =
+        (action.supplierProduct && action.supplierProduct.sourceUrl) ||
+        (action.shopifyProduct && action.shopifyProduct.sourceUrl);
+      const id =
+        (action.supplierProduct && action.supplierProduct.supplierId) ||
+        (action.shopifyProduct && action.shopifyProduct.supplierId);
+      const record = {
+        bucket,
+        reason: action.reason,
+        updateMode: action.updateMode || null
+      };
+      if (sourceUrl) out[sourceUrl] = record;
+      if (id) out[id] = record;
+    }
+  }
+  return out;
+}
+
+function summarizePlan(plan) {
+  return {
+    toCreate: plan.toCreate.length,
+    toUpdate: plan.toUpdate.length,
+    toMarkOutOfStock: plan.toMarkOutOfStock.length,
+    toSkipEnriched: plan.toSkipEnriched.length,
+    unchanged: plan.unchanged.length,
+    actions: plan
+  };
+}
+
+function normalizeTags(value) {
+  if (Array.isArray(value)) return value.map(String).map((tag) => tag.trim()).filter(Boolean);
+  return String(value || '')
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function uniqueTags(tags) {
+  const seen = {};
+  const out = [];
+  for (const tag of normalizeTags(tags)) {
+    const key = tag.toLowerCase();
+    if (!seen[key]) {
+      seen[key] = true;
+      out.push(tag);
+    }
+  }
+  return out;
 }
 
 const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
@@ -135,6 +347,13 @@ if (isDirectRun) {
     .then((output) => {
       console.log('Dry run wrote ' + output.generatedPayloads + ' payloads to ' + path.relative(process.cwd(), outputPath));
       console.log('Missing supplier pages skipped: ' + output.missingSupplierPages);
+      console.log('Reconcile plan: ' + JSON.stringify({
+        create: output.reconcilePlan.toCreate,
+        update: output.reconcilePlan.toUpdate,
+        outOfStock: output.reconcilePlan.toMarkOutOfStock,
+        skipEnriched: output.reconcilePlan.toSkipEnriched,
+        unchanged: output.reconcilePlan.unchanged
+      }));
     })
     .catch((error) => {
       console.error(error && error.stack ? error.stack : String(error));

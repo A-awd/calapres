@@ -9,12 +9,20 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 - `pricing.js`: `applyPricing({ supplierPrice, supplierCompareAtPrice })` adds the exact Calapres `+100 SAR` markup and clears `compareAtPrice` when it would equal `price`.
 - `inventory.js`: `mapAvailability(availability)` maps supplier state to status-only Shopify fields. It never emits numeric inventory quantities and never deletes missing supplier products.
 - `build-shopify-payload.js`: `buildPayload(parsed)` assembles a Shopify product payload with title, body HTML, vendor, tags, image, and one variant. If an existing product is tagged `enriched`, the explicit guard returns only price and availability fields so the luxury presentation layer is protected.
-- `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` and never writes to Shopify.
+- `shopify-client.js`: pure Shopify Admin GraphQL/REST request-shape builder for lookup, create, update, pagination, tag reads, and offline execution tests.
+- `reconcile.js`: pure action planner returning `{ toCreate, toUpdate, toMarkOutOfStock, toSkipEnriched, unchanged }`.
+- `validate-shopify-shape.js`: REST Admin field-name guard for every product payload the sync writes.
+- `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` with payloads, reconcile plan, and exact Shopify request bodies. It never writes to Shopify.
 - `n8n-sync-flow.md`: complete recurring sync workflow spec, including crawl, parse, pricing, availability, matching, create/update, and missing-product out-of-stock handling.
 - `n8n-enrich-flow.md`: complete one-time enrichment workflow spec using Higgsfield images plus protected Arabic SEO/presentation updates.
 - `PRODUCTION-CHECKLIST.md`: ordered launch checklist for credentials, variables, validation, go-live, monitoring, and rollback.
+- `INTEGRATION-NOTES.md`: Shopify field mapping, enriched guard contract, product matching, and n8n wiring notes.
 - `fixtures/`: real Nawadirdior sitemap and product-page samples used for offline tests and dry runs.
 - `__tests__/run-tests.js`: dependency-free Node test runner using `node:assert`.
+
+## Data Flow
+
+`sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with enriched products routed through a price/availability-only guard and supplier-missing products drafted out of stock instead of deleted.
 
 ## Local Validation
 
@@ -26,7 +34,7 @@ node sync/__tests__/run-tests.js
 node sync/run-local-dry.js
 ```
 
-The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
+The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
 
 ## n8n Flow
 
@@ -35,7 +43,10 @@ The dry run writes `sync/dry-run-output.json`. It should report 20 generated pay
 3. Code node with `parse-product.js` calls `parseProduct($json.html)` or `parseProduct($json.body)`.
 4. Code node with `pricing.js` can call `applyPricing(parsed)` if pricing is needed separately.
 5. Code node with `inventory.js` can call `mapAvailability(parsed.availability)` for status-only stock sync.
-6. Code node with `build-shopify-payload.js` calls `buildPayload(parsed)` and sends the returned object to Shopify.
+6. Code node with `reconcile.js` calls `reconcile(supplierProducts, shopifyProducts)` to decide create/update/out-of-stock/skip actions.
+7. Code node with `build-shopify-payload.js` calls `buildPayload(parsed)` for the selected action.
+8. Code node with `validate-shopify-shape.js` calls `assertValidShopifyProductShape(payload)` before writes.
+9. Code node with `shopify-client.js` builds the exact Admin REST/GraphQL request object for the next HTTP Request node.
 
 ## Enriched Product Guard
 
