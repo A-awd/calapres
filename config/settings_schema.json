@@ -13,26 +13,32 @@
       {
         "type": "color",
         "id": "color_primary",
-        "label": "Primary (Emerald)",
+        "label": "Primary Color",
         "default": "#13362B"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent (Gold)",
+        "label": "Accent Color",
         "default": "#B8956A"
       },
       {
         "type": "color",
         "id": "color_background",
-        "label": "Background (Ivory)",
+        "label": "Background Color",
         "default": "#F7F4EF"
       },
       {
         "type": "color",
         "id": "color_text",
-        "label": "Text (Ink)",
+        "label": "Text Color",
         "default": "#171513"
+      },
+      {
+        "type": "color",
+        "id": "color_hero_bg",
+        "label": "Hero Background",
+        "default": "#13362B"
       }
     ]
   },
@@ -43,7 +49,7 @@
         "type": "font_picker",
         "id": "font_heading",
         "label": "Heading Font",
-        "default": "cormorant_garamond_n4"
+        "default": "assistant_n4"
       },
       {
         "type": "font_picker",
@@ -56,6 +62,12 @@
   {
     "name": "Header",
     "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo Text",
+        "default": "كالابريز"
+      },
       {
         "type": "image_picker",
         "id": "logo_image",
@@ -70,17 +82,18 @@
         "unit": "px",
         "label": "Logo Width",
         "default": 150
-      },
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon"
       }
     ]
   },
   {
     "name": "Footer",
     "settings": [
+      {
+        "type": "richtext",
+        "id": "footer_about",
+        "label": "About Text",
+        "default": "<p>كالابريز — عطور فاخرة من قلب الطبيعة.</p>"
+      },
       {
         "type": "text",
         "id": "footer_email",
@@ -89,9 +102,9 @@
       },
       {
         "type": "text",
-        "id": "footer_whatsapp",
-        "label": "WhatsApp Number (digits only)",
-        "default": "966500000000"
+        "id": "footer_phone",
+        "label": "Phone",
+        "default": "+966 50 000 0000"
       }
     ]
   },

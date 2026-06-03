@@ -1,9 +1,9 @@
 <section class="hero" data-hero-sentinel data-screen-label="hero">
   <div class="hero__img">
     {%- if section.settings.hero_image -%}
-      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" fetchpriority="high" />
+      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" width="1920" height="1080" fetchpriority="high" />
     {%- else -%}
-      <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" fetchpriority="high" />
+      <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" width="1600" height="1080" fetchpriority="high" />
     {%- endif -%}
   </div>
   <div class="hero__inner wrap">

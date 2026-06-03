@@ -2,9 +2,9 @@
   <div class="wrap grid sig-grid">
     <div class="sig-img reveal">
       {%- if section.settings.image -%}
-        <img src="{{ section.settings.image | img_url: '900x1100', crop: 'center' }}" alt="" />
+        <img src="{{ section.settings.image | img_url: '900x1100', crop: 'center' }}" alt="" width="900" height="1100" />
       {%- else -%}
-        <img src="{{ 'p-signature.jpg' | asset_url }}" alt="" />
+        <img src="{{ 'p-signature.jpg' | asset_url }}" alt="" width="1600" height="1080" />
       {%- endif -%}
     </div>
     <div class="sig-copy reveal d1">
