@@ -4,12 +4,12 @@
       "type": "hero",
       "settings": {}
     },
-    "new-arrivals": {
-      "type": "new-arrivals",
-      "settings": {}
-    },
     "collections-strip": {
       "type": "collections-strip",
+      "settings": {}
+    },
+    "new-arrivals": {
+      "type": "new-arrivals",
       "settings": {}
     },
     "maison-story": {
@@ -35,8 +35,8 @@
   },
   "order": [
     "hero",
-    "new-arrivals",
     "collections-strip",
+    "new-arrivals",
     "maison-story",
     "scent-families",
     "oud-signature",

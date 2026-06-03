@@ -1,1 +1,123 @@
-[{"name":"theme_info","theme_name":"Calapres","theme_version":"1.0.0","theme_author":"Calapres","theme_documentation_url":"https://calapres.com","theme_support_url":"https://calapres.com"}]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Calapres",
+    "theme_version": "1.0.0",
+    "theme_author": "Calapres",
+    "theme_documentation_url": "https://calapres.com",
+    "theme_support_url": "https://calapres.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary (Emerald)",
+        "default": "#13362B"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (Gold)",
+        "default": "#B8956A"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background (Ivory)",
+        "default": "#F7F4EF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text (Ink)",
+        "default": "#171513"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "cormorant_garamond_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "assistant_n4"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo Image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo Width",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "footer_email",
+        "label": "Contact Email",
+        "default": "info@calapres.com"
+      },
+      {
+        "type": "text",
+        "id": "footer_whatsapp",
+        "label": "WhatsApp Number (digits only)",
+        "default": "966500000000"
+      }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter / X URL"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat",
+        "label": "Snapchat URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      }
+    ]
+  }
+]
