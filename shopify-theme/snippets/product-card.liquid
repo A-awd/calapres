@@ -1,98 +1,26 @@
-{% comment %}
-  Renders a product card.
-  Usage: {% render 'product-card', product: product %}
-{% endcomment %}
-
-{%- assign is_new = false -%}
-{%- assign is_signature = false -%}
+{%- assign tag_ar = '' -%}
+{%- assign tag_en = '' -%}
 {%- if product.tags contains 'جديد' or product.tags contains 'new' -%}
-  {%- assign is_new = true -%}
+  {%- assign tag_ar = 'جديد' -%}{%- assign tag_en = 'New' -%}
+{%- elsif product.tags contains 'توقيع' or product.tags contains 'signature' -%}
+  {%- assign tag_ar = 'توقيع كالابريز' -%}{%- assign tag_en = 'Signature' -%}
+{%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
+  {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
 {%- endif -%}
-{%- if product.tags contains 'توقيع' or product.tags contains 'signature' -%}
-  {%- assign is_signature = true -%}
-{%- endif -%}
-
-{%- assign family_tag = '' -%}
-{%- for tag in product.tags -%}
-  {%- if tag contains 'عائلة:' -%}
-    {%- assign family_tag = tag | remove: 'عائلة:' | strip -%}
-  {%- endif -%}
-{%- endfor -%}
-
-<article class="product-card" aria-label="{{ product.title }}">
-  <div class="product-card-image-wrap">
-    <!-- Badges -->
-    <div class="product-badges">
-      {%- if is_new -%}
-        <span class="badge badge-new">{{ 'products.new' | t }}</span>
-      {%- endif -%}
-      {%- if is_signature -%}
-        <span class="badge badge-signature">{{ 'products.signature' | t }}</span>
-      {%- endif -%}
-      {%- if product.compare_at_price > product.price -%}
-        <span class="badge badge-sale">{{ 'products.on_sale' | t }}</span>
-      {%- endif -%}
-      {%- unless product.available -%}
-        <span class="badge badge-sold-out">{{ 'products.sold_out' | t }}</span>
-      {%- endunless -%}
-    </div>
-
-    <!-- Product Image -->
+<a class="product-card" href="{{ product.url }}">
+  <div class="frame">
+    {%- if tag_ar != '' -%}
+      <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
+    {%- endif -%}
     {%- if product.featured_image -%}
-      <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-        <img
-          src="{{ product.featured_image | img_url: '600x800', crop: 'center' }}"
-          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-          class="product-card-image"
-          loading="lazy"
-          width="600"
-          height="800"
-        >
-      </a>
-    {%- else -%}
-      <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-        <div class="product-card-image-placeholder" aria-hidden="true">🌿</div>
-      </a>
-    {%- endif -%}
-
-    <!-- Quick Add -->
-    {%- if product.available -%}
-      <div class="product-card-quick-add">
-        <button
-          class="btn btn-primary btn-full"
-          data-add-to-cart
-          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-          data-label="{{ 'products.add_to_cart' | t }}"
-          aria-label="{{ 'products.add_to_cart' | t }}: {{ product.title }}"
-        >
-          {{ 'products.add_to_cart' | t }}
-        </button>
-      </div>
+      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" />
     {%- endif -%}
   </div>
-
-  <div class="product-card-body">
-    {%- if family_tag != '' -%}
-      <p class="product-family-tag">{{ family_tag }}</p>
-    {%- elsif product.product_type != blank -%}
-      <p class="product-family-tag">{{ product.product_type }}</p>
-    {%- endif -%}
-
-    <h3 class="product-card-title">
-      <a href="{{ product.url }}">{{ product.title }}</a>
-    </h3>
-
-    {%- if product.vendor != blank -%}
-      <p class="product-card-subtitle">{{ product.vendor }}</p>
-    {%- endif -%}
-
-    <div class="product-card-price">
-      {%- if product.compare_at_price > product.price -%}
-        <span class="price price-sale">{{ product.price | money }}</span>
-        <span class="price-compare">{{ product.compare_at_price | money }}</span>
-      {%- else -%}
-        <span class="price">{{ product.price | money }}</span>
-      {%- endif -%}
+  <div class="meta">
+    <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
+    <div class="price">
+      <span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span>
+      <span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span>
     </div>
   </div>
-</article>
+</a>

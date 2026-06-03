@@ -1,78 +1,38 @@
-{% render 'breadcrumb' %}
+{%- paginate collection.products by 24 -%}
 
-<div class="container">
-  <div class="collection-layout">
-    <!-- Filter Sidebar -->
-    {% render 'filter-sidebar', collection: collection, current_tags: current_tags %}
-
-    <!-- Products -->
-    <div>
-      <!-- Collection Header -->
-      <div style="margin-bottom:1.5rem;">
-        <h1 class="section-title">{{ collection.title }}</h1>
-        {% if collection.description != blank %}
-          <div style="color:var(--color-text-muted);font-size:0.95rem;margin-top:0.5rem;max-width:600px;">
-            {{ collection.description }}
-          </div>
-        {% endif %}
-      </div>
-
-      <!-- Toolbar -->
-      <div class="collection-toolbar">
-        <p class="collection-count">
-          {{ collection.products_count }} {{ 'products.results' | t }}
-        </p>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <label for="sort-by" style="font-size:0.875rem;color:var(--color-text-muted);">{{ 'products.sort_by' | t }}:</label>
-          <select id="sort-by" class="sort-select" onchange="window.location=this.value">
-            {%- assign sort_options = collection.sort_options -%}
-            {%- for option in sort_options -%}
-              <option
-                value="{{ collection.url }}?sort_by={{ option.value }}"
-                {% if collection.sort_by == option.value %}selected{% endif %}
-              >
-                {{ option.name }}
-              </option>
-            {%- endfor -%}
-          </select>
-        </div>
-      </div>
-
-      <!-- Product Grid -->
-      {%- if collection.products.size > 0 -%}
-        <div class="product-grid">
-          {%- for product in collection.products -%}
-            {% render 'product-card', product: product %}
-          {%- endfor -%}
-        </div>
-
-        <!-- Pagination -->
-        {%- if paginate.pages > 1 -%}
-          {%- paginate collection.products by 24 -%}
-            <nav class="pagination" aria-label="Pagination">
-              {%- if paginate.previous -%}
-                <a href="{{ paginate.previous.url }}" class="page-link" aria-label="الصفحة السابقة">&rsaquo;</a>
-              {%- endif -%}
-              {%- for part in paginate.parts -%}
-                {%- if part.is_link -%}
-                  <a href="{{ part.url }}" class="page-link">{{ part.title }}</a>
-                {%- else -%}
-                  <span class="page-link active" aria-current="page">{{ part.title }}</span>
-                {%- endif -%}
-              {%- endfor -%}
-              {%- if paginate.next -%}
-                <a href="{{ paginate.next.url }}" class="page-link" aria-label="الصفحة التالية">&lsaquo;</a>
-              {%- endif -%}
-            </nav>
-          {%- endpaginate -%}
-        {%- endif -%}
-
-      {%- else -%}
-        <div style="text-align:center;padding:4rem 0;color:var(--color-text-muted);">
-          <div style="font-size:3rem;margin-bottom:1rem;">🌿</div>
-          <p style="font-size:1.1rem;">{{ 'products.no_products' | t }}</p>
-        </div>
-      {%- endif -%}
-    </div>
+<div class="col-hero">
+  <div class="wrap col-hero-inner">
+    <span class="eyebrow"><span data-ar>{{ collection.title }}</span><span data-en>{{ collection.title }}</span></span>
+    {%- if collection.description != blank -%}
+      <p class="col-hero-desc">{{ collection.description }}</p>
+    {%- endif -%}
   </div>
 </div>
+
+<section class="shop-grid wrap" id="shop">
+  {% render 'filter-sidebar', collection: collection %}
+
+  <div class="prod-grid" data-prod-grid>
+    {%- if collection.products.size > 0 -%}
+      {%- for product in collection.products -%}
+        <div class="pcard reveal" data-tags="{{ product.tags | join: ',' }}">
+          {% render 'product-card', product: product %}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="empty-state">
+        <p><span data-ar>لا توجد منتجات في هذه المجموعة حاليًا.</span><span data-en>No products in this collection yet.</span></p>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    <div class="pagination-wrap">
+      <button class="btn btn-secondary" data-load-more>
+        <span data-ar>عرض المزيد</span><span data-en>Load more</span>
+      </button>
+    </div>
+  {%- endif -%}
+</section>
+
+{%- endpaginate -%}

@@ -1,123 +1,54 @@
-{% render 'breadcrumb' %}
-
-<div class="cart-page">
-  <div class="container">
-    <h1 class="cart-page-title">{{ 'cart.title' | t }}</h1>
+<section class="section wrap cart-page-wrap">
+  <div class="cart-page-inner">
+    <h1 class="display d-2"><span data-ar>سلّة التسوق</span><span data-en>Shopping Cart</span></h1>
 
     {%- if cart.item_count > 0 -%}
-      <form action="/cart" method="post" class="cart-layout">
-
-        <!-- Cart Items -->
-        <div>
-          <div class="cart-items">
-            {%- for item in cart.items -%}
-              <div class="cart-item" data-line-key="{{ item.key }}">
-
-                <!-- Image -->
-                <div class="cart-item-image">
-                  {%- if item.image -%}
-                    <img
-                      src="{{ item.image | img_url: '200x266', crop: 'center' }}"
-                      alt="{{ item.image.alt | default: item.title | escape }}"
-                      loading="lazy"
-                      width="100"
-                      height="133"
-                    >
-                  {%- else -%}
-                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--color-border);font-size:2rem;">🌿</div>
-                  {%- endif -%}
+      <div class="cart-page-grid">
+        <div class="cart-page-items">
+          {%- for item in cart.items -%}
+            <div class="cart-page-item">
+              {%- if item.image -%}
+                <img src="{{ item.image | img_url: '200x250', crop: 'center' }}" alt="{{ item.title | escape }}" loading="lazy" />
+              {%- endif -%}
+              <div class="cpi-info">
+                <div class="cpi-title">{{ item.product.title }}</div>
+                {%- if item.variant.title != 'Default Title' -%}
+                  <div class="cpi-variant">{{ item.variant.title }}</div>
+                {%- endif -%}
+                <div class="cart-item-qty">
+                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="-1">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="1">+</button>
                 </div>
-
-                <!-- Info -->
-                <div>
-                  <h3 class="cart-item-title">{{ item.product.title }}</h3>
-                  {%- if item.variant.title != 'Default Title' -%}
-                    <p class="cart-item-variant">{{ item.variant.title }}</p>
-                  {%- endif -%}
-                  {%- if item.selling_plan_allocation -%}
-                    <p class="cart-item-variant">{{ item.selling_plan_allocation.selling_plan.name }}</p>
-                  {%- endif -%}
-
-                  <!-- Quantity -->
-                  <div class="cart-item-qty">
-                    <button type="button" class="qty-btn" data-qty-change="-1" aria-label="تقليل الكمية">−</button>
-                    <input
-                      type="number"
-                      name="updates[]"
-                      value="{{ item.quantity }}"
-                      min="0"
-                      class="qty-input"
-                      aria-label="{{ 'cart.quantity' | t }}"
-                    >
-                    <button type="button" class="qty-btn" data-qty-change="1" aria-label="زيادة الكمية">+</button>
-                  </div>
-
-                  <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart-item-remove">
-                    {{ 'cart.remove' | t }}
-                  </a>
-                </div>
-
-                <!-- Price -->
-                <div class="cart-item-price">
-                  {{ item.final_line_price | money }}
-                </div>
-
+                <button class="link cpi-remove" data-change="{{ item.key }}" data-qty="0">
+                  <span data-ar>حذف</span><span data-en>Remove</span>
+                </button>
               </div>
-            {%- endfor -%}
-          </div>
+              <div class="cpi-price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
         </div>
 
-        <!-- Cart Summary -->
-        <div>
-          <div class="cart-summary">
-            <h2 class="cart-summary-title">ملخص الطلب</h2>
-
-            {%- for item in cart.items -%}
-              <div class="cart-summary-row">
-                <span>{{ item.product.title }} × {{ item.quantity }}</span>
-                <span>{{ item.final_line_price | money }}</span>
-              </div>
-            {%- endfor -%}
-
-            <div class="cart-summary-row" style="border-top:1px solid var(--color-border);margin-top:0.5rem;padding-top:0.75rem;">
-              <span>{{ 'cart.subtotal' | t }}</span>
-              <span>{{ cart.total_price | money }}</span>
-            </div>
-
-            <p class="cart-summary-shipping-note">{{ 'cart.shipping' | t }} — {{ 'cart.shipping_note' | t }}</p>
-
-            <!-- Order Note -->
-            <div class="cart-note-section">
-              <label for="cart-note" class="cart-note-label">{{ 'cart.order_note' | t }}</label>
-              <textarea
-                id="cart-note"
-                name="note"
-                class="cart-note-textarea"
-                placeholder="{{ 'cart.order_note_placeholder' | t }}"
-              >{{ cart.note }}</textarea>
-            </div>
-
-            <div style="margin-top:1.25rem;">
-              <button type="submit" name="checkout" class="btn btn-primary btn-full" style="padding:1rem;font-size:1rem;margin-bottom:0.75rem;">
-                {{ 'cart.checkout' | t }}
-              </button>
-              <a href="/collections/all" class="btn btn-ghost btn-full">
-                {{ 'cart.continue_shopping' | t }}
-              </a>
-            </div>
+        <div class="cart-page-summary">
+          <div class="cps-row">
+            <span><span data-ar>المجموع الفرعي</span><span data-en>Subtotal</span></span>
+            <span>{{ cart.total_price | money }}</span>
           </div>
+          <p class="cps-note"><span data-ar>الشحن يُحسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
+          <a class="btn btn-primary btn-full" href="/checkout">
+            <span data-ar>إتمام الشراء</span><span data-en>Proceed to Checkout</span>
+          </a>
+          <a class="btn btn-secondary btn-full" href="/collections" style="margin-top:var(--s2)">
+            <span data-ar>متابعة التسوق</span><span data-en>Continue Shopping</span>
+          </a>
         </div>
-
-      </form>
+      </div>
 
     {%- else -%}
-      <div class="cart-empty">
-        <div class="cart-empty-icon" aria-hidden="true">🛍️</div>
-        <h2 class="cart-empty-title">{{ 'cart.empty' | t }}</h2>
-        <p class="cart-empty-text">{{ 'cart.empty_message' | t }}</p>
-        <a href="/collections/all" class="btn btn-primary">{{ 'cart.continue_shopping' | t }}</a>
+      <div class="cart-empty" style="padding:var(--s7) 0;text-align:center">
+        <p style="font-size:1.125rem;margin-bottom:var(--s4)"><span data-ar>سلّتك فارغة</span><span data-en>Your cart is empty</span></p>
+        <a class="btn btn-primary" href="/collections"><span data-ar>اكتشف المجموعات</span><span data-en>Discover Collections</span></a>
       </div>
     {%- endif -%}
-
   </div>
-</div>
+</section>

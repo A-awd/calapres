@@ -1,0 +1,48 @@
+<section class="section sig-section" id="signature" style="background:var(--ink)">
+  <div class="wrap grid sig-grid">
+    <div class="sig-img reveal">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | img_url: '900x1100', crop: 'center' }}" alt="" />
+      {%- else -%}
+        <img src="{{ 'p-signature.jpg' | asset_url }}" alt="" />
+      {%- endif -%}
+    </div>
+    <div class="sig-copy reveal d1">
+      <span class="eyebrow" style="color:var(--gold)"><span data-ar>{{ section.settings.eyebrow_ar | default: 'توقيع كالابريز' }}</span><span data-en>{{ section.settings.eyebrow_en | default: 'Calapres Signature' }}</span></span>
+      <h2 class="display d-1" style="color:var(--on-emerald)"><span data-ar>{{ section.settings.heading_ar | default: 'العود الملكي' }}</span><span data-en>{{ section.settings.heading_en | default: 'Royal Oud' }}</span></h2>
+      <p style="color:rgba(239,233,221,.72)"><span data-ar>{{ section.settings.body_ar | default: 'من قلب الغابات الهندية، نُقطّر أنقى أخشاب العود لنُقدّم لك تجربةً لا تُنسى. عطرٌ يحمل إرث الشرق في كل نفَس.' }}</span><span data-en>{{ section.settings.body_en | default: 'From the heart of Indian forests, we distil the purest oud to bring you an unforgettable experience. A fragrance that carries the heritage of the East in every breath.' }}</span></p>
+      <div style="margin-top:var(--s5);display:flex;gap:var(--s3);flex-wrap:wrap">
+        <a class="btn btn-primary" href="{{ section.settings.cta1_url | default: '/collections/oud-bakhour' }}">
+          <span data-ar>{{ section.settings.cta1_ar | default: 'اكتشف العود' }}</span>
+          <span data-en>{{ section.settings.cta1_en | default: 'Explore Oud' }}</span>
+        </a>
+        <a class="btn btn-secondary on-dark" href="{{ section.settings.cta2_url | default: '/collections/luxury-brands' }}">
+          <span data-ar>{{ section.settings.cta2_ar | default: 'المجموعة الكاملة' }}</span>
+          <span data-en>{{ section.settings.cta2_en | default: 'Full Collection' }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Oud Signature",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Signature Image" },
+    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "توقيع كالابريز" },
+    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "Calapres Signature" },
+    { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "العود الملكي" },
+    { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "Royal Oud" },
+    { "type": "textarea", "id": "body_ar", "label": "Body (Arabic)" },
+    { "type": "textarea", "id": "body_en", "label": "Body (English)" },
+    { "type": "text", "id": "cta1_ar", "label": "CTA 1 (Arabic)", "default": "اكتشف العود" },
+    { "type": "text", "id": "cta1_en", "label": "CTA 1 (English)", "default": "Explore Oud" },
+    { "type": "url",  "id": "cta1_url", "label": "CTA 1 URL" },
+    { "type": "text", "id": "cta2_ar", "label": "CTA 2 (Arabic)", "default": "المجموعة الكاملة" },
+    { "type": "text", "id": "cta2_en", "label": "CTA 2 (English)", "default": "Full Collection" },
+    { "type": "url",  "id": "cta2_url", "label": "CTA 2 URL" }
+  ],
+  "presets": [{ "name": "Oud Signature" }]
+}
+{% endschema %}
