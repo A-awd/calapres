@@ -87,7 +87,8 @@ Use this checklist to maintain, verify, and safely operate the Calapres data lak
    - Value: `https://pbiiqlpgchrcgagemclt.supabase.co`
 
 7. `SUPABASE_SUPPLIER_ID`
-   - UUID for the Nawadir Dior row in `suppliers` after the migration is applied.
+   - Value: `90e198d9-5bf3-48e0-9e3f-b9eb818a6c0c`
+   - Verified live UUID for the Nawadir Dior row in `suppliers`.
 
 ## 4. Local Validation Before n8n Edits or Re-Import
 

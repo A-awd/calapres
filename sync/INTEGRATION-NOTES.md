@@ -177,7 +177,8 @@ Supplier-missing products auto-return when they reappear because a matching supp
    - Value: `https://pbiiqlpgchrcgagemclt.supabase.co`
 
 7. `SUPABASE_SUPPLIER_ID`
-   - UUID of the `suppliers` row for Nawadir Dior after migration is applied.
+   - Value: `90e198d9-5bf3-48e0-9e3f-b9eb818a6c0c`
+   - Verified live UUID of the `suppliers` row for Nawadir Dior.
 
 8. `CALAPRES_SYNC_LIMIT`
    - For the one-product live test, set to `1`.
