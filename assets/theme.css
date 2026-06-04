@@ -968,6 +968,48 @@ html[lang="en"] .announcement-card p{
 .hero--fallback .hero-title__en{ text-shadow:none; }
 .hero--fallback .scroll-hint{ color:var(--ink-55); }
 
+@media (min-width:901px){
+  .site-header .bar{
+    display:grid;
+    grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr);
+    gap:clamp(20px,2.8vw,44px);
+    direction:ltr;
+  }
+  .site-header .icons{
+    grid-column:1;
+    justify-self:start;
+    margin:0;
+    direction:rtl;
+  }
+  .site-header .brand,
+  [dir="rtl"] .site-header .brand{
+    grid-column:2;
+    position:static;
+    inset:auto;
+    transform:none;
+    justify-self:center;
+    direction:rtl;
+  }
+  .site-header .nav{
+    grid-column:3;
+    justify-self:end;
+    margin:0;
+    gap:clamp(18px,2vw,30px);
+    direction:rtl;
+  }
+  [dir="rtl"] .site-header .nav a{
+    font-size:15px;
+  }
+  .site-header .menu-btn{ display:none; }
+  .hero{
+    min-height:clamp(620px, calc(100svh - 84px), 760px);
+    align-items:center;
+  }
+  .hero__inner{
+    padding-block:clamp(64px,8vh,104px);
+  }
+}
+
 /* ---------- Product polish ---------- */
 .pinfo .price .compare-at{
   display:inline-block;
