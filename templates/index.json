@@ -16,6 +16,10 @@
       "type": "new-arrivals",
       "settings": {}
     },
+    "home-commerce-rails": {
+      "type": "home-commerce-rails",
+      "settings": {}
+    },
     "maison-story": {
       "type": "maison-story",
       "settings": {}
@@ -42,6 +46,7 @@
     "collections-strip",
     "category-ocean",
     "new-arrivals",
+    "home-commerce-rails",
     "maison-story",
     "scent-families",
     "oud-signature",

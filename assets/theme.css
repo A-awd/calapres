@@ -415,6 +415,47 @@ html[lang="en"] .ocean-links a{
 .rail-btn svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.4; }
 [dir="rtl"] .rail-btn svg{ transform:scaleX(-1); }
 
+/* ---------- Commerce rails ---------- */
+.commerce-rails{
+  display:flex;
+  flex-direction:column;
+  gap:var(--s5);
+}
+.commerce-row{
+  border-top:1px solid var(--grey);
+  padding-top:var(--s3);
+}
+.commerce-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s2);
+  margin-bottom:var(--s3);
+}
+.commerce-head h2{
+  font-family:var(--arabic);
+  font-size:24px;
+  font-weight:600;
+  line-height:1.2;
+}
+html[lang="en"] .commerce-head h2{
+  font-family:var(--serif);
+  font-weight:500;
+}
+.commerce-head a{
+  color:var(--gold);
+  font-family:var(--arabic);
+  font-size:14px;
+}
+html[lang="en"] .commerce-head a{
+  font-family:var(--sans);
+  font-size:12px;
+  text-transform:uppercase;
+}
+.commerce-rail{
+  grid-auto-columns:minmax(160px,18vw);
+}
+
 /* ---------- Maison storytelling (emerald) ---------- */
 .maison{ background:var(--emerald); color:var(--on-emerald); overflow:hidden; }
 .maison .grid{ display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(40px,6vw,110px); }
@@ -735,6 +776,7 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .occasions-grid{ grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,minmax(200px,26vh)); }
   .occ.feature{ grid-column:1 / span 2; grid-row:1; }
   .rail{ grid-auto-columns:minmax(170px,36vw); }
+  .commerce-rail{ grid-auto-columns:minmax(150px,32vw); }
   .shop-grid{ grid-template-columns:1fr; gap:var(--s4); }
   .filters{ position:static; }
   .prod-grid,
@@ -777,6 +819,11 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .occ .lbl .nm{ font-size:16px; line-height:1.2; }
   .hero .scroll-hint{ display:none; }
   .rail{ grid-auto-columns:minmax(142px,42vw); gap:12px; }
+  .commerce-rails{ gap:var(--s4); }
+  .commerce-row{ padding-top:18px; }
+  .commerce-head{ margin-bottom:12px; }
+  .commerce-head h2{ font-size:20px; }
+  .commerce-rail{ grid-auto-columns:minmax(132px,40vw); }
   .prod-grid,
   .product-grid{ grid-template-columns:1fr 1fr; gap:var(--s2) 12px; }
   .product-card .tag,

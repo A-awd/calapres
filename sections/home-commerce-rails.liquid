@@ -1,0 +1,105 @@
+<section class="section-sm wrap commerce-rails" id="shop-rails">
+  <div class="commerce-row reveal" data-rail>
+    <div class="commerce-head">
+      <h2><span data-ar>{{ section.settings.first_title_ar }}</span><span data-en>{{ section.settings.first_title_en }}</span></h2>
+      <a href="/collections/all"><span data-ar>الجميع</span><span data-en>View all</span></a>
+    </div>
+    <div class="rail commerce-rail">
+      {%- assign first_products = collections.all.products -%}
+      {%- for product in first_products limit: 10 -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="commerce-row reveal d1" data-rail>
+    <div class="commerce-head">
+      <h2><span data-ar>{{ section.settings.second_title_ar }}</span><span data-en>{{ section.settings.second_title_en }}</span></h2>
+      <a href="/collections/niche"><span data-ar>الجميع</span><span data-en>View all</span></a>
+    </div>
+    <div class="rail commerce-rail">
+      {%- assign niche_collection = collections['niche'] -%}
+      {%- if niche_collection != blank -%}
+        {%- assign niche_products = niche_collection.products -%}
+      {%- else -%}
+        {%- assign niche_products = collections.all.products -%}
+      {%- endif -%}
+      {%- for product in niche_products limit: 10 -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="commerce-row reveal d2" data-rail>
+    <div class="commerce-head">
+      <h2><span data-ar>{{ section.settings.third_title_ar }}</span><span data-en>{{ section.settings.third_title_en }}</span></h2>
+      <a href="/collections/oud-bakhour"><span data-ar>الجميع</span><span data-en>View all</span></a>
+    </div>
+    <div class="rail commerce-rail">
+      {%- assign oud_collection = collections['oud-bakhour'] -%}
+      {%- if oud_collection != blank -%}
+        {%- assign oud_products = oud_collection.products -%}
+      {%- else -%}
+        {%- assign oud_products = collections.all.products -%}
+      {%- endif -%}
+      {%- for product in oud_products limit: 10 -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Commerce Product Rails",
+  "settings": [
+    {
+      "type": "text",
+      "id": "first_title_ar",
+      "label": "First row title Arabic",
+      "default": "الأفضل مبيعًا"
+    },
+    {
+      "type": "text",
+      "id": "first_title_en",
+      "label": "First row title English",
+      "default": "Best sellers"
+    },
+    {
+      "type": "text",
+      "id": "second_title_ar",
+      "label": "Second row title Arabic",
+      "default": "عطور النيش"
+    },
+    {
+      "type": "text",
+      "id": "second_title_en",
+      "label": "Second row title English",
+      "default": "Niche perfumes"
+    },
+    {
+      "type": "text",
+      "id": "third_title_ar",
+      "label": "Third row title Arabic",
+      "default": "العود والمباخر"
+    },
+    {
+      "type": "text",
+      "id": "third_title_en",
+      "label": "Third row title English",
+      "default": "Oud and bukhoor"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Commerce Product Rails"
+    }
+  ]
+}
+{% endschema %}
