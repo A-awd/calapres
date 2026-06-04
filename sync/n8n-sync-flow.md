@@ -2,7 +2,9 @@
 
 This workflow keeps Calapres Shopify products aligned with Nawadirdior Salla products. It never deletes Shopify products. Supplier items missing from the latest crawl are marked out of stock.
 
-Pre-sync requirement: before this recurring workflow is enabled, run the setup from `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js`. The live store currently has 18 imported products split across two imported-tag conventions: `imported-nader-dior` and `مستورد-نوادر-ديور`. Those products need `supplier.source_url` / `supplier.product_id` definitions and supplier-id tags backfilled from `sync/backfill-map.json`, otherwise the first recurring sync can create duplicates.
+Live status: this recurring workflow is built and has run live successfully. The storefront is open on `unywbe-ub.myshopify.com`; `supplier.source_url` and `supplier.product_id` metafield definitions exist; all 18 legacy imports are backfilled with supplier metadata; current manual/unmatched/not-found backfill counts are 0. New imported products land as `draft` for review.
+
+API version note: documented standard is Admin API `2026-04`. The deployed live n8n flow currently uses `2025-01` and works; use `2026-04` for newly built or rebuilt nodes.
 
 Implementation note: keep Shopify decision logic and request bodies centralized in `sync/reconcile.js`, `sync/build-shopify-payload.js`, `sync/validate-shopify-shape.js`, and `sync/shopify-client.js`. In n8n, Code nodes should call those helpers and pass the returned request objects to HTTP Request nodes instead of hand-building Shopify field names.
 
@@ -12,7 +14,7 @@ Credential:
 
 Recommended Shopify store domain variable:
 
-- n8n environment variable `SHOPIFY_STORE_DOMAIN=calapres.myshopify.com`
+- n8n environment variable `SHOPIFY_STORE_DOMAIN=unywbe-ub.myshopify.com`
 
 ## Connections
 
@@ -208,7 +210,7 @@ return {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `POST`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/graphql.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/graphql.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`
@@ -276,6 +278,9 @@ const parsed = {
   existingTags: $json.existingProduct?.tags || []
 };
 const payload = buildPayload(parsed);
+if (!$json.existingProduct && payload.product) {
+  payload.product.status = 'draft';
+}
 
 return {
   json: {
@@ -305,7 +310,7 @@ return {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `PUT`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/products/{{$json.productId}}.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/products/{{$json.productId}}.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`
@@ -321,7 +326,7 @@ return {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `POST`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/products.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/products.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`
@@ -337,7 +342,7 @@ return {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `POST`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/graphql.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/graphql.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`
@@ -349,7 +354,7 @@ return {
 }
 ```
 
-If more than 250 imported products exist, duplicate this node with cursor pagination before production launch.
+If more than 250 imported products exist, duplicate this node with cursor pagination before scaling the live workflow beyond the first page.
 
 ## Node 17: Code: Find Missing Supplier Products
 
@@ -440,7 +445,7 @@ return {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `PUT`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/products/{{$json.productId}}.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/products/{{$json.productId}}.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`

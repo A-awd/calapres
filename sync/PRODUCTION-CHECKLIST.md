@@ -1,37 +1,45 @@
 # Calapres Supplier Sync Production Checklist
 
-Use this checklist when the Shopify storefront is open and the n8n workflows are ready to run against the live shop.
+Use this checklist to maintain, verify, and safely operate the live supplier sync against the open Shopify storefront.
 
-## 1. Pre-Sync Setup: Must Run Before Recurring Sync
+## Live Status (Verified)
 
-1. Create Shopify product metafield definitions.
-   - Use request shapes from `sync/setup-metafield-definitions.js`.
-   - Create `supplier.source_url`.
-   - Create `supplier.product_id`.
+- Storefront is open on `unywbe-ub.myshopify.com`.
+- Shopify metafield definitions `supplier.source_url` and `supplier.product_id` exist, are pinned, and are admin-filterable.
+- All 18 legacy imports are backfilled with `supplier.product_id`; `needsManualMatch`, `notFoundAtSupplier`, and unmatched counts are 0.
+- The recurring sync workflow is built and has run live successfully. It created real draft products with supplier price + 100 SAR, `supplier:nawadirdior`, `supplier-id-p<id>`, and `supplier.source_url`.
+- New imported products land as `draft` for review.
+- Documented Admin API standard is `2026-04`; the deployed live n8n flow currently uses `2025-01`, and both versions are confirmed working.
+
+## 1. Live Setup State: Verify Before Changes
+
+1. Shopify product metafield definitions are already created.
+   - `supplier.source_url`
+   - `supplier.product_id`
    - Confirm both are `single_line_text_field`.
    - Confirm both are owner type `PRODUCT`.
    - Confirm both are pinned.
    - Confirm both have Admin access `MERCHANT_READ_WRITE`.
    - Confirm both have `adminFilterable.enabled: true`.
 
-2. Backfill the 18 existing imported products.
-   - Use `sync/backfill-existing-products.js` with `sync/backfill-map.json`.
+2. The 18 existing imported products are already backfilled.
+   - Audit with `sync/backfill-existing-products.js` and `sync/backfill-map.json`.
    - Confirm Shopify reads use `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`.
-   - Add `supplier.source_url` metafield.
-   - Add `supplier.product_id` metafield.
-   - Add canonical `imported-nader-dior` tag if missing.
-   - Add `supplier-id-p<id>` tag.
+   - Confirm every legacy product has `supplier.product_id`.
+   - Confirm every matched product has `supplier.source_url`.
+   - Confirm every matched product has `supplier-id-p<id>`.
+   - Confirm the canonical `imported-nader-dior` tag exists where needed.
    - Preserve the Arabic tag `مستورد-نوادر-ديور` on the seven Arabic-tagged products.
    - Do not write price, images, description, status, vendor, inventory, or SEO.
-   - Stop and manually review any product listed in `needsManualMatch[]`.
-   - Products listed in `notFoundAtSupplier[]` receive no backfill writes and move through the recurring missing-supplier draft/out-of-stock path.
+   - Current `needsManualMatch[]` count is `0`.
+   - Current `notFoundAtSupplier[]` count is `0`.
 
-3. Confirm duplicate prevention before enabling recurring sync.
+3. Confirm duplicate prevention before workflow edits or reruns.
    - Run `node sync/run-local-dry.js`.
    - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `18`.
-   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` is `0`, or resolve every manual item before go-live.
-   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` matches any deliberate `not_found` rows in `sync/backfill-map.json`.
-   - Confirm `preSyncSetup.postBackfillReconcilePlan.toCreate` is `0` for high/medium-confidence existing products.
+   - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` is `0`.
+   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` is `0`.
+   - Confirm `preSyncSetup.postBackfillReconcilePlan.toCreate` is `0` for the 18 existing backfilled products.
 
 ## 2. Required n8n Credentials
 
@@ -50,8 +58,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 
 ## 3. Required n8n Variables
 
-1. `SHOPIFY_SHOP_DOMAIN`
-   - Example: `calapres.myshopify.com`
+1. `SHOPIFY_STORE_DOMAIN`
+   - Example: `unywbe-ub.myshopify.com`
    - Do not use `calapres.com` unless Shopify Admin API calls for that host are confirmed.
 
 2. `SUPPLIER_SITEMAP_URL`
@@ -67,7 +75,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 5. `HIGGSFIELD_IMAGE_MODEL`
    - Value used by the enrichment workflow, for example `higgsfield-soul`.
 
-## 4. Local Validation Before n8n Import
+## 4. Local Validation Before n8n Edits or Re-Import
 
 1. Run syntax checks:
    - `node --check sync/crawl-supplier.js`
@@ -94,7 +102,7 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Confirm `preSyncSetup.metafieldDefinitionRequests` contains `source_url` and `product_id`.
    - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `18`.
    - Confirm `preSyncSetup.backfillPlan.summary.needsManualMatch` is `0`.
-   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` equals the deliberate not-found rows that will receive no writes.
+   - Confirm `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` is `0`.
    - Confirm `reconcilePlan` includes create/update/out-of-stock/skip-enriched buckets.
    - Confirm `shopifyRequests.actionRequests` contains the REST request bodies to review.
    - Confirm `payloads[].action` is `create_or_update` for real supplier products.
@@ -105,7 +113,9 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 
 ## 5. n8n Recurring Sync Import
 
-1. Create the recurring workflow from `sync/n8n-sync-flow.md`.
+The recurring workflow is already built and has run live successfully. Use this section when editing, rebuilding, or re-importing it.
+
+1. Maintain the recurring workflow from `sync/n8n-sync-flow.md`.
 2. Paste each helper file into the matching n8n Code node:
    - `sync/crawl-supplier.js`
    - `sync/parse-product.js`
@@ -115,10 +125,9 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - `sync/shopify-client.js`
    - `sync/reconcile.js`
    - `sync/validate-shopify-shape.js`
-   - `sync/setup-metafield-definitions.js`
-   - `sync/backfill-existing-products.js`
+   - Setup/audit helpers `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js` are not recurring-flow nodes.
 3. Configure all Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
-4. Set all Shopify request URLs to use `{{$vars.SHOPIFY_SHOP_DOMAIN}}`.
+4. Set all Shopify request URLs to use `{{$env.SHOPIFY_STORE_DOMAIN}}` or the verified fallback `unywbe-ub.myshopify.com`.
 5. Set the Split In Batches node to batch size `1`.
 6. Keep the one-second Wait node before every Shopify write.
 7. Confirm product matching checks both:
@@ -140,18 +149,19 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
 5. Confirm the Shopify update appends the `enriched` tag.
 6. Confirm enriched products are excluded from future presentation overwrites by `buildPayload`.
 
-## 7. Go-Live Sequence
+## 7. Live Operation Sequence
 
-1. Open the Shopify storefront and confirm Admin API access still works.
-2. Run the pre-sync setup sequence in section 1.
-3. Verify the 18 existing imported products now have supplier metafields and supplier-id tags for every high/medium-confidence map entry.
-4. Leave low-confidence/unmatched products untouched until manually matched.
-5. Run the recurring sync manually with a limit of 5 supplier products.
+1. Confirm the open Shopify storefront and Admin API access still work.
+2. Verify the 18 existing imported products still have supplier metafields and supplier-id tags.
+3. Confirm `sync/backfill-map.json` remains 18 high-confidence matches with 0 unmatched rows.
+4. If a future map introduces low-confidence/unmatched rows, leave those rows untouched until manually matched.
+5. Run the recurring sync manually with a limit of 5 supplier products after workflow edits.
 6. Verify in Shopify Admin:
    - Product titles are correct.
    - Vendor is correct.
    - Price is supplier price plus 100 SAR.
    - Discounted products have compare-at price plus 100 SAR.
+   - New imported products are draft for review.
    - Tags include `imported-nader-dior`, `supplier:nawadirdior`, and `supplier-id-p<id>`.
    - Supplier metafields are present.
 7. Run the enrichment workflow manually for one new product.
@@ -161,8 +171,8 @@ Use this checklist when the Shopify storefront is open and the n8n workflows are
    - Has the `enriched` tag.
 9. Re-run recurring sync for that enriched product.
 10. Verify price and inventory update while title, description, images, and SEO stay unchanged.
-11. Enable the recurring Schedule Trigger.
-12. Monitor the first full run:
+11. Enable or re-enable the recurring Schedule Trigger after QA.
+12. Monitor the next full run after changes:
    - Products created.
    - Products updated.
    - Missing products drafted/out of stock.

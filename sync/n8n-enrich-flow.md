@@ -2,6 +2,10 @@
 
 This workflow upgrades newly imported products into the protected luxury presentation layer. After enrichment, the product receives the `enriched` tag; recurring sync then updates only price and availability.
 
+Live status: storefront is open on `unywbe-ub.myshopify.com`, the recurring sync workflow is built and has run live successfully, and new imported products land as `draft` before enrichment/review.
+
+API version note: documented standard is Admin API `2026-04`. The deployed live n8n flow currently uses `2025-01` and works; use `2026-04` for newly built or rebuilt nodes.
+
 Credentials:
 
 - Shopify-Calapres OAuth2 credential: `QLsvwO73GFsQfy0w`
@@ -42,7 +46,7 @@ Optional recurring alternative:
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `POST`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/graphql.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/graphql.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`
@@ -54,7 +58,7 @@ Optional recurring alternative:
 }
 ```
 
-If more than 100 products need enrichment, add cursor pagination before production launch.
+If more than 100 products need enrichment, add cursor pagination before scaling the live workflow beyond the first page.
 
 ## Node 3: Code: Keep Products Without enriched
 
@@ -225,7 +229,7 @@ function escapeHtml(value) {
   - Credential ID: `QLsvwO73GFsQfy0w`
 - Settings:
   - Method: `PUT`
-  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'calapres.myshopify.com'}}/admin/api/2025-01/products/{{$json.productId}}.json`
+  - URL: `=https://{{$env.SHOPIFY_STORE_DOMAIN || 'unywbe-ub.myshopify.com'}}/admin/api/2026-04/products/{{$json.productId}}.json`
   - Response Format: `JSON`
   - Send Body: `true`
   - Body Content Type: `JSON`

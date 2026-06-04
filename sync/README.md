@@ -17,14 +17,22 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 - `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` with payloads, reconcile plan, and exact Shopify request bodies. It never writes to Shopify.
 - `n8n-sync-flow.md`: complete recurring sync workflow spec, including crawl, parse, pricing, availability, matching, create/update, and missing-product out-of-stock handling.
 - `n8n-enrich-flow.md`: complete one-time enrichment workflow spec using Higgsfield images plus protected Arabic SEO/presentation updates.
-- `PRODUCTION-CHECKLIST.md`: ordered launch checklist for credentials, variables, validation, go-live, monitoring, and rollback.
+- `PRODUCTION-CHECKLIST.md`: ordered operations checklist for credentials, variables, validation, monitoring, and rollback.
 - `INTEGRATION-NOTES.md`: Shopify field mapping, enriched guard contract, product matching, and n8n wiring notes.
 - `fixtures/`: real Nawadirdior sitemap and product-page samples used for offline tests and dry runs.
 - `__tests__/run-tests.js`: dependency-free Node test runner using `node:assert`.
 
+## Live Status
+
+- Storefront is open on `unywbe-ub.myshopify.com`.
+- Shopify metafield definitions `supplier.source_url` and `supplier.product_id` exist and are admin-filterable.
+- All 18 legacy imported products are backfilled with `supplier.product_id`; current manual/unmatched/not-found backfill counts are 0.
+- The recurring n8n sync workflow is built and has run live successfully.
+- New imported products land as draft for review.
+
 ## Data Flow
 
-Pre-sync setup runs first: `setup-metafield-definitions -> backfill-existing-products -> dry-run duplicate check`. Recurring sync then runs: `sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with enriched products routed through a price/availability-only guard and supplier-missing products drafted out of stock instead of deleted.
+Live setup is complete: `setup-metafield-definitions -> backfill-existing-products -> dry-run duplicate check` has already run for the 18 legacy imports. Recurring sync now runs: `sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with new imported products landing as draft for review, enriched products routed through a price/availability-only guard, and supplier-missing products drafted out of stock instead of deleted.
 
 ## Local Validation
 
@@ -36,7 +44,7 @@ node sync/__tests__/run-tests.js
 node sync/run-local-dry.js
 ```
 
-The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, pre-sync metafield/backfill requests, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
+The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, setup/backfill audit requests, 18 high-confidence legacy matches with 0 manual/unmatched/not-found rows, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
 
 ## n8n Flow
 

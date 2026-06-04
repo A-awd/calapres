@@ -1,46 +1,58 @@
 # Calapres Shopify Sync Integration Notes
 
-These notes define the exact field mapping and API contract for wiring the supplier sync into n8n while the storefront remains closed.
+These notes define the exact field mapping and API contract for the live supplier sync running in n8n against the open Shopify storefront.
 
-## 1. Pre-Sync Setup
+## Live Status (Verified)
 
-Run this before the first recurring sync. The live store has 18 imported products, split across `imported-nader-dior` and `مستورد-نوادر-ديور`. The existing imported products do not yet have `supplier.source_url`, `supplier.product_id`, or `supplier-id-p<id>` matching data. Skipping this setup can make the first recurring sync create duplicates.
+- Storefront is open on `unywbe-ub.myshopify.com`.
+- Shopify metafield definitions `supplier.source_url` and `supplier.product_id` exist, are pinned, and are admin-filterable.
+- All 18 legacy imports are backfilled with `supplier.product_id`; `needsManualMatch`, `notFoundAtSupplier`, and unmatched counts are 0.
+- The recurring sync workflow is built and has run live successfully. It created real draft products with supplier price + 100 SAR, `supplier:nawadirdior`, `supplier-id-p<id>`, and `supplier.source_url`.
+- New imported products land as `draft` for review.
+- Documented Admin API standard is `2026-04`; the deployed live n8n flow currently uses `2025-01`, and both versions are confirmed working.
 
-1. Create product metafield definitions using `sync/setup-metafield-definitions.js`.
-   - Create `supplier.source_url`.
-   - Create `supplier.product_id`.
+## 1. Live Setup and Backfill State
+
+The previous pre-sync setup is complete. Keep this section as the audit record and replay guide if live metadata is ever removed.
+
+1. Product metafield definitions are already created.
+   - `supplier.source_url`
+   - `supplier.product_id`
    - Both definitions use `single_line_text_field`.
    - Both definitions use owner type `PRODUCT`.
    - Both definitions set `pin: true`.
    - Both definitions set Admin API access to `MERCHANT_READ_WRITE`.
    - Both definitions enable `capabilities.adminFilterable.enabled`.
 
-2. Backfill the 18 existing imported products using `sync/backfill-existing-products.js` and `sync/backfill-map.json`.
-   - Use the audited brand/name/concentration/size map; do not infer supplier URLs from Shopify descriptions or metafields because those fields are clean/empty on the live store.
-   - Add only `supplier.source_url`, `supplier.product_id`, `imported-nader-dior`, and `supplier-id-p<id>`.
-   - Preserve the existing Arabic imported tag `مستورد-نوادر-ديور` on products that already have it.
-   - Do not write price, images, description, status, vendor, inventory, or SEO.
-   - Review `needsManualMatch[]` before executing any backfill request.
-   - Review `notFoundAtSupplier[]` separately; those rows get no backfill writes and are handled by the recurring missing-supplier draft/out-of-stock path.
+2. The 18 existing imported products are backfilled.
+   - Backfill source: `sync/backfill-existing-products.js` with `sync/backfill-map.json`.
+   - All 18 map entries are high-confidence.
+   - `needsManualMatch[]` count is 0.
+   - `notFoundAtSupplier[]` count is 0.
+   - Backfilled writes were limited to `supplier.source_url`, `supplier.product_id`, canonical `imported-nader-dior`, and `supplier-id-p<id>`.
+   - The Arabic imported tag `مستورد-نوادر-ديور` remains preserved on legacy products that already had it.
+   - Backfill never writes price, images, description, status, vendor, inventory, or SEO.
 
-3. Run one offline dry run and inspect `sync/dry-run-output.json`.
+3. Run an offline dry run after code or workflow edits and inspect `sync/dry-run-output.json`.
    - `preSyncSetup.metafieldDefinitionRequests` shows the two definition-create requests.
-   - `preSyncSetup.backfillPlan` shows matched and manual-review products.
-   - `preSyncSetup.duplicateRiskBeforeBackfill` shows why the setup must run first.
-   - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for high/medium-confidence existing products.
-   - `preSyncSetup.notFoundAtSupplier` must list only deliberate `not_found` map rows.
+   - `preSyncSetup.backfillPlan.summary.totalExisting` must be `18`.
+   - `preSyncSetup.backfillPlan.summary.needsManualMatch` must be `0`.
+   - `preSyncSetup.backfillPlan.summary.notFoundAtSupplier` must be `0`.
+   - `preSyncSetup.postBackfillReconcilePlan` must show `toCreate: 0` for the 18 existing backfilled products.
 
 ## 2. Shopify Admin API Surface
 
-The recurring sync uses:
+The sync system uses:
 
 - GraphQL Admin API for reads and pagination.
-- GraphQL Admin API for metafield definition creation and `metafieldsSet` backfill writes.
+- GraphQL Admin API for setup/audit request shapes such as metafield definition creation and `metafieldsSet` backfill writes.
 - REST Admin API for product create/update writes.
 - `sync/shopify-client.js` for all request-shape construction.
 - `sync/validate-shopify-shape.js` before any REST write payload is trusted.
 
-Default Admin API version in code: `2026-04`.
+Default Admin API version in code and documentation: `2026-04`.
+
+Note: the deployed live n8n flow currently uses Admin API `2025-01` and works; keep `2026-04` as the standard for rebuilt or newly documented nodes.
 
 ## 3. Supplier Field to Shopify Field Mapping
 
@@ -51,7 +63,7 @@ Default Admin API version in code: `2026-04`.
 | `brand` | `product.vendor` | Falls back to `Nawadirdior`. |
 | `supplierPrice` | `product.variants[0].price` | Calapres rule: supplier price plus 100 SAR. |
 | `supplierCompareAtPrice` | `product.variants[0].compare_at_price` | Calapres rule: supplier compare-at plus 100 SAR; cleared when equal to price. |
-| `availability` | `product.status` | `in_stock` becomes `active`; `out_of_stock` or supplier-missing becomes `draft`. |
+| `availability` | `product.status` | New imported products land as `draft` for review; `out_of_stock` or supplier-missing also becomes `draft`. Existing in-stock products may be active when intentionally published. |
 | `availability` | `product.variants[0].inventory_policy` | `in_stock` becomes `continue`; `out_of_stock` or supplier-missing becomes `deny`. |
 | `imageUrl` | `product.images[0].src` | Only written for new or non-enriched products. |
 | fixed import marker | `product.tags` | Adds `imported-nader-dior`. |
@@ -132,8 +144,8 @@ Supplier-missing products auto-return when they reappear because a matching supp
 
 ## 8. Required n8n Variables
 
-1. `SHOPIFY_SHOP_DOMAIN`
-   - Example: `calapres.myshopify.com`
+1. `SHOPIFY_STORE_DOMAIN`
+   - Example: `unywbe-ub.myshopify.com`
 
 2. `SUPPLIER_SITEMAP_URL`
    - Value: `https://nawadirdior.sa/sitemap.xml`
@@ -161,7 +173,7 @@ Then inspect `sync/dry-run-output.json`:
 
 - `payloads[]` shows parsed supplier data and per-product reconcile bucket.
 - `preSyncSetup.metafieldDefinitionRequests` shows GraphQL `metafieldDefinitionCreate` request bodies.
-- `preSyncSetup.backfillPlan` shows exact metafield/tag backfill requests and manual-review flags.
+- `preSyncSetup.backfillPlan` shows exact metafield/tag backfill requests and confirms 18 high-confidence, 0 manual-review, 0 not-found rows.
 - `reconcilePlan` shows the complete action plan.
 - `shopifyRequests.lookupFirst20[]` shows GraphQL lookup request shapes.
 - `shopifyRequests.actionRequests` shows REST create/update/out-of-stock request shapes.
