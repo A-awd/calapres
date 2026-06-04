@@ -3,8 +3,8 @@
     <div class="footer-col">
       <div class="footer-brand"><span data-ar>كالابريز</span><span data-en>Calapres</span></div>
       <p style="color:rgba(239,233,221,.72);max-width:34ch;font-size:14px">
-        <span data-ar>{{ section.settings.tagline_ar | default: 'بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى.' }}</span>
-        <span data-en>{{ section.settings.tagline_en | default: 'A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten.' }}</span>
+        <span data-ar>{{ section.settings.tagline_ar | default: 'بيت عطور النيش والعود الفاخر والمباخر. رائحةٌ تُروى ولا تُنسى.' }}</span>
+        <span data-en>{{ section.settings.tagline_en | default: 'A house of niche perfume, fine oud and bukhoor. A scent that is told, never forgotten.' }}</span>
       </p>
     </div>
     <div class="footer-col">
@@ -37,13 +37,13 @@
         {% if settings.footer_email != blank %}
           <li><a href="mailto:{{ settings.footer_email }}">{{ settings.footer_email }}</a></li>
         {% endif %}
-        <li><a href="/pages/contact"><span data-ar>الرياض، السعودية</span><span data-en>Riyadh, KSA</span></a></li>
+        <li><a href="/pages/contact"><span data-ar>السعودية والخليج</span><span data-en>Saudi Arabia and the Gulf</span></a></li>
       </ul>
     </div>
   </div>
   <div class="wrap footer-bottom">
     <span><span data-ar>© ٢٠٢٦ كالابريز</span><span data-en>© 2026 Calapres</span></span>
-    <span><span data-ar>صُنع بعناية في الرياض</span><span data-en>Crafted with care in Riyadh</span></span>
+    <span><span data-ar>مختار بعناية للسعودية والخليج</span><span data-en>Curated with care for Saudi Arabia and the Gulf</span></span>
   </div>
 </footer>
 
@@ -51,8 +51,8 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "tagline_ar", "label": "Tagline (Arabic)", "default": "بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى." },
-    { "type": "text", "id": "tagline_en", "label": "Tagline (English)", "default": "A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten." }
+    { "type": "text", "id": "tagline_ar", "label": "Tagline (Arabic)", "default": "بيت عطور النيش والعود الفاخر والمباخر. رائحةٌ تُروى ولا تُنسى." },
+    { "type": "text", "id": "tagline_en", "label": "Tagline (English)", "default": "A house of niche perfume, fine oud and bukhoor. A scent that is told, never forgotten." }
   ],
   "presets": [{ "name": "Footer" }]
 }

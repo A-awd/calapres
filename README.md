@@ -1,6 +1,6 @@
 # Calapres Shopify Theme
 
-Calapres (كالابريز) is an Arabic-first Shopify Liquid theme for a Riyadh-based niche perfume, luxury oud, and incense burner store.
+Calapres (كالابريز) is an Arabic-first Shopify Liquid theme for a niche perfume, luxury oud, and incense burner store serving Saudi Arabia and the Gulf.
 
 ## Branches
 

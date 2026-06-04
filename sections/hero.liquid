@@ -12,16 +12,16 @@
   </div>
   <div class="hero__inner wrap">
     <span class="eyebrow reveal">
-      <span data-ar>{{ section.settings.eyebrow_ar | default: 'بيت العطور النيش · الرياض' }}</span>
-      <span data-en>{{ section.settings.eyebrow_en | default: 'Maison de Parfums Niche · Riyadh' }}</span>
+      <span data-ar>{{ section.settings.eyebrow_ar | default: 'بيت عطور النيش والمباخر' }}</span>
+      <span data-en>{{ section.settings.eyebrow_en | default: 'House of Niche Perfume and Bukhoor' }}</span>
     </span>
     <div class="hero-title reveal d1">
       <h1 class="display d-hero hero-title__ar">{{ section.settings.heading_ar | default: 'رائحة تُروى ولا تُنسى' }}</h1>
       <p class="hero-title__en">{{ section.settings.heading_en | default: 'A scent that is told, never forgotten' }}</p>
     </div>
     <p class="sub reveal d2">
-      <span data-ar>{{ section.settings.sub_ar | default: 'عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في الرياض. فنّ العطر، مُتقَنًا.' }}</span>
-      <span data-en>{{ section.settings.sub_en | default: 'Niche perfumes, rare oud and bukhoor — curated with care for the scent-led, in Riyadh. The art of perfume, perfected.' }}</span>
+      <span data-ar>{{ section.settings.sub_ar | default: 'عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في السعودية والخليج. فنّ العطر، مُتقَنًا.' }}</span>
+      <span data-en>{{ section.settings.sub_en | default: 'Niche perfumes, rare oud and bukhoor — curated with care for the scent-led across Saudi Arabia and the Gulf. The art of perfume, perfected.' }}</span>
     </p>
     <div class="cta reveal d3">
       <a class="btn btn-primary" href="{{ section.settings.cta1_url | default: '/collections' }}">
@@ -42,8 +42,8 @@
   "name": "Hero",
   "settings": [
     { "type": "image_picker", "id": "hero_image", "label": "Hero Background Image" },
-    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "بيت العطور النيش · الرياض" },
-    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "Maison de Parfums Niche · Riyadh" },
+    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "بيت عطور النيش والمباخر" },
+    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "House of Niche Perfume and Bukhoor" },
     { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "رائحة تُروى ولا تُنسى" },
     { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "A scent that is told, never forgotten" },
     { "type": "textarea", "id": "sub_ar", "label": "Subtext (Arabic)" },
