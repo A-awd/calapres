@@ -54,102 +54,126 @@
     },
     {
       "order": 6,
+      "name": "Code: Resolve Fragrance Parent",
+      "file": "fragrance-resolve.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 7,
+      "name": "Code: Build Variant Upsert Payload",
+      "file": "variant-upsert.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 8,
+      "name": "Code: Build Shopify Product From Fragrance",
+      "file": "shopify-from-fragrance.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 9,
+      "name": "Code: Merge Enrichment Facts",
+      "file": "enrich-merge.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 10,
       "name": "Code: Build Product Media Rows",
       "file": "product-media.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 7,
+      "order": 11,
       "name": "Code: Build Product Media Lookup",
       "file": "product-media-lookup.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 8,
+      "order": 12,
       "name": "Code: Filter Product Media Rows",
       "file": "product-media-filter.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 9,
+      "order": 13,
       "name": "Code: mapAvailability",
       "file": "availability.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 10,
+      "order": 14,
       "name": "Code: Build Shopify Payload From Supabase",
       "file": "shopify-from-supabase.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 11,
+      "order": 15,
       "name": "Code: Build Supabase Shopify Sync Payload",
       "file": "supabase-shopify-sync.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 12,
+      "order": 16,
       "name": "Code: Build Sync Error Row",
       "file": "sync-error.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 13,
+      "order": 17,
       "name": "Code: Build Shopify Lookup",
       "file": "buildLookup.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 14,
+      "order": 18,
       "name": "Code: Select Existing Product",
       "file": "selectExisting.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 15,
+      "order": 19,
       "name": "Code: buildPayload",
       "file": "buildPayload.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 16,
+      "order": 20,
       "name": "Code: Find Missing Supplier Products",
       "file": "findMissing.generated.js",
       "mode": "runOnceForAllItems"
     },
     {
-      "order": 17,
+      "order": 21,
       "name": "Code: buildPayload Missing",
       "file": "buildMissing.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 18,
+      "order": 22,
       "name": "Code: Build Higgsfield Request (Image Pipeline)",
       "file": "image-pipeline-brief.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 19,
+      "order": 23,
       "name": "Code: Run Quality Gate (Image Pipeline)",
       "file": "image-pipeline-quality.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 20,
+      "order": 24,
       "name": "Code: Build Higgsfield Prompt",
       "file": "enrich-prompt.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 21,
+      "order": 25,
       "name": "Code: Build Arabic SEO",
       "file": "enrich-seo.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 22,
+      "order": 26,
       "name": "Code: Build Enriched Payload",
       "file": "enrich-payload.generated.js",
       "mode": "runOnceForEachItem"
@@ -186,6 +210,26 @@
     ],
     [
       "HTTP POST: Supabase Upsert supplier_products",
+      "Code: Resolve Fragrance Parent"
+    ],
+    [
+      "Code: Resolve Fragrance Parent",
+      "HTTP POST: Supabase Upsert fragrance_products (skip when needs_review)"
+    ],
+    [
+      "HTTP POST: Supabase Upsert fragrance_products (skip when needs_review)",
+      "Code: Build Variant Upsert Payload"
+    ],
+    [
+      "Code: Build Variant Upsert Payload",
+      "HTTP POST: Supabase Upsert product_variants"
+    ],
+    [
+      "HTTP POST: Supabase Upsert product_variants",
+      "HTTP PATCH: Supabase supplier_products link fragrance+variant"
+    ],
+    [
+      "HTTP PATCH: Supabase supplier_products link fragrance+variant",
       "Code: Build Product Media Rows"
     ],
     [
@@ -239,6 +283,22 @@
     [
       "Code: Build Supabase Shopify Sync Payload",
       "HTTP POST: Supabase Upsert shopify_products"
+    ],
+    [
+      "HTTP GET: Supabase fragrance_products + product_variants (grouped)",
+      "Code: Build Shopify Product From Fragrance"
+    ],
+    [
+      "Code: Build Shopify Product From Fragrance",
+      "Shopify Admin REST create/update product+variants"
+    ],
+    [
+      "Supabase List fragrance_products (enrichment pending)",
+      "Code: Merge Enrichment Facts"
+    ],
+    [
+      "Code: Merge Enrichment Facts",
+      "HTTP PATCH: Supabase fragrance_products enrichment"
     ],
     [
       "Shopify Admin GraphQL: List Imported Products",
