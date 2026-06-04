@@ -19,7 +19,50 @@ Read this first. This file is the durable project context for any AI agent worki
 - HARD RULE: theme work NEVER touches `sync/`; sync work NEVER touches theme files.
 - State the current branch at the start of every task.
 
-## 3. LIVE INFRA
+## 3. ARCHITECTURE
+
+**Data flow (authoritative):**
+```
+Supplier → n8n → Supabase → Shopify
+                    ↓
+          Supabase → n8n → Higgsfield → Supabase → Shopify
+```
+
+**Role of each system:**
+- **Supplier** (nawadirdior.sa): source of raw product data only.
+- **n8n**: orchestration only. Crawls, parses, prices, upserts to Supabase, then pushes to Shopify.
+- **Supabase**: source of truth for all product data, images, sync state, and image pipeline state. Permanent. Platform-agnostic.
+- **Shopify**: sales channel only. Receives cleaned, priced, SKU-stamped data from Supabase. Never treated as primary store.
+
+**Supabase tables (product data lake):**
+- `suppliers` — one row per supplier (code ND for Nawadir Dior)
+- `brands` — canonical brand registry
+- `supplier_products` — central product table, one row per supplier product; contains all pricing, SEO, availability, SKU, and image pipeline state
+- `shopify_products` — Shopify channel mapping; FK to supplier_products
+- `product_media` — supplier + generated images; never deleted before new images are uploaded
+- `sync_runs` — one row per n8n run (audit + offset tracking)
+- `sync_errors` — every n8n error logged here
+- `creative_briefs` — image generation queue (linked to supplier_products via supabase_product_id)
+- `image_generation_jobs` — Higgsfield call audit
+- `generated_assets` — final published images
+- `collection_briefs` — collection banner config
+- `brand_style_config` — Calapres visual DNA for Higgsfield
+
+**SKU rules (hard rules):**
+- `calapres_sku` format: `CAL-{SUPPLIER_CODE}-P{SUPPLIER_PRODUCT_ID}` — e.g. `CAL-ND-P852601829`
+- `calapres_sku` is set ONCE on INSERT by a DB trigger; never changed after that.
+- `calapres_sku` is the Shopify variant `sku` field.
+- `supplier_sku` is stored separately as `supplier.sku` Shopify metafield for traceability only.
+- Never use `supplier_sku` or `supplier_product_id` as the Shopify variant SKU.
+- Adding a new supplier just requires a new row in `suppliers` with a unique `code`.
+
+**Migrations:**
+- `20260604000001_image_pipeline.sql` — image pipeline tables (brand_style_config, creative_briefs, image_generation_jobs, generated_assets, collection_briefs)
+- `20260604000002_product_data_lake.sql` — product data lake (suppliers, brands, supplier_products, shopify_products, product_media, sync_runs, sync_errors); also adds `supabase_product_id` FK to image pipeline tables
+
+---
+
+## 4. LIVE INFRA
 
 Verified facts. Do not re-discover unless current state directly contradicts them.
 
@@ -38,7 +81,7 @@ Verified facts. Do not re-discover unless current state directly contradicts the
   - `supplier.product_id`
   - both owner type `PRODUCT`, type `single_line_text_field`
 
-## 4. n8n CREDENTIALS
+## 5. n8n CREDENTIALS
 
 Credential IDs are stable. Never paste secrets or token values into code, docs, commits, or chat.
 
@@ -47,7 +90,7 @@ Credential IDs are stable. Never paste secrets or token values into code, docs, 
 - Admin API version in code: `2026-04` for REST writes.
 - Shopify write pacing: about 1 request/second.
 
-## 5. CALAPRES BUSINESS RULES
+## 6. CALAPRES BUSINESS RULES
 
 Authoritative rules. Every sync and enrichment workflow must honor these.
 
@@ -78,7 +121,7 @@ Authoritative rules. Every sync and enrichment workflow must honor these.
   - Match by `supplier.source_url` metafield OR `supplier.product_id` numeric value OR `supplier-id-p<id>` tag.
   - All 18 existing legacy products are backfilled with `supplier.product_id`.
 
-## 6. WORKING STYLE FOR AGENTS
+## 7. WORKING STYLE FOR AGENTS
 
 AI role split:
 
@@ -101,7 +144,7 @@ Owner standing rules:
   `https://x-access-token:[TOKEN]@github.com/A-awd/calapres.git`
 - If remote moved before push: `git pull origin <branch> --rebase`, then push.
 
-## 7. CURRENT STATE & ROADMAP
+## 8. CURRENT STATE & ROADMAP
 
 ### Done
 
@@ -117,7 +160,7 @@ Owner standing rules:
   - `shopify-client.js`
   - `setup-metafield-definitions.js`
   - `backfill-existing-products.js`
-- `sync/__tests__/run-tests.js`: 43 offline tests passing.
+- `sync/__tests__/run-tests.js`: 77 offline tests passing, 443 assertions.
 - Shopify metafield definitions created live.
 - All 18 legacy imported products backfilled with `supplier.product_id`.
 - `sync/backfill-map.json` complete: 18 high-confidence matches, 0 unmatched.
@@ -127,6 +170,12 @@ Owner standing rules:
 - Recurring sync is chunked by persisted offset with `CHUNK_SIZE=300`, carries crawl source URL/product id through parsing, and blocks creates without price or numeric supplier id.
 - Pure enrichment helpers exist under `sync/enrich/` for Higgsfield prompts, Arabic SEO/copy, and enriched payload assembly.
 - Sync CI exists in `.github/workflows/sync-ci.yml` with syntax, tests, dry-run, doc-lint, secret-scan, and generated-output checks.
+- **Product Data Lake**: Supabase schema (`20260604000002_product_data_lake.sql`) creates `suppliers`, `brands`, `supplier_products`, `shopify_products`, `product_media`, `sync_runs`, `sync_errors`. Architecture is now Supplier → Supabase → Shopify.
+- **`sync/supabase-product.js`**: builds `supplier_products` upsert record, generates `calapres_sku` (CAL-ND-P<id>), extracts `shopify_fields` from DB response.
+- **`sync/n8n-build/supabase-upsert.generated.js`**: n8n Code node bundle that prepares the Supabase upsert body from a priced product.
+- **SKU**: `calapres_sku = CAL-ND-P<id>` auto-generated by DB trigger. `supplier_sku` stored as `supplier.sku` metafield. Shopify variant.sku = `calapres_sku`.
+- **Pricing**: `profit_margin_sar = 100` stored per product row in `supplier_products.profit_margin_sar`.
+- **Image pipeline** (from previous session): `sync/image-pipeline/` modules + n8n workflow `Calapres: Product Image Pipeline` (ID `3IpySHSnlUzOmFVh`).
 
 ### Next
 

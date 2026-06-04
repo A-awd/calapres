@@ -32,7 +32,7 @@ function buildPayload(parsed) {
     };
   }
 
-  const variant = compactObject({
+  const variantBase = compactObject({
     id: item.existingVariantId || existingProduct.variantId || readFirstVariantId(existingProduct),
     price: pricing.price === null ? undefined : formatMoney(pricing.price),
     compare_at_price:
@@ -41,15 +41,21 @@ function buildPayload(parsed) {
   });
 
   if (statusOnly) {
-    // ENRICHED/MISSING GUARD: do not emit title, body_html, images, SEO, vendor, tags, or metafields.
+    // ENRICHED/MISSING GUARD: do not emit title, body_html, images, SEO, vendor, tags, metafields, or sku.
     return {
       product: compactObject({
         id: existingProductId,
         status: stock.productStatus,
-        variants: [variant]
+        variants: [variantBase]
       })
     };
   }
+
+  // Full update: include calapres_sku as Shopify variant SKU.
+  const variant = compactObject({
+    ...variantBase,
+    sku: cleanText(item.calapresSku) || undefined
+  });
 
   const tags = uniqueTags([
     config.TAGS.imported,
@@ -158,6 +164,16 @@ function supplierMetafields(item) {
       namespace: config.NAMESPACES.supplier,
       key: config.METAFIELDS.productId,
       value: id,
+      type: 'single_line_text_field'
+    });
+  }
+  // Store supplier_sku separately for traceability. Never use it as Shopify variant SKU.
+  const supplierSku = cleanText(item.supplierSku);
+  if (supplierSku) {
+    metafields.push({
+      namespace: config.NAMESPACES.supplier,
+      key: config.METAFIELDS.supplierSku,
+      value: supplierSku,
       type: 'single_line_text_field'
     });
   }

@@ -94,6 +94,7 @@ const qualityGate = loadSyncModule('image-pipeline/quality-gate.js');
 const creativeBrief = loadSyncModule('image-pipeline/creative-brief.js');
 const imageTypes = loadSyncModule('image-pipeline/image-types.js');
 const seedBriefs = loadSyncModule('image-pipeline/seed-creative-briefs.js');
+const supabaseProduct = loadSyncModule('supabase-product.js');
 
 function productId(url) {
   return crawl.productIdFromUrl(url);
@@ -1206,6 +1207,265 @@ test('image-types product shot types covers all 4 angles', () => {
   assert.equal(imageTypes.PRODUCT_SHOT_TYPES.length, 4);
   assert.ok(imageTypes.PRODUCT_SHOT_TYPES.includes('product_hero'));
   assert.ok(imageTypes.PRODUCT_SHOT_TYPES.includes('product_angle_rtq'));
+});
+
+// ─── Supabase Product (Data Lake) Tests ─────────────────────────────────────
+
+test('supabase-product generateCalapresSku produces CAL-ND-P<id> format', () => {
+  assert.equal(supabaseProduct.generateCalapresSku('ND', '852601829'), 'CAL-ND-P852601829');
+  assert.equal(supabaseProduct.generateCalapresSku('nd', '100'),       'CAL-ND-P100');
+  assert.equal(supabaseProduct.generateCalapresSku('AF', 'p123'),      'CAL-AF-P123'); // strips leading p
+  assert.equal(supabaseProduct.generateCalapresSku('ND', ''),          null);
+  assert.equal(supabaseProduct.generateCalapresSku('',   '123'),       null);
+  assert.equal(supabaseProduct.SUPPLIER_CODE_ND, 'ND');
+});
+
+test('supabase-product buildSupabaseRecord maps supplier product fields correctly', () => {
+  const parsed = {
+    name: 'Tom Ford Oud Wood EDP 100ml',
+    brand: 'Tom Ford',
+    category: 'Niche',
+    concentration: 'EDP',
+    gender: 'unisex',
+    sizeMl: 100,
+    supplierPrice: 805,
+    supplierCompareAtPrice: null,
+    availability: 'in_stock',
+    imageUrl: 'https://cdn.salla.sa/original.jpg',
+    sourceUrl: 'https://nawadirdior.sa/tom-ford-oud-wood/p852601829',
+    description: 'A woody perfume.',
+    supplierProductId: '852601829',
+    supplierSku: 'TF-OW-100',
+  };
+  const priced = { price: 905, compareAtPrice: null };
+  const record = supabaseProduct.buildSupabaseRecord(parsed, priced);
+
+  // Identity
+  assert.equal(record.supplier_product_id, '852601829');
+  assert.equal(record.supplier_sku, 'TF-OW-100');
+  assert.equal(record.supplier_source_url, 'https://nawadirdior.sa/tom-ford-oud-wood/p852601829');
+  assert.equal(record.supplier_slug, 'tom-ford-oud-wood');
+
+  // Content
+  assert.equal(record.product_title_en, 'Tom Ford Oud Wood EDP 100ml');
+
+  // Classification
+  assert.equal(record.brand_name, 'Tom Ford');
+  assert.equal(record.concentration, 'EDP');
+  assert.equal(record.size_ml, 100);
+  assert.equal(record.gender_target, 'unisex');
+  assert.equal(record.category, 'Niche');
+
+  // Pricing
+  assert.equal(record.supplier_price, 805);
+  assert.equal(record.supplier_original_price, null);
+  assert.equal(record.supplier_discounted_price, null);
+  assert.equal(record.profit_margin_sar, 100);
+  assert.equal(record.selling_price, 905);
+  assert.equal(record.compare_at_price, null);
+  assert.equal(record.currency, 'SAR');
+
+  // Availability
+  assert.equal(record.availability_status, 'in_stock');
+
+  // Image pipeline auto-advances when image URL is present
+  assert.equal(record.image_pipeline_status, 'source_saved');
+
+  // calapres_sku not set on record (DB trigger handles it on INSERT)
+  assert.equal(record.calapres_sku, undefined);
+
+  // Raw payload preserved
+  assert.equal(record.raw_payload.supplierPrice, 805);
+});
+
+test('supabase-product buildSupabaseRecord computes discount pricing correctly', () => {
+  const parsed = {
+    name: 'Dior Sauvage EDP',
+    brand: 'Dior',
+    supplierPrice: 650,
+    supplierCompareAtPrice: 805,
+    availability: 'in_stock',
+    sourceUrl: 'https://nawadirdior.sa/dior-sauvage/p111',
+    supplierProductId: '111',
+  };
+  const priced = { price: 750, compareAtPrice: 905 };
+  const record = supabaseProduct.buildSupabaseRecord(parsed, priced);
+
+  assert.equal(record.supplier_price, 650);
+  assert.equal(record.supplier_original_price, 805);
+  assert.equal(record.supplier_discounted_price, 650);  // discounted = current price when original > current
+  assert.equal(record.selling_price, 750);              // supplier_discounted + 100
+  assert.equal(record.compare_at_price, 905);           // supplier_original + 100
+});
+
+test('supabase-product buildSupabaseRecord prevents compare_at == price (same-price guard)', () => {
+  const parsed = {
+    name: 'Test',
+    brand: 'X',
+    supplierPrice: 200,
+    supplierCompareAtPrice: 200,
+    availability: 'in_stock',
+    sourceUrl: 'https://nawadirdior.sa/x/p222',
+    supplierProductId: '222',
+  };
+  // applyPricing would null out compareAtPrice when equal; pass that result
+  const priced = { price: 300, compareAtPrice: null };
+  const record = supabaseProduct.buildSupabaseRecord(parsed, priced);
+  assert.equal(record.compare_at_price, null);
+});
+
+test('supabase-product buildSupabaseRecord normalizes availability variants', () => {
+  const base = { name: 'X', brand: 'Y', sourceUrl: 'https://nawadirdior.sa/x/p1', supplierProductId: '1', supplierPrice: 100 };
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'in_stock' }, {}).availability_status, 'in_stock');
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'متوفر' }, {}).availability_status, 'unknown');
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'out_of_stock' }, {}).availability_status, 'out_of_stock');
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'نفد' }, {}).availability_status, 'out_of_stock');
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'available' }, {}).availability_status, 'in_stock');
+});
+
+test('supabase-product buildSupabaseRecord sets image_pipeline_status=pending when no image', () => {
+  const parsed = { name: 'X', brand: 'Y', sourceUrl: 'https://nawadirdior.sa/x/p9', supplierProductId: '9', supplierPrice: 100 };
+  const record = supabaseProduct.buildSupabaseRecord(parsed, { price: 200 });
+  assert.equal(record.image_pipeline_status, 'pending');
+  assert.equal(record.supplier_sku, null);
+});
+
+test('supabase-product extractShopifyFields reads calapres_sku and supplier_sku from DB row', () => {
+  const dbRow = {
+    id: 'uuid-abc',
+    calapres_sku: 'CAL-ND-P852601829',
+    supplier_sku: 'TF-OW-100',
+    shopify_product_id: '9001',
+    shopify_variant_id: '8001',
+  };
+  const fields = supabaseProduct.extractShopifyFields(dbRow);
+  assert.equal(fields.calapresSku, 'CAL-ND-P852601829');
+  assert.equal(fields.supplierSku, 'TF-OW-100');
+  assert.equal(fields.shopifyProductId, '9001');
+  assert.equal(fields.supabaseProductId, 'uuid-abc');
+});
+
+test('build-shopify-payload uses calapres_sku as Shopify variant sku in full update', () => {
+  const parsed = supplier({
+    sourceUrl: 'https://nawadirdior.sa/tom-ford/p852601829',
+    calapresSku: 'CAL-ND-P852601829',
+  });
+  const payload = payloads.buildPayload(parsed);
+  assert.equal(payload.product.variants[0].sku, 'CAL-ND-P852601829');
+  assert.ok(payload.canCreate !== false);
+});
+
+test('build-shopify-payload does not emit sku in enriched status-only update', () => {
+  const parsed = supplier({
+    sourceUrl: 'https://nawadirdior.sa/tom-ford/p852601829',
+    calapresSku: 'CAL-ND-P852601829',
+    existingProduct: { id: '9001', tags: 'imported-nader-dior, enriched', variants: [{ id: '8001' }] },
+  });
+  const payload = payloads.buildPayload(parsed).product;
+  assert.deepEqual(Object.keys(payload).sort(), ['id', 'status', 'variants']);
+  assert.equal(payload.variants[0].sku, undefined);
+});
+
+test('build-shopify-payload stores supplier_sku as metafield, calapres_sku as variant sku', () => {
+  const parsed = supplier({
+    sourceUrl: 'https://nawadirdior.sa/dior-sauvage/p111',
+    calapresSku: 'CAL-ND-P111',
+    supplierSku: 'DS-EDP-100',
+  });
+  const payload = payloads.buildPayload(parsed);
+  const variant = payload.product.variants[0];
+  const mfs = payload.product.metafields || [];
+
+  // Shopify variant SKU = calapres_sku
+  assert.equal(variant.sku, 'CAL-ND-P111');
+
+  // supplier_sku stored as metafield, never as variant.sku
+  const skuMetafield = mfs.find(function(mf) { return mf.key === 'sku'; });
+  assert.ok(skuMetafield, 'supplier.sku metafield must be present');
+  assert.equal(skuMetafield.namespace, 'supplier');
+  assert.equal(skuMetafield.value, 'DS-EDP-100');
+
+  // supplier_sku is NOT in variant fields
+  assert.equal(variant.sku, 'CAL-ND-P111');  // only calapres_sku
+});
+
+test('single product end-to-end: parse → Supabase record → Shopify payload', () => {
+  // Simulate one product flowing through the full data lake pipeline
+  const rawParsed = {
+    name: 'Tom Ford Oud Wood EDP 100ml',
+    brand: 'Tom Ford',
+    category: 'Niche',
+    concentration: 'EDP',
+    gender: 'unisex',
+    sizeMl: 100,
+    supplierPrice: 805,
+    supplierCompareAtPrice: null,
+    availability: 'in_stock',
+    imageUrl: 'https://cdn.salla.sa/original.jpg',
+    sourceUrl: 'https://nawadirdior.sa/tom-ford-oud-wood/p852601829',
+    supplierProductId: '852601829',
+    supplierSku: 'TF-OW-100',
+    description: 'A woody fragrance.',
+    canCreate: true,
+  };
+
+  // Step 1: Apply pricing (pricing.js)
+  const priced = pricing.applyPricing(rawParsed);
+  assert.equal(priced.price, 905);
+  assert.equal(priced.compareAtPrice, null);
+
+  // Step 2: Build Supabase record (supabase-product.js)
+  const record = supabaseProduct.buildSupabaseRecord(rawParsed, priced);
+  assert.equal(record.supplier_product_id, '852601829');
+  assert.equal(record.supplier_sku, 'TF-OW-100');
+  assert.equal(record.selling_price, 905);
+  assert.equal(record.profit_margin_sar, 100);
+  assert.equal(record.availability_status, 'in_stock');
+  assert.equal(record.image_pipeline_status, 'source_saved');
+
+  // Step 3: Simulate DB-generated calapres_sku (trigger runs on INSERT)
+  const calapresSku = supabaseProduct.generateCalapresSku('ND', record.supplier_product_id);
+  assert.equal(calapresSku, 'CAL-ND-P852601829');
+
+  // Step 4: Build Shopify payload using calapres_sku (build-shopify-payload.js)
+  const shopifyPayload = payloads.buildPayload({
+    ...rawParsed,
+    ...priced,
+    calapresSku,
+    supplierSku: rawParsed.supplierSku,
+  });
+  const product = shopifyPayload.product;
+  const variant = product.variants[0];
+
+  // Variant SKU = calapres_sku (not supplier_sku)
+  assert.equal(variant.sku, 'CAL-ND-P852601829');
+  assert.equal(variant.price, '905');
+
+  // supplier_sku stored as metafield
+  const skuMf = product.metafields.find(function(mf) { return mf.key === 'sku'; });
+  assert.equal(skuMf.value, 'TF-OW-100');
+
+  // supplier_product_id stored as metafield
+  const idMf = product.metafields.find(function(mf) { return mf.key === 'product_id'; });
+  assert.equal(idMf.value, '852601829');
+
+  // product title and brand set
+  assert.equal(product.title, 'Tom Ford Oud Wood EDP 100ml');
+  assert.equal(product.vendor, 'Tom Ford');
+
+  // Image media row for product_media table
+  const mediaRow = supabaseProduct.buildProductMediaRow('uuid-xyz', rawParsed.imageUrl);
+  assert.equal(mediaRow.original_url, 'https://cdn.salla.sa/original.jpg');
+  assert.equal(mediaRow.source, 'supplier');
+  assert.equal(mediaRow.is_primary, false);  // position not set, defaults false
+  assert.equal(mediaRow.uploaded_to_shopify, false);
+});
+
+test('config exposes SUPABASE_URL, SUPABASE_REST, and SUPPLIER_CODES', () => {
+  assert.equal(configModule.SUPABASE_URL, 'https://vozaayivzggkpazehdxr.supabase.co');
+  assert.equal(configModule.SUPABASE_REST, 'https://vozaayivzggkpazehdxr.supabase.co/rest/v1');
+  assert.equal(configModule.SUPPLIER_CODES.nawadirdior, 'ND');
+  assert.equal(configModule.METAFIELDS.supplierSku, 'sku');
 });
 
 test('seed-creative-briefs builds brief from Shopify product with oud theme detection', () => {

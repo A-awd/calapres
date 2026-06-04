@@ -29,9 +29,19 @@ const NAMESPACES = {
 const METAFIELDS = {
   sourceUrl: 'source_url',
   productId: 'product_id',
+  supplierSku: 'sku',            // supplier's own SKU — stored for traceability, not used as Shopify SKU
   seoTitle: 'title_tag',
   seoDescription: 'description_tag',
   enrichedBy: 'enriched_by'
+};
+
+// Supabase project reference. Never paste the actual service key here.
+const SUPABASE_URL = 'https://vozaayivzggkpazehdxr.supabase.co';
+const SUPABASE_REST = SUPABASE_URL + '/rest/v1';
+
+// Supplier codes — used as the middle segment of calapres_sku.
+const SUPPLIER_CODES = {
+  nawadirdior: 'ND'  // CAL-ND-P<id>
 };
 
 const CREDENTIALS = {
@@ -106,6 +116,9 @@ if (typeof module !== 'undefined' && module.exports) {
     HIGGSFIELD_IMAGE_MODEL,
     CREDENTIALS,
     IMPORTED_PRODUCTS_SEARCH_QUERY,
-    DEFAULTS
+    DEFAULTS,
+    SUPABASE_URL,
+    SUPABASE_REST,
+    SUPPLIER_CODES
   };
 }

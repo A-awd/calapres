@@ -37,6 +37,13 @@
       "mode": "runOnceForEachItem"
     },
     {
+      "order": 3.5,
+      "name": "Code: Build Supabase Payload",
+      "file": "supabase-upsert.generated.js",
+      "mode": "runOnceForEachItem",
+      "note": "Builds upsert body for supplier_products table. HTTP Request node POSTs to Supabase. Next Code node reads calapres_sku from response and passes it to buildPayload."
+    },
+    {
       "order": 4,
       "name": "Code: mapAvailability",
       "file": "availability.generated.js",
@@ -124,6 +131,14 @@
     ],
     [
       "Code: applyPricing",
+      "Code: Build Supabase Payload"
+    ],
+    [
+      "Code: Build Supabase Payload",
+      "HTTP POST: Supabase Upsert supplier_products"
+    ],
+    [
+      "HTTP POST: Supabase Upsert supplier_products",
       "Code: mapAvailability"
     ],
     [

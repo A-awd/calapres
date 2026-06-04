@@ -18,6 +18,7 @@ const PRODUCT_FIELDS = {
 
 const VARIANT_FIELDS = {
   id: true,
+  sku: true,              // calapres_sku — allowed in full update, blocked in price_availability_only
   price: true,
   compare_at_price: true,
   inventory_policy: true
