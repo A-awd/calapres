@@ -19,14 +19,14 @@
                 {%- endunless -%}
                 <div class="cart-item-qty">
                   <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="-1">−</button>
-                  <span>{{ item.quantity }}</span>
+                  <span data-local-number="{{ item.quantity }}">{{ item.quantity }}</span>
                   <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="1">+</button>
                 </div>
                 <button class="link cpi-remove" data-change="{{ item.key }}" data-qty="0">
                   <span data-ar>حذف</span><span data-en>Remove</span>
                 </button>
               </div>
-              <div class="cpi-price">{{ item.final_line_price | money }}</div>
+              <div class="cpi-price" data-money-cents="{{ item.final_line_price }}">{{ item.final_line_price | money }}</div>
             </div>
           {%- endfor -%}
         </div>
@@ -34,7 +34,7 @@
         <div class="cart-page-summary">
           <div class="cps-row">
             <span><span data-ar>المجموع الفرعي</span><span data-en>Subtotal</span></span>
-            <span>{{ cart.total_price | money }}</span>
+            <span data-money-cents="{{ cart.total_price }}">{{ cart.total_price | money }}</span>
           </div>
           <p class="cps-note"><span data-ar>الشحن يُحسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
           <a class="btn btn-primary btn-full" href="/checkout">

@@ -61,9 +61,9 @@
         {%- endif -%}
 
         <div class="price" id="pdp-price">
-          {{ current_variant.price | money }}
+          <span data-money-cents="{{ current_variant.price }}">{{ current_variant.price | money }}</span>
           {%- if current_variant.compare_at_price > current_variant.price -%}
-            <span class="compare-at">{{ current_variant.compare_at_price | money }}</span>
+            <span class="compare-at" data-money-cents="{{ current_variant.compare_at_price }}">{{ current_variant.compare_at_price | money }}</span>
           {%- endif -%}
         </div>
 
@@ -85,11 +85,10 @@
                   type="button"
                   class="size-opt{% if variant.id == current_variant.id %} on{% endif %}"
                   data-variant-id="{{ variant.id }}"
-                  data-price-ar="{{ variant.price | money }}"
-                  data-price-en="{{ variant.price | money }}"
+                  data-price-cents="{{ variant.price }}"
                   {% unless variant.available %}disabled{% endunless %}>
                   <span class="v">{{ variant.title }}</span>
-                  <span class="p">{{ variant.price | money }}</span>
+                  <span class="p" data-money-cents="{{ variant.price }}">{{ variant.price | money }}</span>
                 </button>
               {%- endfor -%}
             </div>
@@ -114,6 +113,7 @@
             data-product-url="{{ product.url }}"
             data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ fallback_image }}{% endif %}"
             data-product-price="{{ current_variant.price | money | escape }}"
+            data-product-price-cents="{{ current_variant.price }}"
             data-product-brand="{{ product.vendor | escape }}">
             <span data-ar>المفضلة</span><span data-en>Wishlist</span>
           </button>

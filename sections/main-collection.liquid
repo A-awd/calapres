@@ -98,6 +98,7 @@
                 data-product-url="{{ product.url }}"
                 data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
                 data-product-price="{{ product.price | money | escape }}"
+                data-product-price-cents="{{ product.price }}"
                 data-family="{{ family }}"
                 data-brand="{{ product.vendor | escape }}"
                 data-type="{{ product_type | escape }}"
@@ -115,7 +116,7 @@
                 {%- if product.vendor != blank -%}<div class="brand"><span data-ar>{{ product.vendor }}</span><span data-en>{{ product.vendor }}</span></div>{%- endif -%}
                 <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
                 <div class="row">
-                  <span class="price">{{ product.price | money }}</span>
+                  <span class="price" data-money-cents="{{ product.price }}">{{ product.price | money }}</span>
                   <span class="size-h">{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %}{{ first_variant.title }}{% else %}<span data-ar>متوفر</span><span data-en>Available</span>{% endunless %}</span>
                 </div>
               </a>

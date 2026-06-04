@@ -15,6 +15,7 @@
   data-product-url="{{ product.url }}"
   data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
   data-product-price="{{ product.price | money | escape }}"
+  data-product-price-cents="{{ product.price }}"
   data-family="{{ product.tags | join: ',' | escape }}"
   data-brand="{{ product.vendor | escape }}"
   data-type="{% if product.type != blank %}{{ product.type | escape }}{% else %}عطر{% endif %}"
@@ -36,8 +37,8 @@
   <div class="meta">
     <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
     <div class="price">
-      <span data-ar>{{ product.price | money }}{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
-      <span data-en>{{ product.price | money }}{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
+      <span data-ar><span data-money-cents="{{ product.price }}">{{ product.price | money }}</span>{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
+      <span data-en><span data-money-cents="{{ product.price }}">{{ product.price | money }}</span>{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
     </div>
   </div>
 </a>

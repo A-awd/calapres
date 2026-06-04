@@ -16,6 +16,8 @@
     document.querySelectorAll("[data-lang-label]").forEach(function (el) {
       el.textContent = isAr ? "EN" : "العربية";
     });
+    localizeStaticMoney();
+    localizeStaticNumbers();
     document.dispatchEvent(new CustomEvent("calapres:lang", { detail: { lang: lang } }));
   }
   window.calapresSetLang = setLang;
@@ -135,6 +137,22 @@
       return toArabicDigits(s) + " ر.س";
     }
     return "SAR " + groupThousands(parts[0]) + "." + parts[1];
+  }
+
+  function localizeStaticMoney() {
+    document.querySelectorAll("[data-money-cents]").forEach(function (el) {
+      el.textContent = money(el.getAttribute("data-money-cents"));
+    });
+    document.querySelectorAll("[data-product-price-cents]").forEach(function (el) {
+      el.dataset.productPrice = money(el.getAttribute("data-product-price-cents"));
+    });
+  }
+
+  function localizeStaticNumbers() {
+    document.querySelectorAll("[data-local-number]").forEach(function (el) {
+      var value = el.getAttribute("data-local-number") || el.textContent || "";
+      el.textContent = root.lang === "ar" ? toArabicDigits(value) : value;
+    });
   }
 
   function updateCartCount(count) {
@@ -404,7 +422,8 @@
       title: source.dataset.productTitle || source.querySelector(".name")?.textContent?.trim() || "",
       url: source.dataset.productUrl || source.getAttribute("href") || location.pathname,
       image: source.dataset.productImage || "",
-      price: source.dataset.productPrice || source.querySelector(".price")?.textContent?.trim() || "",
+      price: source.dataset.productPriceCents ? money(source.dataset.productPriceCents) : source.dataset.productPrice || source.querySelector(".price")?.textContent?.trim() || "",
+      priceCents: source.dataset.productPriceCents || "",
       brand: source.dataset.productBrand || source.dataset.brand || source.querySelector(".brand")?.textContent?.trim() || ""
     };
   }
@@ -447,7 +466,7 @@
       var image = escapeHtml(item.image || "");
       var brand = escapeHtml(item.brand || "");
       var title = escapeHtml(item.title || "");
-      var price = escapeHtml(item.price || "");
+      var price = escapeHtml(item.priceCents ? money(item.priceCents) : item.price || "");
       return '<div class="wishlist-item">' +
         '<a class="wishlist-img" href="' + url + '">' + (image ? '<img src="' + image + '" alt="" />' : '') + '</a>' +
         '<div class="wishlist-meta">' +
@@ -536,11 +555,11 @@
       o.addEventListener("click", function () {
         document.querySelectorAll(".size-opt").forEach(function (x) { x.classList.remove("on"); });
         o.classList.add("on");
-        var priceAr = o.dataset.priceAr;
-        var priceEn = o.dataset.priceEn;
+        var priceCents = o.dataset.priceCents;
         var priceEl = document.getElementById("pdp-price");
-        if (priceEl && priceAr) {
-          priceEl.innerHTML = '<span data-ar>' + priceAr + '</span><span data-en>' + priceEn + '</span>';
+        if (priceEl && priceCents) {
+          priceEl.innerHTML = '<span data-money-cents="' + priceCents + '">' + money(priceCents) + '</span>';
+          localizeStaticMoney();
           setLang(root.lang, false);
         }
         var vidInput = document.querySelector("[name='id']");
