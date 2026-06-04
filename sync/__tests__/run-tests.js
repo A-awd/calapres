@@ -90,6 +90,10 @@ const enrichPrompt = loadSyncModule('enrich/prompt.js');
 const enrichSeo = loadSyncModule('enrich/seo.js');
 const enrichPayload = loadSyncModule('enrich/build-enrich-payload.js');
 const reportModule = loadSyncModule('report.js');
+const qualityGate = loadSyncModule('image-pipeline/quality-gate.js');
+const creativeBrief = loadSyncModule('image-pipeline/creative-brief.js');
+const imageTypes = loadSyncModule('image-pipeline/image-types.js');
+const seedBriefs = loadSyncModule('image-pipeline/seed-creative-briefs.js');
 
 function productId(url) {
   return crawl.productIdFromUrl(url);
@@ -1099,6 +1103,126 @@ test('report builds stable JSON and Markdown run summaries', () => {
   assert.ok(markdown.includes('Calapres Sync Run Summary'));
   assert.ok(markdown.includes('| Created | 2 |'));
   assert.equal(JSON.parse(reportModule.toJson(summary)).runId, 'test-run');
+});
+
+// ─── Image Pipeline Tests ────────────────────────────────────────────────────
+
+test('quality-gate passes a well-formed Higgsfield response with reference image', () => {
+  const response = { images: [{ url: 'https://cdn.higgsfield.ai/img1.jpg' }, { url: 'https://cdn.higgsfield.ai/img2.jpg' }] };
+  const ctx = { referenceImageUrl: 'https://cdn.salla.sa/original.jpg' };
+  const result = qualityGate.runQualityChecks(response, ctx);
+  assert.equal(result.passed, true);
+  assert.equal(result.score, 100);
+  assert.equal(result.bestImageUrl, 'https://cdn.higgsfield.ai/img1.jpg');
+  assert.equal(result.issues.length, 0);
+  assert.equal(qualityGate.decideAction(result, 0), 'publish');
+});
+
+test('quality-gate fails empty response and triggers retry then needs_review', () => {
+  const empty = { images: [] };
+  const ctx = { referenceImageUrl: 'https://cdn.salla.sa/original.jpg' };
+  const result = qualityGate.runQualityChecks(empty, ctx);
+  assert.equal(result.passed, false);
+  assert.ok(result.issues.some(i => i.includes('No images')));
+  assert.equal(qualityGate.decideAction(result, 0), 'retry');
+  assert.equal(qualityGate.decideAction(result, 1), 'retry');
+  assert.equal(qualityGate.decideAction(result, 3), 'needs_review');
+});
+
+test('quality-gate flags missing reference image but still checks images', () => {
+  const response = { images: [{ url: 'https://cdn.higgsfield.ai/img.jpg' }] };
+  const result = qualityGate.runQualityChecks(response, {});
+  assert.equal(result.checks.has_images, true);
+  assert.equal(result.checks.reference_used, false);
+  assert.equal(result.passed, false);
+  assert.ok(result.issues.some(i => i.includes('reference')));
+});
+
+test('quality-gate normalizes different Higgsfield response shapes', () => {
+  const withData   = { data: [{ url: 'https://cdn.higgsfield.ai/a.jpg' }] };
+  const withOutput = { outputs: ['https://cdn.higgsfield.ai/b.jpg'] };
+  const ctx = { referenceImageUrl: 'https://cdn.salla.sa/ref.jpg' };
+  assert.equal(qualityGate.normalizeImages(withData)[0],   'https://cdn.higgsfield.ai/a.jpg');
+  assert.equal(qualityGate.normalizeImages(withOutput)[0], 'https://cdn.higgsfield.ai/b.jpg');
+});
+
+test('quality-gate rejects non-https URLs', () => {
+  const response = { images: [{ url: 'http://insecure.com/img.jpg' }, { url: 'https://cdn.higgsfield.ai/safe.jpg' }] };
+  const imgs = qualityGate.normalizeImages(response);
+  assert.equal(imgs.length, 1);
+  assert.equal(imgs[0], 'https://cdn.higgsfield.ai/safe.jpg');
+});
+
+test('creative-brief builds correct Higgsfield request body for product_hero', () => {
+  const brief = {
+    id: 'brief-1',
+    shopify_product_id: '123',
+    product_title: 'Tom Ford Oud Wood',
+    brand_name: 'Tom Ford',
+    concentration: 'EDP',
+    size_ml: 100,
+    bottle_shape_notes: 'rectangular dark brown bottle with gold cap',
+    primary_color: 'dark brown',
+    reference_image_url: 'https://cdn.salla.sa/original.jpg',
+  };
+  const brandStyle = {
+    base_prompt_fragment: 'Luxury ecommerce fragrance photography.',
+    negative_prompt: 'low quality, blurry',
+    reference_image_weight: 0.85,
+  };
+  const req = creativeBrief.buildHiggsfieldRequest(brief, brandStyle, 'product_hero');
+  assert.equal(req.model, 'higgsfield-soul');
+  assert.ok(req.prompt.includes('Tom Ford Oud Wood'));
+  assert.ok(req.prompt.includes('EDP'));
+  assert.ok(req.prompt.includes('Hero angle'));
+  assert.equal(req.aspect_ratio, '1:1');
+  assert.equal(req.resolution, '2048x2048');
+  assert.equal(req.num_outputs, 1);
+  assert.ok(Array.isArray(req.reference_images));
+  assert.equal(req.reference_images[0].role, 'product_reference');
+  assert.equal(req.reference_images[0].url, 'https://cdn.salla.sa/original.jpg');
+  assert.equal(req.reference_images[0].image_weight, 0.85);
+});
+
+test('creative-brief omits reference_images when url is missing', () => {
+  const brief = { shopify_product_id: '456', product_title: 'No Ref Product', reference_image_url: null };
+  const brandStyle = { base_prompt_fragment: 'Luxury.', negative_prompt: 'bad', reference_image_weight: 0.85 };
+  const req = creativeBrief.buildHiggsfieldRequest(brief, brandStyle, 'product_angle_rtq');
+  assert.equal(req.reference_images, undefined);
+});
+
+test('image-types getImageType returns correct definitions', () => {
+  const hero = imageTypes.getImageType('product_hero');
+  assert.equal(hero.aspectRatio, '1:1');
+  assert.equal(hero.resolution, '2048x2048');
+  const banner = imageTypes.getImageType('collection_desktop');
+  assert.equal(banner.aspectRatio, '16:9');
+  const story = imageTypes.getImageType('ad_story');
+  assert.equal(story.aspectRatio, '9:16');
+  assert.throws(() => imageTypes.getImageType('invalid_type'), /Unknown job_type/);
+});
+
+test('image-types product shot types covers all 4 angles', () => {
+  assert.equal(imageTypes.PRODUCT_SHOT_TYPES.length, 4);
+  assert.ok(imageTypes.PRODUCT_SHOT_TYPES.includes('product_hero'));
+  assert.ok(imageTypes.PRODUCT_SHOT_TYPES.includes('product_angle_rtq'));
+});
+
+test('seed-creative-briefs builds brief from Shopify product with oud theme detection', () => {
+  const product = {
+    id: '9001',
+    title: 'Arabian Oud Tribute 100ml',
+    vendor: 'Arabian Oud',
+    tags: ['imported-nader-dior', 'eastern-oud-incense'],
+    images: [{ src: 'https://cdn.shopify.com/original.jpg' }],
+  };
+  const brief = seedBriefs.buildBriefFromShopifyProduct(product);
+  assert.equal(brief.shopify_product_id, '9001');
+  assert.equal(brief.brand_name, 'Arabian Oud');
+  assert.equal(brief.reference_image_url, 'https://cdn.shopify.com/original.jpg');
+  assert.equal(brief.needs_product_images, true);
+  assert.equal(brief.product_image_status, 'pending');
+  assert.equal(brief.collection_theme, 'oud');
 });
 
 async function main() {

@@ -14,7 +14,10 @@ const TAGS = {
   importedArabic: 'مستورد-نوادر-ديور',
   supplier: 'supplier:nawadirdior',
   idPrefix: 'supplier-id-p',
-  enriched: 'enriched'
+  enriched: 'enriched',
+  aiImage: 'ai-image',           // product has Higgsfield-generated images
+  aiImagePending: 'ai-image-pending',  // in creative_briefs queue
+  adReady: 'ad-ready'            // ad creatives generated and stored
 };
 
 const NAMESPACES = {

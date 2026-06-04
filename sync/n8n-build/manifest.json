@@ -89,6 +89,20 @@
       "name": "Code: Build Enriched Payload",
       "file": "enrich-payload.generated.js",
       "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 13,
+      "name": "Code: Build Higgsfield Request (Image Pipeline)",
+      "file": "image-pipeline-brief.generated.js",
+      "mode": "runOnceForEachItem",
+      "workflow": "image-pipeline"
+    },
+    {
+      "order": 14,
+      "name": "Code: Run Quality Gate (Image Pipeline)",
+      "file": "image-pipeline-quality.generated.js",
+      "mode": "runOnceForEachItem",
+      "workflow": "image-pipeline"
     }
   ],
   "connectionGraph": [
