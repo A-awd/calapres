@@ -37,23 +37,30 @@ Recommended Shopify store domain variable:
 8. `Code: applyPricing` -> `Code: Build Supabase Upsert Payload`
 9. `Code: Build Supabase Upsert Payload` -> `Supabase REST: Upsert supplier_products`
 10. `Supabase REST: Upsert supplier_products` -> `Code: Build Product Media Rows`
-11. `Code: Build Product Media Rows` -> `Supabase REST: Upsert product_media`
-12. `Supabase REST: Upsert product_media` -> `Code: mapAvailability`
-13. `Code: mapAvailability` -> `Code: Build Shopify Lookup`
-14. `Code: Build Shopify Lookup` -> `Shopify Admin GraphQL: Lookup Existing`
-15. `Shopify Admin GraphQL: Lookup Existing` -> `Code: Select Existing Product`
-16. `Code: Select Existing Product` -> `Code: Build Shopify Payload From Supabase`
-17. `Code: Build Shopify Payload From Supabase` -> `IF: Existing Product?`
-18. `IF: Existing Product?` true -> `Shopify Admin REST: Update Product`
-19. `IF: Existing Product?` false -> `Shopify Admin REST: Create Product`
-20. both Shopify write nodes -> `Supabase REST: Patch Shopify ids/status`
-21. `Split Product URLs` done output -> `Shopify Admin GraphQL: List Imported Products`
-22. `Shopify Admin GraphQL: List Imported Products` -> `Code: Find Missing Supplier Products`
-23. `Code: Find Missing Supplier Products` -> `Split Missing Products`
-24. `Split Missing Products` -> `Wait: Missing Rate Limit`
-25. `Wait: Missing Rate Limit` -> `Code: buildPayload Missing`
-26. `Code: buildPayload Missing` -> `Shopify Admin REST: Mark Missing Out Of Stock`
-27. any workflow error -> `Code: Build Sync Error Row` -> `Supabase REST: Insert sync_errors`
+11. `Code: Build Product Media Rows` -> `Code: Build Product Media Lookup`
+12. `Code: Build Product Media Lookup` -> `Supabase REST: Existing product_media`
+13. `Supabase REST: Existing product_media` -> `Code: Filter Product Media Rows`
+14. `Code: Filter Product Media Rows` -> `Supabase REST: Insert Missing product_media`
+15. `Supabase REST: Insert Missing product_media` -> `Code: mapAvailability`
+16. `Code: mapAvailability` -> `Code: Build Shopify Lookup`
+17. `Code: Build Shopify Lookup` -> `Shopify Admin GraphQL: Lookup Existing`
+18. `Shopify Admin GraphQL: Lookup Existing` -> `Code: Select Existing Product`
+19. `Code: Select Existing Product` -> `Code: Build Shopify Payload From Supabase`
+20. `Code: Build Shopify Payload From Supabase` -> `IF: Existing Product?`
+21. `IF: Existing Product?` true -> `Shopify Admin REST: Update Product`
+22. `IF: Existing Product?` false -> `Shopify Admin REST: Create Product`
+23. both Shopify write nodes -> `Code: Build Supabase Shopify Sync Payload`
+24. `Code: Build Supabase Shopify Sync Payload` -> `Supabase REST: Patch supplier_products Shopify fields`
+25. `Code: Build Supabase Shopify Sync Payload` -> `Supabase REST: Upsert shopify_products`
+26. `Split Product URLs` done output -> `Shopify Admin GraphQL: List Imported Products`
+27. `Shopify Admin GraphQL: List Imported Products` -> `Code: Find Missing Supplier Products`
+28. `Code: Find Missing Supplier Products` -> `Split Missing Products`
+29. `Split Missing Products` -> `Wait: Missing Rate Limit`
+30. `Wait: Missing Rate Limit` -> `Code: buildPayload Missing`
+31. `Code: buildPayload Missing` -> `Shopify Admin REST: Mark Missing Out Of Stock`
+32. any workflow error -> `Code: Build Sync Error Row` -> `Supabase REST: Insert sync_errors`
+
+Product media insert is not a blind upsert: query existing supplier media for the Supabase product and insert only `productMediaInsertRows`, because `product_media` intentionally has no unique constraint on `supplier_product_id + source + original_url`.
 
 ## Node 1: Schedule Trigger
 

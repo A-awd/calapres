@@ -44,16 +44,23 @@ Never paste Supabase service role key into code, chat, or GitHub. Store it only 
 9. Code: `Code: Build Supabase Upsert Payload` from `sync/n8n-build/supabase-upsert.generated.js`
 10. HTTP POST Supabase `/supplier_products?on_conflict=supplier_id,supplier_product_id`
 11. Code: `Code: Build Product Media Rows` from `sync/n8n-build/product-media.generated.js`
-12. HTTP POST Supabase `/product_media` for each original image row
-13. Code: `Code: mapAvailability` from `sync/n8n-build/availability.generated.js`
-14. Code: `Code: Build Shopify Lookup` from `sync/n8n-build/buildLookup.generated.js`
-15. Shopify Admin GraphQL lookup existing product
-16. Code: `Code: Select Existing Product` from `sync/n8n-build/selectExisting.generated.js`
-17. Code: `Code: Build Shopify Payload From Supabase` from `sync/n8n-build/shopify-from-supabase.generated.js`
-18. Validate payload output; skip if `skipWrite=true`
-19. Shopify Admin REST create or update product
-20. HTTP PATCH Supabase `supplier_products` and `shopify_products` with Shopify ids/status
-21. On any node error: Code `Code: Build Sync Error Row` from `sync/n8n-build/sync-error.generated.js`, then POST `/sync_errors`
+12. Code: `Code: Build Product Media Lookup` from `sync/n8n-build/product-media-lookup.generated.js`
+13. HTTP GET Supabase path from `productMediaLookupPath`
+14. Code: `Code: Filter Product Media Rows` from `sync/n8n-build/product-media-filter.generated.js`
+15. HTTP POST Supabase `/product_media` using `productMediaInsertRows`; skip when `skipProductMediaInsert=true`
+16. Code: `Code: mapAvailability` from `sync/n8n-build/availability.generated.js`
+17. Code: `Code: Build Shopify Lookup` from `sync/n8n-build/buildLookup.generated.js`
+18. Shopify Admin GraphQL lookup existing product
+19. Code: `Code: Select Existing Product` from `sync/n8n-build/selectExisting.generated.js`
+20. Code: `Code: Build Shopify Payload From Supabase` from `sync/n8n-build/shopify-from-supabase.generated.js`
+21. Validate payload output; skip if `skipWrite=true`
+22. Shopify Admin REST create or update product
+23. Code: `Code: Build Supabase Shopify Sync Payload` from `sync/n8n-build/supabase-shopify-sync.generated.js`
+24. HTTP PATCH Supabase `/supplier_products?id=eq.<supabaseProduct.id>` with `supplierProductPatch`
+25. HTTP POST Supabase `/shopify_products?on_conflict=supplier_product_id` with `shopifyProductUpsertBody`
+26. On any node error: Code `Code: Build Sync Error Row` from `sync/n8n-build/sync-error.generated.js`, then POST `/sync_errors`
+
+Product media is intentionally guarded in n8n because `product_media` has no uniqueness constraint on `supplier_product_id + source + original_url`. Always query existing supplier media for the Supabase product first and insert only `productMediaInsertRows` from the filter node.
 
 ## One-Product Test
 
@@ -68,6 +75,7 @@ Never paste Supabase service role key into code, chat, or GitHub. Store it only 
 4. Confirm `product_media` has supplier image rows.
 5. Stop before bulk loops. Do not trigger Higgsfield generation.
 6. If Shopify write is enabled for the test, create/update only that one product.
+7. Confirm `shopify_products` has exactly one mapping row for the tested Supabase product.
 
 ## Workflow 2
 

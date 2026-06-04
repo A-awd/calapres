@@ -143,6 +143,8 @@ The old direct Shopify workflow has run live successfully, but the new productio
    - Imported-products query `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`.
 10. Confirm missing supplier products are marked draft/out of stock and are never deleted.
 11. Confirm Shopify payloads are built from the returned Supabase row, not directly from parsed supplier data.
+12. Confirm `product_media` inserts use the existing-media lookup/filter nodes and insert only `productMediaInsertRows`.
+13. Confirm successful Shopify writes patch `supplier_products` and upsert `shopify_products` from `supabase-shopify-sync.generated.js`.
 
 ## 6. n8n Enrichment Import
 
@@ -175,21 +177,26 @@ The old direct Shopify workflow has run live successfully, but the new productio
    - New imported products are draft for review.
    - Tags include `imported-nader-dior`, `supplier:nawadirdior`, and `supplier-id-p<id>`.
    - Supplier metafields are present.
-10. Run the enrichment workflow manually for one new product only after prompt style approval.
-11. Verify the enriched product:
+   - Variant SKU is the Calapres SKU, not supplier SKU.
+10. Verify in Supabase:
+   - `shopify_products` has one mapping row for the tested Supabase product.
+   - `supplier_products.shopify_product_id`, `shopify_variant_id`, `shopify_handle`, and `shopify_sync_status` are updated.
+   - `sync_errors` has no row for the tested product.
+11. Run the enrichment workflow manually for one new product only after prompt style approval.
+12. Verify the enriched product:
    - Has generated images.
    - Has Arabic SEO fields.
    - Has the `enriched` tag.
-12. Re-run recurring sync for that enriched product.
-13. Verify price and inventory update while title, description, images, and SEO stay unchanged.
-14. Enable or re-enable the recurring Schedule Trigger after QA.
-15. Monitor the next full run after changes:
+13. Re-run recurring sync for that enriched product.
+14. Verify price and inventory update while title, description, images, and SEO stay unchanged.
+15. Enable or re-enable the recurring Schedule Trigger after QA.
+16. Monitor the next full run after changes:
    - Products created.
    - Products updated.
    - Missing products drafted/out of stock.
    - Shopify HTTP errors.
    - Higgsfield HTTP errors.
-16. Leave deletion disabled permanently for supplier-missing products.
+17. Leave deletion disabled permanently for supplier-missing products.
 
 ## 8. Rollback
 

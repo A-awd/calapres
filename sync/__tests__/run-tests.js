@@ -1508,6 +1508,56 @@ test('supabase-product creates media rows without triggering Higgsfield generati
   assert.equal(Object.prototype.hasOwnProperty.call(rows[0], 'higgsfield_request_id'), false);
 });
 
+test('supabase-product filters existing supplier media rows before n8n insert', () => {
+  const rows = supabaseProduct.buildProductMediaRows('uuid-product', {
+    imageUrl: 'https://cdn.salla.sa/main.jpg',
+    images: ['https://cdn.salla.sa/second.jpg']
+  });
+  const lookupPath = supabaseProduct.buildProductMediaLookupPath('uuid-product');
+  assert.equal(
+    lookupPath,
+    '/product_media?select=id,original_url&supplier_product_id=eq.uuid-product&source=eq.supplier'
+  );
+
+  const missing = supabaseProduct.filterMissingProductMediaRows(rows, [
+    { id: 'existing-media', original_url: 'https://cdn.salla.sa/main.jpg' }
+  ]);
+  assert.equal(missing.length, 1);
+  assert.equal(missing[0].original_url, 'https://cdn.salla.sa/second.jpg');
+});
+
+test('supabase-product builds post-Shopify Supabase mapping payloads', () => {
+  const sync = supabaseProduct.buildShopifySyncPayload(
+    {
+      id: '32f2f461-dc25-4507-a71a-9c7550453455',
+      shopify_product_id: null,
+      shopify_variant_id: null,
+      shopify_handle: null
+    },
+    {
+      product: {
+        id: 1234567890,
+        handle: 'tom-ford-oud-wood',
+        status: 'draft',
+        variants: [{ id: 9876543210 }]
+      }
+    },
+    {
+      existingTags: ['imported-nader-dior']
+    }
+  );
+
+  assert.equal(sync.supplierProductPatch.shopify_product_id, '1234567890');
+  assert.equal(sync.supplierProductPatch.shopify_variant_id, '9876543210');
+  assert.equal(sync.supplierProductPatch.shopify_handle, 'tom-ford-oud-wood');
+  assert.equal(sync.supplierProductPatch.shopify_sync_status, 'synced');
+  assert.equal(Object.prototype.hasOwnProperty.call(sync.supplierProductPatch, 'raw_payload'), false);
+  assert.equal(sync.shopifyProductUpsertBody.supplier_product_id, '32f2f461-dc25-4507-a71a-9c7550453455');
+  assert.equal(sync.shopifyProductUpsertBody.shopify_status, 'draft');
+  assert.equal(sync.shopifyProductUpsertBody.is_enriched, false);
+  assert.equal(sync.shopifyProductUpsertBody.sync_status, 'synced');
+});
+
 test('supabase-product builds sync_errors rows for n8n error logging', () => {
   const row = supabaseProduct.buildSyncErrorRow(new Error('Parse failed'), {
     syncRunId: 'run-1',

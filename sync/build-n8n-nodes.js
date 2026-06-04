@@ -134,6 +134,31 @@ async function main() {
 }`
   },
   {
+    file: 'product-media-lookup.generated.js',
+    name: 'Code: Build Product Media Lookup',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const productId = $json.supabaseProduct?.id || $json.supplier_product_id || null;
+  const path = supabase.buildProductMediaLookupPath(productId);
+  return { json: { ...$json, productMediaLookupPath: path, skipProductMediaLookup: !path || !($json.productMediaRows || []).length } };
+}`
+  },
+  {
+    file: 'product-media-filter.generated.js',
+    name: 'Code: Filter Product Media Rows',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const base = $node['Code: Build Product Media Lookup']?.json || $node['Code: Build Product Media Rows']?.json || $json;
+  const existingRows = Array.isArray($json) ? $json : ($json.data || $json.body || []);
+  const rows = supabase.filterMissingProductMediaRows(base.productMediaRows || [], existingRows);
+  return { json: { ...base, existingProductMediaRows: existingRows, productMediaInsertRows: rows, skipProductMediaInsert: rows.length === 0 } };
+}`
+  },
+  {
     file: 'availability.generated.js',
     name: 'Code: mapAvailability',
     mode: 'runOnceForEachItem',
@@ -158,6 +183,22 @@ async function main() {
   if (payload.skipped) return { json: { ...$json, payload, skipWrite: true, reason: payload.reason } };
   validator.assertValidShopifyProductShape(payload, existingProduct?.tags?.includes('enriched') ? { mode: 'price_availability_only' } : {});
   return { json: { ...$json, payload, productId: payload.product.id || row.shopify_product_id || null } };
+}`
+  },
+  {
+    file: 'supabase-shopify-sync.generated.js',
+    name: 'Code: Build Supabase Shopify Sync Payload',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const base = $node['Code: Build Shopify Payload From Supabase']?.json || $json;
+  const sync = supabase.buildShopifySyncPayload(base.supabaseProduct || base.supplierProduct || {}, $json, {
+    payload: base.payload,
+    existingProduct: base.existingProduct,
+    existingTags: base.existingProduct?.tags || []
+  });
+  return { json: { ...base, shopifyResponse: $json, ...sync } };
 }`
   },
   {
@@ -393,13 +434,19 @@ function buildManifest() {
       ['Code: applyPricing', 'Code: Build Supabase Upsert Payload'],
       ['Code: Build Supabase Upsert Payload', 'HTTP POST: Supabase Upsert supplier_products'],
       ['HTTP POST: Supabase Upsert supplier_products', 'Code: Build Product Media Rows'],
-      ['Code: Build Product Media Rows', 'HTTP POST: Supabase Upsert product_media'],
-      ['HTTP POST: Supabase Upsert product_media', 'Code: mapAvailability'],
+      ['Code: Build Product Media Rows', 'Code: Build Product Media Lookup'],
+      ['Code: Build Product Media Lookup', 'HTTP GET: Supabase Existing product_media'],
+      ['HTTP GET: Supabase Existing product_media', 'Code: Filter Product Media Rows'],
+      ['Code: Filter Product Media Rows', 'HTTP POST: Supabase Insert Missing product_media'],
+      ['HTTP POST: Supabase Insert Missing product_media', 'Code: mapAvailability'],
       ['Code: mapAvailability', 'Code: Build Shopify Lookup'],
       ['Code: Build Shopify Lookup', 'Shopify Admin GraphQL: Lookup Existing'],
       ['Shopify Admin GraphQL: Lookup Existing', 'Code: Select Existing Product'],
       ['Code: Select Existing Product', 'Code: Build Shopify Payload From Supabase'],
       ['Code: Build Shopify Payload From Supabase', 'Shopify Admin REST create/update'],
+      ['Shopify Admin REST create/update', 'Code: Build Supabase Shopify Sync Payload'],
+      ['Code: Build Supabase Shopify Sync Payload', 'HTTP PATCH: Supabase supplier_products Shopify fields'],
+      ['Code: Build Supabase Shopify Sync Payload', 'HTTP POST: Supabase Upsert shopify_products'],
       ['Shopify Admin GraphQL: List Imported Products', 'Code: Find Missing Supplier Products'],
       ['Code: Find Missing Supplier Products', 'Code: buildPayload Missing'],
       ['Workflow Error Trigger', 'Code: Build Sync Error Row'],

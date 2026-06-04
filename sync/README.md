@@ -49,7 +49,7 @@ Live setup is moving from the old direct path to the product data lake:
 
 `nawadirdior.sa -> n8n -> Supabase -> Shopify`
 
-Recurring sync drains the supplier catalog in 300-product chunks: `sitemap.xml -> computeChunk(offset) -> crawl item sourceUrl/supplierProductId -> HTTP GET -> parseProduct(html, crawl context) -> canCreate guard -> normalize -> applyPricing -> Supabase supplier_products upsert -> product_media rows -> Shopify lookup -> Shopify payload from Supabase row -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`. New imported products land as draft for review, enriched products route through a price/availability-only guard, and supplier-missing products are drafted out of stock instead of deleted.
+Recurring sync drains the supplier catalog in 300-product chunks: `sitemap.xml -> computeChunk(offset) -> crawl item sourceUrl/supplierProductId -> HTTP GET -> parseProduct(html, crawl context) -> canCreate guard -> normalize -> applyPricing -> Supabase supplier_products upsert -> product_media rows -> existing-media lookup/filter -> Shopify lookup -> Shopify payload from Supabase row -> validateShopifyProductShape -> Shopify write -> Supabase Shopify-id mapping`. New imported products land as draft for review, enriched products route through a price/availability-only guard, and supplier-missing products are drafted out of stock instead of deleted.
 
 Image flow is prepared but not bulk-enabled:
 
@@ -90,10 +90,12 @@ The dry run writes `sync/dry-run-output.json` and `sync/reports/sample-run.md`. 
 4. Code node with `pricing.js` can call `applyPricing(parsed)` if pricing is needed separately.
 5. Code node with `supabase-product.js` builds `supplier_products` upsert body and `product_media` rows.
 6. Supabase HTTP nodes upsert data lake records with service-role credential stored only in n8n.
-7. Code node with `inventory.js` can call `mapAvailability(parsed.availability)` for status-only stock sync.
-8. Code node with `shopify-client.js` builds lookup request shapes.
-9. Code node with `supabase-product.js` builds Shopify payload from the returned Supabase row.
-10. Code node with `validate-shopify-shape.js` calls `assertValidShopifyProductShape(payload)` before writes.
+7. Product media insert is guarded by querying existing supplier media for the Supabase product and inserting only missing `original_url` rows.
+8. Code node with `inventory.js` can call `mapAvailability(parsed.availability)` for status-only stock sync.
+9. Code node with `shopify-client.js` builds lookup request shapes.
+10. Code node with `supabase-product.js` builds Shopify payload from the returned Supabase row.
+11. Code node with `validate-shopify-shape.js` calls `assertValidShopifyProductShape(payload)` before writes.
+12. After a Shopify write succeeds, `supabase-product.js` builds `supplier_products` patch and `shopify_products` upsert payloads.
 
 ## Enriched Product Guard
 

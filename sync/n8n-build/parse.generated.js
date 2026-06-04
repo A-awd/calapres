@@ -2877,6 +2877,24 @@ function buildProductMediaRows(supabaseProductId, product, options) {
   );
 }
 
+function buildProductMediaLookupPath(supabaseProductId) {
+  const productId = cleanString(supabaseProductId);
+  if (!productId) return null;
+  return '/product_media?select=id,original_url&supplier_product_id=eq.' + encodeURIComponent(productId) + '&source=eq.supplier';
+}
+
+function filterMissingProductMediaRows(mediaRows, existingRows) {
+  const existingUrls = {};
+  for (const row of normalizeRows(existingRows)) {
+    const url = cleanString(row.original_url || row.originalUrl);
+    if (url) existingUrls[url] = true;
+  }
+  return normalizeRows(mediaRows).filter((row) => {
+    const url = cleanString(row.original_url || row.originalUrl);
+    return url && !existingUrls[url];
+  });
+}
+
 function buildSyncErrorRow(error, context) {
   const ctx = context || {};
   const message = error && error.message ? error.message : String(error || 'Unknown sync error');
@@ -2918,6 +2936,48 @@ function buildShopifyPayloadFromSupabaseRecord(row, options) {
   return payloads.buildPayload(buildShopifyInputFromSupabaseRecord(row, options));
 }
 
+function buildShopifySyncPayload(supabaseRow, shopifyResponse, options) {
+  const row = supabaseRow && typeof supabaseRow === 'object' ? supabaseRow : {};
+  const opts = options || {};
+  const product = extractShopifyProduct(shopifyResponse) || extractShopifyProduct(opts.shopifyResponse) || {};
+  const variant = firstArrayItem(product.variants) || {};
+  const shopifyProductId = cleanString(product.id || opts.shopifyProductId || row.shopify_product_id);
+  const shopifyVariantId = cleanString(variant.id || opts.shopifyVariantId || row.shopify_variant_id);
+  const shopifyHandle = cleanString(product.handle || opts.shopifyHandle || row.shopify_handle);
+  const shopifyStatus = cleanString(product.status || opts.shopifyStatus || (opts.payload && opts.payload.product && opts.payload.product.status));
+  const syncStatus = opts.syncStatus || (shopifyProductId ? 'synced' : 'failed');
+  const rawPayload = opts.rawPayload || product || shopifyResponse || null;
+
+  const supplierProductPatch = compactObject({
+    shopify_product_id: shopifyProductId || null,
+    shopify_variant_id: shopifyVariantId || null,
+    shopify_handle: shopifyHandle || null,
+    shopify_sync_status: syncStatus
+  });
+
+  const shopifyProductUpsertBody = compactObject({
+    supplier_product_id: row.id || opts.supabaseProductId,
+    shopify_product_id: shopifyProductId || null,
+    shopify_variant_id: shopifyVariantId || null,
+    shopify_handle: shopifyHandle || null,
+    shopify_status: shopifyStatus || null,
+    is_enriched: hasTag(opts.existingTags || (opts.existingProduct && opts.existingProduct.tags), config.TAGS.enriched),
+    last_synced_at: opts.now || new Date().toISOString(),
+    sync_status: syncStatus,
+    sync_error: opts.syncError || null,
+    raw_payload: rawPayload
+  });
+
+  return {
+    supplierProductPatch,
+    shopifyProductUpsertBody,
+    shopifyProductId: shopifyProductId || null,
+    shopifyVariantId: shopifyVariantId || null,
+    shopifyHandle: shopifyHandle || null,
+    shopifyStatus: shopifyStatus || null
+  };
+}
+
 function extractShopifyFields(supabaseRow) {
   const row = supabaseRow && typeof supabaseRow === 'object' ? supabaseRow : {};
   return {
@@ -2928,6 +2988,15 @@ function extractShopifyFields(supabaseRow) {
     shopifyHandle: row.shopify_handle || null,
     supabaseProductId: row.id || null
   };
+}
+
+function extractShopifyProduct(response) {
+  const value = response && response.json ? response.json : response;
+  if (!value || typeof value !== 'object') return null;
+  if (value.product && typeof value.product === 'object') return value.product;
+  if (value.body && value.body.product && typeof value.body.product === 'object') return value.body.product;
+  if (value.data && value.data.product && typeof value.data.product === 'object') return value.data.product;
+  return null;
 }
 
 function extractImageUrls(value) {
@@ -3053,6 +3122,24 @@ function compactObject(object) {
   return out;
 }
 
+function normalizeRows(value) {
+  if (Array.isArray(value)) return value.filter((row) => row && typeof row === 'object');
+  if (value && Array.isArray(value.data)) return value.data.filter((row) => row && typeof row === 'object');
+  if (value && Array.isArray(value.body)) return value.body.filter((row) => row && typeof row === 'object');
+  return [];
+}
+
+function firstArrayItem(value) {
+  return Array.isArray(value) && value.length ? value[0] : null;
+}
+
+function hasTag(tags, target) {
+  const wanted = cleanString(target).toLowerCase();
+  if (!wanted) return false;
+  const values = Array.isArray(tags) ? tags : String(tags || '').split(',');
+  return values.some((tag) => cleanString(tag).toLowerCase() === wanted);
+}
+
 function unique(values) {
   const seen = {};
   const out = [];
@@ -3074,10 +3161,14 @@ if (typeof module !== 'undefined' && module.exports) {
     generateCalapresSku,
     buildProductMediaRow,
     buildProductMediaRows,
+    buildProductMediaLookupPath,
+    filterMissingProductMediaRows,
     buildSyncErrorRow,
     buildShopifyInputFromSupabaseRecord,
     buildShopifyPayloadFromSupabaseRecord,
+    buildShopifySyncPayload,
     extractShopifyFields,
+    extractShopifyProduct,
     extractImageUrls,
     SUPPLIER_CODE_ND
   };
