@@ -32,14 +32,27 @@
     });
   }
 
-  /* ---- Announcement bar ---- */
+  /* ---- Opening delivery popup ---- */
   function announcement() {
-    var bar = document.querySelector("[data-announcement-bar]");
-    var close = document.querySelector("[data-announcement-close]");
-    if (!bar || !close) return;
-    close.addEventListener("click", function () {
-      root.classList.add("announcement-hidden");
+    var popup = document.querySelector("[data-announcement-popup]");
+    if (!popup) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem("calapres-delivery-popup") === "seen"; } catch (e) {}
+    function close() {
+      popup.classList.remove("open");
+      document.body.style.overflow = "";
+      setTimeout(function () { popup.hidden = true; }, 420);
+      try { sessionStorage.setItem("calapres-delivery-popup", "seen"); } catch (e) {}
+    }
+    if (!seen) {
+      popup.hidden = false;
+      document.body.style.overflow = "hidden";
+      requestAnimationFrame(function () { popup.classList.add("open"); });
+    }
+    popup.querySelectorAll("[data-announcement-close]").forEach(function (btn) {
+      btn.addEventListener("click", close);
     });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && popup.classList.contains("open")) close(); });
   }
 
   /* ---- Header: transparent over hero, solid on scroll ---- */

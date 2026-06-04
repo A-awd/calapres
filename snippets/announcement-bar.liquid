@@ -1,9 +1,16 @@
-{%- assign announcement_ar = settings.announcement_text_ar | default: 'شحن مجاني داخل المملكة العربية السعودية على الطلبات فوق ٢٠٠ ر.س' -%}
-{%- assign announcement_en = settings.announcement_text_en | default: 'Free shipping across Saudi Arabia on orders over SAR 200' -%}
-<div class="announcement-bar" role="region" aria-label="إعلان" data-announcement-bar>
-  <p>
-    <span data-ar>{{ announcement_ar }}</span>
-    <span data-en>{{ announcement_en }}</span>
-  </p>
-  <button class="announcement-close" type="button" aria-label="إغلاق الإعلان" data-announcement-close>&times;</button>
+{%- assign announcement_ar = settings.announcement_text_ar | default: 'توصيل مجاني للطلبات أكثر من ٥٠٠ ريال' -%}
+{%- assign announcement_en = settings.announcement_text_en | default: 'Free delivery on orders over SAR 500' -%}
+<div class="announcement-popup" role="dialog" aria-modal="true" aria-label="إعلان التوصيل المجاني" data-announcement-popup hidden>
+  <div class="announcement-scrim" data-announcement-close></div>
+  <div class="announcement-card">
+    <button class="announcement-close" type="button" aria-label="إغلاق الإعلان" data-announcement-close>&times;</button>
+    <span class="eyebrow"><span data-ar>خدمة كالابريز</span><span data-en>Calapres service</span></span>
+    <p>
+      <span data-ar>{{ announcement_ar }}</span>
+      <span data-en>{{ announcement_en }}</span>
+    </p>
+    <button class="btn btn-primary" type="button" data-announcement-close>
+      <span data-ar>حسنًا</span><span data-en>Got it</span>
+    </button>
+  </div>
 </div>

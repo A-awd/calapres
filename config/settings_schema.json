@@ -92,13 +92,13 @@
         "type": "text",
         "id": "announcement_text_ar",
         "label": "Announcement Arabic",
-        "default": "شحن مجاني داخل المملكة العربية السعودية على الطلبات فوق ٢٠٠ ر.س"
+        "default": "توصيل مجاني للطلبات أكثر من ٥٠٠ ريال"
       },
       {
         "type": "text",
         "id": "announcement_text_en",
         "label": "Announcement English",
-        "default": "Free shipping across Saudi Arabia on orders over SAR 200"
+        "default": "Free delivery on orders over SAR 500"
       }
     ]
   },
