@@ -78,18 +78,7 @@ Use this checklist to maintain, verify, and safely operate the live supplier syn
 ## 4. Local Validation Before n8n Edits or Re-Import
 
 1. Run syntax checks:
-   - `node --check sync/crawl-supplier.js`
-   - `node --check sync/parse-product.js`
-   - `node --check sync/pricing.js`
-   - `node --check sync/inventory.js`
-   - `node --check sync/build-shopify-payload.js`
-   - `node --check sync/shopify-client.js`
-   - `node --check sync/reconcile.js`
-   - `node --check sync/validate-shopify-shape.js`
-   - `node --check sync/setup-metafield-definitions.js`
-   - `node --check sync/backfill-existing-products.js`
-   - `node --check sync/run-local-dry.js`
-   - `node --check sync/__tests__/run-tests.js`
+   - `find sync -name '*.js' -print0 | xargs -0 -n1 node --check`
 
 2. Run offline tests:
    - `node sync/__tests__/run-tests.js`
@@ -97,7 +86,15 @@ Use this checklist to maintain, verify, and safely operate the live supplier syn
 3. Run the first-20 offline dry run:
    - `node sync/run-local-dry.js`
 
-4. Inspect `sync/dry-run-output.json`:
+4. Generate and verify n8n Code-node bundles:
+   - `node sync/build-n8n-nodes.js`
+   - `node sync/tools/check-generated.js`
+
+5. Run docs and secret guards:
+   - `node sync/tools/doc-lint.js`
+   - `node sync/tools/secret-scan.js`
+
+6. Inspect `sync/dry-run-output.json` and `sync/reports/sample-run.md`:
    - Confirm `generatedPayloads` is `20`.
    - Confirm `preSyncSetup.metafieldDefinitionRequests` contains `source_url` and `product_id`.
    - Confirm `preSyncSetup.backfillPlan.summary.totalExisting` is `18`.
@@ -115,26 +112,18 @@ Use this checklist to maintain, verify, and safely operate the live supplier syn
 
 The recurring workflow is already built and has run live successfully. Use this section when editing, rebuilding, or re-importing it.
 
-1. Maintain the recurring workflow from `sync/n8n-sync-flow.md`.
-2. Paste each helper file into the matching n8n Code node:
-   - `sync/crawl-supplier.js`
-   - `sync/parse-product.js`
-   - `sync/pricing.js`
-   - `sync/inventory.js`
-   - `sync/build-shopify-payload.js`
-   - `sync/shopify-client.js`
-   - `sync/reconcile.js`
-   - `sync/validate-shopify-shape.js`
-   - Setup/audit helpers `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js` are not recurring-flow nodes.
-3. Configure all Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
-4. Set all Shopify request URLs to use `{{$env.SHOPIFY_STORE_DOMAIN}}` or the verified fallback `unywbe-ub.myshopify.com`.
-5. Set the Split In Batches node to batch size `1`.
-6. Keep the one-second Wait node before every Shopify write.
-7. Confirm product matching checks both:
+1. Maintain source helpers in GitHub, then run `node sync/build-n8n-nodes.js`.
+2. Claude deploys Code nodes from `sync/n8n-build/*.generated.js` using `sync/n8n-build/manifest.json`.
+3. Setup/audit helpers `sync/setup-metafield-definitions.js` and `sync/backfill-existing-products.js` are not recurring-flow nodes.
+4. Configure all Shopify HTTP Request nodes with credential id `QLsvwO73GFsQfy0w`.
+5. Set all Shopify request URLs to use `{{$env.SHOPIFY_STORE_DOMAIN}}` or the verified fallback `unywbe-ub.myshopify.com`.
+6. Persist and advance the catalog offset from generated crawl output; wrap to `0` at catalog end.
+7. Keep the one-second Wait node before every Shopify write.
+8. Confirm product matching checks both:
    - `supplier.source_url` metafield.
    - `supplier-id-p<id>` tags.
    - Imported-products query `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`.
-8. Confirm missing supplier products are marked draft/out of stock and are never deleted.
+9. Confirm missing supplier products are marked draft/out of stock and are never deleted.
 
 ## 6. n8n Enrichment Import
 

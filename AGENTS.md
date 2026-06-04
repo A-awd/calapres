@@ -122,11 +122,16 @@ Owner standing rules:
 - All 18 legacy imported products backfilled with `supplier.product_id`.
 - `sync/backfill-map.json` complete: 18 high-confidence matches, 0 unmatched.
 - Dry run generates 20 offline payloads and exact Shopify request shapes.
+- `sync/config.js` is the source of truth for store domain, API versions, tags, markup, chunk size, credential ids, namespaces, and supplier constants.
+- Generated n8n Code-node bundles live in `sync/n8n-build/`; Claude deploys these artifacts, Codex does not deploy live flows.
+- Recurring sync is chunked by persisted offset with `CHUNK_SIZE=300`, carries crawl source URL/product id through parsing, and blocks creates without price or numeric supplier id.
+- Pure enrichment helpers exist under `sync/enrich/` for Higgsfield prompts, Arabic SEO/copy, and enriched payload assembly.
+- Sync CI exists in `.github/workflows/sync-ci.yml` with syntax, tests, dry-run, doc-lint, secret-scan, and generated-output checks.
 
 ### Next
 
-- Build full recurring sync workflow in n8n using `sync/n8n-sync-flow.md` (22 nodes).
-- Build enrichment workflow using `sync/n8n-enrich-flow.md` and Higgsfield.
+- Claude redeploys/updates live n8n from `sync/n8n-build/manifest.json` and generated Code-node bundles.
+- Claude wires Higgsfield live credentials to the generated enrichment nodes.
 - Restore/finalize full homepage design on `shopify-theme`.
 - Connect custom domain.
-- Run go-live sequence from `sync/PRODUCTION-CHECKLIST.md`.
+- Continue live operations per `sync/PRODUCTION-CHECKLIST.md`.

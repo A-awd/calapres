@@ -6,6 +6,8 @@ Live status: storefront is open on `unywbe-ub.myshopify.com`, the recurring sync
 
 API version note: documented standard is Admin API `2026-04`. The deployed live n8n flow currently uses `2025-01` and works; use `2026-04` for newly built or rebuilt nodes.
 
+Generated artifact note: Claude deploys enrichment Code nodes from `sync/n8n-build/enrich-prompt.generated.js`, `sync/n8n-build/enrich-seo.generated.js`, and `sync/n8n-build/enrich-payload.generated.js`. These are generated from `sync/enrich/` and are authoritative.
+
 Credentials:
 
 - Shopify-Calapres OAuth2 credential: `QLsvwO73GFsQfy0w`
@@ -17,9 +19,10 @@ Credentials:
 2. `Shopify Admin GraphQL: Find Unenriched Imports` -> `Code: Keep Products Without enriched`
 3. `Code: Keep Products Without enriched` -> `Split Products`
 4. `Split Products` -> `HTTP Request: Higgsfield Generate Images`
-5. `HTTP Request: Higgsfield Generate Images` -> `Code: Build Arabic SEO and Luxury Copy`
-6. `Code: Build Arabic SEO and Luxury Copy` -> `Shopify Admin REST: Update Enriched Product`
-7. `Shopify Admin REST: Update Enriched Product` -> `Split Products` continue
+5. `HTTP Request: Higgsfield Generate Images` -> `Code: Build Arabic SEO`
+6. `Code: Build Arabic SEO` -> `Code: Build Enriched Payload`
+7. `Code: Build Enriched Payload` -> `Shopify Admin REST: Update Enriched Product`
+8. `Shopify Admin REST: Update Enriched Product` -> `Split Products` continue
 
 ## Node 1: Manual Trigger
 
@@ -146,80 +149,44 @@ Expected response shape from this node:
 
 If the Higgsfield account returns a different wrapper, map it in the next Code node; keep the request shape above as the workflow contract.
 
-## Node 6: Code: Build Arabic SEO and Luxury Copy
+## Node 6: Code: Build Arabic SEO
 
 - Type: `n8n-nodes-base.code`
-- Name: `Code: Build Arabic SEO and Luxury Copy`
+- Name: `Code: Build Arabic SEO`
 - Mode: `Run Once for Each Item`
 - JavaScript:
 
 ```js
-const product = $node['Split Products'].json.product;
-const higgsfield = $json;
-const generatedImages = (higgsfield.images || higgsfield.data?.images || higgsfield.outputs || [])
-  .map((item) => (typeof item === 'string' ? item : item.url || item.src))
-  .filter(Boolean);
-const originalImages = (product.images?.nodes || []).map((image) => image.url).filter(Boolean);
-const images = generatedImages.concat(originalImages).slice(0, 6).map((src) => ({ src }));
-const title = product.title || 'عطر فاخر';
-const vendor = product.vendor || 'Calapres';
-
-const bodyHtml = `
-<section class="calapres-luxury-description" dir="rtl">
-  <h2>${escapeHtml(title)}</h2>
-  <p>اكتشف حضورًا عطريًا مصاغًا بعناية لعشاق الفخامة الهادئة. يجمع هذا الإصدار بين شخصية ${escapeHtml(vendor)} وأناقة الاختيار النادر، ليمنحك تجربة تناسب المناسبات الخاصة وتفاصيل اليوم الراقية.</p>
-  <p>اختير هذا المنتج ضمن مجموعة كالابريز بعناية ليحافظ على أصالة المصدر، مع تقديم بصري ووصف عربي فاخر يليق بطابع المتجر وتجربة العميل.</p>
-</section>`.trim();
-
-const seoTitle = `${title} | كالابريز للعطور الفاخرة`;
-const seoDescription = `تسوق ${title} من كالابريز. اختيار فاخر بعرض عربي أصلي وصور فاخرة وتجربة عطرية راقية.`;
-const tags = Array.from(new Set([...(product.tags || []), 'enriched'])).join(', ');
+// Generated source: sync/n8n-build/enrich-seo.generated.js
+const seo = buildArabicSeo($json.product || $node['Split Products'].json.product);
 
 return {
   json: {
-    productId: $node['Split Products'].json.productId,
-    payload: {
-      product: {
-        id: $node['Split Products'].json.productId,
-        body_html: bodyHtml,
-        tags,
-        images,
-        metafields: [
-          {
-            namespace: 'global',
-            key: 'title_tag',
-            value: seoTitle,
-            type: 'single_line_text_field'
-          },
-          {
-            namespace: 'global',
-            key: 'description_tag',
-            value: seoDescription,
-            type: 'multi_line_text_field'
-          },
-          {
-            namespace: 'presentation',
-            key: 'enriched_by',
-            value: 'higgsfield-calapres-n8n',
-            type: 'single_line_text_field'
-          }
-        ]
-      }
-    }
+    ...$json,
+    arabicSeo: seo
   }
 };
-
-function escapeHtml(value) {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
 ```
 
-## Node 7: Shopify Admin REST: Update Enriched Product
+## Node 7: Code: Build Enriched Payload
+
+- Type: `n8n-nodes-base.code`
+- Name: `Code: Build Enriched Payload`
+- Mode: `Run Once for Each Item`
+- JavaScript:
+
+```js
+// Generated source: sync/n8n-build/enrich-payload.generated.js
+const payload = buildEnrichPayload({
+  product: $node['Split Products'].json.product,
+  generatedImages: $json.images || $json.data?.images || $json.outputs,
+  productId: $node['Split Products'].json.productId
+});
+
+return { json: { ...$json, payload, productId: payload.product.id } };
+```
+
+## Node 8: Shopify Admin REST: Update Enriched Product
 
 - Type: `n8n-nodes-base.httpRequest`
 - Name: `Shopify Admin REST: Update Enriched Product`

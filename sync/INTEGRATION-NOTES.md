@@ -49,10 +49,13 @@ The sync system uses:
 - REST Admin API for product create/update writes.
 - `sync/shopify-client.js` for all request-shape construction.
 - `sync/validate-shopify-shape.js` before any REST write payload is trusted.
+- `sync/build-n8n-nodes.js` to generate dependency-inlined Code-node bundles from source.
 
 Default Admin API version in code and documentation: `2026-04`.
 
 Note: the deployed live n8n flow currently uses Admin API `2025-01` and works; keep `2026-04` as the standard for rebuilt or newly documented nodes.
+
+Generated-node contract: use `sync/n8n-build/manifest.json` and `sync/n8n-build/*.generated.js` for Claude deployment. Do not hand-build Code-node logic in n8n.
 
 ## 3. Supplier Field to Shopify Field Mapping
 
@@ -166,7 +169,11 @@ Run:
 ```bash
 for file in sync/*.js sync/__tests__/*.js; do node --check "$file"; done
 node sync/__tests__/run-tests.js
+node sync/build-n8n-nodes.js
 node sync/run-local-dry.js
+node sync/tools/doc-lint.js
+node sync/tools/secret-scan.js
+node sync/tools/check-generated.js
 ```
 
 Then inspect `sync/dry-run-output.json`:

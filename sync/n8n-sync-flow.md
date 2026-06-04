@@ -8,6 +8,8 @@ API version note: documented standard is Admin API `2026-04`. The deployed live 
 
 Implementation note: keep Shopify decision logic and request bodies centralized in `sync/reconcile.js`, `sync/build-shopify-payload.js`, `sync/validate-shopify-shape.js`, and `sync/shopify-client.js`. In n8n, Code nodes should call those helpers and pass the returned request objects to HTTP Request nodes instead of hand-building Shopify field names.
 
+Generated artifact note: Claude deploys Code nodes from `sync/n8n-build/*.generated.js` and uses `sync/n8n-build/manifest.json` as the connection/credential contract. The inline snippets below document intent, but generated bundles are authoritative.
+
 Credential:
 
 - Shopify-Calapres OAuth2 credential: `QLsvwO73GFsQfy0w`
@@ -58,7 +60,7 @@ Recommended Shopify store domain variable:
 - JavaScript:
 
 ```js
-// Paste sync/crawl-supplier.js above this line.
+// Generated source: sync/n8n-build/crawl.generated.js
 const urls = await crawlSupplierProducts({
   sitemapUrl: 'https://nawadirdior.sa/sitemap.xml'
 });
@@ -71,6 +73,8 @@ return urls.map((sourceUrl) => ({
   }
 }));
 ```
+
+The generated node also applies `computeChunk(urls, offset, 300)` and emits `nextOffset`/`wrapped` so n8n can persist progress and wrap to 0 at catalog end.
 
 ## Node 3: Split Product URLs
 
@@ -113,11 +117,12 @@ return urls.map((sourceUrl) => ({
 - JavaScript:
 
 ```js
-// Paste sync/parse-product.js above this line.
+// Generated source: sync/n8n-build/parse.generated.js
 const html = $json.body || $json.data || $json.html || $json;
-const parsed = parseProduct(String(html || ''));
-parsed.sourceUrl = parsed.sourceUrl || $node['Split Product URLs'].json.sourceUrl;
-parsed.supplierProductId = parsed.supplierProductId || $node['Split Product URLs'].json.supplierProductId;
+const parsed = parseProduct(String(html || ''), {
+  sourceUrl: $json.sourceUrl,
+  supplierProductId: $json.supplierProductId
+});
 
 return {
   json: {
@@ -271,16 +276,14 @@ return {
 - JavaScript:
 
 ```js
-// Paste sync/build-shopify-payload.js above this line.
+// Generated source: sync/n8n-build/buildPayload.generated.js
 const parsed = {
   ...$json.parsed,
   existingProduct: $json.existingProduct,
   existingTags: $json.existingProduct?.tags || []
 };
 const payload = buildPayload(parsed);
-if (!$json.existingProduct && payload.product) {
-  payload.product.status = 'draft';
-}
+if (payload.skipped) return { json: { ...$json, payload, skipWrite: true, reason: payload.reason } };
 
 return {
   json: {
@@ -290,6 +293,8 @@ return {
   }
 };
 ```
+
+`payload.skipped` is the canCreate guard: a new product with no price or no numeric supplier id is not written.
 
 ## Node 13: IF: Existing Product?
 

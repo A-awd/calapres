@@ -1,17 +1,26 @@
 # Nawadirdior to Calapres Supplier Sync
 
-Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pasted into an n8n Code node as-is; there are no npm imports and no browser APIs.
+Dependency-free JavaScript helpers and generated n8n Code-node bundles. GitHub is the source of truth: edit `sync/` source files, run `node sync/build-n8n-nodes.js`, then Claude deploys generated artifacts from `sync/n8n-build/`.
 
 ## Files
 
 - `parse-product.js`: `parseProduct(html)` extracts supplier product data from Salla meta tags and JSON-LD. It returns `{ name, brand, supplierPrice, supplierCompareAtPrice, availability, imageUrl, description, category, sourceUrl }` and never throws on missing fields.
+- `config.js`: authoritative constants for store domain, API versions, tags, markup, chunk size, credential ids, namespaces, supplier sitemap, and collection map.
 - `crawl-supplier.js`: `crawlSupplierProducts()` reads `https://nawadirdior.sa/sitemap.xml`, follows nested sitemaps, extracts every product URL matching `/<slug>/p<digits>`, preserves Arabic/encoded slugs safely, and dedupes by Salla product id.
+- `sync-state.js`: persisted-offset chunking and new/existing selectors for 300-product catalog drain runs.
 - `pricing.js`: `applyPricing({ supplierPrice, supplierCompareAtPrice })` adds the exact Calapres `+100 SAR` markup and clears `compareAtPrice` when it would equal `price`.
 - `inventory.js`: `mapAvailability(availability)` maps supplier state to status-only Shopify fields. It never emits numeric inventory quantities and never deletes missing supplier products.
 - `build-shopify-payload.js`: `buildPayload(parsed)` assembles a Shopify product payload with title, body HTML, vendor, tags, image, and one variant. If an existing product is tagged `enriched`, the explicit guard returns only price and availability fields so the luxury presentation layer is protected.
 - `shopify-client.js`: pure Shopify Admin GraphQL/REST request-shape builder for lookup, create, update, pagination, tag reads, and offline execution tests.
 - `reconcile.js`: pure action planner returning `{ toCreate, toUpdate, toMarkOutOfStock, toSkipEnriched, unchanged }`.
 - `validate-shopify-shape.js`: REST Admin field-name guard for every product payload the sync writes.
+- `normalize.js`: brand, concentration, size, gender, and title cleanup.
+- `categorize.js`: Calapres collection handle mapping from normalized product signals.
+- `enrich/`: pure Higgsfield prompt, Arabic SEO, and enriched payload helpers.
+- `report.js`: run summary JSON/Markdown renderer; schema is in `report-schema.md`.
+- `build-n8n-nodes.js`: deterministic n8n Code-node bundler.
+- `n8n-build/`: generated, dependency-inlined Code-node bundles plus `manifest.json` deploy contract for Claude.
+- `tools/`: doc lint, secret scan, and generated-output checks used by CI.
 - `setup-metafield-definitions.js`: pure GraphQL `metafieldDefinitionCreate` request-shape builder for `supplier.source_url` and `supplier.product_id`.
 - `backfill-existing-products.js`: pure planner that matches existing imported Shopify products to supplier products and emits tag/metafield-only backfill requests.
 - `run-local-dry.js`: offline first-20 dry run using saved fixtures only. It writes `dry-run-output.json` with payloads, reconcile plan, and exact Shopify request bodies. It never writes to Shopify.
@@ -32,7 +41,16 @@ Dependency-free JavaScript helpers for n8n Code nodes. Each `.js` file can be pa
 
 ## Data Flow
 
-Live setup is complete: `setup-metafield-definitions -> backfill-existing-products -> dry-run duplicate check` has already run for the 18 legacy imports. Recurring sync now runs: `sitemap.xml -> crawlSupplierProducts -> product HTML fixtures or HTTP GET -> parseProduct -> applyPricing/mapAvailability -> reconcile(supplierProducts, shopifyProducts) -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`, with new imported products landing as draft for review, enriched products routed through a price/availability-only guard, and supplier-missing products drafted out of stock instead of deleted.
+Live setup is complete: `setup-metafield-definitions -> backfill-existing-products -> dry-run duplicate check` has already run for the 18 legacy imports. Recurring sync now drains the supplier catalog in 300-product chunks: `sitemap.xml -> computeChunk(offset) -> crawl item sourceUrl/supplierProductId -> HTTP GET -> parseProduct(html, crawl context) -> canCreate guard -> applyPricing/mapAvailability -> lookup existing -> buildPayload -> validateShopifyProductShape -> shopify-client request shapes -> n8n HTTP Request nodes`. New imported products land as draft for review, enriched products route through a price/availability-only guard, and supplier-missing products are drafted out of stock instead of deleted.
+
+## Generated n8n Bundles
+
+```bash
+node sync/build-n8n-nodes.js
+node sync/tools/check-generated.js
+```
+
+Claude deploys from `sync/n8n-build/manifest.json` and the generated `*.generated.js` files. Do not hand-edit generated files.
 
 ## Local Validation
 
@@ -40,17 +58,21 @@ Run the syntax checks, offline tests, and first-20 dry run before importing or c
 
 ```bash
 for file in sync/*.js sync/__tests__/*.js; do node --check "$file"; done
+find sync -name '*.js' -print0 | xargs -0 -n1 node --check
 node sync/__tests__/run-tests.js
 node sync/run-local-dry.js
+node sync/tools/doc-lint.js
+node sync/tools/secret-scan.js
+node sync/tools/check-generated.js
 ```
 
-The dry run writes `sync/dry-run-output.json`. It should report 20 generated payloads, setup/backfill audit requests, 18 high-confidence legacy matches with 0 manual/unmatched/not-found rows, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
+The dry run writes `sync/dry-run-output.json` and `sync/reports/sample-run.md`. It should report 20 generated payloads, setup/backfill audit requests, 18 high-confidence legacy matches with 0 manual/unmatched/not-found rows, a reconcile plan, and Shopify request bodies. A stale supplier sitemap entry may be marked `skip_missing_supplier_page`; that is expected and prevents homepage redirect HTML from becoming a Shopify product.
 
 ## n8n Flow
 
-1. Code node with `crawl-supplier.js` calls `crawlSupplierProducts()` and emits one item per supplier product URL.
+1. Code node from `sync/n8n-build/crawl.generated.js` calls `crawlSupplierProducts()`, chunks by persisted offset, and emits one item per supplier product URL in the current chunk.
 2. HTTP Request node fetches each Nawadirdior product page HTML.
-3. Code node with `parse-product.js` calls `parseProduct($json.html)` or `parseProduct($json.body)`.
+3. Code node from `parse.generated.js` calls `parseProduct(html, { sourceUrl, supplierProductId })`.
 4. Code node with `pricing.js` can call `applyPricing(parsed)` if pricing is needed separately.
 5. Code node with `inventory.js` can call `mapAvailability(parsed.availability)` for status-only stock sync.
 6. Code node with `reconcile.js` calls `reconcile(supplierProducts, shopifyProducts)` to decide create/update/out-of-stock/skip actions.
