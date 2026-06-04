@@ -9,12 +9,17 @@
 {%- endif -%}
 {%- assign card_class = card_class | default: 'product-card' -%}
 {%- assign first_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
+{%- assign variant_title_normalized = first_variant.title | downcase | strip -%}
 <a class="{{ card_class }}" href="{{ product.url }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-url="{{ product.url }}"
+  data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
+  data-product-price="{{ product.price | money | escape }}"
   data-family="{{ product.tags | join: ',' | escape }}"
   data-brand="{{ product.vendor | escape }}"
   data-type="{% if product.type != blank %}{{ product.type | escape }}{% else %}عطر{% endif %}"
   data-price="{{ product.price | divided_by: 100 }}"
-  data-size="{{ first_variant.title | escape }}">
+  data-size="{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %}{{ first_variant.title | escape }}{% endunless %}">
   <div class="frame">
     {%- if tag_ar != '' -%}
       <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
@@ -31,8 +36,8 @@
   <div class="meta">
     <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
     <div class="price">
-      <span data-ar>{{ product.price | money }}{% if first_variant.title != 'Default Title' %} · {{ first_variant.title }}{% endif %}</span>
-      <span data-en>{{ product.price | money }}{% if first_variant.title != 'Default Title' %} · {{ first_variant.title }}{% endif %}</span>
+      <span data-ar>{{ product.price | money }}{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
+      <span data-en>{{ product.price | money }}{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %} · {{ first_variant.title }}{% endunless %}</span>
     </div>
   </div>
 </a>

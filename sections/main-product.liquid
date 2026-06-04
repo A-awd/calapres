@@ -108,7 +108,15 @@
               <span data-ar>نفد المخزون</span><span data-en>Sold out</span>
             </button>
           {%- endif -%}
-          <button class="btn btn-secondary" type="button"><span data-ar>المفضلة</span><span data-en>Wishlist</span></button>
+          <button class="btn btn-secondary" type="button"
+            data-wishlist-add
+            data-product-title="{{ product.title | escape }}"
+            data-product-url="{{ product.url }}"
+            data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ fallback_image }}{% endif %}"
+            data-product-price="{{ current_variant.price | money | escape }}"
+            data-product-brand="{{ product.vendor | escape }}">
+            <span data-ar>المفضلة</span><span data-en>Wishlist</span>
+          </button>
         </form>
 
         <div class="note">

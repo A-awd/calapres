@@ -127,13 +127,14 @@
   }
   function groupThousands(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
   function money(cents) {
-    var amount = Math.round(cents / 100);
+    var amount = Number(cents || 0) / 100;
+    var parts = amount.toFixed(2).split(".");
     var isAr = root.lang === "ar";
     if (isAr) {
-      var s = groupThousands(amount).replace(/,/g, "٬");
+      var s = groupThousands(parts[0]).replace(/,/g, "٬") + "٫" + parts[1];
       return toArabicDigits(s) + " ر.س";
     }
-    return "SAR " + groupThousands(amount);
+    return "SAR " + groupThousands(parts[0]) + "." + parts[1];
   }
 
   function updateCartCount(count) {
@@ -181,7 +182,7 @@
             '<div>' +
               '<div class="ci-brand">' + (item.vendor || '') + '</div>' +
               '<div class="name">' + item.product_title + '</div>' +
-              (item.variant_title && item.variant_title !== 'Default Title' ? '<div class="ci-size">' + item.variant_title + '</div>' : '') +
+              (item.variant_title && item.variant_title !== 'Default Title' && item.variant_title !== 'Default' ? '<div class="ci-size">' + item.variant_title + '</div>' : '') +
             '</div>' +
             '<button class="ci-remove" data-remove aria-label="إزالة"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
           '</div>' +
@@ -373,14 +374,6 @@
     var fToggle = document.querySelector("[data-filter-toggle]");
     var fPanel = document.querySelector("[data-filters]");
     if (fToggle && fPanel) fToggle.addEventListener("click", function () { fPanel.classList.toggle("open"); });
-    grid.querySelectorAll(".fav").forEach(function (b) {
-      b.addEventListener("click", function (e) {
-        e.preventDefault(); e.stopPropagation();
-        b.classList.toggle("on");
-        var svg = b.querySelector("svg");
-        if (svg) svg.style.fill = b.classList.contains("on") ? "currentColor" : "none";
-      });
-    });
     function localiseSort() {
       if (!sortSel) return;
       var isAr = root.lang === "ar";
@@ -392,6 +385,140 @@
     document.addEventListener("calapres:lang", apply);
     localiseSort();
     apply();
+  }
+
+  /* ---- Wishlist: local saved products ---- */
+  var WISHLIST_KEY = "calapres-wishlist";
+  function wishlistRead() {
+    try {
+      var parsed = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.filter(function (item) { return item && item.url; }) : [];
+    } catch (e) { return []; }
+  }
+  function wishlistWrite(items) {
+    try { localStorage.setItem(WISHLIST_KEY, JSON.stringify(items)); } catch (e) {}
+  }
+  function productFromElement(el) {
+    var source = el.closest("[data-product-url]") || el;
+    return {
+      title: source.dataset.productTitle || source.querySelector(".name")?.textContent?.trim() || "",
+      url: source.dataset.productUrl || source.getAttribute("href") || location.pathname,
+      image: source.dataset.productImage || "",
+      price: source.dataset.productPrice || source.querySelector(".price")?.textContent?.trim() || "",
+      brand: source.dataset.productBrand || source.dataset.brand || source.querySelector(".brand")?.textContent?.trim() || ""
+    };
+  }
+  function wishlistContains(url) {
+    return wishlistRead().some(function (item) { return item.url === url; });
+  }
+  function wishlistSetButton(button, active) {
+    button.classList.toggle("on", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+    var svg = button.querySelector("svg");
+    if (svg) svg.style.fill = active ? "currentColor" : "none";
+  }
+  function wishlistUpdateButtons() {
+    document.querySelectorAll("[data-wishlist-toggle], [data-wishlist-add]").forEach(function (button) {
+      wishlistSetButton(button, wishlistContains(productFromElement(button).url));
+    });
+  }
+  function wishlistUpdateCount() {
+    var count = wishlistRead().length;
+    document.querySelectorAll("[data-wishlist-count]").forEach(function (el) {
+      el.textContent = root.lang === "ar" ? toArabicDigits(count) : count;
+      el.style.display = count > 0 ? "inline-flex" : "none";
+    });
+  }
+  function wishlistRender() {
+    var overlay = document.querySelector("[data-wishlist]");
+    if (!overlay) return;
+    var body = overlay.querySelector("[data-wishlist-body]");
+    var empty = overlay.querySelector("[data-wishlist-empty]");
+    var items = wishlistRead();
+    if (!body) return;
+    if (!items.length) {
+      body.innerHTML = "";
+      if (empty) empty.classList.add("show");
+      return;
+    }
+    if (empty) empty.classList.remove("show");
+    body.innerHTML = items.map(function (item) {
+      var url = escapeHtml(item.url || "");
+      var image = escapeHtml(item.image || "");
+      var brand = escapeHtml(item.brand || "");
+      var title = escapeHtml(item.title || "");
+      var price = escapeHtml(item.price || "");
+      return '<div class="wishlist-item">' +
+        '<a class="wishlist-img" href="' + url + '">' + (image ? '<img src="' + image + '" alt="" />' : '') + '</a>' +
+        '<div class="wishlist-meta">' +
+          '<div class="wishlist-brand">' + brand + '</div>' +
+          '<a class="wishlist-name" href="' + url + '">' + title + '</a>' +
+          '<div class="wishlist-price">' + price + '</div>' +
+        '</div>' +
+        '<button class="wishlist-remove" type="button" data-wishlist-remove="' + url + '" aria-label="إزالة"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
+      '</div>';
+    }).join("");
+    setLang(root.lang, false);
+  }
+  function wishlistOpen() {
+    var overlay = document.querySelector("[data-wishlist]");
+    if (!overlay) return;
+    wishlistRender();
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function wishlistClose() {
+    var overlay = document.querySelector("[data-wishlist]");
+    if (!overlay) return;
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function wishlistToggleProduct(product) {
+    if (!product.url) return;
+    var items = wishlistRead();
+    var exists = items.some(function (item) { return item.url === product.url; });
+    if (exists) items = items.filter(function (item) { return item.url !== product.url; });
+    else items.unshift(product);
+    wishlistWrite(items.slice(0, 24));
+    wishlistUpdateCount();
+    wishlistUpdateButtons();
+    wishlistRender();
+  }
+  function wishlist() {
+    document.querySelectorAll("[data-wishlist-open]").forEach(function (button) {
+      button.addEventListener("click", function (e) { e.preventDefault(); wishlistOpen(); });
+    });
+    document.querySelectorAll("[data-wishlist-close]").forEach(function (button) {
+      button.addEventListener("click", wishlistClose);
+    });
+    document.addEventListener("click", function (e) {
+      var toggle = e.target.closest("[data-wishlist-toggle], [data-wishlist-add]");
+      if (toggle) {
+        e.preventDefault();
+        e.stopPropagation();
+        wishlistToggleProduct(productFromElement(toggle));
+        if (toggle.hasAttribute("data-wishlist-add")) wishlistOpen();
+        return;
+      }
+      var remove = e.target.closest("[data-wishlist-remove]");
+      if (remove) {
+        e.preventDefault();
+        wishlistToggleProduct({ url: remove.getAttribute("data-wishlist-remove") });
+      }
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") wishlistClose(); });
+    document.addEventListener("calapres:lang", wishlistUpdateCount);
+    wishlistUpdateCount();
+    wishlistUpdateButtons();
+  }
+
+  function escapeHtml(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   /* ---- Product page: thumbnails + size selector + accordion ---- */
@@ -441,7 +568,7 @@
   }
 
   function init() {
-    bindToggles(); announcement(); header(); reveal(); drawer(); rails(); cart();
+    bindToggles(); announcement(); header(); reveal(); drawer(); rails(); cart(); wishlist();
     addToBagListeners(); collection(); productPage();
     fetchCart();
   }

@@ -8,7 +8,11 @@
   {%- endif -%}
   <div class="wrap">
     <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
-    <h1 class="display d-1">{{ collection.title | default: section.settings.fallback_title }}</h1>
+    {%- if collection.handle == 'all' -%}
+      <h1 class="display d-1"><span data-ar>{{ section.settings.all_title_ar }}</span><span data-en>{{ section.settings.all_title_en }}</span></h1>
+    {%- else -%}
+      <h1 class="display d-1">{{ collection.title | default: section.settings.fallback_title }}</h1>
+    {%- endif -%}
     {%- if collection.description != blank -%}
       <div>{{ collection.description }}</div>
     {%- else -%}
@@ -88,10 +92,20 @@
               {%- if product.tags contains 'oud' or product.tags contains 'عود' -%}{%- assign product_type = 'عود' -%}{%- endif -%}
               {%- if product.tags contains 'bukhoor' or product.tags contains 'مبخرة' -%}{%- assign product_type = 'مبخرة' -%}{%- endif -%}
               {%- assign first_variant = product.selected_or_first_available_variant -%}
-              <a class="pcard" href="{{ product.url }}" data-family="{{ family }}" data-brand="{{ product.vendor | escape }}" data-type="{{ product_type | escape }}" data-price="{{ product.price | divided_by: 100 }}" data-size="{{ first_variant.title | escape }}">
+              {%- assign variant_title_normalized = first_variant.title | downcase | strip -%}
+              <a class="pcard" href="{{ product.url }}"
+                data-product-title="{{ product.title | escape }}"
+                data-product-url="{{ product.url }}"
+                data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
+                data-product-price="{{ product.price | money | escape }}"
+                data-family="{{ family }}"
+                data-brand="{{ product.vendor | escape }}"
+                data-type="{{ product_type | escape }}"
+                data-price="{{ product.price | divided_by: 100 }}"
+                data-size="{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %}{{ first_variant.title | escape }}{% endunless %}">
                 <div class="frame">
                   {%- if product.tags contains 'signature' or product.tags contains 'توقيع' -%}<span class="tag"><span data-ar>توقيع</span><span data-en>Signature</span></span>{%- endif -%}
-                  <button class="fav" type="button" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
+                  <button class="fav" type="button" aria-label="المفضلة" data-wishlist-toggle><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
                   {%- if product.featured_image -%}
                     <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
                   {%- else -%}
@@ -102,7 +116,7 @@
                 <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
                 <div class="row">
                   <span class="price">{{ product.price | money }}</span>
-                  <span class="size-h">{% if first_variant.title != 'Default Title' %}{{ first_variant.title }}{% else %}<span data-ar>متوفر</span><span data-en>Available</span>{% endif %}</span>
+                  <span class="size-h">{% unless variant_title_normalized == 'default' or variant_title_normalized == 'default title' %}{{ first_variant.title }}{% else %}<span data-ar>متوفر</span><span data-en>Available</span>{% endunless %}</span>
                 </div>
               </a>
             {%- endfor -%}
@@ -151,6 +165,18 @@
       "id": "fallback_title",
       "label": "Fallback title",
       "default": "عطور النيش"
+    },
+    {
+      "type": "text",
+      "id": "all_title_ar",
+      "label": "All collection title Arabic",
+      "default": "كل العطور والمباخر"
+    },
+    {
+      "type": "text",
+      "id": "all_title_en",
+      "label": "All collection title English",
+      "default": "All Perfumes and Bukhoor"
     },
     {
       "type": "textarea",
