@@ -1,0 +1,14 @@
+<article class="page-mast wrap center reveal">
+  <span class="eyebrow">{{ article.published_at | date: "%d %b %Y" }}</span>
+  <h1 class="display d-1">{{ article.title }}</h1>
+  {%- if article.author != blank -%}
+    <p class="lede">{{ article.author }}</p>
+  {%- endif -%}
+</article>
+
+<section class="section wrap account-narrow">
+  <div class="rte">{{ article.content }}</div>
+  <div class="page-actions">
+    <a class="btn btn-secondary" href="{{ blog.url }}"><span data-ar>العودة للمجلة</span><span data-en>Back to journal</span></a>
+  </div>
+</section>

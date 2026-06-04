@@ -1,0 +1,27 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
+  <h1 class="display d-1">{{ order.name }}</h1>
+  <p class="lede">{{ order.created_at | date: "%d %b %Y" }}</p>
+</section>
+
+<section class="section wrap account-layout">
+  <div class="account-card">
+    <h2 class="display d-3"><span data-ar>تفاصيل الطلب</span><span data-en>Order details</span></h2>
+    <div class="account-table-wrap">
+      <table class="account-table">
+        <thead><tr><th><span data-ar>المنتج</span><span data-en>Product</span></th><th><span data-ar>الكمية</span><span data-en>Qty</span></th><th><span data-ar>السعر</span><span data-en>Price</span></th></tr></thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr><td>{{ line_item.title }}</td><td>{{ line_item.quantity }}</td><td>{{ line_item.final_line_price | money }}</td></tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <aside class="account-card">
+    <h2 class="display d-3"><span data-ar>الإجمالي</span><span data-en>Total</span></h2>
+    <p>{{ order.total_price | money }}</p>
+    <div class="rte">{{ order.shipping_address | format_address }}</div>
+    <a class="link" href="{{ routes.account_url }}"><span data-ar>العودة للحساب</span><span data-en>Back to account</span><span class="arrow">→</span></a>
+  </aside>
+</section>

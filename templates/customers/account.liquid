@@ -1,0 +1,39 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
+  <h1 class="display d-1"><span data-ar>أهلًا {{ customer.first_name | default: customer.name }}</span><span data-en>Hello {{ customer.first_name | default: customer.name }}</span></h1>
+  <p class="lede"><span data-ar>هنا تجد طلباتك وعناوينك المحفوظة.</span><span data-en>Find your orders and saved addresses here.</span></p>
+</section>
+
+<section class="section wrap account-layout">
+  <div class="account-card">
+    <h2 class="display d-3"><span data-ar>الطلبات</span><span data-en>Orders</span></h2>
+    {%- if customer.orders.size > 0 -%}
+      <div class="account-table-wrap">
+        <table class="account-table">
+          <thead><tr><th><span data-ar>الطلب</span><span data-en>Order</span></th><th><span data-ar>التاريخ</span><span data-en>Date</span></th><th><span data-ar>الحالة</span><span data-en>Status</span></th><th><span data-ar>الإجمالي</span><span data-en>Total</span></th></tr></thead>
+          <tbody>
+            {%- for order in customer.orders -%}
+              <tr><td><a href="{{ order.customer_url }}">{{ order.name }}</a></td><td>{{ order.created_at | date: "%d %b %Y" }}</td><td>{{ order.fulfillment_status_label }}</td><td>{{ order.total_price | money }}</td></tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- else -%}
+      <p><span data-ar>لا توجد طلبات بعد.</span><span data-en>No orders yet.</span></p>
+      <a class="btn btn-primary" href="/collections/all"><span data-ar>تسوّق العطور</span><span data-en>Shop perfumes</span></a>
+    {%- endif -%}
+  </div>
+
+  <aside class="account-card">
+    <h2 class="display d-3"><span data-ar>العنوان الافتراضي</span><span data-en>Default address</span></h2>
+    {%- if customer.default_address -%}
+      <div class="rte">{{ customer.default_address | format_address }}</div>
+    {%- else -%}
+      <p><span data-ar>لم تضف عنوانًا بعد.</span><span data-en>No address saved yet.</span></p>
+    {%- endif -%}
+    <div class="account-actions">
+      <a class="link" href="{{ routes.account_addresses_url }}"><span data-ar>إدارة العناوين</span><span data-en>Manage addresses</span><span class="arrow">→</span></a>
+      <a class="link" href="{{ routes.account_logout_url }}"><span data-ar>تسجيل الخروج</span><span data-en>Sign out</span><span class="arrow">→</span></a>
+    </div>
+  </aside>
+</section>

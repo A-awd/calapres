@@ -1,0 +1,33 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>مجلّة كالابريز</span><span data-en>Calapres Journal</span></span>
+  <h1 class="display d-1">{{ blog.title }}</h1>
+  <p class="lede"><span data-ar>قراءات هادئة عن العطر والعود والعناية بالرائحة.</span><span data-en>Quiet notes on perfume, oud and scent care.</span></p>
+</section>
+
+<section class="section wrap">
+  {%- paginate blog.articles by 9 -%}
+    <div class="account-grid">
+      {%- for article in blog.articles -%}
+        <article class="account-card">
+          <span class="eyebrow">{{ article.published_at | date: "%d %b %Y" }}</span>
+          <h2 class="display d-3"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+          {%- if article.excerpt_or_content != blank -%}
+            <p>{{ article.excerpt_or_content | strip_html | truncatewords: 28 }}</p>
+          {%- endif -%}
+          <a class="link" href="{{ article.url }}"><span data-ar>اقرأ المزيد</span><span data-en>Read more</span><span class="arrow">→</span></a>
+        </article>
+      {%- else -%}
+        <div class="account-card center">
+          <p><span data-ar>لا توجد مقالات منشورة بعد.</span><span data-en>No articles have been published yet.</span></p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" role="navigation" aria-label="Pagination">
+        {%- if paginate.previous -%}<a class="btn btn-secondary" href="{{ paginate.previous.url }}"><span data-ar>السابق</span><span data-en>Previous</span></a>{%- endif -%}
+        <span class="pagination-current">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a class="btn btn-secondary" href="{{ paginate.next.url }}"><span data-ar>التالي</span><span data-en>Next</span></a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>

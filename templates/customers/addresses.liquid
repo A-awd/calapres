@@ -1,0 +1,36 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
+  <h1 class="display d-1"><span data-ar>العناوين</span><span data-en>Addresses</span></h1>
+  <p class="lede"><span data-ar>احفظ عناوين التوصيل داخل السعودية والخليج.</span><span data-en>Save delivery addresses across Saudi Arabia and the Gulf.</span></p>
+</section>
+
+<section class="section wrap account-layout">
+  <div class="account-card">
+    <h2 class="display d-3"><span data-ar>إضافة عنوان</span><span data-en>Add address</span></h2>
+    {%- form 'customer_address', customer.new_address, class: 'contact-form' -%}
+      <label><span><span data-ar>الاسم الأول</span><span data-en>First name</span></span><input type="text" name="address[first_name]" autocomplete="given-name"></label>
+      <label><span><span data-ar>اسم العائلة</span><span data-en>Last name</span></span><input type="text" name="address[last_name]" autocomplete="family-name"></label>
+      <label><span><span data-ar>الشركة</span><span data-en>Company</span></span><input type="text" name="address[company]" autocomplete="organization"></label>
+      <label><span><span data-ar>العنوان</span><span data-en>Address</span></span><input type="text" name="address[address1]" autocomplete="address-line1"></label>
+      <label><span><span data-ar>المدينة</span><span data-en>City</span></span><input type="text" name="address[city]" autocomplete="address-level2"></label>
+      <label><span><span data-ar>الدولة</span><span data-en>Country</span></span><input type="text" name="address[country]" autocomplete="country"></label>
+      <label><span><span data-ar>الهاتف</span><span data-en>Phone</span></span><input type="tel" name="address[phone]" autocomplete="tel"></label>
+      <button class="btn btn-primary" type="submit"><span data-ar>حفظ العنوان</span><span data-en>Save address</span></button>
+    {%- endform -%}
+  </div>
+
+  <div class="account-grid">
+    {%- for address in customer.addresses -%}
+      <article class="account-card">
+        {%- if address == customer.default_address -%}<span class="eyebrow"><span data-ar>افتراضي</span><span data-en>Default</span></span>{%- endif -%}
+        <div class="rte">{{ address | format_address }}</div>
+        <form method="post" action="{{ address.url }}">
+          <input type="hidden" name="_method" value="delete">
+          <button class="link" type="submit"><span data-ar>حذف</span><span data-en>Delete</span><span class="arrow">→</span></button>
+        </form>
+      </article>
+    {%- else -%}
+      <div class="account-card"><p><span data-ar>لا توجد عناوين محفوظة بعد.</span><span data-en>No saved addresses yet.</span></p></div>
+    {%- endfor -%}
+  </div>
+</section>

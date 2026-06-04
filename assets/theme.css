@@ -1303,6 +1303,66 @@ html[lang="en"] .contact-form label{ font-family:var(--sans); }
 }
 .search-card h2{ margin-top:var(--s2); }
 .search-card p{ color:var(--ink-70); }
+.account-narrow{
+  max-width:760px;
+}
+.account-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:clamp(24px,4vw,56px);
+  align-items:start;
+  padding-top:0;
+}
+.account-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--s2);
+}
+.account-card{
+  background:var(--white);
+  border:1px solid var(--grey);
+  padding:var(--s4);
+}
+.account-card > *:first-child{ margin-top:0; }
+.account-card p{
+  color:var(--ink-70);
+}
+.account-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s2) var(--s3);
+  margin-top:var(--s4);
+}
+.account-table-wrap{
+  overflow-x:auto;
+  margin-top:var(--s3);
+}
+.account-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:560px;
+  font-family:var(--arabic);
+}
+html[lang="en"] .account-table{ font-family:var(--sans); }
+.account-table th,
+.account-table td{
+  text-align:start;
+  border-bottom:1px solid var(--grey);
+  padding:12px 10px;
+}
+.account-table th{
+  color:var(--gold);
+  font-weight:500;
+}
+.rte{
+  color:var(--ink-70);
+}
+.rte > *:first-child{ margin-top:0; }
+.rte a{
+  color:var(--gold);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
 .pagination{
   display:flex;
   align-items:center;
@@ -1324,6 +1384,7 @@ html[lang="en"] .contact-form label{ font-family:var(--sans); }
   .mobile-sticky-cta{ display:block; }
   .editorial-split,
   .contact-grid,
+  .account-layout,
   .page-values{ grid-template-columns:1fr; }
   .editorial-figure{ aspect-ratio:4/3; }
   .search-form{ flex-direction:column; }

@@ -1,0 +1,39 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
+  <h1 class="display d-1"><span data-ar>تسجيل الدخول</span><span data-en>Sign in</span></h1>
+  <p class="lede"><span data-ar>تابع طلباتك واحفظ عناوينك لتجربة أسرع.</span><span data-en>Track orders and save addresses for a smoother experience.</span></p>
+</section>
+
+<section class="section wrap account-narrow">
+  <div class="account-card">
+    {%- form 'customer_login', class: 'contact-form' -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <label>
+        <span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span>
+        <input type="email" name="customer[email]" autocomplete="email" required>
+      </label>
+      <label>
+        <span><span data-ar>كلمة المرور</span><span data-en>Password</span></span>
+        <input type="password" name="customer[password]" autocomplete="current-password" required>
+      </label>
+      <button class="btn btn-primary" type="submit"><span data-ar>دخول</span><span data-en>Sign in</span></button>
+    {%- endform -%}
+    <div class="account-actions">
+      <a class="link" href="{{ routes.account_register_url }}"><span data-ar>إنشاء حساب</span><span data-en>Create account</span><span class="arrow">→</span></a>
+      <a class="link" href="#recover"><span data-ar>استعادة كلمة المرور</span><span data-en>Recover password</span><span class="arrow">→</span></a>
+    </div>
+  </div>
+
+  <div class="account-card" id="recover">
+    <h2 class="display d-3"><span data-ar>استعادة كلمة المرور</span><span data-en>Recover password</span></h2>
+    {%- form 'recover_customer_password', class: 'contact-form' -%}
+      {%- if form.posted_successfully? -%}<p class="form-success"><span data-ar>أرسلنا لك تعليمات الاستعادة.</span><span data-en>Recovery instructions have been sent.</span></p>{%- endif -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <label>
+        <span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <button class="btn btn-secondary" type="submit"><span data-ar>إرسال</span><span data-en>Send</span></button>
+    {%- endform -%}
+  </div>
+</section>

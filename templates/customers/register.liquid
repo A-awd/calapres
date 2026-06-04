@@ -1,0 +1,18 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
+  <h1 class="display d-1"><span data-ar>إنشاء حساب</span><span data-en>Create account</span></h1>
+  <p class="lede"><span data-ar>احفظ تفضيلاتك وعناوينك لطلبات العطور القادمة.</span><span data-en>Save preferences and addresses for future perfume orders.</span></p>
+</section>
+
+<section class="section wrap account-narrow">
+  <div class="account-card">
+    {%- form 'create_customer', class: 'contact-form' -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <label><span><span data-ar>الاسم الأول</span><span data-en>First name</span></span><input type="text" name="customer[first_name]" autocomplete="given-name"></label>
+      <label><span><span data-ar>اسم العائلة</span><span data-en>Last name</span></span><input type="text" name="customer[last_name]" autocomplete="family-name"></label>
+      <label><span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span><input type="email" name="customer[email]" autocomplete="email" required></label>
+      <label><span><span data-ar>كلمة المرور</span><span data-en>Password</span></span><input type="password" name="customer[password]" autocomplete="new-password" required></label>
+      <button class="btn btn-primary" type="submit"><span data-ar>إنشاء الحساب</span><span data-en>Create account</span></button>
+    {%- endform -%}
+  </div>
+</section>
