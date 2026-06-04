@@ -110,7 +110,7 @@
                   {%- if product.featured_image -%}
                     <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
                   {%- else -%}
-                    <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="" width="600" height="750" loading="lazy" />
+                    <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy" />
                   {%- endif -%}
                 </div>
                 {%- if product.vendor != blank -%}<div class="brand"><span data-ar>{{ product.vendor }}</span><span data-en>{{ product.vendor }}</span></div>{%- endif -%}

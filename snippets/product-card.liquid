@@ -26,9 +26,9 @@
       <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
     {%- endif -%}
     {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
+      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
     {%- else -%}
-      <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="" width="600" height="750" loading="lazy" />
+      <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy" />
     {%- endif -%}
   </div>
   {%- if card_class == 'pcard' and product.vendor != blank -%}
