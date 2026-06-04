@@ -8,6 +8,7 @@ const SUPPLIER_SITEMAP = 'https://nawadirdior.sa/sitemap.xml';
 const SUPPLIER_NAME = 'nawadirdior';
 const PRICING_STRATEGY = 'flat_plus_100';
 const HIGGSFIELD_IMAGE_MODEL = 'higgsfield-soul';
+const SUPABASE_PROJECT_REF = 'pbiiqlpgchrcgagemclt';
 
 const TAGS = {
   imported: 'imported-nader-dior',
@@ -36,7 +37,7 @@ const METAFIELDS = {
 };
 
 // Supabase project reference. Never paste the actual service key here.
-const SUPABASE_URL = 'https://vozaayivzggkpazehdxr.supabase.co';
+const SUPABASE_URL = 'https://pbiiqlpgchrcgagemclt.supabase.co';
 const SUPABASE_REST = SUPABASE_URL + '/rest/v1';
 
 // Supplier codes — used as the middle segment of calapres_sku.
@@ -52,6 +53,10 @@ const CREDENTIALS = {
   higgsfieldHeaderAuth: {
     id: 'G31rYKMmDk8hyh2G',
     name: 'Higgsfield API ( awd-n8n )'
+  },
+  supabaseServiceRole: {
+    id: null,
+    name: 'Supabase Calapres Service Role'
   }
 };
 
@@ -117,6 +122,7 @@ if (typeof module !== 'undefined' && module.exports) {
     CREDENTIALS,
     IMPORTED_PRODUCTS_SEARCH_QUERY,
     DEFAULTS,
+    SUPABASE_PROJECT_REF,
     SUPABASE_URL,
     SUPABASE_REST,
     SUPPLIER_CODES

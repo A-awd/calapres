@@ -57,6 +57,7 @@ const backfillModule = loadSyncModule('backfill-existing-products.js');
 const stateModule = loadSyncModule('sync-state.js');
 const reportModule = loadSyncModule('report.js');
 const configModule = loadSyncModule('config.js');
+const supabaseProduct = loadSyncModule('supabase-product.js');
 
 function readFixture(fileName) {
   return fs.readFileSync(path.join(fixturesDir, fileName), 'utf8');
@@ -139,7 +140,14 @@ async function runDryRun(options = {}) {
     const isMissing = normalized.availability === 'missing';
     const priced = pricing.applyPricing(normalized);
     const mappedInventory = inventory.mapAvailability(normalized.availability);
-    const payload = payloads.buildPayload(normalized);
+    const supabaseRecord = supabaseProduct.buildSupabaseRecord(normalized, priced, {
+      supplierCode: configModule.SUPPLIER_CODES.nawadirdior,
+      supplierName: configModule.SUPPLIER_NAME,
+      includeCalapresSku: true,
+      now: '2026-06-04T00:00:00.000Z'
+    });
+    const mediaRows = supabaseProduct.buildProductMediaRows('dry-run-product-' + (index + 1), normalized);
+    const payload = supabaseProduct.buildShopifyPayloadFromSupabaseRecord(supabaseRecord);
     supplierProducts.push(normalized);
 
     entries.push({
@@ -154,6 +162,10 @@ async function runDryRun(options = {}) {
       parsed: normalized,
       pricing: priced,
       inventory: mappedInventory,
+      supabase: {
+        upsertBody: supabaseRecord,
+        productMediaRows: mediaRows
+      },
       payload,
       lookupRequest: shopifyClient.buildLookupProductRequest({ shopDomain, sourceUrl })
     });
@@ -205,6 +217,8 @@ async function runDryRun(options = {}) {
     },
     productLimit: limit,
     generatedPayloads: entries.length,
+    generatedSupabaseRecords: entries.filter((entry) => entry.supabase && entry.supabase.upsertBody.supplier_product_id).length,
+    generatedProductMediaRows: entries.reduce((count, entry) => count + entry.supabase.productMediaRows.length, 0),
     missingSupplierPages: entries.filter((entry) => entry.action === 'skip_missing_supplier_page').length,
     preSyncSetup: {
       metafieldDefinitionRequests: setupDefinitions.buildSupplierMetafieldDefinitionRequests({ shopDomain }),

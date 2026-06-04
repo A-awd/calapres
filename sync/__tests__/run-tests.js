@@ -1317,7 +1317,7 @@ test('supabase-product buildSupabaseRecord prevents compare_at == price (same-pr
 test('supabase-product buildSupabaseRecord normalizes availability variants', () => {
   const base = { name: 'X', brand: 'Y', sourceUrl: 'https://nawadirdior.sa/x/p1', supplierProductId: '1', supplierPrice: 100 };
   assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'in_stock' }, {}).availability_status, 'in_stock');
-  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'متوفر' }, {}).availability_status, 'unknown');
+  assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'متوفر' }, {}).availability_status, 'in_stock');
   assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'out_of_stock' }, {}).availability_status, 'out_of_stock');
   assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'نفد' }, {}).availability_status, 'out_of_stock');
   assert.equal(supabaseProduct.buildSupabaseRecord({ ...base, availability: 'available' }, {}).availability_status, 'in_stock');
@@ -1457,15 +1457,69 @@ test('single product end-to-end: parse → Supabase record → Shopify payload',
   const mediaRow = supabaseProduct.buildProductMediaRow('uuid-xyz', rawParsed.imageUrl);
   assert.equal(mediaRow.original_url, 'https://cdn.salla.sa/original.jpg');
   assert.equal(mediaRow.source, 'supplier');
-  assert.equal(mediaRow.is_primary, false);  // position not set, defaults false
+  assert.equal(mediaRow.is_primary, true);
   assert.equal(mediaRow.uploaded_to_shopify, false);
 });
 
 test('config exposes SUPABASE_URL, SUPABASE_REST, and SUPPLIER_CODES', () => {
-  assert.equal(configModule.SUPABASE_URL, 'https://vozaayivzggkpazehdxr.supabase.co');
-  assert.equal(configModule.SUPABASE_REST, 'https://vozaayivzggkpazehdxr.supabase.co/rest/v1');
+  assert.equal(configModule.SUPABASE_PROJECT_REF, 'pbiiqlpgchrcgagemclt');
+  assert.equal(configModule.SUPABASE_URL, 'https://pbiiqlpgchrcgagemclt.supabase.co');
+  assert.equal(configModule.SUPABASE_REST, 'https://pbiiqlpgchrcgagemclt.supabase.co/rest/v1');
   assert.equal(configModule.SUPPLIER_CODES.nawadirdior, 'ND');
   assert.equal(configModule.METAFIELDS.supplierSku, 'sku');
+  assert.equal(configModule.CREDENTIALS.supabaseServiceRole.name, 'Supabase Calapres Service Role');
+});
+
+test('supabase-product builds Shopify payload from Supabase row using calapres_sku only', () => {
+  const row = {
+    id: 'uuid-product',
+    supplier_name: 'nawadirdior',
+    supplier_product_id: '852601829',
+    supplier_sku: 'SUP-852',
+    supplier_source_url: 'https://nawadirdior.sa/tom-ford/p852601829',
+    calapres_sku: 'CAL-ND-P852601829',
+    product_title_ar: 'Tom Ford Oud Wood EDP 100ml',
+    product_description_ar: 'A woody fragrance.',
+    brand_name: 'Tom Ford',
+    supplier_price: 805,
+    supplier_original_price: null,
+    selling_price: 905,
+    compare_at_price: null,
+    availability_status: 'in_stock'
+  };
+  const payload = supabaseProduct.buildShopifyPayloadFromSupabaseRecord(row);
+  assert.equal(payload.product.variants[0].sku, 'CAL-ND-P852601829');
+  assert.equal(payload.product.variants[0].price, '905');
+  assert.equal(payload.product.vendor, 'Tom Ford');
+  assert.equal(payload.product.metafields.find((field) => field.key === 'sku').value, 'SUP-852');
+  assert.notEqual(payload.product.variants[0].sku, 'SUP-852');
+});
+
+test('supabase-product creates media rows without triggering Higgsfield generation', () => {
+  const rows = supabaseProduct.buildProductMediaRows('uuid-product', {
+    imageUrl: 'https://cdn.salla.sa/main.jpg',
+    images: ['https://cdn.salla.sa/second.jpg']
+  });
+  assert.equal(rows.length, 2);
+  assert.equal(rows[0].source, 'supplier');
+  assert.equal(rows[0].is_primary, true);
+  assert.equal(rows[0].uploaded_to_shopify, false);
+  assert.equal(rows[0].upload_status, 'pending');
+  assert.equal(Object.prototype.hasOwnProperty.call(rows[0], 'higgsfield_request_id'), false);
+});
+
+test('supabase-product builds sync_errors rows for n8n error logging', () => {
+  const row = supabaseProduct.buildSyncErrorRow(new Error('Parse failed'), {
+    syncRunId: 'run-1',
+    supabaseProductId: 'product-1',
+    sourceUrl: 'https://nawadirdior.sa/x/p1',
+    errorType: 'parse_error',
+    rawPayload: { sourceUrl: 'https://nawadirdior.sa/x/p1' }
+  });
+  assert.equal(row.sync_run_id, 'run-1');
+  assert.equal(row.supplier_product_id, 'product-1');
+  assert.equal(row.error_type, 'parse_error');
+  assert.equal(row.error_message, 'Parse failed');
 });
 
 test('seed-creative-briefs builds brief from Shopify product with oud theme detection', () => {

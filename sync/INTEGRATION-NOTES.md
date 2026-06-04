@@ -1,10 +1,12 @@
 # Calapres Shopify Sync Integration Notes
 
-These notes define the exact field mapping and API contract for the live supplier sync running in n8n against the open Shopify storefront.
+These notes define the exact field mapping and API contract for the Calapres data lake sync. Supabase is now the product source of truth; Shopify is only the sales channel.
 
 ## Live Status (Verified)
 
 - Storefront is open on `unywbe-ub.myshopify.com`.
+- Supabase project URL is `https://pbiiqlpgchrcgagemclt.supabase.co`.
+- New source-of-truth path is `nawadirdior.sa -> n8n -> Supabase -> Shopify`.
 - Shopify metafield definitions `supplier.source_url` and `supplier.product_id` exist, are pinned, and are admin-filterable.
 - All 18 legacy imports are backfilled with `supplier.product_id`; `needsManualMatch`, `notFoundAtSupplier`, and unmatched counts are 0.
 - The recurring sync workflow is built and has run live successfully. It created real draft products with supplier price + 100 SAR, `supplier:nawadirdior`, `supplier-id-p<id>`, and `supplier.source_url`.
@@ -57,15 +59,19 @@ Note: the deployed live n8n flow currently uses Admin API `2025-01` and works; k
 
 Generated-node contract: use `sync/n8n-build/manifest.json` and `sync/n8n-build/*.generated.js` for Claude deployment. Do not hand-build Code-node logic in n8n.
 
-## 3. Supplier Field to Shopify Field Mapping
+## 3. Supplier Field to Supabase to Shopify Mapping
+
+Supplier data is first upserted into `supplier_products`. Shopify payloads are built from that Supabase row.
 
 | Supplier or Sync Field | Shopify REST Admin Field | Notes |
 | --- | --- | --- |
 | `name` | `product.title` | Only written for new or non-enriched products. |
 | `description` | `product.body_html` | Plain text is escaped and wrapped in paragraphs. Trusted simple HTML is preserved. |
 | `brand` | `product.vendor` | Falls back to `Nawadirdior`. |
-| `supplierPrice` | `product.variants[0].price` | Calapres rule: supplier price plus 100 SAR. |
-| `supplierCompareAtPrice` | `product.variants[0].compare_at_price` | Calapres rule: supplier compare-at plus 100 SAR; cleared when equal to price. |
+| `supplierPrice` | Supabase `supplier_products.supplier_price`, then `product.variants[0].price` | Calapres rule: supplier price plus 100 SAR. |
+| `supplierCompareAtPrice` | Supabase `supplier_products.supplier_original_price`, then `product.variants[0].compare_at_price` | Calapres rule: supplier compare-at plus 100 SAR; cleared when equal to price. |
+| `supplierSku` | Supabase `supplier_products.supplier_sku`, Shopify metafield `supplier.sku` | Never Shopify variant SKU. |
+| generated `calapres_sku` | Shopify `product.variants[0].sku` | Format `CAL-ND-P<id>` for Nawadir Dior. |
 | `availability` | `product.status` | New imported products land as `draft` for review; `out_of_stock` or supplier-missing also becomes `draft`. Existing in-stock products may be active when intentionally published. |
 | `availability` | `product.variants[0].inventory_policy` | `in_stock` becomes `continue`; `out_of_stock` or supplier-missing becomes `deny`. |
 | `imageUrl` | `product.images[0].src` | Only written for new or non-enriched products. |
@@ -145,6 +151,11 @@ Supplier-missing products auto-return when they reappear because a matching supp
    - Header Auth credential id: `G31rYKMmDk8hyh2G`
    - Used only by the one-time enrichment workflow.
 
+3. `Supabase Calapres Service Role`
+   - Create manually in n8n.
+   - Store the service role key only inside n8n credentials.
+   - Used by Supabase REST nodes for `supplier_products`, `product_media`, `image_generation_jobs`, `generated_assets`, `sync_runs`, and `sync_errors`.
+
 ## 8. Required n8n Variables
 
 1. `SHOPIFY_STORE_DOMAIN`
@@ -161,6 +172,12 @@ Supplier-missing products auto-return when they reappear because a matching supp
 
 5. `HIGGSFIELD_IMAGE_MODEL`
    - Example: `higgsfield-soul`
+
+6. `SUPABASE_URL`
+   - Value: `https://pbiiqlpgchrcgagemclt.supabase.co`
+
+7. `SUPABASE_SUPPLIER_ID`
+   - UUID of the `suppliers` row for Nawadir Dior after migration is applied.
 
 ## 9. Offline Verification Path
 

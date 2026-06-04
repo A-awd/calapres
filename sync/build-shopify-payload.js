@@ -16,11 +16,13 @@ function buildPayload(parsed) {
   const pricing = applyPricingForPayload(item);
   const stock = mapAvailabilityForPayload(item.availability);
   const existingProduct = item.existingProduct || item.shopifyProduct || {};
-  const existingProductId = item.existingProductId || existingProduct.id;
+  const existingProductId = item.existingProductId || item.shopifyProductId || item.shopify_product_id || existingProduct.id;
   const existingTags = normalizeTags(item.existingTags || existingProduct.tags || item.tags);
   const enriched = hasTag(existingTags, 'enriched');
   const statusOnly = enriched || isMissingAvailability(item.availability);
-  const supplierProductId = normalizeSupplierProductId(item.supplierProductId || item.supplierId || productIdFromUrl(item.sourceUrl));
+  const supplierProductId = normalizeSupplierProductId(
+    item.supplierProductId || item.supplier_product_id || item.supplierId || productIdFromUrl(item.sourceUrl || item.supplier_source_url)
+  );
   const canCreate = Boolean(existingProductId || (pricing.price !== null && supplierProductId));
 
   if (!canCreate) {
@@ -54,7 +56,7 @@ function buildPayload(parsed) {
   // Full update: include calapres_sku as Shopify variant SKU.
   const variant = compactObject({
     ...variantBase,
-    sku: cleanText(item.calapresSku) || undefined
+    sku: cleanText(item.calapresSku || item.calapres_sku) || undefined
   });
 
   const tags = uniqueTags([
@@ -68,12 +70,12 @@ function buildPayload(parsed) {
   return {
     product: compactObject({
       id: existingProductId,
-      title: cleanText(item.name),
-      body_html: toBodyHtml(item.description),
-      vendor: cleanText(item.brand) || supplierVendorFallback(),
+      title: cleanText(item.name || item.product_title_ar || item.product_title_en),
+      body_html: toBodyHtml(item.description || item.product_description_ar || item.product_description_en),
+      vendor: cleanText(item.brand || item.brand_name) || supplierVendorFallback(),
       tags: tags.join(', '),
       status: existingProductId ? stock.productStatus : 'draft',
-      images: item.imageUrl ? [{ src: String(item.imageUrl).trim() }] : undefined,
+      images: item.imageUrl || item.primaryImageUrl ? [{ src: String(item.imageUrl || item.primaryImageUrl).trim() }] : undefined,
       metafields: supplierMetafields(item),
       variants: [variant]
     }),
@@ -82,8 +84,19 @@ function buildPayload(parsed) {
 }
 
 function applyPricingForPayload(input) {
-  const supplierPrice = toMoneyNumber(input && input.supplierPrice);
-  const supplierCompareAtPrice = toMoneyNumber(input && input.supplierCompareAtPrice);
+  const explicitPrice = toMoneyNumber(input && (input.price ?? input.selling_price));
+  const explicitCompareAtPrice = toMoneyNumber(input && (input.compareAtPrice ?? input.compare_at_price));
+  if (explicitPrice !== null) {
+    return {
+      price: explicitPrice,
+      compareAtPrice: explicitCompareAtPrice !== null && roundMoney(explicitCompareAtPrice) !== roundMoney(explicitPrice)
+        ? explicitCompareAtPrice
+        : null
+    };
+  }
+
+  const supplierPrice = toMoneyNumber(input && (input.supplierPrice ?? input.supplier_price));
+  const supplierCompareAtPrice = toMoneyNumber(input && (input.supplierCompareAtPrice ?? input.supplier_original_price));
   if (supplierPrice === null) return { price: null, compareAtPrice: null };
   const price = roundMoney(supplierPrice + config.MARKUP_SAR);
   let compareAtPrice = supplierCompareAtPrice === null ? null : roundMoney(supplierCompareAtPrice + config.MARKUP_SAR);
@@ -150,15 +163,16 @@ function productIdFromUrl(value) {
 
 function supplierMetafields(item) {
   const metafields = [];
-  if (item.sourceUrl) {
+  const sourceUrl = item.sourceUrl || item.supplier_source_url;
+  if (sourceUrl) {
     metafields.push({
       namespace: config.NAMESPACES.supplier,
       key: config.METAFIELDS.sourceUrl,
-      value: String(item.sourceUrl),
+      value: String(sourceUrl),
       type: 'single_line_text_field'
     });
   }
-  const id = normalizeSupplierProductId(item.supplierProductId || item.supplierId || productIdFromUrl(item.sourceUrl));
+  const id = normalizeSupplierProductId(item.supplierProductId || item.supplier_product_id || item.supplierId || productIdFromUrl(sourceUrl));
   if (id) {
     metafields.push({
       namespace: config.NAMESPACES.supplier,
@@ -168,7 +182,7 @@ function supplierMetafields(item) {
     });
   }
   // Store supplier_sku separately for traceability. Never use it as Shopify variant SKU.
-  const supplierSku = cleanText(item.supplierSku);
+  const supplierSku = cleanText(item.supplierSku || item.supplier_sku);
   if (supplierSku) {
     metafields.push({
       namespace: config.NAMESPACES.supplier,

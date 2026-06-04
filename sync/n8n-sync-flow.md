@@ -1,6 +1,12 @@
 # n8n Recurring Supplier Sync Flow
 
-This workflow keeps Calapres Shopify products aligned with Nawadirdior Salla products. It never deletes Shopify products. Supplier items missing from the latest crawl are marked out of stock.
+This workflow keeps Calapres products aligned with Nawadirdior Salla products through Supabase. It never deletes Shopify products. Supplier items missing from the latest crawl are marked out of stock.
+
+Authoritative path:
+
+`nawadirdior.sa -> n8n -> Supabase -> Shopify`
+
+Shopify is not the source of truth. Supabase `supplier_products` is the source of truth, and Shopify payloads are built from the returned Supabase row.
 
 Live status: this recurring workflow is built and has run live successfully. The storefront is open on `unywbe-ub.myshopify.com`; `supplier.source_url` and `supplier.product_id` metafield definitions exist; all 18 legacy imports are backfilled with supplier metadata; current manual/unmatched/not-found backfill counts are 0. New imported products land as `draft` for review.
 
@@ -13,6 +19,7 @@ Generated artifact note: Claude deploys Code nodes from `sync/n8n-build/*.genera
 Credential:
 
 - Shopify-Calapres OAuth2 credential: `QLsvwO73GFsQfy0w`
+- Supabase Calapres Service Role credential: create manually in n8n; keep the service-role key only inside n8n.
 
 Recommended Shopify store domain variable:
 
@@ -25,23 +32,28 @@ Recommended Shopify store domain variable:
 3. `Split Product URLs` -> `Wait: Product Rate Limit`
 4. `Wait: Product Rate Limit` -> `HTTP GET Supplier Product`
 5. `HTTP GET Supplier Product` -> `Code: parseProduct`
-6. `Code: parseProduct` -> `Code: applyPricing`
-7. `Code: applyPricing` -> `Code: mapAvailability`
-8. `Code: mapAvailability` -> `Code: Build Shopify Lookup`
-9. `Code: Build Shopify Lookup` -> `Shopify Admin GraphQL: Lookup Existing`
-10. `Shopify Admin GraphQL: Lookup Existing` -> `Code: Select Existing Product`
-11. `Code: Select Existing Product` -> `Code: buildPayload`
-12. `Code: buildPayload` -> `IF: Existing Product?`
-13. `IF: Existing Product?` true -> `Shopify Admin REST: Update Product`
-14. `IF: Existing Product?` false -> `Shopify Admin REST: Create Product`
-15. both Shopify write nodes -> `Split Product URLs` continue
-16. `Split Product URLs` done output -> `Shopify Admin GraphQL: List Imported Products`
-17. `Shopify Admin GraphQL: List Imported Products` -> `Code: Find Missing Supplier Products`
-18. `Code: Find Missing Supplier Products` -> `Split Missing Products`
-19. `Split Missing Products` -> `Wait: Missing Rate Limit`
-20. `Wait: Missing Rate Limit` -> `Code: buildPayload Missing`
-21. `Code: buildPayload Missing` -> `Shopify Admin REST: Mark Missing Out Of Stock`
-22. `Shopify Admin REST: Mark Missing Out Of Stock` -> `Split Missing Products` continue
+6. `Code: parseProduct` -> `Code: Normalize Supplier Product`
+7. `Code: Normalize Supplier Product` -> `Code: applyPricing`
+8. `Code: applyPricing` -> `Code: Build Supabase Upsert Payload`
+9. `Code: Build Supabase Upsert Payload` -> `Supabase REST: Upsert supplier_products`
+10. `Supabase REST: Upsert supplier_products` -> `Code: Build Product Media Rows`
+11. `Code: Build Product Media Rows` -> `Supabase REST: Upsert product_media`
+12. `Supabase REST: Upsert product_media` -> `Code: mapAvailability`
+13. `Code: mapAvailability` -> `Code: Build Shopify Lookup`
+14. `Code: Build Shopify Lookup` -> `Shopify Admin GraphQL: Lookup Existing`
+15. `Shopify Admin GraphQL: Lookup Existing` -> `Code: Select Existing Product`
+16. `Code: Select Existing Product` -> `Code: Build Shopify Payload From Supabase`
+17. `Code: Build Shopify Payload From Supabase` -> `IF: Existing Product?`
+18. `IF: Existing Product?` true -> `Shopify Admin REST: Update Product`
+19. `IF: Existing Product?` false -> `Shopify Admin REST: Create Product`
+20. both Shopify write nodes -> `Supabase REST: Patch Shopify ids/status`
+21. `Split Product URLs` done output -> `Shopify Admin GraphQL: List Imported Products`
+22. `Shopify Admin GraphQL: List Imported Products` -> `Code: Find Missing Supplier Products`
+23. `Code: Find Missing Supplier Products` -> `Split Missing Products`
+24. `Split Missing Products` -> `Wait: Missing Rate Limit`
+25. `Wait: Missing Rate Limit` -> `Code: buildPayload Missing`
+26. `Code: buildPayload Missing` -> `Shopify Admin REST: Mark Missing Out Of Stock`
+27. any workflow error -> `Code: Build Sync Error Row` -> `Supabase REST: Insert sync_errors`
 
 ## Node 1: Schedule Trigger
 

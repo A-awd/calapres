@@ -20,10 +20,14 @@ const modules = [
   './sync-state.js',
   './normalize.js',
   './categorize.js',
+  './supabase-product.js',
   './enrich/prompt.js',
   './enrich/seo.js',
   './enrich/build-enrich-payload.js',
-  './report.js'
+  './report.js',
+  './image-pipeline/creative-brief.js',
+  './image-pipeline/image-types.js',
+  './image-pipeline/quality-gate.js'
 ];
 
 const nodes = [
@@ -66,6 +70,31 @@ async function main() {
 }`
   },
   {
+    file: 'normalize-supplier.generated.js',
+    name: 'Code: Normalize Supplier Product',
+    mode: 'runOnceForEachItem',
+    glue: `
+const normalizer = __require('./normalize.js');
+const categorizer = __require('./categorize.js');
+async function main() {
+  const parsed = $json.parsed || {};
+  const normalized = normalizer.normalizeProduct({
+    name: parsed.name,
+    brand: parsed.brand,
+    category: parsed.category,
+    description: parsed.description
+  });
+  return { json: { ...$json, parsed: {
+    ...parsed,
+    brand: normalized.brand || parsed.brand,
+    concentration: normalized.concentration || parsed.concentration,
+    sizeMl: normalized.sizeMl || parsed.sizeMl,
+    gender: normalized.gender || parsed.gender,
+    collectionHandles: categorizer.collectionHandles({ ...parsed, ...normalized })
+  } } };
+}`
+  },
+  {
     file: 'pricing.generated.js',
     name: 'Code: applyPricing',
     mode: 'runOnceForEachItem',
@@ -77,6 +106,34 @@ async function main() {
 }`
   },
   {
+    file: 'supabase-upsert.generated.js',
+    name: 'Code: Build Supabase Upsert Payload',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const parsed = $json.parsed || {};
+  const priced = { price: parsed.price, compareAtPrice: parsed.compareAtPrice };
+  const supplierId = $json.supplierId || $json.supplier_id || $vars?.SUPABASE_SUPPLIER_ID || $env?.SUPABASE_SUPPLIER_ID || null;
+  const body = supabase.buildSupabaseUpsertBody(parsed, priced, supplierId, { supplierCode: 'ND', supplierName: 'nawadirdior' });
+  return { json: { ...$json, supabaseUpsertBody: body, supabaseTable: 'supplier_products' } };
+}`
+  },
+  {
+    file: 'product-media.generated.js',
+    name: 'Code: Build Product Media Rows',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const response = $json.supabaseResponse || $json;
+  const row = Array.isArray(response) ? response[0] : (Array.isArray(response.data) ? response.data[0] : response);
+  const productId = row && row.id;
+  const mediaRows = productId ? supabase.buildProductMediaRows(productId, $json.parsed || row) : [];
+  return { json: { ...$json, supabaseProduct: row || null, productMediaRows: mediaRows } };
+}`
+  },
+  {
     file: 'availability.generated.js',
     name: 'Code: mapAvailability',
     mode: 'runOnceForEachItem',
@@ -85,6 +142,39 @@ const inventory = __require('./inventory.js');
 async function main() {
   const mapped = inventory.mapAvailability($json.parsed && $json.parsed.availability);
   return { json: { ...$json, parsed: { ...$json.parsed, inventory: mapped } } };
+}`
+  },
+  {
+    file: 'shopify-from-supabase.generated.js',
+    name: 'Code: Build Shopify Payload From Supabase',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+const validator = __require('./validate-shopify-shape.js');
+async function main() {
+  const row = $json.supabaseProduct || $json.supplierProduct || $json;
+  const existingProduct = $json.existingProduct || null;
+  const payload = supabase.buildShopifyPayloadFromSupabaseRecord(row, { existingProduct, existingTags: existingProduct?.tags || [] });
+  if (payload.skipped) return { json: { ...$json, payload, skipWrite: true, reason: payload.reason } };
+  validator.assertValidShopifyProductShape(payload, existingProduct?.tags?.includes('enriched') ? { mode: 'price_availability_only' } : {});
+  return { json: { ...$json, payload, productId: payload.product.id || row.shopify_product_id || null } };
+}`
+  },
+  {
+    file: 'sync-error.generated.js',
+    name: 'Code: Build Sync Error Row',
+    mode: 'runOnceForEachItem',
+    glue: `
+const supabase = __require('./supabase-product.js');
+async function main() {
+  const errorRow = supabase.buildSyncErrorRow($json.error || $json.errorMessage || 'Unknown sync error', {
+    syncRunId: $json.syncRunId,
+    supabaseProductId: $json.supabaseProductId || $json.supabaseProduct?.id,
+    sourceUrl: $json.sourceUrl || $json.parsed?.sourceUrl,
+    errorType: $json.errorType || 'unknown',
+    rawPayload: $json
+  });
+  return { json: { ...$json, syncErrorRow: errorRow } };
 }`
   },
   {
@@ -153,6 +243,47 @@ async function main() {
   const payload = payloads.buildPayload({ ...$json.parsed, existingProduct: $json.existingProduct, existingTags: $json.existingProduct?.tags || [] });
   validator.assertValidShopifyProductShape(payload, { mode: 'price_availability_only' });
   return { json: { ...$json, payload, productId: payload.product.id } };
+}`
+  },
+  {
+    file: 'image-pipeline-brief.generated.js',
+    name: 'Code: Build Higgsfield Request (Image Pipeline)',
+    mode: 'runOnceForEachItem',
+    glue: `
+const creative = __require('./image-pipeline/creative-brief.js');
+async function main() {
+  const job = $json.imageGenerationJob || $json.job || {};
+  const product = $json.supabaseProduct || $json.product || {};
+  const brandStyle = $json.brandStyle || {
+    base_prompt_fragment: 'Luxury ecommerce fragrance photography. Ivory, gold, refined Calapres boutique mood. No readable text, no people, no watermark.',
+    negative_prompt: 'low quality, blurry, distorted bottle, fake text, watermark, hands, faces',
+    reference_image_weight: 0.85
+  };
+  const brief = {
+    id: job.id,
+    shopify_product_id: product.shopify_product_id,
+    product_title: product.product_title_en || product.product_title_ar,
+    brand_name: product.brand_name,
+    concentration: product.concentration,
+    size_ml: product.size_ml,
+    reference_image_url: job.reference_image_url || $json.referenceImageUrl
+  };
+  const jobType = job.job_type || 'product_hero';
+  return { json: { ...$json, higgsfieldRequest: creative.buildHiggsfieldRequest(brief, brandStyle, jobType), brief, brandStyle, jobType } };
+}`
+  },
+  {
+    file: 'image-pipeline-quality.generated.js',
+    name: 'Code: Run Quality Gate (Image Pipeline)',
+    mode: 'runOnceForEachItem',
+    glue: `
+const quality = __require('./image-pipeline/quality-gate.js');
+async function main() {
+  const response = $json.higgsfieldResponse || $json.response || $json;
+  const context = { referenceImageUrl: $json.brief?.reference_image_url || $json.referenceImageUrl || null };
+  const result = quality.runQualityChecks(response, context);
+  const action = quality.decideAction(result, Number($json.retryCount || $json.imageGenerationJob?.retry_count || 0));
+  return { json: { ...$json, qualityResult: result, nextImageAction: action } };
 }`
   },
   {
@@ -248,7 +379,8 @@ function buildManifest() {
     apiVersionDeployed: config.API_VERSION_DEPLOYED,
     credentialRefs: {
       shopify: config.CREDENTIALS.shopifyOAuth2,
-      higgsfield: config.CREDENTIALS.higgsfieldHeaderAuth
+      higgsfield: config.CREDENTIALS.higgsfieldHeaderAuth,
+      supabase: config.CREDENTIALS.supabaseServiceRole
     },
     trigger: { type: 'schedule', everyHours: 6, timezone: 'Asia/Riyadh' },
     nodes: nodes.map((node, index) => ({ order: index + 1, name: node.name, file: node.file, mode: node.mode })),
@@ -256,15 +388,26 @@ function buildManifest() {
       ['Schedule Trigger', 'Crawl Supplier URLs'],
       ['Crawl Supplier URLs', 'HTTP GET Supplier Product'],
       ['HTTP GET Supplier Product', 'Code: parseProduct'],
-      ['Code: parseProduct', 'Code: applyPricing'],
-      ['Code: applyPricing', 'Code: mapAvailability'],
+      ['Code: parseProduct', 'Code: Normalize Supplier Product'],
+      ['Code: Normalize Supplier Product', 'Code: applyPricing'],
+      ['Code: applyPricing', 'Code: Build Supabase Upsert Payload'],
+      ['Code: Build Supabase Upsert Payload', 'HTTP POST: Supabase Upsert supplier_products'],
+      ['HTTP POST: Supabase Upsert supplier_products', 'Code: Build Product Media Rows'],
+      ['Code: Build Product Media Rows', 'HTTP POST: Supabase Upsert product_media'],
+      ['HTTP POST: Supabase Upsert product_media', 'Code: mapAvailability'],
       ['Code: mapAvailability', 'Code: Build Shopify Lookup'],
       ['Code: Build Shopify Lookup', 'Shopify Admin GraphQL: Lookup Existing'],
       ['Shopify Admin GraphQL: Lookup Existing', 'Code: Select Existing Product'],
-      ['Code: Select Existing Product', 'Code: buildPayload'],
-      ['Code: buildPayload', 'Shopify Admin REST create/update'],
+      ['Code: Select Existing Product', 'Code: Build Shopify Payload From Supabase'],
+      ['Code: Build Shopify Payload From Supabase', 'Shopify Admin REST create/update'],
       ['Shopify Admin GraphQL: List Imported Products', 'Code: Find Missing Supplier Products'],
       ['Code: Find Missing Supplier Products', 'Code: buildPayload Missing'],
+      ['Workflow Error Trigger', 'Code: Build Sync Error Row'],
+      ['Code: Build Sync Error Row', 'HTTP POST: Supabase Insert sync_errors'],
+      ['Supabase List Pending Image Jobs', 'Code: Build Higgsfield Request (Image Pipeline)'],
+      ['Code: Build Higgsfield Request (Image Pipeline)', 'HTTP Request: Higgsfield Generate Images'],
+      ['HTTP Request: Higgsfield Generate Images', 'Code: Run Quality Gate (Image Pipeline)'],
+      ['Code: Run Quality Gate (Image Pipeline)', 'HTTP PATCH: Supabase image_generation_jobs/generated_assets'],
       ['Code: Build Higgsfield Prompt', 'HTTP Request: Higgsfield Generate Images'],
       ['HTTP Request: Higgsfield Generate Images', 'Code: Build Arabic SEO'],
       ['Code: Build Arabic SEO', 'Code: Build Enriched Payload']

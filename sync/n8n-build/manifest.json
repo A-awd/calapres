@@ -10,6 +10,10 @@
     "higgsfield": {
       "id": "G31rYKMmDk8hyh2G",
       "name": "Higgsfield API ( awd-n8n )"
+    },
+    "supabase": {
+      "id": null,
+      "name": "Supabase Calapres Service Role"
     }
   },
   "trigger": {
@@ -32,84 +36,105 @@
     },
     {
       "order": 3,
+      "name": "Code: Normalize Supplier Product",
+      "file": "normalize-supplier.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 4,
       "name": "Code: applyPricing",
       "file": "pricing.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 3.5,
-      "name": "Code: Build Supabase Payload",
+      "order": 5,
+      "name": "Code: Build Supabase Upsert Payload",
       "file": "supabase-upsert.generated.js",
-      "mode": "runOnceForEachItem",
-      "note": "Builds upsert body for supplier_products table. HTTP Request node POSTs to Supabase. Next Code node reads calapres_sku from response and passes it to buildPayload."
+      "mode": "runOnceForEachItem"
     },
     {
-      "order": 4,
+      "order": 6,
+      "name": "Code: Build Product Media Rows",
+      "file": "product-media.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 7,
       "name": "Code: mapAvailability",
       "file": "availability.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 5,
+      "order": 8,
+      "name": "Code: Build Shopify Payload From Supabase",
+      "file": "shopify-from-supabase.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 9,
+      "name": "Code: Build Sync Error Row",
+      "file": "sync-error.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 10,
       "name": "Code: Build Shopify Lookup",
       "file": "buildLookup.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 6,
+      "order": 11,
       "name": "Code: Select Existing Product",
       "file": "selectExisting.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 7,
+      "order": 12,
       "name": "Code: buildPayload",
       "file": "buildPayload.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 8,
+      "order": 13,
       "name": "Code: Find Missing Supplier Products",
       "file": "findMissing.generated.js",
       "mode": "runOnceForAllItems"
     },
     {
-      "order": 9,
+      "order": 14,
       "name": "Code: buildPayload Missing",
       "file": "buildMissing.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 10,
+      "order": 15,
+      "name": "Code: Build Higgsfield Request (Image Pipeline)",
+      "file": "image-pipeline-brief.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 16,
+      "name": "Code: Run Quality Gate (Image Pipeline)",
+      "file": "image-pipeline-quality.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 17,
       "name": "Code: Build Higgsfield Prompt",
       "file": "enrich-prompt.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 11,
+      "order": 18,
       "name": "Code: Build Arabic SEO",
       "file": "enrich-seo.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 12,
+      "order": 19,
       "name": "Code: Build Enriched Payload",
       "file": "enrich-payload.generated.js",
       "mode": "runOnceForEachItem"
-    },
-    {
-      "order": 13,
-      "name": "Code: Build Higgsfield Request (Image Pipeline)",
-      "file": "image-pipeline-brief.generated.js",
-      "mode": "runOnceForEachItem",
-      "workflow": "image-pipeline"
-    },
-    {
-      "order": 14,
-      "name": "Code: Run Quality Gate (Image Pipeline)",
-      "file": "image-pipeline-quality.generated.js",
-      "mode": "runOnceForEachItem",
-      "workflow": "image-pipeline"
     }
   ],
   "connectionGraph": [
@@ -127,18 +152,30 @@
     ],
     [
       "Code: parseProduct",
+      "Code: Normalize Supplier Product"
+    ],
+    [
+      "Code: Normalize Supplier Product",
       "Code: applyPricing"
     ],
     [
       "Code: applyPricing",
-      "Code: Build Supabase Payload"
+      "Code: Build Supabase Upsert Payload"
     ],
     [
-      "Code: Build Supabase Payload",
+      "Code: Build Supabase Upsert Payload",
       "HTTP POST: Supabase Upsert supplier_products"
     ],
     [
       "HTTP POST: Supabase Upsert supplier_products",
+      "Code: Build Product Media Rows"
+    ],
+    [
+      "Code: Build Product Media Rows",
+      "HTTP POST: Supabase Upsert product_media"
+    ],
+    [
+      "HTTP POST: Supabase Upsert product_media",
       "Code: mapAvailability"
     ],
     [
@@ -155,10 +192,10 @@
     ],
     [
       "Code: Select Existing Product",
-      "Code: buildPayload"
+      "Code: Build Shopify Payload From Supabase"
     ],
     [
-      "Code: buildPayload",
+      "Code: Build Shopify Payload From Supabase",
       "Shopify Admin REST create/update"
     ],
     [
@@ -168,6 +205,30 @@
     [
       "Code: Find Missing Supplier Products",
       "Code: buildPayload Missing"
+    ],
+    [
+      "Workflow Error Trigger",
+      "Code: Build Sync Error Row"
+    ],
+    [
+      "Code: Build Sync Error Row",
+      "HTTP POST: Supabase Insert sync_errors"
+    ],
+    [
+      "Supabase List Pending Image Jobs",
+      "Code: Build Higgsfield Request (Image Pipeline)"
+    ],
+    [
+      "Code: Build Higgsfield Request (Image Pipeline)",
+      "HTTP Request: Higgsfield Generate Images"
+    ],
+    [
+      "HTTP Request: Higgsfield Generate Images",
+      "Code: Run Quality Gate (Image Pipeline)"
+    ],
+    [
+      "Code: Run Quality Gate (Image Pipeline)",
+      "HTTP PATCH: Supabase image_generation_jobs/generated_assets"
     ],
     [
       "Code: Build Higgsfield Prompt",
