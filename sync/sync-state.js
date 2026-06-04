@@ -21,6 +21,17 @@ function computeChunk(fullList, offset, chunkSize) {
   };
 }
 
+function selectOneProductTestUrls(fullList, options) {
+  const opts = options && typeof options === 'object' ? options : {};
+  const urls = Array.isArray(fullList) ? fullList.slice() : [];
+  const explicitUrl = cleanString(opts.testProductUrl);
+  if (explicitUrl) return [explicitUrl];
+
+  const productId = normalizeSupplierId(opts.testProductId);
+  if (!productId) return urls;
+  return urls.filter((url) => productIdFromUrl(url) === productId);
+}
+
 function selectNewVsExisting(supplierProducts, shopifyProducts) {
   const existingIds = {};
   const existingUrls = {};
@@ -89,6 +100,7 @@ function cleanString(value) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     computeChunk,
+    selectOneProductTestUrls,
     selectNewVsExisting,
     normalizeOffset,
     normalizePositiveInt,

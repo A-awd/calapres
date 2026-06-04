@@ -41,8 +41,16 @@ const crawl = __require('./crawl-supplier.js');
 const state = __require('./sync-state.js');
 async function main() {
   const offset = Number($vars?.CALAPRES_SYNC_OFFSET || $env?.CALAPRES_SYNC_OFFSET || 0);
-  const urls = await crawl.crawlSupplierProducts({ sitemapUrl: config.SUPPLIER_SITEMAP });
-  const chunk = state.computeChunk(urls, offset, config.CHUNK_SIZE);
+  const limit = $vars?.CALAPRES_SYNC_LIMIT || $env?.CALAPRES_SYNC_LIMIT || config.CHUNK_SIZE;
+  const testProductId = $vars?.CALAPRES_TEST_PRODUCT_ID || $env?.CALAPRES_TEST_PRODUCT_ID || null;
+  const testProductUrl = $vars?.CALAPRES_TEST_PRODUCT_URL || $env?.CALAPRES_TEST_PRODUCT_URL || null;
+  const sitemapUrl = $vars?.SUPPLIER_SITEMAP_URL || $env?.SUPPLIER_SITEMAP_URL || config.SUPPLIER_SITEMAP;
+  const urls = await crawl.crawlSupplierProducts({ sitemapUrl });
+  const selectedUrls = state.selectOneProductTestUrls(urls, { testProductId, testProductUrl });
+  if (testProductId && !selectedUrls.length) {
+    throw new Error('CALAPRES_TEST_PRODUCT_ID not found in supplier sitemap: ' + testProductId);
+  }
+  const chunk = state.computeChunk(selectedUrls, testProductId || testProductUrl ? 0 : offset, limit);
   return chunk.chunk.map((sourceUrl) => ({ json: {
     sourceUrl,
     supplierProductId: crawl.productIdFromUrl(sourceUrl),
@@ -472,7 +480,7 @@ function buildReadme() {
     '| --- | --- | --- |',
     ...nodes.map((node) => '| ' + node.name + ' | `' + node.file + '` | `' + node.mode + '` |'),
     '',
-    'The bundles inline `sync/` helpers, config, offset chunking, carry-through parsing, canCreate guards, enriched guard, and validation.'
+    'The bundles inline `sync/` helpers, config, offset chunking, one-product guards (`CALAPRES_SYNC_LIMIT`, `CALAPRES_TEST_PRODUCT_ID`, `CALAPRES_TEST_PRODUCT_URL`), carry-through parsing, canCreate guards, enriched guard, and validation.'
   ].join('\n') + '\n';
 }
 

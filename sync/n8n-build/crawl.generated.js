@@ -5,7 +5,7 @@ const __modules = {
 "./config.js": function(module, exports, __require) {
 const SHOP_DOMAIN = 'unywbe-ub.myshopify.com';
 const API_VERSION_STANDARD = '2026-04';
-const API_VERSION_DEPLOYED = '2025-01';
+const API_VERSION_DEPLOYED = API_VERSION_STANDARD;
 const MARKUP_SAR = 100;
 const CHUNK_SIZE = 300;
 const REQUEST_DELAY_SECONDS = 1;
@@ -2415,6 +2415,17 @@ function computeChunk(fullList, offset, chunkSize) {
   };
 }
 
+function selectOneProductTestUrls(fullList, options) {
+  const opts = options && typeof options === 'object' ? options : {};
+  const urls = Array.isArray(fullList) ? fullList.slice() : [];
+  const explicitUrl = cleanString(opts.testProductUrl);
+  if (explicitUrl) return [explicitUrl];
+
+  const productId = normalizeSupplierId(opts.testProductId);
+  if (!productId) return urls;
+  return urls.filter((url) => productIdFromUrl(url) === productId);
+}
+
 function selectNewVsExisting(supplierProducts, shopifyProducts) {
   const existingIds = {};
   const existingUrls = {};
@@ -2483,6 +2494,7 @@ function cleanString(value) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     computeChunk,
+    selectOneProductTestUrls,
     selectNewVsExisting,
     normalizeOffset,
     normalizePositiveInt,
@@ -3781,8 +3793,16 @@ const crawl = __require('./crawl-supplier.js');
 const state = __require('./sync-state.js');
 async function main() {
   const offset = Number($vars?.CALAPRES_SYNC_OFFSET || $env?.CALAPRES_SYNC_OFFSET || 0);
-  const urls = await crawl.crawlSupplierProducts({ sitemapUrl: config.SUPPLIER_SITEMAP });
-  const chunk = state.computeChunk(urls, offset, config.CHUNK_SIZE);
+  const limit = $vars?.CALAPRES_SYNC_LIMIT || $env?.CALAPRES_SYNC_LIMIT || config.CHUNK_SIZE;
+  const testProductId = $vars?.CALAPRES_TEST_PRODUCT_ID || $env?.CALAPRES_TEST_PRODUCT_ID || null;
+  const testProductUrl = $vars?.CALAPRES_TEST_PRODUCT_URL || $env?.CALAPRES_TEST_PRODUCT_URL || null;
+  const sitemapUrl = $vars?.SUPPLIER_SITEMAP_URL || $env?.SUPPLIER_SITEMAP_URL || config.SUPPLIER_SITEMAP;
+  const urls = await crawl.crawlSupplierProducts({ sitemapUrl });
+  const selectedUrls = state.selectOneProductTestUrls(urls, { testProductId, testProductUrl });
+  if (testProductId && !selectedUrls.length) {
+    throw new Error('CALAPRES_TEST_PRODUCT_ID not found in supplier sitemap: ' + testProductId);
+  }
+  const chunk = state.computeChunk(selectedUrls, testProductId || testProductUrl ? 0 : offset, limit);
   return chunk.chunk.map((sourceUrl) => ({ json: {
     sourceUrl,
     supplierProductId: crawl.productIdFromUrl(sourceUrl),

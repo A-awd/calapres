@@ -64,18 +64,21 @@ Product media is intentionally guarded in n8n because `product_media` has no uni
 
 ## One-Product Test
 
-1. Set chunk size or Split limit to `1`.
-2. Run the workflow manually.
-3. Confirm one `supplier_products` row has:
+1. Keep Schedule Trigger disabled and run manually.
+2. Set n8n variable `CALAPRES_SYNC_LIMIT=1`.
+3. Prefer the known proof product by setting `CALAPRES_TEST_PRODUCT_ID=735368737`. If the sitemap ever omits that id, set `CALAPRES_TEST_PRODUCT_URL` to the exact supplier product page URL instead.
+4. Keep the Split in Batches limit at `1` as a second guard.
+5. Run the workflow manually.
+6. Confirm one `supplier_products` row has:
    - `supplier_product_id`
    - `supplier_sku` if supplier exposes it
    - `calapres_sku` like `CAL-ND-P<id>`
    - `selling_price = supplier_price + 100`
    - `compare_at_price = supplier_original_price + 100` only when discounted
-4. Confirm `product_media` has supplier image rows.
-5. Stop before bulk loops. Do not trigger Higgsfield generation.
-6. If Shopify write is enabled for the test, create/update only that one product.
-7. Confirm `shopify_products` has exactly one mapping row for the tested Supabase product.
+7. Confirm `product_media` has supplier image rows.
+8. Stop before bulk loops. Do not trigger Higgsfield generation.
+9. If Shopify write is enabled for the test, create/update only that one product.
+10. Confirm `shopify_products` has exactly one mapping row for the tested Supabase product.
 
 ## Workflow 2
 

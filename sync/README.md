@@ -49,7 +49,7 @@ Live setup is moving from the old direct path to the product data lake:
 
 `nawadirdior.sa -> n8n -> Supabase -> Shopify`
 
-Recurring sync drains the supplier catalog in 300-product chunks: `sitemap.xml -> computeChunk(offset) -> crawl item sourceUrl/supplierProductId -> HTTP GET -> parseProduct(html, crawl context) -> canCreate guard -> normalize -> applyPricing -> Supabase supplier_products upsert -> product_media rows -> existing-media lookup/filter -> Shopify lookup -> Shopify payload from Supabase row -> validateShopifyProductShape -> Shopify write -> Supabase Shopify-id mapping`. New imported products land as draft for review, enriched products route through a price/availability-only guard, and supplier-missing products are drafted out of stock instead of deleted.
+Recurring sync drains the supplier catalog in 300-product chunks: `sitemap.xml -> computeChunk(offset) -> crawl item sourceUrl/supplierProductId -> HTTP GET -> parseProduct(html, crawl context) -> canCreate guard -> normalize -> applyPricing -> Supabase supplier_products upsert -> product_media rows -> existing-media lookup/filter -> Shopify lookup -> Shopify payload from Supabase row -> validateShopifyProductShape -> Shopify write -> Supabase Shopify-id mapping`. New imported products land as draft for review, enriched products route through a price/availability-only guard, and supplier-missing products are drafted out of stock instead of deleted. For the one-product live test, set `CALAPRES_SYNC_LIMIT=1` and optionally `CALAPRES_TEST_PRODUCT_ID=735368737` or `CALAPRES_TEST_PRODUCT_URL=<supplier product URL>` to constrain the crawl node itself.
 
 Image flow is prepared but not bulk-enabled:
 

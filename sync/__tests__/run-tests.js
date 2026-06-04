@@ -900,7 +900,7 @@ test('backfill-existing-products plans the real 18-product map and preserves dua
 test('config exposes the live source-of-truth constants', () => {
   assert.equal(configModule.SHOP_DOMAIN, 'unywbe-ub.myshopify.com');
   assert.equal(configModule.API_VERSION_STANDARD, '2026-04');
-  assert.equal(configModule.API_VERSION_DEPLOYED, '2025-01');
+  assert.equal(configModule.API_VERSION_DEPLOYED, '2026-04');
   assert.equal(configModule.MARKUP_SAR, 100);
   assert.equal(configModule.CHUNK_SIZE, 300);
   assert.equal(configModule.TAGS.imported, 'imported-nader-dior');
@@ -934,6 +934,18 @@ test('sync-state computes chunks, offsets, wrap-around, and empty lists', () => 
     chunkSize: 300,
     total: 0
   });
+});
+
+test('sync-state selects one-product test URLs by supplier id or explicit URL', () => {
+  const urls = [
+    'https://nawadirdior.sa/tom-ford/p735368737',
+    'https://nawadirdior.sa/dior/p852601829'
+  ];
+  assert.deepEqual(plain(stateModule.selectOneProductTestUrls(urls, { testProductId: 'p735368737' })), [urls[0]]);
+  assert.deepEqual(plain(stateModule.selectOneProductTestUrls(urls, { testProductId: '735368737' })), [urls[0]]);
+  assert.deepEqual(plain(stateModule.selectOneProductTestUrls(urls, { testProductId: '999' })), []);
+  assert.deepEqual(plain(stateModule.selectOneProductTestUrls(urls, { testProductUrl: 'https://nawadirdior.sa/custom/p123' })), ['https://nawadirdior.sa/custom/p123']);
+  assert.deepEqual(plain(stateModule.selectOneProductTestUrls(urls, {})), urls);
 });
 
 test('sync-state selects new vs existing by source URL and supplier id', () => {

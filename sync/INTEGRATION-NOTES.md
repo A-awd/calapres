@@ -179,6 +179,15 @@ Supplier-missing products auto-return when they reappear because a matching supp
 7. `SUPABASE_SUPPLIER_ID`
    - UUID of the `suppliers` row for Nawadir Dior after migration is applied.
 
+8. `CALAPRES_SYNC_LIMIT`
+   - For the one-product live test, set to `1`.
+
+9. `CALAPRES_TEST_PRODUCT_ID`
+   - Optional one-product guard. Use `735368737` for the known proof product.
+
+10. `CALAPRES_TEST_PRODUCT_URL`
+   - Optional fallback if the proof id is not present in the current supplier sitemap. Use the exact Nawadir Dior product page URL.
+
 ## 9. Offline Verification Path
 
 Run:
