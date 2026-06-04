@@ -1,0 +1,156 @@
+{
+  "generatedAt": "deterministic",
+  "apiVersionStandard": "2026-04",
+  "apiVersionDeployed": "2025-01",
+  "credentialRefs": {
+    "shopify": {
+      "id": "QLsvwO73GFsQfy0w",
+      "name": "Shopify-Calapres"
+    },
+    "higgsfield": {
+      "id": "G31rYKMmDk8hyh2G",
+      "name": "Higgsfield API ( awd-n8n )"
+    }
+  },
+  "trigger": {
+    "type": "schedule",
+    "everyHours": 6,
+    "timezone": "Asia/Riyadh"
+  },
+  "nodes": [
+    {
+      "order": 1,
+      "name": "Crawl Supplier URLs",
+      "file": "crawl.generated.js",
+      "mode": "runOnceForAllItems"
+    },
+    {
+      "order": 2,
+      "name": "Code: parseProduct",
+      "file": "parse.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 3,
+      "name": "Code: applyPricing",
+      "file": "pricing.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 4,
+      "name": "Code: mapAvailability",
+      "file": "availability.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 5,
+      "name": "Code: Build Shopify Lookup",
+      "file": "buildLookup.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 6,
+      "name": "Code: Select Existing Product",
+      "file": "selectExisting.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 7,
+      "name": "Code: buildPayload",
+      "file": "buildPayload.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 8,
+      "name": "Code: Find Missing Supplier Products",
+      "file": "findMissing.generated.js",
+      "mode": "runOnceForAllItems"
+    },
+    {
+      "order": 9,
+      "name": "Code: buildPayload Missing",
+      "file": "buildMissing.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 10,
+      "name": "Code: Build Higgsfield Prompt",
+      "file": "enrich-prompt.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 11,
+      "name": "Code: Build Arabic SEO",
+      "file": "enrich-seo.generated.js",
+      "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 12,
+      "name": "Code: Build Enriched Payload",
+      "file": "enrich-payload.generated.js",
+      "mode": "runOnceForEachItem"
+    }
+  ],
+  "connectionGraph": [
+    [
+      "Schedule Trigger",
+      "Crawl Supplier URLs"
+    ],
+    [
+      "Crawl Supplier URLs",
+      "HTTP GET Supplier Product"
+    ],
+    [
+      "HTTP GET Supplier Product",
+      "Code: parseProduct"
+    ],
+    [
+      "Code: parseProduct",
+      "Code: applyPricing"
+    ],
+    [
+      "Code: applyPricing",
+      "Code: mapAvailability"
+    ],
+    [
+      "Code: mapAvailability",
+      "Code: Build Shopify Lookup"
+    ],
+    [
+      "Code: Build Shopify Lookup",
+      "Shopify Admin GraphQL: Lookup Existing"
+    ],
+    [
+      "Shopify Admin GraphQL: Lookup Existing",
+      "Code: Select Existing Product"
+    ],
+    [
+      "Code: Select Existing Product",
+      "Code: buildPayload"
+    ],
+    [
+      "Code: buildPayload",
+      "Shopify Admin REST create/update"
+    ],
+    [
+      "Shopify Admin GraphQL: List Imported Products",
+      "Code: Find Missing Supplier Products"
+    ],
+    [
+      "Code: Find Missing Supplier Products",
+      "Code: buildPayload Missing"
+    ],
+    [
+      "Code: Build Higgsfield Prompt",
+      "HTTP Request: Higgsfield Generate Images"
+    ],
+    [
+      "HTTP Request: Higgsfield Generate Images",
+      "Code: Build Arabic SEO"
+    ],
+    [
+      "Code: Build Arabic SEO",
+      "Code: Build Enriched Payload"
+    ]
+  ]
+}

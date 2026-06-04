@@ -1,0 +1,33 @@
+name: Sync CI
+
+on:
+  push:
+    paths:
+      - 'sync/**'
+      - '.github/**'
+  pull_request:
+    paths:
+      - 'sync/**'
+      - '.github/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check sync JavaScript
+        run: |
+          find sync -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Offline tests
+        run: node sync/__tests__/run-tests.js
+      - name: Offline dry run
+        run: node sync/run-local-dry.js
+      - name: Doc lint
+        run: node sync/tools/doc-lint.js
+      - name: Secret scan
+        run: node sync/tools/secret-scan.js
+      - name: Generated n8n bundles are current
+        run: node sync/tools/check-generated.js
