@@ -16,7 +16,7 @@
       {%- else -%}
         {%- assign rail_products = collections.all.products | reverse -%}
       {%- endif -%}
-      {%- for product in rail_products limit: 8 -%}
+      {%- for product in rail_products limit: 12 -%}
         {% render 'product-card', product: product %}
       {%- else -%}
         <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>

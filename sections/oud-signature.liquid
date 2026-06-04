@@ -17,7 +17,7 @@
       {%- assign oud_collection = collections['oud-bakhour'] -%}
       {%- if oud_collection.products.size > 0 -%}
         <div class="signature-products">
-          {%- for product in oud_collection.products limit: 4 -%}
+          {%- for product in oud_collection.products limit: 8 -%}
             {% render 'product-card', product: product %}
           {%- endfor -%}
         </div>
