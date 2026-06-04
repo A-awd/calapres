@@ -320,93 +320,77 @@ html[lang="en"] [data-ar]{ display:none; }
 [dir="rtl"] .col-card:hover .cap .ar-icn{ transform:translateX(-5px) scaleX(-1); }
 [dir="rtl"] .col-card .cap .ar-icn{ transform:scaleX(-1); }
 
-/* ---------- Category ocean ---------- */
+/* ---------- Category directory ---------- */
 .category-ocean{ padding-block-start:0; }
-.ocean-feature-grid{
+.category-ocean .sec-head{ margin-bottom:var(--s3); }
+.category-directory{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:var(--s2);
-  margin-bottom:var(--s3);
+  align-items:start;
 }
-.ocean-feature{
-  min-height:220px;
+.calapres-line{
+  grid-column:1 / -1;
   display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  gap:10px;
-  padding:var(--s3);
-  background:var(--white);
-  border:1px solid var(--grey);
-  transition:border-color var(--slow) var(--ease), transform var(--slow) var(--ease);
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s2);
+  min-height:74px;
+  padding:16px 18px;
+  background:linear-gradient(135deg, rgba(184,149,106,.20), rgba(255,255,255,.62));
+  border:1px solid rgba(184,149,106,.55);
 }
-.ocean-feature:hover{
-  border-color:var(--gold);
-  transform:translateY(-3px);
-}
-.ocean-feature--gold{
-  background:linear-gradient(135deg, rgba(184,149,106,.18), var(--white));
-  border-color:rgba(184,149,106,.55);
-}
-.ocean-kicker{
+.calapres-line span,
+.calapres-line em{
   color:var(--gold);
   font-family:var(--arabic);
   font-size:13px;
+  font-style:normal;
 }
-html[lang="en"] .ocean-kicker{
-  font-family:var(--sans);
-  font-size:10px;
-  text-transform:uppercase;
-}
-.ocean-feature strong{
+.calapres-line strong{
+  flex:1;
   font-family:var(--arabic);
-  font-size:clamp(22px,2vw,30px);
+  font-size:24px;
   line-height:1.2;
 }
-html[lang="en"] .ocean-feature strong{
-  font-family:var(--serif);
-  font-weight:500;
+html[lang="en"] .calapres-line span,
+html[lang="en"] .calapres-line em{
+  font-family:var(--sans);
+  font-size:11px;
+  text-transform:uppercase;
 }
-.ocean-feature > span:last-child{
-  color:var(--ink-70);
-  font-size:14px;
-  line-height:1.7;
-}
-.ocean-panels{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:var(--s2);
-}
+html[lang="en"] .calapres-line strong{ font-family:var(--serif); font-weight:500; }
 .ocean-panel{
-  background:rgba(255,255,255,.56);
-  border:1px solid var(--grey);
-  padding:var(--s3);
+  border-top:1px solid var(--ink);
+  padding-top:14px;
 }
 .ocean-panel h3{
   font-family:var(--arabic);
   font-weight:600;
-  font-size:20px;
-  margin-bottom:var(--s2);
+  font-size:17px;
+  margin-bottom:12px;
 }
 html[lang="en"] .ocean-panel h3{
-  font-family:var(--serif);
-  font-weight:500;
+  font-family:var(--sans);
+  font-size:12px;
+  text-transform:uppercase;
 }
 .ocean-links{
   display:flex;
   flex-wrap:wrap;
-  gap:9px;
+  gap:8px;
 }
 .ocean-links a{
   display:inline-flex;
   align-items:center;
-  min-height:38px;
-  padding:8px 12px;
+  min-height:34px;
+  padding:7px 10px;
   border:1px solid var(--grey);
-  background:var(--ivory);
+  background:rgba(255,255,255,.52);
   color:var(--ink);
   font-family:var(--arabic);
-  font-size:14px;
-  line-height:1.25;
+  font-size:13px;
+  line-height:1.2;
   transition:border-color var(--slow) var(--ease), background var(--slow) var(--ease);
 }
 html[lang="en"] .ocean-links a{
@@ -755,9 +739,7 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .filters{ position:static; }
   .prod-grid,
   .product-grid{ grid-template-columns:repeat(3,1fr); }
-  .ocean-feature-grid{ grid-template-columns:1fr; }
-  .ocean-feature{ min-height:150px; }
-  .ocean-panels{ grid-template-columns:1fr; }
+  .category-directory{ grid-template-columns:repeat(2,1fr); }
   .filter-toggle{ display:inline-flex; align-items:center; gap:10px; font-family:var(--arabic); font-size:15px;
     background:var(--white); border:1px solid var(--grey); border-radius:1px; padding:11px 18px; }
   html[lang="en"] .filter-toggle{ font-family:var(--sans); font-size:12px; letter-spacing:.1em; text-transform:uppercase; }
@@ -775,11 +757,15 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .col-card .cap{ inset-block-end:12px; inset-inline:12px; }
   .col-card .cap .nm{ font-size:16px; line-height:1.2; }
   .category-ocean .sec-head{ margin-bottom:var(--s3); }
-  .ocean-feature-grid{ gap:12px; margin-bottom:12px; }
-  .ocean-feature{ min-height:132px; padding:18px; }
-  .ocean-feature strong{ font-size:20px; }
-  .ocean-feature > span:last-child{ font-size:13px; line-height:1.55; }
-  .ocean-panel{ padding:16px; }
+  .category-directory{ grid-template-columns:1fr; gap:18px; }
+  .calapres-line{
+    min-height:60px;
+    padding:13px 14px;
+    gap:10px;
+  }
+  .calapres-line strong{ font-size:20px; }
+  .calapres-line span,
+  .calapres-line em{ font-size:12px; }
   .ocean-panel h3{ font-size:18px; margin-bottom:12px; }
   .ocean-links{ gap:8px; }
   .ocean-links a{ min-height:34px; padding:7px 10px; font-size:13px; }
