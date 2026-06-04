@@ -1,4 +1,4 @@
-<header class="site-header" {% unless section.settings.transparent_on_hero %}data-header-solid{% endunless %} role="banner">
+<header class="site-header" data-header-solid role="banner">
   <div class="wrap bar">
     <button class="menu-btn" data-drawer-open aria-label="القائمة">
       <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -38,8 +38,8 @@
     {
       "type": "checkbox",
       "id": "transparent_on_hero",
-      "label": "Transparent header over hero (homepage)",
-      "default": true
+      "label": "Reserved: keep header solid",
+      "default": false
     }
   ],
   "presets": [{ "name": "Header" }]

@@ -1,9 +1,13 @@
-<section class="hero" data-hero-sentinel data-screen-label="hero">
+{%- assign has_hero_image = false -%}
+{%- if section.settings.hero_image -%}
+  {%- assign has_hero_image = true -%}
+{%- endif -%}
+<section class="hero{% unless has_hero_image %} hero--fallback{% endunless %}" data-hero-sentinel data-screen-label="hero">
   <div class="hero__img">
-    {%- if section.settings.hero_image -%}
+    {%- if has_hero_image -%}
       <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" width="1920" height="1080" fetchpriority="high" />
     {%- else -%}
-      <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" width="1600" height="1080" fetchpriority="high" />
+      <div class="hero__fallback" aria-hidden="true"></div>
     {%- endif -%}
   </div>
   <div class="hero__inner wrap">
@@ -24,7 +28,7 @@
         <span data-ar>{{ section.settings.cta1_ar | default: 'اكتشف المجموعات' }}</span>
         <span data-en>{{ section.settings.cta1_en | default: 'Discover collections' }}</span>
       </a>
-      <a class="btn btn-secondary on-dark" href="{{ section.settings.cta2_url | default: '#signature' }}">
+      <a class="btn btn-secondary{% if has_hero_image %} on-dark{% endif %}" href="{{ section.settings.cta2_url | default: '#signature' }}">
         <span data-ar>{{ section.settings.cta2_ar | default: 'العود والمباخر' }}</span>
         <span data-en>{{ section.settings.cta2_en | default: 'Oud & Bukhoor' }}</span>
       </a>

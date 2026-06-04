@@ -14,6 +14,14 @@
           <span data-ar>{{ section.settings.cta_ar }}</span><span data-en>{{ section.settings.cta_en }}</span>
         </a>
       </div>
+      {%- assign oud_collection = collections['oud-bakhour'] -%}
+      {%- if oud_collection.products.size > 0 -%}
+        <div class="signature-products">
+          {%- for product in oud_collection.products limit: 4 -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>

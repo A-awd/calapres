@@ -16,22 +16,18 @@
       {% endif %}
     </div>
 
-    {% assign featured = section.settings.collection %}
-    {% if featured != blank %}
-      <div class="product-grid">
-        {% for product in featured.products limit: section.settings.products_to_show %}
-          {% render 'product-card', product: product %}
-        {% else %}
-          <p>{{ 'products.no_products' | t }}</p>
-        {% endfor %}
-      </div>
+    {% if section.settings.collection != blank %}
+      {% assign featured = section.settings.collection %}
     {% else %}
-      <div class="product-grid">
-        {% for i in (1..4) %}
-          {% render 'product-card-placeholder', index: i %}
-        {% endfor %}
-      </div>
+      {% assign featured = collections.all %}
     {% endif %}
+    <div class="product-grid">
+      {% for product in featured.products limit: section.settings.products_to_show %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <p>{{ 'products.no_products' | t }}</p>
+      {% endfor %}
+    </div>
   </div>
 </section>
 

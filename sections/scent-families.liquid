@@ -6,23 +6,23 @@
     </div>
   </div>
   <div class="occasions-grid">
-    <a class="occ feature reveal" href="{{ section.settings.oud_url | default: '/collections/oud-bakhour' }}">
+    <a class="occ feature reveal" href="{{ section.settings.oud_url | default: collections['oud-bakhour'].url | default: '/collections/oud-bakhour' }}">
       <img src="{{ 'c-oud.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
       <span class="lbl"><span class="k"><span data-ar>التوقيع</span><span data-en>Signature</span></span><span class="nm"><span data-ar>العود والأخشاب</span><span data-en>Oud &amp; Woods</span></span></span>
     </a>
-    <a class="occ reveal d1" href="{{ section.settings.floral_url | default: '/collections/floral' }}">
+    <a class="occ reveal d1" href="{{ section.settings.floral_url | default: collections['niche'].url | default: '/collections/niche' }}">
       <img src="{{ 'pr-rose.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
       <span class="lbl"><span class="k"><span data-ar>ناعمة</span><span data-en>Soft</span></span><span class="nm"><span data-ar>الورديات</span><span data-en>Florals</span></span></span>
     </a>
-    <a class="occ reveal d2" href="{{ section.settings.amber_url | default: '/collections/amber' }}">
+    <a class="occ reveal d2" href="{{ section.settings.amber_url | default: collections['oriental'].url | default: '/collections/oriental' }}">
       <img src="{{ 'pr-amber.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
       <span class="lbl"><span class="k"><span data-ar>دافئة</span><span data-en>Warm</span></span><span class="nm"><span data-ar>الشرقيات والعنبر</span><span data-en>Orientals &amp; Amber</span></span></span>
     </a>
-    <a class="occ reveal d1" href="{{ section.settings.musk_url | default: '/collections/musk' }}">
+    <a class="occ reveal d1" href="{{ section.settings.musk_url | default: collections['luxury-brands'].url | default: '/collections/luxury-brands' }}">
       <img src="{{ 'pr-musk.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
       <span class="lbl"><span class="k"><span data-ar>نقية</span><span data-en>Clean</span></span><span class="nm"><span data-ar>المسك</span><span data-en>Musk</span></span></span>
     </a>
-    <a class="occ reveal d2" href="{{ section.settings.citrus_url | default: '/collections/citrus' }}">
+    <a class="occ reveal d2" href="{{ section.settings.citrus_url | default: collections['niche'].url | default: '/collections/niche' }}">
       <img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
       <span class="lbl"><span class="k"><span data-ar>منعشة</span><span data-en>Fresh</span></span><span class="nm"><span data-ar>الحمضيات</span><span data-en>Citrus</span></span></span>
     </a>
