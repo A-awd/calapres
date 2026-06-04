@@ -1,6 +1,6 @@
 {%- assign announcement_ar = settings.announcement_text_ar | default: 'توصيل مجاني للطلبات أكثر من ٥٠٠ ريال' -%}
 {%- assign announcement_en = settings.announcement_text_en | default: 'Free delivery on orders over SAR 500' -%}
-<div class="announcement-popup" role="dialog" aria-modal="true" aria-label="إعلان التوصيل المجاني" data-announcement-popup hidden>
+<div class="announcement-popup" role="status" aria-live="polite" aria-label="إعلان التوصيل المجاني" data-announcement-popup hidden>
   <div class="announcement-scrim" data-announcement-close></div>
   <div class="announcement-card">
     <button class="announcement-close" type="button" aria-label="إغلاق الإعلان" data-announcement-close>&times;</button>

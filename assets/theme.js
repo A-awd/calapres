@@ -38,18 +38,23 @@
   function announcement() {
     var popup = document.querySelector("[data-announcement-popup]");
     if (!popup) return;
+    if (/^\/(cart|account|checkout|checkouts)/.test(window.location.pathname)) return;
     var seen = false;
     try { seen = sessionStorage.getItem("calapres-delivery-popup") === "seen"; } catch (e) {}
-    function close() {
-      popup.classList.remove("open");
-      document.body.style.overflow = "";
-      setTimeout(function () { popup.hidden = true; }, 420);
+    function markSeen() {
       try { sessionStorage.setItem("calapres-delivery-popup", "seen"); } catch (e) {}
     }
+    function close() {
+      popup.classList.remove("open");
+      setTimeout(function () { popup.hidden = true; }, 420);
+      markSeen();
+    }
     if (!seen) {
-      popup.hidden = false;
-      document.body.style.overflow = "hidden";
-      requestAnimationFrame(function () { popup.classList.add("open"); });
+      window.setTimeout(function () {
+        popup.hidden = false;
+        markSeen();
+        requestAnimationFrame(function () { popup.classList.add("open"); });
+      }, 6500);
     }
     popup.querySelectorAll("[data-announcement-close]").forEach(function (btn) {
       btn.addEventListener("click", close);
