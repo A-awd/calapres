@@ -1029,7 +1029,7 @@ html[lang="en"] .contact-form label{ font-family:var(--sans); }
     padding-block:clamp(36px,8vh,72px);
   }
   .hero .eyebrow{
-    letter-spacing:.1em;
+    letter-spacing:0;
   }
   .hero-title__ar,
   .hero h1,
@@ -1057,5 +1057,14 @@ html[lang="en"] .contact-form label{ font-family:var(--sans); }
     width:100%;
     max-width:320px;
   }
+}
+/* Arabic shaping guard: letter spacing breaks connected Arabic glyphs. */
+[dir="rtl"],
+[dir="rtl"] *,
+html[lang="ar"],
+html[lang="ar"] *,
+html[lang|="ar"],
+html[lang|="ar"] *{
+  letter-spacing:0 !important;
 }
 /* sync-probe-A1 */
