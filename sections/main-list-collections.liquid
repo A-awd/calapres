@@ -1,0 +1,115 @@
+<section class="page-mast wrap reveal">
+  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
+  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+</section>
+
+<section class="section-sm wrap collection-index">
+  <div class="collection-index-grid">
+    {%- assign core_handles = 'niche,luxury-brands,oriental,oud-bakhour' | split: ',' -%}
+    {%- for handle in core_handles -%}
+      {%- assign linked_collection = collections[handle] -%}
+      {%- case handle -%}
+        {%- when 'niche' -%}
+          {%- assign fallback_title_ar = 'عطور النيش' -%}
+          {%- assign fallback_title_en = 'Niche perfumes' -%}
+          {%- assign fallback_desc_ar = 'روائح مختارة لمحبي التفرّد والعمق.' -%}
+          {%- assign fallback_desc_en = 'Distinctive scents with depth and character.' -%}
+        {%- when 'luxury-brands' -%}
+          {%- assign fallback_title_ar = 'البراندات الفاخرة' -%}
+          {%- assign fallback_title_en = 'Luxury brands' -%}
+          {%- assign fallback_desc_ar = 'أسماء عالمية موثوقة وحضور كلاسيكي.' -%}
+          {%- assign fallback_desc_en = 'Trusted global houses with polished presence.' -%}
+        {%- when 'oriental' -%}
+          {%- assign fallback_title_ar = 'العطور الشرقية' -%}
+          {%- assign fallback_title_en = 'Oriental perfumes' -%}
+          {%- assign fallback_desc_ar = 'عنبر، توابل، أخشاب، ودفء يدوم.' -%}
+          {%- assign fallback_desc_en = 'Amber, spice, woods and lasting warmth.' -%}
+        {%- else -%}
+          {%- assign fallback_title_ar = 'المبخر' -%}
+          {%- assign fallback_title_en = 'Burners' -%}
+          {%- assign fallback_desc_ar = 'مباخر وقطع عطرية ضمن مجموعة الدار.' -%}
+          {%- assign fallback_desc_en = 'Burners and scented pieces within the house selection.' -%}
+      {%- endcase -%}
+
+      {%- if linked_collection != blank -%}
+        {%- assign card_url = linked_collection.url -%}
+        {%- assign card_title = linked_collection.title | default: fallback_title_ar -%}
+        {%- assign card_count = linked_collection.products_count | default: 0 -%}
+        {%- assign card_image = linked_collection.image -%}
+      {%- else -%}
+        {%- assign card_url = '/collections/' | append: handle -%}
+        {%- assign card_title = fallback_title_ar -%}
+        {%- assign card_count = 0 -%}
+        {%- assign card_image = blank -%}
+      {%- endif -%}
+
+      <a class="collection-index-card" href="{{ card_url }}">
+        <div class="collection-index-media">
+          {%- if card_image -%}
+            <img src="{{ card_image | img_url: '900x1050', crop: 'center' }}" alt="{{ card_image.alt | default: card_title | escape }}" width="900" height="1050" loading="lazy">
+          {%- else -%}
+            <span aria-hidden="true"></span>
+          {%- endif -%}
+        </div>
+        <div class="collection-index-copy">
+          <span class="eyebrow">
+            <span data-ar>{% if card_count > 0 %}{{ card_count }} منتج{% else %}مجموعة{% endif %}</span>
+            <span data-en>{% if card_count > 0 %}{{ card_count }} products{% else %}Collection{% endif %}</span>
+          </span>
+          <h2><span data-ar>{{ card_title }}</span><span data-en>{{ fallback_title_en }}</span></h2>
+          <p><span data-ar>{{ fallback_desc_ar }}</span><span data-en>{{ fallback_desc_en }}</span></p>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections index",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "المجموعات"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "Collections"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "اختر طريقك إلى الرائحة"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Choose your way into scent"
+    },
+    {
+      "type": "textarea",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "مجموعات كالابريز الأساسية مرتبة لتصل سريعًا إلى العطر أو المبخر المناسب."
+    },
+    {
+      "type": "textarea",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "Calapres core collections, arranged so every scent and burner is easy to reach."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections index"
+    }
+  ]
+}
+{% endschema %}

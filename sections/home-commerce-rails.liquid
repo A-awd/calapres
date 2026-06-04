@@ -37,16 +37,16 @@
   <div class="commerce-row reveal d2" data-rail>
     <div class="commerce-head">
       <h2><span data-ar>{{ section.settings.third_title_ar }}</span><span data-en>{{ section.settings.third_title_en }}</span></h2>
-      <a href="/collections/oud-bakhour"><span data-ar>الجميع</span><span data-en>View all</span></a>
+      <a href="/collections/oriental"><span data-ar>الجميع</span><span data-en>View all</span></a>
     </div>
     <div class="rail commerce-rail">
-      {%- assign oud_collection = collections['oud-bakhour'] -%}
-      {%- if oud_collection != blank -%}
-        {%- assign oud_products = oud_collection.products -%}
+      {%- assign oriental_collection = collections['oriental'] -%}
+      {%- if oriental_collection != blank and oriental_collection.products.size > 0 -%}
+        {%- assign third_products = oriental_collection.products -%}
       {%- else -%}
-        {%- assign oud_products = collections.all.products -%}
+        {%- assign third_products = collections.all.products -%}
       {%- endif -%}
-      {%- for product in oud_products limit: 10 -%}
+      {%- for product in third_products limit: 10 -%}
         {% render 'product-card', product: product %}
       {%- else -%}
         <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>
@@ -87,13 +87,13 @@
       "type": "text",
       "id": "third_title_ar",
       "label": "Third row title Arabic",
-      "default": "العود والمباخر"
+      "default": "مختارات شرقية"
     },
     {
       "type": "text",
       "id": "third_title_en",
       "label": "Third row title English",
-      "default": "Oud and bukhoor"
+      "default": "Oriental picks"
     }
   ],
   "presets": [

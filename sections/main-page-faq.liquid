@@ -6,17 +6,47 @@
 
 <section class="section wrap faq-wrap">
   <div class="accordion faq-list" data-accordion>
-    {%- for block in section.blocks -%}
-      <div class="acc-item{% if forloop.first %} open{% endif %}" {{ block.shopify_attributes }}>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="acc-item{% if forloop.first %} open{% endif %}" {{ block.shopify_attributes }}>
+          <button class="acc-head" type="button">
+            <span><span data-ar>{{ block.settings.question_ar }}</span><span data-en>{{ block.settings.question_en }}</span></span>
+            <span class="acc-ico" aria-hidden="true"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-inner">
+            <p><span data-ar>{{ block.settings.answer_ar }}</span><span data-en>{{ block.settings.answer_en }}</span></p>
+          </div></div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="acc-item open">
         <button class="acc-head" type="button">
-          <span><span data-ar>{{ block.settings.question_ar }}</span><span data-en>{{ block.settings.question_en }}</span></span>
+          <span><span data-ar>هل العطور أصلية؟</span><span data-en>Are the perfumes authentic?</span></span>
           <span class="acc-ico" aria-hidden="true"></span>
         </button>
         <div class="acc-panel"><div class="acc-inner">
-          <p><span data-ar>{{ block.settings.answer_ar }}</span><span data-en>{{ block.settings.answer_en }}</span></p>
+          <p><span data-ar>نعم، كل عطر وقطعة عود أصلية من مصادر موثوقة، وتصل بعناية كالابريز في التغليف.</span><span data-en>Yes. Every perfume and oud piece is authentic and comes from trusted sources.</span></p>
         </div></div>
       </div>
-    {%- endfor -%}
+      <div class="acc-item">
+        <button class="acc-head" type="button">
+          <span><span data-ar>كيف يتم التوصيل؟</span><span data-en>How does delivery work?</span></span>
+          <span class="acc-ico" aria-hidden="true"></span>
+        </button>
+        <div class="acc-panel"><div class="acc-inner">
+          <p><span data-ar>نوفر توصيلًا داخل السعودية والخليج، وتظهر خيارات الشحن النهائية عند الدفع.</span><span data-en>We deliver across Saudi Arabia and the Gulf, with final shipping options shown at checkout.</span></p>
+        </div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" type="button">
+          <span><span data-ar>هل تظهر المنتجات غير المتوفرة؟</span><span data-en>Do unavailable products appear?</span></span>
+          <span class="acc-ico" aria-hidden="true"></span>
+        </button>
+        <div class="acc-panel"><div class="acc-inner">
+          <p><span data-ar>نحافظ على وضوح التوفر قدر الإمكان، وتُحدّث حالة المنتج عند عودته للمخزون.</span><span data-en>Availability is kept clear, and product status updates when an item returns to stock.</span></p>
+        </div></div>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 

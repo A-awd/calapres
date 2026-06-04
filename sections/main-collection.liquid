@@ -65,7 +65,7 @@
 
       <div>
         <div class="results-bar">
-          <span class="count" data-count>{{ collection.products_count }} <span data-ar>عطر</span><span data-en>perfumes</span></span>
+          <span class="count" data-count>{{ collection.products_count }} <span data-ar>منتج</span><span data-en>products</span></span>
           <div class="sort">
             <label for="sort"><span data-ar>ترتيب</span><span data-en>Sort</span></label>
             <select id="sort" data-sort>
@@ -110,7 +110,7 @@
         </div>
 
         <div class="empty-results{% if collection.products.size == 0 %} show{% endif %}" data-empty>
-          <p><span data-ar>لا توجد عطور تطابق اختيارك. جرّب تخفيف الفلاتر.</span><span data-en>No perfumes match your selection. Try easing the filters.</span></p>
+          <p><span data-ar>لا توجد منتجات تطابق اختيارك. جرّب تخفيف الفلاتر أو العودة إلى كل المجموعات.</span><span data-en>No products match your selection. Try easing the filters or return to all collections.</span></p>
         </div>
 
         {%- if paginate.pages > 1 -%}
