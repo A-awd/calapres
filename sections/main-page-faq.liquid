@@ -1,0 +1,125 @@
+<section class="page-mast wrap reveal">
+  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
+  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+</section>
+
+<section class="section wrap faq-wrap">
+  <div class="accordion faq-list" data-accordion>
+    {%- for block in section.blocks -%}
+      <div class="acc-item{% if forloop.first %} open{% endif %}" {{ block.shopify_attributes }}>
+        <button class="acc-head" type="button">
+          <span><span data-ar>{{ block.settings.question_ar }}</span><span data-en>{{ block.settings.question_en }}</span></span>
+          <span class="acc-ico" aria-hidden="true"></span>
+        </button>
+        <div class="acc-panel"><div class="acc-inner">
+          <p><span data-ar>{{ block.settings.answer_ar }}</span><span data-en>{{ block.settings.answer_en }}</span></p>
+        </div></div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "الأسئلة الشائعة"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "تفاصيل قبل أن تختار رائحتك"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Details before choosing your scent"
+    },
+    {
+      "type": "textarea",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "إجابات مختصرة عن الأصالة، التوصيل، العيّنات، والعناية بالعطر."
+    },
+    {
+      "type": "textarea",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "Short answers on authenticity, delivery, samples and caring for perfume."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question_ar",
+          "label": "Question Arabic",
+          "default": "هل العطور أصلية؟"
+        },
+        {
+          "type": "text",
+          "id": "question_en",
+          "label": "Question English",
+          "default": "Are the perfumes authentic?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer_ar",
+          "label": "Answer Arabic",
+          "default": "نعم، كل عطر وقطعة عود أصلية من مصادر موثوقة، وتصل مع عناية كالابريز في التغليف."
+        },
+        {
+          "type": "textarea",
+          "id": "answer_en",
+          "label": "Answer English",
+          "default": "Yes. Every perfume and oud piece is authentic and comes from trusted sources."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ page",
+      "blocks": [
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question_ar": "كيف يتم التوصيل داخل الرياض؟",
+            "question_en": "How does Riyadh delivery work?",
+            "answer_ar": "نوفر توصيلًا سريعًا داخل الرياض، وتظهر خيارات الشحن النهائية عند الدفع.",
+            "answer_en": "We offer swift Riyadh delivery, with final shipping options shown at checkout."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question_ar": "هل توجد عيّنات اكتشاف؟",
+            "question_en": "Are discovery samples available?",
+            "answer_ar": "نعم، نوفر عيّنات مختارة لتجربة الرائحة قبل اختيار القارورة.",
+            "answer_en": "Yes, selected discovery samples help you experience the scent before choosing a bottle."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

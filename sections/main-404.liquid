@@ -1,0 +1,58 @@
+<section class="page-mast wrap center reveal">
+  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
+  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+  <div class="page-actions">
+    <a class="btn btn-primary" href="/collections"><span data-ar>اكتشف المجموعات</span><span data-en>Discover collections</span></a>
+    <a class="btn btn-secondary" href="/"><span data-ar>الرئيسية</span><span data-en>Home</span></a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "صفحة غير موجودة"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "Page not found"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "هذه الرائحة غابت عن المسار"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "This scent slipped from the trail"
+    },
+    {
+      "type": "textarea",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "يمكنك العودة إلى المجموعات لاكتشاف العطور النيش والعود الفاخر."
+    },
+    {
+      "type": "textarea",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "Return to the collections to discover niche perfume and fine oud."
+    }
+  ],
+  "presets": [
+    {
+      "name": "404 page"
+    }
+  ]
+}
+{% endschema %}

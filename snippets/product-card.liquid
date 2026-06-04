@@ -7,20 +7,32 @@
 {%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
   {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
 {%- endif -%}
-<a class="product-card" href="{{ product.url }}">
+{%- assign card_class = card_class | default: 'product-card' -%}
+{%- assign first_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
+<a class="{{ card_class }}" href="{{ product.url }}"
+  data-family="{{ product.tags | join: ',' | escape }}"
+  data-brand="{{ product.vendor | escape }}"
+  data-type="{% if product.type != blank %}{{ product.type | escape }}{% else %}عطر{% endif %}"
+  data-price="{{ product.price | divided_by: 100 }}"
+  data-size="{{ first_variant.title | escape }}">
   <div class="frame">
     {%- if tag_ar != '' -%}
       <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
     {%- endif -%}
     {%- if product.featured_image -%}
       <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
+    {%- else -%}
+      <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="" width="600" height="750" loading="lazy" />
     {%- endif -%}
   </div>
+  {%- if card_class == 'pcard' and product.vendor != blank -%}
+    <div class="brand"><span data-ar>{{ product.vendor }}</span><span data-en>{{ product.vendor }}</span></div>
+  {%- endif -%}
   <div class="meta">
     <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
     <div class="price">
-      <span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span>
-      <span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span>
+      <span data-ar>{{ product.price | money }}{% if first_variant.title != 'Default Title' %} · {{ first_variant.title }}{% endif %}</span>
+      <span data-en>{{ product.price | money }}{% if first_variant.title != 'Default Title' %} · {{ first_variant.title }}{% endif %}</span>
     </div>
   </div>
 </a>

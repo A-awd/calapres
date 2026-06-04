@@ -1,0 +1,111 @@
+<section class="page-mast wrap reveal">
+  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
+  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+</section>
+
+<section class="section wrap contact-grid">
+  <div class="contact-panel reveal">
+    <h2 class="display d-2"><span data-ar>اكتب لنا</span><span data-en>Write to us</span></h2>
+    {%- form 'contact', class: 'contact-form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-success"><span data-ar>وصلتنا رسالتك، وسنرد عليك قريبًا.</span><span data-en>Your message has reached us. We will reply soon.</span></p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <div class="form-error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+      <label>
+        <span>{{ 'contact.form.name' | t }}</span>
+        <input type="text" name="contact[name]" autocomplete="name" required>
+      </label>
+      <label>
+        <span>{{ 'contact.form.email' | t }}</span>
+        <input type="email" name="contact[email]" autocomplete="email" required>
+      </label>
+      <label>
+        <span>{{ 'contact.form.message' | t }}</span>
+        <textarea name="contact[body]" rows="6" required></textarea>
+      </label>
+      <button class="btn btn-primary" type="submit">{{ 'contact.form.send' | t }}</button>
+    {%- endform -%}
+  </div>
+
+  <div class="contact-aside reveal d1">
+    <div class="svc">
+      <h3><span data-ar>واتساب</span><span data-en>WhatsApp</span></h3>
+      <p><span data-ar>{{ section.settings.whatsapp_ar }}</span><span data-en>{{ section.settings.whatsapp_en }}</span></p>
+      {%- if settings.footer_whatsapp != blank -%}
+        <a class="link" href="https://wa.me/{{ settings.footer_whatsapp }}"><span data-ar>ابدأ المحادثة</span><span data-en>Start chat</span><span class="arrow">→</span></a>
+      {%- endif -%}
+    </div>
+    <div class="svc">
+      <h3><span data-ar>البريد</span><span data-en>Email</span></h3>
+      <p>{% if settings.footer_email != blank %}{{ settings.footer_email }}{% else %}hello@calapres.sa{% endif %}</p>
+    </div>
+    <div class="svc">
+      <h3><span data-ar>الموقع</span><span data-en>Location</span></h3>
+      <p><span data-ar>الرياض، المملكة العربية السعودية</span><span data-en>Riyadh, Saudi Arabia</span></p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "تواصل"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "فريق الدار في خدمتك"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "The maison team is here"
+    },
+    {
+      "type": "textarea",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "لطلب توصية عطرية، أو سؤال عن العود والمباخر، يسعدنا سماعك."
+    },
+    {
+      "type": "textarea",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "For scent recommendations or questions about perfume, oud and burners, we are glad to help."
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_ar",
+      "label": "WhatsApp Arabic",
+      "default": "للاستشارة السريعة ومتابعة الطلبات داخل الرياض."
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_en",
+      "label": "WhatsApp English",
+      "default": "For quick consultation and order support in Riyadh."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact page"
+    }
+  ]
+}
+{% endschema %}

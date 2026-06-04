@@ -1,6 +1,7 @@
 <section class="section wrap cart-page-wrap">
   <div class="cart-page-inner">
     <h1 class="display d-2"><span data-ar>سلّة التسوق</span><span data-en>Shopping Cart</span></h1>
+    <p class="lede cart-page-lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
 
     {%- if cart.item_count > 0 -%}
       <div class="cart-page-grid">
@@ -54,5 +55,26 @@
 </section>
 
 {% schema %}
-{ "name": "Cart", "settings": [] }
+{
+  "name": "Cart",
+  "settings": [
+    {
+      "type": "text",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "راجِع مختاراتك قبل إتمام الطلب."
+    },
+    {
+      "type": "text",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "Review your selections before checkout."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
+}
 {% endschema %}

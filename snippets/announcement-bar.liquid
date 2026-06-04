@@ -1,7 +1,9 @@
-{% assign show_bar = true %}
-<div class="announcement-bar" role="region" aria-label="إعلان" {% unless show_bar %}style="display:none;"{% endunless %}>
+{%- assign announcement_ar = settings.announcement_text_ar | default: 'شحن مجاني داخل المملكة العربية السعودية على الطلبات فوق ٢٠٠ ر.س' -%}
+{%- assign announcement_en = settings.announcement_text_en | default: 'Free shipping across Saudi Arabia on orders over SAR 200' -%}
+<div class="announcement-bar" role="region" aria-label="إعلان" data-announcement-bar>
   <p>
-    🌿 شحن مجاني داخل المملكة العربية السعودية على الطلبات فوق ٢٠٠ ر.س
-    <button class="announcement-close" aria-label="إغلاق الإعلان" style="background:none;border:none;color:inherit;cursor:pointer;margin-right:1rem;font-size:1rem;line-height:1;opacity:0.7;">&times;</button>
+    <span data-ar>{{ announcement_ar }}</span>
+    <span data-en>{{ announcement_en }}</span>
   </p>
+  <button class="announcement-close" type="button" aria-label="إغلاق الإعلان" data-announcement-close>&times;</button>
 </div>

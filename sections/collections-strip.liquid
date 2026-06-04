@@ -2,9 +2,9 @@
   <div class="sec-head">
     <div class="ttl reveal">
       <span class="eyebrow"><span data-ar>تسوّق حسب الفئة</span><span data-en>Shop by category</span></span>
-      <h2 class="display d-2"><span data-ar>مجموعاتٌ مُنتقاة بعناية</span><span data-en>Collections, quietly curated</span></h2>
+      <h2 class="display d-2"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h2>
     </div>
-    <a class="link reveal" href="/collections"><span data-ar>عرض الكل</span><span data-en>View all</span><span class="arrow">→</span></a>
+    <a class="link reveal" href="{{ section.settings.view_all_url | default: '/collections' }}"><span data-ar>{{ section.settings.view_all_ar }}</span><span data-en>{{ section.settings.view_all_en }}</span><span class="arrow">→</span></a>
   </div>
   <div class="collections">
     {%- assign coll_images = 'c-niche.jpg,c-oriental.jpg,c-oud.jpg,c-brands.jpg' | split: ',' -%}
@@ -30,7 +30,37 @@
 {% schema %}
 {
   "name": "Collections Strip",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "مجموعاتٌ مُنتقاة بعناية"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Collections, quietly curated"
+    },
+    {
+      "type": "text",
+      "id": "view_all_ar",
+      "label": "View all Arabic",
+      "default": "عرض الكل"
+    },
+    {
+      "type": "text",
+      "id": "view_all_en",
+      "label": "View all English",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all URL"
+    }
+  ],
   "presets": [{ "name": "Collections Strip" }]
 }
 {% endschema %}

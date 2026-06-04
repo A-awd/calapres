@@ -97,6 +97,22 @@
     "rights": "جميع الحقوق محفوظة",
     "follow_us": "تابعنا"
   },
+  "contact": {
+    "form": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "message": "رسالتك",
+      "send": "إرسال"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "صفحة غير موجودة"
+    },
+    "search": {
+      "title": "بحث"
+    }
+  },
   "accessibility": {
     "skip_to_content": "انتقل إلى المحتوى",
     "close_menu": "إغلاق القائمة",

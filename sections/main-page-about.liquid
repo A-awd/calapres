@@ -1,0 +1,180 @@
+<section class="page-mast wrap reveal">
+  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
+  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+</section>
+
+<section class="section wrap editorial-split">
+  <div class="editorial-copy reveal">
+    <span class="eyebrow"><span data-ar>{{ section.settings.story_eyebrow_ar }}</span><span data-en>{{ section.settings.story_eyebrow_en }}</span></span>
+    <h2 class="display d-2"><span data-ar>{{ section.settings.story_heading_ar }}</span><span data-en>{{ section.settings.story_heading_en }}</span></h2>
+    {%- if page.content != blank -%}
+      <div class="rte">{{ page.content }}</div>
+    {%- else -%}
+      <p><span data-ar>{{ section.settings.story_body_ar }}</span><span data-en>{{ section.settings.story_body_en }}</span></p>
+    {%- endif -%}
+  </div>
+  <div class="editorial-figure reveal d1">
+    {%- if section.settings.image -%}
+      <img src="{{ section.settings.image | img_url: '900x1125', crop: 'center' }}" alt="" width="900" height="1125" loading="lazy" />
+    {%- else -%}
+      <img src="{{ 'm-maison.jpg' | asset_url }}" alt="" width="900" height="1125" loading="lazy" />
+    {%- endif -%}
+    <span class="seal"><span data-ar>منذ<br>الرياض</span><span data-en>Est.<br>Riyadh</span></span>
+  </div>
+</section>
+
+<section class="section wrap page-values">
+  {%- for block in section.blocks -%}
+    <div class="svc reveal{% cycle '', ' d1', ' d2' %}" {{ block.shopify_attributes }}>
+      <div class="ico"><svg viewBox="0 0 32 32"><path d="M16 4l9 3v7c0 6-4 10-9 13-5-3-9-7-9-13V7z"/><path d="M11.5 15.5l3 3 6-6.5"/></svg></div>
+      <h3><span data-ar>{{ block.settings.title_ar }}</span><span data-en>{{ block.settings.title_en }}</span></h3>
+      <p><span data-ar>{{ block.settings.text_ar }}</span><span data-en>{{ block.settings.text_en }}</span></p>
+    </div>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "About page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "الميزون"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "The Maison"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "العطر بوصفه حرفة"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Perfume, made a craft"
+    },
+    {
+      "type": "textarea",
+      "id": "lede_ar",
+      "label": "Intro Arabic",
+      "default": "كالابريز دار عطور في الرياض تنتقي النيش العالمي والعود الفاخر والمباخر بعين هادئة ودقيقة."
+    },
+    {
+      "type": "textarea",
+      "id": "lede_en",
+      "label": "Intro English",
+      "default": "Calapres is a Riyadh perfume maison for niche fragrance, fine oud and carefully chosen burners."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story image"
+    },
+    {
+      "type": "text",
+      "id": "story_eyebrow_ar",
+      "label": "Story eyebrow Arabic",
+      "default": "قصتنا"
+    },
+    {
+      "type": "text",
+      "id": "story_eyebrow_en",
+      "label": "Story eyebrow English",
+      "default": "Our story"
+    },
+    {
+      "type": "text",
+      "id": "story_heading_ar",
+      "label": "Story heading Arabic",
+      "default": "رائحة تروى ولا تنسى"
+    },
+    {
+      "type": "text",
+      "id": "story_heading_en",
+      "label": "Story heading English",
+      "default": "A scent that is told, never forgotten"
+    },
+    {
+      "type": "textarea",
+      "id": "story_body_ar",
+      "label": "Story body Arabic",
+      "default": "وُلدت كالابريز من شغف واحد: أن تصبح الرائحة لحظة ذات أثر. نختار كل قارورة وقطعة عود بتأن، لنقدم العطر كما يجب أن يقدم: أصيلا ومكتملا."
+    },
+    {
+      "type": "textarea",
+      "id": "story_body_en",
+      "label": "Story body English",
+      "default": "Calapres was born from one passion: to make scent a lasting moment. Every bottle and oud piece is chosen with care, then presented with quiet precision."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Maison value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_ar",
+          "label": "Title Arabic",
+          "default": "اختيار دقيق"
+        },
+        {
+          "type": "text",
+          "id": "title_en",
+          "label": "Title English",
+          "default": "Precise curation"
+        },
+        {
+          "type": "textarea",
+          "id": "text_ar",
+          "label": "Text Arabic",
+          "default": "ننتقي ما يستحق البقاء فقط، من العطور النيش والعود الفاخر."
+        },
+        {
+          "type": "textarea",
+          "id": "text_en",
+          "label": "Text English",
+          "default": "Only scents worth remembering earn a place in the maison."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About page",
+      "blocks": [
+        {
+          "type": "value"
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title_ar": "أصالة المصدر",
+            "title_en": "Authentic sources",
+            "text_ar": "كل عطر وعود من مصادر معتمدة وموثوقة.",
+            "text_en": "Every perfume and oud piece comes from trusted sources."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title_ar": "تجربة هادئة",
+            "title_en": "A quiet experience",
+            "text_ar": "واجهة عربية راقية، وتفاصيل خدمة تليق بفن العطر.",
+            "text_en": "Arabic-first service details shaped around the art of perfume."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

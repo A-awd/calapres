@@ -14,15 +14,15 @@
       <a href="/collections"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
       <a href="/collections/fragrance-families"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
       <a href="/collections/oud-bakhour"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
-      <a href="/pages/maison"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
+      <a href="/pages/about"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
       <a href="/pages/system"><span data-ar>النظام</span><span data-en>The System</span></a>
     </nav>
     <div class="icons">
-      <button class="icon-btn hide-sm" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></button>
+      <a class="icon-btn hide-sm" href="/search" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></a>
       {% if shop.customer_accounts_enabled %}
         <a href="/account" class="icon-btn hide-sm" aria-label="الحساب"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></a>
       {% endif %}
-      <button class="icon-btn hide-sm" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
+      <button class="icon-btn hide-sm" type="button" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
       <button class="icon-btn" data-cart-open aria-label="الحقيبة" style="position:relative;">
         <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
         <span data-cart-count style="display:none;position:absolute;top:-4px;inset-inline-end:-4px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;line-height:1;font-family:var(--arabic);"></span>

@@ -1,42 +1,183 @@
-{%- paginate collection.products by 24 -%}
+{%- assign hero_image = collection.image | default: section.settings.hero_image -%}
 
-<div class="col-hero">
-  <div class="wrap col-hero-inner">
-    <span class="eyebrow"><span data-ar>{{ collection.title }}</span><span data-en>{{ collection.title }}</span></span>
-    {%- if collection.description != blank -%}
-      <p class="col-hero-desc">{{ collection.description }}</p>
-    {%- endif -%}
-  </div>
-</div>
-
-<section class="shop-grid wrap" id="shop">
-  {% render 'filter-sidebar', collection: collection %}
-
-  <div class="prod-grid" data-prod-grid>
-    {%- if collection.products.size > 0 -%}
-      {%- for product in collection.products -%}
-        <div class="pcard reveal" data-tags="{{ product.tags | join: ',' }}">
-          {% render 'product-card', product: product %}
-        </div>
-      {%- endfor -%}
-    {%- else -%}
-      <div class="empty-state">
-        <p><span data-ar>لا توجد منتجات في هذه المجموعة حاليًا.</span><span data-en>No products in this collection yet.</span></p>
-      </div>
-    {%- endif -%}
-  </div>
-
-  {%- if paginate.pages > 1 -%}
-    <div class="pagination-wrap">
-      <button class="btn btn-secondary" data-load-more>
-        <span data-ar>عرض المزيد</span><span data-en>Load more</span>
-      </button>
-    </div>
+<section class="col-hero" data-screen-label="collection-hero">
+  {%- if hero_image -%}
+    <img src="{{ hero_image | img_url: '1800x900', crop: 'center' }}" alt="" width="1800" height="900" />
+  {%- else -%}
+    <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" width="1800" height="900" />
   {%- endif -%}
+  <div class="wrap">
+    <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
+    <h1 class="display d-1">{{ collection.title | default: section.settings.fallback_title }}</h1>
+    {%- if collection.description != blank -%}
+      <div>{{ collection.description }}</div>
+    {%- else -%}
+      <p><span data-ar>{{ section.settings.description_ar }}</span><span data-en>{{ section.settings.description_en }}</span></p>
+    {%- endif -%}
+  </div>
 </section>
 
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <section class="shop wrap" data-screen-label="collection">
+    <div style="margin-bottom:var(--s4)" class="only-mobile">
+      <button class="filter-toggle" type="button" data-filter-toggle>
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+        <span data-ar>تصفية</span><span data-en>Filter</span>
+      </button>
+    </div>
+
+    <div class="shop-grid">
+      <aside class="filters" data-filters aria-label="تصفية">
+        <div class="f-top">
+          <h2><span data-ar>تصفية</span><span data-en>Filter</span></h2>
+          <button class="f-clear" type="button" data-clear><span data-ar>مسح الكل</span><span data-en>Clear all</span></button>
+        </div>
+
+        <div class="f-group">
+          <h3><span data-ar>العائلة العطرية</span><span data-en>Scent Family</span></h3>
+          <div class="chips" data-group="family">
+            <button class="chip" type="button" data-value="وردي"><span class="sw" style="background:#bd726a"></span><span data-ar>وردي</span><span data-en>Floral</span></button>
+            <button class="chip" type="button" data-value="خشبي"><span class="sw" style="background:#5a3a22"></span><span data-ar>خشبي</span><span data-en>Woody</span></button>
+            <button class="chip" type="button" data-value="عنبري"><span class="sw" style="background:#c08a45"></span><span data-ar>عنبري</span><span data-en>Amber</span></button>
+            <button class="chip" type="button" data-value="مسكي"><span class="sw" style="background:#e9e2d4"></span><span data-ar>مسكي</span><span data-en>Musk</span></button>
+            <button class="chip" type="button" data-value="حمضي"><span class="sw" style="background:#a8b06d"></span><span data-ar>حمضي</span><span data-en>Citrus</span></button>
+          </div>
+        </div>
+
+        <div class="f-group">
+          <h3><span data-ar>النوع</span><span data-en>Type</span></h3>
+          <div class="chips" data-group="type">
+            <button class="chip" type="button" data-value="عطر"><span data-ar>عطر</span><span data-en>Perfume</span></button>
+            <button class="chip" type="button" data-value="عود"><span data-ar>عود</span><span data-en>Oud</span></button>
+            <button class="chip" type="button" data-value="مبخرة"><span data-ar>مبخرة</span><span data-en>Bukhoor</span></button>
+          </div>
+        </div>
+
+        <div class="f-group">
+          <h3><span data-ar>السعر</span><span data-en>Price</span></h3>
+          <div class="chips" data-group="price">
+            <button class="chip" type="button" data-value="0-500"><span data-ar>أقل من ٥٠٠ ر.س</span><span data-en>Under SAR 500</span></button>
+            <button class="chip" type="button" data-value="500-800"><span data-ar>٥٠٠ إلى ٨٠٠ ر.س</span><span data-en>SAR 500 to 800</span></button>
+            <button class="chip" type="button" data-value="800-99999"><span data-ar>أكثر من ٨٠٠ ر.س</span><span data-en>Over SAR 800</span></button>
+          </div>
+        </div>
+      </aside>
+
+      <div>
+        <div class="results-bar">
+          <span class="count" data-count>{{ collection.products_count }} <span data-ar>عطر</span><span data-en>perfumes</span></span>
+          <div class="sort">
+            <label for="sort"><span data-ar>ترتيب</span><span data-en>Sort</span></label>
+            <select id="sort" data-sort>
+              <option value="featured" data-ar-text="مختارة" data-en-text="Featured">مختارة</option>
+              <option value="low" data-ar-text="السعر: الأقل" data-en-text="Price: Low to High">السعر: الأقل</option>
+              <option value="high" data-ar-text="السعر: الأعلى" data-en-text="Price: High to Low">السعر: الأعلى</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="prod-grid" data-grid>
+          {%- if collection.products.size > 0 -%}
+            {%- for product in collection.products -%}
+              {%- assign family = 'خشبي' -%}
+              {%- if product.tags contains 'وردي' or product.tags contains 'floral' -%}{%- assign family = 'وردي' -%}{%- endif -%}
+              {%- if product.tags contains 'عنبري' or product.tags contains 'amber' -%}{%- assign family = 'عنبري' -%}{%- endif -%}
+              {%- if product.tags contains 'مسكي' or product.tags contains 'musk' -%}{%- assign family = 'مسكي' -%}{%- endif -%}
+              {%- if product.tags contains 'حمضي' or product.tags contains 'citrus' -%}{%- assign family = 'حمضي' -%}{%- endif -%}
+              {%- assign product_type = product.type | default: 'عطر' -%}
+              {%- if product.tags contains 'oud' or product.tags contains 'عود' -%}{%- assign product_type = 'عود' -%}{%- endif -%}
+              {%- if product.tags contains 'bukhoor' or product.tags contains 'مبخرة' -%}{%- assign product_type = 'مبخرة' -%}{%- endif -%}
+              {%- assign first_variant = product.selected_or_first_available_variant -%}
+              <a class="pcard" href="{{ product.url }}" data-family="{{ family }}" data-brand="{{ product.vendor | escape }}" data-type="{{ product_type | escape }}" data-price="{{ product.price | divided_by: 100 }}" data-size="{{ first_variant.title | escape }}">
+                <div class="frame">
+                  {%- if product.tags contains 'signature' or product.tags contains 'توقيع' -%}<span class="tag"><span data-ar>توقيع</span><span data-en>Signature</span></span>{%- endif -%}
+                  <button class="fav" type="button" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
+                  {%- if product.featured_image -%}
+                    <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
+                  {%- else -%}
+                    <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="" width="600" height="750" loading="lazy" />
+                  {%- endif -%}
+                </div>
+                {%- if product.vendor != blank -%}<div class="brand"><span data-ar>{{ product.vendor }}</span><span data-en>{{ product.vendor }}</span></div>{%- endif -%}
+                <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
+                <div class="row">
+                  <span class="price">{{ product.price | money }}</span>
+                  <span class="size-h">{% if first_variant.title != 'Default Title' %}{{ first_variant.title }}{% else %}<span data-ar>متوفر</span><span data-en>Available</span>{% endif %}</span>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="empty-results{% if collection.products.size == 0 %} show{% endif %}" data-empty>
+          <p><span data-ar>لا توجد عطور تطابق اختيارك. جرّب تخفيف الفلاتر.</span><span data-en>No perfumes match your selection. Try easing the filters.</span></p>
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" role="navigation" aria-label="Pagination">
+            {%- if paginate.previous -%}<a class="btn btn-secondary" href="{{ paginate.previous.url }}"><span data-ar>السابق</span><span data-en>Previous</span></a>{%- endif -%}
+            <span class="pagination-current">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+            {%- if paginate.next -%}<a class="btn btn-secondary" href="{{ paginate.next.url }}"><span data-ar>التالي</span><span data-en>Next</span></a>{%- endif -%}
+          </nav>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
 {%- endpaginate -%}
 
 {% schema %}
-{ "name": "Collection", "settings": [] }
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Fallback hero image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "Eyebrow Arabic",
+      "default": "المجموعة"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow English",
+      "default": "The Collection"
+    },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Fallback title",
+      "default": "عطور النيش"
+    },
+    {
+      "type": "textarea",
+      "id": "description_ar",
+      "label": "Fallback description Arabic",
+      "default": "مختارات نادرة من أرقى دور العطر في العالم، عطور وعود ومباخر تروي الحكايات في الرياض."
+    },
+    {
+      "type": "textarea",
+      "id": "description_en",
+      "label": "Fallback description English",
+      "default": "A rare selection from the world's finest perfume houses, including perfume, oud and bukhoor for Riyadh rituals."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 48,
+      "step": 6,
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection"
+    }
+  ]
+}
 {% endschema %}

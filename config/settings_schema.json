@@ -74,6 +74,11 @@
         "label": "Logo Image"
       },
       {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
         "type": "range",
         "id": "logo_width",
         "min": 50,
@@ -82,6 +87,18 @@
         "unit": "px",
         "label": "Logo Width",
         "default": 150
+      },
+      {
+        "type": "text",
+        "id": "announcement_text_ar",
+        "label": "Announcement Arabic",
+        "default": "شحن مجاني داخل المملكة العربية السعودية على الطلبات فوق ٢٠٠ ر.س"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text_en",
+        "label": "Announcement English",
+        "default": "Free shipping across Saudi Arabia on orders over SAR 200"
       }
     ]
   },
@@ -98,13 +115,19 @@
         "type": "text",
         "id": "footer_email",
         "label": "Contact Email",
-        "default": "info@calapres.com"
+        "default": "hello@calapres.sa"
       },
       {
         "type": "text",
         "id": "footer_phone",
         "label": "Phone",
         "default": "+966 50 000 0000"
+      },
+      {
+        "type": "text",
+        "id": "footer_whatsapp",
+        "label": "WhatsApp Number",
+        "default": "966500000000"
       }
     ]
   },

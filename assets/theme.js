@@ -32,6 +32,16 @@
     });
   }
 
+  /* ---- Announcement bar ---- */
+  function announcement() {
+    var bar = document.querySelector("[data-announcement-bar]");
+    var close = document.querySelector("[data-announcement-close]");
+    if (!bar || !close) return;
+    close.addEventListener("click", function () {
+      root.classList.add("announcement-hidden");
+    });
+  }
+
   /* ---- Header: transparent over hero, solid on scroll ---- */
   function header() {
     var h = document.querySelector(".site-header");
@@ -395,6 +405,12 @@
         }
         var vidInput = document.querySelector("[name='id']");
         if (vidInput && o.dataset.variantId) vidInput.value = o.dataset.variantId;
+        document.querySelectorAll("[data-add-to-bag]").forEach(function (btn) {
+          if (o.dataset.variantId) {
+            btn.dataset.variantId = o.dataset.variantId;
+            btn.dataset.addToBag = o.dataset.variantId;
+          }
+        });
       });
     });
 
@@ -412,7 +428,7 @@
   }
 
   function init() {
-    bindToggles(); header(); reveal(); drawer(); rails(); cart();
+    bindToggles(); announcement(); header(); reveal(); drawer(); rails(); cart();
     addToBagListeners(); collection(); productPage();
     fetchCart();
   }
