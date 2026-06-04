@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calapres · كالابريز — فنّ العطر</title>
+<meta name="description" content="كالابريز — بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="calapres.css" />
+<link rel="stylesheet" href="home.css" />
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap bar">
+    <button class="menu-btn" data-drawer-open aria-label="القائمة">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <a class="brand" href="index.html">
+      <span data-ar>كالابريز</span><span data-en>Calapres</span>
+    </a>
+    <nav class="nav" aria-label="رئيسية">
+      <a href="collection.html"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
+      <a href="#occasions"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
+      <a href="#signature"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
+      <a href="#maison"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
+      <a href="design-system.html"><span data-ar>النظام</span><span data-en>The System</span></a>
+    </nav>
+    <div class="icons">
+      <button class="lang-toggle" data-lang-toggle aria-label="Language"><span data-lang-label>EN</span></button>
+      <button class="icon-btn hide-sm" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></button>
+      <button class="icon-btn hide-sm" aria-label="الحساب"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></button>
+      <button class="icon-btn hide-sm" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
+      <button class="icon-btn" data-cart-open aria-label="الحقيبة"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE DRAWER ============ -->
+<div class="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="brand"><span data-ar>كالابريز</span><span data-en>Calapres</span></span>
+    <button class="icon-btn" data-drawer-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="collection.html"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
+    <a href="#occasions"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
+    <a href="#signature"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
+    <a href="#maison"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
+    <a href="design-system.html"><span data-ar>النظام</span><span data-en>The System</span></a>
+  </nav>
+  <div class="drawer-foot">
+    <button class="lang-toggle" data-lang-toggle><span data-lang-label>EN</span></button>
+    <span class="small muted" style="align-self:center"><span data-ar>الرياض</span><span data-en>Riyadh</span></span>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-hero-sentinel data-screen-label="hero">
+  <div class="hero__img"><img src="assets/p-hero.jpg" alt="" fetchpriority="high" /></div>
+  <div class="hero__inner wrap">
+    <span class="eyebrow reveal"><span data-ar>بيت العطور النيش · الرياض</span><span data-en>Maison de Parfums Niche · Riyadh</span></span>
+    <div class="hero-title reveal d1">
+      <h1 class="display d-hero hero-title__ar">رائحة تُروى ولا تُنسى</h1>
+      <p class="hero-title__en">A scent that is told, never forgotten</p>
+    </div>
+    <p class="sub reveal d2">
+      <span data-ar>عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في الرياض. فنّ العطر، مُتقَنًا.</span>
+      <span data-en>Niche perfumes, rare oud and bukhoor — curated with care for the scent-led, in Riyadh. The art of perfume, perfected.</span>
+    </p>
+    <div class="cta reveal d3">
+      <a class="btn btn-primary" href="collection.html"><span data-ar>اكتشف المجموعات</span><span data-en>Discover collections</span></a>
+      <a class="btn btn-secondary on-dark" href="#signature"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span class="ln"></span><span data-ar>اسحب للأسفل</span><span data-en>Scroll</span></div>
+</section>
+
+<!-- ============ COLLECTIONS STRIP ============ -->
+<section class="section wrap" id="collections">
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>تسوّق حسب الفئة</span><span data-en>Shop by category</span></span>
+      <h2 class="display d-2"><span data-ar>مجموعاتٌ مُنتقاة بعناية</span><span data-en>Collections, quietly curated</span></h2>
+    </div>
+    <a class="link reveal" href="collection.html"><span data-ar>عرض الكل</span><span data-en>View all</span><span class="arrow">→</span></a>
+  </div>
+  <div class="collections">
+    <a class="col-card reveal" href="collection.html"><img src="assets/c-niche.jpg" alt="عطور النيش" /><span class="cap"><span class="nm"><span data-ar>عطور النيش</span><span data-en>Niche Perfumes</span></span><span class="ar-icn">→</span></span></a>
+    <a class="col-card reveal d1" href="collection.html"><img src="assets/c-oriental.jpg" alt="العطور الشرقية" /><span class="cap"><span class="nm"><span data-ar>العطور الشرقية</span><span data-en>Oriental Perfumes</span></span><span class="ar-icn">→</span></span></a>
+    <a class="col-card reveal d2" href="collection.html"><img src="assets/c-oud.jpg" alt="العود والمباخر" /><span class="cap"><span class="nm"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></span><span class="ar-icn">→</span></span></a>
+    <a class="col-card reveal d3" href="collection.html"><img src="assets/c-brands.jpg" alt="البراندات الفاخرة" /><span class="cap"><span class="nm"><span data-ar>البراندات الفاخرة</span><span data-en>Luxury Brands</span></span><span class="ar-icn">→</span></span></a>
+  </div>
+</section>
+
+<!-- ============ NEW ARRIVALS — RAIL ============ -->
+<section class="section-sm wrap" id="new" data-rail>
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>وصل حديثًا</span><span data-en>New arrivals</span></span>
+      <h2 class="display d-2"><span data-ar>أحدث ما وصل إلى الدار</span><span data-en>The latest to the maison</span></h2>
+    </div>
+    <div class="rail-nav reveal">
+      <button class="rail-btn" data-rail-prev aria-label="السابق"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="rail-btn" data-rail-next aria-label="التالي"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <div class="rail-wrap">
+    <div class="rail">
+      <a class="product-card" href="product.html"><div class="frame"><span class="tag"><span data-ar>جديد</span><span data-en>New</span></span><img src="assets/pr-amber.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>عنبر الليل</span><span data-en>Ambre Nuit</span></div><div class="price"><span data-ar>٦٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 690 · 100ml</span></div></div></a>
+      <a class="product-card" href="product.html"><div class="frame"><img src="assets/pr-rose.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>وردة الطائف</span><span data-en>Rose Taïf</span></div><div class="price"><span data-ar>٥٤٠ ر.س · ٥٠ مل</span><span data-en>SAR 540 · 50ml</span></div></div></a>
+      <a class="product-card" href="product.html"><div class="frame"><span class="tag"><span data-ar>توقيع كالابريز</span><span data-en>Signature</span></span><img src="assets/pr-oud.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></div><div class="price"><span data-ar>٨٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 890 · 100ml</span></div></div></a>
+      <a class="product-card" href="product.html"><div class="frame"><img src="assets/pr-musk.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>مسك أبيض</span><span data-en>White Musk</span></div><div class="price"><span data-ar>٤٢٠ ر.س · ٥٠ مل</span><span data-en>SAR 420 · 50ml</span></div></div></a>
+      <a class="product-card" href="product.html"><div class="frame"><span class="tag"><span data-ar>الأكثر طلبًا</span><span data-en>Most loved</span></span><img src="assets/c-oriental.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>ليالي الرياض</span><span data-en>Riyadh Nights</span></div><div class="price"><span data-ar>٧٥٠ ر.س · ١٠٠ مل</span><span data-en>SAR 750 · 100ml</span></div></div></a>
+      <a class="product-card" href="product.html"><div class="frame"><img src="assets/c-oud.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>دخان العود</span><span data-en>Bukhoor Smoke</span></div><div class="price"><span data-ar>٣٢٠ ر.س · مبخرة</span><span data-en>SAR 320 · Bukhoor</span></div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAISON STORYTELLING (emerald) ============ -->
+<section class="section maison" id="maison">
+  <div class="wrap grid">
+    <div class="copy reveal">
+      <span class="eyebrow"><span data-ar>الميزون</span><span data-en>The Maison</span></span>
+      <h2 class="display d-1"><span data-ar>العطر بوصفه حِرفة</span><span data-en>Perfume, made a craft</span></h2>
+      <p><span data-ar>وُلدت كالابريز في الرياض من شغفٍ واحد: أن تكون الرائحة لحظةً تُروى. ننتقي كل عطرٍ نيش وكل قطعة عودٍ بعناية، من أرقى دور العالم، لنقدّمها كما يجب أن تُقدَّم الروائح النادرة — أصيلةً ومكتملة.</span><span data-en>Calapres was born in Riyadh from a single passion: that a scent should be a moment worth telling. Every niche perfume and piece of oud is chosen with care, from the world's finest houses — presented the way rare scents should be: authentic and complete.</span></p>
+      <div style="margin-top:var(--s4)"><a class="link" href="#" style="color:var(--gold)"><span data-ar>قصّتنا</span><span data-en>Our story</span><span class="arrow">→</span></a></div>
+    </div>
+    <div class="figure reveal d1">
+      <img src="assets/m-maison.jpg" alt="" />
+      <span class="seal"><span data-ar>منذ<br/>الرياض</span><span data-en>Est.<br/>Riyadh</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENT FAMILIES ============ -->
+<section class="section wrap" id="occasions">
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>اكتشف حسب الرائحة</span><span data-en>Find by scent</span></span>
+      <h2 class="display d-2"><span data-ar>عائلاتٌ عطرية تختار منها</span><span data-en>Olfactive families to choose from</span></h2>
+    </div>
+  </div>
+  <div class="occasions-grid">
+    <a class="occ feature reveal" href="product.html"><img src="assets/c-oud.jpg" alt="" /><span class="lbl"><span class="k"><span data-ar>التوقيع</span><span data-en>Signature</span></span><span class="nm"><span data-ar>العود والأخشاب</span><span data-en>Oud &amp; Woods</span></span></span></a>
+    <a class="occ reveal d1" href="product.html"><img src="assets/pr-rose.jpg" alt="" /><span class="lbl"><span class="k"><span data-ar>ناعمة</span><span data-en>Soft</span></span><span class="nm"><span data-ar>الورديات</span><span data-en>Florals</span></span></span></a>
+    <a class="occ reveal d2" href="product.html"><img src="assets/pr-amber.jpg" alt="" /><span class="lbl"><span class="k"><span data-ar>دافئة</span><span data-en>Warm</span></span><span class="nm"><span data-ar>الشرقيات والعنبر</span><span data-en>Orientals &amp; Amber</span></span></span></a>
+    <a class="occ reveal d1" href="product.html"><img src="assets/pr-musk.jpg" alt="" /><span class="lbl"><span class="k"><span data-ar>نقيّة</span><span data-en>Clean</span></span><span class="nm"><span data-ar>المسك</span><span data-en>Musk</span></span></span></a>
+    <a class="occ reveal d2" href="product.html"><img src="assets/c-oriental.jpg" alt="" /><span class="lbl"><span class="k"><span data-ar>منعشة</span><span data-en>Fresh</span></span><span class="nm"><span data-ar>الحمضيات</span><span data-en>Citrus</span></span></span></a>
+  </div>
+</section>
+
+<!-- ============ OUD STORY / SIGNATURE ============ -->
+<section class="signature" id="signature" data-screen-label="oud-story">
+  <img src="assets/p-signature.jpg" alt="" />
+  <div class="wrap"><div class="inner reveal">
+    <span class="eyebrow"><span data-ar>عود كالابريز</span><span data-en>Calapres Oud</span></span>
+    <h2 class="display d-1"><span data-ar>رائحةٌ تبدأ القصة</span><span data-en>A scent that begins the story</span></h2>
+    <p><span data-ar>عودٌ مُعتَّق، عنبرٌ نادر، ومباخر تُختار بعناية. كل قطرةٍ وكل قطعةٍ تحمل أصالة المصدر — لتجعل من لحظة العطر تجربةً لا تُنسى.</span><span data-en>Aged oud, rare amber, and bukhoor chosen with care. Every drop and every piece carries the authenticity of its source — making the moment of scent unforgettable.</span></p>
+    <div style="margin-top:var(--s4)"><a class="btn btn-secondary on-dark" href="collection.html"><span data-ar>اكتشف العود</span><span data-en>Explore the oud</span></a></div>
+  </div></div>
+</section>
+
+<!-- ============ MAISON SERVICES ============ -->
+<section class="section wrap services" id="services">
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>خدمة الدار</span><span data-en>Maison service</span></span>
+      <h2 class="display d-2"><span data-ar>كل ما تحتاجه الرائحة</span><span data-en>Everything the scent needs</span></h2>
+    </div>
+    <p class="lede reveal"><span data-ar>من عيّنات الاكتشاف إلى التوصيل في الرياض، نهتمّ بالتفاصيل التي تصنع تجربة العطر.</span><span data-en>From discovery samples to delivery across Riyadh, we tend to the details that make the scent experience.</span></p>
+  </div>
+  <div class="grid">
+    <div class="svc reveal">
+      <div class="ico"><svg viewBox="0 0 32 32"><path d="M13 4h6M14 4v5l-3 6v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V15l-3-6V4"/><path d="M11 19h10"/></svg></div>
+      <h3><span data-ar>عيّنات الاكتشاف</span><span data-en>Discovery samples</span></h3>
+      <p><span data-ar>عيّناتٌ ٢ مل من النيش والعود، لتختار رائحتك قبل القارورة.</span><span data-en>2ml niche &amp; oud samples, to find your scent before the bottle.</span></p>
+    </div>
+    <div class="svc reveal d1">
+      <div class="ico"><svg viewBox="0 0 32 32"><path d="M5 7h22v15H14l-6 5v-5H5z"/><path d="M11 13h10M11 17h6"/></svg></div>
+      <h3><span data-ar>استشارة عطرية</span><span data-en>Scent consultation</span></h3>
+      <p><span data-ar>خبراء الدار يرشّحون لك العطر الأنسب لذوقك ومناسبتك.</span><span data-en>Our experts recommend the scent that suits your taste and occasion.</span></p>
+    </div>
+    <div class="svc reveal d2">
+      <div class="ico"><svg viewBox="0 0 32 32"><path d="M3 8h15v11H3zM18 12h6l4 4v3h-10z"/><circle cx="9" cy="23" r="2.4"/><circle cx="23" cy="23" r="2.4"/></svg></div>
+      <h3><span data-ar>توصيل الرياض</span><span data-en>Riyadh delivery</span></h3>
+      <p><span data-ar>توصيلٌ سريع داخل الرياض، وشحنٌ مدروس لبقية المملكة.</span><span data-en>Swift delivery across Riyadh, careful shipping to the Kingdom.</span></p>
+    </div>
+    <div class="svc reveal d3">
+      <div class="ico"><svg viewBox="0 0 32 32"><path d="M16 4l9 3v7c0 6-4 10-9 13-5-3-9-7-9-13V7z"/><path d="M11.5 15.5l3 3 6-6.5"/></svg></div>
+      <h3><span data-ar>ضمان الأصالة</span><span data-en>Authenticity guaranteed</span></h3>
+      <p><span data-ar>كل عطرٍ وقطعة عودٍ أصليّة ١٠٠٪ من مصادرها المعتمدة.</span><span data-en>Every perfume and oud is 100% authentic from approved sources.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOURNAL SIGNUP ============ -->
+<section class="section wrap journal">
+  <div class="inner reveal">
+    <span class="eyebrow"><span data-ar>المجلّة</span><span data-en>The Journal</span></span>
+    <h2 class="display d-2"><span data-ar>حكاياتٌ عن فنّ العطر</span><span data-en>Stories on the art of perfume</span></h2>
+    <p><span data-ar>انضمّ إلى قائمتنا لتصلك مختاراتُ المواسم، وأدلّة العطر، ولمساتٌ من الدار.</span><span data-en>Join our list for seasonal selections, scent guides, and notes from the maison.</span></p>
+    <form class="signup" onsubmit="return false">
+      <input type="email" aria-label="البريد الإلكتروني" placeholder="" data-ph-ar="بريدك الإلكتروني" data-ph-en="Your email address" />
+      <button type="submit"><span data-ar>اشتراك</span><span data-en>Subscribe</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand"><span data-ar>كالابريز</span><span data-en>Calapres</span></div>
+      <p style="color:rgba(239,233,221,.72);max-width:34ch;font-size:14px"><span data-ar>بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى.</span><span data-en>A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten.</span></p>
+    </div>
+    <div class="footer-col"><h4><span data-ar>تسوّق</span><span data-en>Shop</span></h4><ul>
+      <li><a href="collection.html"><span data-ar>عطور النيش</span><span data-en>Niche Perfumes</span></a></li>
+      <li><a href="collection.html"><span data-ar>العطور الشرقية</span><span data-en>Oriental Perfumes</span></a></li>
+      <li><a href="collection.html"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a></li>
+      <li><a href="collection.html"><span data-ar>البراندات الفاخرة</span><span data-en>Luxury Brands</span></a></li>
+    </ul></div>
+    <div class="footer-col"><h4><span data-ar>الميزون</span><span data-en>Maison</span></h4><ul>
+      <li><a href="#maison"><span data-ar>قصّتنا</span><span data-en>Our story</span></a></li>
+      <li><a href="#services"><span data-ar>عيّنات الاكتشاف</span><span data-en>Discovery samples</span></a></li>
+      <li><a href="#"><span data-ar>المجلّة</span><span data-en>Journal</span></a></li>
+      <li><a href="#"><span data-ar>تتبّع الطلب</span><span data-en>Order tracking</span></a></li>
+    </ul></div>
+    <div class="footer-col"><h4><span data-ar>تواصل</span><span data-en>Contact</span></h4><ul>
+      <li><a href="#"><span data-ar>إنستغرام</span><span data-en>Instagram</span></a></li>
+      <li><a href="#"><span data-ar>واتساب</span><span data-en>WhatsApp</span></a></li>
+      <li><a href="#">hello@calapres.sa</a></li>
+      <li><a href="#"><span data-ar>الرياض، السعودية</span><span data-en>Riyadh, KSA</span></a></li>
+    </ul></div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span><span data-ar>© ٢٠٢٦ كالابريز</span><span data-en>© 2026 Calapres</span></span>
+    <span><span data-ar>صُنع بعناية في الرياض</span><span data-en>Crafted with care in Riyadh</span></span>
+  </div>
+</footer>
+
+<!-- ============ CART SLIDE-OVER ============ -->
+<div class="cart-overlay" data-cart>
+  <div class="cart-scrim" data-cart-close></div>
+  <aside class="cart-panel" aria-label="الحقيبة">
+    <div class="cart-head">
+      <span class="cart-title"><span data-ar>حقيبتك</span><span data-en>Your bag</span></span>
+      <button class="icon-btn" data-cart-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="cart-body">
+      <div class="cart-item">
+        <div class="ci-img"><img src="assets/pr-amber.jpg" alt="" /></div>
+        <div class="ci-meta">
+          <div class="name"><span data-ar>عنبر الليل</span><span data-en>Ambre Nuit</span></div>
+          <div class="price"><span data-ar>٦٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 690 · 100ml</span></div>
+          <div class="qty"><button>−</button><span>١</span><button>+</button></div>
+        </div>
+      </div>
+      <div class="cart-item">
+        <div class="ci-img"><img src="assets/pr-oud.jpg" alt="" /></div>
+        <div class="ci-meta">
+          <div class="name"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></div>
+          <div class="price"><span data-ar>٨٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 890 · 100ml</span></div>
+          <div class="qty"><button>−</button><span>١</span><button>+</button></div>
+        </div>
+      </div>
+      <div class="cart-addon">
+        <div class="addon-row">
+          <span><span data-ar>أضف عيّنة اكتشاف ٢ مل</span><span data-en>Add 2ml discovery sample</span></span>
+          <span class="muted small"><span data-ar>+ ٤٥ ر.س</span><span data-en>+ SAR 45</span></span>
+        </div>
+        <div class="addon-row">
+          <span><span data-ar>بطاقة الأصالة مرفقة</span><span data-en>Authenticity card included</span></span>
+          <span class="muted small"><span data-ar>مجانًا</span><span data-en>Free</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span><span data-ar>المجموع</span><span data-en>Subtotal</span></span><span><span data-ar>١٬٥٨٠ ر.س</span><span data-en>SAR 1,580</span></span></div>
+      <a class="btn btn-primary" style="width:100%" href="#"><span data-ar>إتمام الشراء</span><span data-en>Checkout</span></a>
+      <p class="small muted center" style="margin:12px 0 0"><span data-ar>الشحن يُحتسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
+    </div>
+  </aside>
+</div>
+
+<style>
+  /* cart slide-over */
+  .cart-overlay{ position:fixed; inset:0; z-index:140; visibility:hidden; }
+  .cart-overlay.open{ visibility:visible; }
+  .cart-scrim{ position:absolute; inset:0; background:rgba(23,21,19,.4); opacity:0; }
+  .cart-overlay.open .cart-scrim{ opacity:1; }
+  .cart-panel{ position:absolute; inset-block:0; inset-inline-start:0; width:min(440px,92vw); background:var(--ivory);
+    display:flex; flex-direction:column; transform:translateX(-100%); }
+  [dir="rtl"] .cart-panel{ transform:translateX(100%); }
+  .cart-overlay.open .cart-panel{ transform:none; }
+  .cart-head{ display:flex; align-items:center; justify-content:space-between; padding:var(--s3) var(--s4); border-bottom:1px solid var(--grey); }
+  .cart-title{ font-family:var(--serif); font-size:24px; font-weight:500; }
+  [dir="rtl"] .cart-title{ font-family:var(--arabic); font-weight:600; }
+  .cart-body{ flex:1; overflow-y:auto; padding:var(--s4); display:flex; flex-direction:column; gap:var(--s3); }
+  .cart-item{ display:grid; grid-template-columns:84px 1fr; gap:var(--s3); }
+  .ci-img{ aspect-ratio:4/5; overflow:hidden; background:var(--white); }
+  .ci-img img{ width:100%; height:100%; object-fit:cover; }
+  .ci-meta .name{ font-family:var(--serif); font-size:19px; font-weight:500; }
+  [dir="rtl"] .ci-meta .name{ font-family:var(--arabic); font-weight:600; }
+  .ci-meta .price{ color:var(--ink-70); font-size:14px; margin-top:4px; }
+  [dir="rtl"] .ci-meta .price{ font-family:var(--arabic); }
+  .qty{ display:inline-flex; align-items:center; gap:14px; margin-top:12px; border:1px solid var(--grey); padding:4px 12px; }
+  .qty button{ background:none; border:0; font-size:18px; color:var(--ink); line-height:1; }
+  .cart-addon{ border-top:1px solid var(--grey); padding-top:var(--s3); display:flex; flex-direction:column; gap:14px; }
+  .addon-row{ display:flex; align-items:center; justify-content:space-between; font-size:14px; }
+  [dir="rtl"] .addon-row{ font-family:var(--arabic); }
+  .cart-foot{ padding:var(--s4); border-top:1px solid var(--grey); }
+  .cart-total{ display:flex; align-items:center; justify-content:space-between; font-family:var(--serif); font-size:21px; margin-bottom:var(--s3); }
+  [dir="rtl"] .cart-total{ font-family:var(--arabic); }
+</style>
+
+<script src="calapres.js"></script>
+<script>
+  /* placeholder localisation for the email input */
+  (function () {
+    function setPh() {
+      var ar = document.documentElement.lang === "ar";
+      document.querySelectorAll("[data-ph-ar]").forEach(function (el) {
+        el.placeholder = ar ? el.getAttribute("data-ph-ar") : el.getAttribute("data-ph-en");
+      });
+    }
+    document.addEventListener("calapres:lang", setPh);
+    setPh();
+  })();
+</script>
+</body>
+</html>

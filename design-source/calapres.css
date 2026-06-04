@@ -1,0 +1,266 @@
+/* ============================================================
+   CALAPRES — كالابريز
+   Shared design system — niche perfume, oud &amp; bukhoor, Riyadh
+   ============================================================ */
+
+/* ---------- Design tokens ---------- */
+:root{
+  /* Palette */
+  --ivory:      #F7F4EF;   /* warm ivory background */
+  --ink:        #171513;   /* near-black text */
+  --gold:       #B8956A;   /* champagne-gold accent (<=5%) */
+  --emerald:    #13362B;   /* deep emerald secondary */
+  --grey:       #E4DED4;   /* soft divider/border */
+  --white:      #FFFFFF;   /* card surface */
+
+  --ink-70:     rgba(23,21,19,.70);
+  --ink-55:     rgba(23,21,19,.55);
+  --ink-40:     rgba(23,21,19,.40);
+  --on-emerald: #EFE9DD;
+
+  /* Spacing scale — 8 / 16 / 24 / 40 / 64 / 96 / 128 */
+  --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 40px;
+  --s5: 64px; --s6: 96px; --s7: 128px;
+
+  /* Layout */
+  --maxw: 1440px;
+  --gutter: clamp(20px, 5vw, 72px);
+
+  /* Type families */
+  --serif: "Cormorant Garamond", Georgia, serif;  /* Latin display */
+  --sans:  "Jost", system-ui, sans-serif;          /* Latin body */
+  --arabic:"El Messiri", system-ui, sans-serif;    /* ALL Arabic */
+
+  /* Motion */
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --slow: 560ms;
+}
+
+*{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  background:var(--ivory);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.65;
+  font-size:16px;
+  letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; }
+::selection{ background:var(--emerald); color:var(--on-emerald); }
+
+/* ---------- Arabic-first typography ----------
+   Arabic uses El Messiri for headings AND body.
+   Latin uses Cormorant (display) + Jost (body). */
+[dir="rtl"] body,
+html[lang="ar"] body{ font-family:var(--arabic); font-weight:400; line-height:1.85; }
+
+[dir="rtl"] .display,
+[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] h4,
+html[lang="ar"] .display,
+html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3,html[lang="ar"] h4{
+  font-family:var(--arabic);
+}
+
+/* Headings (Latin default) */
+h1,h2,h3,h4{ margin:0; font-weight:400; line-height:1.05; letter-spacing:-.01em; }
+.display{ font-family:var(--serif); font-weight:500; }
+
+.d-hero{ font-size:clamp(48px, 7.2vw, 104px); line-height:.98; }
+.d-1{ font-size:clamp(36px, 4.6vw, 68px); }
+.d-2{ font-size:clamp(28px, 3.1vw, 46px); }
+.d-3{ font-size:clamp(22px, 2.1vw, 30px); }
+
+[dir="rtl"] .d-hero{ line-height:1.08; }
+[dir="rtl"] .d-1{ line-height:1.18; }
+[dir="rtl"] .d-2{ line-height:1.22; }
+
+/* Eyebrow / kicker */
+.eyebrow{
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:12px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+[dir="rtl"] .eyebrow{
+  font-family:var(--arabic);
+  letter-spacing:.18em;
+  text-transform:none;
+  font-size:15px;
+}
+
+.lede{ font-size:clamp(16px,1.25vw,19px); color:var(--ink-70); font-weight:300; }
+[dir="rtl"] .lede{ font-weight:400; }
+
+.small{ font-size:13px; letter-spacing:.02em; }
+.muted{ color:var(--ink-55); }
+
+/* ---------- Layout helpers ---------- */
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); }
+.section{ padding-block:clamp(64px,9vw,128px); }
+.section-sm{ padding-block:clamp(48px,6vw,96px); }
+.divider{ height:1px; background:var(--grey); border:0; margin:0; }
+.center{ text-align:center; }
+
+/* ---------- Buttons ----------
+   primary = solid ink, light text; secondary = thin outline; sharp corners */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  font-family:var(--sans); font-weight:400;
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  padding:17px 34px; border:1px solid transparent; border-radius:1px;
+  transition:background var(--slow) var(--ease), color var(--slow) var(--ease),
+             border-color var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+[dir="rtl"] .btn{ font-family:var(--arabic); letter-spacing:.04em; text-transform:none; font-size:16px; font-weight:500; padding:14px 36px; }
+
+.btn-primary{ background:var(--ink); color:var(--ivory); }
+.btn-primary:hover{ background:var(--emerald); }
+.btn-secondary{ background:transparent; color:var(--ink); border-color:var(--ink); }
+.btn-secondary:hover{ background:var(--ink); color:var(--ivory); }
+.btn-ghost{ background:transparent; color:var(--ink); border-color:var(--grey); }
+.btn-ghost:hover{ border-color:var(--ink); }
+.on-dark .btn-secondary,.btn-secondary.on-dark{ color:var(--ivory); border-color:rgba(247,244,239,.5); }
+.on-dark .btn-secondary:hover,.btn-secondary.on-dark:hover{ background:var(--ivory); color:var(--ink); }
+
+/* text link with gold underline */
+.link{
+  font-family:var(--sans); font-size:12px; letter-spacing:.2em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:10px; position:relative; padding-bottom:4px;
+}
+[dir="rtl"] .link{ font-family:var(--arabic); letter-spacing:.02em; text-transform:none; font-size:16px; }
+.link::after{
+  content:""; position:absolute; inset-inline:0; bottom:0; height:1px;
+  background:var(--gold); transform:scaleX(0); transform-origin:inline-start;
+  transition:transform var(--slow) var(--ease);
+}
+.link:hover::after{ transform:scaleX(1); }
+.link .arrow{ transition:transform var(--slow) var(--ease); }
+.link:hover .arrow{ transform:translateX(4px); }
+[dir="rtl"] .link:hover .arrow{ transform:translateX(-4px) scaleX(-1); }
+[dir="rtl"] .link .arrow{ transform:scaleX(-1); }
+
+/* ---------- Header ---------- */
+.site-header{
+  position:fixed; inset-block-start:0; inset-inline:0; z-index:80;
+  transition:background var(--slow) var(--ease), box-shadow var(--slow) var(--ease),
+             color var(--slow) var(--ease);
+  color:var(--ivory);
+}
+.site-header .bar{
+  display:flex; align-items:center; justify-content:space-between;
+  height:84px; gap:var(--s4);
+}
+.site-header.solid{
+  background:rgba(247,244,239,.92);
+  backdrop-filter:saturate(1.2) blur(14px);
+  color:var(--ink);
+  box-shadow:0 1px 0 var(--grey);
+}
+.brand{
+  font-family:var(--serif); font-weight:500; font-size:27px; letter-spacing:.26em;
+  text-transform:uppercase; padding-inline-start:2px; white-space:nowrap;
+}
+[dir="rtl"] .brand{ font-family:var(--arabic); letter-spacing:normal; text-transform:none; font-size:30px; font-weight:600; }
+.nav{ display:flex; align-items:center; gap:34px; }
+.nav a{
+  font-family:var(--sans); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  position:relative; padding-block:6px; opacity:.9; transition:opacity var(--slow) var(--ease); white-space:nowrap;
+}
+[dir="rtl"] .nav a{ font-family:var(--arabic); letter-spacing:.01em; text-transform:none; font-size:16px; }
+.nav a::after{
+  content:""; position:absolute; inset-inline:0; bottom:0; height:1px; background:currentColor;
+  transform:scaleX(0); transform-origin:center; transition:transform var(--slow) var(--ease); opacity:.6;
+}
+.nav a:hover::after{ transform:scaleX(1); }
+.icons{ display:flex; align-items:center; gap:20px; }
+.icon-btn{
+  background:none; border:0; color:inherit; padding:6px; line-height:0;
+  opacity:.9; transition:opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+.icon-btn:hover{ opacity:1; transform:translateY(-1px); }
+.icon-btn svg{ width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.3; }
+.lang-toggle{
+  font-family:var(--sans); font-size:11px; letter-spacing:.18em; color:inherit;
+  background:none; border:1px solid currentColor; border-radius:1px; padding:7px 12px;
+  opacity:.85; transition:opacity var(--slow) var(--ease), background var(--slow) var(--ease), color var(--slow) var(--ease);
+}
+.lang-toggle:hover{ opacity:1; }
+/* When showing the Arabic label ("العربية"), render it in El Messiri, not Jost */
+html[lang="en"] .lang-toggle{ font-family:var(--arabic); letter-spacing:.02em; font-size:14px; padding:5px 13px; }
+.site-header.solid .lang-toggle:hover{ background:var(--ink); color:var(--ivory); }
+
+.menu-btn{ display:none; background:none; border:0; color:inherit; padding:6px; }
+.menu-btn svg{ width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:1.3; }
+
+/* ---------- Footer ---------- */
+.site-footer{ background:var(--emerald); color:var(--on-emerald); }
+.site-footer a{ transition:color var(--slow) var(--ease); }
+.site-footer a:hover{ color:var(--gold); }
+.footer-grid{
+  display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:var(--s4);
+  padding-block:var(--s6) var(--s5);
+}
+.footer-col h4{
+  font-family:var(--sans); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:var(--s3); font-weight:400;
+}
+[dir="rtl"] .footer-col h4{ font-family:var(--arabic); letter-spacing:.04em; text-transform:none; font-size:15px; }
+.footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:13px; }
+.footer-col li a{ font-size:14px; color:rgba(239,233,221,.78); }
+.footer-brand{ font-family:var(--serif); font-size:34px; letter-spacing:.22em; text-transform:uppercase; margin-bottom:var(--s3); }
+[dir="rtl"] .footer-brand{ font-family:var(--arabic); letter-spacing:normal; text-transform:none; font-size:38px; }
+.footer-bottom{
+  display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+  padding-block:var(--s3); border-top:1px solid rgba(239,233,221,.16);
+  font-size:12px; color:rgba(239,233,221,.6); letter-spacing:.04em;
+}
+
+/* ---------- Product card ---------- */
+.product-card{ display:block; }
+.product-card .frame{ overflow:hidden; background:var(--white); position:relative; aspect-ratio:4/5; }
+.product-card .frame img{
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 900ms var(--ease);
+}
+.product-card:hover .frame img{ transform:scale(1.06); }
+.product-card .tag{
+  position:absolute; inset-block-start:14px; inset-inline-start:14px;
+  background:rgba(247,244,239,.92); color:var(--ink);
+  font-family:var(--sans); font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+  padding:6px 11px; border-radius:1px;
+}
+[dir="rtl"] .product-card .tag{ font-family:var(--arabic); letter-spacing:.02em; text-transform:none; font-size:13px; }
+.product-card .meta{ padding-block:var(--s2) 0; }
+.product-card .name{ font-family:var(--serif); font-size:23px; font-weight:500; line-height:1.15; }
+[dir="rtl"] .product-card .name{ font-family:var(--arabic); font-weight:600; }
+.product-card .price{ font-family:var(--sans); font-size:14px; color:var(--ink-70); margin-top:5px; letter-spacing:.04em; }
+[dir="rtl"] .product-card .price{ font-family:var(--arabic); }
+
+/* ---------- Motion: fade-and-rise on scroll ---------- */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity 900ms var(--ease), transform 900ms var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:90ms; }
+.reveal.d2{ transition-delay:180ms; }
+.reveal.d3{ transition-delay:270ms; }
+.reveal.d4{ transition-delay:360ms; }
+@media (prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  *{ scroll-behavior:auto !important; }
+}
+
+/* lang swap helper — show only active language spans */
+[data-en]{ display:none; }
+html[lang="en"] [data-en]{ display:revert; }
+html[lang="en"] [data-ar]{ display:none; }
+
+/* hide mobile drawer by default */
+.drawer{ display:none; }

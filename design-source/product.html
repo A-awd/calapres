@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>عود ملكي · Royal Oud — كالابريز</title>
+<meta name="description" content="عود ملكي من كالابريز — إكستريه عطري بالعود والورد والعنبر. عطور نيش فاخرة في الرياض." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="calapres.css" />
+<style>
+  .pdp{ padding-top:84px; }
+  .crumb{ display:flex; gap:10px; align-items:center; font-family:var(--sans); font-size:12px; letter-spacing:.04em; color:var(--ink-55);
+    padding-block:var(--s4) 0; }
+  [dir="rtl"] .crumb{ font-family:var(--arabic); font-size:14px; }
+  .crumb .sep{ opacity:.5; }
+  .crumb a:hover{ color:var(--ink); }
+
+  /* layout */
+  .pdp-main{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(40px,5vw,88px); padding-block:var(--s4) var(--s6); align-items:start; }
+
+  /* gallery */
+  .gallery{ position:sticky; top:104px; }
+  .gallery .hero-img{ position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--white); border:1px solid var(--grey); }
+  .gallery .hero-img img{ width:100%; height:100%; object-fit:cover; }
+  .gallery .hero-img .tag{ position:absolute; inset-block-start:16px; inset-inline-start:16px; background:rgba(247,244,239,.92); color:var(--ink);
+    font-family:var(--sans); font-size:10px; letter-spacing:.18em; text-transform:uppercase; padding:7px 12px; }
+  [dir="rtl"] .gallery .hero-img .tag{ font-family:var(--arabic); letter-spacing:.02em; text-transform:none; font-size:13px; }
+  .thumbs{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s2); margin-top:var(--s2); }
+  .thumbs button{ aspect-ratio:1/1; overflow:hidden; background:var(--white); border:1px solid var(--grey); padding:0; transition:border-color var(--slow) var(--ease); }
+  .thumbs button.on{ border-color:var(--gold); }
+  .thumbs img{ width:100%; height:100%; object-fit:cover; }
+
+  /* info */
+  .pinfo .brand-line{ font-family:var(--sans); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); }
+  [dir="rtl"] .pinfo .brand-line{ font-family:var(--arabic); letter-spacing:.1em; text-transform:none; font-size:15px; }
+  .pinfo h1{ margin-top:var(--s2); }
+  .pinfo .latin{ font-family:var(--serif); font-style:italic; font-size:22px; color:var(--ink-55); margin-top:8px; }
+  [dir="rtl"] .pinfo .latin{ font-family:var(--serif); }
+  .pinfo .price{ font-family:var(--serif); font-size:34px; font-weight:500; margin-top:var(--s3); }
+  [dir="rtl"] .pinfo .price{ font-family:var(--arabic); font-weight:600; }
+  .pinfo .desc{ color:var(--ink-70); margin-top:var(--s3); max-width:46ch; }
+
+  .field-label{ font-family:var(--sans); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-55); margin-bottom:12px; }
+  [dir="rtl"] .field-label{ font-family:var(--arabic); letter-spacing:.04em; text-transform:none; font-size:14px; }
+  .sizes{ display:flex; gap:var(--s2); margin-top:var(--s4); }
+  .size-opt{ background:var(--white); border:1px solid var(--grey); padding:14px 22px; min-width:96px; text-align:center; cursor:pointer;
+    transition:border-color var(--slow) var(--ease), background var(--slow) var(--ease); }
+  .size-opt .v{ font-family:var(--serif); font-size:21px; font-weight:500; display:block; }
+  [dir="rtl"] .size-opt .v{ font-family:var(--arabic); font-weight:600; }
+  .size-opt .p{ font-family:var(--sans); font-size:12px; color:var(--ink-55); margin-top:3px; }
+  [dir="rtl"] .size-opt .p{ font-family:var(--arabic); }
+  .size-opt.on{ border-color:var(--ink); background:var(--ivory); }
+
+  .buy-row{ display:flex; gap:var(--s2); margin-top:var(--s4); align-items:stretch; }
+  .buy-row .btn-primary{ flex:1; }
+  .pinfo .note{ font-size:13px; color:var(--ink-55); margin-top:var(--s2); display:flex; gap:8px; align-items:center; }
+  [dir="rtl"] .pinfo .note{ font-family:var(--arabic); }
+  .pinfo .note svg{ width:16px; height:16px; stroke:var(--gold); fill:none; stroke-width:1.4; flex:none; }
+
+  /* accordion */
+  .accordion{ margin-top:var(--s5); border-top:1px solid var(--grey); }
+  .acc-item{ border-bottom:1px solid var(--grey); }
+  .acc-head{ width:100%; background:none; border:0; display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+    padding-block:var(--s3); text-align:start; color:var(--ink); }
+  .acc-head span:first-child{ font-family:var(--serif); font-size:20px; font-weight:500; }
+  [dir="rtl"] .acc-head span:first-child{ font-family:var(--arabic); font-weight:600; font-size:19px; }
+  .acc-ico{ position:relative; width:16px; height:16px; flex:none; }
+  .acc-ico::before,.acc-ico::after{ content:""; position:absolute; inset-block-start:50%; inset-inline-start:0; width:16px; height:1.4px;
+    background:var(--gold); transform:translateY(-50%); transition:opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+  .acc-ico::after{ transform:translateY(-50%) rotate(90deg); }
+  .acc-item.open .acc-ico::after{ opacity:0; transform:translateY(-50%) rotate(0deg); }
+  .acc-panel{ overflow:hidden; height:0; }
+  .acc-item.open .acc-panel{ height:auto; }
+  .acc-inner{ padding-bottom:var(--s3); color:var(--ink-70); font-size:15px; }
+  [dir="rtl"] .acc-inner{ font-family:var(--arabic); }
+  .acc-inner p{ margin:0; max-width:50ch; }
+  .acc-row{ display:grid; grid-template-columns:150px 1fr; gap:var(--s3); padding-block:9px; border-top:1px solid var(--grey); }
+  .acc-row:first-child{ border-top:0; }
+  .acc-row .k{ font-family:var(--sans); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-55); padding-top:3px; }
+  [dir="rtl"] .acc-row .k{ font-family:var(--arabic); letter-spacing:.02em; text-transform:none; font-size:15px; }
+  .acc-row .v{ font-size:15px; color:var(--ink); }
+
+  /* fragrance pyramid */
+  .pyramid{ background:var(--emerald); color:var(--on-emerald); }
+  .pyramid .wrap{ padding-block:clamp(56px,7vw,104px); }
+  .pyramid .head{ text-align:center; margin-bottom:var(--s5); }
+  .pyramid .head .eyebrow{ color:var(--gold); }
+  .pyramid .head h2{ color:var(--on-emerald); margin-top:var(--s2); }
+  .tiers{ max-width:760px; margin-inline:auto; display:flex; flex-direction:column; }
+  .tier{ display:grid; grid-template-columns:150px 1fr; gap:var(--s4); align-items:center; padding-block:var(--s4); border-top:1px solid rgba(239,233,221,.16); }
+  .tier:first-child{ border-top:0; }
+  .tier .stage{ }
+  .tier .stage .idx{ font-family:var(--sans); font-size:11px; letter-spacing:.24em; color:var(--gold); }
+  [dir="rtl"] .tier .stage .idx{ font-family:var(--arabic); letter-spacing:.06em; font-size:14px; }
+  .tier .stage .ttl{ font-family:var(--serif); font-size:28px; font-weight:500; margin-top:6px; }
+  [dir="rtl"] .tier .stage .ttl{ font-family:var(--arabic); font-weight:600; }
+  .tier .notes{ display:flex; flex-wrap:wrap; gap:10px; }
+  .tier .notes span{ font-family:var(--serif); font-size:19px; border:1px solid rgba(239,233,221,.26); padding:8px 16px; border-radius:1px; }
+  [dir="rtl"] .tier .notes span{ font-family:var(--arabic); font-size:16px; }
+
+  /* related */
+  .related .sec-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--s3); margin-bottom:var(--s5); }
+  .rel-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s3); }
+
+  @media (max-width:980px){
+    .pdp-main{ grid-template-columns:1fr; gap:var(--s5); }
+    .gallery{ position:static; }
+    .rel-grid{ grid-template-columns:repeat(2,1fr); }
+    .nav{ display:none; }
+    .menu-btn{ display:block; }
+    .tier{ grid-template-columns:1fr; gap:var(--s2); }
+  }
+  @media (max-width:560px){
+    .rel-grid{ grid-template-columns:1fr; }
+    .sizes{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" data-header-solid>
+  <div class="wrap bar">
+    <button class="menu-btn" data-drawer-open aria-label="القائمة">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <a class="brand" href="index.html"><span data-ar>كالابريز</span><span data-en>Calapres</span></a>
+    <nav class="nav" aria-label="رئيسية">
+      <a href="collection.html"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
+      <a href="index.html#occasions"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
+      <a href="index.html#signature"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
+      <a href="index.html#maison"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
+      <a href="design-system.html"><span data-ar>النظام</span><span data-en>The System</span></a>
+    </nav>
+    <div class="icons">
+      <button class="lang-toggle" data-lang-toggle aria-label="Language"><span data-lang-label>EN</span></button>
+      <button class="icon-btn" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></button>
+      <button class="icon-btn" aria-label="المفضلة"><svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg></button>
+      <button class="icon-btn" data-cart-open aria-label="الحقيبة"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE DRAWER ============ -->
+<div class="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="brand" style="color:var(--ink)"><span data-ar>كالابريز</span><span data-en>Calapres</span></span>
+    <button class="icon-btn" data-drawer-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="collection.html"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
+    <a href="index.html#occasions"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
+    <a href="index.html#signature"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
+    <a href="index.html#maison"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
+    <a href="design-system.html"><span data-ar>النظام</span><span data-en>The System</span></a>
+  </nav>
+</div>
+
+<main class="pdp" data-screen-label="product">
+  <div class="wrap">
+    <nav class="crumb reveal" aria-label="مسار">
+      <a href="index.html"><span data-ar>الرئيسية</span><span data-en>Home</span></a><span class="sep">/</span>
+      <a href="collection.html"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a><span class="sep">/</span>
+      <span class="muted"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></span>
+    </nav>
+
+    <div class="pdp-main">
+      <!-- GALLERY -->
+      <div class="gallery reveal">
+        <div class="hero-img">
+          <span class="tag"><span data-ar>توقيع كالابريز</span><span data-en>Signature</span></span>
+          <img id="main-img" src="assets/pr-oud.jpg" alt="عود ملكي" />
+        </div>
+        <div class="thumbs">
+          <button class="on" data-src="assets/pr-oud.jpg"><img src="assets/pr-oud.jpg" alt="" /></button>
+          <button data-src="assets/c-oud.jpg"><img src="assets/c-oud.jpg" alt="" /></button>
+          <button data-src="assets/pr-amber.jpg"><img src="assets/pr-amber.jpg" alt="" /></button>
+          <button data-src="assets/m-maison.jpg"><img src="assets/m-maison.jpg" alt="" /></button>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="pinfo reveal d1">
+        <div class="brand-line"><span data-ar>كالابريز بريفيه</span><span data-en>Calapres Privé</span></div>
+        <h1 class="display d-1"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></h1>
+        <div class="latin"><span data-ar>Extrait de Parfum</span><span data-en>Extrait de Parfum</span></div>
+        <div class="price" id="pdp-price"><span data-ar>٨٩٠ ر.س</span><span data-en>SAR 890</span></div>
+        <p class="desc"><span data-ar>عطرٌ شرقيّ خشبيّ يتمحور حول العود المُعتَّق والورد البلغاري، يستقرّ على قاعدةٍ من العنبر والمسك والصندل. حضورٌ دافئ يدوم طويلًا، صُمّم لليالي الرياض.</span><span data-en>An oriental-woody extrait built around aged oud and Bulgarian rose, settling on a base of amber, musk and sandalwood. A warm, long-lasting presence, composed for Riyadh nights.</span></p>
+
+        <div style="margin-top:var(--s5)">
+          <div class="field-label"><span data-ar>الحجم</span><span data-en>Size</span></div>
+          <div class="sizes">
+            <div class="size-opt" data-size="50"><span class="v"><span data-ar>٥٠ مل</span><span data-en>50ml</span></span><span class="p"><span data-ar>٥٩٠ ر.س</span><span data-en>SAR 590</span></span></div>
+            <div class="size-opt on" data-size="100"><span class="v"><span data-ar>١٠٠ مل</span><span data-en>100ml</span></span><span class="p"><span data-ar>٨٩٠ ر.س</span><span data-en>SAR 890</span></span></div>
+          </div>
+        </div>
+
+        <div class="buy-row">
+          <button class="btn btn-primary" data-cart-open><span data-ar>أضِف إلى الحقيبة</span><span data-en>Add to bag</span></button>
+          <button class="btn btn-secondary"><span data-ar>المفضلة</span><span data-en>Wishlist</span></button>
+        </div>
+        <div class="note"><svg viewBox="0 0 24 24"><path d="M12 3l7 2.5v6c0 4.5-3 7.6-7 9.5-4-1.9-7-5-7-9.5v-6z"/><path d="M9 12l2 2 4-4.5"/></svg><span><span data-ar>أصالة مضمونة ١٠٠٪ · عيّنة ٢ مل تُرفق مع كل طلب</span><span data-en>100% authenticity guaranteed · 2ml sample with every order</span></span></div>
+
+        <!-- DETAILS — accordion -->
+        <div class="accordion" data-accordion>
+          <div class="acc-item open">
+            <button class="acc-head" type="button">
+              <span><span data-ar>الوصف</span><span data-en>Description</span></span>
+              <span class="acc-ico" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-inner">
+              <p><span data-ar>عطرٌ شرقيّ خشبيّ يتمحور حول العود المُعتَّق والورد البلغاري، يستقرّ على قاعدةٍ دافئة من العنبر والمسك والصندل. إكستريه بتركيز ٢٥٪ يمنح حضورًا يدوم من ٨ إلى ١٠ ساعات، صُمّم خصيصًا لليالي الرياض.</span><span data-en>An oriental-woody extrait built around aged oud and Bulgarian rose, settling on a warm base of amber, musk and sandalwood. A 25% concentration that lasts 8–10 hours, composed for Riyadh nights.</span></p>
+            </div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button">
+              <span><span data-ar>العائلة العطرية</span><span data-en>Scent Family</span></span>
+              <span class="acc-ico" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-inner">
+              <div class="acc-row"><span class="k"><span data-ar>التصنيف</span><span data-en>Family</span></span><span class="v"><span data-ar>شرقيّ خشبيّ · عود</span><span data-en>Oriental Woody · Oud</span></span></div>
+              <div class="acc-row"><span class="k"><span data-ar>التركيز</span><span data-en>Concentration</span></span><span class="v"><span data-ar>إكستريه دو بارفان · ٢٥٪</span><span data-en>Extrait de Parfum · 25%</span></span></div>
+              <div class="acc-row"><span class="k"><span data-ar>الثبات</span><span data-en>Longevity</span></span><span class="v"><span data-ar>٨–١٠ ساعات</span><span data-en>8–10 hours</span></span></div>
+              <div class="acc-row"><span class="k"><span data-ar>المنشأ</span><span data-en>Origin</span></span><span class="v"><span data-ar>صناعة فرنسية · مكوّنات عربية</span><span data-en>Made in France · Arabian ingredients</span></span></div>
+            </div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button">
+              <span><span data-ar>التوصيل والشحن</span><span data-en>Delivery &amp; Shipping</span></span>
+              <span class="acc-ico" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-inner">
+              <p><span data-ar>توصيلٌ سريع داخل الرياض خلال ٢٤ ساعة، وشحنٌ مدروس لبقية مناطق المملكة خلال ٢ إلى ٤ أيام عمل. الشحن مجاني للطلبات فوق ٣٥٠ ر.س. تُرفق عيّنة اكتشاف ٢ مل وبطاقة الأصالة مع كل طلب.</span><span data-en>Swift delivery across Riyadh within 24 hours, and careful shipping to the rest of the Kingdom in 2–4 working days. Free shipping on orders over SAR 350. A 2ml discovery sample and authenticity card are included with every order.</span></p>
+            </div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button">
+              <span><span data-ar>الإرجاع والاستبدال</span><span data-en>Returns &amp; Exchange</span></span>
+              <span class="acc-ico" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-inner">
+              <p><span data-ar>يمكنك إرجاع أو استبدال العطر خلال ٧ أيام من الاستلام بشرط أن تكون القارورة مغلقة وبكامل تغليفها. العيّنات غير قابلة للإرجاع. لأي استفسار، فريق الدار في خدمتك عبر واتساب.</span><span data-en>You may return or exchange your perfume within 7 days of receipt, provided the bottle is sealed and in its full packaging. Samples are non-returnable. For any query, our maison team is at your service via WhatsApp.</span></p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAGRANCE PYRAMID -->
+  <section class="pyramid">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow"><span data-ar>هرم المكوّنات العطرية</span><span data-en>The fragrance pyramid</span></span>
+        <h2 class="display d-2"><span data-ar>كيف تتكشّف الرائحة</span><span data-en>How the scent unfolds</span></h2>
+      </div>
+      <div class="tiers">
+        <div class="tier reveal">
+          <div class="stage"><div class="idx"><span data-ar>المقدمة</span><span data-en>Top notes</span></div><div class="ttl"><span data-ar>أول لمسة</span><span data-en>First breath</span></div></div>
+          <div class="notes"><span><span data-ar>زعفران</span><span data-en>Saffron</span></span><span><span data-ar>برغموت</span><span data-en>Bergamot</span></span><span><span data-ar>هيل</span><span data-en>Cardamom</span></span></div>
+        </div>
+        <div class="tier reveal d1">
+          <div class="stage"><div class="idx"><span data-ar>القلب</span><span data-en>Heart notes</span></div><div class="ttl"><span data-ar>روح العطر</span><span data-en>The heart</span></div></div>
+          <div class="notes"><span><span data-ar>عود مُعتَّق</span><span data-en>Aged Oud</span></span><span><span data-ar>ورد بلغاري</span><span data-en>Bulgarian Rose</span></span><span><span data-ar>زهر البرتقال</span><span data-en>Orange Blossom</span></span></div>
+        </div>
+        <div class="tier reveal d2">
+          <div class="stage"><div class="idx"><span data-ar>القاعدة</span><span data-en>Base notes</span></div><div class="ttl"><span data-ar>الأثر الباقي</span><span data-en>The trail</span></div></div>
+          <div class="notes"><span><span data-ar>عنبر</span><span data-en>Amber</span></span><span><span data-ar>مسك</span><span data-en>Musk</span></span><span><span data-ar>صندل</span><span data-en>Sandalwood</span></span><span><span data-ar>جلد</span><span data-en>Leather</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="section wrap related">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow"><span data-ar>قد يناسبك أيضًا</span><span data-en>You may also like</span></span>
+        <h2 class="display d-2" style="margin-top:var(--s2)"><span data-ar>من العائلة نفسها</span><span data-en>From the same family</span></h2>
+      </div>
+      <a class="link" href="collection.html"><span data-ar>عرض الكل</span><span data-en>View all</span><span class="arrow">→</span></a>
+    </div>
+    <div class="rel-grid">
+      <a class="product-card reveal" href="product.html"><div class="frame"><span class="tag"><span data-ar>جديد</span><span data-en>New</span></span><img src="assets/pr-amber.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>عنبر الليل</span><span data-en>Ambre Nuit</span></div><div class="price"><span data-ar>٦٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 690 · 100ml</span></div></div></a>
+      <a class="product-card reveal d1" href="product.html"><div class="frame"><img src="assets/pr-rose.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>وردة الطائف</span><span data-en>Rose Taïf</span></div><div class="price"><span data-ar>٥٤٠ ر.س · ٥٠ مل</span><span data-en>SAR 540 · 50ml</span></div></div></a>
+      <a class="product-card reveal d2" href="product.html"><div class="frame"><img src="assets/c-oriental.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>ليالي الرياض</span><span data-en>Riyadh Nights</span></div><div class="price"><span data-ar>٧٥٠ ر.س · ١٠٠ مل</span><span data-en>SAR 750 · 100ml</span></div></div></a>
+      <a class="product-card reveal d3" href="product.html"><div class="frame"><img src="assets/c-oud.jpg" alt="" /></div><div class="meta"><div class="name"><span data-ar>دخان العود</span><span data-en>Bukhoor Smoke</span></div><div class="price"><span data-ar>٣٢٠ ر.س · مبخرة</span><span data-en>SAR 320 · Bukhoor</span></div></div></a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand"><span data-ar>كالابريز</span><span data-en>Calapres</span></div>
+      <p style="color:rgba(239,233,221,.72);max-width:34ch;font-size:14px"><span data-ar>بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى.</span><span data-en>A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten.</span></p>
+    </div>
+    <div class="footer-col"><h4><span data-ar>تسوّق</span><span data-en>Shop</span></h4><ul>
+      <li><a href="collection.html"><span data-ar>عطور النيش</span><span data-en>Niche Perfumes</span></a></li>
+      <li><a href="collection.html"><span data-ar>العطور الشرقية</span><span data-en>Oriental Perfumes</span></a></li>
+      <li><a href="collection.html"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a></li>
+      <li><a href="collection.html"><span data-ar>البراندات الفاخرة</span><span data-en>Luxury Brands</span></a></li>
+    </ul></div>
+    <div class="footer-col"><h4><span data-ar>الميزون</span><span data-en>Maison</span></h4><ul>
+      <li><a href="index.html#maison"><span data-ar>قصّتنا</span><span data-en>Our story</span></a></li>
+      <li><a href="index.html#services"><span data-ar>عيّنات الاكتشاف</span><span data-en>Discovery samples</span></a></li>
+      <li><a href="#"><span data-ar>المجلّة</span><span data-en>Journal</span></a></li>
+      <li><a href="#"><span data-ar>تتبّع الطلب</span><span data-en>Order tracking</span></a></li>
+    </ul></div>
+    <div class="footer-col"><h4><span data-ar>تواصل</span><span data-en>Contact</span></h4><ul>
+      <li><a href="#"><span data-ar>إنستغرام</span><span data-en>Instagram</span></a></li>
+      <li><a href="#"><span data-ar>واتساب</span><span data-en>WhatsApp</span></a></li>
+      <li><a href="#">hello@calapres.sa</a></li>
+      <li><a href="#"><span data-ar>الرياض، السعودية</span><span data-en>Riyadh, KSA</span></a></li>
+    </ul></div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span><span data-ar>© ٢٠٢٦ كالابريز</span><span data-en>© 2026 Calapres</span></span>
+    <span><span data-ar>صُنع بعناية في الرياض</span><span data-en>Crafted with care in Riyadh</span></span>
+  </div>
+</footer>
+
+<!-- ============ CART SLIDE-OVER ============ -->
+<div class="cart-overlay" data-cart>
+  <div class="cart-scrim" data-cart-close></div>
+  <aside class="cart-panel" aria-label="الحقيبة">
+    <div class="cart-head">
+      <span class="cart-title"><span data-ar>حقيبتك</span><span data-en>Your bag</span></span>
+      <button class="icon-btn" data-cart-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="cart-body">
+      <div class="cart-item">
+        <div class="ci-img"><img src="assets/pr-oud.jpg" alt="" /></div>
+        <div class="ci-meta">
+          <div class="name"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></div>
+          <div class="price"><span data-ar>٨٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 890 · 100ml</span></div>
+          <div class="qty"><button>−</button><span>١</span><button>+</button></div>
+        </div>
+      </div>
+      <div class="cart-addon">
+        <div class="addon-row">
+          <span><span data-ar>أضف عيّنة اكتشاف ٢ مل</span><span data-en>Add 2ml discovery sample</span></span>
+          <span class="muted small"><span data-ar>+ ٤٥ ر.س</span><span data-en>+ SAR 45</span></span>
+        </div>
+        <div class="addon-row">
+          <span><span data-ar>بطاقة الأصالة مرفقة</span><span data-en>Authenticity card included</span></span>
+          <span class="muted small"><span data-ar>مجانًا</span><span data-en>Free</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total"><span><span data-ar>المجموع</span><span data-en>Subtotal</span></span><span><span data-ar>٨٩٠ ر.س</span><span data-en>SAR 890</span></span></div>
+      <a class="btn btn-primary" style="width:100%" href="#"><span data-ar>إتمام الشراء</span><span data-en>Checkout</span></a>
+      <p class="small muted center" style="margin:12px 0 0"><span data-ar>الشحن يُحتسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
+    </div>
+  </aside>
+</div>
+
+<style>
+  .cart-overlay{ position:fixed; inset:0; z-index:140; visibility:hidden; }
+  .cart-overlay.open{ visibility:visible; }
+  .cart-scrim{ position:absolute; inset:0; background:rgba(23,21,19,.4); opacity:0; }
+  .cart-overlay.open .cart-scrim{ opacity:1; }
+  .cart-panel{ position:absolute; inset-block:0; inset-inline-start:0; width:min(440px,92vw); background:var(--ivory);
+    display:flex; flex-direction:column; transform:translateX(-100%); }
+  [dir="rtl"] .cart-panel{ transform:translateX(100%); }
+  .cart-overlay.open .cart-panel{ transform:none; }
+  .cart-head{ display:flex; align-items:center; justify-content:space-between; padding:var(--s3) var(--s4); border-bottom:1px solid var(--grey); }
+  .cart-title{ font-family:var(--serif); font-size:24px; font-weight:500; }
+  [dir="rtl"] .cart-title{ font-family:var(--arabic); font-weight:600; }
+  .cart-body{ flex:1; overflow-y:auto; padding:var(--s4); display:flex; flex-direction:column; gap:var(--s3); }
+  .cart-item{ display:grid; grid-template-columns:84px 1fr; gap:var(--s3); }
+  .ci-img{ aspect-ratio:4/5; overflow:hidden; background:var(--white); }
+  .ci-img img{ width:100%; height:100%; object-fit:cover; }
+  .ci-meta .name{ font-family:var(--serif); font-size:19px; font-weight:500; }
+  [dir="rtl"] .ci-meta .name{ font-family:var(--arabic); font-weight:600; }
+  .ci-meta .price{ color:var(--ink-70); font-size:14px; margin-top:4px; }
+  [dir="rtl"] .ci-meta .price{ font-family:var(--arabic); }
+  .qty{ display:inline-flex; align-items:center; gap:14px; margin-top:12px; border:1px solid var(--grey); padding:4px 12px; }
+  .qty button{ background:none; border:0; font-size:18px; color:var(--ink); line-height:1; }
+  .cart-addon{ border-top:1px solid var(--grey); padding-top:var(--s3); display:flex; flex-direction:column; gap:14px; }
+  .addon-row{ display:flex; align-items:center; justify-content:space-between; font-size:14px; }
+  [dir="rtl"] .addon-row{ font-family:var(--arabic); }
+  .cart-foot{ padding:var(--s4); border-top:1px solid var(--grey); }
+  .cart-total{ display:flex; align-items:center; justify-content:space-between; font-family:var(--serif); font-size:21px; margin-bottom:var(--s3); }
+  [dir="rtl"] .cart-total{ font-family:var(--arabic); }
+</style>
+
+<script src="calapres.js"></script>
+<script>
+  /* thumbnail swap */
+  (function(){
+    var main = document.getElementById("main-img");
+    document.querySelectorAll(".thumbs button").forEach(function(b){
+      b.addEventListener("click", function(){
+        document.querySelectorAll(".thumbs button").forEach(function(x){ x.classList.remove("on"); });
+        b.classList.add("on");
+        if (main) main.src = b.getAttribute("data-src");
+      });
+    });
+    /* size selector → updates the headline price */
+    var PRICES = { "50": { ar: "٥٩٠ ر.س", en: "SAR 590" }, "100": { ar: "٨٩٠ ر.س", en: "SAR 890" } };
+    document.querySelectorAll(".size-opt").forEach(function(o){
+      o.addEventListener("click", function(){
+        document.querySelectorAll(".size-opt").forEach(function(x){ x.classList.remove("on"); });
+        o.classList.add("on");
+        var p = PRICES[o.getAttribute("data-size")];
+        var el = document.getElementById("pdp-price");
+        if (el && p) el.innerHTML = '<span data-ar>' + p.ar + '</span><span data-en>' + p.en + '</span>';
+      });
+    });
+  })();
+
+  /* accordion — one panel open at a time */
+  (function(){
+    var acc = document.querySelector("[data-accordion]");
+    if (!acc) return;
+    var items = [].slice.call(acc.querySelectorAll(".acc-item"));
+    items.forEach(function(item){
+      item.querySelector(".acc-head").addEventListener("click", function(){
+        var isOpen = item.classList.contains("open");
+        items.forEach(function(o){ o.classList.remove("open"); });
+        if (!isOpen) item.classList.add("open");
+      });
+    });
+  })();
+</script>
+</body>
+</html>
