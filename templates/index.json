@@ -8,6 +8,10 @@
       "type": "collections-strip",
       "settings": {}
     },
+    "category-ocean": {
+      "type": "category-ocean",
+      "settings": {}
+    },
     "new-arrivals": {
       "type": "new-arrivals",
       "settings": {}
@@ -36,6 +40,7 @@
   "order": [
     "hero",
     "collections-strip",
+    "category-ocean",
     "new-arrivals",
     "maison-story",
     "scent-families",

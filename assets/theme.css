@@ -320,6 +320,104 @@ html[lang="en"] [data-ar]{ display:none; }
 [dir="rtl"] .col-card:hover .cap .ar-icn{ transform:translateX(-5px) scaleX(-1); }
 [dir="rtl"] .col-card .cap .ar-icn{ transform:scaleX(-1); }
 
+/* ---------- Category ocean ---------- */
+.category-ocean{ padding-block-start:0; }
+.ocean-feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--s2);
+  margin-bottom:var(--s3);
+}
+.ocean-feature{
+  min-height:220px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:10px;
+  padding:var(--s3);
+  background:var(--white);
+  border:1px solid var(--grey);
+  transition:border-color var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+.ocean-feature:hover{
+  border-color:var(--gold);
+  transform:translateY(-3px);
+}
+.ocean-feature--gold{
+  background:linear-gradient(135deg, rgba(184,149,106,.18), var(--white));
+  border-color:rgba(184,149,106,.55);
+}
+.ocean-kicker{
+  color:var(--gold);
+  font-family:var(--arabic);
+  font-size:13px;
+}
+html[lang="en"] .ocean-kicker{
+  font-family:var(--sans);
+  font-size:10px;
+  text-transform:uppercase;
+}
+.ocean-feature strong{
+  font-family:var(--arabic);
+  font-size:clamp(22px,2vw,30px);
+  line-height:1.2;
+}
+html[lang="en"] .ocean-feature strong{
+  font-family:var(--serif);
+  font-weight:500;
+}
+.ocean-feature > span:last-child{
+  color:var(--ink-70);
+  font-size:14px;
+  line-height:1.7;
+}
+.ocean-panels{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--s2);
+}
+.ocean-panel{
+  background:rgba(255,255,255,.56);
+  border:1px solid var(--grey);
+  padding:var(--s3);
+}
+.ocean-panel h3{
+  font-family:var(--arabic);
+  font-weight:600;
+  font-size:20px;
+  margin-bottom:var(--s2);
+}
+html[lang="en"] .ocean-panel h3{
+  font-family:var(--serif);
+  font-weight:500;
+}
+.ocean-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+.ocean-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:8px 12px;
+  border:1px solid var(--grey);
+  background:var(--ivory);
+  color:var(--ink);
+  font-family:var(--arabic);
+  font-size:14px;
+  line-height:1.25;
+  transition:border-color var(--slow) var(--ease), background var(--slow) var(--ease);
+}
+html[lang="en"] .ocean-links a{
+  font-family:var(--sans);
+  font-size:12px;
+}
+.ocean-links a:hover{
+  border-color:var(--gold);
+  background:var(--white);
+}
+
 /* ---------- New arrivals — horizontal scroll ---------- */
 .rail-wrap{ position:relative; }
 .rail{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(210px,22vw); gap:var(--s2);
@@ -657,6 +755,9 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .filters{ position:static; }
   .prod-grid,
   .product-grid{ grid-template-columns:repeat(3,1fr); }
+  .ocean-feature-grid{ grid-template-columns:1fr; }
+  .ocean-feature{ min-height:150px; }
+  .ocean-panels{ grid-template-columns:1fr; }
   .filter-toggle{ display:inline-flex; align-items:center; gap:10px; font-family:var(--arabic); font-size:15px;
     background:var(--white); border:1px solid var(--grey); border-radius:1px; padding:11px 18px; }
   html[lang="en"] .filter-toggle{ font-family:var(--sans); font-size:12px; letter-spacing:.1em; text-transform:uppercase; }
@@ -673,6 +774,15 @@ html[lang="en"] .empty-results p{ font-family:var(--serif); font-style:italic; f
   .col-card{ aspect-ratio:1/1.08; }
   .col-card .cap{ inset-block-end:12px; inset-inline:12px; }
   .col-card .cap .nm{ font-size:16px; line-height:1.2; }
+  .category-ocean .sec-head{ margin-bottom:var(--s3); }
+  .ocean-feature-grid{ gap:12px; margin-bottom:12px; }
+  .ocean-feature{ min-height:132px; padding:18px; }
+  .ocean-feature strong{ font-size:20px; }
+  .ocean-feature > span:last-child{ font-size:13px; line-height:1.55; }
+  .ocean-panel{ padding:16px; }
+  .ocean-panel h3{ font-size:18px; margin-bottom:12px; }
+  .ocean-links{ gap:8px; }
+  .ocean-links a{ min-height:34px; padding:7px 10px; font-size:13px; }
   .services .grid{ grid-template-columns:1fr; }
   .occasions-grid{ grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,minmax(150px,22vh)); gap:12px; }
   .occ.feature{ grid-column:auto; grid-row:auto; }
