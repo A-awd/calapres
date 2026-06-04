@@ -360,7 +360,7 @@
       if (countEl) {
         var isAr = root.lang === "ar";
         countEl.textContent = isAr
-          ? toArabicDigits(matches.length) + " عطر"
+          ? toArabicDigits(matches.length) + " منتج"
           : matches.length + (matches.length === 1 ? " perfume" : " perfumes");
       }
       if (emptyEl) emptyEl.classList.toggle("show", matches.length === 0);

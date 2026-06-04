@@ -54,7 +54,7 @@
         </div>
         <div class="collection-index-copy">
           <span class="eyebrow">
-            <span data-ar>{% if card_count > 0 %}{{ card_count }} منتج{% else %}مجموعة{% endif %}</span>
+            <span data-ar>{% if card_count > 0 %}<span data-local-number="{{ card_count }}">{{ card_count }}</span> منتج{% else %}مجموعة{% endif %}</span>
             <span data-en>{% if card_count > 0 %}{{ card_count }} products{% else %}Collection{% endif %}</span>
           </span>
           <h2><span data-ar>{{ card_title }}</span><span data-en>{{ fallback_title_en }}</span></h2>

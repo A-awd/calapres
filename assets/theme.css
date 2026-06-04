@@ -497,6 +497,35 @@ html[lang="en"] .commerce-head a{
 .drawer-nav{ display:flex; flex-direction:column; gap:var(--s3); }
 .drawer-nav a{ font-family:var(--serif); font-size:34px; color:var(--ink); }
 [dir="rtl"] .drawer-nav a{ font-family:var(--arabic); }
+.drawer-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:var(--s5);
+}
+.drawer-action{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:46px;
+  padding:10px 12px;
+  border:1px solid var(--grey);
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--arabic);
+  font-size:15px;
+  line-height:1;
+}
+html[lang="en"] .drawer-action{ font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+.drawer-action svg{
+  width:17px;
+  height:17px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.35;
+}
+.drawer-action:hover{ border-color:var(--gold); color:var(--gold); }
 .drawer-foot{ margin-top:var(--s5); padding-top:var(--s4); border-top:1px solid var(--grey); display:flex; gap:var(--s3); }
 
 /* ---------- Cart slide-over ---------- */
