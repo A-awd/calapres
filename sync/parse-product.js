@@ -1,5 +1,5 @@
 /**
- * parseProduct(html) extracts a Salla product page without running JavaScript.
+ * parseProduct(html, context) extracts a Salla product page without running JavaScript.
  *
  * Example:
  * parseProduct('<meta property="og:title" content="Amber"><meta property="product:price:amount" content="250">')
@@ -9,8 +9,11 @@
  * parseProduct('<script type="application/ld+json">{"@type":"Product","brand":{"name":"NISHANE"},"offers":{"price":805,"availability":"https://schema.org/InStock"}}</script>')
  * // -> { brand: 'NISHANE', supplierPrice: 805, availability: 'in_stock', ... }
  */
-function parseProduct(html) {
+const config = require('./config.js');
+
+function parseProduct(html, context) {
   try {
+    const carry = normalizeContext(context);
     const source = typeof html === 'string' ? html : '';
     const meta = collectMeta(source);
     const sources = [
@@ -36,12 +39,14 @@ function parseProduct(html) {
         ? compareCandidate
         : null;
 
+    const carriedSourceUrl = cleanUrl(carry.sourceUrl);
+    const sourceUrl = carriedSourceUrl || cleanUrl(merged.sourceUrl);
+    const supplierProductId = normalizeSupplierProductId(carry.supplierProductId || productIdFromUrl(sourceUrl));
     const name = cleanText(merged.name);
     const brand = cleanText(merged.brand);
     const category = cleanText(merged.category);
-    const sourceUrl = cleanUrl(merged.sourceUrl);
     if (supplierPrice === null && !brand && !category && !isProductUrl(sourceUrl)) {
-      return emptyProduct();
+      return emptyProduct(carry);
     }
 
     return {
@@ -53,14 +58,20 @@ function parseProduct(html) {
       imageUrl: pickBestImage(merged.images || [merged.imageUrl]),
       description: cleanText(merged.description),
       category,
-      sourceUrl
+      sourceUrl,
+      supplierProductId,
+      canCreate: canCreateSupplierProduct({ supplierPrice, supplierProductId }),
+      invalidReason: canCreateSupplierProduct({ supplierPrice, supplierProductId }) ? null : invalidCreateReason(supplierPrice, supplierProductId)
     };
   } catch (error) {
-    return emptyProduct();
+    return emptyProduct(context);
   }
 }
 
-function emptyProduct() {
+function emptyProduct(context) {
+  const carry = normalizeContext(context);
+  const sourceUrl = cleanUrl(carry.sourceUrl);
+  const supplierProductId = normalizeSupplierProductId(carry.supplierProductId || productIdFromUrl(sourceUrl));
   return {
     name: '',
     brand: '',
@@ -70,7 +81,10 @@ function emptyProduct() {
     imageUrl: null,
     description: '',
     category: '',
-    sourceUrl: null
+    sourceUrl,
+    supplierProductId,
+    canCreate: false,
+    invalidReason: invalidCreateReason(null, supplierProductId)
   };
 }
 
@@ -91,8 +105,17 @@ function sourceFromJsonLd(html) {
 }
 
 function sourceFromMeta(html, meta) {
-  const price = parseMoney(getMeta(meta, 'product:price:amount'));
-  const salePrice = parseMoney(getMeta(meta, 'product:sale_price:amount'));
+  const price = firstNumber(
+    parseMoney(getMeta(meta, 'product:price:amount')),
+    parseMoney(getMeta(meta, 'product:price:amount:after_tax')),
+    parseMoney(getMeta(meta, 'price')),
+    parseMoney(getMeta(meta, 'twitter:price'))
+  );
+  const salePrice = firstNumber(
+    parseMoney(getMeta(meta, 'product:sale_price:amount')),
+    parseMoney(getMeta(meta, 'product:sale_price:amount:after_tax')),
+    parseMoney(getMeta(meta, 'sale_price'))
+  );
   const compareAt = firstNumber(
     parseMoney(getMeta(meta, 'product:compare_at_price:amount')),
     parseMoney(getMeta(meta, 'product:original_price:amount')),
@@ -127,6 +150,7 @@ function sourceFromSallaInline(html) {
     name: product.name,
     brand: product.brand || extractVisibleBrand(html),
     supplierPrice: parseMoney(firstValue(product.price, button.amount)),
+    supplierCompareAtPrice: parseMoney(firstValue(product.regular_price, product.regularPrice, product.original_price, product.originalPrice)),
     availability: firstValue(product.availability, product.quantity, button.status),
     imageUrl: product.image_url || product.image,
     images: [product.image_url, product.image],
@@ -364,12 +388,16 @@ function normalizeAvailability(value) {
     raw === 'available' ||
     raw === 'sale' ||
     raw === 'true' ||
+    raw.includes('متوفر') ||
     raw.includes('instock') ||
     raw.includes('in stock') ||
     raw.includes('/instock') ||
     raw.includes('product-status="sale"')
   ) {
     return 'in_stock';
+  }
+  if (raw.includes('نفد') || raw.includes('غير متوفر') || raw.includes('out of stock') || raw.includes('sold out')) {
+    return 'out_of_stock';
   }
   if (Number(raw) > 0) return 'in_stock';
   return 'out_of_stock';
@@ -391,6 +419,33 @@ function firstValue() {
 
 function isProductUrl(value) {
   return /\/[^/?#\s<>]+\/p\d+(?=$|[/?#])/i.test(String(value || ''));
+}
+
+function productIdFromUrl(value) {
+  const match = String(value || '').match(/\/p(\d+)(?=$|[/?#])/i);
+  return match ? match[1] : '';
+}
+
+function normalizeSupplierProductId(value) {
+  return String(value || '').replace(/^p/i, '').replace(/\D/g, '');
+}
+
+function normalizeContext(context) {
+  const input = context && typeof context === 'object' ? context : {};
+  return {
+    sourceUrl: cleanUrl(input.sourceUrl),
+    supplierProductId: normalizeSupplierProductId(input.supplierProductId || input.supplierId || productIdFromUrl(input.sourceUrl))
+  };
+}
+
+function canCreateSupplierProduct(product) {
+  return Boolean(product && product.supplierPrice !== null && normalizeSupplierProductId(product.supplierProductId));
+}
+
+function invalidCreateReason(supplierPrice, supplierProductId) {
+  if (supplierPrice === null || supplierPrice === undefined) return 'missing_supplier_price';
+  if (!normalizeSupplierProductId(supplierProductId)) return 'missing_numeric_supplier_id';
+  return null;
 }
 
 function parseMoney(value) {
@@ -435,5 +490,13 @@ function decodeEntities(value) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { parseProduct };
+  module.exports = {
+    parseProduct,
+    emptyProduct,
+    normalizeAvailability,
+    parseMoney,
+    productIdFromUrl,
+    normalizeSupplierProductId,
+    canCreateSupplierProduct
+  };
 }

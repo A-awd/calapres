@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';
+import nodeAssert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
@@ -10,17 +10,50 @@ const syncDir = path.resolve(__dirname, '..');
 const fixturesDir = path.join(syncDir, 'fixtures');
 
 const tests = [];
+let assertionCount = 0;
+
+const assert = new Proxy(nodeAssert, {
+  apply(target, thisArg, args) {
+    assertionCount += 1;
+    return Reflect.apply(target, thisArg, args);
+  },
+  get(target, prop) {
+    const value = target[prop];
+    if (typeof value !== 'function') return value;
+    return (...args) => {
+      assertionCount += 1;
+      return value.apply(target, args);
+    };
+  }
+});
 
 function test(name, fn) {
   tests.push({ name, fn });
 }
 
 function loadSyncModule(fileName) {
+  const cache = {};
+  return loadModule(fileName, cache);
+}
+
+function loadModule(fileName, cache) {
   const filePath = path.join(syncDir, fileName);
+  const resolved = path.normalize(filePath);
+  if (cache[resolved]) return cache[resolved].exports;
   const code = fs.readFileSync(filePath, 'utf8');
+  const module = { exports: {} };
+  cache[resolved] = module;
+  const localRequire = (request) => {
+    if (request.startsWith('.')) {
+      const target = path.normalize(path.join(path.dirname(resolved), request));
+      return loadModule(path.relative(syncDir, target), cache);
+    }
+    throw new Error('External require is disabled in sync tests: ' + request);
+  };
   const sandbox = {
-    module: { exports: {} },
-    exports: {},
+    module,
+    exports: module.exports,
+    require: localRequire,
     URL,
     console,
     fetch: async () => {
@@ -28,7 +61,7 @@ function loadSyncModule(fileName) {
     }
   };
   vm.runInNewContext(code, sandbox, { filename: filePath, timeout: 1000 });
-  return sandbox.module.exports;
+  return module.exports;
 }
 
 function readFixture(fileName) {
@@ -49,6 +82,14 @@ const reconcileModule = loadSyncModule('reconcile.js');
 const shapeValidator = loadSyncModule('validate-shopify-shape.js');
 const setupDefinitions = loadSyncModule('setup-metafield-definitions.js');
 const backfillModule = loadSyncModule('backfill-existing-products.js');
+const configModule = loadSyncModule('config.js');
+const stateModule = loadSyncModule('sync-state.js');
+const normalizeModule = loadSyncModule('normalize.js');
+const categorizeModule = loadSyncModule('categorize.js');
+const enrichPrompt = loadSyncModule('enrich/prompt.js');
+const enrichSeo = loadSyncModule('enrich/seo.js');
+const enrichPayload = loadSyncModule('enrich/build-enrich-payload.js');
+const reportModule = loadSyncModule('report.js');
 
 function productId(url) {
   return crawl.productIdFromUrl(url);
@@ -251,7 +292,10 @@ test('parse-product never throws on missing, malformed, or homepage-like fields'
     imageUrl: null,
     description: '',
     category: '',
-    sourceUrl: null
+    sourceUrl: null,
+    supplierProductId: '',
+    canCreate: false,
+    invalidReason: 'missing_supplier_price'
   });
   assert.equal(parser.parseProduct('<script type="application/ld+json">{bad json}</script>').name, '');
   const homepageLike = '<meta property="og:title" content="Supplier Home"><link rel="canonical" href="https://nawadirdior.sa/">';
@@ -320,7 +364,7 @@ test('build-shopify-payload creates a new product payload', () => {
   }).product;
   assert.equal(payload.title, 'Amber <Rose>');
   assert.equal(payload.vendor, 'Maison Test');
-  assert.equal(payload.status, 'active');
+  assert.equal(payload.status, 'draft');
   assert.equal(payload.variants[0].price, '200');
   assert.equal(payload.variants[0].compare_at_price, '250');
   assert.ok(payload.body_html.includes('&lt;one&gt;'));
@@ -375,12 +419,12 @@ test('build-shopify-payload marks missing supplier products draft and never emit
 test('shopify-client builds lookup GraphQL request by source_url metafield or supplier-id tag', () => {
   const sourceUrl = 'https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1-test/p1625888751';
   const request = shopifyClient.buildLookupProductRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     sourceUrl,
     first: 5
   });
   assert.equal(request.method, 'POST');
-  assert.equal(request.url, 'https://calapres.myshopify.com/admin/api/2026-04/graphql.json');
+  assert.equal(request.url, 'https://unywbe-ub.myshopify.com/admin/api/2026-04/graphql.json');
   assert.ok(request.body.query.includes('CalapresLookupProduct'));
   assert.equal(request.body.variables.first, 5);
   assert.ok(request.body.variables.query.includes('metafields.supplier.source_url'));
@@ -392,11 +436,11 @@ test('shopify-client builds lookup GraphQL request by source_url metafield or su
 test('shopify-client builds exact REST create product request shape', () => {
   const productPayload = payloads.buildPayload(supplier({ sourceUrl: 'https://nawadirdior.sa/new/p777' }));
   const request = shopifyClient.buildCreateProductRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     payload: productPayload
   });
   assert.equal(request.method, 'POST');
-  assert.equal(request.url, 'https://calapres.myshopify.com/admin/api/2026-04/products.json');
+  assert.equal(request.url, 'https://unywbe-ub.myshopify.com/admin/api/2026-04/products.json');
   assert.equal(request.body.product.title, 'Test Perfume');
   assert.equal(request.body.product.variants[0].price, '200');
   assert.equal(request.body.product.metafields.find((field) => field.key === 'product_id').value, '777');
@@ -404,7 +448,7 @@ test('shopify-client builds exact REST create product request shape', () => {
 
 test('shopify-client builds price and availability only update request shape', () => {
   const request = shopifyClient.buildUpdatePriceAvailabilityRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     productId: 'gid://shopify/Product/123',
     status: 'draft',
     variant: {
@@ -415,7 +459,7 @@ test('shopify-client builds price and availability only update request shape', (
     }
   });
   assert.equal(request.method, 'PUT');
-  assert.equal(request.url, 'https://calapres.myshopify.com/admin/api/2026-04/products/123.json');
+  assert.equal(request.url, 'https://unywbe-ub.myshopify.com/admin/api/2026-04/products/123.json');
   assert.deepEqual(plain(request.body), {
     product: {
       id: '123',
@@ -427,7 +471,7 @@ test('shopify-client builds price and availability only update request shape', (
 
 test('shopify-client builds imported-products pagination requests past 250 safely', () => {
   const request = shopifyClient.buildListImportedProductsRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     first: 999,
     after: 'cursor-250'
   });
@@ -439,7 +483,7 @@ test('shopify-client builds imported-products pagination requests past 250 safel
 
 test('shopify-client builds product tags read request for enriched guard', () => {
   const request = shopifyClient.buildReadProductTagsRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     productId: '123'
   });
   assert.equal(request.body.variables.id, 'gid://shopify/Product/123');
@@ -491,7 +535,7 @@ test('shopify-client normalizes GraphQL product nodes and lookup selection', () 
 
 test('shopify-client executeShopifyRequest serializes body and parses JSON offline', async () => {
   const request = shopifyClient.buildCreateProductRequest({
-    shopDomain: 'calapres.myshopify.com',
+    shopDomain: 'unywbe-ub.myshopify.com',
     product: { title: 'Offline Test', variants: [{ price: '200', inventory_policy: 'continue' }] }
   });
   const calls = [];
@@ -537,7 +581,7 @@ test('reconcile plans create, update, enriched skip/update, missing, duplicates,
   assert.equal(plan.toMarkOutOfStock.length, 1);
   assert.equal(plan.toSkipEnriched.length, 1);
   assert.ok(plan.unchanged.some((entry) => entry.reason === 'duplicate_supplier_id'));
-  assert.ok(plan.unchanged.some((entry) => entry.reason === 'invalid_supplier_product'));
+  assert.ok(plan.unchanged.some((entry) => entry.reason === 'cannot_create_missing_supplier_price'));
   assert.ok(plan.unchanged.some((entry) => entry.reason === 'already_out_of_stock_missing_supplier'));
   assert.equal(plan.toUpdate.find((entry) => entry.supplierProduct.supplierId === '1004').updateMode, 'price_availability_only');
   assert.ok(plan.toUpdate.find((entry) => entry.supplierProduct.supplierId === '1006').changes.some((change) => change.field === 'compareAtPrice' && change.desired === 445));
@@ -629,7 +673,7 @@ test('validate-shopify-shape flags invalid status, inventory policy, and malform
 
 test('setup-metafield-definitions builds two admin-filterable pinned PRODUCT definitions', () => {
   const requests = setupDefinitions.buildSupplierMetafieldDefinitionRequests({
-    shopDomain: 'calapres.myshopify.com'
+    shopDomain: 'unywbe-ub.myshopify.com'
   });
   assert.equal(requests.length, 2);
   const keys = requests.map((request) => request.body.variables.definition.key).sort();
@@ -637,7 +681,7 @@ test('setup-metafield-definitions builds two admin-filterable pinned PRODUCT def
   for (const request of requests) {
     const definition = request.body.variables.definition;
     assert.equal(request.method, 'POST');
-    assert.equal(request.url, 'https://calapres.myshopify.com/admin/api/2026-04/graphql.json');
+    assert.equal(request.url, 'https://unywbe-ub.myshopify.com/admin/api/2026-04/graphql.json');
     assert.ok(request.body.query.includes('metafieldDefinitionCreate'));
     assert.equal(definition.namespace, 'supplier');
     assert.equal(definition.ownerType, 'PRODUCT');
@@ -735,7 +779,7 @@ test('backfill-existing-products uses high and medium entries, separates low man
     { id: '1004', title: 'Not Found Product', tags: ['imported-nader-dior'], metafields: [] }
   ];
   const plan = backfillModule.planBackfillExistingProducts(existing, testMap, {
-    shopDomain: 'calapres.myshopify.com'
+    shopDomain: 'unywbe-ub.myshopify.com'
   });
   assert.equal(plan.summary.highConfidence, 1);
   assert.equal(plan.summary.mediumConfidence, 1);
@@ -848,6 +892,215 @@ test('backfill-existing-products plans the real 18-product map and preserves dua
   assert.equal(after.toCreate.length, 0);
 });
 
+test('config exposes the live source-of-truth constants', () => {
+  assert.equal(configModule.SHOP_DOMAIN, 'unywbe-ub.myshopify.com');
+  assert.equal(configModule.API_VERSION_STANDARD, '2026-04');
+  assert.equal(configModule.API_VERSION_DEPLOYED, '2025-01');
+  assert.equal(configModule.MARKUP_SAR, 100);
+  assert.equal(configModule.CHUNK_SIZE, 300);
+  assert.equal(configModule.TAGS.imported, 'imported-nader-dior');
+  assert.equal(configModule.TAGS.supplier, 'supplier:nawadirdior');
+  assert.equal(configModule.NAMESPACES.supplier, 'supplier');
+  assert.equal(configModule.CREDENTIALS.shopifyOAuth2.id, 'QLsvwO73GFsQfy0w');
+});
+
+test('sync-state computes chunks, offsets, wrap-around, and empty lists', () => {
+  assert.deepEqual(plain(stateModule.computeChunk([1, 2, 3, 4, 5], 0, 2)), {
+    chunk: [1, 2],
+    nextOffset: 2,
+    wrapped: false,
+    offset: 0,
+    chunkSize: 2,
+    total: 5
+  });
+  assert.deepEqual(plain(stateModule.computeChunk([1, 2, 3, 4, 5], 4, 3)), {
+    chunk: [5],
+    nextOffset: 0,
+    wrapped: true,
+    offset: 4,
+    chunkSize: 3,
+    total: 5
+  });
+  assert.deepEqual(plain(stateModule.computeChunk([], 99, 300)), {
+    chunk: [],
+    nextOffset: 0,
+    wrapped: true,
+    offset: 0,
+    chunkSize: 300,
+    total: 0
+  });
+});
+
+test('sync-state selects new vs existing by source URL and supplier id', () => {
+  const selected = stateModule.selectNewVsExisting(
+    [
+      { sourceUrl: 'https://nawadirdior.sa/a/p111' },
+      { sourceUrl: 'https://nawadirdior.sa/b/p222' },
+      { sourceUrl: 'https://nawadirdior.sa/c/p333' }
+    ],
+    [
+      { sourceUrl: 'https://nawadirdior.sa/a/p111' },
+      { tags: ['supplier-id-p222'] }
+    ]
+  );
+  assert.equal(selected.existingProducts.length, 2);
+  assert.equal(selected.newProducts.length, 1);
+  assert.equal(selected.newProducts[0].sourceUrl, 'https://nawadirdior.sa/c/p333');
+});
+
+test('parse-product carries crawl source/id through redirected homepage HTML and blocks create', () => {
+  const parsed = parser.parseProduct(readFixture('homepage-redirect.html'), {
+    sourceUrl: 'https://nawadirdior.sa/stale-page/p123456',
+    supplierProductId: '123456'
+  });
+  assert.equal(parsed.sourceUrl, 'https://nawadirdior.sa/stale-page/p123456');
+  assert.equal(parsed.supplierProductId, '123456');
+  assert.equal(parsed.supplierPrice, null);
+  assert.equal(parsed.canCreate, false);
+  assert.equal(parsed.invalidReason, 'missing_supplier_price');
+  const payload = payloads.buildPayload(parsed);
+  assert.equal(payload.skipped, true);
+  assert.equal(payload.reason, 'missing_supplier_price');
+});
+
+test('parse-product recognizes Arabic availability and Arabic-Indic prices', () => {
+  const html = `
+    <meta property="og:title" content="عطر اختبار">
+    <meta property="product:price:amount" content="٣٤٥ ر.س">
+    <meta property="product:availability" content="متوفر">
+    <link rel="canonical" href="https://nawadirdior.sa/arabic-test/p765">
+  `;
+  const parsed = parser.parseProduct(html);
+  assert.equal(parsed.supplierPrice, 345);
+  assert.equal(parsed.availability, 'in_stock');
+  assert.equal(parsed.canCreate, true);
+});
+
+test('pricing custom strategy stub reads brand and range tables while preserving compare guard', () => {
+  const brand = pricing.applyPricing(
+    { brand: 'Dior', supplierPrice: 100, supplierCompareAtPrice: 100 },
+    { strategy: 'custom', customTable: { brands: { Dior: { markupSar: 150 } } } }
+  );
+  assert.equal(brand.price, 250);
+  assert.equal(brand.compareAtPrice, null);
+  assert.equal(brand.strategy, 'custom');
+  assert.equal(brand.rule, 'brand:Dior');
+  const range = pricing.applyPricing(
+    { supplierPrice: 900, supplierCompareAtPrice: 1000 },
+    { strategy: 'custom', customTable: { ranges: [{ min: 800, markupSar: 200 }] } }
+  );
+  assert.equal(range.price, 1100);
+  assert.equal(range.compareAtPrice, 1200);
+  assert.equal(range.rule, 'range');
+});
+
+test('normalize extracts canonical brand, concentration, size, gender, and cleaned title', () => {
+  const normalized = normalizeModule.normalizeProduct({
+    name: ' توم فورد Black Orchid Eau de Parfum ١٠٠ml للنساء '
+  });
+  assert.equal(normalized.brand, 'Tom Ford');
+  assert.equal(normalized.concentration, 'EDP');
+  assert.equal(normalized.sizeMl, 100);
+  assert.equal(normalized.gender, 'women');
+  assert.equal(normalized.title, 'توم فورد Black Orchid Eau de Parfum ١٠٠ml للنساء');
+});
+
+test('categorize maps products to Calapres collection handles', () => {
+  const niche = categorizeModule.collectionHandles({ name: 'Nishane Hacivat Extrait 100ml', brand: 'Nishane' });
+  assert.ok(niche.includes('niche-international'));
+  const oud = categorizeModule.collectionHandles({ name: 'Luxury Oud Burner مبخرة عود', brand: 'Arabian Oud' });
+  assert.ok(oud.includes('eastern-oud-incense'));
+  const luxury = categorizeModule.collectionHandles({ name: 'Dior Sauvage Elixir', brand: 'Dior' });
+  assert.ok(luxury.includes('luxury-brands'));
+});
+
+test('shopify-client builds metafieldsSet, collection add, smart collection, and backoff metadata', () => {
+  const meta = shopifyClient.buildMetafieldsSetRequest({
+    productId: '123',
+    metafields: [{ key: 'source_url', value: 'https://nawadirdior.sa/a/p1' }]
+  });
+  assert.equal(meta.url, 'https://unywbe-ub.myshopify.com/admin/api/2026-04/graphql.json');
+  assert.equal(meta.body.variables.metafields[0].ownerId, 'gid://shopify/Product/123');
+  const collection = shopifyClient.buildCollectionAddProductsRequest({
+    collectionId: '999',
+    productIds: ['123', 'gid://shopify/Product/456']
+  });
+  assert.equal(collection.body.variables.id, 'gid://shopify/Collection/999');
+  assert.equal(collection.body.variables.productIds.length, 2);
+  const rule = shopifyClient.buildSmartCollectionRuleShape({
+    handle: 'tom-ford',
+    rules: [{ condition: 'brand:Tom Ford' }]
+  });
+  assert.equal(rule.rules[0].column, 'tag');
+  const backoff = shopifyClient.backoffMetadata({ status: 429, headers: { 'Retry-After': '7' } });
+  assert.equal(backoff.shouldRetry, true);
+  assert.equal(backoff.waitSeconds, 7);
+  assert.equal(shopifyClient.pacingMetadata().waitSeconds, 1);
+});
+
+test('validate-shopify-shape rejects customer fields, secrets, and exact enriched guard violations', () => {
+  const bad = shapeValidator.validateShopifyProductShape({
+    product: {
+      id: 1,
+      status: 'draft',
+      customerEmail: 'blocked-contact',
+      metafields: [{ namespace: 'presentation', key: 'note', value: 'bear' + 'er abcdefghijklmnopqrstuvwxyz', type: 'single_line_text_field' }],
+      variants: [{ id: 2, price: '100', inventory_policy: 'deny', sku: 'NOPE' }]
+    }
+  }, { mode: 'price_availability_only' });
+  assert.equal(bad.valid, false);
+  assert.ok(bad.errors.some((error) => error.includes('customer')));
+  assert.ok(bad.errors.some((error) => error.includes('secret')));
+  assert.ok(bad.errors.some((error) => error.includes('variant.sku') || error.includes('sku')));
+});
+
+test('enrichment prompt, SEO, and payload protect luxury presentation and add enriched tag', () => {
+  const product = {
+    id: '123',
+    title: 'Tom Ford Oud Wood EDP 100ml',
+    vendor: 'Tom Ford',
+    tags: ['imported-nader-dior'],
+    images: [{ url: 'https://cdn.test/original.jpg' }]
+  };
+  const prompts = enrichPrompt.buildHiggsfieldPrompts(product);
+  assert.equal(prompts.model, 'higgsfield-soul');
+  assert.ok(prompts.heroPrompt.includes('Tom Ford'));
+  assert.equal(prompts.anglePrompts.length, 3);
+  const seo = enrichSeo.buildArabicSeo(product);
+  assert.ok(seo.titleTag.includes('كالابريز'));
+  assert.ok(seo.bodyHtml.includes('dir="rtl"'));
+  assert.ok(seo.descriptionTag.length <= 155);
+  const payload = enrichPayload.buildEnrichPayload({
+    product,
+    generatedImages: ['https://cdn.test/generated-1.jpg', 'https://cdn.test/generated-2.jpg']
+  });
+  assert.equal(payload.product.id, '123');
+  assert.ok(payload.product.tags.includes('enriched'));
+  assert.equal(payload.product.images.length, 3);
+  const guarded = payloads.buildPayload({
+    supplierPrice: 500,
+    availability: 'in_stock',
+    existingProduct: { id: '123', tags: payload.product.tags, variants: [{ id: '456' }] }
+  }).product;
+  assert.deepEqual(Object.keys(guarded).sort(), ['id', 'status', 'variants']);
+});
+
+test('report builds stable JSON and Markdown run summaries', () => {
+  const summary = reportModule.buildRunSummary({
+    runId: 'test-run',
+    mode: 'offline',
+    offset: { start: 300, next: 600, chunkSize: 300, total: 3155 },
+    reconcilePlan: { toCreate: [1, 2], toUpdate: [3], toMarkOutOfStock: [], toSkipEnriched: [4], unchanged: [5, 6] }
+  });
+  assert.equal(summary.counts.created, 2);
+  assert.equal(summary.counts.updated, 1);
+  assert.equal(summary.offset.next, 600);
+  const markdown = reportModule.toMarkdown(summary);
+  assert.ok(markdown.includes('Calapres Sync Run Summary'));
+  assert.ok(markdown.includes('| Created | 2 |'));
+  assert.equal(JSON.parse(reportModule.toJson(summary)).runId, 'test-run');
+});
+
 async function main() {
   let passed = 0;
   const failures = [];
@@ -871,7 +1124,7 @@ async function main() {
     if (row.error) console.error(row.error && row.error.stack ? row.error.stack : String(row.error));
   }
   console.log('');
-  console.log('Summary: ' + passed + '/' + tests.length + ' tests passed');
+  console.log('Summary: ' + passed + '/' + tests.length + ' tests passed; ' + assertionCount + ' assertions');
   if (failures.length) {
     process.exitCode = 1;
   }

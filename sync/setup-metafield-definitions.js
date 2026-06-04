@@ -3,12 +3,14 @@
  *
  * No request is executed unless executeSetupRequest() receives a fetch-like function.
  */
-const DEFAULT_API_VERSION = '2026-04';
+const config = require('./config.js');
+
+const DEFAULT_API_VERSION = config.API_VERSION_STANDARD;
 const SUPPLIER_DEFINITIONS = [
   {
     name: 'Supplier Source URL',
-    namespace: 'supplier',
-    key: 'source_url',
+    namespace: config.NAMESPACES.supplier,
+    key: config.METAFIELDS.sourceUrl,
     description: 'Canonical Nawadirdior product URL used by the Calapres supplier sync.',
     type: 'single_line_text_field',
     ownerType: 'PRODUCT',
@@ -24,8 +26,8 @@ const SUPPLIER_DEFINITIONS = [
   },
   {
     name: 'Supplier Product ID',
-    namespace: 'supplier',
-    key: 'product_id',
+    namespace: config.NAMESPACES.supplier,
+    key: config.METAFIELDS.productId,
     description: 'Nawadirdior Salla product id parsed from the supplier product URL.',
     type: 'single_line_text_field',
     ownerType: 'PRODUCT',
@@ -118,9 +120,13 @@ function normalizeOptions(options) {
   const config = options && typeof options === 'object' ? options : {};
   return {
     ...config,
-    shopDomain: normalizeShopDomain(config.shopDomain || config.shop || config.domain || 'calapres.myshopify.com'),
+    shopDomain: normalizeShopDomain(config.shopDomain || config.shop || config.domain || configModuleShopDomain()),
     apiVersion: String(config.apiVersion || DEFAULT_API_VERSION).trim()
   };
+}
+
+function configModuleShopDomain() {
+  return config.SHOP_DOMAIN;
 }
 
 function adminGraphqlUrl(shopDomain, apiVersion) {

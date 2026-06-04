@@ -4,16 +4,18 @@
  * These helpers are dependency-free and do not make network calls unless a caller
  * explicitly passes a fetch-like function to executeShopifyRequest().
  */
-const DEFAULT_API_VERSION = '2026-04';
-const IMPORTED_TAG = 'imported-nader-dior';
-const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const config = require('./config.js');
+
+const DEFAULT_API_VERSION = config.API_VERSION_STANDARD;
+const IMPORTED_TAG = config.TAGS.imported;
+const ARABIC_IMPORTED_TAG = config.TAGS.importedArabic;
 const IMPORTED_TAGS = [IMPORTED_TAG, ARABIC_IMPORTED_TAG];
-const IMPORTED_PRODUCTS_SEARCH_QUERY = 'tag:imported-nader-dior OR tag:مستورد-نوادر-ديور';
-const SUPPLIER_TAG = 'supplier:nawadirdior';
-const SUPPLIER_ID_TAG_PREFIX = 'supplier-id-p';
-const SOURCE_NAMESPACE = 'supplier';
-const SOURCE_URL_KEY = 'source_url';
-const SOURCE_PRODUCT_ID_KEY = 'product_id';
+const IMPORTED_PRODUCTS_SEARCH_QUERY = config.IMPORTED_PRODUCTS_SEARCH_QUERY;
+const SUPPLIER_TAG = config.TAGS.supplier;
+const SUPPLIER_ID_TAG_PREFIX = config.TAGS.idPrefix;
+const SOURCE_NAMESPACE = config.NAMESPACES.supplier;
+const SOURCE_URL_KEY = config.METAFIELDS.sourceUrl;
+const SOURCE_PRODUCT_ID_KEY = config.METAFIELDS.productId;
 
 function buildLookupProductRequest(options) {
   const config = normalizeOptions(options);
@@ -108,6 +110,71 @@ function buildListImportedProductsRequest(options) {
   });
 }
 
+function buildListImportedProductsPageRequest(options) {
+  return buildListImportedProductsRequest(options);
+}
+
+function buildListAllImportedProductsRequests(options) {
+  const config = normalizeOptions(options);
+  const cursors = Array.isArray(config.cursors) && config.cursors.length ? config.cursors : [null];
+  return cursors.map((after) =>
+    buildListImportedProductsRequest({
+      ...config,
+      after,
+      first: config.first || 250
+    })
+  );
+}
+
+function buildMetafieldsSetRequest(options) {
+  const config = normalizeOptions(options);
+  const metafields = (config.metafields || []).map((field) => ({
+    ownerId: field.ownerId || toGraphqlProductId(field.productId || config.productId),
+    namespace: field.namespace || SOURCE_NAMESPACE,
+    key: field.key,
+    type: field.type || 'single_line_text_field',
+    value: String(field.value === undefined || field.value === null ? '' : field.value)
+  }));
+  if (!metafields.length) throw new Error('buildMetafieldsSetRequest requires metafields');
+  return buildGraphqlRequest({
+    shopDomain: config.shopDomain,
+    apiVersion: config.apiVersion,
+    body: {
+      query: METAFIELDS_SET_MUTATION,
+      variables: { metafields }
+    }
+  });
+}
+
+function buildCollectionAddProductsRequest(options) {
+  const config = normalizeOptions(options);
+  const collectionId = toGraphqlCollectionId(config.collectionId);
+  const productIds = (config.productIds || []).map(toGraphqlProductId).filter(Boolean);
+  if (!collectionId || !productIds.length) throw new Error('buildCollectionAddProductsRequest requires collectionId and productIds');
+  return buildGraphqlRequest({
+    shopDomain: config.shopDomain,
+    apiVersion: config.apiVersion,
+    body: {
+      query: COLLECTION_ADD_PRODUCTS_MUTATION,
+      variables: { id: collectionId, productIds }
+    }
+  });
+}
+
+function buildSmartCollectionRuleShape(options) {
+  const input = options && typeof options === 'object' ? options : {};
+  return {
+    title: cleanString(input.title || input.handle || 'Calapres Supplier Collection'),
+    handle: cleanString(input.handle),
+    rules: (input.rules || []).map((rule) => ({
+      column: cleanString(rule.column || 'tag'),
+      relation: cleanString(rule.relation || 'equals'),
+      condition: cleanString(rule.condition)
+    })),
+    disjunctive: Boolean(input.disjunctive)
+  };
+}
+
 function buildReadProductTagsRequest(options) {
   const config = normalizeOptions(options);
   const id = toGraphqlProductId(config.productId || config.id);
@@ -166,6 +233,34 @@ async function executeShopifyRequest(request, fetchLike) {
     headers: response.headers,
     text,
     json
+  };
+}
+
+function backoffMetadata(response, options) {
+  const status = Number(response && response.status);
+  const retryAfter = readHeader(response && response.headers, 'Retry-After');
+  const retryAfterSeconds = retryAfter ? Number(retryAfter) : null;
+  const baseDelay = Number((options && options.baseDelaySeconds) || config.REQUEST_DELAY_SECONDS);
+  const attempt = Math.max(1, Number((options && options.attempt) || 1));
+  const waitSeconds =
+    status === 429 && Number.isFinite(retryAfterSeconds)
+      ? retryAfterSeconds
+      : status === 429
+        ? Math.min(60, baseDelay * Math.pow(2, attempt - 1))
+        : baseDelay;
+  return {
+    shouldRetry: status === 429 || status >= 500,
+    status,
+    retryAfterSeconds: Number.isFinite(retryAfterSeconds) ? retryAfterSeconds : null,
+    waitSeconds
+  };
+}
+
+function pacingMetadata(options) {
+  const delay = Number((options && options.requestDelaySeconds) || config.REQUEST_DELAY_SECONDS);
+  return {
+    waitSeconds: Number.isFinite(delay) && delay > 0 ? delay : config.REQUEST_DELAY_SECONDS,
+    reason: 'shopify_admin_rate_pacing'
   };
 }
 
@@ -242,11 +337,11 @@ function normalizeProductBody(value) {
 }
 
 function normalizeOptions(options) {
-  const config = options && typeof options === 'object' ? options : {};
+  const input = options && typeof options === 'object' ? options : {};
   return {
-    ...config,
-    shopDomain: normalizeShopDomain(config.shopDomain || config.shop || config.domain || 'calapres.myshopify.com'),
-    apiVersion: cleanString(config.apiVersion || DEFAULT_API_VERSION)
+    ...input,
+    shopDomain: normalizeShopDomain(input.shopDomain || input.shop || input.domain || config.SHOP_DOMAIN),
+    apiVersion: cleanString(input.apiVersion || DEFAULT_API_VERSION)
   };
 }
 
@@ -318,6 +413,14 @@ function toGraphqlProductId(value) {
   return id ? 'gid://shopify/Product/' + id : '';
 }
 
+function toGraphqlCollectionId(value) {
+  const raw = cleanString(value);
+  if (!raw) return '';
+  if (raw.startsWith('gid://shopify/Collection/')) return raw;
+  const id = toRestId(raw);
+  return id ? 'gid://shopify/Collection/' + id : '';
+}
+
 function toRestId(value) {
   const raw = cleanString(value);
   if (!raw) return '';
@@ -355,6 +458,13 @@ function compactObject(object) {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function readHeader(headers, name) {
+  if (!headers || !name) return '';
+  if (typeof headers.get === 'function') return headers.get(name) || headers.get(String(name).toLowerCase()) || '';
+  const key = Object.keys(headers).find((header) => header.toLowerCase() === String(name).toLowerCase());
+  return key ? headers[key] : '';
 }
 
 const PRODUCT_FIELDS = `
@@ -421,6 +531,22 @@ query CalapresReadProductTags($id: ID!) {
   }
 }`;
 
+const METAFIELDS_SET_MUTATION = `
+mutation CalapresMetafieldsSet($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields { id namespace key value type }
+    userErrors { field message code }
+  }
+}`;
+
+const COLLECTION_ADD_PRODUCTS_MUTATION = `
+mutation CalapresCollectionAddProducts($id: ID!, $productIds: [ID!]!) {
+  collectionAddProducts(id: $id, productIds: $productIds) {
+    collection { id }
+    userErrors { field message }
+  }
+}`;
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     DEFAULT_API_VERSION,
@@ -437,10 +563,17 @@ if (typeof module !== 'undefined' && module.exports) {
     buildUpdateProductRequest,
     buildUpdatePriceAvailabilityRequest,
     buildListImportedProductsRequest,
+    buildListImportedProductsPageRequest,
+    buildListAllImportedProductsRequests,
     buildReadProductTagsRequest,
+    buildMetafieldsSetRequest,
+    buildCollectionAddProductsRequest,
+    buildSmartCollectionRuleShape,
     buildGraphqlRequest,
     buildRestRequest,
     executeShopifyRequest,
+    backoffMetadata,
+    pacingMetadata,
     normalizeGraphqlProducts,
     selectLookupProduct,
     normalizeGraphqlProduct,
@@ -452,6 +585,7 @@ if (typeof module !== 'undefined' && module.exports) {
     supplierIdFromTags,
     productIdFromUrl,
     toGraphqlProductId,
+    toGraphqlCollectionId,
     toRestId
   };
 }

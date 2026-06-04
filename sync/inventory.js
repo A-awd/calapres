@@ -10,6 +10,8 @@
  * mapAvailability('missing')
  * // -> { availability: 'out_of_stock', productStatus: 'draft', inventoryPolicy: 'deny', shouldDelete: false, restockWhenSeen: true }
  */
+const config = require('./config.js');
+
 function mapAvailability(availability) {
   const normalized = normalizeAvailability(availability);
   return {
@@ -28,6 +30,7 @@ function normalizeAvailability(value) {
     raw === 'available' ||
     raw === 'sale' ||
     raw === 'true' ||
+    raw.includes('متوفر') ||
     raw.includes('instock') ||
     raw.includes('in stock') ||
     raw.includes('/instock') ||
@@ -35,6 +38,7 @@ function normalizeAvailability(value) {
   ) {
     return 'in_stock';
   }
+  if (raw.includes('نفد') || raw.includes('غير متوفر') || raw.includes('out of stock') || raw.includes('sold out')) return 'out_of_stock';
   if (Number(raw) > 0) return 'in_stock';
   return 'out_of_stock';
 }

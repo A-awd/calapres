@@ -40,6 +40,14 @@ const FORBIDDEN_FIELDS = {
   shouldDelete: 'Supplier-missing products are drafted, never deleted.',
   delete: 'Supplier-missing products are drafted, never deleted.',
   destroy: 'Supplier-missing products are drafted, never deleted.',
+  deleted_at: 'Supplier-missing products are drafted, never deleted.',
+  customer: 'Product sync payloads must never contain customer data.',
+  customer_id: 'Product sync payloads must never contain customer data.',
+  customerEmail: 'Product sync payloads must never contain customer data.',
+  email: 'Product sync payloads must never contain email addresses.',
+  access_token: 'Secrets must never be present in Shopify payloads.',
+  api_key: 'Secrets must never be present in Shopify payloads.',
+  password: 'Secrets must never be present in Shopify payloads.',
   bodyHtml: 'REST Admin product payloads use body_html.',
   compareAtPrice: 'REST Admin variants use compare_at_price.',
   inventoryPolicy: 'REST Admin variants use inventory_policy.'
@@ -59,12 +67,14 @@ function validateShopifyProductShape(value, options) {
 
   validateKeys(product, PRODUCT_FIELDS, 'product', errors, fields);
   validateForbidden(product, 'product', errors);
+  validateSecretValues(product, 'product', errors);
   validateStatus(product.status, errors);
 
   if (Array.isArray(product.variants)) {
     product.variants.forEach((variant, index) => {
       validateKeys(variant, VARIANT_FIELDS, 'product.variants[' + index + ']', errors, fields);
       validateForbidden(variant, 'product.variants[' + index + ']', errors);
+      validateSecretValues(variant, 'product.variants[' + index + ']', errors);
       validateInventoryPolicy(variant.inventory_policy, errors, 'product.variants[' + index + '].inventory_policy');
     });
   } else if (product.variants !== undefined) {
@@ -75,6 +85,7 @@ function validateShopifyProductShape(value, options) {
     product.images.forEach((image, index) => {
       validateKeys(image, IMAGE_FIELDS, 'product.images[' + index + ']', errors, fields);
       validateForbidden(image, 'product.images[' + index + ']', errors);
+      validateSecretValues(image, 'product.images[' + index + ']', errors);
     });
   } else if (product.images !== undefined) {
     errors.push('product.images must be an array when present.');
@@ -84,6 +95,7 @@ function validateShopifyProductShape(value, options) {
     product.metafields.forEach((metafield, index) => {
       validateKeys(metafield, METAFIELD_FIELDS, 'product.metafields[' + index + ']', errors, fields);
       validateForbidden(metafield, 'product.metafields[' + index + ']', errors);
+      validateSecretValues(metafield, 'product.metafields[' + index + ']', errors);
       validateMetafield(metafield, errors, warnings, index);
     });
   } else if (product.metafields !== undefined) {
@@ -94,6 +106,14 @@ function validateShopifyProductShape(value, options) {
     const allowed = { id: true, status: true, variants: true };
     for (const key of Object.keys(product)) {
       if (!allowed[key]) errors.push('price_availability_only payload must not write product.' + key);
+    }
+    if (!Array.isArray(product.variants) || product.variants.length !== 1) {
+      errors.push('price_availability_only payload must write exactly one variant.');
+    } else {
+      const allowedVariant = { id: true, price: true, compare_at_price: true, inventory_policy: true };
+      for (const key of Object.keys(product.variants[0])) {
+        if (!allowedVariant[key]) errors.push('price_availability_only payload must not write variant.' + key);
+      }
     }
   }
 
@@ -122,6 +142,24 @@ function validateKeys(object, allowed, path, errors, fields) {
 function validateForbidden(object, path, errors) {
   for (const key of Object.keys(object || {})) {
     if (FORBIDDEN_FIELDS[key]) errors.push(path + '.' + key + ': ' + FORBIDDEN_FIELDS[key]);
+    const value = object[key];
+    if (value && typeof value === 'object') {
+      if (Array.isArray(value)) value.forEach((item, index) => validateForbidden(item, path + '.' + key + '[' + index + ']', errors));
+      else validateForbidden(value, path + '.' + key, errors);
+    }
+  }
+}
+
+function validateSecretValues(object, path, errors) {
+  for (const key of Object.keys(object || {})) {
+    const value = object[key];
+    const nextPath = path + '.' + key;
+    if (typeof value === 'string' && /(shpat_|shpss_|bearer\s+[a-z0-9._-]+|api[-_ ]?key|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i.test(value)) {
+      errors.push(nextPath + ' looks like a secret or direct personal contact value.');
+    } else if (value && typeof value === 'object') {
+      if (Array.isArray(value)) value.forEach((item, index) => validateSecretValues(item, nextPath + '[' + index + ']', errors));
+      else validateSecretValues(value, nextPath, errors);
+    }
   }
 }
 

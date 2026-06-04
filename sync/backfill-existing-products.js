@@ -5,11 +5,13 @@
  * supplier metafield writes and tag updates; it never writes price, images,
  * descriptions, inventory, status, vendor, SEO, or product presentation fields.
  */
-const DEFAULT_API_VERSION = '2026-04';
-const CANONICAL_IMPORTED_TAG = 'imported-nader-dior';
-const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const config = require('./config.js');
+
+const DEFAULT_API_VERSION = config.API_VERSION_STANDARD;
+const CANONICAL_IMPORTED_TAG = config.TAGS.imported;
+const ARABIC_IMPORTED_TAG = config.TAGS.importedArabic;
 const IMPORTED_TAGS = [CANONICAL_IMPORTED_TAG, ARABIC_IMPORTED_TAG];
-const SUPPLIER_ID_TAG_PREFIX = 'supplier-id-p';
+const SUPPLIER_ID_TAG_PREFIX = config.TAGS.idPrefix;
 const CONFIDENT_MATCHES = { high: true, medium: true };
 const NOT_FOUND_CONFIDENCE = 'not_found';
 
@@ -346,9 +348,13 @@ function normalizeOptions(options) {
   const config = options && typeof options === 'object' ? options : {};
   return {
     ...config,
-    shopDomain: normalizeShopDomain(config.shopDomain || config.shop || config.domain || 'calapres.myshopify.com'),
+    shopDomain: normalizeShopDomain(config.shopDomain || config.shop || config.domain || configModuleShopDomain()),
     apiVersion: cleanString(config.apiVersion || DEFAULT_API_VERSION)
   };
+}
+
+function configModuleShopDomain() {
+  return config.SHOP_DOMAIN;
 }
 
 function normalizeShopDomain(value) {

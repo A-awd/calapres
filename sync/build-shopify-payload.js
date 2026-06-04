@@ -9,14 +9,28 @@
  * buildPayload({ existingTags: ['enriched'], supplierPrice: 805, availability: 'out_of_stock', description: 'ignored' })
  * // -> { product: { status: 'draft', variants: [{ price: '905', compare_at_price: null, inventory_policy: 'deny' }] } }
  */
+const config = require('./config.js');
+
 function buildPayload(parsed) {
   const item = parsed && typeof parsed === 'object' ? parsed : {};
   const pricing = applyPricingForPayload(item);
   const stock = mapAvailabilityForPayload(item.availability);
   const existingProduct = item.existingProduct || item.shopifyProduct || {};
+  const existingProductId = item.existingProductId || existingProduct.id;
   const existingTags = normalizeTags(item.existingTags || existingProduct.tags || item.tags);
   const enriched = hasTag(existingTags, 'enriched');
   const statusOnly = enriched || isMissingAvailability(item.availability);
+  const supplierProductId = normalizeSupplierProductId(item.supplierProductId || item.supplierId || productIdFromUrl(item.sourceUrl));
+  const canCreate = Boolean(existingProductId || (pricing.price !== null && supplierProductId));
+
+  if (!canCreate) {
+    return {
+      product: {},
+      canCreate: false,
+      skipped: true,
+      reason: pricing.price === null ? 'missing_supplier_price' : 'missing_numeric_supplier_id'
+    };
+  }
 
   const variant = compactObject({
     id: item.existingVariantId || existingProduct.variantId || readFirstVariantId(existingProduct),
@@ -30,7 +44,7 @@ function buildPayload(parsed) {
     // ENRICHED/MISSING GUARD: do not emit title, body_html, images, SEO, vendor, tags, or metafields.
     return {
       product: compactObject({
-        id: item.existingProductId || existingProduct.id,
+        id: existingProductId,
         status: stock.productStatus,
         variants: [variant]
       })
@@ -38,25 +52,26 @@ function buildPayload(parsed) {
   }
 
   const tags = uniqueTags([
-    'imported-nader-dior',
-    'supplier:nawadirdior',
-    supplierIdTag(item.sourceUrl),
+    config.TAGS.imported,
+    config.TAGS.supplier,
+    supplierIdTag(supplierProductId),
     item.brand ? 'brand:' + item.brand : '',
     item.category ? 'category:' + item.category : ''
   ]);
 
   return {
     product: compactObject({
-      id: item.existingProductId || existingProduct.id,
+      id: existingProductId,
       title: cleanText(item.name),
       body_html: toBodyHtml(item.description),
-      vendor: cleanText(item.brand) || 'Nawadirdior',
+      vendor: cleanText(item.brand) || supplierVendorFallback(),
       tags: tags.join(', '),
-      status: stock.productStatus,
+      status: existingProductId ? stock.productStatus : 'draft',
       images: item.imageUrl ? [{ src: String(item.imageUrl).trim() }] : undefined,
       metafields: supplierMetafields(item),
       variants: [variant]
-    })
+    }),
+    canCreate: true
   };
 }
 
@@ -64,8 +79,8 @@ function applyPricingForPayload(input) {
   const supplierPrice = toMoneyNumber(input && input.supplierPrice);
   const supplierCompareAtPrice = toMoneyNumber(input && input.supplierCompareAtPrice);
   if (supplierPrice === null) return { price: null, compareAtPrice: null };
-  const price = roundMoney(supplierPrice + 100);
-  let compareAtPrice = supplierCompareAtPrice === null ? null : roundMoney(supplierCompareAtPrice + 100);
+  const price = roundMoney(supplierPrice + config.MARKUP_SAR);
+  let compareAtPrice = supplierCompareAtPrice === null ? null : roundMoney(supplierCompareAtPrice + config.MARKUP_SAR);
   if (compareAtPrice !== null && roundMoney(compareAtPrice) === roundMoney(price)) compareAtPrice = null;
   return { price, compareAtPrice };
 }
@@ -118,8 +133,8 @@ function uniqueTags(tags) {
 }
 
 function supplierIdTag(sourceUrl) {
-  const id = productIdFromUrl(sourceUrl);
-  return id ? 'supplier-id-p' + id : '';
+  const id = productIdFromUrl(sourceUrl) || normalizeSupplierProductId(sourceUrl);
+  return id ? config.TAGS.idPrefix + id : '';
 }
 
 function productIdFromUrl(value) {
@@ -131,22 +146,30 @@ function supplierMetafields(item) {
   const metafields = [];
   if (item.sourceUrl) {
     metafields.push({
-      namespace: 'supplier',
-      key: 'source_url',
+      namespace: config.NAMESPACES.supplier,
+      key: config.METAFIELDS.sourceUrl,
       value: String(item.sourceUrl),
       type: 'single_line_text_field'
     });
   }
-  const id = productIdFromUrl(item.sourceUrl);
+  const id = normalizeSupplierProductId(item.supplierProductId || item.supplierId || productIdFromUrl(item.sourceUrl));
   if (id) {
     metafields.push({
-      namespace: 'supplier',
-      key: 'product_id',
+      namespace: config.NAMESPACES.supplier,
+      key: config.METAFIELDS.productId,
       value: id,
       type: 'single_line_text_field'
     });
   }
   return metafields.length ? metafields : undefined;
+}
+
+function normalizeSupplierProductId(value) {
+  return String(value || '').replace(/^p/i, '').replace(/\D/g, '');
+}
+
+function supplierVendorFallback() {
+  return config.SUPPLIER_NAME.charAt(0).toUpperCase() + config.SUPPLIER_NAME.slice(1);
 }
 
 function readFirstVariantId(product) {
@@ -204,5 +227,5 @@ function compactObject(object) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { buildPayload };
+  module.exports = { buildPayload, productIdFromUrl, normalizeSupplierProductId };
 }

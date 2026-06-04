@@ -7,14 +7,33 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixturesDir = path.join(__dirname, 'fixtures');
 const outputPath = path.join(__dirname, 'dry-run-output.json');
+const reportDir = path.join(__dirname, 'reports');
+const reportPath = path.join(reportDir, 'sample-run.md');
 const defaultLimit = 20;
 
 function loadSyncModule(fileName) {
+  const cache = {};
+  return loadModule(fileName, cache);
+}
+
+function loadModule(fileName, cache) {
   const filePath = path.join(__dirname, fileName);
+  const resolved = path.normalize(filePath);
+  if (cache[resolved]) return cache[resolved].exports;
   const code = fs.readFileSync(filePath, 'utf8');
+  const module = { exports: {} };
+  cache[resolved] = module;
+  const localRequire = (request) => {
+    if (request.startsWith('.')) {
+      const target = path.normalize(path.join(path.dirname(resolved), request));
+      return loadModule(path.relative(__dirname, target), cache);
+    }
+    throw new Error('External require is disabled in dry run: ' + request);
+  };
   const sandbox = {
-    module: { exports: {} },
-    exports: {},
+    module,
+    exports: module.exports,
+    require: localRequire,
     URL,
     console,
     fetch: async () => {
@@ -22,7 +41,7 @@ function loadSyncModule(fileName) {
     }
   };
   vm.runInNewContext(code, sandbox, { filename: filePath, timeout: 1000 });
-  return sandbox.module.exports;
+  return module.exports;
 }
 
 const crawl = loadSyncModule('crawl-supplier.js');
@@ -35,6 +54,9 @@ const shopifyClient = loadSyncModule('shopify-client.js');
 const shapeValidator = loadSyncModule('validate-shopify-shape.js');
 const setupDefinitions = loadSyncModule('setup-metafield-definitions.js');
 const backfillModule = loadSyncModule('backfill-existing-products.js');
+const stateModule = loadSyncModule('sync-state.js');
+const reportModule = loadSyncModule('report.js');
+const configModule = loadSyncModule('config.js');
 
 function readFixture(fileName) {
   return fs.readFileSync(path.join(fixturesDir, fileName), 'utf8');
@@ -98,15 +120,21 @@ function normalizeForPayload(parsed, sourceUrl) {
 
 async function runDryRun(options = {}) {
   const limit = Number.isFinite(Number(options.limit)) ? Number(options.limit) : defaultLimit;
-  const shopDomain = options.shopDomain || process.env.SHOPIFY_SHOP_DOMAIN || 'calapres.myshopify.com';
-  const urls = (await crawlOfflineProducts()).slice(0, limit);
+  const shopDomain = options.shopDomain || process.env.SHOPIFY_STORE_DOMAIN || configModule.SHOP_DOMAIN;
+  const offset = Number.isFinite(Number(options.offset)) ? Number(options.offset) : 0;
+  const allUrls = await crawlOfflineProducts();
+  const chunkInfo = stateModule.computeChunk(allUrls, offset, Number(options.chunkSize || configModule.CHUNK_SIZE));
+  const urls = chunkInfo.chunk.slice(0, limit);
   const entries = [];
   const supplierProducts = [];
 
   for (let index = 0; index < urls.length; index += 1) {
     const sourceUrl = urls[index];
     const fixture = readCachedProductHtml(sourceUrl);
-    const parsed = parser.parseProduct(fixture.html);
+    const parsed = parser.parseProduct(fixture.html, {
+      sourceUrl,
+      supplierProductId: crawl.productIdFromUrl(sourceUrl)
+    });
     const normalized = normalizeForPayload(parsed, sourceUrl);
     const isMissing = normalized.availability === 'missing';
     const priced = pricing.applyPricing(normalized);
@@ -168,6 +196,13 @@ async function runDryRun(options = {}) {
   const output = {
     mode: 'offline-fixtures',
     shopDomain,
+    offset: {
+      start: chunkInfo.offset,
+      next: chunkInfo.nextOffset,
+      chunkSize: chunkInfo.chunkSize,
+      total: chunkInfo.total,
+      wrapped: chunkInfo.wrapped
+    },
     productLimit: limit,
     generatedPayloads: entries.length,
     missingSupplierPages: entries.filter((entry) => entry.action === 'skip_missing_supplier_page').length,
@@ -192,6 +227,17 @@ async function runDryRun(options = {}) {
     payloads: entries
   };
   fs.writeFileSync(outputPath, JSON.stringify(output, null, 2) + '\n');
+  fs.mkdirSync(reportDir, { recursive: true });
+  fs.writeFileSync(
+    reportPath,
+    reportModule.toMarkdown({
+      runId: 'offline-fixtures-first-' + limit,
+      mode: output.mode,
+      timingMs: 0,
+      offset: output.offset,
+      buckets: reconcilePlan
+    })
+  );
   return output;
 }
 

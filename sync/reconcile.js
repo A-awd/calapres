@@ -4,8 +4,10 @@
  * reconcile(supplierProducts, shopifyProducts) returns the five operational
  * buckets n8n needs: create, update, mark out of stock, skip enriched, unchanged.
  */
-const CANONICAL_IMPORTED_TAG = 'imported-nader-dior';
-const ARABIC_IMPORTED_TAG = 'مستورد-نوادر-ديور';
+const config = require('./config.js');
+
+const CANONICAL_IMPORTED_TAG = config.TAGS.imported;
+const ARABIC_IMPORTED_TAG = config.TAGS.importedArabic;
 const IMPORTED_TAGS = [CANONICAL_IMPORTED_TAG, ARABIC_IMPORTED_TAG];
 
 function reconcile(supplierProducts, shopifyProducts) {
@@ -23,7 +25,7 @@ function reconcile(supplierProducts, shopifyProducts) {
   for (const key of Object.keys(supplierIndex)) {
     const supplier = supplierIndex[key];
     if (!isImportableSupplierProduct(supplier)) {
-      plan.unchanged.push(action('invalid_supplier_product', supplier, null, { supplierKey: key }));
+      plan.unchanged.push(action(invalidSupplierReason(supplier), supplier, null, { supplierKey: key }));
       continue;
     }
 
@@ -167,10 +169,18 @@ function isImportableSupplierProduct(product) {
   return Boolean(product && product.sourceUrl && product.supplierId && product.supplierPrice !== null && product.availability !== 'missing');
 }
 
+function invalidSupplierReason(product) {
+  if (!product || !product.sourceUrl) return 'invalid_supplier_product_missing_source_url';
+  if (!product.supplierId) return 'cannot_create_missing_numeric_supplier_id';
+  if (product.supplierPrice === null) return 'cannot_create_missing_supplier_price';
+  if (product.availability === 'missing') return 'invalid_supplier_product_missing_page';
+  return 'invalid_supplier_product';
+}
+
 function desiredState(supplier) {
-  const price = supplier.supplierPrice === null ? null : roundMoney(supplier.supplierPrice + 100);
+  const price = supplier.supplierPrice === null ? null : roundMoney(supplier.supplierPrice + config.MARKUP_SAR);
   let compareAtPrice =
-    supplier.supplierCompareAtPrice === null ? null : roundMoney(supplier.supplierCompareAtPrice + 100);
+    supplier.supplierCompareAtPrice === null ? null : roundMoney(supplier.supplierCompareAtPrice + config.MARKUP_SAR);
   if (compareAtPrice !== null && sameMoney(compareAtPrice, price)) compareAtPrice = null;
   const inStock = supplier.availability === 'in_stock';
   return {
@@ -184,8 +194,8 @@ function desiredState(supplier) {
     inventoryPolicy: inStock ? 'continue' : 'deny',
     tags: [
       CANONICAL_IMPORTED_TAG,
-      'supplier:nawadirdior',
-      supplier.supplierId ? 'supplier-id-p' + supplier.supplierId : ''
+      config.TAGS.supplier,
+      supplier.supplierId ? config.TAGS.idPrefix + supplier.supplierId : ''
     ].filter(Boolean)
   };
 }

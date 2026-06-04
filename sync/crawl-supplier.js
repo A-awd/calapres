@@ -9,11 +9,13 @@
  * extractProductUrls('<loc>https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1/p123</loc>')
  * // -> ['https://nawadirdior.sa/%D8%B9%D8%B7%D8%B1/p123']
  */
+const config = require('./config.js');
+
 async function crawlSupplierProducts(options) {
-  const config = options && typeof options === 'object' ? options : {};
-  const startUrl = config.sitemapUrl || 'https://nawadirdior.sa/sitemap.xml';
-  const maxSitemaps = config.maxSitemaps || 50;
-  const fetchText = config.fetchText || defaultFetchText;
+  const opts = options && typeof options === 'object' ? options : {};
+  const startUrl = opts.sitemapUrl || config.SUPPLIER_SITEMAP;
+  const maxSitemaps = opts.maxSitemaps || 50;
+  const fetchText = opts.fetchText || defaultFetchText;
   const queue = [startUrl];
   const visitedSitemaps = {};
   const productById = {};
