@@ -71,7 +71,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          export CALAPRES_THEME_VERSION="${GITHUB_SHA::12}"
+          version="$(git rev-parse --short=12 HEAD)"
+          export CALAPRES_THEME_VERSION="$version"
+          echo "CALAPRES_THEME_VERSION=$version" >> "$GITHUB_ENV"
           node <<'NODE'
           const fs = require("fs");
           const version = process.env.CALAPRES_THEME_VERSION;
@@ -118,6 +120,6 @@ jobs:
             echo ""
             echo "- Target: ${{ steps.target.outputs.target }}"
             echo "- Theme ID: ${{ steps.target.outputs.theme_id }}"
-            echo "- Version: ${GITHUB_SHA::12}"
+            echo "- Version: ${CALAPRES_THEME_VERSION}"
             echo "- Deploy attempted: ${{ steps.auth.outputs.ready }}"
           } >> "$GITHUB_STEP_SUMMARY"
