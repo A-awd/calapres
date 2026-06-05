@@ -1913,9 +1913,9 @@ html[lang="en"] .home-ad__cta{
     align-items:center;
   }
   .hero__inner{
-    min-height:clamp(560px, 76svh, 720px);
+    min-height:clamp(500px, 66svh, 610px);
     justify-content:center;
-    padding-block:34px 42px;
+    padding-block:28px 32px;
   }
   .hero-title__ar,
   .hero h1{
@@ -1935,12 +1935,12 @@ html[lang="en"] .home-ad__cta{
     width:100%;
     max-width:340px;
     grid-template-columns:1fr;
-    gap:8px;
-    margin-top:20px;
+    gap:6px;
+    margin-top:16px;
   }
   .hero__trustbar > span{
-    min-height:36px;
-    padding:8px 10px;
+    min-height:32px;
+    padding:6px 10px;
     font-size:13px;
   }
   .category-ocean{
@@ -1954,7 +1954,7 @@ html[lang="en"] .home-ad__cta{
   }
   .rail,
   .commerce-rail{
-    grid-auto-columns:minmax(146px,42vw);
+    grid-auto-columns:minmax(154px,42vw);
   }
   .commerce-row{
     padding:14px;
