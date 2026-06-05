@@ -21,7 +21,6 @@
     "everyHours": 6,
     "timezone": "Asia/Riyadh"
   },
-  "liveWorkflowId": "Vsf1Epd3ssfbw10i",
   "nodes": [
     {
       "order": 1,
@@ -73,78 +72,66 @@
     },
     {
       "order": 9,
-      "name": "Code: Extract Shopify IDs (update)",
-      "file": "patch-shopify-ids.generated.js",
-      "mode": "runOnceForEachItem"
-    },
-    {
-      "order": 10,
-      "name": "Code: Extract Shopify IDs (create)",
-      "file": "patch-shopify-ids.generated.js",
-      "mode": "runOnceForEachItem"
-    },
-    {
-      "order": 11,
       "name": "Code: Build Sync Error Row",
       "file": "sync-error.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 12,
+      "order": 10,
       "name": "Code: Build Shopify Lookup",
       "file": "buildLookup.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 13,
+      "order": 11,
       "name": "Code: Select Existing Product",
       "file": "selectExisting.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 14,
+      "order": 12,
       "name": "Code: buildPayload",
       "file": "buildPayload.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 15,
+      "order": 13,
       "name": "Code: Find Missing Supplier Products",
       "file": "findMissing.generated.js",
       "mode": "runOnceForAllItems"
     },
     {
-      "order": 16,
+      "order": 14,
       "name": "Code: buildPayload Missing",
       "file": "buildMissing.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 17,
+      "order": 15,
       "name": "Code: Build Higgsfield Request (Image Pipeline)",
       "file": "image-pipeline-brief.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 18,
+      "order": 16,
       "name": "Code: Run Quality Gate (Image Pipeline)",
       "file": "image-pipeline-quality.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 19,
+      "order": 17,
       "name": "Code: Build Higgsfield Prompt",
       "file": "enrich-prompt.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 20,
+      "order": 18,
       "name": "Code: Build Arabic SEO",
       "file": "enrich-seo.generated.js",
       "mode": "runOnceForEachItem"
     },
     {
-      "order": 21,
+      "order": 19,
       "name": "Code: Build Enriched Payload",
       "file": "enrich-payload.generated.js",
       "mode": "runOnceForEachItem"
@@ -210,30 +197,6 @@
     [
       "Code: Build Shopify Payload From Supabase",
       "Shopify Admin REST create/update"
-    ],
-    [
-      "Shopify Admin REST: Update Product",
-      "Code: Extract Shopify IDs (update)"
-    ],
-    [
-      "Code: Extract Shopify IDs (update)",
-      "HTTP PATCH: Supabase Patch Shopify IDs (update)"
-    ],
-    [
-      "HTTP PATCH: Supabase Patch Shopify IDs (update)",
-      "Loop Products (nextBatch)"
-    ],
-    [
-      "Shopify Admin REST: Create Product",
-      "Code: Extract Shopify IDs (create)"
-    ],
-    [
-      "Code: Extract Shopify IDs (create)",
-      "HTTP PATCH: Supabase Patch Shopify IDs (create)"
-    ],
-    [
-      "HTTP PATCH: Supabase Patch Shopify IDs (create)",
-      "Loop Products (nextBatch)"
     ],
     [
       "Shopify Admin GraphQL: List Imported Products",
