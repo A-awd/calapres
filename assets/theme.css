@@ -492,7 +492,7 @@ html[lang="en"] .commerce-head a{
 .signup button:hover{ color:var(--gold); }
 
 /* ---------- Mobile drawer ---------- */
-.drawer.open{ display:block; position:fixed; inset:0; z-index:120; background:var(--ivory); padding:var(--gutter); overflow-y:auto; }
+.drawer.open{ display:block; position:fixed; inset:0; z-index:220; background:var(--ivory); padding:var(--gutter); overflow-y:auto; }
 .drawer-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--s5); color:var(--ink); }
 .drawer-nav{ display:flex; flex-direction:column; gap:var(--s3); }
 .drawer-nav a{ font-family:var(--serif); font-size:34px; color:var(--ink); }
@@ -529,7 +529,7 @@ html[lang="en"] .drawer-action{ font-family:var(--sans); font-size:12px; letter-
 .drawer-foot{ margin-top:var(--s5); padding-top:var(--s4); border-top:1px solid var(--grey); display:flex; gap:var(--s3); }
 
 /* ---------- Cart slide-over ---------- */
-.cart-overlay{ position:fixed; inset:0; z-index:140; visibility:hidden; }
+.cart-overlay{ position:fixed; inset:0; z-index:230; visibility:hidden; }
 .cart-overlay.open{ visibility:visible; }
 .cart-scrim{ position:absolute; inset:0; background:rgba(23,21,19,.42); opacity:0; transition:opacity var(--slow) var(--ease); }
 .cart-overlay.open .cart-scrim{ opacity:1; }
@@ -591,7 +591,7 @@ html[lang="en"] .cart-line{ font-family:var(--sans); }
 html[lang="en"] .cart-total-row{ font-family:var(--serif); font-weight:600; }
 
 /* ---------- Wishlist slide-over ---------- */
-.wishlist-overlay{ position:fixed; inset:0; z-index:145; visibility:hidden; }
+.wishlist-overlay{ position:fixed; inset:0; z-index:240; visibility:hidden; }
 .wishlist-overlay.open{ visibility:visible; }
 .wishlist-scrim{ position:absolute; inset:0; background:rgba(23,21,19,.34); opacity:0; transition:opacity var(--slow) var(--ease); }
 .wishlist-overlay.open .wishlist-scrim{ opacity:1; }
