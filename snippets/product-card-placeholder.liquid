@@ -1,0 +1,24 @@
+{% comment %}Placeholder product card for when no collection is assigned{% endcomment %}
+{%- assign placeholder_titles = 'عطر الورد الملكي,عود المسك الفاخر,مجموعة الأمبر,نسيم البحر' | split: ',' -%}
+{%- assign placeholder_prices = '٣٢٠,٤٨٠,٢٩٠,٣٥٠' | split: ',' -%}
+{%- assign placeholder_families = 'ورديّ,خشبيّ,عنبريّ,مسكيّ' | split: ',' -%}
+{%- assign idx = index | minus: 1 -%}
+
+<article class="product-card" aria-label="منتج تجريبي">
+  <div class="product-card-image-wrap">
+    <div class="product-card-image-placeholder" aria-hidden="true">🌿</div>
+    {% if forloop.first %}
+      <div class="product-badges">
+        <span class="badge badge-new">{{ 'products.new' | t }}</span>
+      </div>
+    {% endif %}
+  </div>
+  <div class="product-card-body">
+    <p class="product-family-tag">{{ placeholder_families[idx] | default: 'عطري' }}</p>
+    <h3 class="product-card-title"><a href="#">{{ placeholder_titles[idx] | default: 'عطر فاخر' }}</a></h3>
+    <p class="product-card-subtitle">كالابريز</p>
+    <div class="product-card-price">
+      <span class="price">{{ placeholder_prices[idx] | default: '٣٠٠' }} ر.س</span>
+    </div>
+  </div>
+</article>

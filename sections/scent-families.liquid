@@ -1,92 +1,57 @@
-<section class="section wrap" id="occasions">
+<section class="section wrap" id="scents">
   <div class="sec-head">
     <div class="ttl reveal">
-      <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
-      <h2 class="display d-2"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h2>
+      <span class="eyebrow"><span data-ar>تسوّق حسب المناسبة</span><span data-en>Shop by occasion</span></span>
+      <h2 class="display d-2"><span data-ar>لكلّ لحظةٍ رائحتها</span><span data-en>Every moment has its scent</span></h2>
     </div>
+    <a class="link reveal" href="/collections"><span data-ar>اكتشف الكل</span><span data-en>Discover all</span><span class="arrow">→</span></a>
   </div>
-  <div class="occasions-grid">
-    <a class="occ feature reveal" href="{{ section.settings.oud_url | default: collections['oud-bakhour'].url | default: '/collections/oud-bakhour' }}">
-      <img src="{{ 'c-oud.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
-      <span class="lbl"><span class="k"><span data-ar>التوقيع</span><span data-en>Signature</span></span><span class="nm"><span data-ar>العود والأخشاب</span><span data-en>Oud &amp; Woods</span></span></span>
+  <div class="occasions">
+    <a class="occ-feature reveal" href="{{ section.settings.feature_url | default: '/collections/oriental' }}">
+      {%- if section.settings.feature_image -%}
+        <img src="{{ section.settings.feature_image | img_url: '800x1000', crop: 'center' }}" alt="" width="800" height="1000" />
+      {%- else -%}
+        <img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1080" height="1440" />
+      {%- endif -%}
+      <div class="occ-cap">
+        <span class="eyebrow"><span data-ar>{{ section.settings.feature_eyebrow_ar | default: 'العطور الشرقية' }}</span><span data-en>{{ section.settings.feature_eyebrow_en | default: 'Oriental Perfumes' }}</span></span>
+        <h3><span data-ar>{{ section.settings.feature_title_ar | default: 'السحر الشرقي' }}</span><span data-en>{{ section.settings.feature_title_en | default: 'Eastern Allure' }}</span></h3>
+        <span class="ar-icn">→</span>
+      </div>
     </a>
-    <a class="occ reveal d1" href="{{ section.settings.floral_url | default: collections['niche'].url | default: '/collections/niche' }}">
-      <img src="{{ 'pr-rose.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
-      <span class="lbl"><span class="k"><span data-ar>ناعمة</span><span data-en>Soft</span></span><span class="nm"><span data-ar>الورديات</span><span data-en>Florals</span></span></span>
-    </a>
-    <a class="occ reveal d2" href="{{ section.settings.amber_url | default: collections['oriental'].url | default: '/collections/oriental' }}">
-      <img src="{{ 'pr-amber.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
-      <span class="lbl"><span class="k"><span data-ar>دافئة</span><span data-en>Warm</span></span><span class="nm"><span data-ar>الشرقيات والعنبر</span><span data-en>Orientals &amp; Amber</span></span></span>
-    </a>
-    <a class="occ reveal d1" href="{{ section.settings.musk_url | default: collections['luxury-brands'].url | default: '/collections/luxury-brands' }}">
-      <img src="{{ 'pr-musk.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
-      <span class="lbl"><span class="k"><span data-ar>نقية</span><span data-en>Clean</span></span><span class="nm"><span data-ar>المسك</span><span data-en>Musk</span></span></span>
-    </a>
-    <a class="occ reveal d2" href="{{ section.settings.citrus_url | default: collections['niche'].url | default: '/collections/niche' }}">
-      <img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy" />
-      <span class="lbl"><span class="k"><span data-ar>منعشة</span><span data-en>Fresh</span></span><span class="nm"><span data-ar>الحمضيات</span><span data-en>Citrus</span></span></span>
-    </a>
+    <div class="occ-grid">
+      {%- assign occ_titles_ar = 'ليلةٌ رسمية,رحلةٌ صباحية,لقاءٌ عاطفي,هديةٌ مميّزة' | split: ',' -%}
+      {%- assign occ_titles_en = 'Formal Evening,Morning Journey,Intimate Encounter,Special Gift' | split: ',' -%}
+      {%- assign occ_imgs = 'c-niche.jpg,c-oud.jpg,c-brands.jpg,c-oriental.jpg' | split: ',' -%}
+      {%- assign occ_urls = '/collections/niche,/collections/oud-bakhour,/collections/luxury-brands,/collections/oriental' | split: ',' -%}
+      {%- for i in (0..3) -%}
+        {%- assign delay = '' -%}
+        {%- if i == 1 -%}{%- assign delay = ' d1' -%}{%- endif -%}
+        {%- if i == 2 -%}{%- assign delay = ' d2' -%}{%- endif -%}
+        {%- if i == 3 -%}{%- assign delay = ' d3' -%}{%- endif -%}
+        <a class="occ-sm reveal{{ delay }}" href="{{ occ_urls[i] }}">
+          <img src="{{ occ_imgs[i] | asset_url }}" alt="" width="1080" height="1440" />
+          <div class="occ-cap sm">
+            <span><span data-ar>{{ occ_titles_ar[i] }}</span><span data-en>{{ occ_titles_en[i] }}</span></span>
+            <span class="ar-icn">→</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Scent Families",
+  "name": "Scent Occasions",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow_ar",
-      "label": "Eyebrow Arabic",
-      "default": "اكتشف حسب الرائحة"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow_en",
-      "label": "Eyebrow English",
-      "default": "Find by scent"
-    },
-    {
-      "type": "text",
-      "id": "heading_ar",
-      "label": "Heading Arabic",
-      "default": "عائلات عطرية تختار منها"
-    },
-    {
-      "type": "text",
-      "id": "heading_en",
-      "label": "Heading English",
-      "default": "Olfactive families to choose from"
-    },
-    {
-      "type": "url",
-      "id": "oud_url",
-      "label": "Oud collection URL"
-    },
-    {
-      "type": "url",
-      "id": "floral_url",
-      "label": "Floral collection URL"
-    },
-    {
-      "type": "url",
-      "id": "amber_url",
-      "label": "Amber collection URL"
-    },
-    {
-      "type": "url",
-      "id": "musk_url",
-      "label": "Musk collection URL"
-    },
-    {
-      "type": "url",
-      "id": "citrus_url",
-      "label": "Citrus collection URL"
-    }
+    { "type": "image_picker", "id": "feature_image", "label": "Feature Image" },
+    { "type": "url", "id": "feature_url", "label": "Feature URL" },
+    { "type": "text", "id": "feature_eyebrow_ar", "label": "Feature Eyebrow (Arabic)", "default": "العطور الشرقية" },
+    { "type": "text", "id": "feature_eyebrow_en", "label": "Feature Eyebrow (English)", "default": "Oriental Perfumes" },
+    { "type": "text", "id": "feature_title_ar", "label": "Feature Title (Arabic)", "default": "السحر الشرقي" },
+    { "type": "text", "id": "feature_title_en", "label": "Feature Title (English)", "default": "Eastern Allure" }
   ],
-  "presets": [
-    {
-      "name": "Scent Families"
-    }
-  ]
+  "presets": [{ "name": "Scent Occasions" }]
 }
 {% endschema %}

@@ -1,64 +1,45 @@
-{%- assign has_hero_image = false -%}
-{%- if section.settings.hero_image -%}
-  {%- assign has_hero_image = true -%}
-{%- endif -%}
-<section class="hero{% unless has_hero_image %} hero--fallback{% endunless %}" data-hero-sentinel data-screen-label="hero">
+<section class="hero" data-hero-sentinel data-screen-label="hero">
   <div class="hero__img">
-    {%- if has_hero_image -%}
+    {%- if section.settings.hero_image -%}
       <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" width="1920" height="1080" fetchpriority="high" />
     {%- else -%}
-      <div class="hero__fallback" aria-hidden="true"></div>
+      <img src="{{ 'p-hero.jpg' | asset_url }}" alt="" width="1600" height="1080" fetchpriority="high" />
     {%- endif -%}
   </div>
   <div class="hero__inner wrap">
     <span class="eyebrow reveal">
-      <span data-ar>{{ section.settings.eyebrow_ar | default: 'بيت عطور النيش والمباخر' }}</span>
-      <span data-en>{{ section.settings.eyebrow_en | default: 'House of Niche Perfume and Bukhoor' }}</span>
+      <span data-ar>{{ section.settings.eyebrow_ar | default: 'بيت العطور النيش · الرياض' }}</span>
+      <span data-en>{{ section.settings.eyebrow_en | default: 'Maison de Parfums Niche · Riyadh' }}</span>
     </span>
     <div class="hero-title reveal d1">
       <h1 class="display d-hero hero-title__ar">{{ section.settings.heading_ar | default: 'رائحة تُروى ولا تُنسى' }}</h1>
       <p class="hero-title__en">{{ section.settings.heading_en | default: 'A scent that is told, never forgotten' }}</p>
     </div>
     <p class="sub reveal d2">
-      <span data-ar>{{ section.settings.sub_ar | default: 'عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في السعودية والخليج. فنّ العطر، مُتقَنًا.' }}</span>
-      <span data-en>{{ section.settings.sub_en | default: 'Niche perfumes, rare oud and bukhoor — curated with care for the scent-led across Saudi Arabia and the Gulf. The art of perfume, perfected.' }}</span>
+      <span data-ar>{{ section.settings.sub_ar | default: 'عطور نيش عالمية، عودٌ فاخر، ومباخر — مُنتقاةٌ بعنايةٍ لعشّاق الرائحة في الرياض. فنّ العطر، مُتقَنًا.' }}</span>
+      <span data-en>{{ section.settings.sub_en | default: 'Niche perfumes, rare oud and bukhoor — curated with care for the scent-led, in Riyadh. The art of perfume, perfected.' }}</span>
     </p>
     <div class="cta reveal d3">
       <a class="btn btn-primary" href="{{ section.settings.cta1_url | default: '/collections' }}">
         <span data-ar>{{ section.settings.cta1_ar | default: 'اكتشف المجموعات' }}</span>
         <span data-en>{{ section.settings.cta1_en | default: 'Discover collections' }}</span>
       </a>
-      <a class="btn btn-secondary{% if has_hero_image %} on-dark{% endif %}" href="{{ section.settings.cta2_url | default: '#signature' }}">
+      <a class="btn btn-secondary on-dark" href="{{ section.settings.cta2_url | default: '#signature' }}">
         <span data-ar>{{ section.settings.cta2_ar | default: 'العود والمباخر' }}</span>
         <span data-en>{{ section.settings.cta2_en | default: 'Oud & Bukhoor' }}</span>
       </a>
     </div>
-    <div class="hero__trustbar reveal d4" aria-label="مزايا كالابريز" data-home-polish-sync="20260605b">
-      <span><span data-ar>أصالة مضمونة</span><span data-en>Authenticity assured</span></span>
-      <span><span data-ar>عطور نيش عالمية</span><span data-en>Global niche perfume</span></span>
-      <span><span data-ar>عود ومباخر فاخرة</span><span data-en>Luxury oud and burners</span></span>
-    </div>
   </div>
   <div class="scroll-hint"><span class="ln"></span><span data-ar>اسحب للأسفل</span><span data-en>Scroll</span></div>
 </section>
-
-<style>
-  @media (max-width:768px){
-    .hero__inner{ min-height:clamp(500px,66svh,610px) !important; padding-block:28px 32px; }
-    .hero__trustbar{ gap:6px; margin-top:16px; }
-    .hero__trustbar > span{ min-height:32px; padding:6px 10px; }
-    .rail,
-    .commerce-rail{ grid-auto-columns:minmax(154px,42vw) !important; }
-  }
-</style>
 
 {% schema %}
 {
   "name": "Hero",
   "settings": [
     { "type": "image_picker", "id": "hero_image", "label": "Hero Background Image" },
-    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "بيت عطور النيش والمباخر" },
-    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "House of Niche Perfume and Bukhoor" },
+    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "بيت العطور النيش · الرياض" },
+    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "Maison de Parfums Niche · Riyadh" },
     { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "رائحة تُروى ولا تُنسى" },
     { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "A scent that is told, never forgotten" },
     { "type": "textarea", "id": "sub_ar", "label": "Subtext (Arabic)" },
