@@ -26,6 +26,14 @@
   try { stored = localStorage.getItem("calapres-lang") || "ar"; } catch (e) {}
   setLang(stored, false);
 
+  function dismissAnnouncementPopup() {
+    var popup = document.querySelector("[data-announcement-popup]");
+    if (!popup) return;
+    popup.classList.remove("open");
+    popup.hidden = true;
+    try { sessionStorage.setItem("calapres-delivery-popup", "seen"); } catch (e) {}
+  }
+
   function bindToggles() {
     document.querySelectorAll("[data-lang-toggle]").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -44,11 +52,7 @@
     function markSeen() {
       try { sessionStorage.setItem("calapres-delivery-popup", "seen"); } catch (e) {}
     }
-    function close() {
-      popup.classList.remove("open");
-      setTimeout(function () { popup.hidden = true; }, 420);
-      markSeen();
-    }
+    function close() { dismissAnnouncementPopup(); }
     if (!seen) {
       window.setTimeout(function () {
         popup.hidden = false;
@@ -105,7 +109,7 @@
     var openBtn = document.querySelector("[data-drawer-open]");
     var d = document.querySelector(".drawer");
     if (!openBtn || !d) return;
-    function open() { d.classList.add("open"); document.body.style.overflow = "hidden"; }
+    function open() { dismissAnnouncementPopup(); d.classList.add("open"); document.body.style.overflow = "hidden"; }
     function close() { d.classList.remove("open"); document.body.style.overflow = ""; }
     openBtn.addEventListener("click", open);
     d.querySelectorAll("[data-drawer-close]").forEach(function (b) { b.addEventListener("click", close); });
@@ -258,6 +262,7 @@
 
   /* ---- Cart slide-over open/close ---- */
   function openCart() {
+    dismissAnnouncementPopup();
     var overlay = document.querySelector("[data-cart]");
     if (overlay) { overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
   }
@@ -485,6 +490,7 @@
     setLang(root.lang, false);
   }
   function wishlistOpen() {
+    dismissAnnouncementPopup();
     var overlay = document.querySelector("[data-wishlist]");
     if (!overlay) return;
     wishlistRender();
