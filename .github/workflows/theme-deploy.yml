@@ -77,7 +77,7 @@ jobs:
           const version = process.env.CALAPRES_THEME_VERSION;
           const file = "layout/theme.liquid";
           let source = fs.readFileSync(file, "utf8");
-          source = source.replace(/Calapres theme version: [^<]*/g, `Calapres theme version: ${version}`);
+          source = source.replace(/<!-- Calapres theme version: .*? -->/g, `<!-- Calapres theme version: ${version} -->`);
           source = source.replace(/calapres_js=[^"']+/g, `calapres_js=${version}`);
           fs.writeFileSync(file, source);
           NODE
