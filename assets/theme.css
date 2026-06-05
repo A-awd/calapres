@@ -2389,6 +2389,231 @@ html[lang="en"] .home-ad strong{
     min-height:300px;
   }
 }
+
+/* ---------- Homepage premium rhythm 20260605c ---------- */
+.category-promo{
+  display:grid;
+  grid-template-columns:1.18fr 1fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+.category-promo__item{
+  position:relative;
+  display:flex;
+  min-height:74px;
+  flex-direction:column;
+  justify-content:center;
+  padding:14px 18px;
+  overflow:hidden;
+  border:1px solid rgba(228,222,212,.88);
+  background:
+    linear-gradient(135deg, rgba(255,250,242,.96), rgba(255,255,255,.72)),
+    linear-gradient(90deg, rgba(184,149,106,.14), rgba(19,54,43,.05));
+}
+.category-promo__item:first-child{
+  background:
+    linear-gradient(135deg, rgba(19,54,43,.98), rgba(23,21,19,.96));
+  color:var(--on-emerald);
+  border-color:rgba(19,54,43,.72);
+}
+.category-promo__item::after{
+  content:"";
+  position:absolute;
+  inset-block:14px;
+  inset-inline-end:14px;
+  width:1px;
+  background:rgba(184,149,106,.44);
+}
+.category-promo__item strong{
+  display:block;
+  font-family:var(--arabic);
+  font-size:16px;
+  font-weight:600;
+  line-height:1.35;
+}
+.category-promo__item small{
+  display:block;
+  margin-top:4px;
+  color:var(--ink-55);
+  font-family:var(--arabic);
+  font-size:12px;
+  line-height:1.45;
+}
+.category-promo__item:first-child small{
+  color:rgba(239,233,221,.72);
+}
+html[lang="en"] .category-promo__item strong,
+html[lang="en"] .category-promo__item small{
+  font-family:var(--sans);
+}
+
+@media (min-width:1200px){
+  .rail{
+    grid-auto-columns:minmax(134px,11.7vw);
+  }
+  .commerce-rail{
+    grid-auto-columns:minmax(140px,12.4vw);
+  }
+  .rail .product-card .frame,
+  .commerce-rail .product-card .frame{
+    aspect-ratio:1/1.16;
+  }
+}
+.commerce-row{
+  padding:clamp(14px,1.8vw,24px);
+}
+.product-card .meta{
+  padding-block-start:8px;
+}
+.product-card .name{
+  font-size:clamp(14px,1.1vw,17px);
+}
+.product-card .brand{
+  margin-top:7px;
+}
+.product-card__foot{
+  margin-top:4px;
+}
+
+.home-editorial-ads{
+  grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+  grid-template-areas:
+    "perfume oud"
+    "perfume notes";
+  align-items:stretch;
+}
+.home-ad--perfume{ grid-area:perfume; }
+.home-ad--oud{ grid-area:oud; }
+.home-ad--notes{ grid-area:notes; }
+.home-ad--perfume{
+  min-height:clamp(480px,48vw,680px);
+}
+.home-ad--oud,
+.home-ad--notes{
+  min-height:clamp(230px,22vw,326px);
+}
+.home-ad--notes{
+  background:var(--ivory);
+  color:var(--ink);
+}
+.home-ad--notes::after{
+  background:
+    linear-gradient(to left, rgba(247,244,239,.96), rgba(247,244,239,.66) 58%, rgba(247,244,239,.10)),
+    linear-gradient(to top, rgba(23,21,19,.10), rgba(23,21,19,0) 58%);
+}
+[dir="rtl"] .home-ad--notes::after{
+  background:
+    linear-gradient(to right, rgba(247,244,239,.96), rgba(247,244,239,.66) 58%, rgba(247,244,239,.10)),
+    linear-gradient(to top, rgba(23,21,19,.10), rgba(23,21,19,0) 58%);
+}
+.home-ad--notes .home-ad__copy{
+  color:var(--ink);
+}
+.home-ad--notes strong{
+  text-shadow:none;
+}
+.home-ad--notes small{
+  color:var(--ink-70);
+}
+.home-ad--notes .home-ad__cta{
+  color:var(--ink);
+}
+
+@media (max-width:900px){
+  .category-promo{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scroll-snap-type:x proximity;
+    padding-bottom:4px;
+    scrollbar-width:none;
+  }
+  .category-promo::-webkit-scrollbar{ display:none; }
+  .category-promo__item{
+    flex:0 0 min(286px,78vw);
+    min-height:70px;
+    scroll-snap-align:start;
+  }
+  .home-editorial-ads{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "perfume"
+      "oud"
+      "notes";
+  }
+  .home-ad--perfume,
+  .home-ad--oud,
+  .home-ad--notes{
+    min-height:clamp(288px,74vw,390px);
+  }
+}
+@media (max-width:768px){
+  .category-promo{
+    margin-bottom:10px;
+  }
+  .category-promo__item{
+    flex-basis:76vw;
+    min-height:66px;
+    padding:12px 14px;
+  }
+  .category-promo__item strong{
+    font-size:14px;
+  }
+  .category-promo__item small{
+    font-size:11px;
+  }
+  .rail,
+  .commerce-rail{
+    grid-auto-columns:minmax(128px,39vw);
+  }
+  .product-card .frame{
+    aspect-ratio:1/1.12;
+  }
+  .product-card__fav{
+    inset-block-start:7px;
+    inset-inline-end:7px;
+    width:30px;
+    height:30px;
+  }
+  .product-card .brand,
+  .product-card .size-h,
+  .mini-link{
+    font-size:10px;
+  }
+  .product-card .name{
+    font-size:13px;
+    line-height:1.24;
+  }
+  .product-card .price{
+    font-size:11px;
+  }
+  .home-ad--notes::after,
+  [dir="rtl"] .home-ad--notes::after{
+    background:
+      linear-gradient(to top, rgba(247,244,239,.96), rgba(247,244,239,.74) 54%, rgba(247,244,239,.18)),
+      linear-gradient(to bottom, rgba(247,244,239,.64), rgba(247,244,239,0) 44%);
+  }
+}
+@media (max-width:420px){
+  .hero__inner{
+    min-height:clamp(400px,53svh,480px) !important;
+  }
+  .hero__trustbar > span{
+    font-size:10.5px;
+  }
+  .category-promo__item{
+    flex-basis:80vw;
+  }
+  .rail,
+  .commerce-rail{
+    grid-auto-columns:minmax(124px,38vw);
+  }
+  .home-ad--perfume,
+  .home-ad--oud,
+  .home-ad--notes{
+    min-height:282px;
+  }
+}
 /* Arabic shaping guard: letter spacing breaks connected Arabic glyphs. */
 [dir="rtl"],
 [dir="rtl"] *,

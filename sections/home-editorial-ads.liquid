@@ -1,5 +1,9 @@
+{%- assign first_default_url = routes.collections_url | append: '/niche' -%}
+{%- assign second_default_url = routes.collections_url | append: '/oud-bakhour' -%}
+{%- assign third_default_url = routes.collections_url | append: '/oriental' -%}
+
 <section class="home-editorial-ads wrap" aria-label="مختارات كالابريز">
-  <a class="home-ad home-ad--perfume reveal" href="{{ section.settings.first_url | default: '/collections/niche' | escape }}">
+  <a class="home-ad home-ad--perfume reveal" href="{{ section.settings.first_url | default: first_default_url | escape }}">
     <img src="{{ 'c-niche.jpg' | asset_url }}" alt="" width="1080" height="1440" loading="lazy" />
     <span class="home-ad__copy">
       <span class="eyebrow"><span data-ar>{{ section.settings.first_kicker_ar | escape }}</span><span data-en>{{ section.settings.first_kicker_en | escape }}</span></span>
@@ -8,13 +12,22 @@
       <span class="home-ad__cta"><span data-ar>{{ section.settings.first_cta_ar | escape }}</span><span data-en>{{ section.settings.first_cta_en | escape }}</span></span>
     </span>
   </a>
-  <a class="home-ad home-ad--oud reveal d1" href="{{ section.settings.second_url | default: '/collections/oud-bakhour' | escape }}">
+  <a class="home-ad home-ad--oud reveal d1" href="{{ section.settings.second_url | default: second_default_url | escape }}">
     <img src="{{ 'p-signature.jpg' | asset_url }}" alt="" width="1800" height="1200" loading="lazy" />
     <span class="home-ad__copy">
       <span class="eyebrow"><span data-ar>{{ section.settings.second_kicker_ar | escape }}</span><span data-en>{{ section.settings.second_kicker_en | escape }}</span></span>
       <strong><span data-ar>{{ section.settings.second_heading_ar | escape }}</span><span data-en>{{ section.settings.second_heading_en | escape }}</span></strong>
       <small><span data-ar>{{ section.settings.second_body_ar | escape }}</span><span data-en>{{ section.settings.second_body_en | escape }}</span></small>
       <span class="home-ad__cta"><span data-ar>{{ section.settings.second_cta_ar | escape }}</span><span data-en>{{ section.settings.second_cta_en | escape }}</span></span>
+    </span>
+  </a>
+  <a class="home-ad home-ad--notes reveal d2" href="{{ section.settings.third_url | default: third_default_url | escape }}">
+    <img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1080" height="1440" loading="lazy" />
+    <span class="home-ad__copy">
+      <span class="eyebrow"><span data-ar>{{ section.settings.third_kicker_ar | escape }}</span><span data-en>{{ section.settings.third_kicker_en | escape }}</span></span>
+      <strong><span data-ar>{{ section.settings.third_heading_ar | escape }}</span><span data-en>{{ section.settings.third_heading_en | escape }}</span></strong>
+      <small><span data-ar>{{ section.settings.third_body_ar | escape }}</span><span data-en>{{ section.settings.third_body_en | escape }}</span></small>
+      <span class="home-ad__cta"><span data-ar>{{ section.settings.third_cta_ar | escape }}</span><span data-en>{{ section.settings.third_cta_en | escape }}</span></span>
     </span>
   </a>
 </section>
@@ -40,7 +53,16 @@
     { "type": "text", "id": "second_body_ar", "label": "Second body Arabic", "default": "عود، بخور، ومباخر تضيف عمقًا للمجلس والبيت." },
     { "type": "text", "id": "second_body_en", "label": "Second body English", "default": "Oud, bukhoor, and burners for a deeper home ritual." },
     { "type": "text", "id": "second_cta_ar", "label": "Second CTA Arabic", "default": "تسوق العود" },
-    { "type": "text", "id": "second_cta_en", "label": "Second CTA English", "default": "Shop oud" }
+    { "type": "text", "id": "second_cta_en", "label": "Second CTA English", "default": "Shop oud" },
+    { "type": "url", "id": "third_url", "label": "Third ad URL" },
+    { "type": "text", "id": "third_kicker_ar", "label": "Third kicker Arabic", "default": "مختارات شرقية" },
+    { "type": "text", "id": "third_kicker_en", "label": "Third kicker English", "default": "Oriental edits" },
+    { "type": "text", "id": "third_heading_ar", "label": "Third heading Arabic", "default": "عنبر، مسك، وخشب" },
+    { "type": "text", "id": "third_heading_en", "label": "Third heading English", "default": "Amber, musk, and woods" },
+    { "type": "text", "id": "third_body_ar", "label": "Third body Arabic", "default": "روائح عميقة تناسب الحضور اليومي والمناسبات الهادئة." },
+    { "type": "text", "id": "third_body_en", "label": "Third body English", "default": "Deep scent profiles for daily presence and quiet occasions." },
+    { "type": "text", "id": "third_cta_ar", "label": "Third CTA Arabic", "default": "تسوق الشرقيات" },
+    { "type": "text", "id": "third_cta_en", "label": "Third CTA English", "default": "Shop oriental" }
   ],
   "presets": [
     {
