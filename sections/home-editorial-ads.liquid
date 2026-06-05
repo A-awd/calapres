@@ -1,0 +1,51 @@
+<section class="home-editorial-ads wrap" aria-label="مختارات كالابريز">
+  <a class="home-ad home-ad--perfume reveal" href="{{ section.settings.first_url | default: '/collections/niche' | escape }}">
+    <img src="{{ 'c-niche.jpg' | asset_url }}" alt="" width="1080" height="1440" loading="lazy" />
+    <span class="home-ad__copy">
+      <span class="eyebrow"><span data-ar>{{ section.settings.first_kicker_ar | escape }}</span><span data-en>{{ section.settings.first_kicker_en | escape }}</span></span>
+      <strong><span data-ar>{{ section.settings.first_heading_ar | escape }}</span><span data-en>{{ section.settings.first_heading_en | escape }}</span></strong>
+      <small><span data-ar>{{ section.settings.first_body_ar | escape }}</span><span data-en>{{ section.settings.first_body_en | escape }}</span></small>
+      <span class="home-ad__cta"><span data-ar>{{ section.settings.first_cta_ar | escape }}</span><span data-en>{{ section.settings.first_cta_en | escape }}</span></span>
+    </span>
+  </a>
+  <a class="home-ad home-ad--oud reveal d1" href="{{ section.settings.second_url | default: '/collections/oud-bakhour' | escape }}">
+    <img src="{{ 'p-signature.jpg' | asset_url }}" alt="" width="1800" height="1200" loading="lazy" />
+    <span class="home-ad__copy">
+      <span class="eyebrow"><span data-ar>{{ section.settings.second_kicker_ar | escape }}</span><span data-en>{{ section.settings.second_kicker_en | escape }}</span></span>
+      <strong><span data-ar>{{ section.settings.second_heading_ar | escape }}</span><span data-en>{{ section.settings.second_heading_en | escape }}</span></strong>
+      <small><span data-ar>{{ section.settings.second_body_ar | escape }}</span><span data-en>{{ section.settings.second_body_en | escape }}</span></small>
+      <span class="home-ad__cta"><span data-ar>{{ section.settings.second_cta_ar | escape }}</span><span data-en>{{ section.settings.second_cta_en | escape }}</span></span>
+    </span>
+  </a>
+</section>
+
+{% schema %}
+{
+  "name": "Home Editorial Ads",
+  "settings": [
+    { "type": "url", "id": "first_url", "label": "First ad URL" },
+    { "type": "text", "id": "first_kicker_ar", "label": "First kicker Arabic", "default": "عطور النيش" },
+    { "type": "text", "id": "first_kicker_en", "label": "First kicker English", "default": "Niche perfume" },
+    { "type": "text", "id": "first_heading_ar", "label": "First heading Arabic", "default": "قوارير تُعرّف حضورك" },
+    { "type": "text", "id": "first_heading_en", "label": "First heading English", "default": "Bottles that define presence" },
+    { "type": "text", "id": "first_body_ar", "label": "First body Arabic", "default": "اختيارات نيش عالمية بطابع فاخر وهادئ." },
+    { "type": "text", "id": "first_body_en", "label": "First body English", "default": "Global niche selections with a quiet luxury tone." },
+    { "type": "text", "id": "first_cta_ar", "label": "First CTA Arabic", "default": "اكتشف العطور" },
+    { "type": "text", "id": "first_cta_en", "label": "First CTA English", "default": "Explore perfume" },
+    { "type": "url", "id": "second_url", "label": "Second ad URL" },
+    { "type": "text", "id": "second_kicker_ar", "label": "Second kicker Arabic", "default": "العود والمباخر" },
+    { "type": "text", "id": "second_kicker_en", "label": "Second kicker English", "default": "Oud and burners" },
+    { "type": "text", "id": "second_heading_ar", "label": "Second heading Arabic", "default": "طقس الرائحة الشرقية" },
+    { "type": "text", "id": "second_heading_en", "label": "Second heading English", "default": "The ritual of oriental scent" },
+    { "type": "text", "id": "second_body_ar", "label": "Second body Arabic", "default": "عود، بخور، ومباخر تضيف عمقًا للمجلس والبيت." },
+    { "type": "text", "id": "second_body_en", "label": "Second body English", "default": "Oud, bukhoor, and burners for a deeper home ritual." },
+    { "type": "text", "id": "second_cta_ar", "label": "Second CTA Arabic", "default": "تسوق العود" },
+    { "type": "text", "id": "second_cta_en", "label": "Second CTA English", "default": "Shop oud" }
+  ],
+  "presets": [
+    {
+      "name": "Home Editorial Ads"
+    }
+  ]
+}
+{% endschema %}

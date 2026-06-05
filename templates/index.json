@@ -16,8 +16,16 @@
       "type": "new-arrivals",
       "settings": {}
     },
+    "home-promo-band": {
+      "type": "home-promo-band",
+      "settings": {}
+    },
     "home-commerce-rails": {
       "type": "home-commerce-rails",
+      "settings": {}
+    },
+    "home-editorial-ads": {
+      "type": "home-editorial-ads",
       "settings": {}
     },
     "maison-story": {
@@ -43,10 +51,12 @@
   },
   "order": [
     "hero",
-    "collections-strip",
     "category-ocean",
     "new-arrivals",
+    "home-promo-band",
     "home-commerce-rails",
+    "home-editorial-ads",
+    "collections-strip",
     "maison-story",
     "scent-families",
     "oud-signature",

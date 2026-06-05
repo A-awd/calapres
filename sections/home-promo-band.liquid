@@ -1,0 +1,99 @@
+<section class="home-promo-band wrap" aria-label="خدمات كالابريز">
+  <a class="promo-marquee reveal" href="{{ section.settings.cta_url | default: '/collections/all' | escape }}">
+    <span class="promo-marquee__kicker">
+      <span data-ar>{{ section.settings.kicker_ar | escape }}</span>
+      <span data-en>{{ section.settings.kicker_en | escape }}</span>
+    </span>
+    <strong>
+      <span data-ar>{{ section.settings.heading_ar | escape }}</span>
+      <span data-en>{{ section.settings.heading_en | escape }}</span>
+    </strong>
+    <span class="promo-marquee__fine">
+      <span data-ar>{{ section.settings.body_ar | escape }}</span>
+      <span data-en>{{ section.settings.body_en | escape }}</span>
+    </span>
+  </a>
+  <div class="promo-services" role="list">
+    <div class="promo-service reveal d1" role="listitem">
+      <span class="promo-service__icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M3 8h16v12H3zM19 12h5l5 5v3h-10z"/><circle cx="9" cy="23" r="2.2"/><circle cx="24" cy="23" r="2.2"/></svg>
+      </span>
+      <span>
+        <strong><span data-ar>توصيل داخل السعودية</span><span data-en>Saudi delivery</span></strong>
+        <small><span data-ar>تغليف آمن ومتابعة دقيقة للطلب</span><span data-en>Secure packing with careful tracking</span></small>
+      </span>
+    </div>
+    <div class="promo-service reveal d2" role="listitem">
+      <span class="promo-service__icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M16 4l9 3v7c0 6-4 10-9 13-5-3-9-7-9-13V7z"/><path d="M11.5 15.5l3 3 6-6.5"/></svg>
+      </span>
+      <span>
+        <strong><span data-ar>أصالة مضمونة</span><span data-en>Authenticity assured</span></strong>
+        <small><span data-ar>كل قارورة وقطعة عود من مصدر موثوق</span><span data-en>Every bottle and oud piece is sourced carefully</span></small>
+      </span>
+    </div>
+    <div class="promo-service reveal d3" role="listitem">
+      <span class="promo-service__icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M13 4h6M14 4v5l-3 6v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V15l-3-6V4"/><path d="M11 19h10"/></svg>
+      </span>
+      <span>
+        <strong><span data-ar>اختيار عطري أدق</span><span data-en>Sharper scent curation</span></strong>
+        <small><span data-ar>نيش، عود، مباخر، وروائح شرقية مختارة</span><span data-en>Niche, oud, burners, and oriental notes</span></small>
+      </span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Promo Band",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker_ar",
+      "label": "Kicker Arabic",
+      "default": "خدمة كالابريز"
+    },
+    {
+      "type": "text",
+      "id": "kicker_en",
+      "label": "Kicker English",
+      "default": "Calapres service"
+    },
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "توصيل مجاني للطلبات أكثر من ٥٠٠ ريال"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Free delivery on orders over SAR 500"
+    },
+    {
+      "type": "text",
+      "id": "body_ar",
+      "label": "Body Arabic",
+      "default": "عطور نيش وعود ومباخر تصل إليك بتغليف يليق بالرائحة."
+    },
+    {
+      "type": "text",
+      "id": "body_en",
+      "label": "Body English",
+      "default": "Niche perfume, oud, and burners delivered with scent-worthy care."
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Promo Band"
+    }
+  ]
+}
+{% endschema %}
