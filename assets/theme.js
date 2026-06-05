@@ -171,14 +171,38 @@
     });
   }
 
+  function emptyCart() {
+    return { item_count: 0, items: [], total_price: 0 };
+  }
+
+  function normaliseCart(cart) {
+    if (!cart || typeof cart !== "object") return emptyCart();
+    if (!Array.isArray(cart.items)) cart.items = [];
+    if (typeof cart.item_count !== "number") cart.item_count = cart.items.reduce(function (sum, item) {
+      return sum + Number(item.quantity || 0);
+    }, 0);
+    if (typeof cart.total_price !== "number") cart.total_price = 0;
+    return cart;
+  }
+
   async function fetchCart() {
     try {
-      var res = await fetch("/cart.js");
-      var cart = await res.json();
+      var res = await fetch("/cart.js", {
+        credentials: "same-origin",
+        headers: { "Accept": "application/json" }
+      });
+      var text = await res.text();
+      var cart = normaliseCart(text ? JSON.parse(text) : emptyCart());
       updateCartCount(cart.item_count);
       renderCartPanel(cart);
       return cart;
-    } catch (e) { console.error("Cart fetch:", e); }
+    } catch (e) {
+      console.error("Cart fetch:", e);
+      var fallback = emptyCart();
+      updateCartCount(0);
+      renderCartPanel(fallback);
+      return fallback;
+    }
   }
 
   function renderCartPanel(cart) {
@@ -265,6 +289,7 @@
     dismissAnnouncementPopup();
     var overlay = document.querySelector("[data-cart]");
     if (overlay) { overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
+    fetchCart();
   }
   function closeCart() {
     var overlay = document.querySelector("[data-cart]");
