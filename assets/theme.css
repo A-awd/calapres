@@ -1913,7 +1913,7 @@ html[lang="en"] .home-ad__cta{
     align-items:center;
   }
   .hero__inner{
-    min-height:min(720px, calc(86svh - 76px));
+    min-height:clamp(560px, 76svh, 720px);
     justify-content:center;
     padding-block:34px 42px;
   }
