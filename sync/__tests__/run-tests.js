@@ -95,6 +95,9 @@ const creativeBrief = loadSyncModule('image-pipeline/creative-brief.js');
 const imageTypes = loadSyncModule('image-pipeline/image-types.js');
 const seedBriefs = loadSyncModule('image-pipeline/seed-creative-briefs.js');
 const supabaseProduct = loadSyncModule('supabase-product.js');
+const matchFragrance = loadSyncModule('match-fragrance.js');
+const fragranceVariant = loadSyncModule('fragrance-variant.js');
+const enrichmentSource = loadSyncModule('enrich/enrichment-source.js');
 
 function productId(url) {
   return crawl.productIdFromUrl(url);
@@ -1599,6 +1602,216 @@ test('seed-creative-briefs builds brief from Shopify product with oud theme dete
   assert.equal(brief.needs_product_images, true);
   assert.equal(brief.product_image_status, 'pending');
   assert.equal(brief.collection_theme, 'oud');
+});
+
+// ─── Fragrance Parent + Variant Model Tests ─────────────────────────────────
+
+function fragranceFrom(action) {
+  // Turn a resolve() result into the in-memory parent row shape used for matching.
+  return {
+    id: 'frag-' + action.fragranceKey,
+    brand_name: action.facts.brand,
+    normalized_name: action.facts.normalizedName,
+    concentration: action.facts.concentration
+  };
+}
+
+test('match-fragrance: one fragrance, one variant -> create_fragrance at high confidence', () => {
+  const parsed = { name: 'Aramis Classic Eau de Toilette 100ml', brand: 'Aramis', supplierPrice: 200, supplierProductId: '1002', sourceUrl: 'https://nawadirdior.sa/aramis-100/p1002' };
+  const result = matchFragrance.resolveFragrance(parsed, []);
+  assert.equal(result.action, 'create_fragrance');
+  assert.equal(result.fragranceKey, 'aramis|classic|edt');
+  assert.equal(result.confidence, 1);
+  assert.equal(result.facts.sizeMl, 100);
+  assert.equal(result.facts.isTester, false);
+  assert.equal(result.facts.sizeLabel, '100ml');
+});
+
+test('match-fragrance: one fragrance, multiple sizes/tester -> ONE parent, FOUR variants', () => {
+  const items = [
+    { name: 'Aramis Classic Eau de Toilette 50ml', brand: 'Aramis', supplierPrice: 150, supplierProductId: '1001', sourceUrl: 'https://nawadirdior.sa/aramis-50/p1001' },
+    { name: 'Aramis Classic Eau de Toilette 100ml', brand: 'Aramis', supplierPrice: 200, supplierProductId: '1002', sourceUrl: 'https://nawadirdior.sa/aramis-100/p1002' },
+    { name: 'Aramis Classic EDT 110ml', brand: 'Aramis', supplierPrice: 210, supplierProductId: '1003', sourceUrl: 'https://nawadirdior.sa/aramis-110/p1003' },
+    { name: 'Aramis Classic EDT Tester', brand: 'Aramis', supplierPrice: 90, supplierProductId: '1004', sourceUrl: 'https://nawadirdior.sa/aramis-tester/p1004' }
+  ];
+  const parents = [];
+  const variants = [];
+  for (const item of items) {
+    const result = matchFragrance.resolveFragrance(item, parents);
+    if (result.action === 'create_fragrance') parents.push(fragranceFrom(result));
+    else assert.equal(result.action, 'attach_variant');
+    variants.push(matchFragrance.extractFragranceFacts(item));
+  }
+  assert.equal(parents.length, 1);
+  assert.equal(variants.length, 4);
+  assert.deepEqual(Array.from(variants.map((v) => v.sizeLabel)), ['50ml', '100ml', '110ml', 'Tester']);
+  assert.equal(variants[3].isTester, true);
+});
+
+test('match-fragrance: different size of a known fragrance -> attach_variant (no duplicate parent)', () => {
+  const existing = [{ id: 'frag-1', brand_name: 'Aramis', normalized_name: 'classic', concentration: 'EDT' }];
+  const result = matchFragrance.resolveFragrance(
+    { name: 'Aramis Classic EDT 50ml', brand: 'Aramis', supplierPrice: 150, supplierProductId: '1005', sourceUrl: 'https://nawadirdior.sa/aramis-50/p1005' },
+    existing
+  );
+  assert.equal(result.action, 'attach_variant');
+  assert.equal(result.matched.id, 'frag-1');
+});
+
+test('match-fragrance: low confidence (missing brand/name) -> review, never merged', () => {
+  const noBrand = matchFragrance.resolveFragrance({ name: 'Mystery Juice 100ml', brand: '' }, []);
+  assert.equal(noBrand.action, 'review');
+  assert.ok(noBrand.confidence < matchFragrance.HIGH_CONFIDENCE);
+  const noName = matchFragrance.resolveFragrance({ name: 'Aramis EDT 100ml', brand: 'Aramis' }, []);
+  // brand + concentration + size only, no core name left -> unresolvable name
+  assert.equal(noName.action, 'review');
+  assert.equal(noName.reason, 'unresolvable_fragrance_name');
+});
+
+test('match-fragrance: Arabic + English mixed title resolves brand, name, size, concentration, gender', () => {
+  const result = matchFragrance.resolveFragrance({ name: ' توم فورد Black Orchid Eau de Parfum ١٠٠ml للنساء ' }, []);
+  assert.equal(result.facts.brand, 'Tom Ford');
+  assert.equal(result.facts.normalizedName, 'black orchid');
+  assert.equal(result.facts.concentration, 'EDP');
+  assert.equal(result.facts.sizeMl, 100);
+  assert.equal(result.facts.gender, 'women');
+  assert.equal(result.facts.canonicalNameEn, 'Black Orchid');
+});
+
+test('fragrance-variant: parent record carries enrichment fields unverified by default', () => {
+  const parsed = { name: 'Dior Sauvage Eau de Parfum 100ml', brand: 'Dior', sourceUrl: 'https://nawadirdior.sa/dior-sauvage/p111', supplierProductId: '111', supplierPrice: 650 };
+  const resolved = matchFragrance.resolveFragrance(parsed, []);
+  const parent = fragranceVariant.buildFragranceProductRecord(parsed, { facts: resolved.facts, confidence: resolved.confidence });
+  assert.equal(parent.brand_name, 'Dior');
+  assert.equal(parent.normalized_name, 'sauvage');
+  assert.equal(parent.concentration, 'EDP');
+  assert.equal(parent.canonical_name_en, 'Sauvage');
+  assert.equal(parent.enrichment_status, 'pending');
+  assert.equal(parent.verified, false);
+  assert.equal(parent.confidence_score, 1);
+  // enrichment-only fields start empty (filled later, never from supplier copy)
+  assert.equal(parent.fragrance_family_primary, null);
+  assert.equal(parent.luxury_description_en, null);
+  assert.equal(parent.seo_title_ar, null);
+});
+
+test('fragrance-variant: variant record preserves raw supplier payload + separates supplier_sku', () => {
+  const parsed = {
+    name: 'Tom Ford Oud Wood EDP 100ml', brand: 'Tom Ford', supplierPrice: 805, supplierCompareAtPrice: null,
+    availability: 'in_stock', sourceUrl: 'https://nawadirdior.sa/oud-wood/p852601829', supplierProductId: '852601829',
+    supplierSku: 'TF-OW-100', someSupplierField: 'KEEP-ME'
+  };
+  const priced = pricing.applyPricing(parsed);
+  const variant = fragranceVariant.buildProductVariantRecord(parsed, priced, { includeCalapresSku: true, supplierCode: 'ND', fragranceProductId: 'frag-uuid', supplierProductUuid: 'sup-uuid' });
+  // raw supplier payload preserved verbatim
+  assert.equal(variant.raw_payload.someSupplierField, 'KEEP-ME');
+  assert.equal(variant.raw_payload.supplierPrice, 805);
+  // supplier_sku kept separately, never used as calapres_sku
+  assert.equal(variant.supplier_sku, 'TF-OW-100');
+  assert.equal(variant.calapres_sku, 'CAL-ND-P852601829');
+  assert.notEqual(variant.calapres_sku, variant.supplier_sku);
+  // linkage to raw supplier row + parent
+  assert.equal(variant.supplier_product_uuid, 'sup-uuid');
+  assert.equal(variant.fragrance_product_id, 'frag-uuid');
+  assert.equal(variant.supplier_product_id, '852601829');
+});
+
+test('fragrance-variant: price = supplier + 100; discounted compare-at handling + same-price guard', () => {
+  const plain = fragranceVariant.buildProductVariantRecord(
+    { supplierPrice: 805, sourceUrl: 'https://nawadirdior.sa/x/p1', supplierProductId: '1' },
+    pricing.applyPricing({ supplierPrice: 805 })
+  );
+  assert.equal(plain.selling_price, 905);
+  assert.equal(plain.compare_at_price, null);
+
+  const discounted = fragranceVariant.buildProductVariantRecord(
+    { supplierPrice: 650, supplierCompareAtPrice: 805, sourceUrl: 'https://nawadirdior.sa/x/p2', supplierProductId: '2' },
+    pricing.applyPricing({ supplierPrice: 650, supplierCompareAtPrice: 805 })
+  );
+  assert.equal(discounted.selling_price, 750);              // discounted + 100
+  assert.equal(discounted.compare_at_price, 905);           // original + 100
+  assert.equal(discounted.supplier_discounted_price, 650);
+
+  const samePrice = fragranceVariant.buildProductVariantRecord(
+    { supplierPrice: 200, supplierCompareAtPrice: 200, sourceUrl: 'https://nawadirdior.sa/x/p3', supplierProductId: '3' },
+    pricing.applyPricing({ supplierPrice: 200, supplierCompareAtPrice: 200 })
+  );
+  assert.equal(samePrice.selling_price, 300);
+  assert.equal(samePrice.compare_at_price, null);           // never equal to selling_price
+});
+
+test('fragrance-variant: Shopify product groups variants and uses calapres_sku as variant SKU', () => {
+  const fragrance = { brand_name: 'Aramis', canonical_name_en: 'Classic', shopify_product_id: '9001' };
+  const variants = [
+    { calapres_sku: 'CAL-ND-P1001', supplier_sku: 'SUP-50', size_label: '50ml', selling_price: 250, compare_at_price: null, availability_status: 'in_stock' },
+    { calapres_sku: 'CAL-ND-P1002', supplier_sku: 'SUP-100', size_label: '100ml', selling_price: 300, compare_at_price: 360, availability_status: 'out_of_stock' }
+  ];
+  const payload = fragranceVariant.buildShopifyProductFromFragrance(fragrance, variants);
+  assert.equal(payload.product.title, 'Classic');
+  assert.equal(payload.product.vendor, 'Aramis');
+  assert.equal(payload.variantCount, 2);
+  assert.deepEqual(Array.from(payload.product.options[0].values), ['50ml', '100ml']);
+  assert.equal(payload.product.variants[0].sku, 'CAL-ND-P1001');
+  assert.equal(payload.product.variants[0].price, '250');
+  assert.equal(payload.product.variants[0].inventory_policy, 'continue');
+  assert.equal(payload.product.variants[1].inventory_policy, 'deny');
+  assert.equal(payload.product.variants[1].compare_at_price, '360');
+  // supplier_sku never appears as a Shopify variant sku
+  for (const variant of payload.product.variants) {
+    assert.notEqual(variant.sku, 'SUP-50');
+    assert.notEqual(variant.sku, 'SUP-100');
+  }
+});
+
+test('enrichment-source: plan prioritizes supplier, then official brand, then Fragrantica Arabia', () => {
+  const plan = enrichmentSource.buildEnrichmentPlan(
+    { brand_name: 'Tom Ford', canonical_name_en: 'Oud Wood' },
+    { supplierSourceUrl: 'https://nawadirdior.sa/oud-wood/p1', officialBrandUrl: 'https://www.tomford.com/oud-wood' }
+  );
+  assert.deepEqual(Array.from(plan.map((s) => s.source)), ['supplier', 'official_brand', 'fragrantica_arabia']);
+  assert.equal(plan[0].trusted, false);
+  assert.equal(plan[1].trusted, true);
+  assert.equal(plan[2].trusted, false);
+  assert.ok(plan[2].url.includes('fragranticarabia.com'));
+  assert.equal(plan[2].use, 'structured_facts_only');
+});
+
+test('enrichment-source: public facts stay UNVERIFIED and long text is never copied', () => {
+  const merged = enrichmentSource.mergeEnrichmentFacts(
+    { normalized_name: 'oud wood' },
+    { fragrance_family_primary: 'Woody', accords: 'oud, wood, spice', notes_top: ['rosewood'], description: 'A long marketing paragraph that must never be copied.', review: 'user review text' },
+    'fragrantica_arabia',
+    { sourceUrl: 'https://www.fragranticarabia.com/perfume/oud-wood', confidence: 0.7 }
+  );
+  assert.equal(merged.verified, false);
+  assert.equal(merged.fragrance.enrichment_status, 'enriched');
+  assert.equal(merged.fragrance.fragrance_family_primary, 'Woody');
+  assert.deepEqual(Array.from(merged.fragrance.accords), ['oud', 'wood', 'spice']);
+  assert.equal(merged.fragrance.enrichment_source, 'fragrantica_arabia');
+  // long-text fields are dropped, not stored
+  assert.ok(merged.ignored.includes('description'));
+  assert.equal(merged.fragrance.luxury_description_en, undefined);
+  assert.equal(Object.prototype.hasOwnProperty.call(merged.fragrance.raw_enrichment_payload, 'description'), false);
+});
+
+test('enrichment-source: only an official/manual trusted source with markVerified sets verified', () => {
+  const official = enrichmentSource.mergeEnrichmentFacts({}, { fragrance_family_primary: 'Woody' }, 'official_brand', { markVerified: true });
+  assert.equal(official.verified, true);
+  assert.equal(official.fragrance.enrichment_status, 'verified');
+  // trusted source but no explicit verify flag -> stays unverified
+  const notFlagged = enrichmentSource.mergeEnrichmentFacts({}, { fragrance_family_primary: 'Woody' }, 'official_brand', {});
+  assert.equal(notFlagged.verified, false);
+  // public source can never be verified even if markVerified is passed
+  const publicForced = enrichmentSource.mergeEnrichmentFacts({}, { accords: 'amber' }, 'fragrantica_arabia', { markVerified: true });
+  assert.equal(publicForced.verified, false);
+});
+
+test('enrichment-source: never overwrites existing enriched/manual facts unless force', () => {
+  const base = { fragrance_family_primary: 'Oriental', accords: ['amber'] };
+  const soft = enrichmentSource.mergeEnrichmentFacts(base, { fragrance_family_primary: 'Woody' }, 'fragrantica_arabia', {});
+  assert.equal(soft.fragrance.fragrance_family_primary, 'Oriental'); // preserved
+  const forced = enrichmentSource.mergeEnrichmentFacts(base, { fragrance_family_primary: 'Woody' }, 'official_brand', { force: true, markVerified: true });
+  assert.equal(forced.fragrance.fragrance_family_primary, 'Woody');  // force override from trusted source
 });
 
 async function main() {

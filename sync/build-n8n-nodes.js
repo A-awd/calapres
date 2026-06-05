@@ -21,6 +21,9 @@ const modules = [
   './normalize.js',
   './categorize.js',
   './supabase-product.js',
+  './match-fragrance.js',
+  './fragrance-variant.js',
+  './enrich/enrichment-source.js',
   './enrich/prompt.js',
   './enrich/seo.js',
   './enrich/build-enrich-payload.js',
@@ -125,6 +128,93 @@ async function main() {
   const supplierId = $json.supplierId || $json.supplier_id || $vars?.SUPABASE_SUPPLIER_ID || $env?.SUPABASE_SUPPLIER_ID || null;
   const body = supabase.buildSupabaseUpsertBody(parsed, priced, supplierId, { supplierCode: 'ND', supplierName: 'nawadirdior' });
   return { json: { ...$json, supabaseUpsertBody: body, supabaseTable: 'supplier_products' } };
+}`
+  },
+  {
+    file: 'fragrance-resolve.generated.js',
+    name: 'Code: Resolve Fragrance Parent',
+    mode: 'runOnceForEachItem',
+    glue: `
+const matcher = __require('./match-fragrance.js');
+const fragranceVariant = __require('./fragrance-variant.js');
+async function main() {
+  const parsed = $json.parsed || {};
+  // Existing-parent attach vs create is enforced at the DB level by the
+  // fragrance_products identity index (brand + normalized name + concentration).
+  // Here we only compute facts + confidence and gate low-confidence rows to review.
+  const resolution = matcher.resolveFragrance(parsed, $json.existingFragrances || []);
+  const review = resolution.action === 'review';
+  const fragranceRecord = review ? null : fragranceVariant.buildFragranceProductRecord(parsed, { facts: resolution.facts, confidence: resolution.confidence });
+  return { json: { ...$json,
+    fragranceResolution: resolution,
+    fragranceFacts: resolution.facts,
+    fragranceRecord,
+    fragranceTable: 'fragrance_products',
+    matchStatus: review ? 'needs_review' : (resolution.action === 'attach_variant' ? 'matched_variant' : 'created_fragrance'),
+    matchConfidence: resolution.confidence,
+    skipFragranceUpsert: review
+  } };
+}`
+  },
+  {
+    file: 'variant-upsert.generated.js',
+    name: 'Code: Build Variant Upsert Payload',
+    mode: 'runOnceForEachItem',
+    glue: `
+const fragranceVariant = __require('./fragrance-variant.js');
+async function main() {
+  const parsed = $json.parsed || {};
+  const priced = { price: parsed.price, compareAtPrice: parsed.compareAtPrice };
+  const fragranceResponse = $json.fragranceResponse || $json.fragranceUpsertResponse;
+  const fragranceRow = Array.isArray(fragranceResponse) ? fragranceResponse[0]
+    : (fragranceResponse && Array.isArray(fragranceResponse.data) ? fragranceResponse.data[0] : (fragranceResponse || $json.fragranceRow));
+  const supplierRow = $json.supabaseProduct || $json.supplierProduct || null;
+  const supplierId = $json.supplierId || $json.supplier_id || $vars?.SUPABASE_SUPPLIER_ID || $env?.SUPABASE_SUPPLIER_ID || null;
+  const body = fragranceVariant.buildProductVariantRecord(parsed, priced, {
+    facts: $json.fragranceFacts,
+    fragranceProductId: fragranceRow && fragranceRow.id,
+    supplierProductUuid: supplierRow && supplierRow.id,
+    supplierId: supplierId,
+    supplierCode: 'ND',
+    supplierName: 'nawadirdior'
+  });
+  return { json: { ...$json, productVariantBody: body, supabaseTable: 'product_variants', skipVariantUpsert: !(fragranceRow && fragranceRow.id) } };
+}`
+  },
+  {
+    file: 'shopify-from-fragrance.generated.js',
+    name: 'Code: Build Shopify Product From Fragrance',
+    mode: 'runOnceForEachItem',
+    glue: `
+const fragranceVariant = __require('./fragrance-variant.js');
+async function main() {
+  const fragrance = $json.fragrance || $json.fragranceRow || $json.supabaseFragrance || {};
+  const variants = $json.variants || $json.productVariants || (fragrance && fragrance.variants) || [];
+  const existingProduct = $json.existingProduct || null;
+  const payload = fragranceVariant.buildShopifyProductFromFragrance(fragrance, variants, {
+    existingProductId: existingProduct && (existingProduct.id || existingProduct.legacyResourceId)
+  });
+  return { json: { ...$json, payload, productId: payload.product.id || (fragrance && fragrance.shopify_product_id) || null } };
+}`
+  },
+  {
+    file: 'enrich-merge.generated.js',
+    name: 'Code: Merge Enrichment Facts',
+    mode: 'runOnceForEachItem',
+    glue: `
+const enrichment = __require('./enrich/enrichment-source.js');
+async function main() {
+  const fragrance = $json.fragrance || $json.fragranceRow || {};
+  const facts = $json.facts || $json.enrichmentFacts || {};
+  const source = $json.enrichmentSource || facts.source || 'fragrantica_arabia';
+  // markVerified only honored for official/manual trusted sources inside the merge.
+  const merged = enrichment.mergeEnrichmentFacts(fragrance, facts, source, {
+    sourceUrl: $json.enrichmentSourceUrl || facts.source_url || null,
+    confidence: $json.enrichmentConfidence,
+    markVerified: $json.markVerified === true,
+    force: $json.forceUpdate === true
+  });
+  return { json: { ...$json, fragranceEnrichmentBody: merged.fragrance, enrichmentApplied: merged.applied, enrichmentIgnored: merged.ignored, fragranceTable: 'fragrance_products' } };
 }`
   },
   {
@@ -441,7 +531,12 @@ function buildManifest() {
       ['Code: Normalize Supplier Product', 'Code: applyPricing'],
       ['Code: applyPricing', 'Code: Build Supabase Upsert Payload'],
       ['Code: Build Supabase Upsert Payload', 'HTTP POST: Supabase Upsert supplier_products'],
-      ['HTTP POST: Supabase Upsert supplier_products', 'Code: Build Product Media Rows'],
+      ['HTTP POST: Supabase Upsert supplier_products', 'Code: Resolve Fragrance Parent'],
+      ['Code: Resolve Fragrance Parent', 'HTTP POST: Supabase Upsert fragrance_products (skip when needs_review)'],
+      ['HTTP POST: Supabase Upsert fragrance_products (skip when needs_review)', 'Code: Build Variant Upsert Payload'],
+      ['Code: Build Variant Upsert Payload', 'HTTP POST: Supabase Upsert product_variants'],
+      ['HTTP POST: Supabase Upsert product_variants', 'HTTP PATCH: Supabase supplier_products link fragrance+variant'],
+      ['HTTP PATCH: Supabase supplier_products link fragrance+variant', 'Code: Build Product Media Rows'],
       ['Code: Build Product Media Rows', 'Code: Build Product Media Lookup'],
       ['Code: Build Product Media Lookup', 'HTTP GET: Supabase Existing product_media'],
       ['HTTP GET: Supabase Existing product_media', 'Code: Filter Product Media Rows'],
@@ -455,6 +550,10 @@ function buildManifest() {
       ['Shopify Admin REST create/update', 'Code: Build Supabase Shopify Sync Payload'],
       ['Code: Build Supabase Shopify Sync Payload', 'HTTP PATCH: Supabase supplier_products Shopify fields'],
       ['Code: Build Supabase Shopify Sync Payload', 'HTTP POST: Supabase Upsert shopify_products'],
+      ['HTTP GET: Supabase fragrance_products + product_variants (grouped)', 'Code: Build Shopify Product From Fragrance'],
+      ['Code: Build Shopify Product From Fragrance', 'Shopify Admin REST create/update product+variants'],
+      ['Supabase List fragrance_products (enrichment pending)', 'Code: Merge Enrichment Facts'],
+      ['Code: Merge Enrichment Facts', 'HTTP PATCH: Supabase fragrance_products enrichment'],
       ['Shopify Admin GraphQL: List Imported Products', 'Code: Find Missing Supplier Products'],
       ['Code: Find Missing Supplier Products', 'Code: buildPayload Missing'],
       ['Workflow Error Trigger', 'Code: Build Sync Error Row'],

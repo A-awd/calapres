@@ -3187,6 +3187,763 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 },
+"./match-fragrance.js": function(module, exports, __require) {
+// Fragrance matching: resolve raw supplier products into a canonical parent
+// fragrance + a variant (size / tester / gift set).
+//
+// Rules:
+// - Fragrance = parent (brand + normalized fragrance name + concentration).
+// - Sizes / testers / gift sets = variants of that parent.
+// - Same brand + same normalized name (+ compatible concentration) with HIGH
+//   confidence -> attach as a new VARIANT, never a duplicate parent.
+// - Missing brand or unresolvable name -> LOW confidence -> flag for review,
+//   never merge blindly.
+//
+// Dependency-free: only requires sibling sync helpers so it runs in n8n Code
+// nodes and the offline test runner.
+
+const normalize = require('./normalize.js');
+
+const HIGH_CONFIDENCE = 0.9;
+
+// Surface forms removed from a title to isolate the core fragrance name.
+const CONCENTRATION_TOKENS = [
+  'eau de parfum', 'eau de toilette', 'eau de cologne', 'le parfum',
+  'edp', 'edt', 'edc', 'extrait', 'parfum', 'cologne',
+  'او دو برفيوم', 'او دو بارفيوم', 'او دو تواليت', 'ماء عطر', 'ماء تواليت',
+  'بارفيوم', 'برفيوم', 'كولونيا', 'اكستريت', 'اكسيتريت', 'مستخلص'
+];
+
+const GENDER_TOKENS = [
+  'for women', 'for men', 'for him', 'for her', 'pour homme', 'pour femme',
+  'women', 'woman', 'men', 'man', 'unisex', 'ladies',
+  'نسائي', 'للنساء', 'حريمي', 'رجالي', 'للرجال', 'للجنسين', 'مشترك'
+];
+
+const TESTER_TOKENS = ['tester', 'test', 'تستر', 'تيستر', 'عينة'];
+const GIFT_SET_TOKENS = ['gift set', 'giftset', 'gift box', 'set', 'coffret', 'طقم', 'مجموعة', 'هدية', 'بوكس'];
+
+function resolveFragrance(parsed, existingFragrances, options) {
+  const facts = extractFragranceFacts(parsed, options);
+  const key = buildFragranceKey(facts);
+  const confidence = scoreConfidence(facts);
+
+  if (confidence < HIGH_CONFIDENCE) {
+    return {
+      action: 'review',
+      reason: reviewReason(facts),
+      confidence,
+      facts,
+      fragranceKey: key,
+      matched: null
+    };
+  }
+
+  const matched = findMatchingFragrance(facts, existingFragrances);
+  if (matched) {
+    return { action: 'attach_variant', confidence, facts, fragranceKey: key, matched };
+  }
+  return { action: 'create_fragrance', confidence, facts, fragranceKey: key, matched: null };
+}
+
+function extractFragranceFacts(parsed, options) {
+  const opts = options || {};
+  const input = parsed && typeof parsed === 'object' ? parsed : {};
+  const rawTitle = normalize.cleanTitle(input.name || input.title || input.product_title_en || input.product_title_ar || '');
+  const brand = normalize.normalizeBrand(input.brand || input.brand_name || input.vendor || normalize.detectBrand(rawTitle));
+  const concentration = firstNonEmpty(input.concentration, normalize.normalizeConcentration(rawTitle));
+  const sizeMl = firstFinite(input.sizeMl, input.size_ml, normalize.normalizeSizeMl(rawTitle));
+  const gender = firstNonEmpty(input.gender, input.gender_target, normalize.normalizeGender(rawTitle));
+  const isTester = detectFlag(rawTitle, TESTER_TOKENS) || Boolean(opts.isTester);
+  const isGiftSet = detectFlag(rawTitle, GIFT_SET_TOKENS) || Boolean(opts.isGiftSet);
+
+  const coreName = stripToCoreName(rawTitle, brand, concentration);
+  const normalizedName = normalize.fold(coreName);
+  const canonicalNameEn = latinOnly(coreName) || (isLatin(rawTitle) ? rawTitle : '');
+  const canonicalNameAr = arabicOnly(coreName) || (isArabic(rawTitle) ? rawTitle : '');
+
+  return {
+    rawTitle,
+    brand: brand || '',
+    brandSlug: brand ? normalize.fold(brand) : '',
+    concentration: concentration || null,
+    sizeMl: sizeMl === undefined ? null : sizeMl,
+    gender: gender || null,
+    isTester,
+    isGiftSet,
+    coreName,
+    normalizedName,
+    canonicalNameEn,
+    canonicalNameAr,
+    sizeLabel: buildSizeLabel({ sizeMl, isTester, isGiftSet }),
+    variantTitle: buildVariantTitle({ sizeMl, isTester, isGiftSet, concentration })
+  };
+}
+
+function buildFragranceKey(facts) {
+  const f = facts || {};
+  return [f.brandSlug || '', f.normalizedName || '', f.concentration ? String(f.concentration).toLowerCase() : ''].join('|');
+}
+
+function scoreConfidence(facts) {
+  const f = facts || {};
+  let score = 0;
+  if (f.brand) score += 0.5;
+  if (f.normalizedName) score += 0.4;
+  if (f.concentration) score += 0.1;
+  // Brand AND a resolvable name are both mandatory for a high-confidence merge.
+  if (!f.brand || !f.normalizedName) score = Math.min(score, 0.5);
+  return Math.round(score * 1000) / 1000;
+}
+
+function reviewReason(facts) {
+  const f = facts || {};
+  if (!f.brand && !f.normalizedName) return 'missing_brand_and_name';
+  if (!f.brand) return 'missing_brand';
+  if (!f.normalizedName) return 'unresolvable_fragrance_name';
+  return 'low_confidence';
+}
+
+function findMatchingFragrance(facts, existingFragrances) {
+  const rows = Array.isArray(existingFragrances)
+    ? existingFragrances
+    : (existingFragrances && Array.isArray(existingFragrances.data) ? existingFragrances.data : []);
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') continue;
+    const rowBrandSlug = row.brandSlug || (row.brand_name ? normalize.fold(row.brand_name) : (row.brand ? normalize.fold(row.brand) : ''));
+    const rowName = row.normalized_name || row.normalizedName || '';
+    if (!rowBrandSlug || !rowName) continue;
+    if (rowBrandSlug !== facts.brandSlug) continue;
+    if (rowName !== facts.normalizedName) continue;
+    if (!concentrationCompatible(facts.concentration, row.concentration)) continue;
+    return row;
+  }
+  return null;
+}
+
+function concentrationCompatible(a, b) {
+  if (!a || !b) return true; // unknown concentration never blocks a name match
+  return String(a).toLowerCase() === String(b).toLowerCase();
+}
+
+function stripToCoreName(title, brand, concentration) {
+  // Fold Arabic-Indic digits to ASCII first so "١٠٠ml" becomes "100ml" and the
+  // size patterns below can strip it (\d and \b only see ASCII digits).
+  let text = ' ' + normalize.foldArabicDigits(String(title || '')) + ' ';
+  for (const form of brandSurfaceForms(brand)) text = removeToken(text, form);
+  for (const token of CONCENTRATION_TOKENS) text = removeToken(text, token);
+  for (const token of GENDER_TOKENS) text = removeToken(text, token);
+  for (const token of TESTER_TOKENS) text = removeToken(text, token);
+  for (const token of GIFT_SET_TOKENS) text = removeToken(text, token);
+  // Sizes: "100ml", "100 مل", then any bare 1-4 digit run left over.
+  text = text.replace(/\d+(?:\.\d+)?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
+  text = text.replace(/\d{1,4}/g, ' ');
+  return text.replace(/[‌‏]/g, ' ').replace(/[-_/|,،.]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function brandSurfaceForms(brand) {
+  const forms = [];
+  const canonical = String(brand || '').trim();
+  if (canonical) forms.push(canonical);
+  for (const key of Object.keys(normalize.BRAND_MAP)) {
+    if (normalize.BRAND_MAP[key] === canonical) forms.push(key);
+  }
+  for (const key of Object.keys(normalize.BRAND_ALIASES)) {
+    if (normalize.BRAND_ALIASES[key] === canonical) forms.push(key);
+  }
+  // Longest first so multi-word brands are removed before their fragments.
+  return unique(forms).sort((a, b) => b.length - a.length);
+}
+
+function removeToken(haystack, token) {
+  const needle = String(token || '').trim();
+  if (!needle) return haystack;
+  if (/[a-z]/i.test(needle)) {
+    const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    return haystack.replace(new RegExp('(^|[^a-z])' + escaped + '(?=$|[^a-z])', 'gi'), '$1 ');
+  }
+  // Arabic / non-latin: plain global substring removal.
+  return haystack.split(needle).join(' ');
+}
+
+function buildSizeLabel(input) {
+  if (input && input.isTester) return 'Tester';
+  if (input && input.isGiftSet) return 'Gift Set';
+  const ml = firstFinite(input && input.sizeMl);
+  return ml ? ml + 'ml' : 'Standard';
+}
+
+function buildVariantTitle(input) {
+  const parts = [];
+  const ml = firstFinite(input && input.sizeMl);
+  if (ml) parts.push(ml + 'ml');
+  if (input && input.concentration) parts.push(input.concentration);
+  if (input && input.isTester) parts.push('Tester');
+  if (input && input.isGiftSet) parts.push('Gift Set');
+  return parts.join(' ').trim() || 'Standard';
+}
+
+function detectFlag(text, tokens) {
+  const folded = normalize.fold(text);
+  return tokens.some((token) => {
+    if (/[a-z]/i.test(token)) return new RegExp('(^|[^a-z])' + token.replace(/\s+/g, '\\s+') + '(?=$|[^a-z])', 'i').test(folded);
+    return folded.indexOf(token) !== -1;
+  });
+}
+
+function latinOnly(value) {
+  const out = String(value || '').replace(/[^ -ɏ]/g, ' ').replace(/\s+/g, ' ').trim();
+  return /[a-z]/i.test(out) ? out : '';
+}
+
+function arabicOnly(value) {
+  const out = String(value || '').replace(/[^؀-ۿ\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  return /[؀-ۿ]/.test(out) ? out : '';
+}
+
+function isLatin(value) {
+  return /[a-z]/i.test(String(value || ''));
+}
+
+function isArabic(value) {
+  return /[؀-ۿ]/.test(String(value || ''));
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
+  }
+  return null;
+}
+
+function firstFinite() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    if (value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value))) return Number(value);
+  }
+  return null;
+}
+
+function unique(values) {
+  const seen = {};
+  const out = [];
+  for (const value of values || []) {
+    const key = String(value);
+    if (!seen[key]) {
+      seen[key] = true;
+      out.push(value);
+    }
+  }
+  return out;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    HIGH_CONFIDENCE,
+    resolveFragrance,
+    extractFragranceFacts,
+    buildFragranceKey,
+    scoreConfidence,
+    findMatchingFragrance,
+    stripToCoreName,
+    buildSizeLabel,
+    buildVariantTitle,
+    detectFlag
+  };
+}
+
+},
+"./fragrance-variant.js": function(module, exports, __require) {
+// Builders for the fragrance parent + variant model.
+//
+// Flow: supplier_products (raw) -> fragrance_products (parent) -> product_variants
+// (children) -> Shopify (one product, many size variants).
+//
+// Business rules honored here (same as supplier_products):
+// - profit_margin_sar = 100 (default).
+// - selling_price = supplier price + margin.
+// - discounted -> compare_at_price = original + margin, selling = discounted + margin.
+// - compare_at_price never equals selling_price (null it instead).
+// - supplier_sku is preserved separately; calapres_sku (CAL-<CODE>-P<id>) is the
+//   ONLY value used as the Shopify variant sku.
+
+const config = require('./config.js');
+const matcher = require('./match-fragrance.js');
+
+const SUPPLIER_CODE_ND = 'ND';
+
+// ── Parent: fragrance_products ──────────────────────────────────────────────
+function buildFragranceProductRecord(parsed, options) {
+  const opts = options || {};
+  const facts = opts.facts || matcher.extractFragranceFacts(parsed, opts);
+  const input = parsed && typeof parsed === 'object' ? parsed : {};
+
+  return compactObject({
+    brand_id: opts.brandId || input.brand_id || null,
+    brand_name: facts.brand || cleanString(input.brand || input.brand_name) || null,
+    canonical_name_ar: facts.canonicalNameAr || null,
+    canonical_name_en: facts.canonicalNameEn || null,
+    normalized_name: facts.normalizedName || null,
+    gender_target: facts.gender || null,
+    concentration: facts.concentration || null,
+    // Enrichment fields stay empty until an enrichment pass fills them.
+    fragrance_family_primary: null,
+    fragrance_family_secondary: null,
+    accords: normalizeTextArray(input.accords),
+    notes_top: normalizeTextArray(input.notesTop || input.notes_top),
+    notes_middle: normalizeTextArray(input.notesMiddle || input.notes_middle),
+    notes_base: normalizeTextArray(input.notesBase || input.notes_base),
+    longevity_rating: null,
+    sillage_rating: null,
+    season_best_for: null,
+    occasion_best_for: null,
+    style_keywords: null,
+    luxury_description_ar: null,
+    luxury_description_en: null,
+    seo_title_ar: null,
+    seo_title_en: null,
+    seo_description_ar: null,
+    seo_description_en: null,
+    seo_keywords: null,
+    enrichment_status: cleanString(opts.enrichmentStatus) || 'pending',
+    enrichment_source: opts.enrichmentSource || null,
+    enrichment_source_url: opts.enrichmentSourceUrl || null,
+    confidence_score: clampConfidence(opts.confidence),
+    verified: false,
+    raw_enrichment_payload: opts.rawEnrichmentPayload || {}
+  });
+}
+
+// ── Child: product_variants ─────────────────────────────────────────────────
+function buildProductVariantRecord(parsed, priced, options) {
+  const opts = options || {};
+  const facts = opts.facts || matcher.extractFragranceFacts(parsed, opts);
+  const input = parsed && typeof parsed === 'object' ? parsed : {};
+  const pricing = priced && typeof priced === 'object' ? priced : {};
+  const profitMarginSar = toMoneyNumber(opts.profitMarginSar) || config.MARKUP_SAR;
+
+  const supplierProductId = normalizeProductId(
+    input.supplierProductId || input.supplier_product_id || extractProductIdFromUrl(input.sourceUrl || input.supplier_source_url)
+  );
+  const supplierCode = cleanString(opts.supplierCode || config.SUPPLIER_CODES[config.SUPPLIER_NAME] || SUPPLIER_CODE_ND).toUpperCase();
+
+  const supplierPrice = toMoneyNumber(input.supplierPrice ?? input.supplier_price);
+  const supplierOriginalPrice = toMoneyNumber(
+    input.supplierCompareAtPrice ?? input.supplier_original_price ?? input.compareAtPrice ?? input.compare_at_price
+  );
+  const hasDiscount = supplierOriginalPrice !== null && supplierPrice !== null && supplierOriginalPrice > supplierPrice;
+  const supplierDiscountedPrice = hasDiscount ? supplierPrice : null;
+  const sellingPrice = firstMoney(
+    pricing.price, pricing.selling_price, input.selling_price,
+    supplierPrice === null ? null : supplierPrice + profitMarginSar
+  );
+  let compareAtPrice = firstMoney(pricing.compareAtPrice, pricing.compare_at_price, input.compare_at_price);
+  if (compareAtPrice === null && hasDiscount) compareAtPrice = roundMoney(supplierOriginalPrice + profitMarginSar);
+  if (compareAtPrice !== null && sellingPrice !== null && sameMoney(compareAtPrice, sellingPrice)) compareAtPrice = null;
+
+  const record = compactObject({
+    fragrance_product_id: opts.fragranceProductId || input.fragrance_product_id || null,
+    supplier_id: opts.supplierId || input.supplier_id || null,
+    supplier_product_uuid: opts.supplierProductUuid || input.supplier_product_uuid || null,
+    supplier_product_id: supplierProductId,
+    supplier_sku: cleanString(input.supplierSku || input.supplier_sku || input.sku) || null,
+    size_ml: toInteger(facts.sizeMl),
+    size_label: facts.sizeLabel || null,
+    variant_title: facts.variantTitle || null,
+    is_tester: Boolean(facts.isTester),
+    is_gift_set: Boolean(facts.isGiftSet),
+    supplier_price: supplierPrice,
+    supplier_original_price: supplierOriginalPrice,
+    supplier_discounted_price: supplierDiscountedPrice,
+    profit_margin_sar: profitMarginSar,
+    selling_price: sellingPrice,
+    compare_at_price: compareAtPrice,
+    currency: cleanString(input.currency) || 'SAR',
+    availability_status: normalizeAvailability(input.availability || input.availability_status),
+    shopify_product_id: cleanString(input.shopifyProductId || input.shopify_product_id) || null,
+    shopify_variant_id: cleanString(input.shopifyVariantId || input.shopify_variant_id) || null,
+    shopify_sync_status: cleanString(input.shopifySyncStatus || input.shopify_sync_status) || 'pending',
+    raw_payload: input.raw_payload || input,
+    last_seen_at: opts.now || new Date().toISOString()
+  });
+
+  if (opts.calapresSku || input.calapresSku || input.calapres_sku) {
+    record.calapres_sku = cleanString(opts.calapresSku || input.calapresSku || input.calapres_sku);
+  } else if (opts.includeCalapresSku) {
+    record.calapres_sku = generateCalapresSku(supplierCode, supplierProductId);
+  }
+
+  return record;
+}
+
+function generateCalapresSku(supplierCode, supplierProductId) {
+  const code = cleanString(supplierCode).toUpperCase();
+  const id = normalizeProductId(supplierProductId);
+  if (!code || !id) return null;
+  return 'CAL-' + code + '-P' + id;
+}
+
+// ── Shopify: one parent product with a size-variant array ───────────────────
+// Each Shopify variant.sku is the variant's calapres_sku — never supplier_sku.
+function buildShopifyProductFromFragrance(fragrance, variants, options) {
+  const opts = options || {};
+  const parent = fragrance && typeof fragrance === 'object' ? fragrance : {};
+  const rows = (Array.isArray(variants) ? variants : []).filter((row) => row && typeof row === 'object');
+  const anyInStock = rows.some((row) => normalizeAvailability(row.availability_status || row.availability) === 'in_stock');
+  const existingProductId = opts.existingProductId || parent.shopify_product_id || null;
+
+  const shopifyVariants = rows.map((row) => {
+    const inStock = normalizeAvailability(row.availability_status || row.availability) === 'in_stock';
+    return compactObject({
+      id: row.shopify_variant_id || undefined,
+      option1: cleanString(row.size_label || row.variant_title) || 'Standard',
+      // SKU = calapres_sku ONLY. supplier_sku is never used as a Shopify SKU.
+      sku: cleanString(row.calapres_sku) || undefined,
+      price: row.selling_price === null || row.selling_price === undefined ? undefined : formatMoney(row.selling_price),
+      compare_at_price: row.compare_at_price === null || row.compare_at_price === undefined ? null : formatMoney(row.compare_at_price),
+      inventory_policy: inStock ? 'continue' : 'deny'
+    });
+  });
+
+  return {
+    product: compactObject({
+      id: existingProductId || undefined,
+      title: cleanString(parent.canonical_name_en || parent.canonical_name_ar || parent.normalized_name) || undefined,
+      vendor: cleanString(parent.brand_name) || undefined,
+      status: existingProductId ? (anyInStock ? 'active' : 'draft') : 'draft',
+      options: [{ name: 'Size', values: shopifyVariants.map((variant) => variant.option1) }],
+      variants: shopifyVariants
+    }),
+    variantCount: shopifyVariants.length,
+    anyInStock
+  };
+}
+
+// ── helpers ─────────────────────────────────────────────────────────────────
+function clampConfidence(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  if (number < 0) return 0;
+  if (number > 1) return 1;
+  return Math.round(number * 1000) / 1000;
+}
+
+function normalizeProductId(value) {
+  const cleaned = String(value || '').replace(/^p/i, '').replace(/\D/g, '');
+  return cleaned || null;
+}
+
+function extractProductIdFromUrl(url) {
+  const match = String(url || '').match(/\/p(\d+)(?=$|[/?#])/i);
+  return match ? match[1] : null;
+}
+
+function normalizeAvailability(value) {
+  const raw = String(value || '').trim().toLowerCase();
+  if (raw === 'in_stock' || raw === 'instock' || raw === 'available' || raw === 'true' || raw === '1' || raw.includes('متوفر') || raw.includes('in stock')) {
+    return 'in_stock';
+  }
+  if (raw === 'out_of_stock' || raw === 'missing' || raw === 'not_found' || raw === 'unavailable' || raw === 'false' || raw === '0' || raw.includes('نفد') || raw.includes('غير متوفر') || raw.includes('sold out')) {
+    return 'out_of_stock';
+  }
+  return 'unknown';
+}
+
+function normalizeTextArray(value) {
+  if (Array.isArray(value)) {
+    const out = unique(value.map(cleanString).filter(Boolean));
+    return out.length ? out : null;
+  }
+  const text = cleanString(value);
+  if (!text) return null;
+  return unique(text.split(/[,،|]/).map(cleanString).filter(Boolean));
+}
+
+function firstMoney() {
+  for (const value of arguments) {
+    const number = toMoneyNumber(value);
+    if (number !== null) return roundMoney(number);
+  }
+  return null;
+}
+
+function toMoneyNumber(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const number = Number(String(value).replace(/,/g, ''));
+  return Number.isFinite(number) ? number : null;
+}
+
+function toInteger(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const number = parseInt(String(value).replace(/\D/g, ''), 10);
+  return Number.isFinite(number) ? number : null;
+}
+
+function roundMoney(value) {
+  return Math.round(Number(value) * 100) / 100;
+}
+
+function sameMoney(left, right) {
+  return roundMoney(left) === roundMoney(right);
+}
+
+function formatMoney(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const rounded = roundMoney(value);
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
+}
+
+function cleanString(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function compactObject(object) {
+  const out = {};
+  for (const key of Object.keys(object || {})) {
+    if (object[key] !== undefined) out[key] = object[key];
+  }
+  return out;
+}
+
+function unique(values) {
+  const seen = {};
+  const out = [];
+  for (const value of values || []) {
+    const key = String(value);
+    if (!seen[key]) {
+      seen[key] = true;
+      out.push(value);
+    }
+  }
+  return out;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    SUPPLIER_CODE_ND,
+    buildFragranceProductRecord,
+    buildProductVariantRecord,
+    generateCalapresSku,
+    buildShopifyProductFromFragrance
+  };
+}
+
+},
+"./enrich/enrichment-source.js": function(module, exports, __require) {
+// Enrichment source handling for fragrance_products.
+//
+// Source priority (use the first that yields each structured fact):
+//   1. supplier      (nawadirdior.sa)            — already-crawled facts. NOT verified.
+//   2. official_brand (brand's own site, manual) — TRUSTED. May be verified.
+//   3. fragrantica_arabia (fragranticarabia.com) — public structured facts only. NOT verified.
+//
+// Hard rules:
+// - Public sources are used ONLY for STRUCTURED perfume facts (family, accords,
+//   notes, ratings, season/occasion). Never copy long descriptions or reviews.
+// - Do not mark facts `verified` unless they come from an official brand source
+//   or a manual trusted entry.
+// - Never overwrite a fragrance field that is already filled unless force=true.
+//
+// Dependency-free so it runs in n8n Code nodes and the offline test runner.
+
+const FRAGRANTICA_ARABIA_BASE = 'https://www.fragranticarabia.com/';
+
+// Structured fields enrichment is allowed to write. Anything not listed here
+// (descriptions, reviews, body copy) is intentionally ignored.
+const STRUCTURED_FACT_FIELDS = [
+  'fragrance_family_primary',
+  'fragrance_family_secondary',
+  'accords',
+  'notes_top',
+  'notes_middle',
+  'notes_base',
+  'longevity_rating',
+  'sillage_rating',
+  'season_best_for',
+  'occasion_best_for',
+  'style_keywords'
+];
+
+// Free-text fields that must NEVER be copied from a public source.
+const BLOCKED_FACT_FIELDS = [
+  'description',
+  'long_description',
+  'luxury_description_ar',
+  'luxury_description_en',
+  'review',
+  'reviews',
+  'body',
+  'body_html'
+];
+
+const ARRAY_FACT_FIELDS = {
+  accords: true,
+  notes_top: true,
+  notes_middle: true,
+  notes_base: true,
+  season_best_for: true,
+  occasion_best_for: true,
+  style_keywords: true
+};
+
+const TRUSTED_SOURCES = { official_brand: true, manual: true };
+
+function buildEnrichmentPlan(fragrance, options) {
+  const opts = options || {};
+  const parent = fragrance && typeof fragrance === 'object' ? fragrance : {};
+  const plan = [];
+
+  plan.push({
+    source: 'supplier',
+    trusted: false,
+    url: opts.supplierSourceUrl || parent.enrichment_source_url || null,
+    use: 'structured_facts',
+    note: 'Supplier-crawled facts. Never verified.'
+  });
+
+  if (opts.officialBrandUrl) {
+    plan.push({
+      source: 'official_brand',
+      trusted: true,
+      url: opts.officialBrandUrl,
+      use: 'structured_facts',
+      note: 'Official brand source. May be marked verified.'
+    });
+  }
+
+  if (opts.useFragranticaArabia !== false) {
+    plan.push({
+      source: 'fragrantica_arabia',
+      trusted: false,
+      url: opts.fragranticaUrl || buildFragranticaQueryUrl(parent),
+      use: 'structured_facts_only',
+      note: 'Public structured facts only. Do not copy descriptions or reviews. Never verified.'
+    });
+  }
+
+  return plan;
+}
+
+function buildFragranticaQueryUrl(fragrance) {
+  const parent = fragrance && typeof fragrance === 'object' ? fragrance : {};
+  const terms = [parent.brand_name, parent.canonical_name_en || parent.canonical_name_ar || parent.normalized_name]
+    .map((value) => String(value || '').trim())
+    .filter(Boolean)
+    .join(' ');
+  if (!terms) return FRAGRANTICA_ARABIA_BASE;
+  return FRAGRANTICA_ARABIA_BASE + 'search/?query=' + encodeURIComponent(terms);
+}
+
+function isTrustedSource(source) {
+  return Boolean(TRUSTED_SOURCES[String(source || '').toLowerCase()]);
+}
+
+// Merge structured facts onto a fragrance, honoring every enrichment rule.
+function mergeEnrichmentFacts(fragrance, facts, source, options) {
+  const opts = options || {};
+  const parent = fragrance && typeof fragrance === 'object' ? { ...fragrance } : {};
+  const incoming = facts && typeof facts === 'object' ? facts : {};
+  const sourceName = String(source || incoming.source || 'unknown').toLowerCase();
+  const trusted = isTrustedSource(sourceName);
+  const force = Boolean(opts.force);
+
+  const applied = {};
+  const ignored = [];
+
+  for (const field of STRUCTURED_FACT_FIELDS) {
+    if (!(field in incoming)) continue;
+    const value = ARRAY_FACT_FIELDS[field] ? normalizeArray(incoming[field]) : normalizeScalar(incoming[field]);
+    if (value === null || (Array.isArray(value) && value.length === 0)) continue;
+    if (!force && !isEmpty(parent[field])) continue; // never overwrite existing enriched/manual data
+    parent[field] = value;
+    applied[field] = value;
+  }
+
+  // Explicitly drop anything that looks like free-text copy from a public source.
+  for (const field of BLOCKED_FACT_FIELDS) {
+    if (field in incoming) ignored.push(field);
+  }
+
+  parent.enrichment_source = sourceName;
+  parent.enrichment_source_url = opts.sourceUrl || incoming.source_url || parent.enrichment_source_url || null;
+  parent.raw_enrichment_payload = onlyStructured(incoming);
+  parent.confidence_score = clampConfidence(opts.confidence ?? parent.confidence_score);
+  parent.enrichment_status = Object.keys(applied).length ? (opts.partial ? 'partial' : 'enriched') : (parent.enrichment_status || 'pending');
+
+  // Verified ONLY from an official/manual trusted source AND an explicit verify flag.
+  parent.verified = Boolean(trusted && opts.markVerified);
+  if (parent.verified) parent.enrichment_status = 'verified';
+
+  return { fragrance: parent, applied, ignored, trusted, verified: parent.verified };
+}
+
+// ── helpers ─────────────────────────────────────────────────────────────────
+function onlyStructured(facts) {
+  const out = {};
+  for (const field of STRUCTURED_FACT_FIELDS) {
+    if (field in facts && !isEmpty(facts[field])) out[field] = facts[field];
+  }
+  return out;
+}
+
+function normalizeArray(value) {
+  if (Array.isArray(value)) return unique(value.map(cleanString).filter(Boolean));
+  const text = cleanString(value);
+  if (!text) return [];
+  return unique(text.split(/[,،|]/).map(cleanString).filter(Boolean));
+}
+
+function normalizeScalar(value) {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  const text = cleanString(value);
+  return text || null;
+}
+
+function clampConfidence(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 0;
+  if (number < 0) return 0;
+  if (number > 1) return 1;
+  return Math.round(number * 1000) / 1000;
+}
+
+function isEmpty(value) {
+  return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0);
+}
+
+function cleanString(value) {
+  return String(value === null || value === undefined ? '' : value).replace(/\s+/g, ' ').trim();
+}
+
+function unique(values) {
+  const seen = {};
+  const out = [];
+  for (const value of values || []) {
+    const key = String(value);
+    if (!seen[key]) {
+      seen[key] = true;
+      out.push(value);
+    }
+  }
+  return out;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    FRAGRANTICA_ARABIA_BASE,
+    STRUCTURED_FACT_FIELDS,
+    BLOCKED_FACT_FIELDS,
+    TRUSTED_SOURCES,
+    buildEnrichmentPlan,
+    buildFragranticaQueryUrl,
+    isTrustedSource,
+    mergeEnrichmentFacts
+  };
+}
+
+},
 "./enrich/prompt.js": function(module, exports, __require) {
 const config = require('../config.js');
 const normalize = require('../normalize.js');
