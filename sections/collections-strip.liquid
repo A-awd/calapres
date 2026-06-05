@@ -2,21 +2,28 @@
   <div class="sec-head">
     <div class="ttl reveal">
       <span class="eyebrow"><span data-ar>تسوّق حسب الفئة</span><span data-en>Shop by category</span></span>
-      <h2 class="display d-2"><span data-ar>مجموعاتٌ مُنتقاة بعناية</span><span data-en>Collections, quietly curated</span></h2>
+      <h2 class="display d-2"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h2>
     </div>
-    <a class="link reveal" href="/collections"><span data-ar>عرض الكل</span><span data-en>View all</span><span class="arrow">→</span></a>
+    <a class="link reveal" href="{{ section.settings.view_all_url | default: '/collections' }}"><span data-ar>{{ section.settings.view_all_ar }}</span><span data-en>{{ section.settings.view_all_en }}</span><span class="arrow">→</span></a>
   </div>
   <div class="collections">
-    {%- assign coll_images = 'c-niche.jpg,c-oriental.jpg,c-oud.jpg,c-brands.jpg' | split: ',' -%}
-    {%- assign coll_names_ar = 'عطور النيش,العطور الشرقية,العود والمباخر,البراندات الفاخرة' | split: ',' -%}
-    {%- assign coll_names_en = 'Niche Perfumes,Oriental Perfumes,Oud & Bukhoor,Luxury Brands' | split: ',' -%}
-    {%- assign coll_urls = '/collections/niche,/collections/oriental,/collections/oud-bakhour,/collections/luxury-brands' | split: ',' -%}
+    {%- assign coll_handles = 'niche,luxury-brands,oriental,oud-bakhour' | split: ',' -%}
+    {%- assign coll_images = 'c-niche.jpg,c-brands.jpg,c-oriental.jpg,c-oud.jpg' | split: ',' -%}
+    {%- assign coll_names_ar = 'عطور النيش,البراندات الفاخرة,العطور الشرقية,العود والمباخر' | split: ',' -%}
+    {%- assign coll_names_en = 'Niche Perfumes,Luxury Brands,Oriental Perfumes,Oud & Bukhoor' | split: ',' -%}
     {%- for i in (0..3) -%}
+      {%- assign coll_handle = coll_handles[i] -%}
+      {%- assign linked_collection = collections[coll_handle] -%}
+      {%- if linked_collection != blank -%}
+        {%- assign coll_url = linked_collection.url -%}
+      {%- else -%}
+        {%- capture coll_url -%}/collections/{{ coll_handle }}{%- endcapture -%}
+      {%- endif -%}
       {%- assign delay = '' -%}
       {%- if i == 1 -%}{%- assign delay = ' d1' -%}{%- endif -%}
       {%- if i == 2 -%}{%- assign delay = ' d2' -%}{%- endif -%}
       {%- if i == 3 -%}{%- assign delay = ' d3' -%}{%- endif -%}
-      <a class="col-card reveal{{ delay }}" href="{{ coll_urls[i] }}">
+      <a class="col-card reveal{{ delay }}" href="{{ coll_url }}">
         <img src="{{ coll_images[i] | asset_url }}" alt="{{ coll_names_ar[i] }}" width="1080" height="1440" />
         <span class="cap">
           <span class="nm"><span data-ar>{{ coll_names_ar[i] }}</span><span data-en>{{ coll_names_en[i] }}</span></span>
@@ -30,7 +37,37 @@
 {% schema %}
 {
   "name": "Collections Strip",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_ar",
+      "label": "Heading Arabic",
+      "default": "مجموعاتٌ مُنتقاة بعناية"
+    },
+    {
+      "type": "text",
+      "id": "heading_en",
+      "label": "Heading English",
+      "default": "Collections, quietly curated"
+    },
+    {
+      "type": "text",
+      "id": "view_all_ar",
+      "label": "View all Arabic",
+      "default": "عرض الكل"
+    },
+    {
+      "type": "text",
+      "id": "view_all_en",
+      "label": "View all English",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all URL"
+    }
+  ],
   "presets": [{ "name": "Collections Strip" }]
 }
 {% endschema %}

@@ -12,40 +12,15 @@
   <div class="rail-wrap">
     <div class="rail">
       {%- if section.settings.collection != blank -%}
-        {%- for product in section.settings.collection.products limit: 8 -%}
-          {%- assign tag_ar = '' -%}
-          {%- assign tag_en = '' -%}
-          {%- if product.tags contains 'جديد' or product.tags contains 'new' -%}
-            {%- assign tag_ar = 'جديد' -%}{%- assign tag_en = 'New' -%}
-          {%- elsif product.tags contains 'توقيع' or product.tags contains 'signature' -%}
-            {%- assign tag_ar = 'توقيع كالابريز' -%}{%- assign tag_en = 'Signature' -%}
-          {%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
-            {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
-          {%- endif -%}
-          <a class="product-card" href="{{ product.url }}">
-            <div class="frame">
-              {%- if tag_ar != '' -%}
-                <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
-              {%- endif -%}
-              {%- if product.featured_image -%}
-                <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
-              {%- endif -%}
-            </div>
-            <div class="meta">
-              <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
-              <div class="price"><span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span><span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span></div>
-            </div>
-          </a>
-        {%- endfor -%}
+        {%- assign rail_products = section.settings.collection.products -%}
       {%- else -%}
-        <!-- Fallback static cards matching design -->
-        <a class="product-card" href="/products/amber-nuit"><div class="frame"><span class="tag"><span data-ar>جديد</span><span data-en>New</span></span><img src="{{ 'pr-amber.jpg' | asset_url }}" alt="" width="1080" height="1350" /></div><div class="meta"><div class="name"><span data-ar>عنبر الليل</span><span data-en>Ambre Nuit</span></div><div class="price"><span data-ar>٦٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 690 · 100ml</span></div></div></a>
-        <a class="product-card" href="/products/rose-taif"><div class="frame"><img src="{{ 'pr-rose.jpg' | asset_url }}" alt="" width="1080" height="1350" /></div><div class="meta"><div class="name"><span data-ar>وردة الطائف</span><span data-en>Rose Taïf</span></div><div class="price"><span data-ar>٥٤٠ ر.س · ٥٠ مل</span><span data-en>SAR 540 · 50ml</span></div></div></a>
-        <a class="product-card" href="/products/royal-oud"><div class="frame"><span class="tag"><span data-ar>توقيع كالابريز</span><span data-en>Signature</span></span><img src="{{ 'pr-oud.jpg' | asset_url }}" alt="" width="1080" height="1350" /></div><div class="meta"><div class="name"><span data-ar>عود ملكي</span><span data-en>Royal Oud</span></div><div class="price"><span data-ar>٨٩٠ ر.س · ١٠٠ مل</span><span data-en>SAR 890 · 100ml</span></div></div></a>
-        <a class="product-card" href="/products/white-musk"><div class="frame"><img src="{{ 'pr-musk.jpg' | asset_url }}" alt="" width="1080" height="1350" /></div><div class="meta"><div class="name"><span data-ar>مسك أبيض</span><span data-en>White Musk</span></div><div class="price"><span data-ar>٤٢٠ ر.س · ٥٠ مل</span><span data-en>SAR 420 · 50ml</span></div></div></a>
-        <a class="product-card" href="/products/riyadh-nights"><div class="frame"><span class="tag"><span data-ar>الأكثر طلبًا</span><span data-en>Most loved</span></span><img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1080" height="1440" /></div><div class="meta"><div class="name"><span data-ar>ليالي الرياض</span><span data-en>Riyadh Nights</span></div><div class="price"><span data-ar>٧٥٠ ر.س · ١٠٠ مل</span><span data-en>SAR 750 · 100ml</span></div></div></a>
-        <a class="product-card" href="/products/bukhoor-smoke"><div class="frame"><img src="{{ 'c-oud.jpg' | asset_url }}" alt="" width="1080" height="1440" /></div><div class="meta"><div class="name"><span data-ar>دخان العود</span><span data-en>Bukhoor Smoke</span></div><div class="price"><span data-ar>٣٢٠ ر.س · مبخرة</span><span data-en>SAR 320 · Bukhoor</span></div></div></a>
+        {%- assign rail_products = collections.all.products | reverse -%}
       {%- endif -%}
+      {%- for product in rail_products limit: 12 -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="lede"><span data-ar>ستظهر المنتجات هنا فور توفرها.</span><span data-en>Products will appear here as soon as they are available.</span></p>
+      {%- endfor -%}
     </div>
   </div>
 </section>

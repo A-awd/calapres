@@ -3,9 +3,9 @@
     <div class="copy reveal">
       <span class="eyebrow"><span data-ar>الميزون</span><span data-en>The Maison</span></span>
       <h2 class="display d-1"><span data-ar>{{ section.settings.heading_ar | default: 'العطر بوصفه حِرفة' }}</span><span data-en>{{ section.settings.heading_en | default: 'Perfume, made a craft' }}</span></h2>
-      <p><span data-ar>{{ section.settings.body_ar | default: 'وُلدت كالابريز في الرياض من شغفٍ واحد: أن تكون الرائحة لحظةً تُروى. ننتقي كل عطرٍ نيش وكل قطعة عودٍ بعناية، من أرقى دور العالم، لنقدّمها كما يجب أن تُقدَّم الروائح النادرة — أصيلةً ومكتملة.' }}</span><span data-en>{{ section.settings.body_en | default: 'Calapres was born in Riyadh from a single passion: that a scent should be a moment worth telling. Every niche perfume and piece of oud is chosen with care, from the world’s finest houses — presented the way rare scents should be: authentic and complete.' }}</span></p>
+      <p><span data-ar>{{ section.settings.body_ar | default: 'وُلدت كالابريز من شغفٍ واحد: أن تكون الرائحة لحظةً تُروى. ننتقي كل عطرٍ نيش وكل قطعة عودٍ بعناية، من أرقى دور العالم، لنقدّمها كما يجب أن تُقدَّم الروائح النادرة — أصيلةً ومكتملة.' }}</span><span data-en>{{ section.settings.body_en | default: 'Calapres was born from a single passion: that a scent should be a moment worth telling. Every niche perfume and piece of oud is chosen with care, from the finest houses — presented the way rare scents should be: authentic and complete.' }}</span></p>
       <div style="margin-top:var(--s4)">
-        <a class="link" href="{{ section.settings.cta_url | default: '/pages/maison' }}" style="color:var(--gold)">
+        <a class="link" href="{{ section.settings.cta_url | default: '/pages/about' }}" style="color:var(--gold)">
           <span data-ar>{{ section.settings.cta_ar | default: 'قصّتنا' }}</span>
           <span data-en>{{ section.settings.cta_en | default: 'Our story' }}</span>
           <span class="arrow">→</span>
@@ -18,7 +18,7 @@
       {%- else -%}
         <img src="{{ 'm-maison.jpg' | asset_url }}" alt="" width="1120" height="1400" />
       {%- endif -%}
-      <span class="seal"><span data-ar>منذ<br/>الرياض</span><span data-en>Est.<br/>Riyadh</span></span>
+      <span class="seal"><span data-ar>دار<br/>كالابريز</span><span data-en>Calapres<br/>Maison</span></span>
     </div>
   </div>
 </section>

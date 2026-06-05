@@ -7,20 +7,60 @@
 {%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
   {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
 {%- endif -%}
-<a class="product-card" href="{{ product.url }}">
-  <div class="frame">
-    {%- if tag_ar != '' -%}
-      <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
-    {%- endif -%}
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
-    {%- endif -%}
-  </div>
+{%- assign card_class = card_class | default: 'product-card' -%}
+{%- assign first_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
+{%- assign variant_title_normalized = first_variant.title | downcase | strip -%}
+{%- assign compare_price = first_variant.compare_at_price | default: 0 -%}
+{%- assign has_size = true -%}
+{%- if variant_title_normalized == 'default' or variant_title_normalized == 'default title' -%}
+  {%- assign has_size = false -%}
+{%- endif -%}
+<div class="{{ card_class }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-url="{{ product.url }}"
+  data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
+  data-product-price="{{ product.price | money | escape }}"
+  data-product-price-cents="{{ product.price }}"
+  data-family="{{ product.tags | join: ',' | escape }}"
+  data-brand="{{ product.vendor | escape }}"
+  data-type="{% if product.type != blank %}{{ product.type | escape }}{% else %}عطر{% endif %}"
+  data-price="{{ product.price | divided_by: 100 }}"
+  data-size="{% if has_size %}{{ first_variant.title | escape }}{% endif %}">
+  <a class="product-card__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    <span class="frame">
+      {%- if tag_ar != '' -%}
+        <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
+      {%- endif -%}
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
+      {%- else -%}
+        <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy" />
+      {%- endif -%}
+    </span>
+  </a>
+  <button class="product-card__fav" type="button" aria-label="المفضلة" aria-pressed="false" data-wishlist-toggle>
+    <svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg>
+  </button>
   <div class="meta">
-    <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
+    {%- if product.vendor != blank -%}
+      <div class="brand"><span data-ar>{{ product.vendor | escape }}</span><span data-en>{{ product.vendor | escape }}</span></div>
+    {%- endif -%}
+    <a class="name" href="{{ product.url }}"><span data-ar>{{ product.title | escape }}</span><span data-en>{{ product.title | escape }}</span></a>
     <div class="price">
-      <span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span>
-      <span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span>
+      <span class="current" data-money-cents="{{ product.price }}">{{ product.price | money }}</span>
+      {%- if compare_price > product.price -%}
+        <span class="compare-at" data-money-cents="{{ compare_price }}">{{ compare_price | money }}</span>
+      {%- endif -%}
+    </div>
+    <div class="product-card__foot">
+      <span class="size-h">
+        {%- if has_size -%}
+          {{ first_variant.title | escape }}
+        {%- else -%}
+          <span data-ar>متوفر</span><span data-en>Available</span>
+        {%- endif -%}
+      </span>
+      <a class="mini-link" href="{{ product.url }}"><span data-ar>تفاصيل</span><span data-en>Details</span></a>
     </div>
   </div>
-</a>
+</div>
