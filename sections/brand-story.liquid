@@ -1,0 +1,83 @@
+<section class="brand-story" aria-labelledby="brand-story-title-{{ section.id }}">
+  <div class="container">
+    <div class="brand-story-grid">
+      <div class="brand-story-content">
+        <h2 class="section-title" id="brand-story-title-{{ section.id }}">
+          {{ section.settings.heading | default: 'قصة كالابريز' }}
+        </h2>
+        <p class="brand-story-text">
+          {{ section.settings.text_1 | default: 'كالابريز — رحلة عطرية تنبع من قلب الطبيعة، حيث تلتقي أصالة العطور العربية بالرقي العالمي. نؤمن أن لكل عطر قصة تُروى، ولكل رائحة ذكرى تبقى.' }}
+        </p>
+        {% if section.settings.text_2 != blank %}
+          <p class="brand-story-text">{{ section.settings.text_2 }}</p>
+        {% endif %}
+        <a href="{{ section.settings.cta_url | default: '/pages/about' }}" class="btn btn-accent">
+          {{ section.settings.cta_label | default: 'اعرف أكثر عنّا' }}
+        </a>
+      </div>
+
+      {% if section.settings.image %}
+        <div class="brand-story-image">
+          <img
+            src="{{ section.settings.image | img_url: '800x' }}"
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            loading="lazy"
+            width="800"
+            height="1000"
+          >
+        </div>
+      {% else %}
+        <div class="brand-story-image" style="background:rgba(201,169,110,0.1);display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:6rem;opacity:0.3;">🌿</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "قصة كالابريز"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Paragraph 1",
+      "default": "كالابريز — رحلة عطرية تنبع من قلب الطبيعة، حيث تلتقي أصالة العطور العربية بالرقي العالمي."
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "Paragraph 2 (optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Brand Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Label",
+      "default": "اعرف أكثر عنّا"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+      "default": "/pages/about"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story"
+    }
+  ]
+}
+{% endschema %}

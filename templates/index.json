@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "collections-strip": {
+      "type": "collections-strip",
+      "settings": {}
+    },
+    "new-arrivals": {
+      "type": "new-arrivals",
+      "settings": {}
+    },
+    "maison-story": {
+      "type": "maison-story",
+      "settings": {}
+    },
+    "scent-families": {
+      "type": "scent-families",
+      "settings": {}
+    },
+    "oud-signature": {
+      "type": "oud-signature",
+      "settings": {}
+    },
+    "services": {
+      "type": "services",
+      "settings": {}
+    },
+    "journal-signup": {
+      "type": "journal-signup",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "collections-strip",
+    "new-arrivals",
+    "maison-story",
+    "scent-families",
+    "oud-signature",
+    "services",
+    "journal-signup"
+  ]
+}

@@ -1,0 +1,144 @@
+<section class="pdp wrap" id="product">
+  <div class="pdp-grid">
+
+    <!-- Gallery -->
+    <div class="pdp-gallery" data-gallery>
+      <div class="gallery-main">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | img_url: '900x1125', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" data-main-img fetchpriority="high" />
+        {%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="gallery-thumbs">
+          {%- for img in product.images limit: 5 -%}
+            <button class="thumb{% if forloop.first %} active{% endif %}" data-thumb="{{ img | img_url: '900x1125', crop: 'center' }}" aria-label="صورة {{ forloop.index }}">
+              <img src="{{ img | img_url: '120x150', crop: 'center' }}" alt="" width="120" height="150" loading="lazy" />
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="pdp-info">
+      {%- if product.vendor != blank -%}
+        <span class="eyebrow">{{ product.vendor }}</span>
+      {%- endif -%}
+      <h1 class="display d-2">{{ product.title }}</h1>
+
+      <div class="pdp-price" data-pdp-price>
+        {{ product.selected_or_first_available_variant.price | money }}
+      </div>
+
+      {%- if product.variants.size > 1 -%}
+        <div class="pdp-sizes" data-sizes>
+          {%- for variant in product.variants -%}
+            <button class="size-btn{% if forloop.first %} active{% endif %}"
+              data-variant-id="{{ variant.id }}"
+              data-price="{{ variant.price | money }}"
+              {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <input type="hidden" name="id" data-selected-variant value="{{ product.selected_or_first_available_variant.id }}" />
+
+      <div class="pdp-actions">
+        {%- if product.available -%}
+          <button class="btn btn-primary btn-full" data-add-to-cart
+            data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+            <span data-ar>أضف إلى السلة</span>
+            <span data-en>Add to cart</span>
+          </button>
+        {%- else -%}
+          <button class="btn btn-primary btn-full" disabled>
+            <span data-ar>نفد المخزون</span>
+            <span data-en>Sold out</span>
+          </button>
+        {%- endif -%}
+      </div>
+
+      <!-- Accordion: Description -->
+      {%- if product.description != blank -%}
+        <div class="accordion" data-accordion>
+          <button class="acc-toggle" aria-expanded="false">
+            <span><span data-ar>وصف العطر</span><span data-en>Fragrance Description</span></span>
+            <span class="acc-icon">+</span>
+          </button>
+          <div class="acc-body">{{ product.description }}</div>
+        </div>
+      {%- endif -%}
+
+      <!-- Accordion: Notes -->
+      {%- assign top_notes = product.metafields.perfume.top_notes.value -%}
+      {%- assign heart_notes = product.metafields.perfume.heart_notes.value -%}
+      {%- assign base_notes = product.metafields.perfume.base_notes.value -%}
+      {%- if top_notes or heart_notes or base_notes -%}
+        <div class="accordion" data-accordion>
+          <button class="acc-toggle" aria-expanded="false">
+            <span><span data-ar>هرم العطر</span><span data-en>Fragrance Pyramid</span></span>
+            <span class="acc-icon">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="pyramid">
+              {%- if top_notes -%}
+                <div class="pyr-row">
+                  <span class="pyr-label"><span data-ar>القمة</span><span data-en>Top</span></span>
+                  <span class="pyr-notes">{{ top_notes }}</span>
+                </div>
+              {%- endif -%}
+              {%- if heart_notes -%}
+                <div class="pyr-row">
+                  <span class="pyr-label"><span data-ar>القلب</span><span data-en>Heart</span></span>
+                  <span class="pyr-notes">{{ heart_notes }}</span>
+                </div>
+              {%- endif -%}
+              {%- if base_notes -%}
+                <div class="pyr-row">
+                  <span class="pyr-label"><span data-ar>القاعدة</span><span data-en>Base</span></span>
+                  <span class="pyr-notes">{{ base_notes }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Accordion: Delivery -->
+      <div class="accordion" data-accordion>
+        <button class="acc-toggle" aria-expanded="false">
+          <span><span data-ar>التوصيل والإرجاع</span><span data-en>Delivery &amp; Returns</span></span>
+          <span class="acc-icon">+</span>
+        </button>
+        <div class="acc-body">
+          <p><span data-ar>توصيل في نفس اليوم داخل الرياض. خلال ٢–٤ أيام عمل لباقي المناطق. إرجاع مجاني خلال ١٤ يومًا.</span><span data-en>Same-day delivery in Riyadh. 2–4 business days for other regions. Free returns within 14 days.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  {%- if product.collections.first -%}
+    {%- assign rel_col = product.collections.first -%}
+    <div class="pdp-related section-sm">
+      <div class="sec-head">
+        <div class="ttl">
+          <span class="eyebrow"><span data-ar>قد يعجبك أيضًا</span><span data-en>You may also like</span></span>
+        </div>
+      </div>
+      <div class="rail">
+        {%- for rp in rel_col.products limit: 6 -%}
+          {%- unless rp.id == product.id -%}
+            {% render 'product-card', product: rp %}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

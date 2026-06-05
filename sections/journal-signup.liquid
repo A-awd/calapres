@@ -1,0 +1,38 @@
+<section class="section wrap journal-signup" id="journal">
+  <div class="js-inner reveal">
+    <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar | default: 'مجلّة كالابريز' }}</span><span data-en>{{ section.settings.eyebrow_en | default: 'The Calapres Journal' }}</span></span>
+    <h2 class="display d-2"><span data-ar>{{ section.settings.heading_ar | default: 'اشترك في رسائلنا' }}</span><span data-en>{{ section.settings.heading_en | default: 'Subscribe to our letters' }}</span></h2>
+    <p><span data-ar>{{ section.settings.sub_ar | default: 'أخبارٌ عن العطور، نصائح الخبراء، وعروضٌ حصرية — مباشرةً إلى بريدك.' }}</span><span data-en>{{ section.settings.sub_en | default: 'Perfume news, expert tips, and exclusive offers — direct to your inbox.' }}</span></p>
+    {% form 'customer', id: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter" />
+      <div class="js-form">
+        <input class="js-input" type="email" name="contact[email]" required
+          placeholder-ar="بريدك الإلكتروني"
+          placeholder-en="Your email"
+          placeholder="بريدك الإلكتروني" />
+        <button class="btn btn-primary" type="submit">
+          <span data-ar>اشترك</span>
+          <span data-en>Subscribe</span>
+        </button>
+      </div>
+      {%- if form.posted_successfully? -%}
+        <p class="js-success"><span data-ar>شكرًا! سنبقيك على اطلاع.</span><span data-en>Thank you! We'll keep you informed.</span></p>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Journal Signup",
+  "settings": [
+    { "type": "text", "id": "eyebrow_ar", "label": "Eyebrow (Arabic)", "default": "مجلّة كالابريز" },
+    { "type": "text", "id": "eyebrow_en", "label": "Eyebrow (English)", "default": "The Calapres Journal" },
+    { "type": "text", "id": "heading_ar", "label": "Heading (Arabic)", "default": "اشترك في رسائلنا" },
+    { "type": "text", "id": "heading_en", "label": "Heading (English)", "default": "Subscribe to our letters" },
+    { "type": "textarea", "id": "sub_ar", "label": "Subtext (Arabic)" },
+    { "type": "textarea", "id": "sub_en", "label": "Subtext (English)" }
+  ],
+  "presets": [{ "name": "Journal Signup" }]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+<section class="section wrap" id="scents">
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>تسوّق حسب المناسبة</span><span data-en>Shop by occasion</span></span>
+      <h2 class="display d-2"><span data-ar>لكلّ لحظةٍ رائحتها</span><span data-en>Every moment has its scent</span></h2>
+    </div>
+    <a class="link reveal" href="/collections"><span data-ar>اكتشف الكل</span><span data-en>Discover all</span><span class="arrow">→</span></a>
+  </div>
+  <div class="occasions">
+    <a class="occ-feature reveal" href="{{ section.settings.feature_url | default: '/collections/oriental' }}">
+      {%- if section.settings.feature_image -%}
+        <img src="{{ section.settings.feature_image | img_url: '800x1000', crop: 'center' }}" alt="" width="800" height="1000" />
+      {%- else -%}
+        <img src="{{ 'c-oriental.jpg' | asset_url }}" alt="" width="1080" height="1440" />
+      {%- endif -%}
+      <div class="occ-cap">
+        <span class="eyebrow"><span data-ar>{{ section.settings.feature_eyebrow_ar | default: 'العطور الشرقية' }}</span><span data-en>{{ section.settings.feature_eyebrow_en | default: 'Oriental Perfumes' }}</span></span>
+        <h3><span data-ar>{{ section.settings.feature_title_ar | default: 'السحر الشرقي' }}</span><span data-en>{{ section.settings.feature_title_en | default: 'Eastern Allure' }}</span></h3>
+        <span class="ar-icn">→</span>
+      </div>
+    </a>
+    <div class="occ-grid">
+      {%- assign occ_titles_ar = 'ليلةٌ رسمية,رحلةٌ صباحية,لقاءٌ عاطفي,هديةٌ مميّزة' | split: ',' -%}
+      {%- assign occ_titles_en = 'Formal Evening,Morning Journey,Intimate Encounter,Special Gift' | split: ',' -%}
+      {%- assign occ_imgs = 'c-niche.jpg,c-oud.jpg,c-brands.jpg,c-oriental.jpg' | split: ',' -%}
+      {%- assign occ_urls = '/collections/niche,/collections/oud-bakhour,/collections/luxury-brands,/collections/oriental' | split: ',' -%}
+      {%- for i in (0..3) -%}
+        {%- assign delay = '' -%}
+        {%- if i == 1 -%}{%- assign delay = ' d1' -%}{%- endif -%}
+        {%- if i == 2 -%}{%- assign delay = ' d2' -%}{%- endif -%}
+        {%- if i == 3 -%}{%- assign delay = ' d3' -%}{%- endif -%}
+        <a class="occ-sm reveal{{ delay }}" href="{{ occ_urls[i] }}">
+          <img src="{{ occ_imgs[i] | asset_url }}" alt="" width="1080" height="1440" />
+          <div class="occ-cap sm">
+            <span><span data-ar>{{ occ_titles_ar[i] }}</span><span data-en>{{ occ_titles_en[i] }}</span></span>
+            <span class="ar-icn">→</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Scent Occasions",
+  "settings": [
+    { "type": "image_picker", "id": "feature_image", "label": "Feature Image" },
+    { "type": "url", "id": "feature_url", "label": "Feature URL" },
+    { "type": "text", "id": "feature_eyebrow_ar", "label": "Feature Eyebrow (Arabic)", "default": "العطور الشرقية" },
+    { "type": "text", "id": "feature_eyebrow_en", "label": "Feature Eyebrow (English)", "default": "Oriental Perfumes" },
+    { "type": "text", "id": "feature_title_ar", "label": "Feature Title (Arabic)", "default": "السحر الشرقي" },
+    { "type": "text", "id": "feature_title_en", "label": "Feature Title (English)", "default": "Eastern Allure" }
+  ],
+  "presets": [{ "name": "Scent Occasions" }]
+}
+{% endschema %}

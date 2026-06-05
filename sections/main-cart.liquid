@@ -1,0 +1,58 @@
+<section class="section wrap cart-page-wrap">
+  <div class="cart-page-inner">
+    <h1 class="display d-2"><span data-ar>سلّة التسوق</span><span data-en>Shopping Cart</span></h1>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-page-grid">
+        <div class="cart-page-items">
+          {%- for item in cart.items -%}
+            <div class="cart-page-item">
+              {%- if item.image -%}
+                <img src="{{ item.image | img_url: '200x250', crop: 'center' }}" alt="{{ item.title | escape }}" width="200" height="250" loading="lazy" />
+              {%- endif -%}
+              <div class="cpi-info">
+                <div class="cpi-title">{{ item.product.title }}</div>
+                {%- if item.variant.title != 'Default Title' -%}
+                  <div class="cpi-variant">{{ item.variant.title }}</div>
+                {%- endif -%}
+                <div class="cart-item-qty">
+                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="-1">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="1">+</button>
+                </div>
+                <button class="link cpi-remove" data-change="{{ item.key }}" data-qty="0">
+                  <span data-ar>حذف</span><span data-en>Remove</span>
+                </button>
+              </div>
+              <div class="cpi-price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-page-summary">
+          <div class="cps-row">
+            <span><span data-ar>المجموع الفرعي</span><span data-en>Subtotal</span></span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cps-note"><span data-ar>الشحن يُحسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
+          <a class="btn btn-primary btn-full" href="/checkout">
+            <span data-ar>إتمام الشراء</span><span data-en>Proceed to Checkout</span>
+          </a>
+          <a class="btn btn-secondary btn-full" href="/collections" style="margin-top:var(--s2)">
+            <span data-ar>متابعة التسوق</span><span data-en>Continue Shopping</span>
+          </a>
+        </div>
+      </div>
+
+    {%- else -%}
+      <div class="cart-empty" style="padding:var(--s7) 0;text-align:center">
+        <p style="font-size:1.125rem;margin-bottom:var(--s4)"><span data-ar>سلّتك فارغة</span><span data-en>Your cart is empty</span></p>
+        <a class="btn btn-primary" href="/collections"><span data-ar>اكتشف المجموعات</span><span data-en>Discover Collections</span></a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

@@ -1,0 +1,36 @@
+<section class="section wrap" id="collections">
+  <div class="sec-head">
+    <div class="ttl reveal">
+      <span class="eyebrow"><span data-ar>تسوّق حسب الفئة</span><span data-en>Shop by category</span></span>
+      <h2 class="display d-2"><span data-ar>مجموعاتٌ مُنتقاة بعناية</span><span data-en>Collections, quietly curated</span></h2>
+    </div>
+    <a class="link reveal" href="/collections"><span data-ar>عرض الكل</span><span data-en>View all</span><span class="arrow">→</span></a>
+  </div>
+  <div class="collections">
+    {%- assign coll_images = 'c-niche.jpg,c-oriental.jpg,c-oud.jpg,c-brands.jpg' | split: ',' -%}
+    {%- assign coll_names_ar = 'عطور النيش,العطور الشرقية,العود والمباخر,البراندات الفاخرة' | split: ',' -%}
+    {%- assign coll_names_en = 'Niche Perfumes,Oriental Perfumes,Oud & Bukhoor,Luxury Brands' | split: ',' -%}
+    {%- assign coll_urls = '/collections/niche,/collections/oriental,/collections/oud-bakhour,/collections/luxury-brands' | split: ',' -%}
+    {%- for i in (0..3) -%}
+      {%- assign delay = '' -%}
+      {%- if i == 1 -%}{%- assign delay = ' d1' -%}{%- endif -%}
+      {%- if i == 2 -%}{%- assign delay = ' d2' -%}{%- endif -%}
+      {%- if i == 3 -%}{%- assign delay = ' d3' -%}{%- endif -%}
+      <a class="col-card reveal{{ delay }}" href="{{ coll_urls[i] }}">
+        <img src="{{ coll_images[i] | asset_url }}" alt="{{ coll_names_ar[i] }}" width="1080" height="1440" />
+        <span class="cap">
+          <span class="nm"><span data-ar>{{ coll_names_ar[i] }}</span><span data-en>{{ coll_names_en[i] }}</span></span>
+          <span class="ar-icn">→</span>
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections Strip",
+  "settings": [],
+  "presets": [{ "name": "Collections Strip" }]
+}
+{% endschema %}

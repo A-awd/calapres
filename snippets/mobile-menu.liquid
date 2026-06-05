@@ -1,0 +1,32 @@
+<div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true"></div>
+
+<div class="mobile-menu-drawer" id="mobile-menu-drawer" role="dialog" aria-label="{{ 'navigation.menu' | t }}" aria-modal="true">
+  <div class="mobile-menu-header">
+    <a href="/" class="logo-text" style="font-size:1.3rem;">{{ settings.logo_text | default: shop.name }}</a>
+    <button class="mobile-menu-close" aria-label="{{ 'general.close' | t }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:var(--color-border);font-size:1.2rem;">✕</button>
+  </div>
+
+  <nav aria-label="Mobile Navigation">
+    <ul class="mobile-nav-list">
+      <li><a href="/collections" class="mobile-nav-link">{{ 'navigation.collections' | t }}</a></li>
+      <li><a href="/collections/fragrance-families" class="mobile-nav-link">{{ 'navigation.fragrance_families' | t }}</a></li>
+      <li><a href="/collections/oud-bakhour" class="mobile-nav-link">{{ 'navigation.oud_bakhour' | t }}</a></li>
+      <li><a href="/collections/maison" class="mobile-nav-link">{{ 'navigation.maison' | t }}</a></li>
+      <li><a href="/pages/system" class="mobile-nav-link">{{ 'navigation.system' | t }}</a></li>
+      <li><a href="/pages/about" class="mobile-nav-link">{{ 'footer.about_us' | t }}</a></li>
+      <li><a href="/pages/contact" class="mobile-nav-link">{{ 'footer.contact_us' | t }}</a></li>
+    </ul>
+  </nav>
+
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+    {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+        <a href="/account" class="btn btn-outline btn-full" style="margin-bottom:0.75rem;">حسابي</a>
+        <a href="/account/logout" class="btn btn-ghost btn-full">تسجيل الخروج</a>
+      {% else %}
+        <a href="/account/login" class="btn btn-primary btn-full" style="margin-bottom:0.75rem;">تسجيل الدخول</a>
+        <a href="/account/register" class="btn btn-outline btn-full">إنشاء حساب</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

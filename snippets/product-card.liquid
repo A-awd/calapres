@@ -1,0 +1,26 @@
+{%- assign tag_ar = '' -%}
+{%- assign tag_en = '' -%}
+{%- if product.tags contains 'جديد' or product.tags contains 'new' -%}
+  {%- assign tag_ar = 'جديد' -%}{%- assign tag_en = 'New' -%}
+{%- elsif product.tags contains 'توقيع' or product.tags contains 'signature' -%}
+  {%- assign tag_ar = 'توقيع كالابريز' -%}{%- assign tag_en = 'Signature' -%}
+{%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
+  {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
+{%- endif -%}
+<a class="product-card" href="{{ product.url }}">
+  <div class="frame">
+    {%- if tag_ar != '' -%}
+      <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
+    {%- endif -%}
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
+    {%- endif -%}
+  </div>
+  <div class="meta">
+    <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
+    <div class="price">
+      <span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span>
+      <span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span>
+    </div>
+  </div>
+</a>

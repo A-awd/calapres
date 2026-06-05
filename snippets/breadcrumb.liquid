@@ -1,0 +1,23 @@
+<nav class="page-breadcrumb" aria-label="Breadcrumb">
+  <div class="container">
+    <ol class="breadcrumb-list">
+      <li><a href="/">الرئيسية</a></li>
+      <li class="breadcrumb-sep" aria-hidden="true">/</li>
+      {% if template.name == 'collection' %}
+        <li aria-current="page">{{ collection.title }}</li>
+      {% elsif template.name == 'product' %}
+        {% if product.collections.first %}
+          <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        {% endif %}
+        <li aria-current="page">{{ product.title }}</li>
+      {% elsif template.name == 'cart' %}
+        <li aria-current="page">{{ 'cart.title' | t }}</li>
+      {% elsif page %}
+        <li aria-current="page">{{ page.title }}</li>
+      {% else %}
+        <li aria-current="page">{{ page_title }}</li>
+      {% endif %}
+    </ol>
+  </div>
+</nav>

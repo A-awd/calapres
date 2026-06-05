@@ -1,0 +1,42 @@
+{%- paginate collection.products by 24 -%}
+
+<div class="col-hero">
+  <div class="wrap col-hero-inner">
+    <span class="eyebrow"><span data-ar>{{ collection.title }}</span><span data-en>{{ collection.title }}</span></span>
+    {%- if collection.description != blank -%}
+      <p class="col-hero-desc">{{ collection.description }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<section class="shop-grid wrap" id="shop">
+  {% render 'filter-sidebar', collection: collection %}
+
+  <div class="prod-grid" data-prod-grid>
+    {%- if collection.products.size > 0 -%}
+      {%- for product in collection.products -%}
+        <div class="pcard reveal" data-tags="{{ product.tags | join: ',' }}">
+          {% render 'product-card', product: product %}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="empty-state">
+        <p><span data-ar>لا توجد منتجات في هذه المجموعة حاليًا.</span><span data-en>No products in this collection yet.</span></p>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    <div class="pagination-wrap">
+      <button class="btn btn-secondary" data-load-more>
+        <span data-ar>عرض المزيد</span><span data-en>Load more</span>
+      </button>
+    </div>
+  {%- endif -%}
+</section>
+
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}

@@ -1,0 +1,106 @@
+{
+  "general": {
+    "search": "بحث",
+    "close": "إغلاق",
+    "loading": "جاري التحميل...",
+    "currency": "ر.س"
+  },
+  "navigation": {
+    "collections": "مجموعات",
+    "fragrance_families": "العائلات العطرية",
+    "oud_bakhour": "العود والمباخر",
+    "maison": "الميزان",
+    "system": "النظام",
+    "cart": "السلة",
+    "account": "حسابي",
+    "menu": "القائمة"
+  },
+  "hero": {
+    "headline": "اكتشف عالماً من العطور الفاخرة",
+    "subheadline": "تشكيلة حصرية من أرقى العطور العربية والعالمية",
+    "cta": "تسوق الآن"
+  },
+  "products": {
+    "add_to_cart": "أضف إلى السلة",
+    "sold_out": "نفذت الكمية",
+    "on_sale": "عرض",
+    "new": "جديد",
+    "signature": "توقيع",
+    "from": "من",
+    "view_all": "عرض الكل",
+    "no_products": "لا توجد منتجات",
+    "filter": "تصفية",
+    "sort_by": "ترتيب حسب",
+    "sort_featured": "مميز",
+    "sort_price_asc": "السعر: من الأقل",
+    "sort_price_desc": "السعر: من الأعلى",
+    "sort_newest": "الأحدث",
+    "results": "نتيجة",
+    "ml": "مل",
+    "size": "الحجم",
+    "concentration": "التركيز"
+  },
+  "fragrance_families": {
+    "title": "العائلات العطرية",
+    "rosy": "ورديّ",
+    "woody": "خشبيّ",
+    "amber": "عنبريّ",
+    "musky": "مسكيّ",
+    "citrus": "حمضيّ",
+    "oriental": "شرقيّ",
+    "fresh": "منعش",
+    "floral": "زهريّ"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلتك فارغة",
+    "empty_message": "لم تقم بإضافة أي منتجات بعد",
+    "continue_shopping": "متابعة التسوق",
+    "checkout": "إتمام الشراء",
+    "total": "المجموع",
+    "remove": "حذف",
+    "quantity": "الكمية",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "shipping_note": "يحسب عند الدفع",
+    "order_note": "ملاحظة على الطلب",
+    "order_note_placeholder": "أضف ملاحظة خاصة بطلبك..."
+  },
+  "product": {
+    "description": "الوصف",
+    "details": "التفاصيل",
+    "notes": "المكونات العطرية",
+    "top_notes": "رائحة البداية",
+    "heart_notes": "رائحة القلب",
+    "base_notes": "رائحة القاعدة",
+    "intensity": "القوة",
+    "longevity": "الثبات",
+    "sillage": "الانتشار",
+    "share": "مشاركة",
+    "wishlist": "المفضلة",
+    "related_products": "منتجات مشابهة",
+    "you_may_also_like": "قد يعجبك أيضاً"
+  },
+  "footer": {
+    "quick_links": "روابط سريعة",
+    "customer_service": "خدمة العملاء",
+    "about_us": "من نحن",
+    "contact_us": "اتصل بنا",
+    "shipping_policy": "سياسة الشحن",
+    "return_policy": "سياسة الإرجاع",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام",
+    "newsletter": "النشرة البريدية",
+    "newsletter_text": "اشترك للحصول على أحدث العروض والمجموعات",
+    "newsletter_placeholder": "بريدك الإلكتروني",
+    "subscribe": "اشتراك",
+    "rights": "جميع الحقوق محفوظة",
+    "follow_us": "تابعنا"
+  },
+  "accessibility": {
+    "skip_to_content": "انتقل إلى المحتوى",
+    "close_menu": "إغلاق القائمة",
+    "open_menu": "فتح القائمة",
+    "cart_count": "{{ count }} منتج في السلة"
+  }
+}
