@@ -1,0 +1,123 @@
+name: Shopify theme deploy
+
+on:
+  push:
+    branches:
+      - shopify-theme
+    paths:
+      - ".github/workflows/theme-deploy.yml"
+      - "assets/**"
+      - "config/**"
+      - "layout/**"
+      - "locales/**"
+      - "sections/**"
+      - "snippets/**"
+      - "templates/**"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Theme target"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - live
+
+concurrency:
+  group: shopify-theme-deploy
+  cancel-in-progress: false
+
+env:
+  SHOPIFY_STORE: unywbe-ub.myshopify.com
+  SHOPIFY_STAGING_THEME_ID: "163004449024"
+  SHOPIFY_LIVE_THEME_ID: "163072377088"
+
+jobs:
+  deploy:
+    name: Theme check and deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout theme source
+        uses: actions/checkout@v4
+        with:
+          ref: shopify-theme
+
+      - name: Resolve deploy target
+        id: target
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            target="${{ inputs.target }}"
+          else
+            target="staging"
+          fi
+
+          if [ "$target" = "live" ]; then
+            echo "theme_id=${SHOPIFY_LIVE_THEME_ID}" >> "$GITHUB_OUTPUT"
+            echo "allow_live=--allow-live" >> "$GITHUB_OUTPUT"
+          else
+            echo "theme_id=${SHOPIFY_STAGING_THEME_ID}" >> "$GITHUB_OUTPUT"
+            echo "allow_live=" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
+      - name: Inject deploy version
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CALAPRES_THEME_VERSION="${GITHUB_SHA::12}"
+          node <<'NODE'
+          const fs = require("fs");
+          const version = process.env.CALAPRES_THEME_VERSION;
+          const file = "layout/theme.liquid";
+          let source = fs.readFileSync(file, "utf8");
+          source = source.replace(/<!-- Calapres theme version: .*? -->/g, `<!-- Calapres theme version: ${version} -->`);
+          source = source.replace(/calapres_js=[^"']+/g, `calapres_js=${version}`);
+          fs.writeFileSync(file, source);
+          NODE
+
+      - name: Theme check
+        run: npx --yes @shopify/cli@latest theme check
+
+      - name: Check deployment secret
+        id: auth
+        shell: bash
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SHOPIFY_CLI_THEME_TOKEN:-}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::SHOPIFY_CLI_THEME_TOKEN is not configured; skipping Shopify deploy."
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy theme
+        if: steps.auth.outputs.ready == 'true'
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        run: |
+          npx --yes @shopify/cli@latest theme push \
+            --store "$SHOPIFY_STORE" \
+            --theme "${{ steps.target.outputs.theme_id }}" \
+            --password "$SHOPIFY_CLI_THEME_TOKEN" \
+            --path . \
+            ${{ steps.target.outputs.allow_live }}
+
+      - name: Deployment summary
+        run: |
+          {
+            echo "### Calapres theme deploy"
+            echo ""
+            echo "- Target: ${{ steps.target.outputs.target }}"
+            echo "- Theme ID: ${{ steps.target.outputs.theme_id }}"
+            echo "- Version: ${GITHUB_SHA::12}"
+            echo "- Deploy attempted: ${{ steps.auth.outputs.ready }}"
+          } >> "$GITHUB_STEP_SUMMARY"
