@@ -28,6 +28,9 @@ Shopify is the sales channel. n8n runtime execution belongs to Claude Code.
 - Base command-center commit before this handoff: `f3d752a93f5535fe80b0664011281b88a779fc9a`
 - Claude model branch adopted for schema: local `claude/wizardly-feynman-HTS2T` at `926030fd3847502a2e9db961379e03d433332322`
 - The Claude branch's fragrance migration is already present unchanged on `integration/claude-codex`.
+- n8n contract proof commits pushed before this state refresh:
+  - `626d710e27cc7f40fba358e3ad3bf6ed33849bab` `docs: add n8n fragrance contract`
+  - `a2247e029b71561e662daea28d1d002c314c00be` `docs: close n8n contract workboard`
 
 ## Live Supabase State
 
