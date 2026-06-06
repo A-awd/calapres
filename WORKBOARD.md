@@ -32,7 +32,7 @@ Rules:
 | Agent | Branch | Task | Files/Systems Owned | Status | Last Update |
 | --- | --- | --- | --- | --- | --- |
 | Codex | `integration/claude-codex` | Calapres AI coordination system | `AGENTS.md`, `PROJECT_STATE.md`, `WORKBOARD.md`, `HANDOFFS.md` | Completed and pushed | 2026-06-06 |
-| Codex | `integration/claude-codex` | Adopt Claude fragrance model and add n8n Supabase RPC contract | `AGENTS.md`, `PROJECT_STATE.md`, `WORKBOARD.md`, `CLAUDE_N8N_HANDOFF.md`, Supabase migrations | Completed; commit/push proof required | 2026-06-06 |
+| Codex | `integration/claude-codex` | Adopt Claude fragrance model and add n8n Supabase RPC contract | `AGENTS.md`, `PROJECT_STATE.md`, `WORKBOARD.md`, `CLAUDE_N8N_HANDOFF.md`, Supabase migrations | Completed and pushed | 2026-06-06 |
 | Codex | `shopify-theme` | Theme deploy pipeline and staging homepage polish | Shopify theme files | Completed and pushed | 2026-06-05 |
 | Codex | `main` | Product data lake and fragrance variant source files | `sync/`, Supabase migrations | Completed and pushed | 2026-06-05 |
 
