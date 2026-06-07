@@ -3,6 +3,7 @@
 
 const __modules = {
 "./config.js": function(module, exports, __require) {
+const require = __require;
 const SHOP_DOMAIN = 'unywbe-ub.myshopify.com';
 const API_VERSION_STANDARD = '2026-04';
 const API_VERSION_DEPLOYED = API_VERSION_STANDARD;
@@ -136,6 +137,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./crawl-supplier.js": function(module, exports, __require) {
+const require = __require;
 /**
  * crawlSupplierProducts() reads Nawadirdior Salla sitemaps and returns every product URL.
  *
@@ -317,6 +319,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./parse-product.js": function(module, exports, __require) {
+const require = __require;
 /**
  * parseProduct(html, context) extracts a Salla product page without running JavaScript.
  *
@@ -822,6 +825,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./pricing.js": function(module, exports, __require) {
+const require = __require;
 /**
  * applyPricing({ supplierPrice, supplierCompareAtPrice }) applies Calapres markup.
  *
@@ -908,6 +912,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./inventory.js": function(module, exports, __require) {
+const require = __require;
 /**
  * mapAvailability(availability) maps supplier stock to status fields only.
  * It never emits numeric quantities and never asks Shopify to delete a product.
@@ -959,6 +964,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./build-shopify-payload.js": function(module, exports, __require) {
+const require = __require;
 /**
  * buildPayload(parsed) builds the Shopify product payload for one supplier item.
  *
@@ -1223,6 +1229,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./shopify-client.js": function(module, exports, __require) {
+const require = __require;
 /**
  * Shopify Admin API request-shape helpers for the Calapres supplier sync.
  *
@@ -1817,6 +1824,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./reconcile.js": function(module, exports, __require) {
+const require = __require;
 /**
  * Pure action planner for the recurring Calapres supplier sync.
  *
@@ -2195,6 +2203,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./validate-shopify-shape.js": function(module, exports, __require) {
+const require = __require;
 /**
  * Validates the Shopify REST Admin product shape emitted by the sync.
  *
@@ -2392,6 +2401,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./sync-state.js": function(module, exports, __require) {
+const require = __require;
 const config = require('./config.js');
 
 function computeChunk(fullList, offset, chunkSize) {
@@ -2505,38 +2515,76 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./normalize.js": function(module, exports, __require) {
-const BRAND_MAP = {
-  'ديور': 'Dior',
-  'ديور سوفاج': 'Dior',
-  'توم فورد': 'Tom Ford',
-  'تومفورد': 'Tom Ford',
-  'شانيل': 'Chanel',
-  'نيشان': 'Nishane',
-  'جيرلان': 'Guerlain',
-  'زيرجوف': 'Xerjoff',
-  'اكوا دي بارما': 'Acqua di Parma',
-  'جان بول غوتييه': 'Jean Paul Gaultier',
-  'فان كليف': 'Van Cleef & Arpels',
-  'ماتيري بريميير': 'Matiere Premiere',
-  'ماتيير بريميير': 'Matiere Premiere',
-  'عبد الصمد القرشي': 'Abdul Samad Al Qurashi',
-  'العربية للعود': 'Arabian Oud'
-};
+const require = __require;
+const STORE_BRAND_NAMES = [
+  'متجر نوادر ديور',
+  'نوادر ديور',
+  'nawadir dior',
+  'nawadir dior store',
+  'nawadir',
+  'calapres'
+];
 
-const BRAND_ALIASES = {
-  'matiere premiere': 'Matiere Premiere',
-  'matière première': 'Matiere Premiere',
-  'van cleef and arpels': 'Van Cleef & Arpels',
-  'van cleef & arpels': 'Van Cleef & Arpels',
-  'j p g': 'Jean Paul Gaultier',
-  'j.p.g': 'Jean Paul Gaultier',
-  'tomford': 'Tom Ford'
-};
+const BRAND_RECORDS = [
+  { name_en: 'Dior', name_ar: 'ديور', aliases: ['ديور', 'كريستيان ديور', 'dior', 'christian dior'] },
+  { name_en: 'Tom Ford', name_ar: 'توم فورد', aliases: ['توم فورد', 'تومفورد', 'tom ford', 'tomford'] },
+  { name_en: 'Chanel', name_ar: 'شانيل', aliases: ['شانيل', 'chanel'] },
+  { name_en: 'Nishane', name_ar: 'نيشان', aliases: ['نيشان', 'nishane'] },
+  { name_en: 'Guerlain', name_ar: 'جيرلان', aliases: ['جيرلان', 'guerlain'] },
+  { name_en: 'Xerjoff', name_ar: 'زيرجوف', aliases: ['زيرجوف', 'xerjoff'] },
+  { name_en: 'Acqua di Parma', name_ar: 'اكوا دي بارما', aliases: ['اكوا دي بارما', 'أكوا دي بارما', 'acqua di parma'] },
+  { name_en: 'Jean Paul Gaultier', name_ar: 'جان بول غوتييه', aliases: ['جان بول غوتييه', 'جان بول جوتييه', 'jean paul gaultier', 'j p g', 'j.p.g'] },
+  { name_en: 'Van Cleef & Arpels', name_ar: 'فان كليف اند اربلز', aliases: ['فان كليف', 'فان كليف اند اربلز', 'فان كليف آند آربلز', 'van cleef and arpels', 'van cleef & arpels', 'van cleef arpels'] },
+  { name_en: 'Matiere Premiere', name_ar: 'ماتيري بريميير', aliases: ['ماتيري بريميير', 'ماتيير بريميير', 'ماتيريا بريميير', 'matiere premiere', 'matière première', 'materia premiere'] },
+  { name_en: 'Abdul Samad Al Qurashi', name_ar: 'عبد الصمد القرشي', aliases: ['عبد الصمد القرشي', 'abdul samad al qurashi'] },
+  { name_en: 'Arabian Oud', name_ar: 'العربية للعود', aliases: ['العربية للعود', 'arabian oud'] },
+  { name_en: 'Aramis', name_ar: 'اراميس', aliases: ['اراميس', 'aramis'] },
+  { name_en: 'Armand Basi', name_ar: 'ارماند باسي', aliases: ['ارماند باسي', 'armand basi'] },
+  { name_en: 'Azzaro', name_ar: 'ازارو', aliases: ['ازارو', 'azzaro'] },
+  { name_en: 'Escada', name_ar: 'اسكادا', aliases: ['اسكادا', 'escada'] },
+  { name_en: 'La Rive', name_ar: 'لا ريف', aliases: ['لا ريف', 'la rive'] },
+  { name_en: 'Rasasi', name_ar: 'رصاصي', aliases: ['رصاصي', 'رساسي', 'rasasi'] },
+  { name_en: 'Elizabeth Arden', name_ar: 'اليزابيث اردن', aliases: ['اليزابيث اردن', 'إليزابيث أردن', 'elizabeth arden'] },
+  { name_en: 'Elizabeth Taylor', name_ar: 'اليزابيث تايلور', aliases: ['اليزابيث تايلور', 'إليزابيث تايلور', 'elizabeth taylor'] },
+  { name_en: 'Issey Miyake', name_ar: 'ايسي مياكي', aliases: ['ايسي مياكي', 'إيسي مياكي', 'issey miyake'] },
+  { name_en: 'Emanuel Ungaro', name_ar: 'ايمانويل انغارو', aliases: ['ايمانويل انغارو', 'emanuel ungaro'] },
+  { name_en: 'S.T. Dupont', name_ar: 'اس تي ديبونت', aliases: ['اس تي ديبونت', 'ديبونت', 's t dupont', 'st dupont', 's.t. dupont', 'dupont'] },
+  { name_en: 'Estee Lauder', name_ar: 'استي لودر', aliases: ['استي لودر', 'إستي لودر', 'estee lauder', 'estée lauder'] },
+  { name_en: 'Yves Saint Laurent', name_ar: 'ايف سان لوران', aliases: ['ايف سان لوران', 'إيف سان لوران', 'yves saint laurent', 'ysl'] },
+  { name_en: 'Elie Saab', name_ar: 'ايلي صعب', aliases: ['ايلي صعب', 'إيلي صعب', 'elie saab'] },
+  { name_en: 'Clive Christian', name_ar: 'كلايف كريستيان', aliases: ['كلايف كريستيان', 'clive christian'] },
+  { name_en: 'By Kilian', name_ar: 'باي كيليان', aliases: ['باي كيليان', 'كيليان', 'kilian', 'by kilian'] },
+  { name_en: 'Kajal', name_ar: 'كاجال', aliases: ['كاجال', 'kajal'] },
+  { name_en: 'Atelier Cologne', name_ar: 'اتيليه كولون', aliases: ['اتيليه كولون', 'atelier cologne'] },
+  { name_en: 'Atelier des Ors', name_ar: 'اتيليه دي اورس', aliases: ['اتيليه دي اورس', 'أتيليه دي أورس', 'atelier des ors'] },
+  { name_en: 'Rosendo Mateu', name_ar: 'روسيندو ماتيو', aliases: ['روسيندو ماتيو', 'rosendo mateu'] },
+  { name_en: 'Louis Vuitton', name_ar: 'لويس فيتون', aliases: ['لويس فيتون', 'louis vuitton'] },
+  { name_en: 'Vilhelm Parfumerie', name_ar: 'فيلهلم بارفومري', aliases: ['فيلهلم', 'vilhelm', 'vilhelm parfumerie'] },
+  { name_en: 'Cartier', name_ar: 'كارتير', aliases: ['كارتير', 'cartier'] },
+  { name_en: 'Diptyque', name_ar: 'ديبتيك', aliases: ['ديبتيك', 'diptyque'] },
+  { name_en: 'Maison Francis Kurkdjian', name_ar: 'ميزون فرانسيس كوركدجيان', aliases: ['ميزون فرانسيس كوركدجيان', 'ميزون فرانسيس', 'maison francis kurkdjian', 'mfk'] },
+  { name_en: 'Maison Crivelli', name_ar: 'ميزون كرفيلي', aliases: ['ميزون كرفيلي', 'maison crivelli'] },
+  { name_en: 'Francesca Bianchi', name_ar: 'فرانشيسكا بيانكي', aliases: ['فرانشيسكا بيانكي', 'francesca bianchi'] },
+  { name_en: 'Creed', name_ar: 'كريد', aliases: ['كريد', 'creed'] },
+  { name_en: 'Lancome', name_ar: 'لانكوم', aliases: ['لانكوم', 'lancome', 'lancôme'] },
+  { name_en: 'Giorgio Armani', name_ar: 'جورجيو ارماني', aliases: ['جورجيو ارماني', 'giorgio armani', 'armani'] },
+  { name_en: 'Imperissima', name_ar: 'امبريسما', aliases: ['امبريسما', 'imperissima'] }
+].map((record) => ({
+  ...record,
+  slug: slugify(record.name_en)
+}));
+
+const BRAND_MAP = buildBrandMap(BRAND_RECORDS);
+const BRAND_ALIASES = buildBrandAliases(BRAND_RECORDS);
+const BRAND_RECORD_BY_NAME = buildBrandRecordByName(BRAND_RECORDS);
+const STORE_NAME_FOLDS = STORE_BRAND_NAMES.map((name) => fold(name));
+const BRAND_ALIAS_INDEX = buildBrandAliasIndex(BRAND_RECORDS);
 
 function normalizeProduct(input) {
   const product = input && typeof input === 'object' ? input : {};
   const title = cleanTitle(product.name || product.title || '');
-  const brand = normalizeBrand(product.brand || product.vendor || detectBrand(title));
+  const brandRecord = resolveBrand(product.brand || product.brand_name || product.vendor, title);
+  const brand = brandRecord ? brandRecord.name_en : normalizeBrand(product.brand || product.brand_name || product.vendor || detectBrand(title), title);
   const concentration = normalizeConcentration(product.concentration || title);
   const sizeMl = normalizeSizeMl(product.sizeMl || product.size || title);
   const gender = normalizeGender(product.gender || title || product.category || '');
@@ -2545,15 +2593,23 @@ function normalizeProduct(input) {
     title,
     name: product.name || title,
     brand,
+    brand_name: brand,
+    brand_name_en: brandRecord ? brandRecord.name_en : brand,
+    brand_name_ar: brandRecord ? brandRecord.name_ar : '',
+    brand_slug: brandRecord ? brandRecord.slug : (brand ? slugify(brand) : ''),
+    brand_record: brandRecord,
     concentration,
     sizeMl,
     gender
   };
 }
 
-function normalizeBrand(value) {
+function normalizeBrand(value, title) {
+  const record = resolveBrand(value, title);
+  if (record) return record.name_en;
   const cleaned = cleanTitle(value);
   if (!cleaned) return '';
+  if (isStoreBrandName(cleaned)) return '';
   if (BRAND_MAP[cleaned]) return BRAND_MAP[cleaned];
   const folded = fold(cleaned);
   if (BRAND_ALIASES[folded]) return BRAND_ALIASES[folded];
@@ -2561,16 +2617,54 @@ function normalizeBrand(value) {
 }
 
 function detectBrand(title) {
-  const text = cleanTitle(title);
-  for (const key of Object.keys(BRAND_MAP)) {
-    if (text.includes(key)) return BRAND_MAP[key];
+  const record = detectBrandRecord(title);
+  return record ? record.name_en : '';
+}
+
+function resolveBrand(value, title) {
+  const candidate = cleanTitle(value);
+  if (candidate && !isStoreBrandName(candidate)) {
+    const record = getBrandRecord(candidate);
+    if (record) return record;
   }
-  const folded = fold(text);
-  for (const key of Object.keys(BRAND_ALIASES)) {
-    if (folded.includes(key)) return BRAND_ALIASES[key];
+  const fromTitle = detectBrandRecord(title || '');
+  return fromTitle || null;
+}
+
+function detectBrandRecord(title) {
+  const clean = stripStoreBrandNames(cleanTitle(title));
+  const folded = ' ' + fold(clean) + ' ';
+  if (!folded.trim()) return null;
+  for (const entry of BRAND_ALIAS_INDEX) {
+    if (containsFoldedAlias(folded, entry.foldedAlias)) return entry.record;
   }
-  const firstTwo = text.split(/\s+/).slice(0, 2).join(' ');
-  return firstTwo;
+  return null;
+}
+
+function getBrandRecord(value) {
+  const cleaned = cleanTitle(value);
+  if (!cleaned || isStoreBrandName(cleaned)) return null;
+  const direct = BRAND_RECORD_BY_NAME[fold(cleaned)];
+  if (direct) return direct;
+  const canonical = BRAND_ALIASES[fold(cleaned)] || BRAND_MAP[cleaned];
+  return canonical ? BRAND_RECORD_BY_NAME[fold(canonical)] || null : null;
+}
+
+function isStoreBrandName(value) {
+  const folded = fold(value);
+  if (!folded) return false;
+  return STORE_NAME_FOLDS.some((storeName) => folded === storeName || folded.indexOf(storeName) !== -1);
+}
+
+function stripStoreBrandNames(value) {
+  let text = String(value || '');
+  for (const name of STORE_BRAND_NAMES) {
+    if (!name) continue;
+    text = text.split(name).join(' ');
+  }
+  const foldedValue = fold(text);
+  if (STORE_NAME_FOLDS.some((storeName) => foldedValue === storeName)) return '';
+  return text;
 }
 
 function normalizeConcentration(value) {
@@ -2617,15 +2711,25 @@ function titleCasePreservingKnown(value) {
 }
 
 function fold(value) {
-  return foldArabicDigits(value)
+  return removeLatinDiacritics(foldArabicDigits(value))
     .toLowerCase()
-    .replace(/[اأإآ]/g, 'ا')
+    .replace(/[اأإآٱ]/g, 'ا')
+    .replace(/[ؤ]/g, 'و')
+    .replace(/[ئ]/g, 'ي')
     .replace(/[ىي]/g, 'ي')
     .replace(/[ة]/g, 'ه')
+    .replace(/[ـ]/g, '')
     .replace(/[\u064B-\u065F\u0670]/g, '')
     .replace(/[^a-z0-9\u0600-\u06ff&]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function removeLatinDiacritics(value) {
+  const raw = String(value || '');
+  return typeof raw.normalize === 'function'
+    ? raw.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    : raw;
 }
 
 function foldArabicDigits(value) {
@@ -2650,24 +2754,98 @@ function decodeEntities(value) {
     .replace(/&#x([a-f0-9]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)));
 }
 
+function buildBrandMap(records) {
+  const out = {};
+  for (const record of records) {
+    out[record.name_ar] = record.name_en;
+    for (const alias of record.aliases || []) {
+      if (/[\u0600-\u06ff]/.test(alias)) out[alias] = record.name_en;
+    }
+  }
+  return out;
+}
+
+function buildBrandAliases(records) {
+  const out = {};
+  for (const record of records) {
+    out[fold(record.name_en)] = record.name_en;
+    out[fold(record.name_ar)] = record.name_en;
+    for (const alias of record.aliases || []) out[fold(alias)] = record.name_en;
+  }
+  return out;
+}
+
+function buildBrandRecordByName(records) {
+  const out = {};
+  for (const record of records) {
+    out[fold(record.name_en)] = record;
+    out[fold(record.name_ar)] = record;
+    out[fold(record.slug)] = record;
+  }
+  return out;
+}
+
+function buildBrandAliasIndex(records) {
+  const out = [];
+  for (const record of records) {
+    const aliases = unique([record.name_en, record.name_ar].concat(record.aliases || []));
+    for (const alias of aliases) {
+      const foldedAlias = fold(alias);
+      if (foldedAlias && !STORE_NAME_FOLDS.includes(foldedAlias)) out.push({ foldedAlias, record });
+    }
+  }
+  return out.sort((a, b) => b.foldedAlias.length - a.foldedAlias.length);
+}
+
+function containsFoldedAlias(foldedHaystack, foldedAlias) {
+  if (!foldedAlias) return false;
+  return foldedHaystack.indexOf(' ' + foldedAlias + ' ') !== -1;
+}
+
+function slugify(value) {
+  return fold(value).replace(/&/g, 'and').replace(/\s+/g, '-');
+}
+
+function unique(values) {
+  const seen = {};
+  const out = [];
+  for (const value of values || []) {
+    const key = String(value);
+    if (!seen[key]) {
+      seen[key] = true;
+      out.push(value);
+    }
+  }
+  return out;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    STORE_BRAND_NAMES,
+    BRAND_RECORDS,
     BRAND_MAP,
     BRAND_ALIASES,
     normalizeProduct,
     normalizeBrand,
     detectBrand,
+    resolveBrand,
+    detectBrandRecord,
+    getBrandRecord,
+    isStoreBrandName,
+    stripStoreBrandNames,
     normalizeConcentration,
     normalizeSizeMl,
     normalizeGender,
     cleanTitle,
     fold,
-    foldArabicDigits
+    foldArabicDigits,
+    slugify
   };
 }
 
 },
 "./categorize.js": function(module, exports, __require) {
+const require = __require;
 const config = require('./config.js');
 const normalize = require('./normalize.js');
 
@@ -2744,6 +2922,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./supabase-product.js": function(module, exports, __require) {
+const require = __require;
 // Pure Supabase product data lake helpers.
 //
 // Source of truth flow:
@@ -3188,6 +3367,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./match-fragrance.js": function(module, exports, __require) {
+const require = __require;
 // Fragrance matching: resolve raw supplier products into a canonical parent
 // fragrance + a variant (size / tester / gift set).
 //
@@ -3222,6 +3402,10 @@ const GENDER_TOKENS = [
 
 const TESTER_TOKENS = ['tester', 'test', 'تستر', 'تيستر', 'عينة'];
 const GIFT_SET_TOKENS = ['gift set', 'giftset', 'gift box', 'set', 'coffret', 'طقم', 'مجموعة', 'هدية', 'بوكس'];
+const PRODUCT_NOISE_TOKENS = [
+  'perfume', 'fragrance', 'body spray', 'hair perfume', 'hair and body mist',
+  'عطر', 'العطر', 'عطور', 'العطور', 'عينة', 'عينات', 'جديد المتجر', 'المتجر'
+];
 
 function resolveFragrance(parsed, existingFragrances, options) {
   const facts = extractFragranceFacts(parsed, options);
@@ -3250,14 +3434,15 @@ function extractFragranceFacts(parsed, options) {
   const opts = options || {};
   const input = parsed && typeof parsed === 'object' ? parsed : {};
   const rawTitle = normalize.cleanTitle(input.name || input.title || input.product_title_en || input.product_title_ar || '');
-  const brand = normalize.normalizeBrand(input.brand || input.brand_name || input.vendor || normalize.detectBrand(rawTitle));
+  const brandRecord = normalize.resolveBrand(input.brand || input.brand_name || input.vendor, rawTitle);
+  const brand = brandRecord ? brandRecord.name_en : normalize.normalizeBrand(input.brand || input.brand_name || input.vendor || normalize.detectBrand(rawTitle), rawTitle);
   const concentration = firstNonEmpty(input.concentration, normalize.normalizeConcentration(rawTitle));
   const sizeMl = firstFinite(input.sizeMl, input.size_ml, normalize.normalizeSizeMl(rawTitle));
   const gender = firstNonEmpty(input.gender, input.gender_target, normalize.normalizeGender(rawTitle));
   const isTester = detectFlag(rawTitle, TESTER_TOKENS) || Boolean(opts.isTester);
   const isGiftSet = detectFlag(rawTitle, GIFT_SET_TOKENS) || Boolean(opts.isGiftSet);
 
-  const coreName = stripToCoreName(rawTitle, brand, concentration);
+  const coreName = stripToCoreName(rawTitle, brandRecord || brand, concentration);
   const normalizedName = normalize.fold(coreName);
   const canonicalNameEn = latinOnly(coreName) || (isLatin(rawTitle) ? rawTitle : '');
   const canonicalNameAr = arabicOnly(coreName) || (isArabic(rawTitle) ? rawTitle : '');
@@ -3265,7 +3450,10 @@ function extractFragranceFacts(parsed, options) {
   return {
     rawTitle,
     brand: brand || '',
-    brandSlug: brand ? normalize.fold(brand) : '',
+    brandNameEn: brandRecord ? brandRecord.name_en : (brand || ''),
+    brandNameAr: brandRecord ? brandRecord.name_ar : '',
+    brandSlug: brandRecord ? brandRecord.slug : (brand ? normalize.slugify(brand) : ''),
+    brandRecord: brandRecord || null,
     concentration: concentration || null,
     sizeMl: sizeMl === undefined ? null : sizeMl,
     gender: gender || null,
@@ -3329,22 +3517,29 @@ function concentrationCompatible(a, b) {
 function stripToCoreName(title, brand, concentration) {
   // Fold Arabic-Indic digits to ASCII first so "١٠٠ml" becomes "100ml" and the
   // size patterns below can strip it (\d and \b only see ASCII digits).
-  let text = ' ' + normalize.foldArabicDigits(String(title || '')) + ' ';
+  let text = ' ' + normalize.stripStoreBrandNames(normalize.foldArabicDigits(String(title || ''))) + ' ';
   for (const form of brandSurfaceForms(brand)) text = removeToken(text, form);
   for (const token of CONCENTRATION_TOKENS) text = removeToken(text, token);
   for (const token of GENDER_TOKENS) text = removeToken(text, token);
   for (const token of TESTER_TOKENS) text = removeToken(text, token);
   for (const token of GIFT_SET_TOKENS) text = removeToken(text, token);
-  // Sizes: "100ml", "100 مل", then any bare 1-4 digit run left over.
-  text = text.replace(/\d+(?:\.\d+)?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
-  text = text.replace(/\d{1,4}/g, ' ');
+  for (const token of PRODUCT_NOISE_TOKENS) text = removeToken(text, token);
+  // Sizes: "100ml", "100 مل", "100-ml", then common bare ml sizes left over.
+  // Keep fragrance names such as 724, No. 5, N01, and M7 intact.
+  text = text.replace(/\d+(?:\.\d+)?\s*-?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
+  text = text.replace(/\b(?:30|40|45|50|60|67|75|80|90|100|110|125|150|200)\b/g, ' ');
   return text.replace(/[‌‏]/g, ' ').replace(/[-_/|,،.]+/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function brandSurfaceForms(brand) {
   const forms = [];
-  const canonical = String(brand || '').trim();
+  const brandRecord = brand && typeof brand === 'object' ? brand : normalize.getBrandRecord(brand);
+  const canonical = brandRecord ? brandRecord.name_en : String(brand || '').trim();
   if (canonical) forms.push(canonical);
+  if (brandRecord && brandRecord.name_ar) forms.push(brandRecord.name_ar);
+  if (brandRecord && Array.isArray(brandRecord.aliases)) {
+    for (const alias of brandRecord.aliases) forms.push(alias);
+  }
   for (const key of Object.keys(normalize.BRAND_MAP)) {
     if (normalize.BRAND_MAP[key] === canonical) forms.push(key);
   }
@@ -3392,7 +3587,7 @@ function detectFlag(text, tokens) {
 }
 
 function latinOnly(value) {
-  const out = String(value || '').replace(/[^ -ɏ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const out = String(value || '').replace(/[^\u0000-\u024F]/g, ' ').replace(/\s+/g, ' ').trim();
   return /[a-z]/i.test(out) ? out : '';
 }
 
@@ -3450,12 +3645,14 @@ if (typeof module !== 'undefined' && module.exports) {
     stripToCoreName,
     buildSizeLabel,
     buildVariantTitle,
-    detectFlag
+    detectFlag,
+    PRODUCT_NOISE_TOKENS
   };
 }
 
 },
 "./fragrance-variant.js": function(module, exports, __require) {
+const require = __require;
 // Builders for the fragrance parent + variant model.
 //
 // Flow: supplier_products (raw) -> fragrance_products (parent) -> product_variants
@@ -3732,6 +3929,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./enrich/enrichment-source.js": function(module, exports, __require) {
+const require = __require;
 // Enrichment source handling for fragrance_products.
 //
 // Source priority (use the first that yields each structured fact):
@@ -3945,6 +4143,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./enrich/prompt.js": function(module, exports, __require) {
+const require = __require;
 const config = require('../config.js');
 const normalize = require('../normalize.js');
 
@@ -3981,6 +4180,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./enrich/seo.js": function(module, exports, __require) {
+const require = __require;
 const config = require('../config.js');
 const normalize = require('../normalize.js');
 
@@ -4045,6 +4245,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./enrich/build-enrich-payload.js": function(module, exports, __require) {
+const require = __require;
 const config = require('../config.js');
 const seo = require('./seo.js');
 
@@ -4111,6 +4312,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./report.js": function(module, exports, __require) {
+const require = __require;
 function buildRunSummary(input) {
   const run = input && typeof input === 'object' ? input : {};
   const buckets = run.buckets || run.reconcilePlan || {};
@@ -4185,6 +4387,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./image-pipeline/creative-brief.js": function(module, exports, __require) {
+const require = __require;
 // Builds Higgsfield API request body from Supabase creative_brief + brand_style_config.
 // This is the single function that translates product data → AI prompt.
 //
@@ -4298,6 +4501,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./image-pipeline/image-types.js": function(module, exports, __require) {
+const require = __require;
 // Image type definitions for Calapres automated generation pipeline.
 // Each type drives: aspect_ratio, prompt_variant, num_outputs, and Shopify upload target.
 
@@ -4407,6 +4611,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 },
 "./image-pipeline/quality-gate.js": function(module, exports, __require) {
+const require = __require;
 // Automated quality gate for Higgsfield-generated images.
 // No human approval required. Gate runs in n8n Code nodes.
 //

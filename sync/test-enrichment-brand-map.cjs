@@ -62,13 +62,16 @@ function legacyFold(value) {
     .trim();
 }
 
-function runCodeNode(file, json) {
-  const source = fs.readFileSync(file, 'utf8');
-  if (/\brequire\s*\(|\bimport\s+/.test(source)) {
-    throw new Error(`${path.basename(file)} is not self-contained`);
+async function runCodeNode(file, json) {
+  const source = fs
+    .readFileSync(file, 'utf8')
+    .replace(/\nawait main\(\);\s*$/, '\nreturn await main();\n');
+  if (/\bimport\s+/.test(source)) {
+    throw new Error(`${path.basename(file)} contains an external import`);
   }
-  const fn = new Function('$json', source);
-  const result = fn(json);
+  const AsyncFn = Object.getPrototypeOf(async function () {}).constructor;
+  const fn = new AsyncFn('$json', source);
+  const result = await fn(json);
   if (!result || typeof result !== 'object' || !result.json) {
     throw new Error(`${path.basename(file)} did not return an n8n item`);
   }
@@ -108,7 +111,25 @@ const projectedNeedsReviewAfter = Math.round(CURRENT_NEEDS_REVIEW * (afterNeedsR
 const brandBundlePath = path.join(ROOT, 'sync/n8n-build/brand-normalize.generated.js');
 const enrichmentBundlePath = path.join(ROOT, 'sync/n8n-build/enrichment-anthropic.generated.js');
 
-const brandBundleResult = runCodeNode(brandBundlePath, {
+runGeneratedBundleChecks().then(() => {
+  console.log(JSON.stringify(summary, null, 2));
+
+  if (afterBrandPass !== fixtures.length) {
+    const failures = brandRows
+      .filter((row) => row.actualBrand !== row.fixture.expectedBrand)
+      .map((row) => ({ title: row.fixture.title, expected: row.fixture.expectedBrand, actual: row.actualBrand }));
+    throw new Error(`brand coverage failures: ${JSON.stringify(failures, null, 2)}`);
+  }
+  if (sizePass !== sizeFixtures.length) {
+    throw new Error(`size parse coverage failed: ${sizePass}/${sizeFixtures.length}`);
+  }
+}).catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
+
+async function runGeneratedBundleChecks() {
+const brandBundleResult = await runCodeNode(brandBundlePath, {
   title: 'عطر ديور سوفاج 100مل',
   brand_name: 'متجر نوادر ديور'
 });
@@ -116,7 +137,7 @@ assertEqual(brandBundleResult.brand_name_en, 'Dior', 'brand bundle should ignore
 assertEqual(brandBundleResult.size_ml, 100, 'brand bundle should parse Arabic attached ml size');
 if (!brandBundleResult.normalized_name) throw new Error('brand bundle should emit normalized_name');
 
-const promptOnly = runCodeNode(enrichmentBundlePath, {
+const promptOnly = await runCodeNode(enrichmentBundlePath, {
   id: 'fragrance-1',
   brand_name_en: 'Dior',
   brand_name_ar: 'ديور',
@@ -127,7 +148,7 @@ const promptOnly = runCodeNode(enrichmentBundlePath, {
 assertEqual(promptOnly.enrichment_status, 'prompt_ready', 'enrichment bundle should build prompt without response');
 assertEqual(promptOnly.should_call_anthropic, true, 'prompt-only bundle should request Anthropic call by downstream node');
 
-const guarded = runCodeNode(enrichmentBundlePath, {
+const guarded = await runCodeNode(enrichmentBundlePath, {
   id: 'fragrance-2',
   is_enriched: true,
   description_ar: 'محتوى موجود',
@@ -136,7 +157,7 @@ const guarded = runCodeNode(enrichmentBundlePath, {
 assertEqual(guarded.enrichment_status, 'skipped_existing_enrichment', 'enrichment guard should skip existing enrichment');
 assertEqual(guarded.fragrance_product_update, null, 'guard should not emit overwrite payload');
 
-const parsed = runCodeNode(enrichmentBundlePath, {
+const parsed = await runCodeNode(enrichmentBundlePath, {
   id: 'fragrance-3',
   brand_name_en: 'Dior',
   brand_name_ar: 'ديور',
@@ -168,6 +189,7 @@ if (!parsed.fragrance_product_update.tags.includes('enriched')) {
 if (!parsed.fragrance_product_update.tags.includes('dior')) {
   throw new Error('parsed payload should preserve existing tags');
 }
+}
 
 const summary = {
   fixture_count: fixtures.length,
@@ -189,18 +211,6 @@ const summary = {
     projected_reduction: CURRENT_NEEDS_REVIEW - projectedNeedsReviewAfter
   }
 };
-
-console.log(JSON.stringify(summary, null, 2));
-
-if (afterBrandPass !== fixtures.length) {
-  const failures = brandRows
-    .filter((row) => row.actualBrand !== row.fixture.expectedBrand)
-    .map((row) => ({ title: row.fixture.title, expected: row.fixture.expectedBrand, actual: row.actualBrand }));
-  throw new Error(`brand coverage failures: ${JSON.stringify(failures, null, 2)}`);
-}
-if (sizePass !== sizeFixtures.length) {
-  throw new Error(`size parse coverage failed: ${sizePass}/${sizeFixtures.length}`);
-}
 
 function percent(numerator, denominator) {
   return denominator === 0 ? 100 : Math.round((numerator / denominator) * 10000) / 100;
