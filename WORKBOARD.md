@@ -9,18 +9,19 @@ Last updated 2026-06-07 (Claude). Full context in `PROJECT_STATE.md`.
 - [x] Built + verified idempotent push `sNjYDNqXvu1o35yW` (parent+variant, precise non-archived lookup, draft-only, patch-back). Confirmed: new products = DRAFT, sku=calapres_sku, price=supplier+100.
 - [x] Built supplier pull `BbIuB2zL6HIxRlYh` (Supabase-only, new supplier-ids only, junk-safe).
 
-## EXACT snapshot (2026-06-07, mid-drain)
-supplier_products **595** · product_media **657** (source=supplier) · pushed **181** · unpushed priced **411** · fragrance_products **86** · product_variants **86** · shopify_products **181** · needs_review **83** · sync_errors **0** · sync_runs **1**.
+## EXACT snapshot (2026-06-07, pull running — exec 4042)
+supplier_products **870** (climbing, ~3155 target) · product_media **657** · pushed **85** · unpushed_priced **~785** · fragrance_products **86** · product_variants **86** · shopify_products **85** · sync_errors **0** · sync_runs **1** (dedup).
+- 96 SQL-re-pointed survivors cleared (shopify_product_id=NULL) → in unpushed pool for backfill via push UPDATE.
 
 ## In progress (autonomous, re-runnable)
-- [~] **Pull `BbIuB2zL6HIxRlYh`** running → supplier_products 595→~3,155. Re-run to finish.
-- [~] **Push `sNjYDNqXvu1o35yW`** draining → 181 pushed, 411 unpushed (grows as pull adds). Re-run 400/batch **sequentially** (never two at once — concurrent pushes race-create dups) until `shopify_product_id is null and supplier_price is not null` = 0.
+- [~] **Pull `BbIuB2zL6HIxRlYh`** — exec 4042 running since 11:40:58 UTC, ~22/min. Restart when stopped. Done when supplier_products ≥ 3,155.
+- [ ] **Push `sNjYDNqXvu1o35yW`** — waiting for pull to finish. Then run 400/batch SEQUENTIALLY (never two at once) until `shopify_product_id IS NULL AND supplier_price IS NOT NULL` = 0. Includes 96 backfill rows.
 
 ## Next (precise)
-1. [ ] Finish pull, then **drain push to zero sequentially**.
-2. [ ] Backfill fragrance_products/product_variants for the **97** SQL-re-pointed survivors (clear their shopify_product_id, re-run push; or one-off RPC pass).
-3. [ ] **Brand map deferred to enrichment** — port `sync/normalize.js` BRAND_MAP (or use `sync/n8n-build/fragrance-resolve.generated.js`) to cut needs_review (now 83) and merge sizes into shared parents.
-4. [ ] Higgsfield images + Arabic SEO enrichment (supplier images are temporary).
+1. [ ] Finish pull → drain push to zero sequentially (push includes 96 survivor backfill).
+2. [x] **96 re-pointed survivors cleared** — in unpushed pool; push UPDATE path will backfill fragrance/variant rows.
+3. [ ] **Brand map deferred to enrichment** — port `sync/normalize.js` BRAND_MAP / `sync/n8n-build/fragrance-resolve.generated.js`.
+4. [ ] Higgsfield images + Arabic SEO enrichment.
 
 ## Workflow IDs
 - Dedup `YEoLTXDRL3NMvcIo` · Pull `BbIuB2zL6HIxRlYh` · Push `sNjYDNqXvu1o35yW` · proven template `tUhxKPw6u2br6JAK` · legacy/inactive `Vsf1Epd3ssfbw10i`, `N4L7C67CgPTRmVLC` · **`s7QvXm1lyQxPHOfF` = DEACTIVATED PERMANENTLY (never re-enable).**
