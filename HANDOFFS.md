@@ -2,6 +2,27 @@
 
 Chronological handoff log. Newest first. See `PROJECT_STATE.md` / `WORKBOARD.md`.
 
+## 2026-06-07 (session 3) — Claude — Pull running, 96 survivors cleared, push queued
+
+**Done this session:**
+- Pull `BbIuB2zL6HIxRlYh` execution 4042 launched at 11:40:58 UTC. Active at ~21/min. supplier_products growing 595→933+ (at time of writing). Target ~3,155.
+- Cleared `shopify_product_id` for **96 SQL-re-pointed survivors** (had shopify ID but no product_variants row). All 96 confirmed to have `supplier-id-pXXX` tags in Shopify. Setting to NULL puts them in unpushed_priced pool. Push will UPDATE (not create) them, backfilling fragrance/variant rows.
+- Updated PROJECT_STATE.md, WORKBOARD.md. Committed 2fbf9a7.
+
+**State at handoff:**
+- supplier_products **933+** (climbing) · pushed **85** · unpushed_priced **~850** (grows as pull adds; includes 96 cleared backfill rows) · fragrance_products **86** · product_variants **86** · sync_errors **0** · sync_runs **1** (dedup).
+
+**Next agent, in strict order:**
+1. Re-check execution 4042 status. If still running → wait and let it finish. If stopped (succeeded/crashed/timeout) → re-run pull `BbIuB2zL6HIxRlYh` immediately. Repeat until supplier_products ≥ 3,155 AND latest_added timestamp stops advancing.
+2. When pull is done (≥3,155): run push `sNjYDNqXvu1o35yW` sequentially (400/batch, NEVER two concurrent). Repeat until `shopify_product_id IS NULL AND supplier_price IS NOT NULL` = 0. This handles both new products AND the 96 cleared backfill rows.
+3. Verify final numbers. Update state files. Commit + push.
+
+**Critical guardrails:**
+- `s7QvXm1lyQxPHOfF` MUST stay deactivated — never re-enable.
+- Never two push runs simultaneously (race-creates duplicates).
+- Never delete; never publish to customers; DRAFT only for new products.
+- UPDATE path for survivors (tag lookup finds them; only price/sku/inventory updated — no status change).
+
 ## 2026-06-07 — Claude — Duplicate incident contained; dedup running; pull/push deferred
 
 **Context handed in:** Task assumed ~324 existing Shopify products and asked to prevent duplicates, resolve a conflicting sync, complete the supplier pull (100→full catalog) and push drafts.
