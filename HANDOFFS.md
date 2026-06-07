@@ -43,3 +43,9 @@ Chronological handoff log. Newest first. See `PROJECT_STATE.md` / `WORKBOARD.md`
 4. Add BRAND_MAP brand extraction (port `sync/normalize.js` or use `sync/n8n-build/fragrance-resolve.generated.js`) to reduce needs_review and enable real parent+variant size-merging.
 
 **Watch out:** Shopify productsCount caps at 10,000 (AT_LEAST) — use per-supplier-id or status counts (EXACT). Never delete. DRAFT only. brand_name in supplier_products is often the store name ("متجر نوادر ديور"); push ignores it and flags needs_review.
+
+### EXACT snapshot update (2026-06-07, mid-drain)
+- supplier_products **595** · product_media **657** (all source=supplier) · pushed **181** · unpushed priced **411** · fragrance_products **86** · product_variants **86** · shopify_products **181** · needs_review **83** · sync_errors **0** · sync_runs **1**.
+- **Precise next steps:** (1) finish pull `BbIuB2zL6HIxRlYh`; (2) **drain push `sNjYDNqXvu1o35yW` to zero SEQUENTIALLY** (400/batch, never two concurrently — race-creates dups) until `shopify_product_id is null and supplier_price is not null` = 0; (3) backfill fragrance/variant rows for the **97** SQL-re-pointed survivors; (4) **brand map deferred to enrichment** (port `sync/normalize.js` BRAND_MAP / use `sync/n8n-build/fragrance-resolve.generated.js`).
+- **Workflow IDs:** Dedup `YEoLTXDRL3NMvcIo` · Pull `BbIuB2zL6HIxRlYh` · Push `sNjYDNqXvu1o35yW` · template `tUhxKPw6u2br6JAK` · legacy/inactive `Vsf1Epd3ssfbw10i`, `N4L7C67CgPTRmVLC`.
+- **PERMANENT RULE: `s7QvXm1lyQxPHOfF` stays DEACTIVATED forever** (it was the duplicate-explosion bypass writer). Never re-enable.

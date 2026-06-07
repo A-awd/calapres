@@ -25,11 +25,11 @@ Supplier (nawadirdior.sa) → n8n → **Supabase (source of truth)** → n8n →
 - `N4L7C67CgPTRmVLC` — legacy dataTable seed, superseded.
 - `s7QvXm1lyQxPHOfF` — **DEACTIVATED permanently.**
 
-## Supabase data (live snapshot 2026-06-07, mid-drain)
-- supplier_products **511 and climbing → ~3,155** (3 junk no-price kept, never deleted)
-- product_media **573** (all source='supplier')
-- shopify_products **127** · fragrance_products **32** · product_variants **32**
-- pushed (shopify_product_id set): **127** · needs_review: **30** · sync_errors: **0** · sync_runs: 1 (dedup)
+## Supabase data (EXACT live snapshot 2026-06-07, mid-drain)
+- supplier_products **595** and climbing → ~3,155 (3 junk no-price kept, never deleted)
+- product_media **657** (all 657 source='supplier')
+- shopify_products **181** · fragrance_products **86** · product_variants **86**
+- pushed (shopify_product_id set): **181** · unpushed priced: **411** · needs_review: **83** · sync_errors: **0** · sync_runs: **1** (dedup)
 
 ## Rules enforced
 - price = supplier+100; discount → compare_at=original+100, price=discounted+100; compare_at≠price else null. selling_price/compare_at computed by `calapres_upsert_product_variant`.
