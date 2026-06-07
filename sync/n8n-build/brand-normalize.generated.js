@@ -1,3 +1,8 @@
+// Self-contained n8n Code node bundle.
+// Mode: runOnceForEachItem
+// Purpose: resolve Nawadir Dior supplier titles to canonical brand records,
+// stable fragrance parent names, concentration, and variant size facts.
+
 const STORE_BRAND_NAMES = [
   'متجر نوادر ديور',
   'نوادر ديور',
@@ -51,74 +56,89 @@ const BRAND_RECORDS = [
   { name_en: 'Lancome', name_ar: 'لانكوم', aliases: ['لانكوم', 'lancome', 'lancôme'] },
   { name_en: 'Giorgio Armani', name_ar: 'جورجيو ارماني', aliases: ['جورجيو ارماني', 'giorgio armani', 'armani'] },
   { name_en: 'Imperissima', name_ar: 'امبريسما', aliases: ['امبريسما', 'imperissima'] }
-].map((record) => ({
-  ...record,
-  slug: slugify(record.name_en)
-}));
+].map((record) => ({ ...record, slug: slugify(record.name_en) }));
 
-const BRAND_MAP = buildBrandMap(BRAND_RECORDS);
-const BRAND_ALIASES = buildBrandAliases(BRAND_RECORDS);
-const BRAND_RECORD_BY_NAME = buildBrandRecordByName(BRAND_RECORDS);
+const CONCENTRATION_TOKENS = [
+  'eau de parfum', 'eau de toilette', 'eau de cologne', 'le parfum',
+  'edp', 'edt', 'edc', 'extrait', 'parfum', 'cologne',
+  'او دو برفيوم', 'او دو بارفيوم', 'اودي بارفيوم', 'او دو تواليت',
+  'ماء عطر', 'ماء تواليت', 'بارفيوم', 'برفيوم', 'كولونيا', 'اكستريت',
+  'اكسيتريت', 'مستخلص'
+];
+const GENDER_TOKENS = ['for women', 'for men', 'for him', 'for her', 'pour homme', 'pour femme', 'women', 'woman', 'men', 'man', 'unisex', 'ladies', 'نسائي', 'للنساء', 'حريمي', 'رجالي', 'للرجال', 'للجنسين', 'مشترك'];
+const TESTER_TOKENS = ['tester', 'test', 'تستر', 'تيستر', 'عينة'];
+const GIFT_SET_TOKENS = ['gift set', 'giftset', 'gift box', 'set', 'coffret', 'طقم', 'مجموعة', 'هدية', 'بوكس'];
+const PRODUCT_NOISE_TOKENS = ['perfume', 'fragrance', 'body spray', 'hair perfume', 'hair and body mist', 'عطر', 'العطر', 'عطور', 'العطور', 'عينة', 'عينات', 'جديد المتجر', 'المتجر'];
+
 const STORE_NAME_FOLDS = STORE_BRAND_NAMES.map((name) => fold(name));
+const BRAND_RECORD_BY_NAME = buildBrandRecordByName(BRAND_RECORDS);
 const BRAND_ALIAS_INDEX = buildBrandAliasIndex(BRAND_RECORDS);
 
-function normalizeProduct(input) {
-  const product = input && typeof input === 'object' ? input : {};
-  const title = cleanTitle(product.name || product.title || '');
-  const brandRecord = resolveBrand(product.brand || product.brand_name || product.vendor, title);
-  const brand = brandRecord ? brandRecord.name_en : normalizeBrand(product.brand || product.brand_name || product.vendor || detectBrand(title), title);
-  const concentration = normalizeConcentration(product.concentration || title);
-  const sizeMl = normalizeSizeMl(product.sizeMl || product.size || title);
-  const gender = normalizeGender(product.gender || title || product.category || '');
-  return {
-    ...product,
-    title,
-    name: product.name || title,
-    brand,
-    brand_name: brand,
-    brand_name_en: brandRecord ? brandRecord.name_en : brand,
+const source = typeof $json === 'object' && $json ? $json : {};
+const title = cleanTitle(source.title || source.name || source.product_title_ar || source.product_title_en || '');
+const brandRecord = resolveBrand(source.brand || source.brand_name || source.vendor, title);
+const concentration = firstNonEmpty(source.concentration, normalizeConcentration(title));
+const sizeMl = firstFinite(source.sizeMl, source.size_ml, source.size, normalizeSizeMl(title));
+const gender = firstNonEmpty(source.gender, source.gender_target, normalizeGender(title));
+const isTester = detectFlag(title, TESTER_TOKENS) || Boolean(source.is_tester);
+const isGiftSet = detectFlag(title, GIFT_SET_TOKENS) || Boolean(source.is_gift_set);
+const coreName = stripToCoreName(title, brandRecord, concentration);
+const normalizedName = fold(coreName);
+const reviewReasons = [];
+if (!brandRecord) reviewReasons.push('missing_canonical_brand');
+if (!normalizedName) reviewReasons.push('missing_normalized_name');
+
+return {
+  json: {
+    ...source,
+    normalized_title: title,
+    brand_name: brandRecord ? brandRecord.name_en : '',
+    brand_name_en: brandRecord ? brandRecord.name_en : '',
     brand_name_ar: brandRecord ? brandRecord.name_ar : '',
-    brand_slug: brandRecord ? brandRecord.slug : (brand ? slugify(brand) : ''),
-    brand_record: brandRecord,
-    concentration,
-    sizeMl,
-    gender
-  };
-}
+    brand_slug: brandRecord ? brandRecord.slug : '',
+    brand_lookup: brandRecord ? {
+      rpc: 'calapres_resolve_brand',
+      params: {
+        p_name_en: brandRecord.name_en,
+        p_name_ar: brandRecord.name_ar
+      }
+    } : null,
+    normalized_name: normalizedName,
+    canonical_name_en: latinOnly(coreName),
+    canonical_name_ar: arabicOnly(coreName),
+    concentration: concentration || null,
+    size_ml: sizeMl,
+    gender_target: gender || null,
+    is_tester: isTester,
+    is_gift_set: isGiftSet,
+    size_label: buildSizeLabel(sizeMl, isTester, isGiftSet),
+    variant_title: buildVariantTitle(sizeMl, isTester, isGiftSet, concentration),
+    needs_review: reviewReasons.length > 0,
+    review_reason: reviewReasons.join(',') || null,
+    enrichment_brand_map: {
+      source: 'nawadirdior_title',
+      ignored_store_brand: isStoreBrandName(source.brand || source.brand_name || source.vendor),
+      brand: brandRecord,
+      normalized_name: normalizedName
+    }
+  }
+};
 
-function normalizeBrand(value, title) {
-  const record = resolveBrand(value, title);
-  if (record) return record.name_en;
-  const cleaned = cleanTitle(value);
-  if (!cleaned) return '';
-  if (isStoreBrandName(cleaned)) return '';
-  if (BRAND_MAP[cleaned]) return BRAND_MAP[cleaned];
-  const folded = fold(cleaned);
-  if (BRAND_ALIASES[folded]) return BRAND_ALIASES[folded];
-  return titleCasePreservingKnown(cleaned);
-}
-
-function detectBrand(title) {
-  const record = detectBrandRecord(title);
-  return record ? record.name_en : '';
-}
-
-function resolveBrand(value, title) {
+function resolveBrand(value, titleValue) {
   const candidate = cleanTitle(value);
   if (candidate && !isStoreBrandName(candidate)) {
     const record = getBrandRecord(candidate);
     if (record) return record;
   }
-  const fromTitle = detectBrandRecord(title || '');
-  return fromTitle || null;
+  return detectBrandRecord(titleValue || '');
 }
 
-function detectBrandRecord(title) {
-  const clean = stripStoreBrandNames(cleanTitle(title));
+function detectBrandRecord(titleValue) {
+  const clean = stripStoreBrandNames(cleanTitle(titleValue));
   const folded = ' ' + fold(clean) + ' ';
   if (!folded.trim()) return null;
   for (const entry of BRAND_ALIAS_INDEX) {
-    if (containsFoldedAlias(folded, entry.foldedAlias)) return entry.record;
+    if (folded.indexOf(' ' + entry.foldedAlias + ' ') !== -1) return entry.record;
   }
   return null;
 }
@@ -126,10 +146,7 @@ function detectBrandRecord(title) {
 function getBrandRecord(value) {
   const cleaned = cleanTitle(value);
   if (!cleaned || isStoreBrandName(cleaned)) return null;
-  const direct = BRAND_RECORD_BY_NAME[fold(cleaned)];
-  if (direct) return direct;
-  const canonical = BRAND_ALIASES[fold(cleaned)] || BRAND_MAP[cleaned];
-  return canonical ? BRAND_RECORD_BY_NAME[fold(canonical)] || null : null;
+  return BRAND_RECORD_BY_NAME[fold(cleaned)] || null;
 }
 
 function isStoreBrandName(value) {
@@ -140,19 +157,42 @@ function isStoreBrandName(value) {
 
 function stripStoreBrandNames(value) {
   let text = String(value || '');
-  for (const name of STORE_BRAND_NAMES) {
-    if (!name) continue;
-    text = text.split(name).join(' ');
+  for (const name of STORE_BRAND_NAMES) text = text.split(name).join(' ');
+  return STORE_NAME_FOLDS.some((storeName) => fold(text) === storeName) ? '' : text;
+}
+
+function stripToCoreName(titleValue, brandRecordValue, concentrationValue) {
+  let text = ' ' + stripStoreBrandNames(foldArabicDigits(String(titleValue || ''))) + ' ';
+  for (const form of brandSurfaceForms(brandRecordValue)) text = removeToken(text, form);
+  for (const token of CONCENTRATION_TOKENS) text = removeToken(text, token);
+  for (const token of GENDER_TOKENS) text = removeToken(text, token);
+  for (const token of TESTER_TOKENS) text = removeToken(text, token);
+  for (const token of GIFT_SET_TOKENS) text = removeToken(text, token);
+  for (const token of PRODUCT_NOISE_TOKENS) text = removeToken(text, token);
+  text = text.replace(/\d+(?:\.\d+)?\s*-?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
+  text = text.replace(/\b(?:30|40|45|50|60|67|75|80|90|100|110|125|150|200)\b/g, ' ');
+  return text.replace(/[‌‏]/g, ' ').replace(/[-_/|,،.]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function brandSurfaceForms(record) {
+  if (!record) return [];
+  return unique([record.name_en, record.name_ar].concat(record.aliases || [])).sort((a, b) => b.length - a.length);
+}
+
+function removeToken(haystack, token) {
+  const needle = String(token || '').trim();
+  if (!needle) return haystack;
+  if (/[a-z]/i.test(needle)) {
+    const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+    return haystack.replace(new RegExp('(^|[^a-z])' + escaped + '(?=$|[^a-z])', 'gi'), '$1 ');
   }
-  const foldedValue = fold(text);
-  if (STORE_NAME_FOLDS.some((storeName) => foldedValue === storeName)) return '';
-  return text;
+  return haystack.split(needle).join(' ');
 }
 
 function normalizeConcentration(value) {
   const raw = foldArabicDigits(value).toLowerCase();
   if (/\bextrait\b|اكستريت|اكسيتريت|مستخلص/.test(raw)) return 'Extrait';
-  if (/\bedp\b|eau de parfum|او دو برفيوم|او دو بارفيوم|ماء عطر/.test(raw)) return 'EDP';
+  if (/\bedp\b|eau de parfum|او دو برفيوم|او دو بارفيوم|اودي بارفيوم|ماء عطر/.test(raw)) return 'EDP';
   if (/\bedt\b|eau de toilette|او دو تواليت|ماء تواليت/.test(raw)) return 'EDT';
   if (/\ble parfum\b|\bparfum\b|بارفيوم|برفيوم/.test(raw)) return 'Parfum';
   if (/\bedc\b|eau de cologne|كولونيا/.test(raw)) return 'EDC';
@@ -163,7 +203,7 @@ function normalizeSizeMl(value) {
   if (value === null || value === undefined || value === '') return null;
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   const raw = foldArabicDigits(value);
-  const match = raw.match(/(\d+(?:\.\d+)?)\s*(?:ml|m\.l|مل|ملي|مليلتر)/i) || raw.match(/\b(\d{2,3})\b/);
+  const match = raw.match(/(\d+(?:\.\d+)?)\s*-?\s*(?:ml|m\.l|مل|ملي|مليلتر)/i) || raw.match(/\b(30|40|45|50|60|67|75|80|90|100|110|125|150|200)\b/);
   return match ? Number(match[1]) : null;
 }
 
@@ -175,21 +215,28 @@ function normalizeGender(value) {
   return null;
 }
 
-function cleanTitle(value) {
-  return decodeEntities(stripTags(String(value || '')))
-    .replace(/\s+/g, ' ')
-    .replace(/\s+([,.;:])/g, '$1')
-    .trim();
+function buildSizeLabel(sizeMl, isTester, isGiftSet) {
+  if (isTester) return 'Tester';
+  if (isGiftSet) return 'Gift Set';
+  return sizeMl ? sizeMl + 'ml' : 'Standard';
 }
 
-function titleCasePreservingKnown(value) {
-  return String(value || '')
-    .split(/\s+/)
-    .map((part) => {
-      if (/^[A-Z0-9&'.-]+$/.test(part)) return part;
-      return part.charAt(0).toUpperCase() + part.slice(1);
-    })
-    .join(' ');
+function buildVariantTitle(sizeMl, isTester, isGiftSet, concentrationValue) {
+  const parts = [];
+  if (sizeMl) parts.push(sizeMl + 'ml');
+  if (concentrationValue) parts.push(concentrationValue);
+  if (isTester) parts.push('Tester');
+  if (isGiftSet) parts.push('Gift Set');
+  return parts.join(' ').trim() || 'Standard';
+}
+
+function detectFlag(text, tokens) {
+  const folded = fold(text);
+  return tokens.some((token) => folded.indexOf(fold(token)) !== -1);
+}
+
+function cleanTitle(value) {
+  return decodeEntities(stripTags(String(value || ''))).replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1').trim();
 }
 
 function fold(value) {
@@ -207,17 +254,15 @@ function fold(value) {
     .trim();
 }
 
-function removeLatinDiacritics(value) {
-  const raw = String(value || '');
-  return typeof raw.normalize === 'function'
-    ? raw.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
-    : raw;
-}
-
 function foldArabicDigits(value) {
   return String(value || '')
     .replace(/[٠-٩]/g, (digit) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(digit)))
     .replace(/[۰-۹]/g, (digit) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(digit)));
+}
+
+function removeLatinDiacritics(value) {
+  const raw = String(value || '');
+  return typeof raw.normalize === 'function' ? raw.normalize('NFKD').replace(/[\u0300-\u036f]/g, '') : raw;
 }
 
 function stripTags(value) {
@@ -236,25 +281,31 @@ function decodeEntities(value) {
     .replace(/&#x([a-f0-9]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)));
 }
 
-function buildBrandMap(records) {
-  const out = {};
-  for (const record of records) {
-    out[record.name_ar] = record.name_en;
-    for (const alias of record.aliases || []) {
-      if (/[\u0600-\u06ff]/.test(alias)) out[alias] = record.name_en;
-    }
-  }
-  return out;
+function latinOnly(value) {
+  const out = String(value || '').replace(/[^\u0000-\u024F]/g, ' ').replace(/\s+/g, ' ').trim();
+  return /[a-z]/i.test(out) ? out : '';
 }
 
-function buildBrandAliases(records) {
-  const out = {};
-  for (const record of records) {
-    out[fold(record.name_en)] = record.name_en;
-    out[fold(record.name_ar)] = record.name_en;
-    for (const alias of record.aliases || []) out[fold(alias)] = record.name_en;
+function arabicOnly(value) {
+  const out = String(value || '').replace(/[^\u0600-\u06FF\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  return /[\u0600-\u06FF]/.test(out) ? out : '';
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
   }
-  return out;
+  return null;
+}
+
+function firstFinite() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    if (value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value))) return Number(value);
+  }
+  return null;
 }
 
 function buildBrandRecordByName(records) {
@@ -263,6 +314,7 @@ function buildBrandRecordByName(records) {
     out[fold(record.name_en)] = record;
     out[fold(record.name_ar)] = record;
     out[fold(record.slug)] = record;
+    for (const alias of record.aliases || []) out[fold(alias)] = record;
   }
   return out;
 }
@@ -270,18 +322,12 @@ function buildBrandRecordByName(records) {
 function buildBrandAliasIndex(records) {
   const out = [];
   for (const record of records) {
-    const aliases = unique([record.name_en, record.name_ar].concat(record.aliases || []));
-    for (const alias of aliases) {
+    for (const alias of unique([record.name_en, record.name_ar].concat(record.aliases || []))) {
       const foldedAlias = fold(alias);
       if (foldedAlias && !STORE_NAME_FOLDS.includes(foldedAlias)) out.push({ foldedAlias, record });
     }
   }
   return out.sort((a, b) => b.foldedAlias.length - a.foldedAlias.length);
-}
-
-function containsFoldedAlias(foldedHaystack, foldedAlias) {
-  if (!foldedAlias) return false;
-  return foldedHaystack.indexOf(' ' + foldedAlias + ' ') !== -1;
 }
 
 function slugify(value) {
@@ -299,28 +345,4 @@ function unique(values) {
     }
   }
   return out;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    STORE_BRAND_NAMES,
-    BRAND_RECORDS,
-    BRAND_MAP,
-    BRAND_ALIASES,
-    normalizeProduct,
-    normalizeBrand,
-    detectBrand,
-    resolveBrand,
-    detectBrandRecord,
-    getBrandRecord,
-    isStoreBrandName,
-    stripStoreBrandNames,
-    normalizeConcentration,
-    normalizeSizeMl,
-    normalizeGender,
-    cleanTitle,
-    fold,
-    foldArabicDigits,
-    slugify
-  };
 }

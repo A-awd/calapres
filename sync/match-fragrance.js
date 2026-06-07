@@ -32,6 +32,10 @@ const GENDER_TOKENS = [
 
 const TESTER_TOKENS = ['tester', 'test', 'تستر', 'تيستر', 'عينة'];
 const GIFT_SET_TOKENS = ['gift set', 'giftset', 'gift box', 'set', 'coffret', 'طقم', 'مجموعة', 'هدية', 'بوكس'];
+const PRODUCT_NOISE_TOKENS = [
+  'perfume', 'fragrance', 'body spray', 'hair perfume', 'hair and body mist',
+  'عطر', 'العطر', 'عطور', 'العطور', 'عينة', 'عينات', 'جديد المتجر', 'المتجر'
+];
 
 function resolveFragrance(parsed, existingFragrances, options) {
   const facts = extractFragranceFacts(parsed, options);
@@ -60,14 +64,15 @@ function extractFragranceFacts(parsed, options) {
   const opts = options || {};
   const input = parsed && typeof parsed === 'object' ? parsed : {};
   const rawTitle = normalize.cleanTitle(input.name || input.title || input.product_title_en || input.product_title_ar || '');
-  const brand = normalize.normalizeBrand(input.brand || input.brand_name || input.vendor || normalize.detectBrand(rawTitle));
+  const brandRecord = normalize.resolveBrand(input.brand || input.brand_name || input.vendor, rawTitle);
+  const brand = brandRecord ? brandRecord.name_en : normalize.normalizeBrand(input.brand || input.brand_name || input.vendor || normalize.detectBrand(rawTitle), rawTitle);
   const concentration = firstNonEmpty(input.concentration, normalize.normalizeConcentration(rawTitle));
   const sizeMl = firstFinite(input.sizeMl, input.size_ml, normalize.normalizeSizeMl(rawTitle));
   const gender = firstNonEmpty(input.gender, input.gender_target, normalize.normalizeGender(rawTitle));
   const isTester = detectFlag(rawTitle, TESTER_TOKENS) || Boolean(opts.isTester);
   const isGiftSet = detectFlag(rawTitle, GIFT_SET_TOKENS) || Boolean(opts.isGiftSet);
 
-  const coreName = stripToCoreName(rawTitle, brand, concentration);
+  const coreName = stripToCoreName(rawTitle, brandRecord || brand, concentration);
   const normalizedName = normalize.fold(coreName);
   const canonicalNameEn = latinOnly(coreName) || (isLatin(rawTitle) ? rawTitle : '');
   const canonicalNameAr = arabicOnly(coreName) || (isArabic(rawTitle) ? rawTitle : '');
@@ -75,7 +80,10 @@ function extractFragranceFacts(parsed, options) {
   return {
     rawTitle,
     brand: brand || '',
-    brandSlug: brand ? normalize.fold(brand) : '',
+    brandNameEn: brandRecord ? brandRecord.name_en : (brand || ''),
+    brandNameAr: brandRecord ? brandRecord.name_ar : '',
+    brandSlug: brandRecord ? brandRecord.slug : (brand ? normalize.slugify(brand) : ''),
+    brandRecord: brandRecord || null,
     concentration: concentration || null,
     sizeMl: sizeMl === undefined ? null : sizeMl,
     gender: gender || null,
@@ -139,22 +147,29 @@ function concentrationCompatible(a, b) {
 function stripToCoreName(title, brand, concentration) {
   // Fold Arabic-Indic digits to ASCII first so "١٠٠ml" becomes "100ml" and the
   // size patterns below can strip it (\d and \b only see ASCII digits).
-  let text = ' ' + normalize.foldArabicDigits(String(title || '')) + ' ';
+  let text = ' ' + normalize.stripStoreBrandNames(normalize.foldArabicDigits(String(title || ''))) + ' ';
   for (const form of brandSurfaceForms(brand)) text = removeToken(text, form);
   for (const token of CONCENTRATION_TOKENS) text = removeToken(text, token);
   for (const token of GENDER_TOKENS) text = removeToken(text, token);
   for (const token of TESTER_TOKENS) text = removeToken(text, token);
   for (const token of GIFT_SET_TOKENS) text = removeToken(text, token);
-  // Sizes: "100ml", "100 مل", then any bare 1-4 digit run left over.
-  text = text.replace(/\d+(?:\.\d+)?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
-  text = text.replace(/\d{1,4}/g, ' ');
+  for (const token of PRODUCT_NOISE_TOKENS) text = removeToken(text, token);
+  // Sizes: "100ml", "100 مل", "100-ml", then common bare ml sizes left over.
+  // Keep fragrance names such as 724, No. 5, N01, and M7 intact.
+  text = text.replace(/\d+(?:\.\d+)?\s*-?\s*(?:ml|m\.l|مل|ملي|مليلتر)/gi, ' ');
+  text = text.replace(/\b(?:30|40|45|50|60|67|75|80|90|100|110|125|150|200)\b/g, ' ');
   return text.replace(/[‌‏]/g, ' ').replace(/[-_/|,،.]+/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function brandSurfaceForms(brand) {
   const forms = [];
-  const canonical = String(brand || '').trim();
+  const brandRecord = brand && typeof brand === 'object' ? brand : normalize.getBrandRecord(brand);
+  const canonical = brandRecord ? brandRecord.name_en : String(brand || '').trim();
   if (canonical) forms.push(canonical);
+  if (brandRecord && brandRecord.name_ar) forms.push(brandRecord.name_ar);
+  if (brandRecord && Array.isArray(brandRecord.aliases)) {
+    for (const alias of brandRecord.aliases) forms.push(alias);
+  }
   for (const key of Object.keys(normalize.BRAND_MAP)) {
     if (normalize.BRAND_MAP[key] === canonical) forms.push(key);
   }
@@ -202,7 +217,7 @@ function detectFlag(text, tokens) {
 }
 
 function latinOnly(value) {
-  const out = String(value || '').replace(/[^ -ɏ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const out = String(value || '').replace(/[^\u0000-\u024F]/g, ' ').replace(/\s+/g, ' ').trim();
   return /[a-z]/i.test(out) ? out : '';
 }
 
@@ -260,6 +275,7 @@ if (typeof module !== 'undefined' && module.exports) {
     stripToCoreName,
     buildSizeLabel,
     buildVariantTitle,
-    detectFlag
+    detectFlag,
+    PRODUCT_NOISE_TOKENS
   };
 }

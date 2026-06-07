@@ -177,6 +177,20 @@
       "name": "Code: Build Enriched Payload",
       "file": "enrich-payload.generated.js",
       "mode": "runOnceForEachItem"
+    },
+    {
+      "order": 27,
+      "name": "Code: Resolve Brand + Parent Name (Offline Enrichment)",
+      "file": "brand-normalize.generated.js",
+      "mode": "runOnceForEachItem",
+      "offlineOnly": true
+    },
+    {
+      "order": 28,
+      "name": "Code: Build Anthropic Fragrance Enrichment (Offline)",
+      "file": "enrichment-anthropic.generated.js",
+      "mode": "runOnceForEachItem",
+      "offlineOnly": true
     }
   ],
   "connectionGraph": [
