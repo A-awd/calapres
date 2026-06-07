@@ -25,3 +25,21 @@ Chronological handoff log. Newest first. See `PROJECT_STATE.md` / `WORKBOARD.md`
 5. Push only genuinely-new as DRAFT; match→update canonical, create only new. No live-status changes without approval. Log to sync_runs/sync_errors.
 
 **Watch out:** Shopify `productsCount` caps at 10,000 (`AT_LEAST`); use per-supplier-id counts or `status:archived/active` (EXACT) to measure progress. Never delete. DRAFT only.
+
+## 2026-06-07 (later) — Claude — Dedup complete; pull+push built, verified, draining
+
+**Done since last entry:**
+- Dedup `YEoLTXDRL3NMvcIo` completed: scanned 17,141 imported products, archived 14,322 duplicates (reversible status=ARCHIVED), 2,813 canonical keepers across 2,794 supplier-ids. Invariant holds (1 non-archived canonical per supplier-id). Zero deletions.
+- Re-pointed 97 supplier_products + 97 shopify_products from archived dups to surviving canonicals (SQL).
+- Built `BbIuB2zL6HIxRlYh` (Supabase-only supplier pull, new supplier-ids only, junk-safe) — running, drains to ~3,155.
+- Built + fixed + verified `sNjYDNqXvu1o35yW` (idempotent parent+variant push). First version had a bug (two consecutive Supabase writes; the 2nd lost context after a return=minimal HTTP node wiped $json) → fixed by merging to one "Extract Shopify IDs" node referenced by name from both writes. Verified live: new products are DRAFT, sku=CAL-ND-P<id>, price=supplier+100, correct tags + supplier.product_id metafield, inventory_policy by availability. Precise lookup `tag:supplier-id-pXXX AND -status:archived` confirmed to match survivors (UPDATE) so no new duplicates.
+
+**State at handoff (mid-drain, real):** supplier_products 511→~3,155 (pull running); pushed 127; fragrance_products/product_variants 32; shopify_products 127; needs_review 30; sync_errors 0.
+
+**Next agent:**
+1. Re-run pull `BbIuB2zL6HIxRlYh` until all supplier-ids are in Supabase.
+2. Re-run push `sNjYDNqXvu1o35yW` (400/batch, SEQUENTIAL — never two pushes concurrently, they race-create dups) until `shopify_product_id is null and supplier_price is not null` = 0.
+3. Backfill fragrance/variant rows for the 97 SQL-re-pointed survivors (clear their shopify_product_id and re-run push, or one-off RPC pass).
+4. Add BRAND_MAP brand extraction (port `sync/normalize.js` or use `sync/n8n-build/fragrance-resolve.generated.js`) to reduce needs_review and enable real parent+variant size-merging.
+
+**Watch out:** Shopify productsCount caps at 10,000 (AT_LEAST) — use per-supplier-id or status counts (EXACT). Never delete. DRAFT only. brand_name in supplier_products is often the store name ("متجر نوادر ديور"); push ignores it and flags needs_review.
