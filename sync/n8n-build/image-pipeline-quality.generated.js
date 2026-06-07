@@ -4548,9 +4548,160 @@ function normalizeModuleId(id) {
 const quality = __require('./image-pipeline/quality-gate.js');
 async function main() {
   const response = $json.higgsfieldResponse || $json.response || $json;
-  const context = { referenceImageUrl: $json.brief?.reference_image_url || $json.referenceImageUrl || null };
+  const request = $json.higgsfieldRequest || {};
+  const job = $json.imageGenerationJob || $json.job || {};
+  const context = {
+    referenceImageUrl: $json.brief?.reference_image_url || $json.referenceImageUrl || null,
+    expectedAspectRatio: request.aspect_ratio || job.aspect_ratio || '1:1',
+    expectedResolution: request.resolution || job.resolution || '2048x2048',
+    expectedCount: Number(request.count || request.n || 4)
+  };
   const result = quality.runQualityChecks(response, context);
-  const action = quality.decideAction(result, Number($json.retryCount || $json.imageGenerationJob?.retry_count || 0));
-  return { json: { ...$json, qualityResult: result, nextImageAction: action } };
+  const bestOfFour = evaluateBestOfFour(response, context);
+  const mergedResult = {
+    ...result,
+    passed: result.passed && bestOfFour.passed,
+    score: Math.min(result.score, bestOfFour.quality_score),
+    checks: { ...result.checks, ...bestOfFour.checks },
+    issues: result.issues.concat(bestOfFour.issues),
+    images: bestOfFour.images.map((image) => image.url),
+    bestImageUrl: bestOfFour.best_image_url
+  };
+  const retryCount = Number($json.retryCount || job.retry_count || 0);
+  const action = quality.decideAction(mergedResult, retryCount);
+  const qualityStatus = mergedResult.passed ? 'passed' : (action === 'retry' ? 'retry' : 'needs_review');
+  const imageGenerationJobPatch = {
+    id: job.id || $json.brief?.image_generation_job_id || null,
+    quality_status: qualityStatus,
+    quality_score: bestOfFour.quality_score,
+    best_image_url: bestOfFour.best_image_url,
+    status: qualityStatus === 'passed' ? 'ready' : qualityStatus,
+    error_message: bestOfFour.issues.join('; ') || null
+  };
+  const generatedAssetsRows = bestOfFour.images.map((image, index) => ({
+    image_generation_job_id: imageGenerationJobPatch.id,
+    fragrance_product_id: $json.brief?.fragrance_product_id || job.fragrance_product_id || null,
+    source: 'higgsfield',
+    asset_type: 'product_image',
+    original_url: image.url,
+    best_image_url: bestOfFour.best_image_url,
+    quality_status: image.accepted ? 'passed' : 'rejected',
+    quality_score: image.score,
+    is_selected: image.url === bestOfFour.best_image_url,
+    sort_order: index + 1,
+    raw_payload: image.raw
+  }));
+  return { json: {
+    ...$json,
+    qualityResult: mergedResult,
+    bestOfFour,
+    nextImageAction: action,
+    imageGenerationJobPatch,
+    generatedAssetsRows
+  } };
+}
+
+function evaluateBestOfFour(response, context) {
+  const rawImages = normalizeImageObjects(response);
+  const expectedCount = context.expectedCount || 4;
+  const expectedAspect = parseAspectRatio(context.expectedAspectRatio);
+  const expectedResolution = parseResolution(context.expectedResolution);
+  const images = rawImages.map((raw, index) => scoreImage(raw, index, expectedAspect, expectedResolution))
+    .sort((a, b) => b.score - a.score || a.index - b.index);
+  const accepted = images.filter((image) => image.accepted);
+  const checks = {
+    output_count_ok: rawImages.length >= expectedCount,
+    best_of_4_available: accepted.length > 0,
+    aspect_ratio_ok: accepted.some((image) => image.checks.aspect_ratio_ok),
+    resolution_ok: accepted.some((image) => image.checks.resolution_ok),
+    failed_outputs_rejected: images.filter((image) => isFailure(image.raw)).every((image) => !image.accepted)
+  };
+  const issues = [];
+  if (!checks.output_count_ok) issues.push('Expected ' + expectedCount + ' generated images, got ' + rawImages.length);
+  if (!checks.aspect_ratio_ok) issues.push('No candidate image matched expected aspect ratio');
+  if (!checks.resolution_ok) issues.push('No candidate image met expected resolution');
+  if (!checks.best_of_4_available) issues.push('No generated image passed concrete quality checks');
+  const best = accepted[0] || images[0] || null;
+  return {
+    passed: issues.length === 0,
+    quality_score: best ? best.score : 0,
+    best_image_url: best && best.accepted ? best.url : null,
+    checks,
+    issues,
+    images
+  };
+}
+
+function normalizeImageObjects(response) {
+  if (!response) return [];
+  const raw = response.images || response.data || response.outputs || response.result || [];
+  return (Array.isArray(raw) ? raw : [raw]).map((item) => {
+    if (typeof item === 'string') return { url: item };
+    return item && typeof item === 'object' ? item : {};
+  });
+}
+
+function scoreImage(raw, index, expectedAspect, expectedResolution) {
+  const url = firstNonEmpty(raw.url, raw.src, raw.uri, raw.image_url);
+  const width = Number(firstNonEmpty(raw.width, raw.w, raw.metadata && raw.metadata.width));
+  const height = Number(firstNonEmpty(raw.height, raw.h, raw.metadata && raw.metadata.height));
+  const ratio = width && height ? width / height : null;
+  const aspectTolerance = 0.04;
+  const checks = {
+    url_valid: isHttpsUrl(url),
+    not_failed: !isFailure(raw),
+    dimensions_present: Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0,
+    aspect_ratio_ok: ratio !== null && Math.abs(ratio - expectedAspect) <= aspectTolerance,
+    resolution_ok: Number.isFinite(width) && Number.isFinite(height) && width >= expectedResolution.width && height >= expectedResolution.height
+  };
+  const score = (
+    (checks.url_valid ? 20 : 0) +
+    (checks.not_failed ? 20 : 0) +
+    (checks.dimensions_present ? 15 : 0) +
+    (checks.aspect_ratio_ok ? 20 : 0) +
+    (checks.resolution_ok ? 25 : 0)
+  );
+  return {
+    index,
+    url: checks.url_valid ? url : null,
+    width: Number.isFinite(width) ? width : null,
+    height: Number.isFinite(height) ? height : null,
+    score,
+    accepted: score >= 90,
+    checks,
+    raw
+  };
+}
+
+function parseAspectRatio(value) {
+  const parts = String(value || '1:1').split(':').map(Number);
+  return parts.length === 2 && parts[0] > 0 && parts[1] > 0 ? parts[0] / parts[1] : 1;
+}
+
+function parseResolution(value) {
+  const match = String(value || '2048x2048').match(/(\d+)\s*x\s*(\d+)/i);
+  if (!match) return { width: 1536, height: 1536 };
+  return { width: Math.round(Number(match[1]) * 0.75), height: Math.round(Number(match[2]) * 0.75) };
+}
+
+function isFailure(raw) {
+  const status = String(firstNonEmpty(raw.status, raw.state, '')).toLowerCase();
+  return Boolean(raw.error || raw.failed || status === 'failed' || status === 'rejected' || status === 'error');
+}
+
+function isHttpsUrl(value) {
+  try {
+    return new URL(String(value || '')).protocol === 'https:';
+  } catch (_err) {
+    return false;
+  }
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
+  }
+  return null;
 }
 await main();

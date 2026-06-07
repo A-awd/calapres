@@ -4545,25 +4545,160 @@ function normalizeModuleId(id) {
   return './' + parts.join('/');
 }
 
-const creative = __require('./image-pipeline/creative-brief.js');
 async function main() {
   const job = $json.imageGenerationJob || $json.job || {};
-  const product = $json.supabaseProduct || $json.product || {};
-  const brandStyle = $json.brandStyle || {
-    base_prompt_fragment: 'Luxury ecommerce fragrance photography. Ivory, gold, refined Calapres boutique mood. No readable text, no people, no watermark.',
-    negative_prompt: 'low quality, blurry, distorted bottle, fake text, watermark, hands, faces',
-    reference_image_weight: 0.85
-  };
+  const product = $json.fragranceProduct || $json.fragrance_product || $json.fragrance || $json.supabaseProduct || $json.product || {};
+  const mediaRows = normalizeMediaRows($json.productMediaRows || $json.product_media || $json.media || $json.productMedia || []);
+  const supplierReference = selectSupplierReference(mediaRows, job.reference_image_url || $json.referenceImageUrl);
+  const facts = buildFragranceFacts(product, job);
+  const positivePrompt = buildWarmLightPrompt(facts, job);
+  const negativePrompt = buildWarmLightNegativePrompt();
   const brief = {
     id: job.id,
-    shopify_product_id: product.shopify_product_id,
-    product_title: product.product_title_en || product.product_title_ar,
-    brand_name: product.brand_name,
-    concentration: product.concentration,
-    size_ml: product.size_ml,
-    reference_image_url: job.reference_image_url || $json.referenceImageUrl
+    image_generation_job_id: job.id || $json.image_generation_job_id || null,
+    fragrance_product_id: product.id || product.fragrance_product_id || job.fragrance_product_id || null,
+    shopify_product_id: product.shopify_product_id || null,
+    product_title: facts.productTitle,
+    brand_name: facts.brandName,
+    concentration: facts.concentration,
+    size_ml: facts.sizeMl,
+    visual_identity: 'Warm Light Luxury',
+    reference_image_url: supplierReference && supplierReference.url
   };
   const jobType = job.job_type || 'product_hero';
-  return { json: { ...$json, higgsfieldRequest: creative.buildHiggsfieldRequest(brief, brandStyle, jobType), brief, brandStyle, jobType } };
+  const request = {
+    model: 'nano_banana_pro',
+    count: 4,
+    n: 4,
+    prompt: positivePrompt,
+    negative_prompt: negativePrompt,
+    aspect_ratio: job.aspect_ratio || '1:1',
+    resolution: job.resolution || '2048x2048',
+    output_format: 'png',
+    style: 'editorial photorealistic luxury product photography',
+    reference_images: supplierReference ? [{
+      url: supplierReference.url,
+      source: 'product_media',
+      source_row_id: supplierReference.id || null,
+      role: 'product_shape_reference',
+      weight: 0.92
+    }] : []
+  };
+  return { json: {
+    ...$json,
+    higgsfieldRequest: request,
+    brief,
+    jobType,
+    productMediaReference: supplierReference,
+    skipImageGeneration: !supplierReference,
+    imagePipelineStatus: supplierReference ? 'request_ready' : 'needs_supplier_reference_image',
+    warmLightLuxury: {
+      palette: ['ivory', 'champagne', 'soft beige'],
+      accents: ['gold', 'amber'],
+      lighting: 'soft warm editorial studio light',
+      absoluteRule: 'never dark or black theme'
+    }
+  } };
+}
+
+function buildFragranceFacts(product, job) {
+  const brandName = firstNonEmpty(product.brand_name, product.brand_name_en, product.brandName, product.brand, job.brand_name);
+  const nameEn = firstNonEmpty(product.name_en, product.product_title_en, product.title_en, product.canonical_name_en, product.normalized_name);
+  const nameAr = firstNonEmpty(product.name_ar, product.product_title_ar, product.title_ar, product.canonical_name_ar);
+  return {
+    brandName: brandName || 'Calapres fragrance',
+    productTitle: firstNonEmpty(nameEn, nameAr, product.title, product.name, 'Luxury fragrance'),
+    nameEn: nameEn || '',
+    nameAr: nameAr || '',
+    concentration: firstNonEmpty(product.concentration, job.concentration) || '',
+    sizeMl: firstNonEmpty(product.size_ml, product.sizeMl, job.size_ml, job.sizeMl) || '',
+    gender: firstNonEmpty(product.gender_target, product.gender, job.gender_target) || ''
+  };
+}
+
+function buildWarmLightPrompt(facts, job) {
+  const productLine = [
+    facts.brandName,
+    facts.productTitle,
+    facts.concentration,
+    facts.sizeMl ? facts.sizeMl + 'ml' : ''
+  ].filter(Boolean).join(' ');
+  return [
+    'Warm Light Luxury fragrance product image for Calapres.',
+    'Editorial photorealistic studio product photography.',
+    'Show the exact bottle shape, cap, label placement, glass thickness, and proportions from the supplied reference image.',
+    'Product: ' + productLine + '.',
+    facts.nameAr ? 'Arabic product name context: ' + facts.nameAr + '.' : '',
+    'Warm ivory, champagne, and soft beige palette with refined gold and amber accents.',
+    'Soft warm lighting, clean luminous background, subtle premium shadows, polished reflective surface.',
+    'Centered full bottle, ecommerce-ready composition, premium Saudi boutique mood.',
+    'No readable text added by the model except authentic text already visible in the reference bottle.',
+    'Absolute visual rule: never use a dark, black, moody, nightclub, gothic, or high-contrast black theme.',
+    job.prompt_suffix || ''
+  ].filter(Boolean).join(' ');
+}
+
+function buildWarmLightNegativePrompt() {
+  return [
+    'dark background',
+    'black background',
+    'black theme',
+    'dark luxury theme',
+    'moody low key lighting',
+    'nightclub lighting',
+    'blue dark shadows',
+    'brown espresso palette',
+    'readable fake text',
+    'misspelled label',
+    'extra logo',
+    'watermark',
+    'hands',
+    'people',
+    'distorted bottle',
+    'wrong bottle shape',
+    'warped cap',
+    'crooked sprayer',
+    'duplicate bottle',
+    'melted glass',
+    'blurry',
+    'low resolution',
+    'cropped product',
+    'cut off bottle',
+    'busy background'
+  ].join(', ');
+}
+
+function normalizeMediaRows(value) {
+  if (Array.isArray(value)) return value;
+  if (value && Array.isArray(value.data)) return value.data;
+  if (value && Array.isArray(value.rows)) return value.rows;
+  return [];
+}
+
+function selectSupplierReference(rows, fallbackUrl) {
+  const supplierRows = rows.filter((row) => row && row.source === 'supplier');
+  const ranked = supplierRows
+    .map((row) => ({ ...row, url: firstNonEmpty(row.original_url, row.url, row.public_url, row.storage_url, row.src) }))
+    .filter((row) => isHttpsUrl(row.url))
+    .sort((a, b) => Number(a.position || 999) - Number(b.position || 999) || Number(a.id || 0) - Number(b.id || 0));
+  if (ranked[0]) return ranked[0];
+  if (isHttpsUrl(fallbackUrl)) return { id: null, source: 'fallback', url: fallbackUrl };
+  return null;
+}
+
+function isHttpsUrl(value) {
+  try {
+    return new URL(String(value || '')).protocol === 'https:';
+  } catch (_err) {
+    return false;
+  }
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
+  }
+  return null;
 }
 await main();

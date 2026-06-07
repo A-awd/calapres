@@ -389,26 +389,161 @@ async function main() {
     name: 'Code: Build Higgsfield Request (Image Pipeline)',
     mode: 'runOnceForEachItem',
     glue: `
-const creative = __require('./image-pipeline/creative-brief.js');
 async function main() {
   const job = $json.imageGenerationJob || $json.job || {};
-  const product = $json.supabaseProduct || $json.product || {};
-  const brandStyle = $json.brandStyle || {
-    base_prompt_fragment: 'Luxury ecommerce fragrance photography. Ivory, gold, refined Calapres boutique mood. No readable text, no people, no watermark.',
-    negative_prompt: 'low quality, blurry, distorted bottle, fake text, watermark, hands, faces',
-    reference_image_weight: 0.85
-  };
+  const product = $json.fragranceProduct || $json.fragrance_product || $json.fragrance || $json.supabaseProduct || $json.product || {};
+  const mediaRows = normalizeMediaRows($json.productMediaRows || $json.product_media || $json.media || $json.productMedia || []);
+  const supplierReference = selectSupplierReference(mediaRows, job.reference_image_url || $json.referenceImageUrl);
+  const facts = buildFragranceFacts(product, job);
+  const positivePrompt = buildWarmLightPrompt(facts, job);
+  const negativePrompt = buildWarmLightNegativePrompt();
   const brief = {
     id: job.id,
-    shopify_product_id: product.shopify_product_id,
-    product_title: product.product_title_en || product.product_title_ar,
-    brand_name: product.brand_name,
-    concentration: product.concentration,
-    size_ml: product.size_ml,
-    reference_image_url: job.reference_image_url || $json.referenceImageUrl
+    image_generation_job_id: job.id || $json.image_generation_job_id || null,
+    fragrance_product_id: product.id || product.fragrance_product_id || job.fragrance_product_id || null,
+    shopify_product_id: product.shopify_product_id || null,
+    product_title: facts.productTitle,
+    brand_name: facts.brandName,
+    concentration: facts.concentration,
+    size_ml: facts.sizeMl,
+    visual_identity: 'Warm Light Luxury',
+    reference_image_url: supplierReference && supplierReference.url
   };
   const jobType = job.job_type || 'product_hero';
-  return { json: { ...$json, higgsfieldRequest: creative.buildHiggsfieldRequest(brief, brandStyle, jobType), brief, brandStyle, jobType } };
+  const request = {
+    model: 'nano_banana_pro',
+    count: 4,
+    n: 4,
+    prompt: positivePrompt,
+    negative_prompt: negativePrompt,
+    aspect_ratio: job.aspect_ratio || '1:1',
+    resolution: job.resolution || '2048x2048',
+    output_format: 'png',
+    style: 'editorial photorealistic luxury product photography',
+    reference_images: supplierReference ? [{
+      url: supplierReference.url,
+      source: 'product_media',
+      source_row_id: supplierReference.id || null,
+      role: 'product_shape_reference',
+      weight: 0.92
+    }] : []
+  };
+  return { json: {
+    ...$json,
+    higgsfieldRequest: request,
+    brief,
+    jobType,
+    productMediaReference: supplierReference,
+    skipImageGeneration: !supplierReference,
+    imagePipelineStatus: supplierReference ? 'request_ready' : 'needs_supplier_reference_image',
+    warmLightLuxury: {
+      palette: ['ivory', 'champagne', 'soft beige'],
+      accents: ['gold', 'amber'],
+      lighting: 'soft warm editorial studio light',
+      absoluteRule: 'never dark or black theme'
+    }
+  } };
+}
+
+function buildFragranceFacts(product, job) {
+  const brandName = firstNonEmpty(product.brand_name, product.brand_name_en, product.brandName, product.brand, job.brand_name);
+  const nameEn = firstNonEmpty(product.name_en, product.product_title_en, product.title_en, product.canonical_name_en, product.normalized_name);
+  const nameAr = firstNonEmpty(product.name_ar, product.product_title_ar, product.title_ar, product.canonical_name_ar);
+  return {
+    brandName: brandName || 'Calapres fragrance',
+    productTitle: firstNonEmpty(nameEn, nameAr, product.title, product.name, 'Luxury fragrance'),
+    nameEn: nameEn || '',
+    nameAr: nameAr || '',
+    concentration: firstNonEmpty(product.concentration, job.concentration) || '',
+    sizeMl: firstNonEmpty(product.size_ml, product.sizeMl, job.size_ml, job.sizeMl) || '',
+    gender: firstNonEmpty(product.gender_target, product.gender, job.gender_target) || ''
+  };
+}
+
+function buildWarmLightPrompt(facts, job) {
+  const productLine = [
+    facts.brandName,
+    facts.productTitle,
+    facts.concentration,
+    facts.sizeMl ? facts.sizeMl + 'ml' : ''
+  ].filter(Boolean).join(' ');
+  return [
+    'Warm Light Luxury fragrance product image for Calapres.',
+    'Editorial photorealistic studio product photography.',
+    'Show the exact bottle shape, cap, label placement, glass thickness, and proportions from the supplied reference image.',
+    'Product: ' + productLine + '.',
+    facts.nameAr ? 'Arabic product name context: ' + facts.nameAr + '.' : '',
+    'Warm ivory, champagne, and soft beige palette with refined gold and amber accents.',
+    'Soft warm lighting, clean luminous background, subtle premium shadows, polished reflective surface.',
+    'Centered full bottle, ecommerce-ready composition, premium Saudi boutique mood.',
+    'No readable text added by the model except authentic text already visible in the reference bottle.',
+    'Absolute visual rule: never use a dark, black, moody, nightclub, gothic, or high-contrast black theme.',
+    job.prompt_suffix || ''
+  ].filter(Boolean).join(' ');
+}
+
+function buildWarmLightNegativePrompt() {
+  return [
+    'dark background',
+    'black background',
+    'black theme',
+    'dark luxury theme',
+    'moody low key lighting',
+    'nightclub lighting',
+    'blue dark shadows',
+    'brown espresso palette',
+    'readable fake text',
+    'misspelled label',
+    'extra logo',
+    'watermark',
+    'hands',
+    'people',
+    'distorted bottle',
+    'wrong bottle shape',
+    'warped cap',
+    'crooked sprayer',
+    'duplicate bottle',
+    'melted glass',
+    'blurry',
+    'low resolution',
+    'cropped product',
+    'cut off bottle',
+    'busy background'
+  ].join(', ');
+}
+
+function normalizeMediaRows(value) {
+  if (Array.isArray(value)) return value;
+  if (value && Array.isArray(value.data)) return value.data;
+  if (value && Array.isArray(value.rows)) return value.rows;
+  return [];
+}
+
+function selectSupplierReference(rows, fallbackUrl) {
+  const supplierRows = rows.filter((row) => row && row.source === 'supplier');
+  const ranked = supplierRows
+    .map((row) => ({ ...row, url: firstNonEmpty(row.original_url, row.url, row.public_url, row.storage_url, row.src) }))
+    .filter((row) => isHttpsUrl(row.url))
+    .sort((a, b) => Number(a.position || 999) - Number(b.position || 999) || Number(a.id || 0) - Number(b.id || 0));
+  if (ranked[0]) return ranked[0];
+  if (isHttpsUrl(fallbackUrl)) return { id: null, source: 'fallback', url: fallbackUrl };
+  return null;
+}
+
+function isHttpsUrl(value) {
+  try {
+    return new URL(String(value || '')).protocol === 'https:';
+  } catch (_err) {
+    return false;
+  }
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
+  }
+  return null;
 }`
   },
   {
@@ -419,10 +554,161 @@ async function main() {
 const quality = __require('./image-pipeline/quality-gate.js');
 async function main() {
   const response = $json.higgsfieldResponse || $json.response || $json;
-  const context = { referenceImageUrl: $json.brief?.reference_image_url || $json.referenceImageUrl || null };
+  const request = $json.higgsfieldRequest || {};
+  const job = $json.imageGenerationJob || $json.job || {};
+  const context = {
+    referenceImageUrl: $json.brief?.reference_image_url || $json.referenceImageUrl || null,
+    expectedAspectRatio: request.aspect_ratio || job.aspect_ratio || '1:1',
+    expectedResolution: request.resolution || job.resolution || '2048x2048',
+    expectedCount: Number(request.count || request.n || 4)
+  };
   const result = quality.runQualityChecks(response, context);
-  const action = quality.decideAction(result, Number($json.retryCount || $json.imageGenerationJob?.retry_count || 0));
-  return { json: { ...$json, qualityResult: result, nextImageAction: action } };
+  const bestOfFour = evaluateBestOfFour(response, context);
+  const mergedResult = {
+    ...result,
+    passed: result.passed && bestOfFour.passed,
+    score: Math.min(result.score, bestOfFour.quality_score),
+    checks: { ...result.checks, ...bestOfFour.checks },
+    issues: result.issues.concat(bestOfFour.issues),
+    images: bestOfFour.images.map((image) => image.url),
+    bestImageUrl: bestOfFour.best_image_url
+  };
+  const retryCount = Number($json.retryCount || job.retry_count || 0);
+  const action = quality.decideAction(mergedResult, retryCount);
+  const qualityStatus = mergedResult.passed ? 'passed' : (action === 'retry' ? 'retry' : 'needs_review');
+  const imageGenerationJobPatch = {
+    id: job.id || $json.brief?.image_generation_job_id || null,
+    quality_status: qualityStatus,
+    quality_score: bestOfFour.quality_score,
+    best_image_url: bestOfFour.best_image_url,
+    status: qualityStatus === 'passed' ? 'ready' : qualityStatus,
+    error_message: bestOfFour.issues.join('; ') || null
+  };
+  const generatedAssetsRows = bestOfFour.images.map((image, index) => ({
+    image_generation_job_id: imageGenerationJobPatch.id,
+    fragrance_product_id: $json.brief?.fragrance_product_id || job.fragrance_product_id || null,
+    source: 'higgsfield',
+    asset_type: 'product_image',
+    original_url: image.url,
+    best_image_url: bestOfFour.best_image_url,
+    quality_status: image.accepted ? 'passed' : 'rejected',
+    quality_score: image.score,
+    is_selected: image.url === bestOfFour.best_image_url,
+    sort_order: index + 1,
+    raw_payload: image.raw
+  }));
+  return { json: {
+    ...$json,
+    qualityResult: mergedResult,
+    bestOfFour,
+    nextImageAction: action,
+    imageGenerationJobPatch,
+    generatedAssetsRows
+  } };
+}
+
+function evaluateBestOfFour(response, context) {
+  const rawImages = normalizeImageObjects(response);
+  const expectedCount = context.expectedCount || 4;
+  const expectedAspect = parseAspectRatio(context.expectedAspectRatio);
+  const expectedResolution = parseResolution(context.expectedResolution);
+  const images = rawImages.map((raw, index) => scoreImage(raw, index, expectedAspect, expectedResolution))
+    .sort((a, b) => b.score - a.score || a.index - b.index);
+  const accepted = images.filter((image) => image.accepted);
+  const checks = {
+    output_count_ok: rawImages.length >= expectedCount,
+    best_of_4_available: accepted.length > 0,
+    aspect_ratio_ok: accepted.some((image) => image.checks.aspect_ratio_ok),
+    resolution_ok: accepted.some((image) => image.checks.resolution_ok),
+    failed_outputs_rejected: images.filter((image) => isFailure(image.raw)).every((image) => !image.accepted)
+  };
+  const issues = [];
+  if (!checks.output_count_ok) issues.push('Expected ' + expectedCount + ' generated images, got ' + rawImages.length);
+  if (!checks.aspect_ratio_ok) issues.push('No candidate image matched expected aspect ratio');
+  if (!checks.resolution_ok) issues.push('No candidate image met expected resolution');
+  if (!checks.best_of_4_available) issues.push('No generated image passed concrete quality checks');
+  const best = accepted[0] || images[0] || null;
+  return {
+    passed: issues.length === 0,
+    quality_score: best ? best.score : 0,
+    best_image_url: best && best.accepted ? best.url : null,
+    checks,
+    issues,
+    images
+  };
+}
+
+function normalizeImageObjects(response) {
+  if (!response) return [];
+  const raw = response.images || response.data || response.outputs || response.result || [];
+  return (Array.isArray(raw) ? raw : [raw]).map((item) => {
+    if (typeof item === 'string') return { url: item };
+    return item && typeof item === 'object' ? item : {};
+  });
+}
+
+function scoreImage(raw, index, expectedAspect, expectedResolution) {
+  const url = firstNonEmpty(raw.url, raw.src, raw.uri, raw.image_url);
+  const width = Number(firstNonEmpty(raw.width, raw.w, raw.metadata && raw.metadata.width));
+  const height = Number(firstNonEmpty(raw.height, raw.h, raw.metadata && raw.metadata.height));
+  const ratio = width && height ? width / height : null;
+  const aspectTolerance = 0.04;
+  const checks = {
+    url_valid: isHttpsUrl(url),
+    not_failed: !isFailure(raw),
+    dimensions_present: Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0,
+    aspect_ratio_ok: ratio !== null && Math.abs(ratio - expectedAspect) <= aspectTolerance,
+    resolution_ok: Number.isFinite(width) && Number.isFinite(height) && width >= expectedResolution.width && height >= expectedResolution.height
+  };
+  const score = (
+    (checks.url_valid ? 20 : 0) +
+    (checks.not_failed ? 20 : 0) +
+    (checks.dimensions_present ? 15 : 0) +
+    (checks.aspect_ratio_ok ? 20 : 0) +
+    (checks.resolution_ok ? 25 : 0)
+  );
+  return {
+    index,
+    url: checks.url_valid ? url : null,
+    width: Number.isFinite(width) ? width : null,
+    height: Number.isFinite(height) ? height : null,
+    score,
+    accepted: score >= 90,
+    checks,
+    raw
+  };
+}
+
+function parseAspectRatio(value) {
+  const parts = String(value || '1:1').split(':').map(Number);
+  return parts.length === 2 && parts[0] > 0 && parts[1] > 0 ? parts[0] / parts[1] : 1;
+}
+
+function parseResolution(value) {
+  const match = String(value || '2048x2048').match(/(\\d+)\\s*x\\s*(\\d+)/i);
+  if (!match) return { width: 1536, height: 1536 };
+  return { width: Math.round(Number(match[1]) * 0.75), height: Math.round(Number(match[2]) * 0.75) };
+}
+
+function isFailure(raw) {
+  const status = String(firstNonEmpty(raw.status, raw.state, '')).toLowerCase();
+  return Boolean(raw.error || raw.failed || status === 'failed' || status === 'rejected' || status === 'error');
+}
+
+function isHttpsUrl(value) {
+  try {
+    return new URL(String(value || '')).protocol === 'https:';
+  } catch (_err) {
+    return false;
+  }
+}
+
+function firstNonEmpty() {
+  for (let i = 0; i < arguments.length; i += 1) {
+    const value = arguments[i];
+    if (value !== null && value !== undefined && String(value).trim() !== '') return value;
+  }
+  return null;
 }`
   },
   {
