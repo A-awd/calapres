@@ -2,6 +2,31 @@
 
 Chronological handoff log. Newest first. See `PROJECT_STATE.md` / `WORKBOARD.md`.
 
+## 2026-06-07 (session 4) — Claude — Push self-driving + active; pull stalled (supplier 403)
+
+**Done this session:**
+- Ran push `sNjYDNqXvu1o35yW` sequentially (3 manual runs of 400 each) advancing from 85 pushed → 1,285 pushed.
+- Pull `BbIuB2zL6HIxRlYh` stalled at **1,822** supplier_products. nawadirdior.sa sitemap returning HTTP 403 — crawler gets no new IDs. Gap: ~1,081 products vs Shopify's ~2,903 canonicals. Blocked on supplier lifting the block.
+- Converted push `sNjYDNqXvu1o35yW` to **self-driving**: replaced manual trigger with Schedule trigger (every 5 min), added Supabase distributed lock (sync_runs push_batch row) — lock acquired before batch, released after (and on error). Skips if already running. Auto-exits cleanly when unpushed_priced = 0.
+- Published + activated workflow `sNjYDNqXvu1o35yW` — `active: true`, version `be403a8c-b5e6-4597-aae6-683bc68e22c7`.
+
+**State at handoff:**
+- supplier_products **1,822** (pull stalled — supplier 403) · pushed **1,285** · unpushed_priced **534** · sync_errors **0**
+- Push workflow: ACTIVE, self-driving every 5 min, sequential-locked via Supabase. Will drain 534 → 0 with no manual intervention.
+- Pull workflow: stalled. Re-run `BbIuB2zL6HIxRlYh` manually when nawadirdior.sa lifts the 403.
+
+**Next agent:**
+1. No push action needed — it self-drains. Check Supabase when convenient to confirm unpushed_priced reaching 0.
+2. When supplier 403 lifts: re-run pull `BbIuB2zL6HIxRlYh` (idempotent, new supplier-ids only). Push will automatically pick up new rows on next 5-min tick.
+3. Brand map (port `sync/normalize.js` BRAND_MAP) and Higgsfield/SEO enrichment remain deferred.
+
+**Critical guardrails:**
+- `s7QvXm1lyQxPHOfF` MUST stay deactivated — never re-enable.
+- Push lock in sync_runs is the only serialization guard — never run a second push instance manually while the self-driving workflow is active.
+- Never delete; never publish to customers; DRAFT only.
+
+---
+
 ## 2026-06-07 (session 3) — Claude — Pull running, 96 survivors cleared, push queued
 
 **Done this session:**

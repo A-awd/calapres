@@ -1,7 +1,7 @@
 # Calapres — Project State
 
 Authoritative current state. Pairs with `AGENTS.md` (durable architecture/rules).
-Last updated: 2026-06-07 by Claude.
+Last updated: 2026-06-07 (session 4) by Claude.
 
 ## Architecture (non-negotiable)
 Supplier (nawadirdior.sa) → n8n → **Supabase (source of truth)** → n8n → Shopify (sales channel, DRAFT until approved). Shopify is never the data source.
@@ -18,20 +18,19 @@ Supplier (nawadirdior.sa) → n8n → **Supabase (source of truth)** → n8n →
 
 ## n8n workflows (current)
 - **`YEoLTXDRL3NMvcIo` "Dedup Archive Duplicates"** — re-runnable. Bulk-export → keep 1 canonical/supplier-id (enriched else oldest) → archive rest. DONE (run 3969). Re-run if archived count ever grows.
-- **`BbIuB2zL6HIxRlYh` "Supplier Pull (Supabase)"** — crawls full sitemap, processes only supplier-ids not yet in Supabase, upserts supplier_products + product_media (source=supplier). Junk-safe, never deletes. RUNNING / re-runnable to finish the ~3,155 catalog.
-- **`sNjYDNqXvu1o35yW` "Push New Products (Draft)"** — idempotent. Reads unpushed priced supplier_products (400/run), calapres RPCs (brand/fragrance/variant/link), **precise lookup `tag:supplier-id-pXXX AND -status:archived` first:1** → UPDATE survivor (price/sku/availability only) or CREATE draft (parent + size variant, sku=calapres_sku, supplier image, tags, metafields) → patch IDs to supplier_products + shopify_products. Logs sync_errors. VERIFIED (drafts confirmed status=draft, correct sku/price). Re-run 400/batch to drain (sequential only — never two pushes at once: dup-create race).
+- **`BbIuB2zL6HIxRlYh` "Supplier Pull (Supabase)"** — crawls full sitemap, processes only supplier-ids not yet in Supabase, upserts supplier_products + product_media (source=supplier). Junk-safe, never deletes. **STALLED at 1,822** — nawadirdior.sa sitemap returning HTTP 403 to crawler. Re-run when supplier site lifts the block.
+- **`sNjYDNqXvu1o35yW` "Push New Products (Draft)"** — **ACTIVE, SELF-DRIVING (every 5 min)**. Schedule trigger fires every 5 min. Supabase distributed lock (sync_runs push_batch row) prevents any overlap — if a run is active the next trigger skips. Idempotent: reads 400 unpushed priced rows, calapres RPCs (brand/fragrance/variant/link), precise lookup `tag:supplier-id-pXXX AND -status:archived first:1` → UPDATE survivor or CREATE draft → patch IDs back. Auto-exits with no work when unpushed_priced = 0. Will self-drain remaining 534 rows.
 - `tUhxKPw6u2br6JAK` "Inject P735368737" — proven single-product template (inactive).
-- `Vsf1Epd3ssfbw10i` — legacy crawl+push, inactive, broken broad-OR lookup. Superseded by the pull+push pair above; do not run as-is.
+- `Vsf1Epd3ssfbw10i` — legacy crawl+push, inactive, broken broad-OR lookup. Superseded; do not run.
 - `N4L7C67CgPTRmVLC` — legacy dataTable seed, superseded.
 - `s7QvXm1lyQxPHOfF` — **DEACTIVATED permanently.**
 
-## Supabase data (EXACT live snapshot 2026-06-07, pull running)
-- supplier_products **870** and climbing → ~3,155 (pull execution 4042 running, ~22/min)
-- product_media **657** (all 657 source='supplier'; grows with pull)
-- shopify_products **85** · fragrance_products **86** · product_variants **86**
-- pushed (shopify_product_id set): **85** · unpushed priced: **~785** (840 cleared; 96 survivors cleared for backfill)
-- sync_errors: **0** · sync_runs: **1** (dedup only; pull log pending execution complete)
-- **96 SQL-re-pointed survivors cleared** (shopify_product_id set to NULL, sync_status=pending) → will be backfilled via push UPDATE path (their Shopify products have supplier-id tags confirmed)
+## Supabase data (EXACT snapshot 2026-06-07 session 4)
+- supplier_products **1,822** (pull stalled — supplier 403 gap: ~1,822 pulled vs ~2,903 Shopify canonicals, ~1,081 missing; re-pull when supplier lifts 403)
+- product_media **657** (all source='supplier')
+- shopify_products **1,285** · fragrance_products/product_variants populated by push
+- pushed (shopify_product_id set): **1,285** · unpushed priced: **534**
+- sync_errors: **0**
 
 ## Rules enforced
 - price = supplier+100; discount → compare_at=original+100, price=discounted+100; compare_at≠price else null. selling_price/compare_at computed by `calapres_upsert_product_variant`.
@@ -39,7 +38,7 @@ Supplier (nawadirdior.sa) → n8n → **Supabase (source of truth)** → n8n →
 - in_stock→continue, out_of_stock→deny. DRAFT only; never publish to customers. Never delete (missing→draft/out_of_stock). Never change live status of survivors. Never overwrite enriched content unless force_update=true.
 
 ## Pending / next
-1. **[IN PROGRESS]** Finish pull `BbIuB2zL6HIxRlYh` (exec 4042, running since 11:40:58 UTC, ~22/min, restarting when it stops until supplier_products ≥ 3,155).
-2. **Drain push** `sNjYDNqXvu1o35yW` sequentially (400/run) until `shopify_product_id is null and supplier_price is not null` = 0. Includes the 96 survivor backfill rows (cleared). UPDATE existing survivors; CREATE new drafts only.
-3. **needs_review brands:** brand map deferred to enrichment — log needs_review and keep moving.
+1. **[SELF-DRIVING]** Push `sNjYDNqXvu1o35yW` runs every 5 min, sequential-locked. Will drain 534 remaining rows to 0. No manual intervention needed.
+2. **Re-pull when supplier 403 lifts** — re-run `BbIuB2zL6HIxRlYh` to add the ~1,081 missing products; then push will pick them up automatically.
+3. **Brand map deferred to enrichment** — port `sync/normalize.js` BRAND_MAP to reduce needs_review.
 4. Image generation (Higgsfield) + Arabic SEO enrichment remain (supplier images are temporary).
