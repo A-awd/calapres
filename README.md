@@ -1,73 +1,22 @@
-# Welcome to your Lovable project
+# calapres
 
-## Project info
+calapres is the canonical One Brain repository for the Calapres perfume-commerce project. GitHub is the only permanent source of truth for its approved code, documentation, decisions, and operational state.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Scope
 
-## How can I edit this code?
+The project covers an Arabic-first perfume storefront, its Shopify implementation, approved Supabase application components, and reusable workflow automation. Live credentials, customer data, order data, and unsanitized platform exports are outside repository scope.
 
-There are several ways of editing your application.
+## Operating documents
 
-**Use Lovable**
+- [AGENTS.md](AGENTS.md) — binding project instructions for every AI launcher.
+- [STATE.md](STATE.md) — current approved project state and next action.
+- [HANDOFF.md](HANDOFF.md) — continuity notes for the next session.
+- [DECISIONS.md](DECISIONS.md) — decision index.
+- [LAUNCHER.md](LAUNCHER.md) — vendor-neutral session protocol.
+- [Project overview](docs/PROJECT-OVERVIEW.md) — sanitized project context.
+- [Migration source index](migration/SOURCE-INDEX.md) — sources and exclusions used for this foundation.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Safety boundary
 
-Changes made via Lovable will be committed automatically to this repo.
+The migration inventory indicates that historical credential material may exist in repository history. No value is repeated in these documents. Credential rotation, history remediation, and a sanitized review are required before treating the repository as clean. No migration document authorizes changes to production services.
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
