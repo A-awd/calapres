@@ -1,209 +1,23 @@
-# Calapres Agent Context
+# Agent Instructions
 
-Read this first. This file is the durable project context for any AI agent working on Calapres (Codex, Claude, or others). Do not spend tokens re-discovering facts already recorded here unless current evidence contradicts them.
+These instructions apply equally to Claude, Codex, ChatGPT, Hermes, and every future launcher.
 
-## 1. PROJECT
+## Start every session
 
-- Calapres (كالابريز) is a Riyadh-based Shopify store.
-- Category: niche/luxury perfumes plus luxury incense/oud burners.
-- It is NOT a gifting store.
-- Experience: Arabic-first, RTL, premium/luxury tone.
+1. Open the calapres repository and confirm the target branch and latest GitHub commit.
+2. Read README.md, this file, STATE.md, HANDOFF.md, and relevant entries in DECISIONS.md.
+3. Use ai-operating-system only for global rules; calapres operational memory belongs here.
+4. Treat platform-local chats, memories, caches, and local copies as non-authoritative until reconciled with GitHub.
 
-## 2. REPO LAYOUT & BRANCHES
+## Working rules
 
-- `main`: sync/automation code lives in `sync/`, plus docs and this file.
-- `shopify-theme`: Shopify Liquid theme synced GitHub -> Shopify.
-  - Theme folders: `config/`, `layout/`, `sections/`, `snippets/`, `templates/`, `assets/`, `locales/`.
-- Repo root also contains legacy React/Vite/Supabase app files from earlier work. Do not confuse those with the Shopify theme.
-- HARD RULE: one agent per branch at a time.
-- HARD RULE: theme work NEVER touches `sync/`; sync work NEVER touches theme files.
-- State the current branch at the start of every task.
+- Preserve useful code and Git history.
+- Store only sanitized, project-specific context in this repository.
+- Never commit credentials, customer or order data, raw conversations, unsanitized exports, or production secrets.
+- Do not change live Shopify, Supabase, automation, hosting, repository settings, or other production state without explicit authorization.
+- Prefer the latest approved GitHub state when sources conflict, and record durable resolutions in DECISIONS.md.
 
-## 3. ARCHITECTURE
+## End every meaningful session
 
-**Data flow (authoritative):**
-```
-Supplier → n8n → Supabase → Shopify
-                    ↓
-          Supabase → n8n → Higgsfield → Supabase → Shopify
-```
+Update STATE.md and HANDOFF.md, add a decision when one was made, then commit and push the approved work when authorized. Leave the next action precise enough for another launcher to continue without relying on platform memory.
 
-**Role of each system:**
-- **Supplier** (nawadirdior.sa): source of raw product data only.
-- **n8n**: orchestration only. Crawls, parses, prices, upserts to Supabase, then pushes to Shopify.
-- **Supabase**: source of truth for all product data, images, sync state, and image pipeline state. Permanent. Platform-agnostic.
-- **Shopify**: sales channel only. Receives cleaned, priced, SKU-stamped data from Supabase. Never treated as primary store.
-
-**Product model (authoritative): fragrance parent + variants, NOT flat supplier rows.**
-- Calapres is a luxury fragrance catalog. A fragrance is the PARENT product; its sizes / testers / gift sets are VARIANTS.
-- Example: `Aramis Classic EDT` is one parent; `50ml`, `100ml`, `110ml`, `tester` are four variants of it.
-- A new size of an already-known fragrance becomes a new VARIANT when brand + normalized fragrance name match with HIGH confidence. It never creates a duplicate parent.
-- LOW-confidence matches (missing brand or unresolvable name) are flagged `needs_review`, never merged.
-- `supplier_products` is the raw supplier landing table only. It is preserved verbatim and linked to the parent/variant it resolved into.
-
-**Supabase tables (product data lake):**
-- `suppliers` — one row per supplier (code ND for Nawadir Dior)
-- `brands` — canonical brand registry
-- `supplier_products` — raw supplier landing table, one row per supplier product; preserves the raw supplier payload, pricing, availability, and image pipeline state; carries `fragrance_product_id`, `product_variant_id`, `match_status`, `match_confidence` links
-- `fragrance_products` — canonical PARENT (one per fragrance); holds enrichment fields (family, accords, notes, ratings, season/occasion, style keywords, luxury copy, SEO) plus `normalized_name`, `enrichment_status`, `enrichment_source`, `confidence_score`, `verified`, `raw_enrichment_payload`
-- `product_variants` — CHILDREN (size / tester / gift set); holds `calapres_sku`, `size_ml`/`size_label`, `is_tester`/`is_gift_set`, supplier pricing, `selling_price`/`compare_at_price`, availability, and Shopify mapping
-- `shopify_products` — Shopify channel mapping; FK to supplier_products
-- `product_media` — original supplier images plus generated image references; old Shopify images are never deleted before new images upload successfully
-- `image_generation_jobs` — Higgsfield job queue, retry state, quality state, and request/response audit
-- `generated_assets` — accepted Higgsfield outputs and Shopify upload status
-- `sync_runs` — one row per n8n run (audit + offset tracking)
-- `sync_errors` — every n8n error logged here
-
-**SKU rules (hard rules):**
-- `calapres_sku` format: `CAL-{SUPPLIER_CODE}-P{SUPPLIER_PRODUCT_ID}` — e.g. `CAL-ND-P852601829`
-- `calapres_sku` lives on `product_variants` (one supplier product = one variant = one SKU). It is also kept on `supplier_products` for the raw row.
-- `calapres_sku` is set ONCE on INSERT by a DB trigger; never changed after that.
-- `calapres_sku` is the Shopify variant `sku` field.
-- `supplier_sku` is stored separately as `supplier.sku` Shopify metafield for traceability only.
-- Never use `supplier_sku` or `supplier_product_id` as the Shopify variant SKU.
-- Adding a new supplier just requires a new row in `suppliers` with a unique `code`.
-
-**Migrations:**
-- `20260604000001_image_pipeline.sql` — compatibility placeholder; image pipeline concepts are merged into the product data lake migration.
-- `20260604000002_product_data_lake.sql` — product data lake tables, pricing/SKU triggers, RLS, and service-role grants.
-- `20260604000003_fragrance_variant_model.sql` — ADDITIVE: adds `fragrance_products` (parent) and `product_variants` (children) with pricing/SKU triggers, RLS, grants; adds `fragrance_product_id`/`product_variant_id`/`match_status`/`match_confidence` link columns to `supplier_products`. Never drops or deletes anything.
-
----
-
-## 4. LIVE INFRA
-
-Verified facts. Do not re-discover unless current state directly contradicts them.
-
-- Shopify store: `unywbe-ub.myshopify.com`
-- Shopify Admin: `admin.shopify.com/store/unywbe-ub`
-- MAIN published theme: `OnlineStoreTheme/163004449024`
-- Supplier: `nawadirdior.sa` (Salla).
-- Supplier data source: public product pages only, `/<slug>/p<digits>`.
-- Supplier product pages do NOT need JavaScript; category pages do.
-- Supplier product data is read from meta tags / JSON-LD / inline Salla page data.
-- IMPORTANT: supplier slugs can be stale or misleading. The numeric `/p<id>` is the reliable key, never the slug.
-- n8n Cloud: `kunads90.app.n8n.cloud`
-- n8n is the active automation system.
-- Supabase project: `https://pbiiqlpgchrcgagemclt.supabase.co`
-- Supabase role: central product data lake and source of truth.
-- Shopify product metafield definitions exist and are admin-filterable:
-  - `supplier.source_url`
-  - `supplier.product_id`
-  - both owner type `PRODUCT`, type `single_line_text_field`
-
-## 5. n8n CREDENTIALS
-
-Credential IDs are stable. Never paste secrets or token values into code, docs, commits, or chat.
-
-- Shopify OAuth2: id `QLsvwO73GFsQfy0w`, name `Shopify-Calapres`.
-- Higgsfield Header Auth: id `G31rYKMmDk8hyh2G`, name `Higgsfield API ( awd-n8n )`.
-- Supabase service-role credential: name `Supabase Calapres Service Role`; create manually in n8n and never paste the key in chat or code.
-- Admin API version in code: `2026-04` for REST writes.
-- Shopify write pacing: about 1 request/second.
-
-## 6. CALAPRES BUSINESS RULES
-
-Authoritative rules. Every sync and enrichment workflow must honor these.
-
-- PRICING:
-  - `price = supplier price + 100 SAR`.
-  - If supplier has a discount: `compare_at_price = original + 100`, `price = discounted + 100`.
-  - `compare_at_price` must never equal `price`; set it to `null` instead.
-- INVENTORY:
-  - Status-only inventory.
-  - `in_stock` -> Shopify product `active`, variant `inventory_policy=continue`.
-  - `out_of_stock` or supplier-missing -> Shopify product `draft`, variant `inventory_policy=deny`.
-  - No numeric quantities, ever.
-- NEVER DELETE:
-  - Missing supplier products become draft/out-of-stock.
-  - They auto-return if the supplier product reappears.
-  - Product deletion is permanently disabled.
-- ENRICHED GUARD:
-  - Products tagged `enriched` receive ONLY price + availability from recurring sync.
-  - Never overwrite title, description, images, vendor, tags, metafields, or SEO for enriched products.
-- IMAGE GENERATION:
-  - Do not bulk-generate Higgsfield images until the prompt/style direction is approved.
-  - Original supplier images are saved to Supabase first and treated as draft/reference assets.
-  - Do not delete old Shopify images until replacement images are uploaded successfully.
-- TAGS:
-  - Canonical imported tag: `imported-nader-dior`.
-  - Supplier tag: `supplier:nawadirdior`.
-  - Supplier-id tag: `supplier-id-p<id>`.
-  - The 18 legacy imports also carry Arabic tag `مستورد-نوادر-ديور`.
-  - All Shopify reads for imported products must query:
-    `tag:imported-nader-dior OR tag:مستورد-نوادر-ديور`
-- MATCHING:
-  - Match by `supplier.source_url` metafield OR `supplier.product_id` numeric value OR `supplier-id-p<id>` tag.
-  - All 18 existing legacy products are backfilled with `supplier.product_id`.
-
-## 7. WORKING STYLE FOR AGENTS
-
-AI role split:
-
-- Claude: product architecture and design direction.
-- Codex: implementation, tests, Supabase safety, and CI hardening.
-- Gemini: research, critique, and second-pass review.
-
-Owner standing rules:
-
-- Optimize for maximum speed and complete work packages, not drip-fed single steps.
-- Every task should run the full cycle in one pass: diagnose -> fix -> search related/adjacent bugs -> test -> verify -> document -> commit -> push -> concise categorized report.
-- Do not stop midway for approval except for data deletion, payments, or publishing/unpublishing to live customers.
-- The owner works in the browser only. Do not assume Terminal access for the owner.
-- Agents may use their own shell. Any owner-facing action should be a single click, not CLI.
-- The owner is highly token-sensitive. Keep reports tight.
-- Do heavy work in code/n8n. Do not re-ask for info already in this file.
-- Never commit secrets, Supabase service keys, auth tokens, customer data, or private business data.
-- Keep dependency-free sync helpers testable offline.
-- GitHub push format when token push is needed:
-  `https://x-access-token:[TOKEN]@github.com/A-awd/calapres.git`
-- If remote moved before push: `git pull origin <branch> --rebase`, then push.
-
-## 8. CURRENT STATE & ROADMAP
-
-### Done
-
-- Theme uploaded and rendering.
-- Mobile header fixed: centered logo, language moved to drawer.
-- `sync/` dependency-free helpers exist for n8n Code nodes:
-  - `parse-product.js`
-  - `crawl-supplier.js` (3155 supplier products)
-  - `pricing.js`
-  - `inventory.js`
-  - `reconcile.js`
-  - `validate-shopify-shape.js`
-  - `shopify-client.js`
-  - `setup-metafield-definitions.js`
-  - `backfill-existing-products.js`
-- `sync/__tests__/run-tests.js`: dependency-free offline test runner for sync/data-lake behavior.
-- Shopify metafield definitions created live.
-- All 18 legacy imported products backfilled with `supplier.product_id`.
-- `sync/backfill-map.json` complete: 18 high-confidence matches, 0 unmatched.
-- Dry run generates 20 offline payloads and exact Shopify request shapes.
-- `sync/config.js` is the source of truth for store domain, API versions, tags, markup, chunk size, credential ids, namespaces, and supplier constants.
-- Generated n8n Code-node bundles live in `sync/n8n-build/`; Claude deploys these artifacts, Codex does not deploy live flows.
-- Recurring sync is chunked by persisted offset with `CHUNK_SIZE=300`, carries crawl source URL/product id through parsing, and blocks creates without price or numeric supplier id.
-- Pure enrichment helpers exist under `sync/enrich/` for Higgsfield prompts, Arabic SEO/copy, and enriched payload assembly.
-- Sync CI exists in `.github/workflows/sync-ci.yml` with syntax, tests, dry-run, doc-lint, secret-scan, and generated-output checks.
-- **Product Data Lake**: Supabase schema (`20260604000002_product_data_lake.sql`) creates `suppliers`, `brands`, `supplier_products`, `shopify_products`, `product_media`, `image_generation_jobs`, `generated_assets`, `sync_runs`, `sync_errors`. Architecture is Supplier -> Supabase -> Shopify.
-- **`sync/supabase-product.js`**: builds `supplier_products` upsert records, product media rows, sync error rows, Calapres SKUs, and Shopify payloads from Supabase records.
-- **`sync/CLAUDE_N8N_HANDOFF.md`**: Claude's deployment contract for n8n. Codex generates artifacts; Claude deploys.
-- **`sync/n8n-build/supabase-upsert.generated.js`** and related generated bundles prepare Supabase upsert, product media, Shopify-from-Supabase, sync error, and image pipeline request/quality nodes.
-- **SKU**: `calapres_sku = CAL-ND-P<id>` auto-generated by DB trigger. `supplier_sku` stored as `supplier.sku` metafield. Shopify variant.sku = `calapres_sku`.
-- **Pricing**: `profit_margin_sar = 100` stored per product row in `supplier_products.profit_margin_sar`.
-- **Image pipeline foundation**: `sync/image-pipeline/` modules and generated Code-node bundles exist. Claude must not bulk-generate until prompt style is approved.
-- **Fragrance parent + variant model**: migration `20260604000003_fragrance_variant_model.sql` adds `fragrance_products` + `product_variants` (additive, no deletions).
-  - `sync/match-fragrance.js`: brand/name normalization, size + concentration extraction, tester/gift-set detection, HIGH/LOW confidence resolution (high -> create-or-attach variant; low -> review).
-  - `sync/fragrance-variant.js`: builds the parent `fragrance_products` record (enrichment fields empty + unverified), the `product_variants` record (pricing +100, compare-at guard, `calapres_sku`, raw payload preserved), and the Shopify one-product-many-variants payload.
-  - `sync/enrich/enrichment-source.js`: enrichment source priority (supplier -> official brand -> Fragrantica Arabia), structured-facts-only merge (long descriptions/reviews are never copied), `verified` only from official/manual trusted source.
-  - Generated nodes: `fragrance-resolve`, `variant-upsert`, `shopify-from-fragrance`, `enrich-merge` in `sync/n8n-build/`.
-  - Tests cover: one fragrance one variant, one fragrance multiple sizes (1 parent / 4 variants), raw supplier preserved, supplier_sku separate, calapres_sku as Shopify sku, price +100, enrichment unverified unless trusted, low confidence -> review.
-
-### Next
-
-- Claude redeploys/updates live n8n from `sync/n8n-build/manifest.json` and generated Code-node bundles (now including the fragrance/variant resolve + upsert nodes).
-- Apply migration `20260604000003_fragrance_variant_model.sql` to the live Supabase project (additive/idempotent).
-- Claude wires Higgsfield live credentials to the generated enrichment nodes.
-- Restore/finalize full homepage design on `shopify-theme`.
-- Connect custom domain.
-- Continue live operations per `sync/PRODUCTION-CHECKLIST.md`.
