@@ -19,3 +19,12 @@ Do not paste exposed values into an issue or report, change a live service, rewr
 
 The security scan is clean, required credentials are rotated, branch authority is explicit, sanitized configuration is recoverable from GitHub, and the next feature task is documented.
 
+## Repository synchronization evidence
+
+- Verified: 2026-07-18
+- Canonical repository: `A-awd/calapres`
+- Approved default branch: `main`
+- Verified effective ref: `migration/one-brain-foundation`
+- Verified baseline revision: `a3b2dbd85c06fd2ebe2362c3ca5b287320af099e`
+- Evidence: the One Brain documents were refreshed from that exact GitHub revision; no business code or production system was changed.
+- Runtime requirement: each agent must fetch or inspect the branch tip and remote synchronization state again before work. Local working-tree state was not inferred through the connector.
