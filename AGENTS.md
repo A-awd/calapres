@@ -21,3 +21,8 @@ These instructions apply equally to Claude, Codex, ChatGPT, Hermes, and every fu
 
 Update STATE.md and HANDOFF.md, add a decision when one was made, then commit and push the approved work when authorized. Leave the next action precise enough for another launcher to continue without relying on platform memory.
 
+## Canonical authority and entry contract
+
+GitHub is the only permanent source of truth for approved, sanitized project state. Platform-local memory, chat history, launcher text, caches, and unpushed work are non-authoritative.
+
+At session start, read `README.md`, `AGENTS.md`, `STATE.md`, `HANDOFF.md`, `DECISIONS.md`, and `LAUNCHER.md`, plus relevant linked decisions and workflows. Continue only from the latest verified GitHub branch and commit.
