@@ -24,6 +24,13 @@ Rotate affected credentials outside GitHub, plan history remediation without des
 
 Do not copy live secrets, customer records, order records, raw conversations, or unsanitized automation exports into GitHub. Do not modify production systems as part of documentation migration.
 
+## Phase 2 preservation review
+
+A Draft PR preserves a sanitized historical theme handoff without theme IDs,
+preview links, CI run identifiers, credential values, or production-action
+instructions. It changes no live system and does not alter the existing security
+or merge gates.
+
 ## Repository synchronization evidence
 
 - Verified: 2026-07-18

@@ -15,6 +15,12 @@ The One Brain foundation documents define calapres as the sole canonical reposit
 
 Do not paste exposed values into an issue or report, change a live service, rewrite history, or merge a migration branch until those actions are separately authorized and validated.
 
+## Phase 2 preservation review
+
+Review the Draft PR containing the sanitized 2026-06-05 theme handoff. It is a
+historical recovery note only; it does not authorize a live publish or resolve
+the repository security gate.
+
 ## Completion signal
 
 The security scan is clean, required credentials are rotated, branch authority is explicit, sanitized configuration is recoverable from GitHub, and the next feature task is documented.
