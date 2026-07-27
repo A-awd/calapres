@@ -1,73 +1,67 @@
-# Welcome to your Lovable project
+# calapres
 
-## Project info
+`calapres` is the canonical One Brain repository for the Calapres perfume-commerce project.
+GitHub is the only permanent source of truth for approved code, documentation, decisions, and
+operational state. `main` is the only canonical branch.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## What Calapres is
 
-## How can I edit this code?
+An Arabic-first luxury and niche perfume storefront in Riyadh, selling on Shopify.
 
-There are several ways of editing your application.
+## Architecture
 
-**Use Lovable**
+    Owner-selected products
+        -> Supabase   (canonical product database)
+        -> n8n        (the only orchestration layer)
+        -> Shopify    (sales channel only)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Products are created manually by the owner and published only after explicit approval. There is no
+supplier crawler, no supplier synchronization, no external pricing or inventory feed, and no
+automatic product discovery. This is binding — see `decisions/0002-retire-nawadir-dior.md`.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Operating documents
 
-**Use your preferred IDE**
+- [AGENTS.md](AGENTS.md) — binding instructions for every AI launcher.
+- [STATE.md](STATE.md) — current approved state and next action.
+- [HANDOFF.md](HANDOFF.md) — continuity notes for the next session.
+- [DECISIONS.md](DECISIONS.md) — decision index.
+- [LAUNCHER.md](LAUNCHER.md) — vendor-neutral session protocol.
+- [Nawadir Dior retirement inventory](docs/nawadir-dior-retirement-inventory.md) — what was
+  disabled, archived, or retained, and why.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Data model
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Canonical tables in Supabase `public`:
 
-Follow these steps:
+`brands` · `fragrance_products` · `product_variants` · `product_media` · `shopify_products` ·
+`image_generation_jobs` · `generated_assets`
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Views:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- `shopify_sync_queue` — the only authorized Supabase to Shopify push source.
+- `shopify_reconciliation` — Supabase against Shopify. Never against any supplier.
+- `legacy_product_review` — inherited supplier products awaiting an owner decision.
 
-# Step 3: Install the necessary dependencies.
-npm i
+The `archive` schema holds frozen supplier history. It is read-only and not exposed through the
+API. Never write to it and never feed it into any active flow.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Product intake
 
-**Edit a file directly in GitHub**
+    select public.calapres_create_product('اسم المنتج', 'Brand', 'awd');
+    select public.calapres_add_variant('<product_id>', '100ml', 690, 100, 420);
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+A product reaches Shopify only when `ready_for_shopify = true`, which the database refuses unless
+the product has a title, a brand, `lifecycle_status = 'approved'`, a named approver, at least one
+variant with an approved selling price, and at least one approved image.
 
-**Use GitHub Codespaces**
+## SKU
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+New products use `CAL-P<n>`, issued once from `calapres_sku_seq` and immutable thereafter.
+The retired `CAL-ND-*` format is blocked at the database level. Existing `CAL-ND-*` SKUs on legacy
+products are preserved and must never be rewritten.
 
-## What technologies are used for this project?
+## Security boundary
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Live credentials, customer data, order data, and unsanitized platform exports are out of scope for
+this repository. A full-history secret audit on 2026-07-27 found no exposed service key or access
+token. See `STATE.md`.
