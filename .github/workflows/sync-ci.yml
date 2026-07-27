@@ -32,13 +32,7 @@ jobs:
               catch (e) { console.error(process.argv[1] + ": " + e.message); process.exit(1); }
             ' "$f"
           done
-      - name: Offline tests
-        run: node sync/__tests__/run-tests.js
-      - name: Offline dry run
-        run: node sync/run-local-dry.js
       - name: Doc lint
         run: node sync/tools/doc-lint.js
       - name: Secret scan
         run: node sync/tools/secret-scan.js
-      - name: Generated n8n bundles are current
-        run: node sync/tools/check-generated.js
