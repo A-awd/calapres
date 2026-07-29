@@ -74,8 +74,9 @@ and connector access do not bypass this gate.
   theme hardcodes its footer and does not render that menu yet.
 - The live theme's saved `settings_data.json` now uses `info@calapres.com` and a free-shipping
   threshold of SAR 320 instead of the incorrect SAR 500 claim.
-- An immediate unauthenticated storefront fetch still rendered the previous email and SAR 500
-  text. Recheck public propagation before claiming those two rendered values are corrected.
+- A later unauthenticated check confirmed `info@calapres.com` on the public contact page. The
+  announcement still rendered the old SAR 500 text; recheck its propagation before claiming that
+  value is corrected.
 - Saudi Arabia is the only active market.
 
 ## Remaining blockers
@@ -92,7 +93,7 @@ and connector access do not bypass this gate.
 5. The automated English privacy policy needs a separate Saudi PDPL localization review.
 6. The live theme must be reconciled into `main` before hardcoded footer-policy links and remaining
    source drift can be fixed safely.
-7. The two saved live-theme setting corrections need a fresh public render check after Shopify
+7. The saved free-shipping announcement correction needs a fresh public render check after Shopify
    cache propagation.
 
 ## Next safe action

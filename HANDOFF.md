@@ -41,9 +41,9 @@ blocked by the owner-curated catalog gate.
 6. Hardcoded footer policy links were not edited in the live theme because the live theme
    `calapres-live-e9e8381` is ahead of `main` and the deployment workflow still reads the
    non-canonical `shopify-theme` branch.
-7. The public HTML still showed `hello@calapres.sa` and the old SAR 500 announcement immediately
-   after the settings save. Recheck after Shopify's cache propagates; do not report the rendered
-   text as fixed until the public page shows the saved values.
+7. The public contact page now shows `info@calapres.com`, but the public announcement still showed
+   the old SAR 500 text after the settings save. Recheck after Shopify's cache propagates; do not
+   report the rendered announcement as fixed until the public page shows SAR 320.
 
 ## Exact next actions
 
