@@ -23,8 +23,8 @@ blocked by the owner-curated catalog gate.
    Supabase product variants.
 10. Created four empty manual collections to repair the live `fragrance-families`, `niche`,
     `oriental`, and `luxury-brands` routes without adding or publishing products.
-11. Updated live theme settings to `info@calapres.com` and corrected the free-shipping claim from
-    SAR 500 to the configured SAR 320 threshold.
+11. Saved live theme settings for `info@calapres.com` and the configured SAR 320 free-shipping
+    threshold; verified both values in the live theme's `settings_data.json`.
 12. Added the five policies to Shopify's footer navigation menu.
 
 ## Not done and why
@@ -41,6 +41,9 @@ blocked by the owner-curated catalog gate.
 6. Hardcoded footer policy links were not edited in the live theme because the live theme
    `calapres-live-e9e8381` is ahead of `main` and the deployment workflow still reads the
    non-canonical `shopify-theme` branch.
+7. The public HTML still showed `hello@calapres.sa` and the old SAR 500 announcement immediately
+   after the settings save. Recheck after Shopify's cache propagates; do not report the rendered
+   text as fixed until the public page shows the saved values.
 
 ## Exact next actions
 

@@ -72,9 +72,10 @@ and connector access do not bypass this gate.
 - Public refund, shipping, privacy, and terms URLs return HTTP 200.
 - The footer navigation menu now contains links to all five policies, although the current live
   theme hardcodes its footer and does not render that menu yet.
-- Live theme settings now use `info@calapres.com`.
-- The free-shipping announcement now matches the configured rate: free at SAR 320 or more, instead
-  of the previous incorrect SAR 500 claim.
+- The live theme's saved `settings_data.json` now uses `info@calapres.com` and a free-shipping
+  threshold of SAR 320 instead of the incorrect SAR 500 claim.
+- An immediate unauthenticated storefront fetch still rendered the previous email and SAR 500
+  text. Recheck public propagation before claiming those two rendered values are corrected.
 - Saudi Arabia is the only active market.
 
 ## Remaining blockers
@@ -91,6 +92,8 @@ and connector access do not bypass this gate.
 5. The automated English privacy policy needs a separate Saudi PDPL localization review.
 6. The live theme must be reconciled into `main` before hardcoded footer-policy links and remaining
    source drift can be fixed safely.
+7. The two saved live-theme setting corrections need a fresh public render check after Shopify
+   cache propagation.
 
 ## Next safe action
 
