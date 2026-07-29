@@ -1,28 +1,24 @@
-# Repo Health
+# Repository Health
 
 ## Snapshot
 
 - Repository: `A-awd/calapres`
 - Visibility: public
-- Type: React/Vite/Supabase app
-- Maturity: generated app with test scripts present
-- Risk: medium, due to Supabase dependency and public visibility
+- Type: Shopify theme and operations repository
+- Canonical branch: `main`
+- Operational source of truth: Shopify
 
-## Observed
+## Verified
 
-- README is Lovable boilerplate with placeholder project ID.
-- Root package includes Vitest scripts.
-- Supabase dependency is present.
+- Theme directories contain no Supabase dependency.
+- The legacy React application and Supabase stack were removed from the active tree.
+- The retired supplier and database synchronization code was removed.
+- Historical code remains recoverable through Git.
+- Shopify-only CI validates the theme and blocks runtime Supabase reintroduction.
 
-## Required Hardening
+## Remaining hardening
 
-- [ ] Replace Lovable boilerplate with product-specific README.
-- [ ] Add `.env.example` with safe placeholders.
-- [ ] Verify Supabase client key exposure is safe.
-- [ ] Add CI for lint, test, and build.
-- [ ] Document production deployment path.
-- [ ] Use this repo's test posture as a reference for sibling app hardening.
-
-## AI Notes
-
-This is a good candidate for a reusable React/Vite/Supabase hardening template.
+- Reconcile the live theme source into `main`.
+- Make `main` the deployment source without triggering an unintended live deployment.
+- Validate the complete live theme after reconciliation.
+- Continue secret scanning and keep customer and order data out of Git.

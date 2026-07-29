@@ -1,0 +1,61 @@
+name: Shopify CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/shopify-ci.yml"
+      - "assets/**"
+      - "config/**"
+      - "layout/**"
+      - "locales/**"
+      - "sections/**"
+      - "snippets/**"
+      - "templates/**"
+      - "*.md"
+      - "decisions/**"
+      - "docs/**"
+  pull_request:
+    paths:
+      - ".github/workflows/shopify-ci.yml"
+      - "assets/**"
+      - "config/**"
+      - "layout/**"
+      - "locales/**"
+      - "sections/**"
+      - "snippets/**"
+      - "templates/**"
+      - "*.md"
+      - "decisions/**"
+      - "docs/**"
+
+jobs:
+  architecture:
+    name: Shopify-native architecture guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject retired runtime dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -n -i -E \
+            '(@supabase/|VITE_SUPABASE_|SUPABASE_(URL|KEY|PROJECT|SERVICE)|supabase/(functions|migrations)|integrations/supabase)' \
+            -- \
+            ':(exclude,glob)**/*.md' \
+            ':(exclude).github/workflows/shopify-ci.yml'; then
+            echo "Retired Supabase runtime dependency detected."
+            exit 1
+          fi
+
+  theme:
+    name: Shopify theme check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate theme
+        run: npx --yes @shopify/cli@latest theme check --path .

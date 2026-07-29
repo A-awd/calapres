@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-07-29
+
+- Retired Supabase from the Calapres architecture by owner decision.
+- Removed the unused React and Vite application, Supabase client, SDK dependency, migrations,
+  edge functions, and lock files from the active tree.
+- Removed the retired supplier, n8n, and Supabase synchronization source.
+- Adopted a Shopify-native draft, review, approval, and publication workflow.
+- Added decision 0006 and a Shopify-only CI guard.
+
 ## 2026-06-04
 
 - Added `sync/config.js` as the Calapres sync source of truth for store domain, API versions, markup, chunking, tags, namespaces, credentials, supplier constants, and collection mapping.

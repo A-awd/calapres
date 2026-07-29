@@ -2,64 +2,52 @@
 
 ## Resume from
 
-`main` at `0b7be574aed822d34f52dc40ab28239db12f07ef`. Live Agentic configuration
-and storefront-policy work was completed on 2026-07-29, but product publication remains correctly
-blocked by the owner-curated catalog gate.
+Continue from the latest verified `main` revision. Decision 0006 is binding: Calapres is
+Shopify-native and Supabase is retired.
 
-## Done and verified live
+## Completed in the Supabase retirement
 
-1. Verified that the Shopify connector targets Calapres (`calapres.com`, SAR, Saudi Arabia).
-2. Enabled Agentic catalog access; Shopify marks it `Completed`.
-3. Published bilingual contact, shipping, refund, and terms content. Shopify marks policies
-   `Completed`; all public policy URLs return 200.
-4. Installed Shopify Knowledge Base and added verified FAQs for contact, Saudi shipping, and
-   returns.
-5. Kept `Allow Shopify to manage for me` enabled.
-6. Verified ChatGPT, Microsoft Copilot, Other channels, and Shop remain inactive.
-7. Verified Shopify Catalog contains 0 products.
-8. Verified all four products are drafts with inventory 0; the three burner drafts have media and
-   the customizable stand does not.
-9. Verified `public.shopify_sync_queue` is empty and none of the four SKUs exists in canonical
-   Supabase product variants.
-10. Created four empty manual collections to repair the live `fragrance-families`, `niche`,
-    `oriental`, and `luxury-brands` routes without adding or publishing products.
-11. Saved live theme settings for `info@calapres.com` and the configured SAR 320 free-shipping
-    threshold; verified both values in the live theme's `settings_data.json`.
-12. Added the five policies to Shopify's footer navigation menu.
+1. Verified the canonical repository, branch, remote synchronization, and baseline revision.
+2. Read all root operating documents and relevant decisions.
+3. Audited the complete tree and found two obsolete Supabase implementations: a legacy React
+   application and a later product-sync layer.
+4. Confirmed the Shopify theme directories and theme deployment workflow have no Supabase
+   dependency.
+5. Removed the legacy React and Vite application, its Supabase client, authentication, storage,
+   functions, generated types, packages, and lock files.
+6. Removed the Supabase migrations and edge functions.
+7. Removed the retired supplier and Supabase synchronization source and its CI workflow.
+8. Replaced active architecture instructions with a direct Shopify draft, review, approval, and
+   publication workflow.
+9. Added decision 0006 and marked the conflicting parts of decisions 0002, 0003, and 0005 as
+   superseded.
+10. Added Shopify-only CI with a guard against runtime Supabase reintroduction.
 
-## Not done and why
+## Live systems
 
-1. No product was activated or published. The drafts bypassed the canonical Supabase -> n8n path,
-   inventory is 0, and the stand has no media.
-2. No US market was created. It is a commercial expansion decision required for ChatGPT/Copilot
-   eligibility.
-3. Shop was not activated. It requires Shopify Payments, which is not available for a Saudi
-   business.
-4. Legal identity fields were not invented. The legal entity name, commercial-register number,
-   VAT number if applicable, verified phone, and complaint-response commitments are still needed.
-5. The automated privacy policy was not represented as Saudi-PDPL complete.
-6. Hardcoded footer policy links were not edited in the live theme because the live theme
-   `calapres-live-e9e8381` is ahead of `main` and the deployment workflow still reads the
-   non-canonical `shopify-theme` branch.
-7. The public contact page now shows `info@calapres.com`, but the public announcement still showed
-   the old SAR 500 text after the settings save. Recheck after Shopify's cache propagates; do not
-   report the rendered announcement as fixed until the public page shows SAR 320.
+- No product was published, deleted, or edited during this repository cleanup.
+- No customer, order, payment, or inventory data was touched.
+- No external Supabase project or historical data was deleted.
+- Live n8n was audited read-only. All eight workflows using the saved Calapres Supabase credential
+  are archived and inactive.
+- The dormant credential remains saved because credential deletion requires confirmation at the
+  time of deletion.
+- Existing Agentic, policies, Knowledge Base, FAQs, collections, and storefront configuration are
+  unaffected.
 
 ## Exact next actions
 
-1. Recreate the four products in canonical Supabase intake, attach approved media, set owner-
-   approved inventory and pricing, and approve them.
-2. Build or resume the n8n consumer only after `public.shopify_sync_queue` returns approved rows.
-3. Publish only through that queue, then verify Online Store and Shopify Catalog inclusion.
-4. Obtain the missing legal identity and complaint details; localize the privacy policy for Saudi
-   PDPL.
-5. Record an owner decision on whether to activate a United States market.
-6. Pull the live theme source, reconcile it into `main`, retire the competing deployment branch,
-   then render the policy menu and remove any remaining hardcoded fallbacks.
+1. Review the four draft products directly in Shopify.
+2. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
+3. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
+   inclusion.
+4. Collect the missing Saudi legal identity and complaint details.
+5. Reconcile the live theme source into `main` before further theme-code deployment.
+6. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
 
 ## Do not do
 
-Do not publish the existing Shopify drafts directly. Do not reactivate archived supplier
-workflows. Do not write to the Supabase `archive` schema. Do not invent stock, legal identity,
-telephone, tax, or market information. Do not use a foreign-entity workaround for Shopify
-Payments. Do not deploy theme code from stale `main` or from an unreconciled competing branch.
+Do not restore the retired React application, Supabase files, database queue, supplier pipeline, or
+old n8n sync code from Git history. Do not treat an external database record as a publication gate.
+Do not permanently delete retired external data without a separate instruction naming the exact
+project and acknowledging irreversibility.

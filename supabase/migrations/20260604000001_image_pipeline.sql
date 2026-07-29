@@ -1,5 +1,0 @@
--- Image pipeline concepts are intentionally merged into
--- 20260604000002_product_data_lake.sql.
---
--- This placeholder keeps the migration ordering from the Claude branch while
--- avoiding duplicate image_generation_jobs/generated_assets tables.

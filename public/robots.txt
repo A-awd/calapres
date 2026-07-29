@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /auth
-Disallow: /reset-password
-Disallow: /checkout
-Disallow: /order-success
-
-Sitemap: https://calapres.com/sitemap.xml

@@ -2,110 +2,85 @@
 
 ## Current phase
 
-Agentic and storefront readiness for an owner-curated catalog. The Nawadir Dior supplier
-architecture remains retired.
+Shopify-native storefront and catalog readiness. The Nawadir Dior supplier architecture and all
+Supabase-based Calapres architecture are retired.
 
 ## Approved architecture
 
-Owner-selected products -> Supabase (canonical) -> n8n (orchestration) -> Shopify (sales channel
-only).
+    owner approval -> Shopify draft -> product review -> Shopify publication
 
-Product publication remains gated by `ready_for_shopify = true`, and
-`public.shopify_sync_queue` is the only authorized push source. Shopify Agentic, Knowledge Base,
-and connector access do not bypass this gate.
+Shopify is the operational source of truth. GitHub `main` is the technical source of truth for the
+theme, decisions, and sanitized handoffs. There is no external product database, authentication
+service, storage service, catalog queue, or mandatory orchestration layer.
 
-## Verified live state — 2026-07-29
+## Verified repository state — 2026-07-29
 
 ### GitHub
 
+- Canonical repository: `A-awd/calapres`.
 - Canonical branch: `main`.
-- Verified local and remote revision:
-  `0b7be574aed822d34f52dc40ab28239db12f07ef`.
-- The live theme `calapres-live-e9e8381` contains newer files and settings than `main`. The
-  `shopify-theme` deployment branch also remains present despite the single-canonical-branch
-  decision. Theme code must be reconciled into `main` before the next code deployment.
+- Verified clean baseline before the retirement change:
+  `b225b9643f8dc9a765ec99a305d969d7a558cf6d`.
+- The legacy React and Vite application was not part of the Shopify theme deployment path and has
+  been removed from the current tree.
+- Supabase configuration, migrations, functions, generated types, client SDK dependency, and lock
+  files have been removed.
+- The retired supplier, n8n, and Supabase synchronization source and its CI workflow have been
+  removed.
+- A Shopify-only CI workflow checks the theme and blocks runtime Supabase reintroduction.
+- Historical code remains recoverable from Git and must not be restored into the active tree.
 
-### Supabase (`pbiiqlpgchrcgagemclt`) and n8n
+### Shopify theme
 
-- `public.shopify_sync_queue` returns 0 rows.
-- None of the four current Shopify draft SKUs exists in `public.product_variants`.
-- The owner-curated schema, approval gates, and reconnect guards remain binding.
-- No retired supplier workflow may be reactivated.
+- The active repository surface is the Shopify theme under `assets`, `config`, `layout`, `locales`,
+  `sections`, `snippets`, and `templates`.
+- Those theme directories contain no Supabase dependency.
+- The existing deployment workflow does not depend on Supabase.
+- The live theme is still ahead of `main`; theme-source reconciliation remains a separate task.
 
-### Shopify (`calapres.com`)
+### Live Shopify
 
-- Four products exist and all are `DRAFT`, unpublished, uncategorized, and have inventory 0:
-  - `CAL-BKH-GRY` — مبخرة كالابريز الفاخرة — الرمادي — SAR 390.
-  - `CAL-BKH-BGE` — مبخرة كالابريز الفاخرة — البيج — SAR 390.
-  - `CAL-BKH-WHT` — مبخرة كالابريز الفاخرة — الأبيض — SAR 390.
-  - `CAL-STD-IPAD` — ستاند عقد قران فاخر للآيباد — قابل للتخصيص — SAR 190.
-- The three burner drafts have media and Arabic SEO content. The stand draft has no media.
-- There are 0 active/public products and 0 products in Shopify Catalog.
-- `العود والمباخر` contains the three burner drafts. Four empty manual collections were created
-  to repair live storefront routes without publishing products:
-  - `fragrance-families` — العائلات العطرية.
-  - `niche` — عطور النيش.
-  - `oriental` — العطور الشرقية.
-  - `luxury-brands` — العلامات الفاخرة.
-- The four collection routes now return HTTP 200.
+- Four products were last verified as drafts with inventory 0.
+- The three burner drafts have media; the customizable stand draft does not.
+- No product was published as part of the Supabase retirement work.
+- Agentic catalog access, policies, Knowledge Base, FAQs, collections, and storefront settings are
+  unaffected by this repository cleanup.
+- Shopify product drafts may now proceed through direct Shopify review. No external database record
+  or queue is required.
 
-### Agentic, Knowledge Base, and Shopify connector
+### Retired external systems
 
-- The connected Shopify tool was verified against the correct Calapres store, domain, currency,
-  and Saudi location. No credential is stored in this repository.
-- Agentic catalog access is enabled and marked `Completed`.
-- Agentic policies are marked `Completed`.
-- `Allow Shopify to manage for me` is enabled.
-- ChatGPT, Microsoft Copilot, Other channels, and Shop are inactive.
-- Shopify Catalog contains 0 products because no approved product is published.
-- Shopify Knowledge Base is installed and reports that policies and FAQs are visible.
-- Three verified custom FAQs were added: customer-service contact, Saudi shipping cost, and the
-  seven-day return process.
-- The public discovery endpoints `agents.md`, `.well-known/ucp`, and
-  `sitemap_agentic_discovery.xml` respond successfully.
-
-### Policies and storefront configuration
-
-- Contact information, privacy, refund, shipping, and terms policies exist in Shopify.
-- Refund and terms policies were published in Arabic and English using conservative Saudi
-  e-commerce requirements. Shipping and contact policies are also bilingual.
-- Public refund, shipping, privacy, and terms URLs return HTTP 200.
-- The footer navigation menu now contains links to all five policies, although the current live
-  theme hardcodes its footer and does not render that menu yet.
-- The live theme's saved `settings_data.json` now uses `info@calapres.com` and a free-shipping
-  threshold of SAR 320 instead of the incorrect SAR 500 claim.
-- A later unauthenticated check confirmed `info@calapres.com` on the public contact page. The
-  announcement still rendered the old SAR 500 text; recheck its propagation before claiming that
-  value is corrected.
-- Saudi Arabia is the only active market.
+- Supabase is not an approved Calapres dependency and must not be queried during normal work.
+- No external Supabase project or historical data was deleted. Permanent data deletion is a
+  separate irreversible action requiring exact owner authorization.
+- Live n8n was audited read-only. The saved Calapres Supabase credential has eight dependent
+  workflows, and all eight are archived and inactive.
+- No active workflow uses the Calapres Supabase credential. The credential itself remains saved;
+  deleting it is a separate irreversible credential action requiring confirmation at deletion
+  time.
+- The repository no longer carries a Supabase or supplier n8n implementation.
 
 ## Remaining blockers
 
-1. Product publication is blocked: the four Shopify drafts are outside the canonical Supabase
-   flow, inventory is 0, and the stand lacks approved media.
-2. ChatGPT and Microsoft Copilot eligibility requires eligible products in Shopify Catalog and a
-   United States selling setup. Activating a US market is a commercial decision and was not
-   assumed.
-3. Shop requires Shopify Payments; Saudi Arabia is not a supported Shopify Payments country.
-   No unsupported-country workaround is allowed.
-4. Saudi compliance still needs the owner's verified legal entity name, commercial-register
-   number, VAT number if applicable, verified phone, and complaint-response commitments.
-5. The automated English privacy policy needs a separate Saudi PDPL localization review.
-6. The live theme must be reconciled into `main` before hardcoded footer-policy links and remaining
-   source drift can be fixed safely.
-7. The saved free-shipping announcement correction needs a fresh public render check after Shopify
-   cache propagation.
+1. The four Shopify drafts still need owner-approved inventory, final product data, and publication
+   decisions; the stand also needs approved media.
+2. Saudi compliance still needs the verified legal entity name, commercial-register number, VAT
+   number if applicable, verified phone, and complaint-response commitments.
+3. The live theme must be reconciled into `main` before theme-code changes are deployed safely.
+4. The public free-shipping announcement still needs a fresh render check for the saved SAR 320
+   threshold.
+5. Opening a new market remains a commercial decision.
+6. The dormant Calapres Supabase credential in n8n may be deleted after explicit confirmation;
+   all workflows that reference it are already archived.
 
 ## Next safe action
 
-Owner approval of the four products' canonical Supabase intake, inventory, pricing, media, and
-publication decision. In parallel, collect the missing legal identity details and decide whether
-Calapres should open a United States market. Do not publish directly from the existing Shopify
-drafts.
+Review the four draft products directly in Shopify. Complete their media, price, inventory,
+collections, SEO, and sales-channel settings; obtain the owner's publication approval; then publish
+and verify them in Shopify and Shopify Catalog.
 
 ## Constraints
 
-Never reconnect a Nawadir Dior source. Never publish a product whose `ready_for_shopify` is not
-true. Never change an existing `calapres_sku`. Never invent legal identity, inventory, pricing, or
-media. Never use an unsupported-country entity to obtain Shopify Payments. Never overwrite the
-live theme until its newer source has been reconciled into `main`.
+Never restore Supabase, the retired React application, a supplier crawler, or the retired
+synchronization code. Never invent legal identity, inventory, pricing, media, or commercial terms.
+Never overwrite the live theme until its newer source is reconciled into `main`.

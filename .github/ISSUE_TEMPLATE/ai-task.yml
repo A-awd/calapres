@@ -1,5 +1,5 @@
 name: AI Task
-about: Structured AI task for this React/Supabase repository
+description: Structured task for the Calapres Shopify repository
 title: "[AI Task]: "
 labels: ["ai-task"]
 body:
@@ -14,18 +14,18 @@ body:
     attributes:
       label: Primary agent
       options:
-        - Claude architect
-        - Codex execution engineer
-        - Gemini research/review
-        - MCP/tool automation
-        - Human/manual
+        - Claude architecture or planning
+        - Codex implementation
+        - Gemini research or review
+        - MCP or tool automation
+        - Human or manual
     validations:
       required: true
   - type: textarea
-    id: supabase_scope
+    id: shopify_scope
     attributes:
-      label: Supabase/data scope
-      description: Note schema, RLS, auth, storage, or data-risk impact.
+      label: Shopify scope
+      description: Note affected theme, products, collections, markets, policies, or live data.
   - type: textarea
     id: verification
     attributes:

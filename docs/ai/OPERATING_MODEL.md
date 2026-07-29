@@ -2,25 +2,26 @@
 
 ## Role
 
-`calapres` is a React/Vite/Supabase app with a stronger testing posture than several sibling app repos. It can serve as a reference for app hardening patterns.
+`calapres` is a Shopify theme and operations repository. AI launchers continue the existing
+Shopify-native implementation from the latest verified GitHub state.
 
-## Durable Memory
+## Durable memory
 
-- GitHub issues: product tasks, bugs, Supabase work, UX changes.
-- Pull requests: implementation notes, tests, risk notes.
-- `AGENTS.md`: AI execution rules.
-- `docs/ai/REPO_HEALTH.md`: maturity and hardening backlog.
+- GitHub issues: product tasks, theme bugs, SEO, performance, and Shopify operations.
+- Pull requests: implementation notes, validation, and risk notes.
+- `AGENTS.md`: binding execution rules.
+- `STATE.md` and `HANDOFF.md`: current state and continuity.
+- `DECISIONS.md`: durable architecture and policy decisions.
 
 ## Workflow
 
-1. Claude owns architecture and product decisions.
-2. Codex owns implementation, tests, migrations, and verification.
-3. Gemini can review product positioning, UX, and external references.
-4. CI and deterministic scripts should be preferred over manual checks.
+1. Verify `main` and read the operating documents.
+2. Inspect live Shopify before making operational claims.
+3. Reuse existing theme code and Shopify-native features.
+4. Validate changes in proportion to risk.
+5. Update state and handoff documents, then commit and push authorized work.
 
-## Supabase Safety
+## Retired systems
 
-- Never expose service-role keys in browser code.
-- Prefer additive migrations.
-- Keep RLS explicit and tested.
-- Do not commit private data, exports, or logs.
+Supabase, the legacy React application, and the retired supplier synchronization stack are not
+approved Calapres components. Do not restore or recreate them.

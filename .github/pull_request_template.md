@@ -2,26 +2,26 @@
 
 What changed and why?
 
-## AI Role
+## AI role
 
-- [ ] Claude architecture/planning
+- [ ] Claude architecture or planning
 - [ ] Codex implementation
-- [ ] Gemini research/review
-- [ ] Human/manual change
+- [ ] Gemini research or review
+- [ ] Human or manual change
 
 ## Verification
 
-- [ ] Lint passed or reason documented
-- [ ] Tests passed or reason documented
-- [ ] Build passed or reason documented
-- [ ] Supabase behavior reviewed where touched
+- [ ] Theme check passed or reason documented
+- [ ] Relevant storefront behavior verified
+- [ ] No retired runtime dependency was reintroduced
+- [ ] Live Shopify impact is documented
 
 ## Safety
 
 - [ ] No secrets committed
-- [ ] No private/customer data committed
-- [ ] Migration/RLS impact documented where applicable
+- [ ] No private customer, order, or payment data committed
+- [ ] Destructive and production impact reviewed
 
-## Durable Memory
+## Durable memory
 
-Issue/decision/runbook links:
+Issue, decision, or runbook links:

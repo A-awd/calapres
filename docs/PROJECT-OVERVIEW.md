@@ -2,23 +2,25 @@
 
 ## Purpose
 
-calapres supports an Arabic-first perfume-commerce experience and its operational integrations. The canonical repository should make the product, storefront implementation, application components, and approved automation recoverable without depending on a specific AI platform.
+Calapres is a premium Arabic-first Shopify storefront. The repository preserves the approved theme,
+project decisions, and sanitized operating state independently of any AI platform.
 
 ## In scope
 
-- Storefront code and sanitized configuration documentation.
-- Approved Shopify and Supabase implementation artifacts.
-- Generic workflow definitions after secret and personal-data removal.
-- Project decisions, current state, and reproducible operating procedures.
+- Shopify theme source and sanitized configuration.
+- Arabic and RTL storefront implementation.
+- Product, collection, SEO, performance, and customer-experience work executed through Shopify.
+- Project decisions, state, handoffs, and reproducible Shopify operating procedures.
+- Bounded automation only after explicit approval and a recorded decision.
 
 ## Out of scope
 
-- Credentials and access tokens.
-- Customer, order, payment, or analytics exports containing personal data.
-- Raw AI conversations and platform-local memory.
-- Unreviewed production exports or changes to live services.
+- External product databases, authentication systems, storage systems, or catalog queues.
+- Supplier crawling and supplier catalog synchronization.
+- Credentials, access tokens, customer data, order data, or payment data.
+- Raw AI conversations and unsanitized production exports.
 
-## Current migration concern
+## Source authority
 
-The source inventory reports possible credential material in Git history and unresolved branch authority. This document records the concern without reproducing sensitive content. The immediate work is security remediation and branch reconciliation, not production change.
-
+GitHub `main` is the technical source of truth. Shopify is the operational source of truth. The
+retired React application and Supabase stack remain available only through Git history.
