@@ -1,0 +1,88 @@
+{%- comment -%}
+  Coming-soon block (.soon) ported 1:1 from the static
+  prototype: sec-head + product tile with "قريباً" badge and a
+  real price from the picked product, plus a notify-me
+  customer form.
+{%- endcomment -%}
+{%- liquid
+  assign cs_product = section.settings.product
+  assign cs_label = section.settings.label
+  if cs_label == blank and cs_product
+    assign cs_parts = cs_product.title | split: '—'
+    assign cs_label = cs_parts | first | strip
+  endif
+-%}
+<section class="soon wrap">
+  <div class="sec-head">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  <div class="cat-tile">
+    {%- if section.settings.badge != blank -%}
+    <span class="badge">{{ section.settings.badge }}</span>
+    {%- endif -%}
+    {%- if section.settings.image -%}
+    <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ cs_label | escape }}" loading="lazy" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
+    {%- elsif cs_product.featured_image -%}
+    <img src="{{ cs_product.featured_image | image_url: width: 1400 }}" alt="{{ cs_label | escape }}" loading="lazy" width="{{ cs_product.featured_image.width }}" height="{{ cs_product.featured_image.height }}">
+    {%- else -%}
+    <img src="{{ 'atmo-silk.jpg' | asset_url }}" alt="{{ cs_label | escape }}" loading="lazy" width="1536" height="942">
+    {%- endif -%}
+    <span class="lbl">{{ cs_label }}{% if cs_product %} <span class="soon-price">{% render 'price-sar', cents: cs_product.price %}</span>{% endif %}</span>
+  </div>
+  <div class="notify">
+    <p>{{ section.settings.notify_text }}</p>
+    {% form 'customer', id: 'notifyForm', class: 'notify-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter, notify-stand">
+      <input type="hidden" name="return_to" value="{{ request.path }}?notified=1">
+      <input type="email" name="contact[email]" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+      <button type="submit">أعلِمني</button>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "قريباً",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان",
+      "default": "قريباً في كالابريز"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "المنتج القادم"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "عنوان البلاطة (يُترك فارغًا لعرض اسم المنتج)",
+      "default": "ستاند عقد قران فاخر للآيباد"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "الشارة",
+      "default": "قريباً"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "الصورة"
+    },
+    {
+      "type": "text",
+      "id": "notify_text",
+      "label": "نص الإشعار",
+      "default": "سجّل بريدك ليصلك إشعار فورَ الإطلاق."
+    }
+  ],
+  "presets": [
+    {
+      "name": "قريباً"
+    }
+  ]
+}
+{% endschema %}

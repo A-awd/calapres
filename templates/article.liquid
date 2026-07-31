@@ -1,14 +1,14 @@
-<article class="page-mast wrap center reveal">
-  <span class="eyebrow">{{ article.published_at | date: "%d %b %Y" }}</span>
-  <h1 class="display d-1">{{ article.title }}</h1>
-  {%- if article.author != blank -%}
-    <p class="lede">{{ article.author }}</p>
-  {%- endif -%}
-</article>
-
-<section class="section wrap account-narrow">
-  <div class="rte">{{ article.content }}</div>
-  <div class="page-actions">
-    <a class="btn btn-secondary" href="{{ blog.url }}"><span data-ar>العودة للمجلة</span><span data-en>Back to journal</span></a>
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">{{ blog.title }}</p>
+    <h1>{{ article.title }}</h1>
+    {%- assign article_date = article.published_at | date: '%Y/%m/%d' -%}
+    <p>{% render 'arabic-digits', value: article_date %}</p>
   </div>
+</section>
+<section class="wrap page-content" style="padding-top:clamp(2rem,4vw,3rem)">
+  {%- if article.image -%}
+  <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.image.alt | default: article.title | escape }}" width="{{ article.image.width }}" height="{{ article.image.height }}" style="margin-bottom:1.6rem">
+  {%- endif -%}
+  <div class="rte">{{ article.content }}</div>
 </section>

@@ -1,152 +1,96 @@
-<section class="page-mast wrap reveal">
-  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
-  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
-  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+{%- comment -%}
+  FAQ page (.page-head + .faq) ported 1:1 from the static
+  prototype. Questions are editable blocks; answers accept
+  inline HTML (bold, strikethrough, links) like the source.
+{%- endcomment -%}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ section.settings.heading | default: page.title }}</h1>
+    {%- if section.settings.text != blank -%}
+    <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
 </section>
 
-<section class="section wrap faq-wrap">
-  <div class="accordion faq-list" data-accordion>
-    {%- if section.blocks.size > 0 -%}
+<section class="faq">
+  <div class="wrap">
+    <div class="faq-list" id="faqList">
       {%- for block in section.blocks -%}
-        <div class="acc-item{% if forloop.first %} open{% endif %}" {{ block.shopify_attributes }}>
-          <button class="acc-head" type="button">
-            <span><span data-ar>{{ block.settings.question_ar }}</span><span data-en>{{ block.settings.question_en }}</span></span>
-            <span class="acc-ico" aria-hidden="true"></span>
-          </button>
-          <div class="acc-panel"><div class="acc-inner">
-            <p><span data-ar>{{ block.settings.answer_ar }}</span><span data-en>{{ block.settings.answer_en }}</span></p>
-          </div></div>
-        </div>
+      {%- assign faq_index = forloop.index -%}
+      {%- capture faq_num -%}{% render 'arabic-digits', value: faq_index %}{%- endcapture -%}
+      <div class="faq-item" {{ block.shopify_attributes }}>
+        <button class="faq-q" aria-expanded="false" aria-controls="fa{{ faq_index }}" id="fq{{ faq_index }}"><span><span class="num">{{ faq_num }}.</span> {{ block.settings.question }}</span><span class="chev" aria-hidden="true">⌄</span></button>
+        <div class="faq-a" id="fa{{ faq_index }}" role="region" aria-labelledby="fq{{ faq_index }}"><div class="faq-a-in"><p>{{ block.settings.answer }}</p></div></div>
+      </div>
       {%- endfor -%}
-    {%- else -%}
-      <div class="acc-item open">
-        <button class="acc-head" type="button">
-          <span><span data-ar>هل العطور أصلية؟</span><span data-en>Are the perfumes authentic?</span></span>
-          <span class="acc-ico" aria-hidden="true"></span>
-        </button>
-        <div class="acc-panel"><div class="acc-inner">
-          <p><span data-ar>نعم، كل عطر وقطعة عود أصلية من مصادر موثوقة، وتصل بعناية كالابريز في التغليف.</span><span data-en>Yes. Every perfume and oud piece is authentic and comes from trusted sources.</span></p>
-        </div></div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-head" type="button">
-          <span><span data-ar>كيف يتم التوصيل؟</span><span data-en>How does delivery work?</span></span>
-          <span class="acc-ico" aria-hidden="true"></span>
-        </button>
-        <div class="acc-panel"><div class="acc-inner">
-          <p><span data-ar>نوفر توصيلًا داخل السعودية والخليج، وتظهر خيارات الشحن النهائية عند الدفع.</span><span data-en>We deliver across Saudi Arabia and the Gulf, with final shipping options shown at checkout.</span></p>
-        </div></div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-head" type="button">
-          <span><span data-ar>هل تظهر المنتجات غير المتوفرة؟</span><span data-en>Do unavailable products appear?</span></span>
-          <span class="acc-ico" aria-hidden="true"></span>
-        </button>
-        <div class="acc-panel"><div class="acc-inner">
-          <p><span data-ar>نحافظ على وضوح التوفر قدر الإمكان، وتُحدّث حالة المنتج عند عودته للمخزون.</span><span data-en>Availability is kept clear, and product status updates when an item returns to stock.</span></p>
-        </div></div>
-      </div>
-    {%- endif -%}
+    </div>
+
+    <div class="faq-cta">
+      <h2>{{ section.settings.cta_heading }}</h2>
+      <p>{{ section.settings.cta_text }}</p>
+      <a class="btn-dark" href="{{ pages['contact'].url | default: routes.root_url }}">{{ section.settings.cta_label }}</a>
+    </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "FAQ page",
+  "name": "صفحة الأسئلة الشائعة",
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow_ar",
-      "label": "Eyebrow Arabic",
+      "id": "eyebrow",
+      "label": "السطر العلوي",
+      "default": "كالابريز"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان (يُترك فارغًا لعرض عنوان الصفحة)",
       "default": "الأسئلة الشائعة"
     },
     {
-      "type": "text",
-      "id": "eyebrow_en",
-      "label": "Eyebrow English",
-      "default": "FAQ"
+      "type": "textarea",
+      "id": "text",
+      "label": "النص",
+      "default": "كل ما تحتاج معرفته عن طقم المبخرة الفاخر — من المحتويات والألوان إلى الحفر والإهداء وطريقة الطلب."
     },
     {
       "type": "text",
-      "id": "heading_ar",
-      "label": "Heading Arabic",
-      "default": "تفاصيل قبل أن تختار رائحتك"
-    },
-    {
-      "type": "text",
-      "id": "heading_en",
-      "label": "Heading English",
-      "default": "Details before choosing your scent"
+      "id": "cta_heading",
+      "label": "عنوان الدعوة",
+      "default": "ما زال لديك سؤال؟"
     },
     {
       "type": "textarea",
-      "id": "lede_ar",
-      "label": "Intro Arabic",
-      "default": "إجابات مختصرة عن الأصالة، التوصيل، العيّنات، والعناية بالعطر."
+      "id": "cta_text",
+      "label": "نص الدعوة",
+      "default": "فريق كالابريز جاهز للإجابة عن استفساراتك ومساعدتك في اختيار الطقم المناسب."
     },
     {
-      "type": "textarea",
-      "id": "lede_en",
-      "label": "Intro English",
-      "default": "Short answers on authenticity, delivery, samples and caring for perfume."
+      "type": "text",
+      "id": "cta_label",
+      "label": "نص زر الدعوة",
+      "default": "تواصل معنا"
     }
   ],
   "blocks": [
     {
-      "type": "faq",
-      "name": "Question",
+      "type": "qa",
+      "name": "سؤال وجواب",
       "settings": [
         {
           "type": "text",
-          "id": "question_ar",
-          "label": "Question Arabic",
-          "default": "هل العطور أصلية؟"
+          "id": "question",
+          "label": "السؤال",
+          "default": "ماذا يتضمّن طقم المبخرة الفاخر؟"
         },
         {
-          "type": "text",
-          "id": "question_en",
-          "label": "Question English",
-          "default": "Are the perfumes authentic?"
-        },
-        {
-          "type": "textarea",
-          "id": "answer_ar",
-          "label": "Answer Arabic",
-          "default": "نعم، كل عطر وقطعة عود أصلية من مصادر موثوقة، وتصل مع عناية كالابريز في التغليف."
-        },
-        {
-          "type": "textarea",
-          "id": "answer_en",
-          "label": "Answer English",
-          "default": "Yes. Every perfume and oud piece is authentic and comes from trusted sources."
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "FAQ page",
-      "blocks": [
-        {
-          "type": "faq"
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question_ar": "كيف يتم التوصيل؟",
-            "question_en": "How does delivery work?",
-            "answer_ar": "نوفر توصيلًا سريعًا داخل السعودية والخليج، وتظهر خيارات الشحن النهائية عند الدفع.",
-            "answer_en": "We offer swift delivery across Saudi Arabia and the Gulf, with final shipping options shown at checkout."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question_ar": "هل توجد عيّنات اكتشاف؟",
-            "question_en": "Are discovery samples available?",
-            "answer_ar": "نعم، نوفر عيّنات مختارة لتجربة الرائحة قبل اختيار القارورة.",
-            "answer_en": "Yes, selected discovery samples help you experience the scent before choosing a bottle."
-          }
+          "type": "html",
+          "id": "answer",
+          "label": "الجواب",
+          "default": "يتضمّن الطقم <b>ستاند</b> أنيقًا، و<b>مبخرًا</b> فاخرًا، و<b>علبة عود</b> — طقم واحد متكامل بثلاث قطع."
         }
       ]
     }

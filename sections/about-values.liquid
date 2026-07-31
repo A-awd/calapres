@@ -1,0 +1,54 @@
+{%- comment -%}
+  Values grid (.values) ported 1:1 from the static prototype's
+  about page. Cards are editable blocks.
+{%- endcomment -%}
+<section class="values">
+  <div class="wrap">
+    <div class="values-grid">
+      {%- for block in section.blocks -%}
+      <div class="vcard" {{ block.shopify_attributes }}>
+        <span class="vnum">{{ block.settings.number }}</span>
+        <h3>{{ block.settings.heading }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "قيمنا",
+  "blocks": [
+    {
+      "type": "value",
+      "name": "قيمة",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "الرقم",
+          "default": "٠١"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "العنوان",
+          "default": "البساطة"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "النص",
+          "default": "طقم واحد متكامل بثلاث قطع وثلاثة ألوان — لا تعقيد في الاختيار، ولا تفاصيل زائدة."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "قيمنا"
+    }
+  ]
+}
+{% endschema %}

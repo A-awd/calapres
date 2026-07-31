@@ -1,110 +1,93 @@
-<section class="page-mast wrap reveal">
-  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
-  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
-  <p class="lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
+{%- comment -%}
+  Contact page (.page-intro + .contact-grid) ported 1:1 from
+  the static prototype. The form is a real Shopify contact
+  form; success/error feedback reuses the prototype's toast.
+{%- endcomment -%}
+<section class="page-intro">
+  <div class="wrap">
+    <h1>{{ section.settings.heading | default: page.title }}</h1>
+    {%- if section.settings.text != blank -%}
+    <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
 </section>
 
-<section class="section wrap contact-grid">
-  <div class="contact-panel reveal">
-    <h2 class="display d-2"><span data-ar>اكتب لنا</span><span data-en>Write to us</span></h2>
-    {%- form 'contact', class: 'contact-form' -%}
+<section class="wrap contact-grid">
+  <div class="form-card">
+    {% form 'contact', id: 'contactForm' %}
       {%- if form.posted_successfully? -%}
-        <p class="form-success"><span data-ar>وصلتنا رسالتك، وسنرد عليك قريبًا.</span><span data-en>Your message has reached us. We will reply soon.</span></p>
+      <div data-toast-message="وصلتنا رسالتك — سنعود إليك قريبًا" hidden></div>
+      {%- elsif form.errors -%}
+      <p class="form-note err">تعذّر إرسال الرسالة — تأكد من البريد الإلكتروني وحاول مرة أخرى.</p>
       {%- endif -%}
-      {%- if form.errors -%}
-        <div class="form-error">{{ form.errors | default_errors }}</div>
-      {%- endif -%}
-      <label>
-        <span>{{ 'contact.form.name' | t }}</span>
-        <input type="text" name="contact[name]" autocomplete="name" required>
-      </label>
-      <label>
-        <span>{{ 'contact.form.email' | t }}</span>
-        <input type="email" name="contact[email]" autocomplete="email" required>
-      </label>
-      <label>
-        <span>{{ 'contact.form.message' | t }}</span>
-        <textarea name="contact[body]" rows="6" required></textarea>
-      </label>
-      <button class="btn btn-primary" type="submit">{{ 'contact.form.send' | t }}</button>
-    {%- endform -%}
+      <div class="field">
+        <label for="cName">الاسم</label>
+        <input type="text" id="cName" name="contact[name]" required autocomplete="name" value="{{ form.name }}">
+      </div>
+      <div class="field">
+        <label for="cEmail">البريد الإلكتروني</label>
+        <input type="email" id="cEmail" name="contact[email]" required autocomplete="email" value="{{ form.email }}">
+      </div>
+      <div class="field">
+        <label for="cSubject">الموضوع</label>
+        <select id="cSubject" name="contact[الموضوع]" required>
+          <option value="" disabled selected>اختر الموضوع</option>
+          <option value="استفسار عن منتج">استفسار عن منتج</option>
+          <option value="الحفر الشخصي">الحفر الشخصي</option>
+          <option value="اقتراح">اقتراح</option>
+          <option value="أخرى">أخرى</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cMsg">الرسالة</label>
+        <textarea id="cMsg" name="contact[body]" required>{{ form.body }}</textarea>
+      </div>
+      <button class="btn-dark" type="submit">إرسال الرسالة</button>
+    {% endform %}
   </div>
-
-  <div class="contact-aside reveal d1">
-    <div class="svc">
-      <h3><span data-ar>واتساب</span><span data-en>WhatsApp</span></h3>
-      <p><span data-ar>{{ section.settings.whatsapp_ar }}</span><span data-en>{{ section.settings.whatsapp_en }}</span></p>
-      {%- if settings.footer_whatsapp != blank -%}
-        <a class="link" href="https://wa.me/{{ settings.footer_whatsapp }}"><span data-ar>ابدأ المحادثة</span><span data-en>Start chat</span><span class="arrow">→</span></a>
-      {%- endif -%}
-    </div>
-    <div class="svc">
-      <h3><span data-ar>البريد</span><span data-en>Email</span></h3>
-      <p>{% if settings.footer_email != blank %}{{ settings.footer_email }}{% else %}hello@calapres.sa{% endif %}</p>
-    </div>
-    <div class="svc">
-      <h3><span data-ar>الموقع</span><span data-en>Location</span></h3>
-      <p><span data-ar>السعودية والخليج</span><span data-en>Saudi Arabia and the Gulf</span></p>
-    </div>
-  </div>
+  <aside class="side-card">
+    <h2>{{ section.settings.side_heading }}</h2>
+    <ul>
+      <li><a class="link-arrow" href="{{ pages['faq'].url | default: routes.root_url }}">الأسئلة الشائعة <span>←</span></a></li>
+      <li><a class="link-arrow" href="{{ routes.all_products_collection_url }}">المتجر <span>←</span></a></li>
+    </ul>
+    <p><b>{{ section.settings.side_promise_title }}</b> {{ section.settings.side_promise_text }}</p>
+  </aside>
 </section>
 
 {% schema %}
 {
-  "name": "Contact page",
+  "name": "صفحة تواصل معنا",
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow_ar",
-      "label": "Eyebrow Arabic",
-      "default": "تواصل"
+      "id": "heading",
+      "label": "العنوان (يُترك فارغًا لعرض عنوان الصفحة)",
+      "default": "تواصل معنا"
     },
     {
       "type": "text",
-      "id": "eyebrow_en",
-      "label": "Eyebrow English",
-      "default": "Contact"
+      "id": "text",
+      "label": "النص",
+      "default": "سؤال عن طقم؟ فكرة لحفرٍ خاص؟ اكتب لنا — نقرأ كل رسالة."
     },
     {
       "type": "text",
-      "id": "heading_ar",
-      "label": "Heading Arabic",
-      "default": "فريق الدار في خدمتك"
+      "id": "side_heading",
+      "label": "عنوان البطاقة الجانبية",
+      "default": "روابط سريعة"
     },
     {
       "type": "text",
-      "id": "heading_en",
-      "label": "Heading English",
-      "default": "The maison team is here"
+      "id": "side_promise_title",
+      "label": "عنوان الوعد",
+      "default": "وعدنا لكم:"
     },
     {
       "type": "textarea",
-      "id": "lede_ar",
-      "label": "Intro Arabic",
-      "default": "لطلب توصية عطرية، أو سؤال عن العود والمباخر، يسعدنا سماعك."
-    },
-    {
-      "type": "textarea",
-      "id": "lede_en",
-      "label": "Intro English",
-      "default": "For scent recommendations or questions about perfume, oud and burners, we are glad to help."
-    },
-    {
-      "type": "textarea",
-      "id": "whatsapp_ar",
-      "label": "WhatsApp Arabic",
-      "default": "للاستشارة السريعة ومتابعة الطلبات في السعودية والخليج."
-    },
-    {
-      "type": "textarea",
-      "id": "whatsapp_en",
-      "label": "WhatsApp English",
-      "default": "For quick consultation and order support across Saudi Arabia and the Gulf."
-    }
-  ],
-  "presets": [
-    {
-      "name": "Contact page"
+      "id": "side_promise_text",
+      "label": "نص الوعد",
+      "default": "فريق كالابريز يردّ على كل رسالة تصله — لا تترددوا في الكتابة إلينا في أي وقت."
     }
   ]
 }

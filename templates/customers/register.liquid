@@ -1,18 +1,37 @@
-<section class="page-mast wrap center reveal">
-  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
-  <h1 class="display d-1"><span data-ar>إنشاء حساب</span><span data-en>Create account</span></h1>
-  <p class="lede"><span data-ar>احفظ تفضيلاتك وعناوينك لطلبات العطور القادمة.</span><span data-en>Save preferences and addresses for future perfume orders.</span></p>
-</section>
-
-<section class="section wrap account-narrow">
-  <div class="account-card">
-    {%- form 'create_customer', class: 'contact-form' -%}
-      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
-      <label><span><span data-ar>الاسم الأول</span><span data-en>First name</span></span><input type="text" name="customer[first_name]" autocomplete="given-name"></label>
-      <label><span><span data-ar>اسم العائلة</span><span data-en>Last name</span></span><input type="text" name="customer[last_name]" autocomplete="family-name"></label>
-      <label><span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span><input type="email" name="customer[email]" autocomplete="email" required></label>
-      <label><span><span data-ar>كلمة المرور</span><span data-en>Password</span></span><input type="password" name="customer[password]" autocomplete="new-password" required></label>
-      <button class="btn btn-primary" type="submit"><span data-ar>إنشاء الحساب</span><span data-en>Create account</span></button>
-    {%- endform -%}
+<section class="page-intro">
+  <div class="wrap">
+    <h1>إنشاء حساب</h1>
   </div>
+</section>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    {% form 'create_customer' %}
+      {%- if form.errors -%}
+      <p class="form-note err">تعذّر إنشاء الحساب — تحقق من البيانات وحاول مرة أخرى.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="regFirst">الاسم الأول</label>
+        <input type="text" id="regFirst" name="customer[first_name]" autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label for="regLast">اسم العائلة</label>
+        <input type="text" id="regLast" name="customer[last_name]" autocomplete="family-name">
+      </div>
+      <div class="field">
+        <label for="regEmail">البريد الإلكتروني</label>
+        <input type="email" id="regEmail" name="customer[email]" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="regPassword">كلمة المرور</label>
+        <input type="password" id="regPassword" name="customer[password]" required autocomplete="new-password">
+      </div>
+      <button class="btn-dark" type="submit">إنشاء الحساب</button>
+    {% endform %}
+  </div>
+  <aside class="side-card">
+    <h2>لديك حساب؟</h2>
+    <ul>
+      <li><a class="link-arrow" href="{{ routes.account_login_url }}">تسجيل الدخول <span>←</span></a></li>
+    </ul>
+  </aside>
 </section>

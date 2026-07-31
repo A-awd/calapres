@@ -1,75 +1,23 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "hero-video",
       "settings": {}
     },
-    "collections-strip": {
-      "type": "collections-strip",
+    "edit-band": {
+      "type": "editorial-band",
       "settings": {}
     },
-    "category-ocean": {
-      "type": "category-ocean",
+    "products": {
+      "type": "featured-products",
       "settings": {}
     },
-    "new-arrivals": {
-      "type": "new-arrivals",
-      "settings": {}
-    },
-    "home-promo-band": {
-      "type": "home-promo-band",
-      "settings": {}
-    },
-    "home-commerce-rails": {
-      "type": "home-commerce-rails",
-      "settings": {}
-    },
-    "home-editorial-ads": {
-      "type": "home-editorial-ads",
-      "settings": {}
-    },
-    "maison-story": {
-      "type": "maison-story",
-      "settings": {}
-    },
-    "scent-families": {
-      "type": "scent-families",
-      "settings": {}
-    },
-    "oud-signature": {
-      "type": "oud-signature",
-      "settings": {}
-    },
-    "services": {
-      "type": "services",
-      "settings": {}
-    },
-    "journal-signup": {
-      "type": "journal-signup",
-      "settings": {}
+    "cats": {
+      "type": "category-tiles",
+      "settings": {
+        "tile2_product": "ستاند-عقد-قران-فاخر-للآيباد-قابل-للتخصيص"
+      }
     }
   },
-  "order": [
-    "hero",
-    "category-ocean",
-    "new-arrivals",
-    "home-promo-band",
-    "home-editorial-ads",
-    "home-commerce-rails",
-    "collections-strip",
-    "maison-story",
-    "scent-families",
-    "oud-signature",
-    "services",
-    "journal-signup"
-  ]
+  "order": ["hero", "edit-band", "products", "cats"]
 }

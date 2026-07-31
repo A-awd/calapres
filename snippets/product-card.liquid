@@ -1,66 +1,43 @@
-{%- assign tag_ar = '' -%}
-{%- assign tag_en = '' -%}
-{%- if product.tags contains 'جديد' or product.tags contains 'new' -%}
-  {%- assign tag_ar = 'جديد' -%}{%- assign tag_en = 'New' -%}
-{%- elsif product.tags contains 'توقيع' or product.tags contains 'signature' -%}
-  {%- assign tag_ar = 'توقيع كالابريز' -%}{%- assign tag_en = 'Signature' -%}
-{%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
-  {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
-{%- endif -%}
-{%- assign card_class = card_class | default: 'product-card' -%}
-{%- assign first_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
-{%- assign variant_title_normalized = first_variant.title | downcase | strip -%}
-{%- assign compare_price = first_variant.compare_at_price | default: 0 -%}
-{%- assign has_size = true -%}
-{%- if variant_title_normalized == 'default' or variant_title_normalized == 'default title' -%}
-  {%- assign has_size = false -%}
-{%- endif -%}
-<div class="{{ card_class }}"
-  data-product-title="{{ product.title | escape }}"
-  data-product-url="{{ product.url }}"
-  data-product-image="{% if product.featured_image %}{{ product.featured_image | img_url: '240x300', crop: 'center' }}{% else %}{{ 'pr-oud.jpg' | asset_url }}{% endif %}"
-  data-product-price="{{ product.price | money | escape }}"
-  data-product-price-cents="{{ product.price }}"
-  data-family="{{ product.tags | join: ',' | escape }}"
-  data-brand="{{ product.vendor | escape }}"
-  data-type="{% if product.type != blank %}{{ product.type | escape }}{% else %}عطر{% endif %}"
-  data-price="{{ product.price | divided_by: 100 }}"
-  data-size="{% if has_size %}{{ first_variant.title | escape }}{% endif %}">
-  <a class="product-card__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
-    <span class="frame">
-      {%- if tag_ar != '' -%}
-        <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
-      {%- endif -%}
-      {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="600" height="750" loading="lazy" />
-      {%- else -%}
-        <img src="{{ 'pr-oud.jpg' | asset_url }}" alt="{{ product.title | escape }}" width="600" height="750" loading="lazy" />
-      {%- endif -%}
-    </span>
-  </a>
-  <button class="product-card__fav" type="button" aria-label="المفضلة" aria-pressed="false" data-wishlist-toggle>
-    <svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg>
-  </button>
-  <div class="meta">
-    {%- if product.vendor != blank -%}
-      <div class="brand"><span data-ar>{{ product.vendor | escape }}</span><span data-en>{{ product.vendor | escape }}</span></div>
+{%- comment -%}
+  Product card (.pcard) ported 1:1 from the static prototype.
+  Each color of the mibkhara set is its own product, so the
+  card title/color split comes from the product title
+  ("مبخرة كالابريز الفاخرة — الأبيض").
+  Usage: {% render 'product-card', card_product: product, show_add: true %}
+{%- endcomment -%}
+{%- liquid
+  assign pc_parts = card_product.title | split: '—'
+  assign pc_name = pc_parts | first | strip
+  assign pc_color = ''
+  if pc_parts.size > 1
+    assign pc_color = pc_parts | last | strip
+  endif
+  assign pc_price = card_product.price
+  assign pc_compare = card_product.compare_at_price
+  assign pc_save = 0
+  if pc_compare > pc_price
+    assign pc_save = pc_compare | minus: pc_price
+  endif
+-%}
+<a class="pcard" href="{{ card_product.url }}">
+  <div class="ph">
+    {%- if pc_save > 0 %}<span class="tag">وفّر {% render 'price-sar', cents: pc_save %}</span>{% endif -%}
+    {%- if card_product.featured_image -%}
+    <img src="{{ card_product.featured_image | image_url: width: 900 }}" alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}" loading="lazy" width="900" height="900">
+    {%- else -%}
+    {{ 'product-1' | placeholder_svg_tag }}
     {%- endif -%}
-    <a class="name" href="{{ product.url }}"><span data-ar>{{ product.title | escape }}</span><span data-en>{{ product.title | escape }}</span></a>
-    <div class="price">
-      <span class="current" data-money-cents="{{ product.price }}">{{ product.price | money }}</span>
-      {%- if compare_price > product.price -%}
-        <span class="compare-at" data-money-cents="{{ compare_price }}">{{ compare_price | money }}</span>
-      {%- endif -%}
-    </div>
-    <div class="product-card__foot">
-      <span class="size-h">
-        {%- if has_size -%}
-          {{ first_variant.title | escape }}
-        {%- else -%}
-          <span data-ar>متوفر</span><span data-en>Available</span>
-        {%- endif -%}
-      </span>
-      <a class="mini-link" href="{{ product.url }}"><span data-ar>تفاصيل</span><span data-en>Details</span></a>
-    </div>
   </div>
-</div>
+  <div class="pbody">
+    <h3>{{ pc_name }}</h3>
+    {% if pc_color != blank %}<div class="color">{{ pc_color }}</div>{% endif %}
+    <div class="price"><b>{% render 'price-sar', cents: pc_price %}</b>{% if pc_save > 0 %}<s>{% render 'price-sar', cents: pc_compare %}</s>{% endif %}</div>
+    {%- if show_add -%}
+    {%- if card_product.available -%}
+    <button class="padd" data-add="{{ card_product.selected_or_first_available_variant.id }}">أضِف إلى السلّة</button>
+    {%- else -%}
+    <button class="padd" disabled>غير متوفر حاليًا</button>
+    {%- endif -%}
+    {%- endif -%}
+  </div>
+</a>
