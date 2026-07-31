@@ -51,3 +51,8 @@ Do not restore the retired React application, Supabase files, database queue, su
 old n8n sync code from Git history. Do not treat an external database record as a publication gate.
 Do not permanently delete retired external data without a separate instruction naming the exact
 project and acknowledging irreversibility.
+
+## Theme delivery — 2026-07-31
+
+- `shopify-theme` @ `2e64a34` carries the Calabriz Liquid theme converted from the approved static build; all schema JSON is valid and `shopify theme check` passes with zero errors.
+- Next: publish the four draft products (and add the iPad-stand photos) so the storefront renders live data, preview the staging theme, then publish it manually when approved.
