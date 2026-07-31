@@ -18,10 +18,9 @@ on:
       target:
         description: "Theme target"
         required: true
-        default: "staging"
+        default: "live"
         type: choice
         options:
-          - staging
           - live
 
 concurrency:
@@ -30,8 +29,7 @@ concurrency:
 
 env:
   SHOPIFY_STORE: unywbe-ub.myshopify.com
-  SHOPIFY_STAGING_THEME_ID: "163004449024"
-  SHOPIFY_LIVE_THEME_ID: "163072377088"
+  SHOPIFY_LIVE_THEME_ID: "163004449024"
 
 jobs:
   deploy:
@@ -54,17 +52,16 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             target="${{ inputs.target }}"
           else
-            target="staging"
+            target="live"
           fi
 
-          if [ "$target" = "live" ]; then
-            echo "theme_id=${SHOPIFY_LIVE_THEME_ID}" >> "$GITHUB_OUTPUT"
-            echo "allow_live=--allow-live" >> "$GITHUB_OUTPUT"
-          else
-            echo "theme_id=${SHOPIFY_STAGING_THEME_ID}" >> "$GITHUB_OUTPUT"
-            echo "allow_live=" >> "$GITHUB_OUTPUT"
+          if [ "$target" != "live" ]; then
+            echo "Only the live theme is available for deployment." >&2
+            exit 1
           fi
 
+          echo "theme_id=${SHOPIFY_LIVE_THEME_ID}" >> "$GITHUB_OUTPUT"
+          echo "allow_live=--allow-live" >> "$GITHUB_OUTPUT"
           echo "target=$target" >> "$GITHUB_OUTPUT"
 
       - name: Inject deploy version

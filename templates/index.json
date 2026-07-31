@@ -18,9 +18,14 @@
       "type": "category-tiles",
       "settings": {
         "tile1_collection": "oud-bakhour",
-        "tile2_product": "ستاند-عقد-قران-فاخر-للآيباد-قابل-للتخصيص"
+        "tile2_collection": "ستاند-عقد-القران"
       }
     }
   },
-  "order": ["hero", "edit-band", "products", "cats"]
+  "order": [
+    "hero",
+    "edit-band",
+    "products",
+    "cats"
+  ]
 }

@@ -8,13 +8,9 @@
   assign t1_collection = section.settings.tile1_collection
   assign t1_url = t1_collection.url | default: routes.all_products_collection_url
   assign t1_label = section.settings.tile1_label | default: t1_collection.title
-  assign t2_product = section.settings.tile2_product
-  assign t2_url = t2_product.url | default: routes.all_products_collection_url
-  assign t2_label = section.settings.tile2_label
-  if t2_label == blank and t2_product
-    assign t2_parts = t2_product.title | split: '—'
-    assign t2_label = t2_parts | first | strip
-  endif
+  assign t2_collection = section.settings.tile2_collection
+  assign t2_url = t2_collection.url | default: routes.all_products_collection_url
+  assign t2_label = section.settings.tile2_label | default: t2_collection.title
 -%}
 <section class="wrap cats">
   <a class="cat-tile" href="{{ t1_url }}">
@@ -33,8 +29,8 @@
     {%- endif -%}
     {%- if section.settings.tile2_image -%}
     <img src="{{ section.settings.tile2_image | image_url: width: 1400 }}" alt="{{ t2_label | escape }}" loading="lazy" width="{{ section.settings.tile2_image.width }}" height="{{ section.settings.tile2_image.height }}">
-    {%- elsif t2_product.featured_image -%}
-    <img src="{{ t2_product.featured_image | image_url: width: 1400 }}" alt="{{ t2_label | escape }}" loading="lazy" width="{{ t2_product.featured_image.width }}" height="{{ t2_product.featured_image.height }}">
+    {%- elsif t2_collection.image -%}
+    <img src="{{ t2_collection.image | image_url: width: 1400 }}" alt="{{ t2_label | escape }}" loading="lazy" width="{{ t2_collection.image.width }}" height="{{ t2_collection.image.height }}">
     {%- else -%}
     <img src="{{ 'atmo-silk.jpg' | asset_url }}" alt="{{ t2_label | escape }}" loading="lazy" width="1536" height="942">
     {%- endif -%}
@@ -63,9 +59,9 @@
       "label": "صورة البلاطة الأولى"
     },
     {
-      "type": "product",
-      "id": "tile2_product",
-      "label": "منتج البلاطة الثانية (قريباً)"
+      "type": "collection",
+      "id": "tile2_collection",
+      "label": "مجموعة البلاطة الثانية"
     },
     {
       "type": "text",
