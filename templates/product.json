@@ -26,10 +26,7 @@
         }
       },
       "block_order": ["qa1", "qa2", "qa3"],
-      "settings": {
-        "sibling_collection": "oud-bakhour",
-        "soon_product": "ستاند-عقد-قران-فاخر-للآيباد-قابل-للتخصيص"
-      }
+      "settings": {}
     }
   },
   "order": ["main"]
