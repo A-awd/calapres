@@ -1,39 +1,41 @@
-<section class="page-mast wrap center reveal">
-  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
-  <h1 class="display d-1"><span data-ar>تسجيل الدخول</span><span data-en>Sign in</span></h1>
-  <p class="lede"><span data-ar>تابع طلباتك واحفظ عناوينك لتجربة أسرع.</span><span data-en>Track orders and save addresses for a smoother experience.</span></p>
+<section class="page-intro">
+  <div class="wrap">
+    <h1>تسجيل الدخول</h1>
+  </div>
 </section>
-
-<section class="section wrap account-narrow">
-  <div class="account-card">
-    {%- form 'customer_login', class: 'contact-form' -%}
-      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
-      <label>
-        <span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span>
-        <input type="email" name="customer[email]" autocomplete="email" required>
-      </label>
-      <label>
-        <span><span data-ar>كلمة المرور</span><span data-en>Password</span></span>
-        <input type="password" name="customer[password]" autocomplete="current-password" required>
-      </label>
-      <button class="btn btn-primary" type="submit"><span data-ar>دخول</span><span data-en>Sign in</span></button>
-    {%- endform -%}
-    <div class="account-actions">
-      <a class="link" href="{{ routes.account_register_url }}"><span data-ar>إنشاء حساب</span><span data-en>Create account</span><span class="arrow">→</span></a>
-      <a class="link" href="#recover"><span data-ar>استعادة كلمة المرور</span><span data-en>Recover password</span><span class="arrow">→</span></a>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    {% form 'customer_login' %}
+      {%- if form.errors -%}
+      <p class="form-note err">تعذّر تسجيل الدخول — تحقق من البريد الإلكتروني وكلمة المرور.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="loginEmail">البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" name="customer[email]" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="loginPassword">كلمة المرور</label>
+        <input type="password" id="loginPassword" name="customer[password]" required autocomplete="current-password">
+      </div>
+      <button class="btn-dark" type="submit">تسجيل الدخول</button>
+    {% endform %}
+    <div style="margin-top:1.6rem;border-top:1px solid var(--line);padding-top:1.3rem">
+      <p class="form-note">نسيت كلمة المرور؟ أدخل بريدك وسنرسل لك رابط إعادة التعيين.</p>
+      {% form 'recover_customer_password', class: 'notify-form', style: 'margin-top:.8rem' %}
+        {%- if form.posted_successfully? -%}
+        <p class="form-note">أرسلنا لك رابط إعادة تعيين كلمة المرور.</p>
+        {%- endif -%}
+        <input type="email" name="email" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+        <button type="submit">إرسال</button>
+      {% endform %}
     </div>
   </div>
-
-  <div class="account-card" id="recover">
-    <h2 class="display d-3"><span data-ar>استعادة كلمة المرور</span><span data-en>Recover password</span></h2>
-    {%- form 'recover_customer_password', class: 'contact-form' -%}
-      {%- if form.posted_successfully? -%}<p class="form-success"><span data-ar>أرسلنا لك تعليمات الاستعادة.</span><span data-en>Recovery instructions have been sent.</span></p>{%- endif -%}
-      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
-      <label>
-        <span><span data-ar>البريد الإلكتروني</span><span data-en>Email</span></span>
-        <input type="email" name="email" autocomplete="email" required>
-      </label>
-      <button class="btn btn-secondary" type="submit"><span data-ar>إرسال</span><span data-en>Send</span></button>
-    {%- endform -%}
-  </div>
+  <aside class="side-card">
+    <h2>عميل جديد؟</h2>
+    <ul>
+      <li><a class="link-arrow" href="{{ routes.account_register_url }}">إنشاء حساب <span>←</span></a></li>
+      <li><a class="link-arrow" href="{{ routes.all_products_collection_url }}">تصفّح المتجر <span>←</span></a></li>
+    </ul>
+    <p>أنشئ حسابًا لمتابعة طلباتك وتسريع إتمام الشراء.</p>
+  </aside>
 </section>

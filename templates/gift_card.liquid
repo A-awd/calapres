@@ -1,18 +1,18 @@
-<section class="page-mast wrap center reveal">
-  <span class="eyebrow"><span data-ar>كالابريز</span><span data-en>Calapres</span></span>
-  <h1 class="display d-1"><span data-ar>بطاقة المتجر</span><span data-en>Store card</span></h1>
-  <p class="lede"><span data-ar>استخدم البطاقة عند الدفع في متجر كالابريز.</span><span data-en>Use this card at checkout in the Calapres store.</span></p>
+<section class="page-intro">
+  <div class="wrap">
+    <h1>بطاقة هدية {{ settings.brand_name | default: shop.name }}</h1>
+    <p>رصيد البطاقة: {% render 'price-sar', cents: gift_card.balance %}</p>
+  </div>
 </section>
-
-<section class="section wrap account-narrow">
-  <div class="account-card center">
-    <span class="eyebrow">{{ gift_card.code | format_code }}</span>
-    <h2 class="display d-2">{{ gift_card.balance | money }}</h2>
-    {%- if gift_card.expires_on -%}
-      <p><span data-ar>تنتهي في</span><span data-en>Expires on</span> {{ gift_card.expires_on | date: "%d %b %Y" }}</p>
+<section class="wrap page-content">
+  <div class="form-card" style="max-width:460px">
+    <p class="form-note">رمز البطاقة:</p>
+    <p class="gift-code">{{ gift_card.code | format_code }}</p>
+    {%- if gift_card.expired -%}
+    <p class="form-note err">انتهت صلاحية هذه البطاقة.</p>
+    {%- elsif gift_card.enabled == false -%}
+    <p class="form-note err">هذه البطاقة غير مفعّلة.</p>
     {%- endif -%}
-    <div class="page-actions">
-      <a class="btn btn-primary" href="/collections/all"><span data-ar>تسوّق الآن</span><span data-en>Shop now</span></a>
-    </div>
+    <a class="btn-dark" href="{{ routes.all_products_collection_url }}">تسوّق الآن</a>
   </div>
 </section>

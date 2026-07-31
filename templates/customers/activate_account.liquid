@@ -1,17 +1,25 @@
-<section class="page-mast wrap center reveal">
-  <span class="eyebrow"><span data-ar>حساب كالابريز</span><span data-en>Calapres Account</span></span>
-  <h1 class="display d-1"><span data-ar>تفعيل الحساب</span><span data-en>Activate account</span></h1>
-  <p class="lede"><span data-ar>اختر كلمة مرور لحسابك في كالابريز.</span><span data-en>Choose a password for your Calapres account.</span></p>
+<section class="page-intro">
+  <div class="wrap">
+    <h1>تفعيل الحساب</h1>
+    <p>أنشئ كلمة مرور لتفعيل حسابك.</p>
+  </div>
 </section>
-
-<section class="section wrap account-narrow">
-  <div class="account-card">
-    {%- form 'activate_customer_password', class: 'contact-form' -%}
-      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
-      <label><span><span data-ar>كلمة المرور</span><span data-en>Password</span></span><input type="password" name="customer[password]" autocomplete="new-password" required></label>
-      <label><span><span data-ar>تأكيد كلمة المرور</span><span data-en>Confirm password</span></span><input type="password" name="customer[password_confirmation]" autocomplete="new-password" required></label>
-      <button class="btn btn-primary" type="submit"><span data-ar>تفعيل</span><span data-en>Activate</span></button>
-      <button class="btn btn-secondary" name="decline" type="submit"><span data-ar>رفض الدعوة</span><span data-en>Decline invitation</span></button>
-    {%- endform -%}
+<section class="wrap page-content">
+  <div class="form-card" style="max-width:560px">
+    {% form 'activate_customer_password' %}
+      {%- if form.errors -%}
+      <p class="form-note err">تعذّر تفعيل الحساب — تحقق من كلمة المرور وحاول مرة أخرى.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="actPassword">كلمة المرور</label>
+        <input type="password" id="actPassword" name="customer[password]" required autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="actConfirm">تأكيد كلمة المرور</label>
+        <input type="password" id="actConfirm" name="customer[password_confirmation]" required autocomplete="new-password">
+      </div>
+      <button class="btn-dark" type="submit">تفعيل الحساب</button>
+      <button class="btn-dark" type="submit" name="decline" style="margin-top:.8rem;background:var(--ground);color:var(--ink);border:1px solid var(--ink)">رفض الدعوة</button>
+    {% endform %}
   </div>
 </section>

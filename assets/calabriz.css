@@ -803,3 +803,16 @@ input{font-family:inherit}
 .search-form input{flex:1;min-width:0;border:none;outline:none;background:transparent;padding:.8rem 1rem;font-size:.9rem;color:var(--ink);font-family:inherit}
 .search-form button{background:var(--midnight);color:var(--ground);padding:.8rem 1.4rem;font-size:.88rem;transition:background .3s;flex-shrink:0}
 .search-form button:hover{background:var(--gold);color:var(--midnight)}
+#shopify-section-header{position:sticky;top:0;z-index:900}
+.page-content{padding:0 0 clamp(3.5rem,7vw,5.5rem)}
+.page-content .rte{max-width:72ch;font-size:.98rem;color:rgba(51,51,48,.85)}
+.page-content .rte p{margin-bottom:1rem}
+.page-content .rte h2,.page-content .rte h3{font-weight:700;margin:1.6rem 0 .7rem}
+.page-content .rte ul,.page-content .rte ol{margin:0 1.2rem 1rem 0;padding-right:1rem}
+.page-content .rte a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.acct{padding:clamp(2.5rem,6vw,4.5rem) 0}
+.tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:.7rem .5rem;text-align:right}
+.tbl th{font-size:.82rem;color:rgba(51,51,48,.65);font-weight:700}
+.gift-code{font-size:1.3rem;font-weight:700;letter-spacing:.08em;margin:.4rem 0 1rem}
+.pw-form{width:min(320px,100%);margin-top:1.2rem}
