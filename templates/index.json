@@ -10,11 +10,14 @@
     },
     "products": {
       "type": "featured-products",
-      "settings": {}
+      "settings": {
+        "collection": "oud-bakhour"
+      }
     },
     "cats": {
       "type": "category-tiles",
       "settings": {
+        "tile1_collection": "oud-bakhour",
         "tile2_product": "ستاند-عقد-قران-فاخر-للآيباد-قابل-للتخصيص"
       }
     }
