@@ -13,19 +13,11 @@
       "settings": {
         "collection": "oud-bakhour"
       }
-    },
-    "cats": {
-      "type": "category-tiles",
-      "settings": {
-        "tile1_collection": "oud-bakhour",
-        "tile2_collection": "ستاند-عقد-القران"
-      }
     }
   },
   "order": [
     "hero",
     "edit-band",
-    "products",
-    "cats"
+    "products"
   ]
 }
