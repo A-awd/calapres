@@ -24,10 +24,6 @@
   if mp_compare > mp_price
     assign mp_save = mp_compare | minus: mp_price
   endif
-  assign mp_siblings = section.settings.sibling_collection
-  if mp_siblings == blank
-    assign mp_siblings = product.collections | first
-  endif
   assign mp_image = mp_variant.image | default: product.featured_image
 -%}
 <main class="wrap">
@@ -51,30 +47,6 @@
       <p class="pd-line">{{ section.settings.line2 }}</p>
       {%- endif -%}
 
-      {%- if mp_siblings.products.size > 1 -%}
-      <div class="pd-colors">
-        <div class="clbl">اللون: <b id="pdColorName">{{ mp_color | default: product.title }}</b></div>
-        <div class="cbtns" id="colorBtns">
-          {%- for mp_sib in mp_siblings.products -%}
-          {%- liquid
-            assign sib_parts = mp_sib.title | split: '—'
-            assign sib_color = sib_parts | last | strip
-            case sib_color
-              when 'الأبيض'
-                assign sib_swatch = '#F5F4F0'
-              when 'البيج'
-                assign sib_swatch = '#D9C6A5'
-              when 'الرمادي'
-                assign sib_swatch = '#9A9A96'
-              else
-                assign sib_swatch = 'var(--panel)'
-            endcase
-          -%}
-          <a class="cbtn{% if mp_sib.id == product.id %} on{% endif %}" href="{{ mp_sib.url }}" aria-label="{{ sib_color | escape }}"><i style="background:{{ sib_swatch }}"></i>{{ sib_color }}</a>
-          {%- endfor -%}
-        </div>
-      </div>
-      {%- endif -%}
 
       {% form 'product', product, id: 'pdForm', data-product-form: 'true' %}
         <input type="hidden" name="id" value="{{ mp_variant.id }}">
@@ -105,65 +77,11 @@
   </div>
 </main>
 
-{%- liquid
-  assign rel_products = ''
-  if mp_siblings.products.size > 1
-    assign rel_products = 'yes'
-  endif
-  assign rel_soon = section.settings.soon_product
--%}
-{%- if rel_products == 'yes' or rel_soon or section.settings.soon_label != blank -%}
-<section class="related wrap">
-  <div class="sec-head">
-    <h2>{{ section.settings.related_heading }}</h2>
-    {%- if mp_siblings -%}
-    <a class="link-arrow" href="{{ mp_siblings.url }}">{{ section.settings.related_link_label }} <span>←</span></a>
-    {%- else -%}
-    <a class="link-arrow" href="{{ routes.all_products_collection_url }}">{{ section.settings.related_link_label }} <span>←</span></a>
-    {%- endif -%}
-  </div>
-  <div class="prod-grid" id="relGrid">
-    {%- if rel_products == 'yes' -%}
-    {%- for mp_sib in mp_siblings.products -%}
-    {%- unless mp_sib.id == product.id -%}
-    {% render 'product-card', card_product: mp_sib, show_add: false %}
-    {%- endunless -%}
-    {%- endfor -%}
-    {%- endif -%}
-    {%- liquid
-      assign soon_label = section.settings.soon_label
-      if soon_label == blank and rel_soon
-        assign soon_parts = rel_soon.title | split: '—'
-        assign soon_label = soon_parts | first | strip
-      endif
-    -%}
-    <div class="cat-tile">
-      {%- if section.settings.soon_badge != blank -%}
-      <span class="badge">{{ section.settings.soon_badge }}</span>
-      {%- endif -%}
-      {%- if section.settings.soon_image -%}
-      <img src="{{ section.settings.soon_image | image_url: width: 1400 }}" alt="{{ soon_label | escape }}" loading="lazy" width="{{ section.settings.soon_image.width }}" height="{{ section.settings.soon_image.height }}">
-      {%- elsif rel_soon.featured_image -%}
-      <img src="{{ rel_soon.featured_image | image_url: width: 1400 }}" alt="{{ soon_label | escape }}" loading="lazy" width="{{ rel_soon.featured_image.width }}" height="{{ rel_soon.featured_image.height }}">
-      {%- else -%}
-      <img src="{{ 'atmo-silk.jpg' | asset_url }}" alt="{{ soon_label | escape }}" loading="lazy" width="1536" height="942">
-      {%- endif -%}
-      <span class="lbl">{{ soon_label }}{% if rel_soon %} <span class="soon-price">{% render 'price-sar', cents: rel_soon.price %}</span>{% endif %}</span>
-    </div>
-  </div>
-</section>
-{%- endif -%}
 
 {% schema %}
 {
   "name": "صفحة المنتج",
   "settings": [
-    {
-      "type": "collection",
-      "id": "sibling_collection",
-      "label": "مجموعة ألوان الطقم",
-      "info": "منتجات هذه المجموعة تظهر كخيارات ألوان. عند تركها فارغة تُستخدم أول مجموعة ينتمي إليها المنتج."
-    },
     {
       "type": "text",
       "id": "line1",
@@ -175,40 +93,6 @@
       "id": "line2",
       "label": "السطر الثاني",
       "default": "حفر الاسم أو الشعار"
-    },
-    {
-      "type": "text",
-      "id": "related_heading",
-      "label": "عنوان قسم قد يعجبك",
-      "default": "قد يعجبك أيضًا"
-    },
-    {
-      "type": "text",
-      "id": "related_link_label",
-      "label": "نص رابط عرض الكل",
-      "default": "عرض الكل"
-    },
-    {
-      "type": "product",
-      "id": "soon_product",
-      "label": "المنتج القادم (بلاطة قريباً)"
-    },
-    {
-      "type": "text",
-      "id": "soon_label",
-      "label": "عنوان بلاطة قريباً (يُترك فارغًا لعرض اسم المنتج)",
-      "default": "ستاند عقد قران فاخر للآيباد"
-    },
-    {
-      "type": "text",
-      "id": "soon_badge",
-      "label": "شارة بلاطة قريباً",
-      "default": "قريباً"
-    },
-    {
-      "type": "image_picker",
-      "id": "soon_image",
-      "label": "صورة بلاطة قريباً"
     }
   ],
   "blocks": [
@@ -226,7 +110,7 @@
           "type": "textarea",
           "id": "answer",
           "label": "الجواب",
-          "default": "الطقم واحد متكامل: ستاند، ومبخر أنيق، وعلبة عود — كلّها باللون الذي تختاره."
+          "default": "الطقم واحد متكامل: ستاند، ومبخر أنيق، وعلبة عود."
         }
       ]
     }
