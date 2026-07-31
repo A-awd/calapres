@@ -839,7 +839,7 @@ input{font-family:inherit}
 .hero-cta-link:hover .arr{transform:translateX(-4px)}
 @media (max-width:1020px){
   .hero{min-height:calc(100svh - 60px)}
-  .hero-cta{bottom:clamp(5.75rem,10vh,6.75rem)}
+  .hero-cta{bottom:clamp(2.25rem,4vh,3rem)}
   .hdr-top{height:58px}
 }
 @media (max-width:480px){
