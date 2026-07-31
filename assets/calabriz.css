@@ -821,7 +821,7 @@ input{font-family:inherit}
 /* Refined mobile header and video-first hero */
 .hdr-top{position:relative;display:flex;align-items:center;justify-content:center;height:60px;border-bottom:1px solid var(--line)}
 .hdr-top .util{display:none}
-.logo{position:absolute;left:50%;transform:translateX(-50%);font-size:1.35rem;font-weight:700;line-height:1;white-space:nowrap;text-align:center}
+.logo{position:absolute;left:50%;transform:translateX(-50%);font-size:1.5rem;font-weight:700;line-height:1;white-space:nowrap;text-align:center}
 .hdr-actions{display:flex;align-items:center;gap:.65rem;position:absolute;top:50%;transform:translateY(-50%)}
 .hdr-actions--left{left:clamp(1rem,4vw,3rem)}
 .hdr-actions--right{right:clamp(1rem,4vw,3rem)}
@@ -839,13 +839,14 @@ input{font-family:inherit}
 .hero-cta-link:hover .arr{transform:translateX(-4px)}
 @media (max-width:1020px){
   .hero{min-height:calc(100svh - 60px)}
-  .hero-cta{bottom:clamp(5.5rem,12vh,7rem)}
+  .hero-cta{bottom:clamp(5rem,10vh,6rem)}
   .hdr-top{height:58px}
 }
 @media (max-width:480px){
   .hdr-actions--left{left:.75rem;gap:.35rem}
   .hdr-actions--right{right:.75rem}
-  .icon-button,.burger{width:2.15rem;height:2.15rem}
-  .icon-button svg{width:1.2rem;height:1.2rem}
+  .icon-button{width:2.35rem;height:2.35rem}
+  .burger{width:2.15rem;height:2.15rem}
+  .icon-button svg{width:1.3rem;height:1.3rem}
   .burger span{width:1.15rem}
 }
