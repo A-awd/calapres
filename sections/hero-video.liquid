@@ -1,19 +1,4 @@
-{%- comment -%}
-  Hero (.hero) ported 1:1 from the static prototype.
-  The video is a theme-editor setting; until one is picked it
-  falls back to the prototype's hero-video.mp4 shipped as a
-  theme asset (video settings cannot declare schema defaults).
-{%- endcomment -%}
 <section class="hero">
-  <div class="hero-txt">
-    <div class="hero-inner">
-      <p class="hero-eyebrow">{{ section.settings.eyebrow }}</p>
-      <h1>{{ section.settings.heading }}</h1>
-      <p>{{ section.settings.text }}</p>
-      <a class="btn-outline" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }} <span class="arr">←</span></a>
-    </div>
-    <div class="hero-progress"><i class="on"></i><i></i><i></i></div>
-  </div>
   <div class="hero-media">
     {%- if section.settings.video -%}
     {%- assign hv_video = section.settings.video -%}
@@ -32,9 +17,12 @@
     {%- endif -%}
     <video src="{{ 'hero-video.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata" poster="{{ hero_poster }}" aria-label="{{ section.settings.video_label | escape }}"></video>
     {%- endif -%}
+    <div class="hero-cta">
+      <a class="hero-cta-link" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        {{ section.settings.button_label | default: 'تسوقي الآن' }} <span class="arr" aria-hidden="true">←</span>
+      </a>
+    </div>
   </div>
-  <button class="hero-arrow prev" aria-label="السابق">›</button>
-  <button class="hero-arrow next" aria-label="التالي">‹</button>
 </section>
 
 {% schema %}
@@ -74,7 +62,7 @@
       "type": "text",
       "id": "button_label",
       "label": "نص الزر",
-      "default": "تسوّق الأطقم"
+      "default": "تسوقي الآن"
     },
     {
       "type": "url",

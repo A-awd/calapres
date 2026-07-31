@@ -24,7 +24,7 @@ window.toast=toast;
 document.addEventListener("click",function(e){
   var t=e.target;
   var mo=t.closest("#menuOpen");
-  if(mo)document.getElementById("mnav").classList.toggle("open");
+  if(mo){var nav=document.getElementById("mnav");if(nav){var open=nav.classList.toggle("open");mo.setAttribute("aria-expanded",open?"true":"false");}}
   if(t.closest(".mnav a"))document.getElementById("mnav").classList.remove("open");
 });
 document.addEventListener("keydown",function(e){
