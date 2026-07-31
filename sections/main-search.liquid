@@ -1,87 +1,48 @@
-<section class="page-mast wrap reveal">
-  <span class="eyebrow"><span data-ar>{{ section.settings.eyebrow_ar }}</span><span data-en>{{ section.settings.eyebrow_en }}</span></span>
-  <h1 class="display d-1"><span data-ar>{{ section.settings.heading_ar }}</span><span data-en>{{ section.settings.heading_en }}</span></h1>
-  <form class="search-form" action="/search" method="get" role="search">
-    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search' | t }}">
-    <button class="btn btn-primary" type="submit">{{ 'general.search' | t }}</button>
-  </form>
+{%- comment -%}
+  Search page — not part of the static prototype's 7 pages;
+  built with the same design language (.page-head + .prod-grid).
+{%- endcomment -%}
+<section class="page-head">
+  <div class="wrap">
+    <h1>البحث</h1>
+    {%- if search.performed -%}
+    {%- assign sr_count = search.results_count -%}
+    <p>نتائج البحث عن «{{ search.terms | escape }}» — {% render 'arabic-digits', value: sr_count %} نتيجة</p>
+    {%- endif -%}
+    <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="ابحث في المتجر" aria-label="البحث">
+      <button type="submit">ابحث</button>
+    </form>
+  </div>
 </section>
 
-{%- if search.performed -%}
-  <section class="section wrap">
-    {%- paginate search.results by section.settings.results_per_page -%}
-      {%- if search.results_count > 0 -%}
-        <div class="prod-grid search-grid">
-          {%- for item in search.results -%}
-            {%- if item.object_type == 'product' -%}
-              {% render 'product-card', product: item %}
-            {%- else -%}
-              <a class="search-card" href="{{ item.url }}">
-                <span class="eyebrow">{{ item.object_type }}</span>
-                <h2 class="display d-3">{{ item.title }}</h2>
-                {%- if item.content != blank -%}<p>{{ item.content | strip_html | truncatewords: 24 }}</p>{%- endif -%}
-              </a>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-        {%- if paginate.pages > 1 -%}
-          <nav class="pagination" role="navigation" aria-label="Pagination">
-            {%- if paginate.previous -%}<a class="btn btn-secondary" href="{{ paginate.previous.url }}"><span data-ar>السابق</span><span data-en>Previous</span></a>{%- endif -%}
-            <span class="pagination-current">{{ paginate.current_page }} / {{ paginate.pages }}</span>
-            {%- if paginate.next -%}<a class="btn btn-secondary" href="{{ paginate.next.url }}"><span data-ar>التالي</span><span data-en>Next</span></a>{%- endif -%}
-          </nav>
-        {%- endif -%}
-      {%- else -%}
-        <div class="empty-results show">
-          <p><span data-ar>لم نجد نتائج مطابقة. جرّب كلمة أخرى.</span><span data-en>No matching results. Try another word.</span></p>
-        </div>
+<section class="products">
+  <div class="wrap">
+    {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+    <div class="prod-grid">
+      {%- for sr_item in search.results -%}
+      {%- if sr_item.object_type == 'product' -%}
+      {% render 'product-card', card_product: sr_item, show_add: false %}
       {%- endif -%}
+      {%- else -%}
+      <p class="form-note">لا توجد نتائج مطابقة.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+    <div class="sec-head" style="margin-top:2rem">
+      {%- if paginate.previous -%}<a class="link-arrow" href="{{ paginate.previous.url }}">السابق</a>{%- endif -%}
+      {%- if paginate.next -%}<a class="link-arrow" href="{{ paginate.next.url }}">التالي</a>{%- endif -%}
+    </div>
+    {%- endif -%}
     {%- endpaginate -%}
-  </section>
-{%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "Search page",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow_ar",
-      "label": "Eyebrow Arabic",
-      "default": "بحث"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow_en",
-      "label": "Eyebrow English",
-      "default": "Search"
-    },
-    {
-      "type": "text",
-      "id": "heading_ar",
-      "label": "Heading Arabic",
-      "default": "ابحث عن رائحتك"
-    },
-    {
-      "type": "text",
-      "id": "heading_en",
-      "label": "Heading English",
-      "default": "Find your scent"
-    },
-    {
-      "type": "range",
-      "id": "results_per_page",
-      "label": "Results per page",
-      "min": 6,
-      "max": 48,
-      "step": 6,
-      "default": 24
-    }
-  ],
-  "presets": [
-    {
-      "name": "Search page"
-    }
-  ]
+  "name": "صفحة البحث",
+  "settings": []
 }
 {% endschema %}

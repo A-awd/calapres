@@ -1,81 +1,67 @@
-<section class="section wrap cart-page-wrap">
-  <div class="cart-page-inner">
-    <h1 class="display d-2"><span data-ar>سلّة التسوق</span><span data-en>Shopping Cart</span></h1>
-    <p class="lede cart-page-lede"><span data-ar>{{ section.settings.lede_ar }}</span><span data-en>{{ section.settings.lede_en }}</span></p>
-
-    {%- if cart.item_count > 0 -%}
-      <div class="cart-page-grid">
-        <div class="cart-page-items">
-          {%- for item in cart.items -%}
-            <div class="cart-page-item">
-              {%- if item.image -%}
-                <img src="{{ item.image | img_url: '200x250', crop: 'center' }}" alt="{{ item.title | escape }}" width="200" height="250" loading="lazy" />
-              {%- endif -%}
-              <div class="cpi-info">
-                <div class="cpi-title">{{ item.product.title }}</div>
-                {%- assign cart_variant_title_normalized = item.variant.title | downcase | strip -%}
-                {%- unless cart_variant_title_normalized == 'default title' or cart_variant_title_normalized == 'default' -%}
-                  <div class="cpi-variant">{{ item.variant.title }}</div>
-                {%- endunless -%}
-                <div class="cart-item-qty">
-                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="-1">−</button>
-                  <span data-local-number="{{ item.quantity }}">{{ item.quantity }}</span>
-                  <button type="button" class="qty-btn" data-change="{{ item.key }}" data-delta="1">+</button>
-                </div>
-                <button class="link cpi-remove" data-change="{{ item.key }}" data-qty="0">
-                  <span data-ar>حذف</span><span data-en>Remove</span>
-                </button>
-              </div>
-              <div class="cpi-price" data-money-cents="{{ item.final_line_price }}">{{ item.final_line_price | money }}</div>
-            </div>
-          {%- endfor -%}
-        </div>
-
-        <div class="cart-page-summary">
-          <div class="cps-row">
-            <span><span data-ar>المجموع الفرعي</span><span data-en>Subtotal</span></span>
-            <span data-money-cents="{{ cart.total_price }}">{{ cart.total_price | money }}</span>
-          </div>
-          <p class="cps-note"><span data-ar>الشحن يُحسب عند الدفع</span><span data-en>Shipping calculated at checkout</span></p>
-          <a class="btn btn-primary btn-full" href="/checkout">
-            <span data-ar>إتمام الشراء</span><span data-en>Proceed to Checkout</span>
-          </a>
-          <a class="btn btn-secondary btn-full" href="/collections" style="margin-top:var(--s2)">
-            <span data-ar>متابعة التسوق</span><span data-en>Continue Shopping</span>
-          </a>
-        </div>
-      </div>
-
+{%- comment -%}
+  Cart page — a server-rendered safety net for the AJAX cart
+  drawer (not part of the static prototype's 7 pages), styled
+  with the same design language. Quantities update through the
+  native /cart form; the engraving line item property
+  "نص الحفر" is shown per line.
+{%- endcomment -%}
+<section class="cart-page">
+  <div class="wrap">
+    <h1>سلّة التسوّق</h1>
+    {%- if cart.item_count == 0 -%}
+    <div class="d-empty">
+      <p>سلّتك فارغة.</p>
+      <a class="link-arrow" href="{{ routes.all_products_collection_url }}">تصفّح المتجر <span>←</span></a>
+    </div>
     {%- else -%}
-      <div class="cart-empty" style="padding:var(--s7) 0;text-align:center">
-        <p style="font-size:1.125rem;margin-bottom:var(--s4)"><span data-ar>سلّتك فارغة</span><span data-en>Your cart is empty</span></p>
-        <a class="btn btn-primary" href="/collections"><span data-ar>اكتشف المجموعات</span><span data-en>Discover Collections</span></a>
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      {%- for item in cart.items -%}
+      {%- liquid
+        assign ci_parts = item.product.title | split: '—'
+        assign ci_name = ci_parts | first | strip
+        assign ci_color = ''
+        if item.variant.title != 'Default Title'
+          assign ci_color = item.variant.title
+        elsif ci_parts.size > 1
+          assign ci_color = ci_parts | last | strip
+        endif
+      -%}
+      <div class="d-item">
+        {%- if item.image -%}
+        <img src="{{ item.image | image_url: width: 144 }}" alt="{{ item.title | escape }}" width="144" height="144">
+        {%- endif -%}
+        <div class="di-info">
+          <h4><a href="{{ item.url }}">{{ ci_name }}</a></h4>
+          {%- if ci_color != blank -%}
+          <div class="di-color">اللون: {{ ci_color }}</div>
+          {%- endif -%}
+          {%- assign ci_eng = item.properties['نص الحفر'] -%}
+          {%- if ci_eng != blank -%}
+          <div class="di-eng">الحفر: «{{ ci_eng }}»</div>
+          {%- endif -%}
+          <div class="d-row">
+            <span class="qty">
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="الكمية">
+            </span>
+            <span class="di-price">{% render 'price-sar', cents: item.final_line_price %}</span>
+          </div>
+          <a class="di-remove" href="{{ item.url_to_remove }}">إزالة</a>
+        </div>
       </div>
+      {%- endfor -%}
+      <div class="cart-total"><span>الإجمالي</span><b>{% render 'price-sar', cents: cart.total_price %}</b></div>
+      <div class="cart-actions">
+        <button class="btn-dark" type="submit" name="update">تحديث السلّة</button>
+        <button class="btn-dark" type="submit" name="checkout">إتمام الطلب</button>
+      </div>
+    </form>
     {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Cart",
-  "settings": [
-    {
-      "type": "text",
-      "id": "lede_ar",
-      "label": "Intro Arabic",
-      "default": "راجِع مختاراتك قبل إتمام الطلب."
-    },
-    {
-      "type": "text",
-      "id": "lede_en",
-      "label": "Intro English",
-      "default": "Review your selections before checkout."
-    }
-  ],
-  "presets": [
-    {
-      "name": "Cart"
-    }
-  ]
+  "name": "صفحة السلّة",
+  "settings": []
 }
 {% endschema %}

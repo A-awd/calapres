@@ -1,50 +1,72 @@
-<header class="site-header" data-header-solid role="banner">
-  <div class="wrap bar">
-    <button class="menu-btn" data-drawer-open aria-label="القائمة">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
-    <a class="brand" href="/">
-      {% if settings.logo_image %}
-        <img src="{{ settings.logo_image | img_url: '240x' }}" alt="{{ shop.name }}" width="240" height="40" style="height:40px;width:auto;" />
-      {% else %}
-        <span data-ar>كالابريز</span><span data-en>Calapres</span>
-      {% endif %}
-    </a>
-    <nav class="nav" aria-label="رئيسية">
-      <a href="/collections"><span data-ar>المجموعات</span><span data-en>Collections</span></a>
-      <a href="/#category-ocean"><span data-ar>دليل العطور</span><span data-en>Scent Guide</span></a>
-      <a href="/collections/fragrance-families"><span data-ar>العائلات العطرية</span><span data-en>Scent Families</span></a>
-      <a href="/collections/oud-bakhour"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a>
-      <a href="/pages/about"><span data-ar>الميزون</span><span data-en>The Maison</span></a>
-    </nav>
-    <div class="icons">
-      <a class="icon-btn hide-sm" href="/search" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></a>
-      {% if shop.customer_accounts_enabled %}
-        <a href="/account" class="icon-btn hide-sm" aria-label="الحساب"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></a>
-      {% endif %}
-      <button class="icon-btn" type="button" aria-label="المفضلة" data-wishlist-open style="position:relative;">
-        <svg viewBox="0 0 24 24"><path d="M12 20S4 14.5 4 8.8C4 6 6 4.2 8.3 4.2c1.7 0 3 1 3.7 2.2.7-1.2 2-2.2 3.7-2.2C18 4.2 20 6 20 8.8 20 14.5 12 20 12 20Z"/></svg>
-        <span data-wishlist-count style="display:none;position:absolute;top:-4px;inset-inline-end:-4px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;align-items:center;justify-content:center;line-height:1;font-family:var(--arabic);"></span>
-      </button>
-      <button class="icon-btn" data-cart-open aria-label="الحقيبة" style="position:relative;">
-        <svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-        <span data-cart-count style="display:none;position:absolute;top:-4px;inset-inline-end:-4px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;line-height:1;font-family:var(--arabic);"></span>
-      </button>
+{%- comment -%}
+  Header (.hdr) ported 1:1 from the static prototype.
+  Nav links come from a Shopify menu (default: main-menu);
+  the account link uses the real account route and the cart
+  badge is server-rendered then kept live by calabriz-cart.js.
+{%- endcomment -%}
+{%- assign menu = section.settings.menu -%}
+{%- assign support_url = section.settings.support_link | default: pages['contact'].url | default: routes.root_url -%}
+<header class="hdr">
+  <div class="wrap hdr-top">
+    <div class="util">
+      <a href="{{ support_url }}">{{ section.settings.support_label }}</a>
+    </div>
+    <a class="logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}</a>
+    <div class="meta">
+      <a href="{{ routes.account_url }}">حسابي</a>
+      <button class="cart-link" id="cartOpen">سلّتي <span class="cart-count" id="cartCount">{% render 'arabic-digits', value: cart.item_count %}</span></button>
+      <button class="burger" id="menuOpen" aria-label="القائمة"><span></span><span></span><span></span></button>
     </div>
   </div>
+  <div class="wrap hdr-nav-row">
+    <nav class="hdr-nav">
+      {%- if menu.links.size > 0 -%}
+      {%- for link in menu.links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+      {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}">المتجر</a>
+      {%- endif -%}
+    </nav>
+  </div>
+  <nav class="mnav" id="mnav">
+    {%- if menu.links.size > 0 -%}
+    {%- for link in menu.links -%}
+    <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+    {%- else -%}
+    <a href="{{ routes.all_products_collection_url }}">المتجر</a>
+    {%- endif -%}
+  </nav>
 </header>
 
 {% schema %}
 {
-  "name": "Header",
+  "name": "الهيدر",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "transparent_on_hero",
-      "label": "Reserved: keep header solid",
-      "default": false
+      "type": "text",
+      "id": "logo_text",
+      "label": "نص الشعار",
+      "default": "كالابريز"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "القائمة الرئيسية",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "support_label",
+      "label": "نص رابط خدمة العملاء",
+      "default": "خدمة العملاء"
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "رابط خدمة العملاء"
     }
-  ],
-  "presets": [{ "name": "Header" }]
+  ]
 }
 {% endschema %}

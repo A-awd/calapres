@@ -2,8 +2,17 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "heading": "المتجر",
+        "subtext": "ثلاثة ألوان — طقم واحد متكامل"
+      }
+    },
+    "soon": {
+      "type": "coming-soon",
+      "settings": {
+        "product": "ستاند-عقد-قران-فاخر-للآيباد-قابل-للتخصيص"
+      }
     }
   },
-  "order": ["main"]
+  "order": ["main", "soon"]
 }
