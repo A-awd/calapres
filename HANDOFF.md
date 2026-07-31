@@ -54,5 +54,5 @@ project and acknowledging irreversibility.
 
 ## Theme delivery — 2026-07-31
 
-- `shopify-theme` @ `2e64a34` carries the Calabriz Liquid theme converted from the approved static build; all schema JSON is valid and `shopify theme check` passes with zero errors.
+- `shopify-theme` @ `65a5388` carries the Calabriz Liquid theme converted from the approved static build; all schema JSON is valid and `shopify theme check` passes with zero errors.
 - Next: publish the four draft products (and add the iPad-stand photos) so the storefront renders live data, preview the staging theme, then publish it manually when approved.

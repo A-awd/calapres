@@ -87,5 +87,5 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 
 ## Theme delivery — 2026-07-31
 
-- The Kimi-approved Calabriz static design (7 pages) is fully ported to a Shopify Liquid theme on `shopify-theme` (merge `2e64a34`): dynamic products/variants, AJAX cart, engraving line item property «نص الحفر», and an editor-managed hero video.
+- The Kimi-approved Calabriz static design (7 pages) is fully ported to a Shopify Liquid theme on `shopify-theme` (merge `65a5388`): dynamic products/variants, AJAX cart, engraving line item property «نص الحفر», and an editor-managed hero video.
 - CI deploys `shopify-theme` only to the unpublished staging theme; the live theme stays untouched until the owner reviews the staging preview and publishes manually from Shopify Admin.
