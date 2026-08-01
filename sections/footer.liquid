@@ -9,6 +9,10 @@
 {%- assign about_url = pages['about'].url | default: routes.root_url -%}
 {%- assign contact_url = pages['contact'].url | default: routes.root_url -%}
 {%- assign faq_url = pages['faq'].url | default: routes.root_url -%}
+{%- assign refund_policy_url = shop.refund_policy.url | default: faq_url -%}
+{%- assign shipping_policy_url = shop.shipping_policy.url | default: faq_url -%}
+{%- assign privacy_policy_url = shop.privacy_policy.url | default: faq_url -%}
+{%- assign terms_policy_url = shop.terms_of_service.url | default: faq_url -%}
 {%- assign oud_collection = collections['oud-bakhour'] -%}
 <footer class="ftr" id="signup">
   <div class="wrap">
@@ -47,7 +51,10 @@
           {%- endfor -%}
           {%- else -%}
           <li><a href="{{ faq_url }}">الأسئلة الشائعة</a></li>
-          <li><a href="{{ faq_url }}">السياسات</a></li>
+          <li><a href="{{ refund_policy_url }}">سياسة الاسترجاع</a></li>
+          <li><a href="{{ shipping_policy_url }}">سياسة الشحن</a></li>
+          <li><a href="{{ privacy_policy_url }}">سياسة الخصوصية</a></li>
+          <li><a href="{{ terms_policy_url }}">شروط الخدمة</a></li>
           {%- endif -%}
         </ul>
       </div>
@@ -121,7 +128,8 @@
         <a href="{{ about_url }}">من نحن</a>
         <a href="{{ contact_url }}">تواصل معنا</a>
         <a href="{{ faq_url }}">الأسئلة الشائعة</a>
-        <a href="{{ faq_url }}">السياسات</a>
+        <a href="{{ privacy_policy_url }}">سياسة الخصوصية</a>
+        <a href="{{ terms_policy_url }}">شروط الخدمة</a>
       </nav>
     </div>
   </div>

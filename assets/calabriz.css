@@ -421,7 +421,7 @@ input{font-family:inherit}
 
 .pd-media{border:1px solid var(--line);background:var(--ground);position:relative;overflow:hidden}
 
-.pd-media img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.pd-media img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
 
 .pd-media .tag{position:absolute;top:.9rem;right:.9rem;background:var(--ground);border:1px solid var(--line);font-size:.72rem;padding:.25rem .8rem;color:var(--gold);font-weight:700}
 

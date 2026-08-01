@@ -31,7 +31,7 @@
     <div class="pd-media">
       {%- if mp_save > 0 %}<span class="tag">وفّر {% render 'price-sar', cents: mp_save %}</span>{% endif -%}
       {%- if mp_image -%}
-      <img id="pdImg" src="{{ mp_image | image_url: width: 1200 }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
+      <img id="pdImg" src="{{ mp_image | image_url: width: 1200, height: 1200, crop: 'bottom' }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
       {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}
       {%- endif -%}
