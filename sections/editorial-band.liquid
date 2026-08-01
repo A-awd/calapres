@@ -15,7 +15,7 @@
     {%- if section.settings.image -%}
     <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" loading="lazy" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
     {%- else -%}
-    <img src="{{ 'product-beige.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="6690" height="6690">
+    <img src="{{ 'product-beige.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="1600">
     {%- endif -%}
   </div>
 </section>
