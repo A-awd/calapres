@@ -34,6 +34,36 @@ document.addEventListener("keydown",function(e){
 
 
 /* ============================================================
+   Mobile sticky add-to-cart (appears only after the primary
+   product button has scrolled above the viewport)
+   ============================================================ */
+(function(){
+"use strict";
+document.addEventListener("DOMContentLoaded",function(){
+  var bar=document.querySelector("[data-sticky-atc]");
+  var submit=document.querySelector("[data-sticky-atc-submit]");
+  var primary=document.getElementById("pdAdd");
+  if(!bar||!submit||!primary)return;
+
+  function sync(){
+    var mobile=window.matchMedia("(max-width: 860px)").matches;
+    var primaryRect=primary.getBoundingClientRect();
+    var footer=document.querySelector(".ftr");
+    var footerNear=footer&&footer.getBoundingClientRect().top<window.innerHeight*.82;
+    var show=mobile&&primaryRect.bottom<0&&!footerNear&&!primary.disabled;
+    bar.classList.toggle("is-visible",show);
+    bar.setAttribute("aria-hidden",show?"false":"true");
+  }
+
+  submit.addEventListener("click",function(){primary.click()});
+  window.addEventListener("scroll",sync,{passive:true});
+  window.addEventListener("resize",sync);
+  sync();
+});
+})();
+
+
+/* ============================================================
    Form feedback (guarded — real Shopify forms now submit
    natively; toasts fire from the redirect/result state)
    ============================================================ */

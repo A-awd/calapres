@@ -63,6 +63,16 @@
         </button>
       {% endform %}
 
+      <div class="pd-sticky-atc" data-sticky-atc aria-hidden="true">
+        <span class="pd-sticky-atc__summary">
+          <span>{{ product.title }}</span>
+          <b>{% render 'price-sar', cents: mp_price %}</b>
+        </span>
+        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless product.available %} disabled{% endunless %}>
+          {%- if product.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
+        </button>
+      </div>
+
       {%- if section.blocks.size > 0 -%}
       <div class="acc" id="acc">
         {%- for block in section.blocks -%}
