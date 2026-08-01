@@ -48,6 +48,9 @@
   <aside class="side-card">
     <h2>{{ section.settings.side_heading }}</h2>
     <ul>
+      {%- if section.settings.contact_email != blank -%}
+      <li><a class="link-arrow" href="mailto:{{ section.settings.contact_email | escape }}">{{ section.settings.contact_email | escape }}</a></li>
+      {%- endif -%}
       <li><a class="link-arrow" href="{{ pages['faq'].url | default: routes.root_url }}">الأسئلة الشائعة <span>←</span></a></li>
       <li><a class="link-arrow" href="{{ routes.all_products_collection_url }}">المتجر <span>←</span></a></li>
     </ul>
@@ -76,6 +79,12 @@
       "id": "side_heading",
       "label": "عنوان البطاقة الجانبية",
       "default": "روابط سريعة"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "بريد التواصل",
+      "default": "info@calapres.com"
     },
     {
       "type": "text",
