@@ -48,9 +48,10 @@ document.addEventListener("DOMContentLoaded",function(){
   function sync(){
     var mobile=window.matchMedia("(max-width: 860px)").matches;
     var primaryRect=primary.getBoundingClientRect();
-    var footer=document.querySelector(".ftr");
-    var footerNear=footer&&footer.getBoundingClientRect().top<window.innerHeight*.82;
-    var show=mobile&&primaryRect.bottom<0&&!footerNear&&!primary.disabled;
+    /* Keep the purchase action available through the footer. On short mobile
+       product pages the footer enters the viewport before the primary button
+       has fully scrolled away, which otherwise prevents the bar appearing. */
+    var show=mobile&&primaryRect.bottom<0&&!primary.disabled;
     bar.classList.toggle("is-visible",show);
     bar.setAttribute("aria-hidden",show?"false":"true");
   }
