@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%- assign brand_label = settings.brand_name | default: shop.name -%}
 <title>
-  {%- if template == 'index' -%}{{ settings.brand_name | default: shop.name }} — مباخر فاخرة
-  {%- elsif page_title == blank -%}{{ settings.brand_name | default: shop.name }}
-  {%- else -%}{{ page_title }} — {{ settings.brand_name | default: shop.name }}{%- endif -%}
+  {%- if template == 'index' -%}{{ brand_label }} — مباخر فاخرة
+  {%- elsif page_title == blank -%}{{ brand_label }}
+  {%- elsif page_title contains brand_label -%}{{ page_title }}
+  {%- else -%}{{ page_title }} — {{ brand_label }}{%- endif -%}
 </title>
 {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
 <link rel="canonical" href="{{ canonical_url }}">
