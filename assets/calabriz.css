@@ -458,6 +458,9 @@ input{font-family:inherit}
 .pd-eng input:focus{border-color:var(--ink)}
 
 .pd-sticky-atc{display:none}
+.pd-reviews{padding:0 0 clamp(3rem,8vw,6rem)}
+.pd-reviews__title{margin:0 0 1.25rem;padding-bottom:.85rem;border-bottom:1px solid var(--line);font-size:clamp(1.35rem,3vw,1.8rem);font-weight:500}
+.pd-reviews .jdgm-widget{font-family:inherit;color:var(--ink)}
 
 /* accordion */
 .acc{margin-top:2.2rem;border-top:1px solid var(--line)}
