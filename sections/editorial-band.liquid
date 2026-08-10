@@ -1,1 +1,90 @@
-PLACEHOLDER
+{%- comment -%}
+  Editorial band (.edit-band) ported 1:1 from the static
+  prototype. Reused on the homepage and the about page — each
+  template instance overrides the text settings.
+{%- endcomment -%}
+{%- assign is_center = false -%}
+{%- if section.settings.layout == 'center' -%}{%- assign is_center = true -%}{%- endif -%}
+<section class="edit-band{% if is_center %} edit-band--center{% endif %}">
+  <div class="txt">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+    {%- if section.settings.link_label != blank -%}
+    <a class="link-arrow" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.link_label }} <span>←</span></a>
+    {%- endif -%}
+  </div>
+  {%- unless is_center -%}
+  <div class="media">
+    {%- if section.settings.image -%}
+    <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" loading="lazy" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
+    {%- else -%}
+    <img src="{{ section.settings.fallback_asset | default: 'product-beige.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="1600">
+    {%- endif -%}
+  </div>
+  {%- endunless -%}
+</section>
+
+{% schema %}
+{
+  "name": "شريط تحريري",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "التخطيط",
+      "options": [
+        { "value": "split", "label": "نص + صورة" },
+        { "value": "center", "label": "نص متوسّط (بدون صورة)" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "السطر العلوي (اختياري)"
+    },
+    {
+      "type": "text",
+      "id": "fallback_asset",
+      "label": "اسم ملف الصورة الاحتياطية من أصول القالب",
+      "default": "product-beige.jpg",
+      "info": "تُستخدم فقط عند عدم اختيار صورة."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان",
+      "default": "حفرٌ شخصي على كلّ طقم"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "النص",
+      "default": "إمكانية حفر اسم العروسين أو التاريخ على الطقم."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "نص الرابط",
+      "default": "اكتشف الأطقم"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "الرابط"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "الصورة",
+      "info": "عند تركها فارغة تُعرض صورة المنتج الافتراضية المضمّنة في القالب."
+    }
+  ],
+  "presets": [
+    {
+      "name": "شريط تحريري"
+    }
+  ]
+}
+{% endschema %}

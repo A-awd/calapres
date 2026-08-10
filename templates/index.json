@@ -1,1 +1,53 @@
-PLACEHOLDER
+{
+  "sections": {
+    "hero": {
+      "type": "hero-video",
+      "settings": {
+        "mode": "seal",
+        "eyebrow": "مبخرة كالابريز الفاخرة",
+        "heading": "طقم المبخرة الفاخر للعروس",
+        "text": "ستاند، ومبخر أنيق، وعلبة عود — طقم واحد متكامل.",
+        "button_label": "تسوقوا الآن"
+      }
+    },
+    "edit-band": {
+      "type": "editorial-band",
+      "settings": {}
+    },
+    "band-collection": {
+      "type": "editorial-band",
+      "settings": {
+        "eyebrow": "المجموعة الرئيسية",
+        "heading": "العود والمباخر",
+        "text": "أطقم مباخر متكاملة بثلاثة ألوان — الأبيض والبيج والرمادي — مع إمكانية حفر الاسم أو الشعار على الطقم.",
+        "link_label": "تسوّق المجموعة",
+        "link": "/collections/oud-bakhour",
+        "fallback_asset": "product-white.jpg"
+      }
+    },
+    "band-story": {
+      "type": "editorial-band",
+      "settings": {
+        "layout": "center",
+        "eyebrow": "قصتنا",
+        "heading": "قصة كالابريز",
+        "text": "كالابريز بيتُ مباخر فاخرة. نصنع أطقم مباخر متكاملة — ستاند، ومبخر أنيق، وعلبة عود — بثلاثة ألوان، مع إمكانية حفر الاسم أو الشعار على الطقم.",
+        "link_label": "اقرأ قصتنا",
+        "link": "/pages/about"
+      }
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": {
+        "collection": "oud-bakhour"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "edit-band",
+    "band-collection",
+    "band-story",
+    "products"
+  ]
+}
