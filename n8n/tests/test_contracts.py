@@ -141,6 +141,26 @@ def validate(instance, schema, schemas, root_schema=None, path="$", errors=None)
         if "maximum" in schema and instance > schema["maximum"]:
             errors.append(f"{path}: value is above maximum")
 
+    if isinstance(instance, list):
+        if "minItems" in schema and len(instance) < schema["minItems"]:
+            errors.append(f"{path}: array is shorter than minItems")
+        if "maxItems" in schema and len(instance) > schema["maxItems"]:
+            errors.append(f"{path}: array is longer than maxItems")
+        if schema.get("uniqueItems") is True:
+            encoded = [json.dumps(item, sort_keys=True) for item in instance]
+            if len(encoded) != len(set(encoded)):
+                errors.append(f"{path}: array items are not unique")
+        if "items" in schema:
+            for index, value in enumerate(instance):
+                validate(
+                    value,
+                    schema["items"],
+                    schemas,
+                    root_schema,
+                    f"{path}/{index}",
+                    errors,
+                )
+
     if "oneOf" in schema:
         matches = 0
         for branch in schema["oneOf"]:
@@ -225,6 +245,11 @@ class ContractTests(unittest.TestCase):
             self.schemas["core-input"]["properties"]["event"]["$ref"],
             "event-envelope.schema.json",
         )
+        self.assertEqual(
+            self.schemas["core-input"]["properties"]["candidate"]["$ref"],
+            "llm-candidate.schema.json",
+        )
+        self.assertNotIn("provider", self.schemas["llm-candidate"]["properties"])
         future = read_json(
             FIXTURE_DIR / "valid" / "event-envelope--generic-brand.json"
         )
@@ -294,13 +319,36 @@ class ContractTests(unittest.TestCase):
             {
                 "optix_customer_service_core_v1",
                 "calapres_customer_service_edge_v1",
+                "calapres_shopify_order_index_v1",
             },
         )
-        for row in workflows.values():
+        for name in {
+            "optix_customer_service_core_v1",
+            "calapres_customer_service_edge_v1",
+        }:
+            row = workflows[name]
             self.assertEqual(row["state"], "inactive")
             self.assertIs(row["published"], False)
             self.assertIs(row["public_webhook"], False)
             self.assertIs(row["customer_egress"], False)
+        index = workflows["calapres_shopify_order_index_v1"]
+        self.assertEqual(index["id"], "cLHCuJ21r4RAuDTE")
+        self.assertEqual(index["state"], "inactive")
+        self.assertIs(index["published"], False)
+        self.assertIs(index["public_webhook"], False)
+        self.assertIs(index["customer_egress"], False)
+        self.assertIs(index["shopify_write"], False)
+        self.assertIs(index["credentials_bound"], False)
+        self.assertTrue((REPO_ROOT / index["source_path"]).is_file())
+        self.assertTrue((REPO_ROOT / index["input_schema"]).is_file())
+        self.assertTrue((REPO_ROOT / index["table_row_schema"]).is_file())
+        edge_extension = workflows["calapres_customer_service_edge_v1"]["source_extensions"]
+        self.assertEqual(edge_extension["delayed_observation_stage"], "merged_into_edge")
+        self.assertEqual(edge_extension["live_deployment"], "imported_inactive")
+        self.assertEqual(edge_extension["node_count"], 23)
+        self.assertIs(edge_extension["wait_state_contains_customer_content"], False)
+        self.assertTrue((REPO_ROOT / edge_extension["wait_carrier_schema"]).is_file())
+        self.assertTrue((REPO_ROOT / edge_extension["post_delay_recheck_schema"]).is_file())
         tables = {row["logical_name"]: row for row in manifest["data_tables"]}
         self.assertEqual(
             set(tables),
@@ -319,7 +367,16 @@ class ContractTests(unittest.TestCase):
             self.assertEqual(row["state"], "empty")
             self.assertTrue((REPO_ROOT / row["schema"]).is_file())
         self.assertIs(manifest["safety"]["customer_egress_enabled"], False)
+        self.assertIs(manifest["safety"]["manual_execution_retention_enabled"], False)
+        self.assertIs(manifest["safety"]["wait_state_contains_customer_content"], False)
+        self.assertIs(manifest["safety"]["shopify_index_writes_enabled"], False)
         self.assertIs(manifest["safety"]["paused_catalog_table_reused"], False)
+        configs = manifest["configuration_manifests"]
+        self.assertEqual(configs["response_style"]["status"], "approved")
+        self.assertEqual(configs["model_policy"]["status"], "proposed")
+        self.assertIs(configs["model_policy"]["active"], False)
+        self.assertTrue((REPO_ROOT / configs["response_style"]["path"]).is_file())
+        self.assertTrue((REPO_ROOT / configs["model_policy"]["path"]).is_file())
 
     def test_current_knowledge_is_versioned_and_source_backed(self):
         manifest = read_json(BRAND_DIR / "knowledge" / "manifest.json")
@@ -353,6 +410,41 @@ class ContractTests(unittest.TestCase):
         ]
         self.assertTrue(legal_entries)
         self.assertTrue(all(entry["authority"] == "mandatory_stop" for entry in legal_entries))
+        renderable_entries = [
+            entry for entry in knowledge["entries"] if "customer_response_ar" in entry
+        ]
+        self.assertTrue(renderable_entries)
+        self.assertTrue(
+            all(entry["authority"] == "draft_only" for entry in renderable_entries)
+        )
+        self.assertTrue(
+            all(entry["customer_response_ar"].strip() for entry in renderable_entries)
+        )
+        self.assertFalse(
+            any(
+                "customer_response_ar" in entry
+                for entry in knowledge["entries"]
+                if entry["authority"] in {"owner_required", "mandatory_stop"}
+            )
+        )
+        shipping_threshold = next(
+            entry
+            for entry in knowledge["entries"]
+            if entry["knowledge_id"] == "shipping.threshold"
+        )
+        core_fixture = read_json(
+            FIXTURE_DIR / "valid" / "core-input--observation.json"
+        )
+        self.assertEqual(
+            core_fixture["context"]["knowledge_facts"][0]["response_text"],
+            shipping_threshold["customer_response_ar"],
+        )
+
+        candidate = read_json(
+            FIXTURE_DIR / "valid" / "llm-candidate--shipping-policy.json"
+        )
+        known_fact_ids = {entry["knowledge_id"] for entry in knowledge["entries"]}
+        self.assertTrue(set(candidate["knowledge_fact_ids"]).issubset(known_fact_ids))
 
     def test_workflow_source_has_no_public_or_customer_egress_nodes(self):
         workflow_dir = REPO_ROOT / "n8n" / "workflows"
@@ -364,6 +456,7 @@ class ContractTests(unittest.TestCase):
             set(sources),
             {
                 "calapres-customer-service-edge-v1.ts",
+                "calapres-shopify-order-index-v1.ts",
                 "optix-customer-service-core-v1.ts",
             },
         )
@@ -376,6 +469,7 @@ class ContractTests(unittest.TestCase):
             "n8n-nodes-base.gmail",
             "n8n-nodes-base.whatsApp",
             "n8n-nodes-base.facebookGraphApi",
+            "n8n-nodes-base.dataTable",
             "@n8n/n8n-nodes-langchain.agent",
         }
         for filename, source in sources.items():
@@ -387,6 +481,61 @@ class ContractTests(unittest.TestCase):
             "n8n-nodes-base.executeWorkflowTrigger",
             sources["optix-customer-service-core-v1.ts"],
         )
+        edge = sources["calapres-customer-service-edge-v1.ts"]
+        self.assertIn("type: 'n8n-nodes-base.wait'", edge)
+        self.assertIn("Build Identifiers-only Post-Response Wait State", edge)
+        self.assertIn("Chatwoot Live Re-read Slot - Fail Closed No Credential", edge)
+        self.assertNotIn("calapres-delayed-observation-worker", "\n".join(sources))
+        index = sources["calapres-shopify-order-index-v1.ts"]
+        self.assertIn("Private HMAC-only Index Command", index)
+        self.assertIn("write_executed: false", index)
+        self.assertIn("shopify_write_allowed: false", index)
+
+    def test_wait_carrier_is_identifiers_only_and_recheck_is_fail_closed(self):
+        carrier = self.schemas["delayed-observation-state"]
+        properties = set(carrier["properties"])
+        self.assertFalse(
+            properties
+            & {
+                "content",
+                "message_body",
+                "sender_ref",
+                "candidate",
+                "draft_text",
+                "phone",
+                "email",
+                "address",
+            }
+        )
+        self.assertEqual(carrier["properties"]["customer_egress_allowed"]["const"], False)
+        recheck = read_json(
+            FIXTURE_DIR / "valid" / "observation-recheck--clear.json"
+        )
+        self.assert_valid("observation-recheck", recheck)
+        self.assertIs(recheck["source_verified"], True)
+        self.assertIs(recheck["eligible_for_observation"], True)
+
+    def test_order_index_contract_is_hmac_only_and_supports_guest_orders(self):
+        command = self.schemas["order-index-command"]
+        record = self.schemas["order-index-record"]
+        self.assertEqual(
+            record["properties"]["buyer_phone_fingerprint"]["$ref"],
+            "#/$defs/optional_fingerprint",
+        )
+        self.assertEqual(
+            record["$defs"]["optional_fingerprint"]["pattern"],
+            "^[a-f0-9]{64}$",
+        )
+        self.assertNotIn("phone", command["properties"])
+        self.assertNotIn("email", command["properties"])
+        self.assertNotIn("order_payload", command["properties"])
+        guest = read_json(
+            FIXTURE_DIR / "valid" / "order-index-record--guest-active.json"
+        )
+        self.assert_valid("order-index-record", guest)
+        self.assertIsNone(guest["shopify_customer_gid"])
+        self.assertIsNone(guest["buyer_phone_fingerprint"])
+        self.assertRegex(guest["recipient_phone_fingerprint"], r"^[a-f0-9]{64}$")
 
     def test_valid_persisted_fixtures_have_no_direct_customer_fields(self):
         prohibited = {

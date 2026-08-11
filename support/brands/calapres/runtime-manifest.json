@@ -1,11 +1,22 @@
 {
   "schema_version": "1.0",
   "brand_id": "calapres",
-  "captured_at": "2026-08-11T00:00:00+03:00",
+  "captured_at": "2026-08-11T18:10:30+03:00",
   "n8n_project": {
     "name": "Calapres Customer Service",
     "id": "0kVami0vGGBbT7Cy",
     "isolation_status": "calapres_scoped"
+  },
+  "configuration_manifests": {
+    "response_style": {
+      "path": "support/brands/calapres/response-style/manifest.json",
+      "status": "approved"
+    },
+    "model_policy": {
+      "path": "support/brands/calapres/model-policy/manifest.json",
+      "status": "proposed",
+      "active": false
+    }
   },
   "workflows": [
     {
@@ -30,9 +41,18 @@
       "published": false,
       "public_webhook": false,
       "customer_egress": false,
+      "source_extensions": {
+        "delayed_observation_stage": "merged_into_edge",
+        "wait_carrier_schema": "n8n/schemas/delayed-observation-state.schema.json",
+        "post_delay_recheck_schema": "n8n/schemas/observation-recheck.schema.json",
+        "live_deployment": "imported_inactive",
+        "node_count": 23,
+        "wait_state_contains_customer_content": false
+      },
       "manual_test_execution_ids": {
         "happy_path": 40577,
         "post_risk_correction_happy_path": 40605,
+        "post_delay_extension_happy_path": 40625,
         "instagram": 40579,
         "tiktok": 40581,
         "email": 40583,
@@ -46,6 +66,24 @@
           40591,
           40592
         ]
+      }
+    },
+    {
+      "logical_name": "calapres_shopify_order_index_v1",
+      "id": "cLHCuJ21r4RAuDTE",
+      "state": "inactive",
+      "published": false,
+      "public_webhook": false,
+      "customer_egress": false,
+      "shopify_write": false,
+      "credentials_bound": false,
+      "node_count": 7,
+      "source_path": "n8n/workflows/calapres-shopify-order-index-v1.ts",
+      "input_schema": "n8n/schemas/order-index-command.schema.json",
+      "table_row_schema": "n8n/schemas/order-index-table-row.schema.json",
+      "synthetic_validation": {
+        "embedded_code_regression_caught_execution_id": 40615,
+        "post_fix_success_execution_id": 40619
       }
     }
   ],
@@ -71,7 +109,7 @@
     {
       "logical_name": "order_index",
       "id": "cMp5lpr89DlUL6eT",
-      "schema": "n8n/schemas/order-index-record.schema.json",
+      "schema": "n8n/schemas/order-index-table-row.schema.json",
       "state": "empty"
     },
     {
@@ -102,8 +140,11 @@
   "safety": {
     "customer_egress_enabled": false,
     "execution_payload_retention": "none",
-    "manual_execution_data_saved": false,
+    "manual_execution_retention_enabled": false,
+    "synthetic_fixture_executions_retained": true,
     "tables_contain_customer_data": false,
+    "wait_state_contains_customer_content": false,
+    "shopify_index_writes_enabled": false,
     "paused_catalog_table_reused": false,
     "secrets_recorded": false
   }

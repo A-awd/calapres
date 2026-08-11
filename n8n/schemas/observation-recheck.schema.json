@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/observation-recheck.schema.json",
+  "title": "Calapres post-delay observation recheck result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "conversation_id",
+    "anchor_message_id",
+    "generation",
+    "evidence_source",
+    "source_verified",
+    "generation_matches",
+    "newer_inbound_present",
+    "public_human_reply_present",
+    "private_owner_instruction_present",
+    "status_changed",
+    "owner_changed",
+    "kill_switch",
+    "eligible_for_observation",
+    "checked_at",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "account_id": {
+      "const": 179973
+    },
+    "inbox_id": {
+      "enum": [
+        128031,
+        128033,
+        128058,
+        128326
+      ]
+    },
+    "channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "conversation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "anchor_message_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "evidence_source": {
+      "enum": [
+        "chatwoot_live_read",
+        "synthetic_fixture"
+      ]
+    },
+    "source_verified": {
+      "type": "boolean"
+    },
+    "generation_matches": {
+      "type": "boolean"
+    },
+    "newer_inbound_present": {
+      "type": "boolean"
+    },
+    "public_human_reply_present": {
+      "type": "boolean"
+    },
+    "private_owner_instruction_present": {
+      "type": "boolean"
+    },
+    "status_changed": {
+      "type": "boolean"
+    },
+    "owner_changed": {
+      "type": "boolean"
+    },
+    "kill_switch": {
+      "type": "boolean"
+    },
+    "eligible_for_observation": {
+      "type": "boolean"
+    },
+    "checked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "customer_egress_allowed": {
+      "const": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "instagram"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128031
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "tiktok"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128033
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "whatsapp"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128058
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "email"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128326
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "eligible_for_observation": {
+            "const": true
+          }
+        },
+        "required": [
+          "eligible_for_observation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "source_verified": {
+            "const": true
+          },
+          "generation_matches": {
+            "const": true
+          },
+          "newer_inbound_present": {
+            "const": false
+          },
+          "public_human_reply_present": {
+            "const": false
+          },
+          "private_owner_instruction_present": {
+            "const": false
+          },
+          "status_changed": {
+            "const": false
+          },
+          "owner_changed": {
+            "const": false
+          },
+          "kill_switch": {
+            "const": false
+          }
+        }
+      }
+    }
+  ]
+}

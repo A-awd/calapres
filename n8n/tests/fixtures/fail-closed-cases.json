@@ -157,5 +157,151 @@
     "operation": "replace",
     "path": "/idempotency_key",
     "value": "plain-event-id"
+  },
+  {
+    "name": "reject raw message in delayed state",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "add",
+    "path": "/raw_message",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject draft candidate in delayed state",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "add",
+    "path": "/candidate",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject mismatched delayed-state inbox",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/inbox_id",
+    "value": 128031
+  },
+  {
+    "name": "reject non-HMAC delayed idempotency value",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/idempotency_fingerprint",
+    "value": "plain-event-id"
+  },
+  {
+    "name": "reject unverified eligible recheck",
+    "schema": "observation-recheck",
+    "base_fixture": "valid/observation-recheck--clear.json",
+    "operation": "replace",
+    "path": "/source_verified",
+    "value": false
+  },
+  {
+    "name": "reject human reply in eligible recheck",
+    "schema": "observation-recheck",
+    "base_fixture": "valid/observation-recheck--clear.json",
+    "operation": "replace",
+    "path": "/public_human_reply_present",
+    "value": true
+  },
+  {
+    "name": "reject kill switch in eligible recheck",
+    "schema": "observation-recheck",
+    "base_fixture": "valid/observation-recheck--clear.json",
+    "operation": "replace",
+    "path": "/kill_switch",
+    "value": true
+  },
+  {
+    "name": "reject raw phone in order index command",
+    "schema": "order-index-command",
+    "base_fixture": "valid/order-index-command--active.json",
+    "operation": "add",
+    "path": "/raw_phone",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject non-HMAC buyer phone fingerprint",
+    "schema": "order-index-command",
+    "base_fixture": "valid/order-index-command--active.json",
+    "operation": "replace",
+    "path": "/record/buyer_phone_fingerprint",
+    "value": "synthetic-phone"
+  },
+  {
+    "name": "reject another brand in order index command",
+    "schema": "order-index-command",
+    "base_fixture": "valid/order-index-command--active.json",
+    "operation": "replace",
+    "path": "/brand_id",
+    "value": "another-brand"
+  },
+  {
+    "name": "reject another brand inside order index record",
+    "schema": "order-index-command",
+    "base_fixture": "valid/order-index-command--active.json",
+    "operation": "replace",
+    "path": "/record/brand_id",
+    "value": "another-brand"
+  },
+  {
+    "name": "reject provider selection in structured candidate",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "add",
+    "path": "/provider",
+    "value": "synthetic-provider"
+  },
+  {
+    "name": "reject missing candidate fact references",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "remove",
+    "path": "/knowledge_fact_ids"
+  },
+  {
+    "name": "reject answer candidate that still needs live lookup",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "replace",
+    "path": "/needs_live_lookup",
+    "value": true
+  },
+  {
+    "name": "reject medium-risk candidate without escalation reason",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "replace",
+    "path": "/risk",
+    "value": "medium"
+  },
+  {
+    "name": "reject unknown candidate intent enum value",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "replace",
+    "path": "/intent",
+    "value": "invented_intent"
+  },
+  {
+    "name": "reject duplicate candidate knowledge references",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "replace",
+    "path": "/knowledge_fact_ids",
+    "value": [
+      "shipping.threshold",
+      "shipping.threshold"
+    ]
+  },
+  {
+    "name": "reject candidate confidence above one",
+    "schema": "llm-candidate",
+    "base_fixture": "valid/llm-candidate--shipping-policy.json",
+    "operation": "replace",
+    "path": "/confidence",
+    "value": 1.1
   }
 ]

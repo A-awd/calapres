@@ -6,7 +6,8 @@ Continue from the latest verified `main` revision. Decision 0006 is binding for 
 architecture, decision 0007 is binding for the isolated Calapres ownership-proof site, and decision
 0008 is binding for the Optix customer-service design and its Calapres-only pilot boundary.
 Decision 0009 makes the ownership-evidence page a future multi-brand standard without authorizing
-another brand implementation.
+another brand implementation. Decision 0010 is binding for the inactive Calapres observation
+runtime, its no-send boundary, and its persistent-access gates.
 
 ## Completed in the Supabase retirement
 
@@ -47,11 +48,20 @@ another brand implementation.
   for this pilot.
 - n8n project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) contains eight empty isolated
   operational tables. Core `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are inactive and
-  unpublished, have no credentials or public webhook, have no customer-send node, and do not save
-  success, error, manual, or progress execution payloads.
-- Repository contracts, synthetic fixtures, and eleven local tests cover the shared Core and the
-  stricter Calapres edge. Sanitized n8n runs proved the four channel mappings and the principal
-  fail-closed paths. No n8n customer-service agent or automatic customer-facing reply is active.
+  unpublished. Shopify Order Index `cLHCuJ21r4RAuDTE` is likewise inactive and unpublished. All
+  three have no credentials or public webhook, have no customer-send or Shopify-write node, and do
+  not retain success, error, manual, or progress execution payloads under current settings.
+- The Edge now includes the identifiers-only Wait and post-delay recheck; there is no separate
+  delayed worker. The index maps only HMAC fingerprints and opaque Shopify references to the exact
+  12-column empty order-index table and still performs no write.
+- Repository contracts, synthetic fixtures, and thirty local tests cover the shared Core, strict
+  knowledge/live-fact grounding, transport-claim rejection, the stricter Calapres edge, embedded
+  n8n Code syntax, and the index table-row mapper. Sanitized n8n runs `40625` and `40619` passed
+  after the final fixes with customer egress, Data Table writes, and Shopify writes all false.
+  No n8n customer-service agent or automatic customer-facing reply is active.
+- The model's free-text draft has no authority and is not forwarded. A grounded observation draft
+  is rendered deterministically from versioned `customer_response_ar` or a verified live-source
+  response fragment selected by an exact cited fact ID.
 
 ## Exact next actions
 
@@ -60,9 +70,11 @@ another brand implementation.
 2. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
    Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
    observation.
-3. Add signed Chatwoot ingress and a separate delayed worker that persists only opaque identifiers,
-   then re-reads the conversation after the delay. Disable saved execution payloads before any real
-   customer event enters n8n.
+3. Add signed Chatwoot ingress to the existing Edge, emit trusted transport evidence from raw-body
+   HMAC verification, and replace the no-credential re-read slot with a live Chatwoot re-read after
+   the merged identifiers-only delay. Never connect a webhook directly to normalization. Prove a
+   real signed fixture because Chatwoot issue `#13809` may affect the displayed HMAC secret; never
+   bypass a failed signature check.
 4. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
    intervention, and verified Shopify retrieval. This does not authorize customer-facing replies.
 5. Review the four draft products directly in Shopify.
@@ -120,11 +132,13 @@ project and acknowledging irreversibility.
 
 ### Resume action
 
-1. Continue with decisions 0008 and 0009, using Calapres only and Chatwoot inbox `128058`.
-2. Inspect Chatwoot and n8n read-only and settle AgentBot, reasoning, deduplication, and persistent
-   storage responsibilities before building.
-3. Build observation mode first and verify exact brand routing and grounded drafts.
-4. Keep all automatic customer sends disabled until the owner-review and end-to-end gates pass.
+1. Continue with decisions 0008–0010 and the already-built inactive runtime; do not recreate the
+   project, tables, Core, Edge, index, registry, knowledge, style, policy, contracts, or fixtures.
+2. Obtain action-time owner confirmation for the dedicated Calapres Chatwoot/LLM/HMAC/Shopify read
+   access. Until then, do not create a live webhook or bind a credential.
+3. After confirmation, test real Instagram `128031`, TikTok `128033`, WhatsApp `128058`, and Email
+   `128326` events as private observation only; Website `128028` remains outside the allowlist.
+4. Keep every automatic customer send disabled until owner review and all end-to-end gates pass.
 
 ## Paused catalog investigation
 

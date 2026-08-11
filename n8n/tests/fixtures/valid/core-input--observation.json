@@ -44,14 +44,28 @@
     "order_lookup": "disabled"
   },
   "context": {
-    "knowledge_version": "2026-08-11-v2",
-    "live_facts_status": "not_requested"
+    "knowledge_version": "2026-08-11-v3",
+    "knowledge_facts": [
+      {
+        "knowledge_id": "shipping.threshold",
+        "authority": "draft_only",
+        "response_text": "رسوم الشحن 25 ريالًا للطلبات الأقل من 320 ريالًا، والشحن مجاني للطلبات بقيمة 320 ريالًا أو أكثر."
+      }
+    ],
+    "live_facts_status": "not_requested",
+    "verified_live_facts": []
   },
   "candidate": {
     "intent": "shipping_policy",
     "risk": "low",
     "requested_action": "answer",
     "draft_text": "مسودة تجريبية بلا بيانات عميل.",
-    "confidence": 0.95
+    "confidence": 0.95,
+    "knowledge_fact_ids": [
+      "shipping.threshold"
+    ],
+    "live_fact_ids": [],
+    "needs_live_lookup": false,
+    "escalation_reason_code": null
   }
 }

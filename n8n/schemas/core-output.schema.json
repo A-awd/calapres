@@ -15,6 +15,7 @@
     "intent",
     "risk",
     "draft_allowed",
+    "draft_text",
     "customer_egress_allowed",
     "requires_owner_review",
     "incident_required",
@@ -87,6 +88,14 @@
     "draft_allowed": {
       "type": "boolean"
     },
+    "draft_text": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 1200
+    },
     "customer_egress_allowed": {
       "const": false
     },
@@ -107,6 +116,9 @@
         "event_type": {
           "enum": [
             "event_rejected",
+            "edge_rejection",
+            "dedup_rejection",
+            "job_cancellation",
             "core_evaluated",
             "core_decision",
             "draft_observed",
@@ -128,6 +140,9 @@
         "brand_kill_switch",
         "unsupported_content",
         "structured_candidate_missing",
+        "knowledge_reference_unverified",
+        "knowledge_authority_required",
+        "live_fact_reference_unverified",
         "owner_authority_required",
         "live_facts_not_verified",
         "confidence_below_threshold",
@@ -150,7 +165,25 @@
         "event_time_invalid",
         "routing_rejected",
         "duplicate_event",
-        "stale_generation"
+        "stale_generation",
+        "wait_state_invalid",
+        "wait_brand_invalid",
+        "wait_account_invalid",
+        "wait_inbox_channel_invalid",
+        "wait_conversation_id_invalid",
+        "wait_message_id_invalid",
+        "wait_conversation_fingerprint_invalid",
+        "wait_message_fingerprint_invalid",
+        "wait_idempotency_fingerprint_invalid",
+        "wait_generation_invalid",
+        "wait_not_before_invalid",
+        "wait_knowledge_version_invalid",
+        "live_recheck_unavailable",
+        "newer_inbound",
+        "human_intervention",
+        "private_owner_instruction",
+        "status_changed",
+        "owner_changed"
       ]
     }
   },
@@ -191,6 +224,11 @@
           "draft_allowed": {
             "const": true
           },
+          "draft_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
           "requires_owner_review": {
             "const": true
           },
@@ -219,6 +257,9 @@
           "draft_allowed": {
             "const": false
           },
+          "draft_text": {
+            "const": null
+          },
           "requires_owner_review": {
             "const": true
           },
@@ -246,6 +287,9 @@
           },
           "draft_allowed": {
             "const": false
+          },
+          "draft_text": {
+            "const": null
           }
         }
       }

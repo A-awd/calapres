@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "conversation_id": "synthetic-conversation-001",
+  "anchor_message_id": "synthetic-message-001",
+  "generation": 1,
+  "evidence_source": "synthetic_fixture",
+  "source_verified": true,
+  "generation_matches": true,
+  "newer_inbound_present": false,
+  "public_human_reply_present": false,
+  "private_owner_instruction_present": false,
+  "status_changed": false,
+  "owner_changed": false,
+  "kill_switch": false,
+  "eligible_for_observation": true,
+  "checked_at": "2026-08-11T12:04:31+03:00",
+  "customer_egress_allowed": false
+}

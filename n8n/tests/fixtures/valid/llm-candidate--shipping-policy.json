@@ -1,0 +1,13 @@
+{
+  "intent": "shipping_policy",
+  "risk": "low",
+  "requested_action": "answer",
+  "draft_text": "مسودة تجريبية مبنية على حقيقة معرفة معتمدة.",
+  "confidence": 0.95,
+  "knowledge_fact_ids": [
+    "shipping.threshold"
+  ],
+  "live_fact_ids": [],
+  "needs_live_lookup": false,
+  "escalation_reason_code": null
+}

@@ -9,6 +9,7 @@
   "intent": "shipping_policy",
   "risk": "low",
   "draft_allowed": true,
+  "draft_text": "مسودة تجريبية بلا بيانات عميل.",
   "customer_egress_allowed": false,
   "requires_owner_review": true,
   "incident_required": false,

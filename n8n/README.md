@@ -7,16 +7,27 @@ a customer database, or a customer-facing bot release.
 ## Runtime source
 
 - `workflows/calapres-customer-service-edge-v1.ts` — the only brand edge. Its current source uses a
-  sanitized manual fixture and contains no public webhook or customer-send node.
+  sanitized manual fixture, merges the post-response delay stage into the edge, and contains no
+  public webhook or customer-send node. The Wait receives only the strict
+  `delayed-observation-state` contract; message content and model candidates are discarded first.
 - `workflows/optix-customer-service-core-v1.ts` — the private, credential-free rules sub-workflow.
   It cannot receive a public channel event or contact a customer.
+- `workflows/calapres-shopify-order-index-v1.ts` — a separate private, inactive index workflow
+  because Shopify order events and reconciliation are a different ingress domain. It accepts only
+  keyed fingerprints and opaque Shopify references, maps them to the exact 12-column live table
+  contract, and performs no Data Table or Shopify write.
 - `schemas/` — strict JSON contracts for the reusable event/Core contracts, the stricter Calapres
-  edge envelope, and every approved operational record class. The Core input references the
-  generic envelope; the Calapres edge must first pass `calapres-event-envelope.schema.json`.
+  edge envelope, the provider-neutral structured model candidate, the identifiers-only Wait
+  state, the post-delay recheck, and every approved operational record class. The Core input
+  references the generic envelope and `llm-candidate.schema.json`; the Calapres edge must first
+  pass `calapres-event-envelope.schema.json`.
 - `tests/fixtures/` — synthetic records only. They contain no production customer or order data.
 
 The non-secret channel registry, knowledge releases, n8n project ID, and isolated Data Table IDs
-are recorded under `support/brands/calapres/`.
+are recorded under `support/brands/calapres/`. The approved response-style release is indexed by
+`support/brands/calapres/response-style/manifest.json`. The separate model-policy manifest is
+`support/brands/calapres/model-policy/manifest.json`; it remains `proposed` and inactive pending
+its explicit access/privacy approval gate.
 
 ## Local validation
 
@@ -26,23 +37,33 @@ Run from the repository root:
 python3 -m unittest discover -s n8n/tests -p 'test_*.py'
 ```
 
-The tests use only the Python standard library; they do not require package installation. They
-validate the strict JSON Schema subset used by this repository and every valid fixture, then
+The tests use only the Python standard library and the local Node.js runtime used for n8n source;
+they do not require package installation. They validate the strict JSON Schema subset used by this
+repository, every valid fixture, and the JavaScript inside every n8n Code node, then
 mutate the fixtures to prove that unknown accounts/inboxes, the disabled website inbox,
 outgoing messages, private notes, bot echoes, missing routing fields, live mode, customer egress,
-another brand at the Calapres edge, high-risk drafts, raw identity values, and raw incident/audit
-fields all fail closed. The generic Core envelope separately accepts a future brand contract so
-the shared Core does not need to be edited for each brand.
+another brand at the Calapres edge, high-risk drafts, raw identity values, raw Wait state,
+unverified post-delay rechecks, payload-supplied transport claims, invented or owner-only knowledge
+references, mismatched live-fact IDs, adversarial free-text model drafts, non-HMAC order-index
+commands, and raw incident/audit fields all fail closed. A model draft is never forwarded as the
+grounded result; the Core renders from the approved knowledge or verified live-fact response text.
+The generic Core envelope and provider-neutral candidate contract separately accept future brand
+logic so the shared Core does not need to be edited for each brand or model provider.
 
 ## Observation boundary
 
 The current release may normalize a sanitized event, validate it, exercise deduplication and
-generation contracts, call the private Core, and record an internal observation. It must not:
+generation contracts, respond to a future webhook before delaying, carry identifiers through a
+Wait, require a fresh re-read, call the private Core, and record an internal observation. There is
+no standalone delay workflow: keeping the stage in the edge preserves the same brand/credential
+boundary and avoids another execution boundary. It must not:
 
 - connect a live Chatwoot webhook before the persistent credential gate;
 - enable Shopify customer/order lookup before scopes and live reads are proven;
 - save message bodies, attachments, raw phone/email values, addresses, order payloads, or payment
   information in Data Tables;
+- pass message text, a transcript, a sender identity value, or a model draft through the Wait;
+- treat a missing, unverified, stale, or human-intervened post-delay recheck as eligible;
 - invoke Captain, AgentBot, an autonomous AI Agent, or a second responder;
 - send a customer message or modify Shopify;
 - use the paused catalog Data Table or any Supabase surface.
@@ -57,7 +78,7 @@ Decision 0010 authorizes eight empty, Calapres-scoped operational tables in the 
 | `dedup` | replay/idempotency state | `dedup-record.schema.json` |
 | `jobs` | conversation generation and delay state | `conversation-job.schema.json` |
 | `customer_links` | verified opaque channel links | `identity-link.schema.json` |
-| `order_index` | keyed lookup fingerprints and opaque Shopify references | `order-index-record.schema.json` |
+| `order_index` | keyed lookup fingerprints and opaque Shopify references | `order-index-table-row.schema.json` |
 | `verification` | identity verification lifecycle | `verification-record.schema.json` |
 | `incidents` | sanitized escalations | `incident.schema.json` |
 | `approvals` | structured owner decisions | `owner-decision.schema.json` |
@@ -75,11 +96,14 @@ is safe.
 1. Validate this repository source and fixtures.
 2. Compile/import the private Core and keep it inactive until its manual fixture passes.
 3. Compile/import the Calapres edge and confirm it has no outbound customer node.
-4. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
-5. Exercise all synthetic fail-closed cases and inspect sanitized records.
-6. Handle the Chatwoot persistent-access gate and Shopify read-scope gate separately.
-7. Connect a live webhook only after signature and replay verification are real, not payload flags.
-8. Run observation with customer egress structurally absent.
+4. Confirm the merged Wait carrier contains only the strict identifier/control contract and that
+   the live-re-read placeholder fails closed until a Chatwoot credential is approved.
+5. Validate and import the Shopify order-index workflow inactive; do not bind a credential yet.
+6. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
+7. Exercise all synthetic fail-closed cases and inspect sanitized records.
+8. Handle the Chatwoot persistent-access gate and Shopify read-scope gate separately.
+9. Connect a live webhook only after signature and replay verification are real, not payload flags.
+10. Run observation with customer egress structurally absent.
 
 Adding a send node, activating automatic customer replies, onboarding another brand, or granting
 write authority requires a later explicit owner approval and the remaining gates in decision 0010.

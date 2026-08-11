@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "version": "2026-08-11-v1",
+  "status": "proposed",
+  "provider": "anthropic",
+  "model": "claude-sonnet-5",
+  "transport": "direct_https_messages_api",
+  "purpose": "structured_classification_and_internal_draft_only",
+  "configuration": {
+    "structured_output": "json_schema_strict",
+    "effort": "high",
+    "tools_enabled": false,
+    "provider_memory_enabled": false,
+    "automatic_provider_fallback": false,
+    "model_draft_authority": "untrusted_not_forwarded",
+    "grounded_output_renderer": "approved_knowledge_or_verified_live_fact_response_text_only",
+    "customer_egress_allowed": false
+  },
+  "data_minimization": {
+    "allow_message_excerpt_only_when_required": true,
+    "send_raw_phone": false,
+    "send_raw_email": false,
+    "send_address": false,
+    "send_order_number": false,
+    "send_payment_data": false,
+    "send_attachment_binary": false,
+    "persist_provider_payload_in_n8n_execution": false
+  },
+  "failure_policy": {
+    "invalid_json": "escalate_internal",
+    "refusal": "escalate_internal",
+    "rate_limit": "escalate_internal",
+    "timeout": "escalate_internal",
+    "provider_unavailable": "escalate_internal",
+    "fallback_to_another_model": false
+  },
+  "activation_gates": [
+    "owner_approval_for_persistent_credential",
+    "owner_acknowledges_default_provider_retention_up_to_30_days",
+    "calapres_scoped_api_key_with_budget_cap",
+    "four_channel_saudi_arabic_blind_evaluation",
+    "all_customer_send_paths_absent_or_disabled"
+  ],
+  "evidence": {
+    "official_model_overview": "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "official_structured_outputs": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "official_retention": "https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data"
+  }
+}

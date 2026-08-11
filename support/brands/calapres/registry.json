@@ -79,8 +79,12 @@
   },
   "knowledge": {
     "namespace": "calapres",
-    "current_version": "2026-08-11-v2",
+    "current_version": "2026-08-11-v3",
     "manifest_path": "support/brands/calapres/knowledge/manifest.json"
+  },
+  "response_style": {
+    "current_version": "2026-08-11-v1",
+    "manifest_path": "support/brands/calapres/response-style/manifest.json"
   },
   "live_sources": {
     "shopify": {
@@ -98,6 +102,7 @@
     "llm": {
       "role": "structured_classification_and_drafting_only",
       "credential_binding": null,
+      "model_policy_manifest": "support/brands/calapres/model-policy/manifest.json",
       "activation_gate": "bind_fixed_calapres_scoped_credential"
     }
   },

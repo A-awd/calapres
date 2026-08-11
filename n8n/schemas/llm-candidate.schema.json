@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/llm-candidate.schema.json",
+  "title": "Provider-neutral structured customer-service model candidate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "intent",
+    "risk",
+    "requested_action",
+    "draft_text",
+    "confidence",
+    "knowledge_fact_ids",
+    "live_fact_ids",
+    "needs_live_lookup",
+    "escalation_reason_code"
+  ],
+  "properties": {
+    "intent": {
+      "enum": [
+        "faq",
+        "order_status",
+        "tracking",
+        "inventory",
+        "product_question",
+        "shipping_policy",
+        "return_request",
+        "complaint",
+        "order_change",
+        "cancellation",
+        "refund",
+        "privacy",
+        "legal",
+        "payment_dispute",
+        "security",
+        "general",
+        "unknown"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ]
+    },
+    "requested_action": {
+      "enum": [
+        "answer",
+        "none",
+        "read_fact",
+        "draft_reply",
+        "modify_order",
+        "cancel_order",
+        "issue_refund",
+        "disclose_data",
+        "approve_exception",
+        "unknown"
+      ]
+    },
+    "draft_text": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "knowledge_fact_ids": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9._:-]{2,120}$"
+      }
+    },
+    "live_fact_ids": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^lf_[A-Za-z0-9._:-]{3,120}$"
+      }
+    },
+    "needs_live_lookup": {
+      "type": "boolean"
+    },
+    "escalation_reason_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z][a-z0-9_]{2,80}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "requested_action": {
+            "const": "answer"
+          }
+        },
+        "required": [
+          "requested_action"
+        ]
+      },
+      "then": {
+        "properties": {
+          "draft_text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "needs_live_lookup": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "needs_live_lookup": {
+            "const": true
+          }
+        },
+        "required": [
+          "needs_live_lookup"
+        ]
+      },
+      "then": {
+        "properties": {
+          "requested_action": {
+            "const": "read_fact"
+          },
+          "draft_text": {
+            "type": "null"
+          },
+          "live_fact_ids": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "escalation_reason_code": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "live_fact_ids": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "required": [
+          "live_fact_ids"
+        ]
+      },
+      "then": {
+        "properties": {
+          "needs_live_lookup": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "enum": [
+              "medium",
+              "high",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "escalation_reason_code": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

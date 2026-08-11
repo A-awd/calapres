@@ -65,13 +65,47 @@
       "additionalProperties": false,
       "required": [
         "knowledge_version",
-        "live_facts_status"
+        "knowledge_facts",
+        "live_facts_status",
+        "verified_live_facts"
       ],
       "properties": {
         "knowledge_version": {
           "type": "string",
           "minLength": 1,
           "maxLength": 64
+        },
+        "knowledge_facts": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "knowledge_id",
+              "authority",
+              "response_text"
+            ],
+            "properties": {
+              "knowledge_id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._:-]{2,120}$"
+              },
+              "authority": {
+                "enum": [
+                  "draft_only",
+                  "owner_required",
+                  "mandatory_stop"
+                ]
+              },
+              "response_text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              }
+            }
+          }
         },
         "live_facts_status": {
           "enum": [
@@ -80,80 +114,35 @@
             "unavailable",
             "ambiguous"
           ]
+        },
+        "verified_live_facts": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "live_fact_id",
+              "response_text"
+            ],
+            "properties": {
+              "live_fact_id": {
+                "type": "string",
+                "pattern": "^lf_[A-Za-z0-9._:-]{3,120}$"
+              },
+              "response_text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              }
+            }
+          }
         }
       }
     },
     "candidate": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "intent",
-        "risk",
-        "requested_action"
-      ],
-      "properties": {
-        "intent": {
-          "$ref": "#/$defs/intent"
-        },
-        "risk": {
-          "$ref": "#/$defs/risk"
-        },
-        "requested_action": {
-          "enum": [
-            "answer",
-            "none",
-            "read_fact",
-            "draft_reply",
-            "modify_order",
-            "cancel_order",
-            "issue_refund",
-            "disclose_data",
-            "approve_exception",
-            "unknown"
-          ]
-        },
-        "draft_text": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 1200
-        },
-        "confidence": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        }
-      }
-    }
-  },
-  "$defs": {
-    "intent": {
-      "enum": [
-        "faq",
-        "order_status",
-        "tracking",
-        "inventory",
-        "product_question",
-        "shipping_policy",
-        "return_request",
-        "complaint",
-        "order_change",
-        "cancellation",
-        "refund",
-        "privacy",
-        "legal",
-        "payment_dispute",
-        "security",
-        "general",
-        "unknown"
-      ]
-    },
-    "risk": {
-      "enum": [
-        "low",
-        "medium",
-        "high",
-        "unknown"
-      ]
+      "$ref": "llm-candidate.schema.json"
     }
   }
 }

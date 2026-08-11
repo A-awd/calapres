@@ -78,15 +78,16 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 5. Opening a new market remains a commercial decision.
 6. The dormant Calapres Supabase credential in n8n may be deleted after explicit confirmation;
    all workflows that reference it are already archived.
-7. The approved Optix customer-service observation runtime has not yet been created in n8n.
-8. n8n has no Chatwoot credential, and the recorded Shopify credential scopes do not include
-   `read_customers`; those access changes require deliberate implementation gates.
+7. The approved observation runtime now exists but remains inactive, unpublished, and disconnected
+   from live customer events until the persistent-access gate is approved.
+8. n8n has no dedicated Calapres Chatwoot credential, and the recorded Shopify credential scopes
+   do not include `read_customers`; those access changes require deliberate implementation gates.
 
 ## Next safe action
 
-Create and validate the decision-0010 workflow source, Calapres-scoped operational tables, and
-inactive n8n observation workflows. Keep the customer egress branch absent and do not connect the
-live Chatwoot webhook until the persistent-access gate is handled.
+After action-time owner confirmation, create the dedicated Calapres-scoped Chatwoot, LLM, identity
+HMAC, and read-only Shopify bindings; then add the signed ingress and prove real four-channel
+observation. Keep the customer-egress branch absent.
 
 ## Constraints
 
@@ -156,16 +157,30 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   empty operational Data Tables for deduplication, conversation jobs, verified identity links,
   the rebuildable order index, verification challenges, incidents, owner decisions, and audit.
   The paused catalog table was not reused or changed.
-- Private Core workflow `uCBXuRjlv8NyeikO` and Calapres Edge workflow `e442GlRmKP4IO8pm` exist in
-  that project. Both are inactive and unpublished, have no assigned credential or public webhook,
-  contain no customer-egress node, and have execution-payload retention disabled.
+- Private Core workflow `uCBXuRjlv8NyeikO`, Calapres Edge workflow `e442GlRmKP4IO8pm`, and Shopify
+  Order Index workflow `cLHCuJ21r4RAuDTE` exist in that project. All three are inactive and
+  unpublished, have no assigned credential or public webhook, contain no customer-egress or
+  Shopify-write node, and have execution-payload retention disabled.
+- The delay and post-delay cancellation stage is merged into the existing Edge. Its Wait carries
+  identifiers and HMAC fingerprints only, then requires a fresh Chatwoot re-read; the current
+  no-credential re-read slot fails closed outside the synthetic fixture.
+- The order-index preview maps a validated Calapres contract to the table's exact 12 columns. A
+  live n8n run caught an embedded Shopify-GID regex error before activation; it was fixed, a
+  permanent embedded-Code syntax test was added, and sanitized post-fix execution `40619` passed
+  with both Data Table and Shopify writes false.
 - Sanitized manual executions proved the Core/Edge happy path, all four allowlisted channel
   mappings, and fail-closed behavior for unknown account/inbox, outgoing/private/bot events,
   invalid signature evidence, duplicate delivery, stale generation, returns, uncertain intent,
   and non-low risk. Every tested result kept customer egress false.
-- GitHub now contains the brand registry, two dated knowledge releases sourced from the live
-  Calapres policy/FAQ pages, generic Core contracts, stricter Calapres edge contracts, synthetic
-  fixtures, and standard-library contract tests. Eleven local tests pass.
+- GitHub now contains the brand registry, three append-only dated knowledge releases sourced from the live
+  Calapres policy/FAQ pages, the approved response-style release, a proposed inactive model policy,
+  generic Core contracts, stricter Calapres edge contracts, synthetic fixtures, and
+  standard-library contract/runtime guard tests. Thirty local tests pass.
+- Core grounding now verifies every cited knowledge ID and its authority against the selected
+  context and verifies live-fact IDs exactly. It ignores the model's free-text draft and renders an
+  `observe_draft` result only from versioned `customer_response_ar` or a verified live-source
+  response fragment. The Edge rejects or strips malformed/extra Core output. Event-payload
+  transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
 - The live observation connection is intentionally not granted yet. Chatwoot webhook/credential,
   a dedicated Calapres LLM credential, identity-HMAC material, and any Shopify read-scope expansion
   remain deliberate persistent-access gates. The current Shopify credential lacks `read_customers`;
@@ -174,9 +189,9 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 ### Next safe action
 
 After an action-time owner confirmation for those persistent-access gates, add the signed Chatwoot
-ingress and delayed observation worker, disable saved execution payloads, bind only Calapres-scoped
-credentials, and test real events as private internal observations. Keep automatic customer-facing
-replies structurally absent until the separate activation decision and every safety gate pass.
+ingress and live re-read inside the existing Edge, bind only Calapres-scoped credentials, and test
+real events as private internal observations. Keep automatic customer-facing replies structurally
+absent until the separate activation decision and every safety gate pass.
 
 ## Multi-brand ownership-evidence standard — 2026-08-11
 

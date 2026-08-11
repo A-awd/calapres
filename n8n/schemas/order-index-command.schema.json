@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/order-index-command.schema.json",
+  "title": "Calapres HMAC-only Shopify order index command",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "source",
+    "operation",
+    "source_event_fingerprint",
+    "idempotency_fingerprint",
+    "record"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "source": {
+      "enum": [
+        "shopify_order_event",
+        "shopify_reconciliation"
+      ]
+    },
+    "operation": {
+      "enum": [
+        "upsert",
+        "revoke"
+      ]
+    },
+    "source_event_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "idempotency_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "record": {
+      "$ref": "order-index-record.schema.json"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "revoke"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "record": {
+            "properties": {
+              "status_class": {
+                "const": "revoked"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

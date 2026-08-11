@@ -8,15 +8,23 @@ Authority: decisions 0008 and 0010
 
 ## What is being built
 
-Calapres gets one customer-service edge and one private rules component:
+Calapres gets one customer-service edge, one private rules component, and one inactive private
+Shopify index component:
 
 ```text
 four allowlisted Calapres inboxes
   -> Calapres Customer Service Edge v1
+       -> identifiers-only Wait inside the same edge
+       -> fresh Chatwoot re-read or fail closed
   -> private Optix Customer Service Core v1
   -> internal observation, incident, or no action
 
+verified Shopify order ingress/reconciliation (future)
+  -> Calapres Shopify Order Index v1
+  -> HMAC fingerprints + opaque Shopify references only
+
 customer send path: absent
+Shopify write path: absent
 ```
 
 The edge is the only component that knows Calapres account/inbox identifiers, operational tables,
@@ -24,19 +32,31 @@ future channel credentials, and future Shopify reads. The Core is a private, ver
 validation and authority rules. It has no public webhook, credential, memory, store tool, or send
 node. It is not a second bot.
 
+The delay phase is intentionally merged into the edge rather than deployed as another workflow.
+A future webhook can return `204` and continue the same execution; after the edge strips the input
+to the strict Wait contract, a separate workflow adds no credential isolation or safety. Shopify
+indexing remains separate because Shopify events/reconciliation have a different root trigger,
+signature boundary, retry lifecycle, and data contract.
+
 The current workflow source starts from sanitized manual fixtures. The live Chatwoot webhook is not
 connected. This keeps the first build useful for validation without granting persistent access or
 risking a customer reply.
 
-The two live n8n workflow shells now exist inside the isolated Calapres project. Core
+The three live n8n workflow shells now exist inside the isolated Calapres project. Core
 `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are both inactive and unpublished, have no public
-webhook, and have no customer-egress node. Sanitized manual evidence was recorded for Core
+webhook, and have no customer-egress node. Shopify index `cLHCuJ21r4RAuDTE` is also inactive,
+unpublished, credential-free, and write-free. Sanitized manual evidence was recorded for Core
 executions `40576` and `40600`–`40603`; Edge happy/channel executions `40577`, `40579`, `40581`,
-`40583`, and post-correction run `40605`; and Edge fail-closed executions `40585`–`40592`.
+`40583`, post-correction run `40605`, and final v3 deterministic-rendering run `40625`; Edge fail-closed executions
+`40585`–`40592`; and the post-fix order-index run `40619`.
 Execution IDs are evidence pointers,
 not a durable knowledge or incident store.
-Success, error, manual, and progress execution payload saving is disabled on both workflows before
+Success, error, manual, and progress execution payload saving is disabled on all three workflows before
 any live customer event is allowed to enter n8n.
+
+The merged delay extension is imported into the existing inactive Edge. The Shopify index is also
+imported inactive. Neither is published; neither has a credential, public webhook, Data Table
+write, Shopify write, or customer-send node.
 
 ## Exact channel boundary
 
@@ -54,22 +74,46 @@ The normalized envelope can never contain the website inbox. Account, inbox, and
 outgoing messages, private notes, bot echoes, or missing conversation/message/sender references
 stop before retrieval or reasoning.
 
+## Signed ingress gate
+
+The future Chatwoot branch must verify `X-Chatwoot-Signature` over the exact bytes
+`timestamp + "." + raw_body`, using `X-Chatwoot-Timestamp`, before parsing or using message
+content. It rejects malformed signatures, payloads over 1 MiB, timestamps older than 300 seconds,
+timestamps more than 60 seconds in the future, and replayed `X-Chatwoot-Delivery` values. A
+reformatted JSON body is not equivalent to the signed body.
+
+Chatwoot issue [#13809](https://github.com/chatwoot/chatwoot/issues/13809) reports a possible
+difference between the displayed webhook secret and the internal HMAC token. Therefore the live
+branch must pass a real signed fixture from account `179973`; if it does not, observation remains
+disconnected. Bypassing signature verification is not an allowed fallback.
+
 ## Message journey in observation mode
 
-1. The edge verifies the transport signature and replay protection before trusting the payload.
+1. A future signed ingress must verify the transport signature and replay protection before the
+   payload reaches normalization. The current manual fixture uses a topology-created trusted test
+   wrapper; transport claims placed inside an event payload are ignored and fail closed.
 2. It resolves `brand_id=calapres` from the fixed account/inbox allowlist. A payload-supplied brand
    is never trusted.
 3. It converts the event to a strict envelope containing identifiers and content metadata only.
    The envelope does not persist the customer's text or attachment data.
 4. It claims an idempotency record and advances the exact conversation generation. A duplicate or
    older generation stops.
-5. It waits for the experimental channel delay. A newer inbound message supersedes the old job.
-6. It cancels when a human has replied, the owner/status changed, a private instruction appeared,
-   or the brand kill switch is on.
+5. It drops the original event, content metadata, sender reference, and model candidate, then gives
+   the Wait node only account/inbox/channel IDs, conversation/message IDs, HMAC fingerprints,
+   generation, time, knowledge version, and `customer_egress_allowed=false`.
+6. After the delay it must re-read Chatwoot. It cancels when the read is unavailable/unverified,
+   the generation changed, a newer inbound or public human reply exists, the owner/status changed,
+   a private instruction appeared, or the brand kill switch is on.
 7. If a live commerce fact is needed, the edge must read it from Shopify. Until required scopes and
    live paths are proven, customer and order lookup remain disabled.
-8. A fixed Calapres-scoped model call may later return a structured candidate. The candidate is
-   untrusted until the Core validates intent, risk, authority, grounding, and confidence.
+8. A fixed Calapres-scoped model call may later return a provider-neutral structured candidate.
+   The contract includes intent, risk, requested action, draft, confidence, knowledge/live fact
+   IDs, live-lookup need, and an escalation reason. It is untrusted until the Core matches every
+   ID to the selected approved knowledge/live-fact set, rejects owner-only facts, and validates
+   authority, confidence, and the exact output shape. The model's free-text draft is never
+   forwarded as the grounded result: the Core renders that result only from versioned
+   `customer_response_ar` text or a verified live-source response fragment supplied by the brand
+   adapter.
 9. The Core returns only `no_action`, `observe_draft`, or `escalate`, and always returns
    `customer_egress_allowed=false`.
 10. The edge records a sanitized observation or incident. There is no customer-send node.
@@ -81,6 +125,8 @@ stop before retrieval or reasoning.
 | Current order, payment, fulfillment, inventory, and tracking facts | Shopify, read live |
 | Channel contact and conversation history | Chatwoot |
 | Brand registry, contracts, approved knowledge versions, workflow source | GitHub `main` |
+| Approved response style | `support/brands/calapres/response-style/manifest.json` |
+| Proposed model policy, inactive until approval | `support/brands/calapres/model-policy/manifest.json` |
 | Deduplication, generation jobs, verified identity references, incidents, approvals, audit | isolated Calapres n8n Data Tables |
 | Secrets and HMAC keys | credential vault only |
 
@@ -110,6 +156,10 @@ and FAQ pages on 2026-08-11:
 - the three-piece set, white/beige/gray colors, engraving, and cart ordering FAQ facts;
 - privacy and terms links as escalation/operational references, not automated legal advice.
 
+The third release supersedes the second without rewriting it. It keeps the same verified facts and
+adds approved `customer_response_ar` render text only to safe `draft_only` entries. The Core uses
+those exact fragments for observation drafts and never forwards the model's free-text wording.
+
 Return, defect, damage, delayed-delivery, privacy, and terms cases remain owner-reviewed even when
 the public policy is known. The policy describes the boundary; it does not grant the workflow
 refund, cancellation, compensation, legal, or privacy authority.
@@ -126,6 +176,7 @@ must not contain:
 - message bodies, full transcripts, or attachment content;
 - raw phone numbers, raw email addresses, or postal addresses;
 - Shopify order payloads or payment information;
+- model candidates, drafts, sender references, or message content in a waiting execution;
 - credentials, tokens, HMAC keys, or model prompts containing secrets.
 
 Incident summaries are sanitized and reference opaque IDs. Audit rows contain reason codes and
@@ -150,9 +201,13 @@ paused catalog state, or silently turns an owner answer into policy.
 ## Evidence required before live observation
 
 - repository schemas and fixtures pass locally;
-- both workflow sources compile/import successfully;
+- Core, Edge, and Shopify index sources compile and are imported inactive without credentials;
 - the private Core has no public trigger or external credential;
 - the edge has no Chatwoot customer-send or Shopify mutation node;
+- the merged Wait carrier rejects message content and the no-credential live-re-read slot stops;
+- the order index accepts only HMAC fingerprints and opaque Shopify references, maps exactly the
+  12 live Data Table columns, strips contract-only fields, and performs no write;
+- an adversarial model draft cannot override the approved response text referenced by its fact ID;
 - all eight Calapres operational tables exist and remain separate from catalog work;
 - signature and replay checks use trusted transport evidence, not fields supplied by a webhook;
 - persistent Chatwoot access is explicitly approved and tested;

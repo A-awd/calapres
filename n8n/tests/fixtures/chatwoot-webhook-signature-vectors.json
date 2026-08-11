@@ -1,0 +1,19 @@
+{
+  "algorithm": "hmac-sha256",
+  "message_format": "{timestamp}.{raw_body_utf8_bytes}",
+  "public_test_secret": "calapres-public-test-secret-v1",
+  "vectors": [
+    {
+      "name": "compact_arabic_body",
+      "timestamp": "1786450000",
+      "raw_body": "{\"event\":\"message_created\",\"content\":\"هلا\",\"account\":{\"id\":179973}}",
+      "signature": "sha256=2ab264838169dd53dfa264d8e3e8f3954c63f5b91773f6f573d310e7a01d3c33"
+    },
+    {
+      "name": "whitespace_sensitive_arabic_body",
+      "timestamp": "1786450001",
+      "raw_body": "{\n  \"event\": \"message_created\",\n  \"content\": \"وين طلبي؟\",\n  \"account\": {\"id\": 179973}\n}",
+      "signature": "sha256=07d8fc2c26dd40235b8af235979fd3063e7286fbed057def70f689ea64d0e0b5"
+    }
+  ]
+}

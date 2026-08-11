@@ -56,8 +56,18 @@ core. The implementation is not a second Chatwoot bot and has no customer egress
    The model never receives a send credential or permission to select a store or brand.
 4. Only the Calapres edge may eventually send. In observation mode the egress branch is absent or
    hard-disabled and the result is an internal draft/audit record only.
-5. Core releases are immutable. A future `Core v2` is created beside `v1`, evaluated in shadow
-   mode, and adopted brand by brand. A Core workflow is never edited in place for every brand.
+5. Core releases become immutable when their first observation or live release is approved. Before
+   that activation boundary, an inactive and unpublished candidate may be corrected in place while
+   its source and live shell are kept synchronized and the full validation suite is rerun. After
+   approval, a future `Core v2` is created beside `v1`, evaluated in shadow mode, and adopted brand
+   by brand; an approved Core workflow is never edited in place for every brand.
+6. The channel delay and post-delay recheck remain inside the Calapres edge. After a future webhook
+   response, the Wait may retain only the strict identifier/control contract; it must not retain a
+   message body, sender value, attachment, model candidate, or draft.
+7. `Calapres | Shopify Order Index v1` is a separate private workflow because Shopify event
+   verification and reconciliation are a different root ingress and retry lifecycle. It is not a
+   second brain. The observation release accepts only keyed fingerprints and opaque Shopify
+   references, maps them explicitly to the isolated table columns, and performs no write.
 
 This resolves the earlier phrase "central router": the central part is versioned internal logic,
 not one giant public workflow that carries every brand credential.
@@ -153,8 +163,17 @@ activation review; it is not required to prove the no-send observation path.
 ### Failure, security, and cost boundaries
 
 - Webhooks require signature verification and replay protection before message content is used.
+- Transport verification evidence must be created by the verified graph branch, never accepted
+  from fields inside an event payload. A public webhook must not connect directly to normalization.
 - LLM output must match a strict schema and is treated as untrusted until deterministic checks
   pass.
+- Every candidate knowledge ID must exist in the selected approved knowledge context and have
+  `draft_only` authority; every live-fact ID must match the verified live-fact set. Unknown,
+  owner-required, or mandatory-stop references escalate rather than becoming an observed draft.
+- A free-text model draft is untrusted evaluation material and is never forwarded as a grounded
+  result. The Core renders an observation draft only from the exact versioned customer-response
+  text attached to approved knowledge or from a response fragment produced by a verified live
+  source adapter.
 - Store and channel credentials are statically bound in the brand edge and never selected from
   model output.
 - All external failures, rate limits, ambiguous matches, stale knowledge, and schema failures end

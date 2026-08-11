@@ -1,12 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/A-awd/calapres/n8n/schemas/order-index-record.schema.json",
-  "title": "Calapres derived Shopify order lookup index record",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/order-index-table-row.schema.json",
+  "title": "Exact Calapres n8n order-index Data Table row",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "schema_version",
-    "brand_id",
     "shopify_order_gid",
     "shopify_customer_gid",
     "order_name_fingerprint",
@@ -21,12 +19,6 @@
     "expires_at"
   ],
   "properties": {
-    "schema_version": {
-      "const": "1.0"
-    },
-    "brand_id": {
-      "const": "calapres"
-    },
     "shopify_order_gid": {
       "type": "string",
       "pattern": "^gid://shopify/Order/[1-9][0-9]{0,30}$"

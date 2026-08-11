@@ -11,7 +11,7 @@
   "references": {
     "conversation_ref": "cwr_synthetic001",
     "incident_id": null,
-    "knowledge_version": "2026-08-11-v2",
+    "knowledge_version": "2026-08-11-v3",
     "workflow_release": "calapres-customer-service-edge-v1"
   },
   "occurred_at": "2026-08-11T12:09:00+03:00"
