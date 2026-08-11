@@ -90,6 +90,8 @@ project and acknowledging irreversibility.
 - Meta approved the live display name `Calapres | كالابريز` for the selected Calapres asset. Live
   Graph verification showed WABA `1835160094133742`, phone-number ID `1202498582954919`,
   `CONNECTED`, `CLOUD_API`, `VERIFIED`, and `STANDARD` throughput. Two-step verification is enabled.
+- The two-step PIN is stored only in the local macOS Keychain under
+  `Meta WhatsApp 2FA PIN - Phone ID 1202498582954919`; never copy it into GitHub or a workflow.
 - Chatwoot Cloud account `179973`, existing inbox `128058`, reports the same identifiers, approved
   name, connected phone, and successful webhook configuration.
 - A real bidirectional test passed from the owner's phone through Meta and Chatwoot and back to the

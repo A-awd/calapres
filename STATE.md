@@ -129,6 +129,9 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 - Meta approved that display name. The number is registered on Cloud API with status `CONNECTED`,
   platform type `CLOUD_API`, code verification `VERIFIED`, throughput `STANDARD`, and two-step
   verification enabled. The actual phone number remains intentionally masked in project records.
+- The current two-step PIN is stored only in the local macOS Keychain under
+  `Meta WhatsApp 2FA PIN - Phone ID 1202498582954919`; it is not stored in GitHub, documentation,
+  workflow data, or chat.
 - Chatwoot Cloud account `179973`, existing WhatsApp inbox `128058`, uses the same WABA and phone
   identifiers. Account Health reports the display name approved, phone connected, the 2K customer
   messaging tier, and the webhook configured successfully.
