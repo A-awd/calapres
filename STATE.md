@@ -144,11 +144,39 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 - No n8n customer-service workflow or automatic customer reply is active yet. Neither
   `calapres.com` nor the live Shopify store was changed.
 
+## Calapres customer-service observation runtime — 2026-08-11
+
+- The live Chatwoot audit covers account `179973` and the native Instagram `128031`, TikTok
+  `128033`, WhatsApp `128058`, and Email `128326` inboxes. Website inbox `128028` is outside the
+  pilot allowlist.
+- Captain is not connected to an inbox, AgentBot is not connected, automation rules are empty, and
+  no independent responder is active. The only Chatwoot agent is `خدمة عملاء كالابريز`; the four
+  pilot inboxes use automatic assignment and have business availability disabled.
+- The isolated n8n team project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) now contains eight
+  empty operational Data Tables for deduplication, conversation jobs, verified identity links,
+  the rebuildable order index, verification challenges, incidents, owner decisions, and audit.
+  The paused catalog table was not reused or changed.
+- Private Core workflow `uCBXuRjlv8NyeikO` and Calapres Edge workflow `e442GlRmKP4IO8pm` exist in
+  that project. Both are inactive and unpublished, have no assigned credential or public webhook,
+  contain no customer-egress node, and have execution-payload retention disabled.
+- Sanitized manual executions proved the Core/Edge happy path, all four allowlisted channel
+  mappings, and fail-closed behavior for unknown account/inbox, outgoing/private/bot events,
+  invalid signature evidence, duplicate delivery, stale generation, returns, uncertain intent,
+  and non-low risk. Every tested result kept customer egress false.
+- GitHub now contains the brand registry, two dated knowledge releases sourced from the live
+  Calapres policy/FAQ pages, generic Core contracts, stricter Calapres edge contracts, synthetic
+  fixtures, and standard-library contract tests. Eleven local tests pass.
+- The live observation connection is intentionally not granted yet. Chatwoot webhook/credential,
+  a dedicated Calapres LLM credential, identity-HMAC material, and any Shopify read-scope expansion
+  remain deliberate persistent-access gates. The current Shopify credential lacks `read_customers`;
+  live order/customer lookup remains disabled rather than guessed.
+
 ### Next safe action
 
-Inspect Chatwoot account `179973`, inbox `128058`, and n8n read-only. Record the implementation
-decision for AgentBot, reasoning, deduplication, and durable storage, then build the Calapres-only
-observation pilot. Keep automatic customer-facing replies disabled until every gate passes.
+After an action-time owner confirmation for those persistent-access gates, add the signed Chatwoot
+ingress and delayed observation worker, disable saved execution payloads, bind only Calapres-scoped
+credentials, and test real events as private internal observations. Keep automatic customer-facing
+replies structurally absent until the separate activation decision and every safety gate pass.
 
 ## Multi-brand ownership-evidence standard — 2026-08-11
 

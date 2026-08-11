@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "audit_id": "aud_synthetic0001",
+  "correlation_id": "calapres:synthetic:005",
+  "idempotency_key": "calapres:synthetic:event:005",
+  "event_type": "draft_observed",
+  "outcome": "success",
+  "reason_code": "grounded_draft_observed",
+  "actor_type": "system",
+  "references": {
+    "conversation_ref": "cwr_synthetic001",
+    "incident_id": null,
+    "knowledge_version": "2026-08-11-v2",
+    "workflow_release": "calapres-customer-service-edge-v1"
+  },
+  "occurred_at": "2026-08-11T12:09:00+03:00"
+}

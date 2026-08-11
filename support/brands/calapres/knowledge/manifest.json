@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "current_version": "2026-08-11-v2",
+  "versions": [
+    {
+      "version": "2026-08-11-v1",
+      "path": "support/brands/calapres/knowledge/2026-08-11-v1.json",
+      "status": "approved",
+      "effective_at": "2026-08-11",
+      "approval_basis": "decisions/0010-adopt-calapres-customer-service-runtime.md",
+      "supersedes": null,
+      "categories": [
+        "brand_identity",
+        "tone",
+        "authority"
+      ]
+    },
+    {
+      "version": "2026-08-11-v2",
+      "path": "support/brands/calapres/knowledge/2026-08-11-v2.json",
+      "status": "approved",
+      "effective_at": "2026-08-11",
+      "approval_basis": "decisions/0010-adopt-calapres-customer-service-runtime.md",
+      "supersedes": "2026-08-11-v1",
+      "categories": [
+        "brand_identity",
+        "tone",
+        "authority",
+        "shipping",
+        "returns",
+        "product_faq",
+        "legal_reference"
+      ]
+    }
+  ]
+}

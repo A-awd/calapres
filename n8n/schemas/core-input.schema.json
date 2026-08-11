@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/core-input.schema.json",
+  "title": "Optix Customer Service Core v1 input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event",
+    "runtime",
+    "capabilities",
+    "context"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "event": {
+      "$ref": "event-envelope.schema.json"
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "customer_egress_enabled",
+        "kill_switch"
+      ],
+      "properties": {
+        "mode": {
+          "const": "observation"
+        },
+        "customer_egress_enabled": {
+          "const": false
+        },
+        "kill_switch": {
+          "type": "boolean"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "customer_lookup",
+        "order_lookup"
+      ],
+      "properties": {
+        "customer_lookup": {
+          "enum": [
+            "disabled",
+            "enabled"
+          ]
+        },
+        "order_lookup": {
+          "enum": [
+            "disabled",
+            "enabled"
+          ]
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge_version",
+        "live_facts_status"
+      ],
+      "properties": {
+        "knowledge_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "live_facts_status": {
+          "enum": [
+            "not_requested",
+            "verified",
+            "unavailable",
+            "ambiguous"
+          ]
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent",
+        "risk",
+        "requested_action"
+      ],
+      "properties": {
+        "intent": {
+          "$ref": "#/$defs/intent"
+        },
+        "risk": {
+          "$ref": "#/$defs/risk"
+        },
+        "requested_action": {
+          "enum": [
+            "answer",
+            "none",
+            "read_fact",
+            "draft_reply",
+            "modify_order",
+            "cancel_order",
+            "issue_refund",
+            "disclose_data",
+            "approve_exception",
+            "unknown"
+          ]
+        },
+        "draft_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "$defs": {
+    "intent": {
+      "enum": [
+        "faq",
+        "order_status",
+        "tracking",
+        "inventory",
+        "product_question",
+        "shipping_policy",
+        "return_request",
+        "complaint",
+        "order_change",
+        "cancellation",
+        "refund",
+        "privacy",
+        "legal",
+        "payment_dispute",
+        "security",
+        "general",
+        "unknown"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ]
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/event-envelope.schema.json",
+  "title": "Generic normalized customer event envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "channel_capabilities",
+    "conversation_id",
+    "message_id",
+    "delivery_id",
+    "correlation_id",
+    "idempotency_key",
+    "event_at",
+    "direction",
+    "visibility",
+    "actor_type",
+    "sender_ref",
+    "content",
+    "flags"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "account_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "inbox_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "channel_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supports_text",
+        "supports_attachments",
+        "supports_public_reply"
+      ],
+      "properties": {
+        "supports_text": {
+          "type": "boolean"
+        },
+        "supports_attachments": {
+          "type": "boolean"
+        },
+        "supports_public_reply": {
+          "type": "boolean"
+        }
+      }
+    },
+    "conversation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "delivery_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
+    },
+    "event_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "direction": {
+      "const": "inbound"
+    },
+    "visibility": {
+      "const": "public"
+    },
+    "actor_type": {
+      "const": "contact"
+    },
+    "sender_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "const": "chatwoot_contact"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "text_present",
+        "attachment_count"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "text",
+            "media",
+            "mixed",
+            "unsupported"
+          ]
+        },
+        "text_present": {
+          "type": "boolean"
+        },
+        "attachment_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        }
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "is_bot_echo",
+        "is_private_note"
+      ],
+      "properties": {
+        "is_bot_echo": {
+          "const": false
+        },
+        "is_private_note": {
+          "const": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+[
+  {
+    "name": "reject unknown Chatwoot account",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/account_id",
+    "value": 999999
+  },
+  {
+    "name": "reject another brand at the Calapres edge",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/brand_id",
+    "value": "another-brand"
+  },
+  {
+    "name": "reject disabled website inbox",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/inbox_id",
+    "value": 128028
+  },
+  {
+    "name": "reject mismatched channel and inbox",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/channel",
+    "value": "instagram"
+  },
+  {
+    "name": "reject outgoing message",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/direction",
+    "value": "outgoing"
+  },
+  {
+    "name": "reject private note",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/flags/is_private_note",
+    "value": true
+  },
+  {
+    "name": "reject bot echo",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/flags/is_bot_echo",
+    "value": true
+  },
+  {
+    "name": "reject non-contact actor",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "replace",
+    "path": "/actor_type",
+    "value": "agent"
+  },
+  {
+    "name": "reject missing conversation",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "remove",
+    "path": "/conversation_id"
+  },
+  {
+    "name": "reject persisted message body",
+    "schema": "calapres-event-envelope",
+    "base_fixture": "valid/event-envelope--whatsapp.json",
+    "operation": "add",
+    "path": "/content/raw_text",
+    "value": "synthetic text that must not cross the normalized envelope"
+  },
+  {
+    "name": "reject live runtime",
+    "schema": "core-input",
+    "base_fixture": "valid/core-input--observation.json",
+    "operation": "replace",
+    "path": "/runtime/mode",
+    "value": "live"
+  },
+  {
+    "name": "reject enabled customer egress in core input",
+    "schema": "core-input",
+    "base_fixture": "valid/core-input--observation.json",
+    "operation": "replace",
+    "path": "/runtime/customer_egress_enabled",
+    "value": true
+  },
+  {
+    "name": "reject customer egress in core output",
+    "schema": "core-output",
+    "base_fixture": "valid/core-output--observed-draft.json",
+    "operation": "replace",
+    "path": "/customer_egress_allowed",
+    "value": true
+  },
+  {
+    "name": "reject high-risk observed draft",
+    "schema": "core-output",
+    "base_fixture": "valid/core-output--observed-draft.json",
+    "operation": "replace",
+    "path": "/risk",
+    "value": "high"
+  },
+  {
+    "name": "reject return request observed draft",
+    "schema": "core-output",
+    "base_fixture": "valid/core-output--observed-draft.json",
+    "operation": "replace",
+    "path": "/intent",
+    "value": "return_request"
+  },
+  {
+    "name": "reject raw phone field in identity link",
+    "schema": "identity-link",
+    "base_fixture": "valid/identity-link--verified.json",
+    "operation": "add",
+    "path": "/raw_phone",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject non-fingerprint identity source",
+    "schema": "identity-link",
+    "base_fixture": "valid/identity-link--verified.json",
+    "operation": "replace",
+    "path": "/source_id_fingerprint",
+    "value": "not-a-keyed-fingerprint"
+  },
+  {
+    "name": "reject raw message in incident",
+    "schema": "incident",
+    "base_fixture": "valid/incident--owner-review.json",
+    "operation": "add",
+    "path": "/raw_message",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject customer email in audit",
+    "schema": "audit-event",
+    "base_fixture": "valid/audit-event--draft-observed.json",
+    "operation": "add",
+    "path": "/customer_email",
+    "value": "synthetic-at-invalid.example"
+  },
+  {
+    "name": "reject unhashed dedup key",
+    "schema": "dedup-record",
+    "base_fixture": "valid/dedup-record--claimed.json",
+    "operation": "replace",
+    "path": "/idempotency_key",
+    "value": "plain-event-id"
+  }
+]

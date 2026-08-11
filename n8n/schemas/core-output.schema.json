@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/core-output.schema.json",
+  "title": "Optix Customer Service Core v1 output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "correlation_id",
+    "idempotency_key",
+    "decision",
+    "reason_code",
+    "authority",
+    "intent",
+    "risk",
+    "draft_allowed",
+    "customer_egress_allowed",
+    "requires_owner_review",
+    "incident_required",
+    "sanitized_audit"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 256
+    },
+    "decision": {
+      "enum": [
+        "no_action",
+        "observe_draft",
+        "escalate"
+      ]
+    },
+    "reason_code": {
+      "$ref": "#/$defs/reason_code"
+    },
+    "authority": {
+      "enum": [
+        "none",
+        "draft_only",
+        "owner_required"
+      ]
+    },
+    "intent": {
+      "enum": [
+        "faq",
+        "order_status",
+        "tracking",
+        "inventory",
+        "product_question",
+        "shipping_policy",
+        "return_request",
+        "complaint",
+        "order_change",
+        "cancellation",
+        "refund",
+        "privacy",
+        "legal",
+        "payment_dispute",
+        "security",
+        "general",
+        "unknown"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ]
+    },
+    "draft_allowed": {
+      "type": "boolean"
+    },
+    "customer_egress_allowed": {
+      "const": false
+    },
+    "requires_owner_review": {
+      "type": "boolean"
+    },
+    "incident_required": {
+      "type": "boolean"
+    },
+    "sanitized_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "reason_code"
+      ],
+      "properties": {
+        "event_type": {
+          "enum": [
+            "event_rejected",
+            "core_evaluated",
+            "core_decision",
+            "draft_observed",
+            "incident_requested",
+            "send_blocked"
+          ]
+        },
+        "reason_code": {
+          "$ref": "#/$defs/reason_code"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "reason_code": {
+      "enum": [
+        "envelope_invalid",
+        "runtime_not_observation",
+        "brand_kill_switch",
+        "unsupported_content",
+        "structured_candidate_missing",
+        "owner_authority_required",
+        "live_facts_not_verified",
+        "confidence_below_threshold",
+        "grounded_draft_missing",
+        "grounded_draft_observed",
+        "core_output_invalid",
+        "edge_rejected_core_output",
+        "signature_not_verified",
+        "replay_protection_not_verified",
+        "account_not_allowlisted",
+        "inbox_not_allowlisted",
+        "inbox_mismatch",
+        "event_not_supported",
+        "message_not_inbound",
+        "private_note_rejected",
+        "bot_echo_rejected",
+        "conversation_id_missing",
+        "message_id_missing",
+        "sender_ref_missing",
+        "event_time_invalid",
+        "routing_rejected",
+        "duplicate_event",
+        "stale_generation"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "observe_draft"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "reason_code": {
+            "const": "grounded_draft_observed"
+          },
+          "authority": {
+            "const": "draft_only"
+          },
+          "intent": {
+            "enum": [
+              "faq",
+              "order_status",
+              "tracking",
+              "inventory",
+              "product_question",
+              "shipping_policy",
+              "general"
+            ]
+          },
+          "risk": {
+            "const": "low"
+          },
+          "draft_allowed": {
+            "const": true
+          },
+          "requires_owner_review": {
+            "const": true
+          },
+          "incident_required": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "escalate"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "const": "owner_required"
+          },
+          "draft_allowed": {
+            "const": false
+          },
+          "requires_owner_review": {
+            "const": true
+          },
+          "incident_required": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "no_action"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authority": {
+            "const": "none"
+          },
+          "draft_allowed": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "risk": {
+            "const": "high"
+          }
+        },
+        "required": [
+          "risk"
+        ]
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "const": "escalate"
+          },
+          "authority": {
+            "const": "owner_required"
+          },
+          "requires_owner_review": {
+            "const": true
+          },
+          "incident_required": {
+            "const": true
+          }
+        }
+      }
+    }
+  ]
+}

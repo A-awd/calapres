@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/calapres-event-envelope.schema.json",
+  "title": "Calapres brand-edge event envelope v1",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "event-envelope.schema.json"
+    },
+    {
+      "required": [
+        "brand_id",
+        "account_id",
+        "inbox_id",
+        "channel"
+      ],
+      "properties": {
+        "brand_id": {
+          "const": "calapres"
+        },
+        "account_id": {
+          "const": 179973
+        },
+        "inbox_id": {
+          "enum": [
+            128031,
+            128033,
+            128058,
+            128326
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "instagram"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128031
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "tiktok"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128033
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "whatsapp"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128058
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "channel": {
+            "const": "email"
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inbox_id": {
+            "const": 128326
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "verification_id": "ver_synthetic0001",
+  "identity_link_id": "idl_synthetic0001",
+  "method": "exact_channel",
+  "status": "verified",
+  "challenge_fingerprint": null,
+  "created_at": "2026-08-11T12:06:00+03:00",
+  "expires_at": null,
+  "verified_at": "2026-08-11T12:06:00+03:00",
+  "revoked_at": null
+}

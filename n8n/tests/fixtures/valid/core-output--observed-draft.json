@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "correlation_id": "calapres:synthetic:002",
+  "idempotency_key": "calapres:synthetic:event:002",
+  "decision": "observe_draft",
+  "reason_code": "grounded_draft_observed",
+  "authority": "draft_only",
+  "intent": "shipping_policy",
+  "risk": "low",
+  "draft_allowed": true,
+  "customer_egress_allowed": false,
+  "requires_owner_review": true,
+  "incident_required": false,
+  "sanitized_audit": {
+    "event_type": "core_decision",
+    "reason_code": "grounded_draft_observed"
+  }
+}

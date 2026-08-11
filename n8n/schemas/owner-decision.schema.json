@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-decision.schema.json",
+  "title": "Calapres owner case or knowledge decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "decision_id",
+    "incident_id",
+    "action",
+    "approver_ref",
+    "case_reply_ref",
+    "knowledge_version_to_publish",
+    "supersedes_knowledge_version",
+    "decided_at",
+    "effective_at",
+    "expires_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^dec_[A-Za-z0-9_-]{8,80}$"
+    },
+    "incident_id": {
+      "type": "string",
+      "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+    },
+    "action": {
+      "enum": [
+        "reply_only",
+        "approve",
+        "approve_until",
+        "correct"
+      ]
+    },
+    "approver_ref": {
+      "type": "string",
+      "pattern": "^own_[A-Za-z0-9_-]{6,80}$"
+    },
+    "case_reply_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^dft_[A-Za-z0-9_-]{6,128}$"
+    },
+    "knowledge_version_to_publish": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"
+    },
+    "supersedes_knowledge_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effective_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "reply_only"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "case_reply_ref": {
+            "type": "string"
+          },
+          "knowledge_version_to_publish": {
+            "type": "null"
+          },
+          "expires_at": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "enum": [
+              "approve",
+              "correct"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "knowledge_version_to_publish": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "approve_until"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "knowledge_version_to_publish": {
+            "type": "string"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "correct"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "supersedes_knowledge_version": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

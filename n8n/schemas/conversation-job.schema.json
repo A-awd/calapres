@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/conversation-job.schema.json",
+  "title": "Calapres conversation batching job",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "conversation_fingerprint",
+    "message_fingerprint",
+    "generation",
+    "status",
+    "last_inbound_at",
+    "not_before",
+    "cancel_reason",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "conversation_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "message_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "waiting",
+        "superseded",
+        "ready",
+        "cancelled",
+        "observed"
+      ]
+    },
+    "last_inbound_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "not_before": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancel_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "newer_inbound",
+        "human_intervention",
+        "private_owner_instruction",
+        "status_changed",
+        "owner_changed",
+        "kill_switch",
+        "duplicate_event"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

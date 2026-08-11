@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/verification-record.schema.json",
+  "title": "Calapres identity verification record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "verification_id",
+    "identity_link_id",
+    "method",
+    "status",
+    "challenge_fingerprint",
+    "created_at",
+    "expires_at",
+    "verified_at",
+    "revoked_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "verification_id": {
+      "type": "string",
+      "pattern": "^ver_[A-Za-z0-9_-]{8,80}$"
+    },
+    "identity_link_id": {
+      "type": "string",
+      "pattern": "^idl_[A-Za-z0-9_-]{8,80}$"
+    },
+    "method": {
+      "enum": [
+        "exact_channel",
+        "otp",
+        "owner_confirmed",
+        "shopify_verified"
+      ]
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "verified",
+        "failed",
+        "expired",
+        "revoked"
+      ]
+    },
+    "challenge_fingerprint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "verified_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "revoked_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "verified"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "revoked"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "revoked_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  ]
+}

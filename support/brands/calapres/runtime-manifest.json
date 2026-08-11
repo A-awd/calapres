@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "captured_at": "2026-08-11T00:00:00+03:00",
+  "n8n_project": {
+    "name": "Calapres Customer Service",
+    "id": "0kVami0vGGBbT7Cy",
+    "isolation_status": "calapres_scoped"
+  },
+  "workflows": [
+    {
+      "logical_name": "optix_customer_service_core_v1",
+      "id": "uCBXuRjlv8NyeikO",
+      "state": "inactive",
+      "published": false,
+      "public_webhook": false,
+      "customer_egress": false,
+      "manual_test_execution_ids": [
+        40576,
+        40600,
+        40601,
+        40602,
+        40603
+      ]
+    },
+    {
+      "logical_name": "calapres_customer_service_edge_v1",
+      "id": "e442GlRmKP4IO8pm",
+      "state": "inactive",
+      "published": false,
+      "public_webhook": false,
+      "customer_egress": false,
+      "manual_test_execution_ids": {
+        "happy_path": 40577,
+        "post_risk_correction_happy_path": 40605,
+        "instagram": 40579,
+        "tiktok": 40581,
+        "email": 40583,
+        "fail_closed": [
+          40585,
+          40586,
+          40587,
+          40588,
+          40589,
+          40590,
+          40591,
+          40592
+        ]
+      }
+    }
+  ],
+  "data_tables": [
+    {
+      "logical_name": "dedup",
+      "id": "PgsnBFCtwWGysCdp",
+      "schema": "n8n/schemas/dedup-record.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "jobs",
+      "id": "9wy6FpcDoNbrK3BM",
+      "schema": "n8n/schemas/conversation-job.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "customer_links",
+      "id": "27Gt4Wwgvz0005rL",
+      "schema": "n8n/schemas/identity-link.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "order_index",
+      "id": "cMp5lpr89DlUL6eT",
+      "schema": "n8n/schemas/order-index-record.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "verification",
+      "id": "MoYzflU3ekrar6dR",
+      "schema": "n8n/schemas/verification-record.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "incidents",
+      "id": "N3UJZWRMNehLX4l7",
+      "schema": "n8n/schemas/incident.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "approvals",
+      "id": "mjSEDJWfXqCL0sG0",
+      "schema": "n8n/schemas/owner-decision.schema.json",
+      "state": "empty"
+    },
+    {
+      "logical_name": "audit",
+      "id": "4YBUAuuEgXYiaybJ",
+      "schema": "n8n/schemas/audit-event.schema.json",
+      "state": "empty"
+    }
+  ],
+  "safety": {
+    "customer_egress_enabled": false,
+    "execution_payload_retention": "none",
+    "manual_execution_data_saved": false,
+    "tables_contain_customer_data": false,
+    "paused_catalog_table_reused": false,
+    "secrets_recorded": false
+  }
+}

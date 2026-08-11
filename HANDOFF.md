@@ -42,19 +42,29 @@ another brand implementation.
   `1202498582954919`; the phone is `CONNECTED`, verified, and protected by two-step verification.
 - Chatwoot Cloud account `179973` and its existing WhatsApp inbox `128058` use those same IDs. The
   webhook is configured and a real inbound, outbound, and owner-acknowledgement test passed.
-- No n8n customer-service agent or automatic customer-facing reply is active yet.
+- The native Calapres Instagram `128031`, TikTok `128033`, WhatsApp `128058`, and Email `128326`
+  inboxes are the exact customer-service pilot allowlist. Website inbox `128028` remains disabled
+  for this pilot.
+- n8n project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) contains eight empty isolated
+  operational tables. Core `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are inactive and
+  unpublished, have no credentials or public webhook, have no customer-send node, and do not save
+  success, error, manual, or progress execution payloads.
+- Repository contracts, synthetic fixtures, and eleven local tests cover the shared Core and the
+  stricter Calapres edge. Sanitized n8n runs proved the four channel mappings and the principal
+  fail-closed paths. No n8n customer-service agent or automatic customer-facing reply is active.
 
 ## Exact next actions
 
-1. Continue with decision 0010, which records the completed Chatwoot/n8n audit and fixes the
-   Calapres edge, immutable Core, direct structured LLM, persistence, deduplication, and no-send
-   boundaries.
-2. Create the Calapres-isolated n8n project/tables and the inactive observation workflows from the
-   validated repository source.
-3. Handle Chatwoot credential/webhook and Shopify `read_customers` only at their deliberate
-   persistent-access gates; do not bypass either requirement.
-4. Prove brand routing, grounded draft generation, deduplication, delay cancellation, and owner
-   review before enabling an automatic customer-facing reply.
+1. Continue with decision 0010 and `docs/calapres-customer-service-pilot.md`; do not recreate the
+   already-built project, tables, Core, Edge, registry, knowledge releases, contracts, or fixtures.
+2. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
+   Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
+   observation.
+3. Add signed Chatwoot ingress and a separate delayed worker that persists only opaque identifiers,
+   then re-reads the conversation after the delay. Disable saved execution payloads before any real
+   customer event enters n8n.
+4. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
+   intervention, and verified Shopify retrieval. This does not authorize customer-facing replies.
 5. Review the four draft products directly in Shopify.
 6. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
 7. Record owner publication approval, publish in Shopify, and verify storefront and Catalog

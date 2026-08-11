@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/identity-link.schema.json",
+  "title": "Calapres verified channel identity link",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "identity_link_id",
+    "channel",
+    "chatwoot_contact_ref",
+    "source_id_fingerprint",
+    "fingerprint_key_version",
+    "customer_ref",
+    "verification",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "identity_link_id": {
+      "type": "string",
+      "pattern": "^idl_[A-Za-z0-9_-]{8,80}$"
+    },
+    "channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "chatwoot_contact_ref": {
+      "type": "string",
+      "pattern": "^cwct_[A-Za-z0-9_-]{4,80}$"
+    },
+    "source_id_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fingerprint_key_version": {
+      "type": "string",
+      "pattern": "^hmac-sha256-v[1-9][0-9]*$"
+    },
+    "customer_ref": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "system",
+            "id"
+          ],
+          "properties": {
+            "system": {
+              "enum": [
+                "shopify",
+                "internal"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{6,128}$"
+            }
+          }
+        }
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "method",
+        "verified_at",
+        "revoked_at",
+        "evidence_ref"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unverified",
+            "verified",
+            "revoked"
+          ]
+        },
+        "method": {
+          "enum": [
+            "exact_channel",
+            "otp",
+            "owner_confirmed",
+            "shopify_verified",
+            "revoked"
+          ]
+        },
+        "verified_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "revoked_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "evidence_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^ver_[A-Za-z0-9_-]{8,80}$"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "status": {
+                "const": "verified"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "verified_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "evidence_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "customer_ref": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "status": {
+                "const": "revoked"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verification": {
+            "properties": {
+              "method": {
+                "const": "revoked"
+              },
+              "revoked_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

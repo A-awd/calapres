@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "event": {
+    "schema_version": "1.0",
+    "brand_id": "calapres",
+    "account_id": 179973,
+    "inbox_id": 128326,
+    "channel": "email",
+    "channel_capabilities": {
+      "supports_text": true,
+      "supports_attachments": true,
+      "supports_public_reply": true
+    },
+    "conversation_id": "synthetic-conversation-002",
+    "message_id": "synthetic-message-002",
+    "delivery_id": null,
+    "correlation_id": "calapres:synthetic:002",
+    "idempotency_key": "calapres:synthetic:event:002",
+    "event_at": "2026-08-11T12:01:00+03:00",
+    "direction": "inbound",
+    "visibility": "public",
+    "actor_type": "contact",
+    "sender_ref": {
+      "kind": "chatwoot_contact",
+      "id": "synthetic-contact-002"
+    },
+    "content": {
+      "kind": "text",
+      "text_present": true,
+      "attachment_count": 0
+    },
+    "flags": {
+      "is_bot_echo": false,
+      "is_private_note": false
+    }
+  },
+  "runtime": {
+    "mode": "observation",
+    "customer_egress_enabled": false,
+    "kill_switch": true
+  },
+  "capabilities": {
+    "customer_lookup": "disabled",
+    "order_lookup": "disabled"
+  },
+  "context": {
+    "knowledge_version": "2026-08-11-v2",
+    "live_facts_status": "not_requested"
+  },
+  "candidate": {
+    "intent": "shipping_policy",
+    "risk": "low",
+    "requested_action": "answer",
+    "draft_text": "مسودة تجريبية بلا بيانات عميل.",
+    "confidence": 0.95
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/order-index-record.schema.json",
+  "title": "Calapres derived Shopify lookup index record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "lookup_fingerprint",
+    "fingerprint_key_version",
+    "shopify_customer_ref",
+    "shopify_order_ref",
+    "status",
+    "indexed_at",
+    "expires_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "lookup_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fingerprint_key_version": {
+      "type": "string",
+      "pattern": "^hmac-sha256-v[1-9][0-9]*$"
+    },
+    "shopify_customer_ref": {
+      "type": "string",
+      "pattern": "^shc_[A-Za-z0-9_-]{6,128}$"
+    },
+    "shopify_order_ref": {
+      "type": "string",
+      "pattern": "^sho_[A-Za-z0-9_-]{6,128}$"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "stale",
+        "revoked"
+      ]
+    },
+    "indexed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

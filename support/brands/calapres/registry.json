@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "display_name": {
+    "en": "Calapres",
+    "ar": "كالابريز",
+    "approved_public_name": "Calapres | كالابريز"
+  },
+  "runtime": {
+    "status": "test",
+    "mode": "observation",
+    "core_release": "optix-customer-service-core-v1",
+    "customer_egress_enabled": false,
+    "kill_switch": true
+  },
+  "chatwoot": {
+    "account_id": 179973,
+    "channels": [
+      {
+        "channel": "instagram",
+        "inbox_id": 128031,
+        "enabled": true,
+        "accept_events": true,
+        "response_delay_class": "chat",
+        "identity_scope": "channel_sender"
+      },
+      {
+        "channel": "tiktok",
+        "inbox_id": 128033,
+        "enabled": true,
+        "accept_events": true,
+        "response_delay_class": "chat",
+        "identity_scope": "conversation"
+      },
+      {
+        "channel": "whatsapp",
+        "inbox_id": 128058,
+        "enabled": true,
+        "accept_events": true,
+        "response_delay_class": "chat",
+        "identity_scope": "channel_sender"
+      },
+      {
+        "channel": "email",
+        "inbox_id": 128326,
+        "enabled": true,
+        "accept_events": true,
+        "response_delay_class": "email",
+        "identity_scope": "channel_sender"
+      },
+      {
+        "channel": "website",
+        "inbox_id": 128028,
+        "enabled": false,
+        "accept_events": false,
+        "response_delay_class": "disabled",
+        "identity_scope": "unvalidated",
+        "disabled_reason": "not_validated_for_pilot"
+      }
+    ],
+    "single_responder": {
+      "captain_connected": false,
+      "agentbot_connected": false,
+      "reply_automation_enabled": false
+    }
+  },
+  "delay_policy": {
+    "observation_only": true,
+    "chat_seconds": {
+      "minimum": 30,
+      "maximum": 75
+    },
+    "email_seconds": {
+      "minimum": 120,
+      "maximum": 300
+    },
+    "restart_on_new_inbound": true,
+    "cancel_on_human_intervention": true
+  },
+  "knowledge": {
+    "namespace": "calapres",
+    "current_version": "2026-08-11-v2",
+    "manifest_path": "support/brands/calapres/knowledge/manifest.json"
+  },
+  "live_sources": {
+    "shopify": {
+      "role": "commerce_source_of_truth",
+      "credential_binding": "Shopify-Calapres",
+      "customer_lookup": "disabled",
+      "order_lookup": "disabled",
+      "activation_gate": "prove_required_read_scopes_and_live_lookup"
+    },
+    "chatwoot": {
+      "role": "channel_conversation_source",
+      "credential_binding": null,
+      "activation_gate": "create_and_approve_persistent_credential_before_live_webhook"
+    },
+    "llm": {
+      "role": "structured_classification_and_drafting_only",
+      "credential_binding": null,
+      "activation_gate": "bind_fixed_calapres_scoped_credential"
+    }
+  },
+  "data_policy": {
+    "persist_message_bodies": false,
+    "persist_attachments": false,
+    "persist_raw_phone_numbers": false,
+    "persist_raw_email_addresses": false,
+    "persist_addresses": false,
+    "persist_order_payloads": false,
+    "persist_payment_data": false,
+    "identity_lookup": "keyed_hmac_fingerprint",
+    "cross_brand_linking": false
+  }
+}
