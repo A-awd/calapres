@@ -2,8 +2,8 @@
 
 ## Resume from
 
-Continue from the latest verified `main` revision. Decision 0006 is binding: Calapres is
-Shopify-native and Supabase is retired.
+Continue from `main` revision `ac5224b`. Decision 0006 is binding for the Shopify-native
+architecture, and decision 0007 is binding for the isolated Calapres ownership-proof site.
 
 ## Completed in the Supabase retirement
 
@@ -37,13 +37,18 @@ Shopify-native and Supabase is retired.
 
 ## Exact next actions
 
-1. Review the four draft products directly in Shopify.
-2. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
-3. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
+1. Wait for the GitHub Pages custom-domain TLS certificate, enable HTTPS enforcement, and validate
+   `https://awd-businesses.com/` before any Meta display-name action.
+2. After the ownership-site validation, reopen the exact Calapres Meta assets and decide the next
+   display-name action from their live status; do not submit from stale identifiers.
+3. Review the four draft products directly in Shopify.
+4. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
+5. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
    inclusion.
-4. Collect the missing Saudi legal identity and complaint details.
-5. Reconcile the live theme source into `main` before further theme-code deployment.
-6. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
+6. Collect the missing commercial-register number, VAT number if applicable, verified phone, and
+   complaint-response commitments.
+7. Reconcile the live theme source into `main` before further theme-code deployment.
+8. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
 
 ## Do not do
 

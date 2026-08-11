@@ -34,6 +34,8 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 
 - The active repository surface is the Shopify theme under `assets`, `config`, `layout`, `locales`,
   `sections`, `snippets`, and `templates`.
+- The isolated `owner-site/` surface and its GitHub Pages workflow publish only the Calapres
+  legal-ownership evidence page; they are not part of the Shopify theme or its deployment path.
 - Those theme directories contain no Supabase dependency.
 - The existing deployment workflow does not depend on Supabase.
 - The live theme is still ahead of `main`; theme-source reconciliation remains a separate task.
@@ -64,8 +66,9 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 
 1. The four Shopify drafts still need owner-approved inventory, final product data, and publication
    decisions; the stand also needs approved media.
-2. Saudi compliance still needs the verified legal entity name, commercial-register number, VAT
-   number if applicable, verified phone, and complaint-response commitments.
+2. The Calapres ownership page now identifies `مؤسسة عبق الخيل للتجارة` as the legal owner. Saudi
+   compliance still needs the commercial-register number, VAT number if applicable, verified
+   phone, and complaint-response commitments.
 3. The live theme must be reconciled into `main` before theme-code changes are deployed safely.
 4. The public free-shipping announcement still needs a fresh render check for the saved SAR 320
    threshold.
@@ -75,9 +78,9 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 
 ## Next safe action
 
-Review the four draft products directly in Shopify. Complete their media, price, inventory,
-collections, SEO, and sales-channel settings; obtain the owner's publication approval; then publish
-and verify them in Shopify and Shopify Catalog.
+Complete the `awd-businesses.com` custom-domain transition: wait for GitHub to issue the TLS
+certificate, enable HTTPS enforcement, and verify the exact ownership page at the public HTTPS URL
+before any Meta display-name action.
 
 ## Constraints
 
