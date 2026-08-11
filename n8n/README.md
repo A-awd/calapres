@@ -16,6 +16,10 @@ a customer database, or a customer-facing bot release.
   because Shopify order events and reconciliation are a different ingress domain. It accepts only
   keyed fingerprints and opaque Shopify references, maps them to the exact 12-column live table
   contract, and performs no Data Table or Shopify write.
+- `workflows/calapres-owner-review-desk-v1.ts` — a separate private, inactive owner-command
+  validator. It binds the exact case, incident revision, owner, private-message fingerprint,
+  nonce, and content digests, then emits only a lossless no-write preview. It has no public
+  webhook, credential, Data Table node, model, customer send, or knowledge publication action.
 - `schemas/` — strict JSON contracts for the reusable event/Core contracts, the stricter Calapres
   edge envelope, the provider-neutral structured model candidate, the identifiers-only Wait
   state, the post-delay recheck, and every approved operational record class. The Core input
@@ -45,7 +49,8 @@ outgoing messages, private notes, bot echoes, missing routing fields, live mode,
 another brand at the Calapres edge, high-risk drafts, raw identity values, raw Wait state,
 unverified post-delay rechecks, payload-supplied transport claims, invented or owner-only knowledge
 references, mismatched live-fact IDs, adversarial free-text model drafts, non-HMAC order-index
-commands, and raw incident/audit fields all fail closed. A model draft is never forwarded as the
+commands, raw incident/audit fields, mismatched owner/case/revision references, replay timing, and
+untrusted owner commands all fail closed. A model draft is never forwarded as the
 grounded result; the Core renders from the approved knowledge or verified live-fact response text.
 The generic Core envelope and provider-neutral candidate contract separately accept future brand
 logic so the shared Core does not need to be edited for each brand or model provider.
@@ -80,9 +85,9 @@ Decision 0010 authorizes eight empty, Calapres-scoped operational tables in the 
 | `customer_links` | verified opaque channel links | `identity-link.schema.json` |
 | `order_index` | keyed lookup fingerprints and opaque Shopify references | `order-index-table-row.schema.json` |
 | `verification` | identity verification lifecycle | `verification-record.schema.json` |
-| `incidents` | sanitized escalations | `incident.schema.json` |
-| `approvals` | structured owner decisions | `owner-decision.schema.json` |
-| `audit` | sanitized durable audit events | `audit-event.schema.json` |
+| `incidents` | sanitized escalations | `incident.schema.json`; owner projection `owner-incident-table-row.schema.json` |
+| `approvals` | structured owner decisions | `owner-decision.schema.json`; exact projection `owner-approval-required-row.schema.json` |
+| `audit` | sanitized durable audit events | `audit-event.schema.json`; owner projection `owner-audit-table-row.schema.json` |
 
 Exact non-secret IDs live in `support/brands/calapres/runtime-manifest.json`. The existing paused
 catalog table is not part of this runtime.
@@ -99,11 +104,13 @@ is safe.
 4. Confirm the merged Wait carrier contains only the strict identifier/control contract and that
    the live-re-read placeholder fails closed until a Chatwoot credential is approved.
 5. Validate and import the Shopify order-index workflow inactive; do not bind a credential yet.
-6. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
-7. Exercise all synthetic fail-closed cases and inspect sanitized records.
-8. Handle the Chatwoot persistent-access gate and Shopify read-scope gate separately.
-9. Connect a live webhook only after signature and replay verification are real, not payload flags.
-10. Run observation with customer egress structurally absent.
+6. Validate and import the private Owner Review Desk inactive with caller policy `none`; keep every
+   persistence and publication path absent.
+7. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
+8. Exercise all synthetic fail-closed cases and inspect sanitized records.
+9. Handle the Chatwoot persistent-access gate and Shopify read-scope gate separately.
+10. Connect a live webhook only after signature and replay verification are real, not payload flags.
+11. Run observation with customer egress structurally absent.
 
 Adding a send node, activating automatic customer replies, onboarding another brand, or granting
 write authority requires a later explicit owner approval and the remaining gates in decision 0010.

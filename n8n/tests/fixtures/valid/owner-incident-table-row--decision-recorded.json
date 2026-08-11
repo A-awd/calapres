@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "incident_revision": 1,
+  "correlation_id": "calapres:synthetic:004",
+  "reason_code": "owner_authority_required",
+  "draft_ref": "dft_synthetic001",
+  "conversation_id": "cwr_synthetic001",
+  "created_at": "2026-08-11T09:07:00.000Z",
+  "incident_id": "inc_synthetic0001",
+  "incident_type": "return_or_refund",
+  "order_ref": null,
+  "owner_decision": "dec_synthetic0001",
+  "proposed_action": "reply_only",
+  "resolved_at": null,
+  "severity": "medium",
+  "status": "awaiting_owner",
+  "summary_sanitized": "Incident inc_synthetic0001 remains awaiting owner; category=return_or_refund; reason=owner_authority_required; decision=reply_only recorded as preview only.",
+  "updated_at": "2026-08-11T09:08:00.000Z"
+}

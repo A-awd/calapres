@@ -8,6 +8,7 @@
     "schema_version",
     "brand_id",
     "incident_id",
+    "revision",
     "correlation_id",
     "conversation_ref",
     "order_ref",
@@ -32,6 +33,10 @@
     "incident_id": {
       "type": "string",
       "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
     },
     "correlation_id": {
       "type": "string",

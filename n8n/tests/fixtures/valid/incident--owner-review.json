@@ -2,6 +2,7 @@
   "schema_version": "1.0",
   "brand_id": "calapres",
   "incident_id": "inc_synthetic0001",
+  "revision": 1,
   "correlation_id": "calapres:synthetic:004",
   "conversation_ref": "cwr_synthetic001",
   "order_ref": null,

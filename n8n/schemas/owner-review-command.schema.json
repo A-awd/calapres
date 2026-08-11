@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-review-command.schema.json",
+  "title": "Calapres private owner review command",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trusted_owner_ingress",
+    "payload"
+  ],
+  "properties": {
+    "trusted_owner_ingress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "brand_id",
+        "kind",
+        "source",
+        "account_id",
+        "inbox_id",
+        "channel",
+        "conversation_ref",
+        "source_private_message_fingerprint",
+        "fingerprint_key_version",
+        "owner_authenticated",
+        "owner_authorized",
+        "replay_protection_verified",
+        "incident_lookup_verified",
+        "incident_snapshot_sanitized",
+        "owner_ref",
+        "incident_id",
+        "incident_revision",
+        "review_idempotency_fingerprint",
+        "command_digest",
+        "auth_evidence_fingerprint",
+        "nonce_fingerprint",
+        "nonce_issued_at",
+        "nonce_expires_at",
+        "verified_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "brand_id": {
+          "const": "calapres"
+        },
+        "kind": {
+          "const": "owner_review_topology_v1"
+        },
+        "source": {
+          "const": "private_owner_review_topology"
+        },
+        "account_id": {
+          "const": 179973
+        },
+        "inbox_id": {
+          "enum": [
+            128031,
+            128033,
+            128058,
+            128326
+          ]
+        },
+        "channel": {
+          "enum": [
+            "instagram",
+            "tiktok",
+            "whatsapp",
+            "email"
+          ]
+        },
+        "conversation_ref": {
+          "type": "string",
+          "pattern": "^cwr_[A-Za-z0-9_-]{6,128}$"
+        },
+        "source_private_message_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "fingerprint_key_version": {
+          "type": "string",
+          "pattern": "^hmac-sha256-v[1-9][0-9]*$"
+        },
+        "owner_authenticated": {
+          "const": true
+        },
+        "owner_authorized": {
+          "const": true
+        },
+        "replay_protection_verified": {
+          "const": true
+        },
+        "incident_lookup_verified": {
+          "const": true
+        },
+        "incident_snapshot_sanitized": {
+          "const": true
+        },
+        "owner_ref": {
+          "type": "string",
+          "pattern": "^own_[A-Za-z0-9_-]{6,80}$"
+        },
+        "incident_id": {
+          "type": "string",
+          "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+        },
+        "incident_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "review_idempotency_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "command_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "auth_evidence_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "nonce_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "nonce_issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nonce_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "brand_id",
+        "incident_snapshot",
+        "decision"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "brand_id": {
+          "const": "calapres"
+        },
+        "incident_snapshot": {
+          "allOf": [
+            {
+              "$ref": "incident.schema.json"
+            },
+            {
+              "properties": {
+                "correlation_id": {
+                  "type": "string",
+                  "pattern": "^calapres:[A-Za-z0-9:_-]{1,100}$"
+                },
+                "status": {
+                  "const": "awaiting_owner"
+                },
+                "owner_decision_ref": {
+                  "type": "null"
+                },
+                "draft_ref": {
+                  "type": "string"
+                },
+                "resolved_at": {
+                  "type": "null"
+                }
+              }
+            }
+          ]
+        },
+        "decision": {
+          "$ref": "owner-decision.schema.json"
+        }
+      }
+    }
+  }
+}

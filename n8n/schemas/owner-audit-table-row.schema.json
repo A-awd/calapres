@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-audit-table-row.schema.json",
+  "title": "Exact live audit table row preview for owner review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "idempotency_key",
+    "outcome",
+    "actor_type",
+    "conversation_ref",
+    "incident_id",
+    "knowledge_version",
+    "workflow_release",
+    "audit_id",
+    "correlation_id",
+    "created_at",
+    "decision",
+    "details_sanitized",
+    "event_type",
+    "reason_code",
+    "source_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "outcome": {
+      "const": "validated_no_write"
+    },
+    "actor_type": {
+      "const": "owner"
+    },
+    "conversation_ref": {
+      "type": "string",
+      "pattern": "^cwr_[A-Za-z0-9_-]{6,128}$"
+    },
+    "incident_id": {
+      "type": "string",
+      "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+    },
+    "knowledge_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"
+    },
+    "workflow_release": {
+      "const": "calapres-owner-review-desk-v1"
+    },
+    "audit_id": {
+      "type": "string",
+      "pattern": "^aud_[A-Za-z0-9_-]{8,80}$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^calapres:[A-Za-z0-9:_-]{1,100}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "const": "owner_decision_preview"
+    },
+    "details_sanitized": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "event_type": {
+      "const": "owner_decision_recorded"
+    },
+    "reason_code": {
+      "const": "owner_decision_validated_no_write"
+    },
+    "source_ref": {
+      "type": "string",
+      "pattern": "^dec_[A-Za-z0-9_-]{8,80}$"
+    }
+  }
+}

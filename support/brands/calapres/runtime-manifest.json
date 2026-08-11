@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "brand_id": "calapres",
-  "captured_at": "2026-08-11T18:10:30+03:00",
+  "captured_at": "2026-08-11T18:49:38+03:00",
   "n8n_project": {
     "name": "Calapres Customer Service",
     "id": "0kVami0vGGBbT7Cy",
@@ -85,6 +85,26 @@
         "embedded_code_regression_caught_execution_id": 40615,
         "post_fix_success_execution_id": 40619
       }
+    },
+    {
+      "logical_name": "calapres_owner_review_desk_v1",
+      "id": "hU7sAMAQSg9Obgky",
+      "state": "inactive",
+      "published": false,
+      "public_webhook": false,
+      "credentials_bound": false,
+      "node_count": 7,
+      "source_path": "n8n/workflows/calapres-owner-review-desk-v1.ts",
+      "input_schema": "n8n/schemas/owner-review-command.schema.json",
+      "output_schema": "n8n/schemas/owner-review-persistence-preview.schema.json",
+      "customer_egress": false,
+      "data_table_write": false,
+      "knowledge_publish": false,
+      "caller_policy": "none",
+      "synthetic_validation": {
+        "success_execution_id": 40631,
+        "result": "owner_decision_validated_no_write"
+      }
     }
   ],
   "data_tables": [
@@ -122,18 +142,24 @@
       "logical_name": "incidents",
       "id": "N3UJZWRMNehLX4l7",
       "schema": "n8n/schemas/incident.schema.json",
+      "table_row_schema": "n8n/schemas/owner-incident-table-row.schema.json",
+      "column_count": 18,
       "state": "empty"
     },
     {
       "logical_name": "approvals",
       "id": "mjSEDJWfXqCL0sG0",
       "schema": "n8n/schemas/owner-decision.schema.json",
+      "table_row_schema": "n8n/schemas/owner-approval-required-row.schema.json",
+      "column_count": 34,
       "state": "empty"
     },
     {
       "logical_name": "audit",
       "id": "4YBUAuuEgXYiaybJ",
       "schema": "n8n/schemas/audit-event.schema.json",
+      "table_row_schema": "n8n/schemas/owner-audit-table-row.schema.json",
+      "column_count": 17,
       "state": "empty"
     }
   ],
@@ -145,6 +171,8 @@
     "tables_contain_customer_data": false,
     "wait_state_contains_customer_content": false,
     "shopify_index_writes_enabled": false,
+    "owner_review_writes_enabled": false,
+    "owner_review_knowledge_publish_enabled": false,
     "paused_catalog_table_reused": false,
     "secrets_recorded": false
   }

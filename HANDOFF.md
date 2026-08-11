@@ -48,16 +48,22 @@ runtime, its no-send boundary, and its persistent-access gates.
   for this pilot.
 - n8n project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) contains eight empty isolated
   operational tables. Core `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are inactive and
-  unpublished. Shopify Order Index `cLHCuJ21r4RAuDTE` is likewise inactive and unpublished. All
-  three have no credentials or public webhook, have no customer-send or Shopify-write node, and do
+  unpublished. Shopify Order Index `cLHCuJ21r4RAuDTE` and Owner Review Desk
+  `hU7sAMAQSg9Obgky` are likewise inactive and unpublished. All four have no credentials or public
+  webhook, have no customer-send or Shopify-write node, and do
   not retain success, error, manual, or progress execution payloads under current settings.
+- The approvals, incidents, and audit table schemas are aligned to the exact lossless owner-review
+  projections at 34, 18, and 17 columns. The tables remain empty. Owner Review Desk caller policy
+  is `none`, it contains no Data Table node, and its four decision actions remain previews with all
+  writes and knowledge publication disabled.
 - The Edge now includes the identifiers-only Wait and post-delay recheck; there is no separate
   delayed worker. The index maps only HMAC fingerprints and opaque Shopify references to the exact
   12-column empty order-index table and still performs no write.
-- Repository contracts, synthetic fixtures, and thirty local tests cover the shared Core, strict
+- Repository contracts, synthetic fixtures, and thirty-four local tests cover the shared Core, strict
   knowledge/live-fact grounding, transport-claim rejection, the stricter Calapres edge, embedded
-  n8n Code syntax, and the index table-row mapper. Sanitized n8n runs `40625` and `40619` passed
-  after the final fixes with customer egress, Data Table writes, and Shopify writes all false.
+  n8n Code syntax, the index table-row mapper, and the owner-decision trust boundary. Sanitized n8n
+  runs `40625`, `40619`, and Owner Review Desk run `40631` passed after the final fixes with
+  customer egress, Data Table writes, knowledge publication, and Shopify writes all false.
   No n8n customer-service agent or automatic customer-facing reply is active.
 - The model's free-text draft has no authority and is not forwarded. A grounded observation draft
   is rendered deterministically from versioned `customer_response_ar` or a verified live-source
@@ -66,7 +72,8 @@ runtime, its no-send boundary, and its persistent-access gates.
 ## Exact next actions
 
 1. Continue with decision 0010 and `docs/calapres-customer-service-pilot.md`; do not recreate the
-   already-built project, tables, Core, Edge, registry, knowledge releases, contracts, or fixtures.
+   already-built project, tables, Core, Edge, Order Index, Owner Review Desk, registry, knowledge
+   releases, contracts, or fixtures.
 2. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
    Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
    observation.

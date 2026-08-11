@@ -157,10 +157,16 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   empty operational Data Tables for deduplication, conversation jobs, verified identity links,
   the rebuildable order index, verification challenges, incidents, owner decisions, and audit.
   The paused catalog table was not reused or changed.
-- Private Core workflow `uCBXuRjlv8NyeikO`, Calapres Edge workflow `e442GlRmKP4IO8pm`, and Shopify
-  Order Index workflow `cLHCuJ21r4RAuDTE` exist in that project. All three are inactive and
+- Private Core workflow `uCBXuRjlv8NyeikO`, Calapres Edge workflow `e442GlRmKP4IO8pm`, Shopify
+  Order Index workflow `cLHCuJ21r4RAuDTE`, and private Owner Review Desk
+  `hU7sAMAQSg9Obgky` exist in that project. All four are inactive and
   unpublished, have no assigned credential or public webhook, contain no customer-egress or
   Shopify-write node, and have execution-payload retention disabled.
+- The empty approvals, incidents, and audit tables now match the lossless owner-review contracts
+  exactly: 34, 18, and 17 columns respectively. No row was inserted. The Owner Review Desk has no
+  Data Table node, no public trigger, and caller policy `none`; it validates `reply_only`,
+  `approve`, `approve_until`, and `correct` as no-write previews only. Sanitized execution `40631`
+  passed with persistence, knowledge publication, and customer egress all false.
 - The delay and post-delay cancellation stage is merged into the existing Edge. Its Wait carries
   identifiers and HMAC fingerprints only, then requires a fresh Chatwoot re-read; the current
   no-credential re-read slot fails closed outside the synthetic fixture.
@@ -175,7 +181,7 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 - GitHub now contains the brand registry, three append-only dated knowledge releases sourced from the live
   Calapres policy/FAQ pages, the approved response-style release, a proposed inactive model policy,
   generic Core contracts, stricter Calapres edge contracts, synthetic fixtures, and
-  standard-library contract/runtime guard tests. Thirty local tests pass.
+  standard-library contract/runtime guard tests. Thirty-four local tests pass.
 - Core grounding now verifies every cited knowledge ID and its authority against the selected
   context and verifies live-fact IDs exactly. It ignores the model's free-text draft and renders an
   `observe_draft` result only from versioned `customer_response_ar` or a verified live-source

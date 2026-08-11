@@ -68,6 +68,11 @@ core. The implementation is not a second Chatwoot bot and has no customer egress
    verification and reconciliation are a different root ingress and retry lifecycle. It is not a
    second brain. The observation release accepts only keyed fingerprints and opaque Shopify
    references, maps them explicitly to the isolated table columns, and performs no write.
+8. `Calapres | Owner Review Desk v1` is a separate private sub-workflow because owner commands are
+   a different trust domain from customer ingress. Its inactive observation release has no public
+   webhook, credential, external call, Data Table node, model, customer send, or knowledge publish
+   action. It validates and previews decisions only; caller policy remains `none` until a trusted
+   owner-ingress path is separately implemented and approved.
 
 This resolves the earlier phrase "central router": the central part is versioned internal logic,
 not one giant public workflow that carries every brand credential.
@@ -155,6 +160,15 @@ invitation to infer.
 Owner decisions are one of `reply_only`, `approve`, `approve_until`, or `correct`. Only an explicit
 approval creates a new dated, brand-scoped GitHub knowledge version. A case-only answer remains in
 the case approval/incident record and never silently becomes policy.
+
+The decision contract binds the exact Calapres account/inbox/channel, conversation, incident ID
+and revision, allowlisted owner reference, private-message HMAC fingerprint and key version,
+single-use nonce timing, command digest, case-reply digest, and any knowledge proposal/base/target/
+superseded versions. A validated preview has status `prepared` and `committed_at=null`; validation
+does not mean the reply was sent, the incident was resolved, the row was written, or knowledge was
+published. The approvals, incidents, and audit tables may be column-aligned in advance, but no
+write path is allowed until fresh Chatwoot re-read, actor verification, digest re-verification,
+incident compare-and-swap, atomic idempotency, and live schema re-verification all pass.
 
 The first owner review surface may use sanitized n8n records and Chatwoot private notes. A private
 Telegram Owner Agent is deferred until its credential and command contract receive a separate

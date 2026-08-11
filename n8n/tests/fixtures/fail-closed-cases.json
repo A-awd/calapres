@@ -303,5 +303,124 @@
     "operation": "replace",
     "path": "/confidence",
     "value": 1.1
+  },
+  {
+    "name": "reject owner review without trusted topology wrapper",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "remove",
+    "path": "/trusted_owner_ingress"
+  },
+  {
+    "name": "reject unauthenticated owner review wrapper",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/trusted_owner_ingress/owner_authenticated",
+    "value": false
+  },
+  {
+    "name": "reject owner review without case reply digest",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--approve.json",
+    "operation": "replace",
+    "path": "/payload/decision/case_reply_sha256",
+    "value": null
+  },
+  {
+    "name": "reject owner review with invalid incident revision",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/trusted_owner_ingress/incident_revision",
+    "value": 0
+  },
+  {
+    "name": "reject owner review with non-digest command attestation",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/trusted_owner_ingress/command_digest",
+    "value": "not-a-digest"
+  },
+  {
+    "name": "reject unverified incident lookup in owner review",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/trusted_owner_ingress/incident_lookup_verified",
+    "value": false
+  },
+  {
+    "name": "reject another brand in owner review",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/payload/brand_id",
+    "value": "another-brand"
+  },
+  {
+    "name": "reject another brand in trusted owner topology wrapper",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/trusted_owner_ingress/brand_id",
+    "value": "another-brand"
+  },
+  {
+    "name": "reject payload supplied owner trust flags",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "add",
+    "path": "/payload/owner_authenticated",
+    "value": true
+  },
+  {
+    "name": "reject raw message field in owner review incident",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "add",
+    "path": "/payload/incident_snapshot/raw_message",
+    "value": "synthetic-prohibited-value"
+  },
+  {
+    "name": "reject decided owner review incident",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/payload/incident_snapshot/owner_decision_ref",
+    "value": "dec_synthetic9999"
+  },
+  {
+    "name": "reject reply-only decision carrying knowledge proposal",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--reply-only.json",
+    "operation": "replace",
+    "path": "/payload/decision/knowledge_proposal_ref",
+    "value": "kpr_synthetic9999"
+  },
+  {
+    "name": "reject knowledge approval without proposal digest",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--approve.json",
+    "operation": "replace",
+    "path": "/payload/decision/knowledge_proposal_sha256",
+    "value": null
+  },
+  {
+    "name": "reject temporary approval without expiry",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--approve-until.json",
+    "operation": "replace",
+    "path": "/payload/decision/expires_at",
+    "value": null
+  },
+  {
+    "name": "reject correction without superseded version",
+    "schema": "owner-review-command",
+    "base_fixture": "valid/owner-review-command--correct.json",
+    "operation": "replace",
+    "path": "/payload/decision/supersedes_knowledge_version",
+    "value": null
   }
 ]

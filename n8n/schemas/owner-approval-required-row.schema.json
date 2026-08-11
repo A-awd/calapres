@@ -1,15 +1,22 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-decision.schema.json",
-  "title": "Calapres owner case or knowledge decision",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-approval-required-row.schema.json",
+  "title": "Exact aligned approvals table row preview before commit",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "schema_version",
     "brand_id",
-    "decision_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "approval_id",
     "incident_id",
+    "incident_revision",
+    "conversation_id",
+    "approval_scope",
     "action",
+    "status",
     "approver_ref",
     "case_reply_ref",
     "case_reply_sha256",
@@ -18,9 +25,20 @@
     "base_knowledge_version",
     "knowledge_version_to_publish",
     "supersedes_knowledge_version",
-    "decided_at",
     "effective_at",
-    "expires_at"
+    "expires_at",
+    "decided_at",
+    "audit_ref",
+    "committed_at",
+    "command_digest",
+    "auth_evidence_kind",
+    "auth_evidence_fingerprint",
+    "nonce_fingerprint",
+    "nonce_issued_at",
+    "nonce_expires_at",
+    "review_idempotency_fingerprint",
+    "source_private_message_fingerprint",
+    "fingerprint_key_version"
   ],
   "properties": {
     "schema_version": {
@@ -29,13 +47,48 @@
     "brand_id": {
       "const": "calapres"
     },
-    "decision_id": {
+    "account_id": {
+      "const": 179973
+    },
+    "inbox_id": {
+      "enum": [
+        128031,
+        128033,
+        128058,
+        128326
+      ]
+    },
+    "channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "approval_id": {
       "type": "string",
       "pattern": "^dec_[A-Za-z0-9_-]{8,80}$"
     },
     "incident_id": {
       "type": "string",
       "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+    },
+    "incident_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "conversation_id": {
+      "type": "string",
+      "pattern": "^cwr_[A-Za-z0-9_-]{6,128}$"
+    },
+    "approval_scope": {
+      "enum": [
+        "case_only",
+        "knowledge_permanent",
+        "knowledge_temporary",
+        "knowledge_correction"
+      ]
     },
     "action": {
       "enum": [
@@ -44,6 +97,9 @@
         "approve_until",
         "correct"
       ]
+    },
+    "status": {
+      "const": "prepared"
     },
     "approver_ref": {
       "type": "string",
@@ -92,10 +148,6 @@
       ],
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"
     },
-    "decided_at": {
-      "type": "string",
-      "format": "date-time"
-    },
     "effective_at": {
       "type": "string",
       "format": "date-time"
@@ -106,6 +158,52 @@
         "null"
       ],
       "format": "date-time"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "audit_ref": {
+      "type": "string",
+      "pattern": "^aud_[A-Za-z0-9_-]{8,80}$"
+    },
+    "committed_at": {
+      "type": "null"
+    },
+    "command_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "auth_evidence_kind": {
+      "const": "owner_review_topology_v1"
+    },
+    "auth_evidence_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nonce_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nonce_issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nonce_expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_idempotency_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_private_message_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fingerprint_key_version": {
+      "type": "string",
+      "pattern": "^hmac-sha256-v[1-9][0-9]*$"
     }
   },
   "allOf": [
@@ -119,8 +217,8 @@
       },
       "then": {
         "properties": {
-          "case_reply_ref": {
-            "type": "string"
+          "approval_scope": {
+            "const": "case_only"
           },
           "knowledge_proposal_ref": {
             "type": "null"
@@ -136,43 +234,6 @@
           },
           "supersedes_knowledge_version": {
             "type": "null"
-          },
-          "expires_at": {
-            "type": "null"
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "action": {
-            "enum": [
-              "approve",
-              "correct"
-            ]
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "case_reply_ref": {
-            "type": "string"
-          },
-          "case_reply_sha256": {
-            "type": "string"
-          },
-          "knowledge_proposal_ref": {
-            "type": "string"
-          },
-          "knowledge_proposal_sha256": {
-            "type": "string"
-          },
-          "base_knowledge_version": {
-            "type": "string"
-          },
-          "knowledge_version_to_publish": {
-            "type": "string"
           },
           "expires_at": {
             "type": "null"
@@ -190,7 +251,25 @@
       },
       "then": {
         "properties": {
+          "approval_scope": {
+            "const": "knowledge_permanent"
+          },
+          "knowledge_proposal_ref": {
+            "type": "string"
+          },
+          "knowledge_proposal_sha256": {
+            "type": "string"
+          },
+          "base_knowledge_version": {
+            "type": "string"
+          },
+          "knowledge_version_to_publish": {
+            "type": "string"
+          },
           "supersedes_knowledge_version": {
+            "type": "null"
+          },
+          "expires_at": {
             "type": "null"
           }
         }
@@ -206,11 +285,8 @@
       },
       "then": {
         "properties": {
-          "case_reply_ref": {
-            "type": "string"
-          },
-          "case_reply_sha256": {
-            "type": "string"
+          "approval_scope": {
+            "const": "knowledge_temporary"
           },
           "knowledge_proposal_ref": {
             "type": "string"
@@ -244,11 +320,8 @@
       },
       "then": {
         "properties": {
-          "case_reply_ref": {
-            "type": "string"
-          },
-          "case_reply_sha256": {
-            "type": "string"
+          "approval_scope": {
+            "const": "knowledge_correction"
           },
           "knowledge_proposal_ref": {
             "type": "string"

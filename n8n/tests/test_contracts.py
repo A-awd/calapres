@@ -320,6 +320,7 @@ class ContractTests(unittest.TestCase):
                 "optix_customer_service_core_v1",
                 "calapres_customer_service_edge_v1",
                 "calapres_shopify_order_index_v1",
+                "calapres_owner_review_desk_v1",
             },
         )
         for name in {
@@ -342,6 +343,19 @@ class ContractTests(unittest.TestCase):
         self.assertTrue((REPO_ROOT / index["source_path"]).is_file())
         self.assertTrue((REPO_ROOT / index["input_schema"]).is_file())
         self.assertTrue((REPO_ROOT / index["table_row_schema"]).is_file())
+        owner_desk = workflows["calapres_owner_review_desk_v1"]
+        self.assertEqual(owner_desk["id"], "hU7sAMAQSg9Obgky")
+        self.assertEqual(owner_desk["state"], "inactive")
+        self.assertIs(owner_desk["published"], False)
+        self.assertIs(owner_desk["public_webhook"], False)
+        self.assertIs(owner_desk["credentials_bound"], False)
+        self.assertIs(owner_desk["customer_egress"], False)
+        self.assertIs(owner_desk["data_table_write"], False)
+        self.assertIs(owner_desk["knowledge_publish"], False)
+        self.assertEqual(owner_desk["caller_policy"], "none")
+        self.assertTrue((REPO_ROOT / owner_desk["source_path"]).is_file())
+        self.assertTrue((REPO_ROOT / owner_desk["input_schema"]).is_file())
+        self.assertTrue((REPO_ROOT / owner_desk["output_schema"]).is_file())
         edge_extension = workflows["calapres_customer_service_edge_v1"]["source_extensions"]
         self.assertEqual(edge_extension["delayed_observation_stage"], "merged_into_edge")
         self.assertEqual(edge_extension["live_deployment"], "imported_inactive")
@@ -366,10 +380,19 @@ class ContractTests(unittest.TestCase):
         for row in tables.values():
             self.assertEqual(row["state"], "empty")
             self.assertTrue((REPO_ROOT / row["schema"]).is_file())
+            if "table_row_schema" in row:
+                self.assertTrue((REPO_ROOT / row["table_row_schema"]).is_file())
+        self.assertEqual(tables["approvals"]["column_count"], 34)
+        self.assertEqual(tables["incidents"]["column_count"], 18)
+        self.assertEqual(tables["audit"]["column_count"], 17)
         self.assertIs(manifest["safety"]["customer_egress_enabled"], False)
         self.assertIs(manifest["safety"]["manual_execution_retention_enabled"], False)
         self.assertIs(manifest["safety"]["wait_state_contains_customer_content"], False)
         self.assertIs(manifest["safety"]["shopify_index_writes_enabled"], False)
+        self.assertIs(manifest["safety"]["owner_review_writes_enabled"], False)
+        self.assertIs(
+            manifest["safety"]["owner_review_knowledge_publish_enabled"], False
+        )
         self.assertIs(manifest["safety"]["paused_catalog_table_reused"], False)
         configs = manifest["configuration_manifests"]
         self.assertEqual(configs["response_style"]["status"], "approved")
@@ -456,6 +479,7 @@ class ContractTests(unittest.TestCase):
             set(sources),
             {
                 "calapres-customer-service-edge-v1.ts",
+                "calapres-owner-review-desk-v1.ts",
                 "calapres-shopify-order-index-v1.ts",
                 "optix-customer-service-core-v1.ts",
             },
@@ -490,6 +514,10 @@ class ContractTests(unittest.TestCase):
         self.assertIn("Private HMAC-only Index Command", index)
         self.assertIn("write_executed: false", index)
         self.assertIn("shopify_write_allowed: false", index)
+        owner_desk = sources["calapres-owner-review-desk-v1.ts"]
+        self.assertIn("Private Trusted Owner Review Input", owner_desk)
+        self.assertIn("data_table_write_allowed: false", owner_desk)
+        self.assertIn("knowledge_publish_executed: false", owner_desk)
 
     def test_wait_carrier_is_identifiers_only_and_recheck_is_fail_closed(self):
         carrier = self.schemas["delayed-observation-state"]

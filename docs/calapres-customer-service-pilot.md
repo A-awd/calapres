@@ -8,8 +8,8 @@ Authority: decisions 0008 and 0010
 
 ## What is being built
 
-Calapres gets one customer-service edge, one private rules component, and one inactive private
-Shopify index component:
+Calapres gets one customer-service edge, one private rules component, one inactive private Shopify
+index component, and one inactive private owner-review component:
 
 ```text
 four allowlisted Calapres inboxes
@@ -22,6 +22,10 @@ four allowlisted Calapres inboxes
 verified Shopify order ingress/reconciliation (future)
   -> Calapres Shopify Order Index v1
   -> HMAC fingerprints + opaque Shopify references only
+
+trusted private owner command (future)
+  -> Calapres Owner Review Desk v1
+  -> validated prepared preview only; no write, publish, or customer send
 
 customer send path: absent
 Shopify write path: absent
@@ -42,21 +46,29 @@ The current workflow source starts from sanitized manual fixtures. The live Chat
 connected. This keeps the first build useful for validation without granting persistent access or
 risking a customer reply.
 
-The three live n8n workflow shells now exist inside the isolated Calapres project. Core
+The four live n8n workflow shells now exist inside the isolated Calapres project. Core
 `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are both inactive and unpublished, have no public
 webhook, and have no customer-egress node. Shopify index `cLHCuJ21r4RAuDTE` is also inactive,
-unpublished, credential-free, and write-free. Sanitized manual evidence was recorded for Core
+unpublished, credential-free, and write-free. Owner Review Desk `hU7sAMAQSg9Obgky` is inactive,
+unpublished, credential-free, has caller policy `none`, and has no webhook, Data Table node,
+knowledge publication, or customer-egress path. Sanitized manual evidence was recorded for Core
 executions `40576` and `40600`–`40603`; Edge happy/channel executions `40577`, `40579`, `40581`,
 `40583`, post-correction run `40605`, and final v3 deterministic-rendering run `40625`; Edge fail-closed executions
-`40585`–`40592`; and the post-fix order-index run `40619`.
+`40585`–`40592`; the post-fix order-index run `40619`; and the owner-review no-write run `40631`.
 Execution IDs are evidence pointers,
 not a durable knowledge or incident store.
-Success, error, manual, and progress execution payload saving is disabled on all three workflows before
+Success, error, manual, and progress execution payload saving is disabled on all four workflows before
 any live customer event is allowed to enter n8n.
 
 The merged delay extension is imported into the existing inactive Edge. The Shopify index is also
 imported inactive. Neither is published; neither has a credential, public webhook, Data Table
 write, Shopify write, or customer-send node.
+
+The empty approvals, incidents, and audit tables are now column-aligned to the exact no-write
+owner-review projections at 34, 18, and 17 columns. No row was inserted. The Desk requires exact
+account/inbox/channel, conversation, incident revision, owner, private-message fingerprint, nonce,
+and digest bindings, then emits a `prepared` preview with `committed_at=null`. It does not mark the
+incident resolved or turn a decision into knowledge.
 
 ## Exact channel boundary
 
@@ -168,6 +180,11 @@ Knowledge is append-only and dated. An owner answer is `reply_only` unless the o
 chooses `approve`, `approve_until`, or `correct`. Only the latter choices create or supersede a
 GitHub knowledge version.
 
+In the current inactive release those four choices are validation previews only. Before any future
+row write or knowledge publication, the runtime must freshly re-read Chatwoot, verify the owner
+actor and private message, re-check the nonce and content digests, compare the incident revision,
+guarantee idempotency atomically, and re-verify the live table schema.
+
 ## Data minimization
 
 The operational contracts reject raw customer fields and arbitrary extra properties. Data Tables
@@ -201,7 +218,8 @@ paused catalog state, or silently turns an owner answer into policy.
 ## Evidence required before live observation
 
 - repository schemas and fixtures pass locally;
-- Core, Edge, and Shopify index sources compile and are imported inactive without credentials;
+- Core, Edge, Shopify index, and Owner Review Desk sources compile and are imported inactive
+  without credentials;
 - the private Core has no public trigger or external credential;
 - the edge has no Chatwoot customer-send or Shopify mutation node;
 - the merged Wait carrier rejects message content and the no-credential live-re-read slot stops;
@@ -209,6 +227,8 @@ paused catalog state, or silently turns an owner answer into policy.
   12 live Data Table columns, strips contract-only fields, and performs no write;
 - an adversarial model draft cannot override the approved response text referenced by its fact ID;
 - all eight Calapres operational tables exist and remain separate from catalog work;
+- owner-review table projections match the exact 34/18/17-column approvals/incidents/audit schemas,
+  while all owner-review writes and knowledge publication remain disabled;
 - signature and replay checks use trusted transport evidence, not fields supplied by a webhook;
 - persistent Chatwoot access is explicitly approved and tested;
 - logs and execution saving expose no customer body or secret.

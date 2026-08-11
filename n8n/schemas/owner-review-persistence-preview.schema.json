@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/owner-review-persistence-preview.schema.json",
+  "title": "Calapres owner review no-write persistence preview",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "accepted",
+    "decision",
+    "reason_code",
+    "owner_decision",
+    "incident_reference",
+    "persistence_preview",
+    "knowledge_publish_executed",
+    "customer_egress_allowed",
+    "data_table_write_allowed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "accepted": {
+      "const": true
+    },
+    "decision": {
+      "const": "owner_decision_preview"
+    },
+    "reason_code": {
+      "const": "owner_decision_validated_no_write"
+    },
+    "owner_decision": {
+      "$ref": "owner-decision.schema.json"
+    },
+    "incident_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "incident_id",
+        "incident_revision",
+        "conversation_ref",
+        "status_before"
+      ],
+      "properties": {
+        "incident_id": {
+          "type": "string",
+          "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+        },
+        "incident_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "conversation_ref": {
+          "type": "string",
+          "pattern": "^cwr_[A-Za-z0-9_-]{6,128}$"
+        },
+        "status_before": {
+          "const": "awaiting_owner"
+        }
+      }
+    },
+    "persistence_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "persistence_ready",
+        "required_additive_columns",
+        "future_write_preconditions",
+        "approvals",
+        "incidents",
+        "audit",
+        "write_executed"
+      ],
+      "properties": {
+        "mode": {
+          "const": "preview_no_write"
+        },
+        "persistence_ready": {
+          "const": false
+        },
+        "required_additive_columns": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "approvals",
+            "incidents",
+            "audit"
+          ],
+          "properties": {
+            "approvals": {
+              "const": []
+            },
+            "incidents": {
+              "const": []
+            },
+            "audit": {
+              "const": []
+            }
+          }
+        },
+        "future_write_preconditions": {
+          "const": [
+            "fresh_chatwoot_incident_reread",
+            "owner_actor_allowlist_match",
+            "cryptographic_nonce_attestation",
+            "command_digest_recomputed_from_canonical_payload",
+            "case_reply_digest_reverification",
+            "knowledge_proposal_digest_reverification",
+            "incident_revision_compare_and_swap",
+            "atomic_idempotency_guarantee",
+            "live_table_schema_reverification"
+          ]
+        },
+        "approvals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "table_id",
+            "required_operation",
+            "key_column",
+            "table_row",
+            "write_executed"
+          ],
+          "properties": {
+            "table_id": {
+              "const": "mjSEDJWfXqCL0sG0"
+            },
+            "required_operation": {
+              "const": "upsert_after_all_write_preconditions"
+            },
+            "key_column": {
+              "const": "approval_id"
+            },
+            "table_row": {
+              "$ref": "owner-approval-required-row.schema.json"
+            },
+            "write_executed": {
+              "const": false
+            }
+          }
+        },
+        "incidents": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "table_id",
+            "required_operation",
+            "key_column",
+            "table_row",
+            "write_executed"
+          ],
+          "properties": {
+            "table_id": {
+              "const": "N3UJZWRMNehLX4l7"
+            },
+            "required_operation": {
+              "const": "update_after_all_write_preconditions"
+            },
+            "key_column": {
+              "const": "incident_id"
+            },
+            "table_row": {
+              "$ref": "owner-incident-table-row.schema.json"
+            },
+            "write_executed": {
+              "const": false
+            }
+          }
+        },
+        "audit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "table_id",
+            "required_operation",
+            "key_column",
+            "table_row",
+            "write_executed"
+          ],
+          "properties": {
+            "table_id": {
+              "const": "4YBUAuuEgXYiaybJ"
+            },
+            "required_operation": {
+              "const": "insert_after_all_write_preconditions"
+            },
+            "key_column": {
+              "const": "audit_id"
+            },
+            "table_row": {
+              "$ref": "owner-audit-table-row.schema.json"
+            },
+            "write_executed": {
+              "const": false
+            }
+          }
+        },
+        "write_executed": {
+          "const": false
+        }
+      }
+    },
+    "knowledge_publish_executed": {
+      "const": false
+    },
+    "customer_egress_allowed": {
+      "const": false
+    },
+    "data_table_write_allowed": {
+      "const": false
+    }
+  }
+}

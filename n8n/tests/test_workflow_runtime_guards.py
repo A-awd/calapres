@@ -1,5 +1,6 @@
 import copy
 import json
+import re
 import shutil
 import subprocess
 import unittest
@@ -223,6 +224,331 @@ class WorkflowRuntimeGuardTests(unittest.TestCase):
         self.assertNotIn("schema_version", table_row)
         self.assertNotIn("brand_id", table_row)
         self.assertIs(preview["write_executed"], False)
+
+    def test_owner_review_accepts_all_actions_as_no_write_previews(self):
+        scopes = {
+            "reply_only": "case_only",
+            "approve": "knowledge_permanent",
+            "approve_until": "knowledge_temporary",
+            "correct": "knowledge_correction",
+        }
+        incident_columns = set(
+            read_json(FIXTURE_DIR / "owner-incident-table-row--decision-recorded.json")
+        )
+        audit_columns = set(
+            read_json(FIXTURE_DIR / "owner-audit-table-row--decision-preview.json")
+        )
+        required_approval_columns = set(
+            read_json(FIXTURE_DIR / "owner-approval-required-row--reply-only.json")
+        )
+
+        for action, suffix in {
+            "reply_only": "reply-only",
+            "approve": "approve",
+            "approve_until": "approve-until",
+            "correct": "correct",
+        }.items():
+            fixture = read_json(FIXTURE_DIR / f"owner-review-command--{suffix}.json")
+            preview = self.run_nodes(
+                "calapres-owner-review-desk-v1.ts",
+                [
+                    "Validate Trusted Owner Review Command",
+                    "Build Exact Owner Persistence Preview - No Write",
+                ],
+                [fixture],
+            )[0]
+            with self.subTest(action=action):
+                self.assertIs(preview["accepted"], True)
+                self.assertEqual(preview["owner_decision"]["action"], action)
+                self.assertRegex(
+                    preview["owner_decision"]["case_reply_sha256"], r"^[a-f0-9]{64}$"
+                )
+                self.assertIs(preview["knowledge_publish_executed"], False)
+                self.assertIs(preview["customer_egress_allowed"], False)
+                self.assertIs(preview["data_table_write_allowed"], False)
+                persistence = preview["persistence_preview"]
+                self.assertIs(persistence["persistence_ready"], False)
+                self.assertIs(persistence["write_executed"], False)
+                self.assertEqual(
+                    persistence["approvals"]["table_row"]["approval_scope"],
+                    scopes[action],
+                )
+                self.assertEqual(
+                    set(persistence["approvals"]["table_row"]),
+                    required_approval_columns,
+                )
+                self.assertEqual(
+                    persistence["approvals"]["table_row"]["case_reply_ref"],
+                    preview["owner_decision"]["case_reply_ref"],
+                )
+                self.assertEqual(
+                    persistence["approvals"]["table_row"]["case_reply_sha256"],
+                    preview["owner_decision"]["case_reply_sha256"],
+                )
+                aligned = persistence["approvals"]["table_row"]
+                self.assertEqual(aligned["status"], "prepared")
+                self.assertIsNone(aligned["committed_at"])
+                self.assertEqual(aligned["account_id"], 179973)
+                self.assertEqual(aligned["inbox_id"], fixture["trusted_owner_ingress"]["inbox_id"])
+                self.assertEqual(aligned["channel"], fixture["trusted_owner_ingress"]["channel"])
+                self.assertEqual(
+                    aligned["source_private_message_fingerprint"],
+                    fixture["trusted_owner_ingress"]["source_private_message_fingerprint"],
+                )
+                self.assertEqual(
+                    aligned["fingerprint_key_version"],
+                    fixture["trusted_owner_ingress"]["fingerprint_key_version"],
+                )
+                reconstructed_decision = {
+                    "schema_version": aligned["schema_version"],
+                    "brand_id": aligned["brand_id"],
+                    "decision_id": aligned["approval_id"],
+                    "incident_id": aligned["incident_id"],
+                    "action": aligned["action"],
+                    "approver_ref": aligned["approver_ref"],
+                    "case_reply_ref": aligned["case_reply_ref"],
+                    "case_reply_sha256": aligned["case_reply_sha256"],
+                    "knowledge_proposal_ref": aligned["knowledge_proposal_ref"],
+                    "knowledge_proposal_sha256": aligned[
+                        "knowledge_proposal_sha256"
+                    ],
+                    "base_knowledge_version": aligned["base_knowledge_version"],
+                    "knowledge_version_to_publish": aligned[
+                        "knowledge_version_to_publish"
+                    ],
+                    "supersedes_knowledge_version": aligned[
+                        "supersedes_knowledge_version"
+                    ],
+                    "decided_at": aligned["decided_at"],
+                    "effective_at": aligned["effective_at"],
+                    "expires_at": aligned["expires_at"],
+                }
+                self.assertEqual(reconstructed_decision, preview["owner_decision"])
+                self.assertEqual(
+                    set(persistence["incidents"]["table_row"]), incident_columns
+                )
+                self.assertEqual(set(persistence["audit"]["table_row"]), audit_columns)
+                self.assertTrue(
+                    all(
+                        command["write_executed"] is False
+                        for command in (
+                            persistence["approvals"],
+                            persistence["incidents"],
+                            persistence["audit"],
+                        )
+                    )
+                )
+                incident_row = persistence["incidents"]["table_row"]
+                self.assertEqual(incident_row["status"], "awaiting_owner")
+                self.assertIsNone(incident_row["resolved_at"])
+                self.assertEqual(incident_row["proposed_action"], action)
+                self.assertNotIn(":", incident_row["proposed_action"])
+                self.assertEqual(
+                    persistence["required_additive_columns"],
+                    {"approvals": [], "incidents": [], "audit": []},
+                )
+                self.assertIn(
+                    "live_table_schema_reverification",
+                    persistence["future_write_preconditions"],
+                )
+                if action == "reply_only":
+                    self.assertEqual(
+                        preview,
+                        read_json(
+                            FIXTURE_DIR
+                            / "owner-review-persistence-preview--reply-only.json"
+                        ),
+                    )
+
+    def test_owner_review_trust_must_come_from_topology_and_refs_must_match(self):
+        fixture = read_json(FIXTURE_DIR / "owner-review-command--reply-only.json")
+
+        payload_spoof = {"payload": copy.deepcopy(fixture["payload"])}
+        payload_spoof["payload"]["trusted_owner_ingress"] = copy.deepcopy(
+            fixture["trusted_owner_ingress"]
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [payload_spoof],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "trusted_owner_ingress_missing")
+
+        incident_mismatch = copy.deepcopy(fixture)
+        incident_mismatch["payload"]["decision"]["incident_id"] = "inc_synthetic9999"
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [incident_mismatch],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "incident_reference_mismatch")
+
+        owner_mismatch = copy.deepcopy(fixture)
+        owner_mismatch["payload"]["decision"]["approver_ref"] = "own_secondary001"
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [owner_mismatch],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "owner_reference_mismatch")
+
+        revision_mismatch = copy.deepcopy(fixture)
+        revision_mismatch["trusted_owner_ingress"]["incident_revision"] = 2
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [revision_mismatch],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "incident_revision_mismatch")
+
+        conversation_mismatch = copy.deepcopy(fixture)
+        conversation_mismatch["trusted_owner_ingress"]["conversation_ref"] = (
+            "cwr_synthetic999"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [conversation_mismatch],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "conversation_reference_mismatch")
+
+        channel_mismatch = copy.deepcopy(fixture)
+        channel_mismatch["trusted_owner_ingress"]["channel"] = "email"
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [channel_mismatch],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "trusted_channel_mismatch")
+
+    def test_owner_review_rejects_pii_and_invalid_temporal_semantics(self):
+        reply_only = read_json(FIXTURE_DIR / "owner-review-command--reply-only.json")
+        raw_field = copy.deepcopy(reply_only)
+        raw_field["payload"]["incident_snapshot"]["raw_message"] = "forbidden"
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [raw_field],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+
+        pii_summary = copy.deepcopy(reply_only)
+        pii_summary["payload"]["incident_snapshot"]["sanitized_summary"] = (
+            "Contact synthetic@example.invalid"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [pii_summary],
+        )[0]
+        self.assertEqual(
+            rejected["reason_code"], "incident_summary_contains_pii_like_value"
+        )
+
+        stale_decision = copy.deepcopy(reply_only)
+        stale_decision["payload"]["decision"]["decided_at"] = (
+            "2026-08-11T09:06:59.000Z"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [stale_decision],
+        )[0]
+        self.assertEqual(rejected["reason_code"], "decision_precedes_incident_snapshot")
+
+        invalid_effective = copy.deepcopy(reply_only)
+        invalid_effective["payload"]["decision"]["effective_at"] = (
+            "2026-08-11T09:07:59.000Z"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [invalid_effective],
+        )[0]
+        self.assertEqual(rejected["reason_code"], "effective_before_decision")
+
+        temporary = read_json(FIXTURE_DIR / "owner-review-command--approve-until.json")
+        temporary["payload"]["decision"]["expires_at"] = temporary["payload"][
+            "decision"
+        ]["effective_at"]
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [temporary],
+        )[0]
+        self.assertEqual(rejected["reason_code"], "approve_until_expiry_invalid")
+
+        correction = read_json(FIXTURE_DIR / "owner-review-command--correct.json")
+        correction["payload"]["decision"]["supersedes_knowledge_version"] = (
+            "2026-08-11-v2"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [correction],
+        )[0]
+        self.assertEqual(rejected["reason_code"], "correct_supersedes_must_equal_base")
+
+        expired_nonce = read_json(
+            FIXTURE_DIR / "owner-review-command--reply-only.json"
+        )
+        expired_nonce["trusted_owner_ingress"]["nonce_expires_at"] = (
+            expired_nonce["trusted_owner_ingress"]["verified_at"]
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [expired_nonce],
+        )[0]
+        self.assertEqual(rejected["reason_code"], "nonce_expired_at_verification")
+
+        nonce_after_decision = read_json(
+            FIXTURE_DIR / "owner-review-command--reply-only.json"
+        )
+        nonce_after_decision["trusted_owner_ingress"]["nonce_issued_at"] = (
+            "2026-08-11T09:08:00.500Z"
+        )
+        rejected = self.run_nodes(
+            "calapres-owner-review-desk-v1.ts",
+            ["Validate Trusted Owner Review Command"],
+            [nonce_after_decision],
+        )[0]
+        self.assertIs(rejected["accepted"], False)
+        self.assertEqual(rejected["reason_code"], "nonce_issued_after_decision")
+
+    def test_owner_review_source_has_only_private_no_side_effect_nodes(self):
+        source = (WORKFLOW_DIR / "calapres-owner-review-desk-v1.ts").read_text(
+            encoding="utf-8"
+        )
+        node_types = set(
+            re.findall(
+                r"^\s*type:\s*'(n8n-nodes-base\.[^']+)'",
+                source,
+                flags=re.MULTILINE,
+            )
+        )
+        self.assertEqual(
+            node_types,
+            {
+                "n8n-nodes-base.executeWorkflowTrigger",
+                "n8n-nodes-base.manualTrigger",
+                "n8n-nodes-base.code",
+            },
+        )
+        self.assertNotIn("credentials:", source)
+        self.assertNotIn("customer_egress_allowed: true", source)
+        self.assertNotIn("data_table_write_allowed: true", source)
+        self.assertNotIn("knowledge_publish_executed: true", source)
+        self.assertNotIn("n8n-nodes-base.webhook", source)
+        self.assertNotIn("n8n-nodes-base.httpRequest", source)
+        self.assertNotIn("n8n-nodes-base.dataTable", source)
+        self.assertNotIn("n8n-nodes-base.shopify", source)
 
 
 if __name__ == "__main__":
