@@ -78,9 +78,8 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 
 ## Next safe action
 
-Complete the `awd-businesses.com` custom-domain transition: wait for GitHub to issue the TLS
-certificate, enable HTTPS enforcement, and verify the exact ownership page at the public HTTPS URL
-before any Meta display-name action.
+Reopen the exact live Calapres WABA and phone-number asset in Meta read-only and verify their current
+IDs and display-name status before deciding whether to submit or appeal the ownership-backed name.
 
 ## Constraints
 
@@ -111,16 +110,17 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 - The authoritative and public DNS records now point the apex to GitHub Pages and `www` to
   `a-awd.github.io`. Google Workspace MX, SPF, DKIM, Facebook verification, Domain Connect, and the
   GitHub ownership-verification record were preserved.
-- Direct HTTP routing to GitHub returns the ownership page with status `200` and the expected title,
-  statement, canonical URL, and `index,follow` directive.
-- GitHub has not yet issued the custom-domain TLS certificate, so HTTPS enforcement remains off
-  while DNS caches and certificate provisioning converge. Some local resolvers may temporarily
-  continue serving the former Squarespace page.
+- GitHub completed the DNS check, issued the custom-domain certificate, and HTTPS enforcement is
+  enabled. `https://awd-businesses.com/` returns the ownership page from GitHub with status `200`;
+  `https://www.awd-businesses.com/` redirects to the apex.
+- The live HTTPS response has the expected title, statement, canonical URL, and `index,follow`
+  directive. Its SHA-256 matches `owner-site/index.html` exactly.
+- Public DNS resolvers point to GitHub. Some local resolvers may temporarily continue serving the
+  former Squarespace page until their old cache expires.
 - No WhatsApp display name was submitted, no WhatsApp number was registered, and neither
   `calapres.com` nor the live Shopify store was changed.
 
 ### Next safe action
 
-Recheck the public apex and `www` endpoints after DNS and certificate propagation. Once GitHub
-reports a valid certificate, enable HTTPS enforcement and verify that `https://awd-businesses.com/`
-returns the ownership page directly with status `200` before any Meta display-name action.
+Reopen the exact live Calapres WABA and phone-number asset in Meta read-only and verify their current
+IDs, ownership, registration state, and display-name status before any new submission or appeal.

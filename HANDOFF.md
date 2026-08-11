@@ -2,7 +2,7 @@
 
 ## Resume from
 
-Continue from `main` revision `ac5224b`. Decision 0006 is binding for the Shopify-native
+Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native
 architecture, and decision 0007 is binding for the isolated Calapres ownership-proof site.
 
 ## Completed in the Supabase retirement
@@ -37,10 +37,10 @@ architecture, and decision 0007 is binding for the isolated Calapres ownership-p
 
 ## Exact next actions
 
-1. Wait for the GitHub Pages custom-domain TLS certificate, enable HTTPS enforcement, and validate
-   `https://awd-businesses.com/` before any Meta display-name action.
-2. After the ownership-site validation, reopen the exact Calapres Meta assets and decide the next
-   display-name action from their live status; do not submit from stale identifiers.
+1. Reopen the exact Calapres WABA and phone-number asset in Meta read-only, verify their current IDs,
+   ownership, registration state, and display-name status, and do not reuse stale identifiers.
+2. Decide whether the next Meta action is a new submission or an appeal using the live ownership
+   page as evidence.
 3. Review the four draft products directly in Shopify.
 4. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
 5. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
@@ -75,17 +75,18 @@ project and acknowledging irreversibility.
   `awd-businesses.com`, and the repository Pages configuration uses that custom domain.
 - The apex A records and `www` CNAME now point to GitHub Pages. Google Workspace MX, SPF, DKIM,
   Facebook verification, Domain Connect, and GitHub verification records remain intact.
-- Direct HTTP routing to GitHub returns the expected page with status `200`. Public HTTPS is not yet
-  final because GitHub's custom-domain certificate is still pending and some DNS caches still serve
-  Squarespace.
+- GitHub completed its DNS check, issued the custom-domain certificate, and HTTPS enforcement is
+  enabled. The apex returns the exact published page over HTTPS with status `200`; `www` redirects
+  to the apex, and the live response hash matches `owner-site/index.html`.
+- Public resolvers point to GitHub. Some local DNS caches may temporarily continue serving the old
+  Squarespace page until their previous record expires.
 - No WhatsApp name was submitted or number registered. No file, setting, DNS record, or content for
   `calapres.com` or the live Shopify store was changed.
 
 ### Resume action
 
-1. Recheck public DNS for the apex and `www`.
-2. Recheck the GitHub Pages certificate state.
-3. When the certificate is valid, enable HTTPS enforcement.
-4. Verify the public HTTPS page returns status `200`, the exact ownership statement, canonical URL,
-   and `index,follow` without redirecting to another domain.
-5. Do not submit a Meta display name until that public HTTPS validation is complete.
+1. Reopen the exact live Calapres WABA and phone-number asset in Meta read-only.
+2. Verify their current IDs, ownership, registration state, and display-name status; do not reuse
+   stale identifiers from earlier migration attempts.
+3. Only then decide whether the next Meta action is a new submission or an appeal using the live
+   ownership page as evidence.
