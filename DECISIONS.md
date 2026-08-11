@@ -14,6 +14,9 @@ decision record.
 - [0004 — `main` is the single canonical branch](decisions/0004-single-canonical-branch.md)
 - [0006 — Retire Supabase and adopt Shopify-native operations](decisions/0006-retire-supabase.md)
 - [0007 — Publish an isolated Calapres ownership-proof site](decisions/0007-publish-ownership-proof-site.md)
+- [0008 — Adopt the Optix multi-brand customer-service architecture](decisions/0008-optix-customer-service-architecture.md)
+  — approved for design and a Calapres-only pilot; n8n remains an orchestration layer and every
+  brand's knowledge, credentials, customer context, and store adapter stay isolated.
 
 ## Superseded decisions
 

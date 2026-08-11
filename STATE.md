@@ -2,8 +2,10 @@
 
 ## Current phase
 
-Shopify-native storefront and catalog readiness. The Nawadir Dior supplier architecture and all
-Supabase-based Calapres architecture are retired.
+Shopify-native storefront and catalog readiness, plus a verified Calapres WhatsApp Cloud API
+channel. The Nawadir Dior supplier architecture and all Supabase-based Calapres architecture are
+retired. The Optix customer-service architecture is approved for design and a Calapres-only pilot,
+but no production customer-service bot is deployed yet.
 
 ## Approved architecture
 
@@ -75,11 +77,15 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 5. Opening a new market remains a commercial decision.
 6. The dormant Calapres Supabase credential in n8n may be deleted after explicit confirmation;
    all workflows that reference it are already archived.
+7. The approved Optix customer-service design has not yet been implemented in n8n; the existing
+   live WhatsApp channel must remain the Calapres-only pilot until the observation and reply gates
+   are validated.
 
 ## Next safe action
 
-Reopen the exact live Calapres WABA and phone-number asset in Meta read-only and verify their current
-IDs and display-name status before deciding whether to submit or appeal the ownership-backed name.
+Build the Calapres-only customer-service pilot in observation/test mode against the existing
+Chatwoot inbox, with no automatic customer reply until its brand routing, grounding, and owner
+review gates pass an end-to-end test.
 
 ## Constraints
 
@@ -117,10 +123,25 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   directive. Its SHA-256 matches `owner-site/index.html` exactly.
 - Public DNS resolvers point to GitHub. Some local resolvers may temporarily continue serving the
   former Squarespace page until their old cache expires.
-- No WhatsApp display name was submitted, no WhatsApp number was registered, and neither
+- Live Meta verification on 2026-08-11 confirmed the selected Calapres WABA
+  `1835160094133742` under Optix portfolio `3498131087080400`, phone-number ID
+  `1202498582954919`, and display name `Calapres | كالابريز`.
+- Meta approved that display name. The number is registered on Cloud API with status `CONNECTED`,
+  platform type `CLOUD_API`, code verification `VERIFIED`, throughput `STANDARD`, and two-step
+  verification enabled. The actual phone number remains intentionally masked in project records.
+- Chatwoot Cloud account `179973`, existing WhatsApp inbox `128058`, uses the same WABA and phone
+  identifiers. Account Health reports the display name approved, phone connected, the 2K customer
+  messaging tier, and the webhook configured successfully.
+- A real bidirectional test passed: multiple messages sent from the owner's phone arrived in the
+  Chatwoot conversation, a reply sent from Chatwoot reached the phone, and the owner's delivery
+  acknowledgement returned to Chatwoot.
+- Chatwoot accepted a manual WhatsApp-template synchronization request after the connection test.
+- No duplicate WABA, phone number, Meta app, Chatwoot account, or Chatwoot inbox was created.
+- No n8n customer-service workflow or automatic customer reply is active yet. Neither
   `calapres.com` nor the live Shopify store was changed.
 
 ### Next safe action
 
-Reopen the exact live Calapres WABA and phone-number asset in Meta read-only and verify their current
-IDs, ownership, registration state, and display-name status before any new submission or appeal.
+Implement decision 0008 as a Calapres-only observation/test workflow against Chatwoot inbox
+`128058`. Prove exact brand routing, grounded drafting, deduplication, delay cancellation, and owner
+review before enabling any automatic customer-facing reply.

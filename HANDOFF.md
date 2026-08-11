@@ -3,7 +3,8 @@
 ## Resume from
 
 Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native
-architecture, and decision 0007 is binding for the isolated Calapres ownership-proof site.
+architecture, decision 0007 is binding for the isolated Calapres ownership-proof site, and decision
+0008 is binding for the Optix customer-service design and its Calapres-only pilot boundary.
 
 ## Completed in the Supabase retirement
 
@@ -34,13 +35,19 @@ architecture, and decision 0007 is binding for the isolated Calapres ownership-p
   time of deletion.
 - Existing Agentic, policies, Knowledge Base, FAQs, collections, and storefront configuration are
   unaffected.
+- The selected Calapres WhatsApp asset is operational on Meta Cloud API. The approved display name
+  is `Calapres | كالابريز`; WABA ID is `1835160094133742`; phone-number ID is
+  `1202498582954919`; the phone is `CONNECTED`, verified, and protected by two-step verification.
+- Chatwoot Cloud account `179973` and its existing WhatsApp inbox `128058` use those same IDs. The
+  webhook is configured and a real inbound, outbound, and owner-acknowledgement test passed.
+- No n8n customer-service agent or automatic customer-facing reply is active yet.
 
 ## Exact next actions
 
-1. Reopen the exact Calapres WABA and phone-number asset in Meta read-only, verify their current IDs,
-   ownership, registration state, and display-name status, and do not reuse stale identifiers.
-2. Decide whether the next Meta action is a new submission or an appeal using the live ownership
-   page as evidence.
+1. Implement decision 0008 as a Calapres-only observation/test workflow against Chatwoot inbox
+   `128058`; do not connect another brand or reuse stale identifiers.
+2. Prove brand routing, grounded draft generation, deduplication, delay cancellation, and owner
+   review before enabling an automatic customer-facing reply.
 3. Review the four draft products directly in Shopify.
 4. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
 5. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
@@ -80,13 +87,20 @@ project and acknowledging irreversibility.
   to the apex, and the live response hash matches `owner-site/index.html`.
 - Public resolvers point to GitHub. Some local DNS caches may temporarily continue serving the old
   Squarespace page until their previous record expires.
-- No WhatsApp name was submitted or number registered. No file, setting, DNS record, or content for
-  `calapres.com` or the live Shopify store was changed.
+- Meta approved the live display name `Calapres | كالابريز` for the selected Calapres asset. Live
+  Graph verification showed WABA `1835160094133742`, phone-number ID `1202498582954919`,
+  `CONNECTED`, `CLOUD_API`, `VERIFIED`, and `STANDARD` throughput. Two-step verification is enabled.
+- Chatwoot Cloud account `179973`, existing inbox `128058`, reports the same identifiers, approved
+  name, connected phone, and successful webhook configuration.
+- A real bidirectional test passed from the owner's phone through Meta and Chatwoot and back to the
+  phone; the owner's acknowledgement then arrived in the same Chatwoot conversation.
+- Chatwoot template synchronization was initiated successfully. No duplicate account, WABA, phone,
+  app, or inbox was created.
+- No n8n customer-service bot is active. No file, setting, DNS record, or content for `calapres.com`
+  or the live Shopify store was changed.
 
 ### Resume action
 
-1. Reopen the exact live Calapres WABA and phone-number asset in Meta read-only.
-2. Verify their current IDs, ownership, registration state, and display-name status; do not reuse
-   stale identifiers from earlier migration attempts.
-3. Only then decide whether the next Meta action is a new submission or an appeal using the live
-   ownership page as evidence.
+1. Continue with decision 0008 using Calapres only and Chatwoot inbox `128058`.
+2. Build observation mode first and verify exact brand routing and grounded drafts.
+3. Keep all automatic customer sends disabled until the owner-review and end-to-end gates pass.

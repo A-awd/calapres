@@ -33,8 +33,10 @@ Supabase is retired and prohibited as a Calapres dependency. Do not add its SDK,
 variables, migrations, functions, storage, authentication, queues, MCP reads, or product records.
 Do not restore the retired React application or the retired synchronization code from Git history.
 
-n8n is not a source of truth. Any future n8n use requires a new recorded decision and must operate
-directly against approved Shopify data with a narrow, reversible scope.
+n8n is not a source of truth. Decision 0008 permits only the bounded Optix customer-service
+architecture with Calapres as the first isolated pilot. It may operate against approved Shopify
+facts and brand-scoped support data with a narrow, reversible scope. Any other future n8n use
+requires a separate recorded decision.
 
 ## Product publication gate
 

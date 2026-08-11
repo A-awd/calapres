@@ -21,8 +21,9 @@ source of truth for the theme and project governance.
 
 There is no external product database, authentication service, storage service, catalog queue, or
 supplier synchronization layer in the approved architecture. Supabase was retired by owner
-decision on 2026-07-29 and must not be reintroduced. n8n is not a product source and may be used
-again only after a new, explicit decision for a bounded Shopify-native workflow.
+decision on 2026-07-29 and must not be reintroduced. n8n is not a product source. Decision 0008
+permits only a bounded, Calapres-first customer-service orchestration layer; every other n8n use
+still requires a separate recorded decision.
 
 ## Product workflow
 
@@ -57,6 +58,8 @@ code are not part of the current tree. Their history remains recoverable from Gi
 - [HANDOFF.md](HANDOFF.md) — continuity notes for the next session.
 - [DECISIONS.md](DECISIONS.md) — decision index.
 - [LAUNCHER.md](LAUNCHER.md) — vendor-neutral session protocol.
+- [Optix Customer Service Architecture](docs/optix-customer-service-architecture.md) — approved
+  multi-brand support design with Calapres as the first isolated pilot.
 
 ## SKU policy
 
