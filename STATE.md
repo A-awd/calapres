@@ -89,3 +89,35 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 
 - The Kimi-approved Calabriz static design (7 pages) is fully ported to a Shopify Liquid theme on `shopify-theme` (merge `65a5388`): dynamic products/variants, AJAX cart, engraving line item property «نص الحفر», and an editor-managed hero video.
 - CI deploys `shopify-theme` only to the unpublished staging theme; the live theme stays untouched until the owner reviews the staging preview and publishes manually from Shopify Admin.
+
+## WhatsApp display-name ownership proof — 2026-08-11
+
+- Verified the canonical `main` branch at
+  `2ab93ac3a7886c38d39b09d8353c56577a843f5e` before preparing this work.
+- Published an isolated ownership page under `owner-site/` in commit
+  `daf25f564c063a6f9066a56bf02293a68242bebc`. It states in Arabic and English that Calapres is
+  owned and operated by `مؤسسة عبق الخيل للتجارة`, includes the literal relationship
+  `Calapres by مؤسسة عبق الخيل للتجارة`, links to `https://calapres.com/`, and exposes crawlable
+  Organization, Brand, and WebPage structured data.
+- The page is intentionally separate from the Shopify theme and contains no other brand, Meta
+  asset ID, phone number, secret, commercial-register number, or tax number.
+- GitHub Pages deployment run `31469442562` completed successfully from `main`; the workflow
+  publishes only `owner-site/` and cannot publish the Shopify theme.
+- GitHub verified ownership of `awd-businesses.com`, and the repository Pages configuration now
+  uses that custom domain.
+- The authoritative and public DNS records now point the apex to GitHub Pages and `www` to
+  `a-awd.github.io`. Google Workspace MX, SPF, DKIM, Facebook verification, Domain Connect, and the
+  GitHub ownership-verification record were preserved.
+- Direct HTTP routing to GitHub returns the ownership page with status `200` and the expected title,
+  statement, canonical URL, and `index,follow` directive.
+- GitHub has not yet issued the custom-domain TLS certificate, so HTTPS enforcement remains off
+  while DNS caches and certificate provisioning converge. Some local resolvers may temporarily
+  continue serving the former Squarespace page.
+- No WhatsApp display name was submitted, no WhatsApp number was registered, and neither
+  `calapres.com` nor the live Shopify store was changed.
+
+### Next safe action
+
+Recheck the public apex and `www` endpoints after DNS and certificate propagation. Once GitHub
+reports a valid certificate, enable HTTPS enforcement and verify that `https://awd-businesses.com/`
+returns the ownership page directly with status `200` before any Meta display-name action.

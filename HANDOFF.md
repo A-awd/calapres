@@ -56,3 +56,31 @@ project and acknowledging irreversibility.
 
 - `shopify-theme` @ `65a5388` carries the Calabriz Liquid theme converted from the approved static build; all schema JSON is valid and `shopify theme check` passes with zero errors.
 - Next: publish the four draft products (and add the iPad-stand photos) so the storefront renders live data, preview the staging theme, then publish it manually when approved.
+
+## WhatsApp display-name ownership proof — 2026-08-11
+
+- The ownership page is committed and pushed on `main` at
+  `daf25f564c063a6f9066a56bf02293a68242bebc` and is deployed from `owner-site/` by GitHub Pages.
+- The exact public statement is:
+  `كالابريز (Calapres) علامة تجارية مملوكة ومدارة بواسطة مؤسسة عبق الخيل للتجارة.`
+- It also includes the literal candidate relationship
+  `Calapres by مؤسسة عبق الخيل للتجارة`, the same relationship in English, a link to the official
+  Calapres store and email, and Organization/Brand/WebPage structured data.
+- Pages deployment run `31469442562` succeeded. GitHub verified ownership of
+  `awd-businesses.com`, and the repository Pages configuration uses that custom domain.
+- The apex A records and `www` CNAME now point to GitHub Pages. Google Workspace MX, SPF, DKIM,
+  Facebook verification, Domain Connect, and GitHub verification records remain intact.
+- Direct HTTP routing to GitHub returns the expected page with status `200`. Public HTTPS is not yet
+  final because GitHub's custom-domain certificate is still pending and some DNS caches still serve
+  Squarespace.
+- No WhatsApp name was submitted or number registered. No file, setting, DNS record, or content for
+  `calapres.com` or the live Shopify store was changed.
+
+### Resume action
+
+1. Recheck public DNS for the apex and `www`.
+2. Recheck the GitHub Pages certificate state.
+3. When the certificate is valid, enable HTTPS enforcement.
+4. Verify the public HTTPS page returns status `200`, the exact ownership statement, canonical URL,
+   and `index,follow` without redirecting to another domain.
+5. Do not submit a Meta display name until that public HTTPS validation is complete.
