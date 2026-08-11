@@ -20,6 +20,9 @@ decision record.
 - [0009 — Adopt a multi-brand ownership-evidence registry](decisions/0009-adopt-multibrand-ownership-evidence-registry.md)
   — repeat the successful permanent ownership-proof pattern for each future verified brand while
   keeping Calapres as the only active implementation.
+- [0010 — Adopt the Calapres customer-service runtime](decisions/0010-adopt-calapres-customer-service-runtime.md)
+  — use a Calapres brand edge plus an immutable credential-free Core, direct structured LLM calls,
+  scoped operational tables, and a no-send observation gate; Captain and AgentBot do not respond.
 
 ## Superseded decisions
 

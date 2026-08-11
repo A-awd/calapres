@@ -1,6 +1,6 @@
 # معمارية خدمة العملاء لـ "أوبتيكس" / Optix Customer Service Architecture
 
-Status: Approved design; not yet deployed
+Status: Approved design; Calapres observation runtime authorized by decision 0010
 
 Date: 2026-08-11
 
@@ -55,6 +55,13 @@ is closed, no customer-service workflow may be activated or allowed to send a cu
 The owner sees one assistant. Internally, the system is modular: one shared reasoning and routing
 core, a separate adapter for every brand and channel, and isolated knowledge and credentials for
 each store.
+
+Decision 0010 fixes the implementation shape: each brand owns a thin public edge with its static
+credentials and final side-effect gate. An immutable Core release is a private internal
+sub-workflow with no public webhook, external credential, or customer-send node. The phrase
+"central router" describes shared internal logic, not one public workflow that mixes every brand's
+credentials. A new Core release is evaluated and adopted brand by brand instead of being edited in
+place for all brands.
 
 ## Core components
 

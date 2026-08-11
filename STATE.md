@@ -2,11 +2,11 @@
 
 ## Current phase
 
-Shopify-native storefront and catalog readiness, plus a verified Calapres WhatsApp Cloud API
-channel. The Nawadir Dior supplier architecture and all Supabase-based Calapres architecture are
-retired. The Optix customer-service architecture is approved for design and a Calapres-only pilot,
-but no production customer-service bot is deployed yet. Its implementation runtime, Chatwoot
-AgentBot role, and durable support-data store must be decided after a read-only live audit.
+Shopify-native storefront and catalog readiness, plus verified Calapres customer channels in
+Chatwoot. The Nawadir Dior supplier architecture and all Supabase-based Calapres architecture are
+retired. Decision 0010 closes the customer-service pre-implementation gate and authorizes a
+Calapres-only observation runtime. No production customer-service bot or automatic customer send
+is deployed.
 
 ## Approved architecture
 
@@ -78,18 +78,15 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 5. Opening a new market remains a commercial decision.
 6. The dormant Calapres Supabase credential in n8n may be deleted after explicit confirmation;
    all workflows that reference it are already archived.
-7. The approved Optix customer-service design has not yet been implemented in n8n; the existing
-   live WhatsApp channel must remain the Calapres-only pilot until the observation and reply gates
-   are validated.
-8. Chatwoot AgentBot/AI, n8n orchestration, and persistent support-data responsibilities have not
-   yet been assigned. Building before that decision risks duplicate replies and fragmented state.
+7. The approved Optix customer-service observation runtime has not yet been created in n8n.
+8. n8n has no Chatwoot credential, and the recorded Shopify credential scopes do not include
+   `read_customers`; those access changes require deliberate implementation gates.
 
 ## Next safe action
 
-Audit the selected Chatwoot account and current n8n instance read-only, then record the exact
-reasoning runtime, AgentBot boundary, webhook/deduplication contract, and durable storage design.
-Only after that decision may the Calapres observation/test pilot be built; automatic customer
-replies remain disabled.
+Create and validate the decision-0010 workflow source, Calapres-scoped operational tables, and
+inactive n8n observation workflows. Keep the customer egress branch absent and do not connect the
+live Chatwoot webhook until the persistent-access gate is handled.
 
 ## Constraints
 

@@ -46,12 +46,13 @@ another brand implementation.
 
 ## Exact next actions
 
-1. Audit Chatwoot account `179973`, inbox `128058`, and the current n8n instance read-only. Decide
-   whether Chatwoot AgentBot participates, where reasoning executes, how duplicate replies are
-   prevented, and where durable multi-brand support data is stored.
-2. Record that implementation decision before creating or activating a workflow.
-3. Build decision 0008 as a Calapres-only observation/test pilot; do not connect another brand or
-   reuse stale identifiers.
+1. Continue with decision 0010, which records the completed Chatwoot/n8n audit and fixes the
+   Calapres edge, immutable Core, direct structured LLM, persistence, deduplication, and no-send
+   boundaries.
+2. Create the Calapres-isolated n8n project/tables and the inactive observation workflows from the
+   validated repository source.
+3. Handle Chatwoot credential/webhook and Shopify `read_customers` only at their deliberate
+   persistent-access gates; do not bypass either requirement.
 4. Prove brand routing, grounded draft generation, deduplication, delay cancellation, and owner
    review before enabling an automatic customer-facing reply.
 5. Review the four draft products directly in Shopify.
