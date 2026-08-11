@@ -13,6 +13,7 @@ decision record.
   remains active; database-issued SKUs are superseded by decision 0006.
 - [0004 — `main` is the single canonical branch](decisions/0004-single-canonical-branch.md)
 - [0006 — Retire Supabase and adopt Shopify-native operations](decisions/0006-retire-supabase.md)
+- [0007 — Publish an isolated Calapres ownership-proof site](decisions/0007-publish-ownership-proof-site.md)
 
 ## Superseded decisions
 
