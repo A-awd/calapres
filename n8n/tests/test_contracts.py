@@ -302,6 +302,172 @@ class ContractTests(unittest.TestCase):
         responders = registry["chatwoot"]["single_responder"]
         self.assertFalse(any(responders.values()))
 
+    def test_edge_persistence_projections_match_exact_live_table_columns(self):
+        expected_columns = {
+            "edge-dedup-table-row": {
+                "event_key",
+                "delivery_id",
+                "message_id",
+                "conversation_id",
+                "channel",
+                "correlation_id",
+                "status",
+                "received_at",
+                "processed_at",
+                "expires_at",
+            },
+            "edge-conversation-job-table-row": {
+                "job_key",
+                "conversation_id",
+                "channel",
+                "generation_token",
+                "last_message_id",
+                "correlation_id",
+                "status",
+                "human_owned",
+                "due_at",
+                "updated_at",
+            },
+            "edge-incident-table-row": {
+                "schema_version",
+                "brand_id",
+                "incident_revision",
+                "correlation_id",
+                "reason_code",
+                "draft_ref",
+                "conversation_id",
+                "created_at",
+                "incident_id",
+                "incident_type",
+                "order_ref",
+                "owner_decision",
+                "proposed_action",
+                "resolved_at",
+                "severity",
+                "status",
+                "summary_sanitized",
+                "updated_at",
+            },
+            "edge-audit-table-row": {
+                "schema_version",
+                "brand_id",
+                "idempotency_key",
+                "outcome",
+                "actor_type",
+                "conversation_ref",
+                "incident_id",
+                "knowledge_version",
+                "workflow_release",
+                "audit_id",
+                "correlation_id",
+                "created_at",
+                "decision",
+                "details_sanitized",
+                "event_type",
+                "reason_code",
+                "source_ref",
+            },
+        }
+        expected_live_types = {
+            "edge-dedup-table-row": {
+                "event_key": "string",
+                "delivery_id": "string",
+                "message_id": "string",
+                "conversation_id": "string",
+                "channel": "string",
+                "correlation_id": "string",
+                "status": "string",
+                "received_at": "date",
+                "processed_at": "date",
+                "expires_at": "date",
+            },
+            "edge-conversation-job-table-row": {
+                "job_key": "string",
+                "conversation_id": "string",
+                "channel": "string",
+                "generation_token": "string",
+                "last_message_id": "string",
+                "correlation_id": "string",
+                "status": "string",
+                "human_owned": "boolean",
+                "due_at": "date",
+                "updated_at": "date",
+            },
+            "edge-incident-table-row": {
+                key: "date" if key in {"created_at", "resolved_at", "updated_at"}
+                else "number" if key == "incident_revision"
+                else "string"
+                for key in expected_columns["edge-incident-table-row"]
+            },
+            "edge-audit-table-row": {
+                key: "date" if key == "created_at" else "string"
+                for key in expected_columns["edge-audit-table-row"]
+            },
+        }
+        prohibited = {
+            "message_body",
+            "raw_message",
+            "phone",
+            "email",
+            "address",
+            "attachment",
+            "order_payload",
+            "payment_data",
+        }
+
+        def live_type(property_schema):
+            if property_schema.get("format") == "date-time":
+                return "date"
+            declared = property_schema.get("type")
+            declared_types = declared if isinstance(declared, list) else [declared]
+            if "boolean" in declared_types:
+                return "boolean"
+            if "integer" in declared_types or "number" in declared_types:
+                return "number"
+            return "string"
+
+        for schema_name_value, columns in expected_columns.items():
+            with self.subTest(schema=schema_name_value):
+                schema = self.schemas[schema_name_value]
+                self.assertIs(schema["additionalProperties"], False)
+                self.assertEqual(set(schema["properties"]), columns)
+                self.assertEqual(set(schema["required"]), columns)
+                self.assertFalse(columns & prohibited)
+                self.assertEqual(
+                    {
+                        key: live_type(property_schema)
+                        for key, property_schema in schema["properties"].items()
+                    },
+                    expected_live_types[schema_name_value],
+                )
+
+        registry = read_json(BRAND_DIR / "registry.json")
+        audit_fixture = read_json(
+            FIXTURE_DIR / "valid" / "edge-audit-table-row--draft-observed.json"
+        )
+        self.assertEqual(
+            audit_fixture["knowledge_version"],
+            registry["knowledge"]["current_version"],
+        )
+
+    def test_dedup_release_reserves_all_identifier_columns_as_null(self):
+        row = read_json(FIXTURE_DIR / "valid" / "edge-dedup-table-row--claimed.json")
+        self.assertEqual(len(row), 10)
+        reserved = {
+            "delivery_id": "unsigned-delivery",
+            "message_id": "900001",
+            "conversation_id": "700001",
+            "channel": "whatsapp",
+            "correlation_id": "calapres:700001:900001",
+        }
+        for field, poisoned_value in reserved.items():
+            poisoned = dict(row)
+            poisoned[field] = poisoned_value
+            with self.subTest(field=field):
+                self.assertTrue(
+                    self.validation_errors("edge-dedup-table-row", poisoned)
+                )
+
     def test_core_output_audit_reason_matches(self):
         fixture = read_json(
             FIXTURE_DIR / "valid" / "core-output--observed-draft.json"
@@ -533,7 +699,21 @@ class ContractTests(unittest.TestCase):
                 "phone",
                 "email",
                 "address",
+                "status",
+                "assignee",
+                "assignee_id",
+                "owner_id",
             }
+        )
+        self.assertTrue(
+            {
+                "wait_state_fingerprint",
+                "event_identity_key_version",
+                "event_identity_fingerprint",
+                "baseline_fingerprint_key_version",
+                "baseline_status_fingerprint",
+                "baseline_assignee_fingerprint",
+            }.issubset(properties)
         )
         self.assertEqual(carrier["properties"]["customer_egress_allowed"]["const"], False)
         recheck = read_json(

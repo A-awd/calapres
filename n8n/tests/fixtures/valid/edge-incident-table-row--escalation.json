@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "incident_revision": 1,
+  "correlation_id": "calapres:700001:900001",
+  "reason_code": "owner_authority_required",
+  "draft_ref": null,
+  "conversation_id": "cwr_700001",
+  "created_at": "2026-08-11T12:00:02.000Z",
+  "incident_id": "inc_333333333333333333333333",
+  "incident_type": "customer_complaint",
+  "order_ref": null,
+  "owner_decision": null,
+  "proposed_action": "review_case",
+  "resolved_at": null,
+  "severity": "medium",
+  "status": "awaiting_owner",
+  "summary_sanitized": "decision=escalate;reason=owner_authority_required;intent=complaint;risk=medium;egress=false",
+  "updated_at": "2026-08-11T12:00:02.000Z"
+}

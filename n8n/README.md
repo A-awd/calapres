@@ -10,6 +10,11 @@ a customer database, or a customer-facing bot release.
   sanitized manual fixture, merges the post-response delay stage into the edge, and contains no
   public webhook or customer-send node. The Wait receives only the strict
   `delayed-observation-state` contract; message content and model candidates are discarded first.
+  Its exact ordered fields are bound by canonical SHA-256, and it carries only the pinned
+  baseline-HMAC key version plus opaque status/assignee fingerprints. Live baseline capture is
+  deliberately unavailable and fails closed until the Chatwoot read and HMAC credential are approved.
+  The compiled policy uses 30–75 seconds for Instagram/TikTok/WhatsApp, 120–300 seconds for Email,
+  and one second only for the synthetic test fixture. Live-shaped input keeps the kill switch on.
 - `workflows/optix-customer-service-core-v1.ts` — the private, credential-free rules sub-workflow.
   It cannot receive a public channel event or contact a customer.
 - `workflows/calapres-shopify-order-index-v1.ts` — a separate private, inactive index workflow
@@ -21,8 +26,9 @@ a customer database, or a customer-facing bot release.
   nonce, and content digests, then emits only a lossless no-write preview. It has no public
   webhook, credential, Data Table node, model, customer send, or knowledge publication action.
 - `schemas/` — strict JSON contracts for the reusable event/Core contracts, the stricter Calapres
-  edge envelope, the provider-neutral structured model candidate, the identifiers-only Wait
-  state, the post-delay recheck, and every approved operational record class. The Core input
+  edge envelope, the provider-neutral structured model candidate, signed Chatwoot ingress,
+  transient live re-read evidence, the identifiers-only Wait state, the post-delay decision, and
+  every approved operational record class. The Core input
   references the generic envelope and `llm-candidate.schema.json`; the Calapres edge must first
   pass `calapres-event-envelope.schema.json`.
 - `tests/fixtures/` — synthetic records only. They contain no production customer or order data.
@@ -47,7 +53,9 @@ repository, every valid fixture, and the JavaScript inside every n8n Code node, 
 mutate the fixtures to prove that unknown accounts/inboxes, the disabled website inbox,
 outgoing messages, private notes, bot echoes, missing routing fields, live mode, customer egress,
 another brand at the Calapres edge, high-risk drafts, raw identity values, raw Wait state,
-unverified post-delay rechecks, payload-supplied transport claims, invented or owner-only knowledge
+unverified post-delay rechecks, payload-supplied transport claims, unsigned Delivery-header replay,
+fresh-signature redelivery, event-identity mutation, truncated or changed bounded re-read sets,
+same-second human intervention, oversized webhook bodies, invented or owner-only knowledge
 references, mismatched live-fact IDs, adversarial free-text model drafts, non-HMAC order-index
 commands, raw incident/audit fields, mismatched owner/case/revision references, replay timing, and
 untrusted owner commands all fail closed. A model draft is never forwarded as the
@@ -68,6 +76,7 @@ boundary and avoids another execution boundary. It must not:
 - save message bodies, attachments, raw phone/email values, addresses, order payloads, or payment
   information in Data Tables;
 - pass message text, a transcript, a sender identity value, or a model draft through the Wait;
+- persist full signed-ingress, live-re-read, or post-delay evidence in Wait, Data Tables, or audit;
 - treat a missing, unverified, stale, or human-intervened post-delay recheck as eligible;
 - invoke Captain, AgentBot, an autonomous AI Agent, or a second responder;
 - send a customer message or modify Shopify;
@@ -80,29 +89,35 @@ Decision 0010 authorizes eight empty, Calapres-scoped operational tables in the 
 
 | Logical table | Purpose | Contract |
 |---|---|---|
-| `dedup` | replay/idempotency state | `dedup-record.schema.json` |
-| `jobs` | conversation generation and delay state | `conversation-job.schema.json` |
+| `dedup` | stable business-event idempotency; request replay remains a separate transport gate | `dedup-record.schema.json`; exact preview `edge-dedup-table-row.schema.json` |
+| `jobs` | conversation generation and delay state | `conversation-job.schema.json`; exact preview `edge-conversation-job-table-row.schema.json` |
 | `customer_links` | verified opaque channel links | `identity-link.schema.json` |
 | `order_index` | keyed lookup fingerprints and opaque Shopify references | `order-index-table-row.schema.json` |
 | `verification` | identity verification lifecycle | `verification-record.schema.json` |
-| `incidents` | sanitized escalations | `incident.schema.json`; owner projection `owner-incident-table-row.schema.json` |
+| `incidents` | sanitized escalations | `incident.schema.json`; edge preview `edge-incident-table-row.schema.json`; owner projection `owner-incident-table-row.schema.json` |
 | `approvals` | structured owner decisions | `owner-decision.schema.json`; exact projection `owner-approval-required-row.schema.json` |
-| `audit` | sanitized durable audit events | `audit-event.schema.json`; owner projection `owner-audit-table-row.schema.json` |
+| `audit` | sanitized durable audit events | `audit-event.schema.json`; edge preview `edge-audit-table-row.schema.json`; owner projection `owner-audit-table-row.schema.json` |
 
 Exact non-secret IDs live in `support/brands/calapres/runtime-manifest.json`. The existing paused
 catalog table is not part of this runtime.
 
 Data Tables do not provide a documented atomic uniqueness guarantee. They are acceptable for this
 no-send observation release only. Their presence must not be used as evidence that customer egress
-is safe.
+is safe. The current Edge table rows are shape previews only: `persistence_ready=false` and
+`persistable=false`. Live dedup must bind `event_key` to the stable business-event HMAC, atomically
+reserve it, and dual-read retained prior key versions through the dedup TTL. The signed-request
+replay fingerprint is a separate short-lived transport check; an unsigned Delivery header never
+defines event identity.
 
 ## Import and activation order
 
 1. Validate this repository source and fixtures.
 2. Compile/import the private Core and keep it inactive until its manual fixture passes.
 3. Compile/import the Calapres edge and confirm it has no outbound customer node.
-4. Confirm the merged Wait carrier contains only the strict identifier/control contract and that
-   the live-re-read placeholder fails closed until a Chatwoot credential is approved.
+4. Confirm the merged Wait carrier contains only the strict identifier/control contract, its
+   canonical fingerprint and baseline key-version bindings verify after Wait, and live baseline
+   capture plus the live-re-read placeholder fail closed until Chatwoot read and HMAC credentials
+   are approved.
 5. Validate and import the Shopify order-index workflow inactive; do not bind a credential yet.
 6. Validate and import the private Owner Review Desk inactive with caller policy `none`; keep every
    persistence and publication path absent.

@@ -23,7 +23,8 @@ decision record.
 - [0010 — Adopt the Calapres customer-service runtime](decisions/0010-adopt-calapres-customer-service-runtime.md)
   — use a Calapres brand edge plus an immutable credential-free Core, direct structured LLM calls,
   a separate private Shopify index, a private no-write Owner Review Desk, scoped operational
-  tables, and a no-send observation gate; Captain and AgentBot do not respond.
+  tables, channel-aware delay, signed-request replay protection, and a no-send observation gate;
+  Captain and AgentBot do not respond and pre-activation row projections are non-persistable.
 
 ## Superseded decisions
 

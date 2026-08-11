@@ -206,6 +206,397 @@ class WorkflowRuntimeGuardTests(unittest.TestCase):
         self.assertNotIn("unexpected", guarded)
         self.assertIsNone(guarded["draft_text"])
 
+    def test_edge_builds_exact_no_write_live_table_projections(self):
+        staged = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            [
+                "Create Sanitized Chatwoot Fixture",
+                "Normalize and Resolve Exact Calapres Inbox",
+                "DEDUP Reservation Slot - No Write",
+                "Conversation JOB Generation Slot - No Write",
+            ],
+            [{}],
+        )[0]
+
+        dedup = staged["dedup_gate"]
+        jobs = staged["conversation_job"]
+        self.assertIs(dedup["write_executed"], False)
+        self.assertIs(dedup["atomicity_guaranteed"], False)
+        self.assertEqual(
+            dedup["required_operation"],
+            "non_atomic_lookup_then_prepare_reservation",
+        )
+        self.assertIs(dedup["preview_ready"], True)
+        self.assertIs(dedup["persistence_ready"], False)
+        self.assertIs(dedup["persistable"], False)
+        self.assertEqual(dedup["event_key_semantics"], "event_identity_fingerprint")
+        self.assertEqual(
+            dedup["request_replay_store_state"],
+            "unimplemented_separate_store",
+        )
+        self.assertIs(dedup["business_dedup_store_separate"], True)
+        self.assertEqual(
+            dedup["future_live_received_at_semantics"],
+            "trusted_verifier_receipt_time",
+        )
+        self.assertEqual(
+            dedup["future_live_preconditions"],
+            [
+                "verified_request_replay_claim",
+                "separate_request_replay_store",
+                "event_identity_hmac_credential",
+                "event_identity_key_version_dual_read_through_dedup_ttl",
+                "trusted_verifier_receipt_time",
+                "atomic_event_identity_reservation",
+                "live_table_schema_reverification",
+            ],
+        )
+        self.assertEqual(
+            set(dedup["table_row"]),
+            set(read_json(FIXTURE_DIR / "edge-dedup-table-row--claimed.json")),
+        )
+        self.assertEqual(
+            dedup["table_row"]["event_key"],
+            "9ee62926cfd806b00e5b45c93bafb9ccbe8d58b09bbb0de574c15b39c5802445",
+        )
+        self.assertIs(jobs["write_executed"], False)
+        self.assertIs(jobs["atomicity_guaranteed"], False)
+        self.assertEqual(
+            jobs["required_operation"],
+            "non_atomic_read_then_prepare_generation",
+        )
+        self.assertIs(jobs["preview_ready"], True)
+        self.assertIs(jobs["persistence_ready"], False)
+        self.assertIs(jobs["persistable"], False)
+        self.assertEqual(
+            set(jobs["table_row"]),
+            set(
+                read_json(
+                    FIXTURE_DIR / "edge-conversation-job-table-row--waiting.json"
+                )
+            ),
+        )
+        self.assertIs(jobs["table_row"]["human_owned"], False)
+
+        for node_name, projection_key in (
+            ("DEDUP Reservation Slot - No Write", "dedup_gate"),
+            ("Conversation JOB Generation Slot - No Write", "conversation_job"),
+        ):
+            empty_projection = self.run_nodes(
+                "calapres-customer-service-edge-v1.ts",
+                [node_name],
+                [{}],
+            )[0][projection_key]
+            with self.subTest(empty_projection=node_name):
+                self.assertIs(empty_projection["preview_ready"], False)
+                self.assertIs(empty_projection["persistence_ready"], False)
+                self.assertIs(empty_projection["persistable"], False)
+                self.assertIs(empty_projection["write_executed"], False)
+                self.assertIsNone(empty_projection["table_row"])
+
+        observed = {
+            "schema_version": "1.0",
+            "brand_id": "calapres",
+            "correlation_id": "calapres:700001:900001",
+            "idempotency_key": "9ee62926cfd806b00e5b45c93bafb9ccbe8d58b09bbb0de574c15b39c5802445",
+            "decision": "observe_draft",
+            "reason_code": "grounded_draft_observed",
+            "authority": "draft_only",
+            "intent": "shipping_policy",
+            "risk": "low",
+            "draft_allowed": True,
+            "draft_text": "approved fixture text",
+            "customer_egress_allowed": False,
+            "requires_owner_review": True,
+            "incident_required": False,
+            "sanitized_audit": {
+                "event_type": "core_decision",
+                "reason_code": "grounded_draft_observed",
+            },
+        }
+        preview_provenance = {
+            "kind": "synthetic_manual_fixture",
+            "fixture_ref": "fixture_clear_001",
+            "static_fingerprints": True,
+            "persistable": False,
+        }
+        observed_preview = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["AUDIT Append Slot - Sanitized Preview No Write"],
+            [
+                  {
+                      "observation_result": observed,
+                      "preview_provenance": preview_provenance,
+                      "raw_message": "must not survive",
+                    "phone": "+966500000000",
+                    "arbitrary_note": "must not enter summaries",
+                }
+            ],
+        )[0]
+        self.assertNotIn("raw_message", observed_preview)
+        self.assertNotIn("phone", observed_preview)
+        self.assertNotIn("arbitrary_note", observed_preview)
+        observed_commands = observed_preview["persistence_preview"]
+        self.assertIs(observed_commands["preview_ready"], True)
+        self.assertIs(observed_commands["persistence_ready"], False)
+        self.assertIs(observed_commands["persistable"], False)
+        self.assertIs(observed_commands["incidents"]["write_executed"], False)
+        self.assertIs(observed_commands["incidents"]["atomicity_guaranteed"], False)
+        self.assertIs(observed_commands["incidents"]["persistence_ready"], False)
+        self.assertIs(observed_commands["incidents"]["persistable"], False)
+        self.assertIsNone(observed_commands["incidents"]["table_row"])
+        self.assertIs(observed_commands["audit"]["write_executed"], False)
+        self.assertIs(observed_commands["audit"]["atomicity_guaranteed"], False)
+        self.assertIs(observed_commands["audit"]["preview_ready"], True)
+        self.assertIs(observed_commands["audit"]["persistence_ready"], False)
+        self.assertIs(observed_commands["audit"]["persistable"], False)
+        audit_row = observed_commands["audit"]["table_row"]
+        self.assertEqual(
+            set(audit_row),
+            set(read_json(FIXTURE_DIR / "edge-audit-table-row--draft-observed.json")),
+        )
+        self.assertNotIn("must not", audit_row["details_sanitized"])
+        self.assertEqual(audit_row["outcome"], "observed_no_write")
+        self.assertEqual(audit_row["knowledge_version"], "2026-08-11-v3")
+
+        poisoned = copy.deepcopy(observed)
+        poisoned["intent"] = "phone_966500000000"
+        poisoned_preview = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["AUDIT Append Slot - Sanitized Preview No Write"],
+            [
+                {
+                    "observation_result": poisoned,
+                    "preview_provenance": preview_provenance,
+                }
+            ],
+        )[0]["persistence_preview"]
+        self.assertIs(poisoned_preview["preview_ready"], False)
+        self.assertIs(poisoned_preview["persistence_ready"], False)
+        self.assertIsNone(poisoned_preview["audit"]["table_row"])
+        self.assertIsNone(poisoned_preview["incidents"]["table_row"])
+
+        escalated = copy.deepcopy(observed)
+        escalated.update(
+            {
+                "decision": "escalate",
+                "reason_code": "owner_authority_required",
+                "authority": "owner_required",
+                "intent": "complaint",
+                "risk": "medium",
+                "draft_allowed": False,
+                "draft_text": None,
+                "incident_required": True,
+            }
+        )
+        escalated["sanitized_audit"]["reason_code"] = "owner_authority_required"
+        escalation_preview = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["AUDIT Append Slot - Sanitized Preview No Write"],
+            [
+                {
+                    "observation_result": escalated,
+                    "preview_provenance": preview_provenance,
+                }
+            ],
+        )[0]["persistence_preview"]
+        self.assertIs(escalation_preview["preview_ready"], True)
+        self.assertIs(escalation_preview["persistence_ready"], False)
+        self.assertIs(escalation_preview["persistable"], False)
+        self.assertIs(escalation_preview["incidents"]["write_executed"], False)
+        self.assertIs(escalation_preview["incidents"]["preview_ready"], True)
+        self.assertIs(escalation_preview["incidents"]["persistence_ready"], False)
+        self.assertIs(escalation_preview["incidents"]["persistable"], False)
+        incident_row = escalation_preview["incidents"]["table_row"]
+        self.assertEqual(
+            set(incident_row),
+            set(read_json(FIXTURE_DIR / "edge-incident-table-row--escalation.json")),
+        )
+        self.assertEqual(incident_row["status"], "awaiting_owner")
+        self.assertIsNone(incident_row["resolved_at"])
+        self.assertEqual(incident_row["proposed_action"], "review_case")
+        self.assertIs(escalation_preview["audit"]["write_executed"], False)
+
+        invalid_tokens = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["Normalize and Resolve Exact Calapres Inbox"],
+            [
+                {
+                    "trusted_ingress": {
+                        "schema_version": "1.0",
+                        "kind": "synthetic_manual_fixture",
+                        "signature_verified": True,
+                        "replay_protection_verified": True,
+                    },
+                    "payload": {
+                        "event": "message_created",
+                        "account": {"id": 179973},
+                        "inbox": {"id": 128058},
+                        "conversation": {
+                            "id": "conv:invalid",
+                            "inbox_id": 128058,
+                        },
+                        "id": "msg invalid",
+                        "delivery_id": "delivery:invalid",
+                        "message_type": "incoming",
+                        "private": False,
+                        "sender": {"id": "contact_test", "type": "contact"},
+                        "content_type": "text",
+                        "content": "synthetic",
+                        "attachments": [],
+                        "created_at": "2026-08-11T12:00:00.000Z",
+                    },
+                }
+            ],
+        )[0]
+        self.assertIs(invalid_tokens["accepted"], False)
+        self.assertEqual(invalid_tokens["fail_reason"], "conversation_id_missing")
+        invalid_dedup = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["DEDUP Reservation Slot - No Write"],
+            [invalid_tokens],
+        )[0]["dedup_gate"]
+        invalid_job = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["Conversation JOB Generation Slot - No Write"],
+            [invalid_tokens],
+        )[0]["conversation_job"]
+        for projection in (invalid_dedup, invalid_job):
+            self.assertIs(projection["preview_ready"], False)
+            self.assertIs(projection["persistence_ready"], False)
+            self.assertIs(projection["persistable"], False)
+            self.assertIs(projection["write_executed"], False)
+            self.assertIs(projection["gate_passed"] if "gate_passed" in projection else projection["generation_current"], False)
+            self.assertIsNone(projection["table_row"])
+
+        for field, invalid_value in (
+            ("brand_id", "other-brand"),
+            ("account_id", 179974),
+            ("inbox_id", 128031),
+        ):
+            mismatched = copy.deepcopy(staged)
+            mismatched["envelope"][field] = invalid_value
+            dedup_mismatch = self.run_nodes(
+                "calapres-customer-service-edge-v1.ts",
+                ["DEDUP Reservation Slot - No Write"],
+                [mismatched],
+            )[0]["dedup_gate"]
+            job_mismatch = self.run_nodes(
+                "calapres-customer-service-edge-v1.ts",
+                ["Conversation JOB Generation Slot - No Write"],
+                [mismatched],
+            )[0]["conversation_job"]
+            with self.subTest(mismatch=field):
+                for projection in (dedup_mismatch, job_mismatch):
+                    self.assertIs(projection["preview_ready"], False)
+                    self.assertIs(projection["persistence_ready"], False)
+                    self.assertIs(projection["persistable"], False)
+                    self.assertIs(projection["write_executed"], False)
+                    self.assertIsNone(projection["table_row"])
+
+        pii_correlation = copy.deepcopy(staged)
+        pii_correlation["envelope"]["correlation_id"] = "victim@example.com"
+        for node_name, projection_key in (
+            ("DEDUP Reservation Slot - No Write", "dedup_gate"),
+            ("Conversation JOB Generation Slot - No Write", "conversation_job"),
+        ):
+            projection = self.run_nodes(
+                "calapres-customer-service-edge-v1.ts",
+                [node_name],
+                [pii_correlation],
+            )[0][projection_key]
+            with self.subTest(pii_projection=node_name):
+                self.assertIs(projection["preview_ready"], False)
+                self.assertIs(projection["persistence_ready"], False)
+                self.assertIsNone(projection["table_row"])
+
+        live_static_fingerprints = copy.deepcopy(staged)
+        live_static_fingerprints["delay_contract"]["delay_mode"] = "live_observation"
+        live_static_fingerprints["delay_contract"]["fixture_ref"] = None
+        live_expected_reasons = {
+            "DEDUP Reservation Slot - No Write": "dedup_live_state_unavailable",
+            "Conversation JOB Generation Slot - No Write": "job_live_state_unavailable",
+        }
+        for node_name, projection_key in (
+            ("DEDUP Reservation Slot - No Write", "dedup_gate"),
+            ("Conversation JOB Generation Slot - No Write", "conversation_job"),
+        ):
+            projection = self.run_nodes(
+                "calapres-customer-service-edge-v1.ts",
+                [node_name],
+                [live_static_fingerprints],
+            )[0][projection_key]
+            with self.subTest(live_static_projection=node_name):
+                self.assertIs(projection["preview_ready"], False)
+                self.assertIs(projection["persistence_ready"], False)
+                self.assertIs(projection["persistable"], False)
+                self.assertIs(projection["write_executed"], False)
+                self.assertIsNone(projection["table_row"])
+                self.assertEqual(projection["reason_code"], live_expected_reasons[node_name])
+
+        invalid_projection_input = copy.deepcopy(staged)
+        invalid_projection_input["envelope"]["conversation_id"] = "invalid-token"
+        invalid_dedup_item = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["DEDUP Reservation Slot - No Write"],
+            [invalid_projection_input],
+        )[0]
+        dedup_observation = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["Build Duplicate No-Action Observation"],
+            [invalid_dedup_item],
+        )[0]["observation_result"]
+        self.assertEqual(dedup_observation["reason_code"], "dedup_projection_invalid")
+        self.assertIs(dedup_observation["incident_required"], True)
+
+        invalid_job_item = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["Conversation JOB Generation Slot - No Write"],
+            [invalid_projection_input],
+        )[0]
+        job_observation = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["Build Stale Generation No-Action Observation"],
+            [invalid_job_item],
+        )[0]["observation_result"]
+        self.assertEqual(job_observation["reason_code"], "job_projection_invalid")
+        self.assertIs(job_observation["incident_required"], True)
+
+        malicious_decision = copy.deepcopy(observed)
+        malicious_decision.update(
+            {
+                "schema_version": "9.9",
+                "brand_id": "evilbrand",
+                "customer_egress_allowed": True,
+                "reason_code": "phone_966500000000",
+            }
+        )
+        malicious_decision["sanitized_audit"] = {
+            "event_type": "email_test_example_com",
+            "reason_code": "phone_966500000000",
+        }
+        malicious_output = self.run_nodes(
+            "calapres-customer-service-edge-v1.ts",
+            ["AUDIT Append Slot - Sanitized Preview No Write"],
+            [
+                {
+                    "observation_result": malicious_decision,
+                    "preview_provenance": preview_provenance,
+                }
+            ],
+        )[0]
+        malicious_preview = malicious_output["persistence_preview"]
+        self.assertIs(malicious_preview["preview_ready"], False)
+        self.assertIs(malicious_preview["persistence_ready"], False)
+        self.assertIsNone(malicious_preview["audit"]["table_row"])
+        self.assertIsNone(malicious_preview["incidents"]["table_row"])
+        self.assertEqual(
+            malicious_output["observation_result"]["reason_code"],
+            "audit_projection_invalid",
+        )
+        self.assertNotIn("966500000000", json.dumps(malicious_output))
+        self.assertNotIn("example_com", json.dumps(malicious_output))
+
     def test_order_index_maps_exact_live_table_columns(self):
         preview = self.run_nodes(
             "calapres-shopify-order-index-v1.ts",

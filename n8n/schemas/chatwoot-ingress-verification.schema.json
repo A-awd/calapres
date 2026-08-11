@@ -1,0 +1,488 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-ingress-verification.schema.json",
+  "title": "Calapres Chatwoot signed-ingress verification evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "source",
+    "evidence_id",
+    "signature_algorithm",
+    "signature_message_format",
+    "raw_body_size_bytes",
+    "max_raw_body_size_bytes",
+    "body_sha256",
+    "delivery_id_source",
+    "delivery_id_fingerprint",
+    "delivery_id_trusted",
+    "event_timestamp",
+    "received_at",
+    "verification_completed_at",
+    "max_age_seconds",
+    "max_future_skew_seconds",
+    "signature_verified",
+    "timestamp_verified",
+    "replay_protection_verified",
+    "replay_key_material_format",
+    "replay_key_fingerprint",
+    "accepted",
+    "normalization_allowed",
+    "reason_code",
+    "transient_only",
+    "persistence_allowed",
+    "wait_payload_allowed",
+    "data_table_payload_allowed",
+    "audit_payload_allowed",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "const": "chatwoot_hmac_v1"
+    },
+    "source": {
+      "const": "chatwoot_signed_ingress_topology"
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^cwi_[a-f0-9]{24}$"
+    },
+    "signature_algorithm": {
+      "const": "hmac-sha256"
+    },
+    "signature_message_format": {
+      "const": "{timestamp}.{raw_body_utf8_bytes}"
+    },
+    "raw_body_size_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_raw_body_size_bytes": {
+      "const": 1048576
+    },
+    "body_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delivery_id_source": {
+      "$comment": "X-Chatwoot-Delivery is untrusted header metadata because it is outside the HMAC message. verified_signed_payload_field is permitted only when the identifier was parsed from the raw body after HMAC verification.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "untrusted_header_metadata",
+        "verified_signed_payload_field"
+      ]
+    },
+    "delivery_id_fingerprint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delivery_id_trusted": {
+      "type": "boolean"
+    },
+    "event_timestamp": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{10}$"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "max_age_seconds": {
+      "const": 300
+    },
+    "max_future_skew_seconds": {
+      "const": 60
+    },
+    "signature_verified": {
+      "type": "boolean"
+    },
+    "timestamp_verified": {
+      "type": "boolean"
+    },
+    "replay_protection_verified": {
+      "type": "boolean"
+    },
+    "replay_key_material_format": {
+      "$comment": "Replay identity never depends on X-Chatwoot-Delivery or any other unsigned header metadata.",
+      "const": "sha256({signature_header}:{timestamp}:{body_sha256})"
+    },
+    "replay_key_fingerprint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "accepted": {
+      "type": "boolean"
+    },
+    "normalization_allowed": {
+      "type": "boolean"
+    },
+    "reason_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "payload_empty",
+        "payload_too_large",
+        "timestamp_missing",
+        "timestamp_malformed",
+        "timestamp_stale",
+        "timestamp_future",
+        "signature_missing",
+        "signature_malformed",
+        "signature_mismatch",
+        "duplicate_delivery",
+        "replay_store_unavailable",
+        "verification_unavailable"
+      ]
+    },
+    "transient_only": {
+      "const": true
+    },
+    "persistence_allowed": {
+      "const": false
+    },
+    "wait_payload_allowed": {
+      "const": false
+    },
+    "data_table_payload_allowed": {
+      "const": false
+    },
+    "audit_payload_allowed": {
+      "const": false
+    },
+    "customer_egress_allowed": {
+      "const": false
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "delivery_id_source": {
+              "type": "null"
+            },
+            "delivery_id_fingerprint": {
+              "type": "null"
+            },
+            "delivery_id_trusted": {
+              "const": false
+            }
+          }
+        },
+        {
+          "properties": {
+            "delivery_id_source": {
+              "const": "untrusted_header_metadata"
+            },
+            "delivery_id_fingerprint": {
+              "type": "string"
+            },
+            "delivery_id_trusted": {
+              "const": false
+            }
+          }
+        },
+        {
+          "properties": {
+            "delivery_id_source": {
+              "const": "verified_signed_payload_field"
+            },
+            "delivery_id_fingerprint": {
+              "type": "string"
+            },
+            "delivery_id_trusted": {
+              "const": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "accepted": {
+          "const": true
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "normalization_allowed": {
+          "const": true
+        },
+        "reason_code": {
+          "type": "null"
+        },
+        "signature_verified": {
+          "const": true
+        },
+        "timestamp_verified": {
+          "const": true
+        },
+        "event_timestamp": {
+          "type": "string"
+        },
+        "replay_protection_verified": {
+          "const": true
+        },
+        "replay_key_fingerprint": {
+          "type": "string"
+        },
+        "body_sha256": {
+          "type": "string"
+        },
+        "delivery_id_trusted": {
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "const": 0
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "const": "payload_empty"
+        },
+        "body_sha256": {
+          "type": "null"
+        },
+        "delivery_id_source": {
+          "type": "null"
+        },
+        "delivery_id_fingerprint": {
+          "type": "null"
+        },
+        "delivery_id_trusted": {
+          "const": false
+        },
+        "signature_verified": {
+          "const": false
+        },
+        "timestamp_verified": {
+          "const": false
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "null"
+        },
+        "event_timestamp": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1048577
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "const": "payload_too_large"
+        },
+        "body_sha256": {
+          "type": "null"
+        },
+        "delivery_id_source": {
+          "type": "null"
+        },
+        "delivery_id_fingerprint": {
+          "type": "null"
+        },
+        "delivery_id_trusted": {
+          "const": false
+        },
+        "signature_verified": {
+          "const": false
+        },
+        "timestamp_verified": {
+          "const": false
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "null"
+        },
+        "event_timestamp": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "enum": [
+            "timestamp_missing",
+            "timestamp_malformed",
+            "timestamp_stale",
+            "timestamp_future"
+          ]
+        },
+        "signature_verified": {
+          "const": false
+        },
+        "timestamp_verified": {
+          "const": false
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "enum": [
+            "signature_missing",
+            "signature_malformed",
+            "signature_mismatch"
+          ]
+        },
+        "signature_verified": {
+          "const": false
+        },
+        "timestamp_verified": {
+          "const": true
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "enum": [
+            "duplicate_delivery",
+            "replay_store_unavailable"
+          ]
+        },
+        "signature_verified": {
+          "const": true
+        },
+        "timestamp_verified": {
+          "const": true
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "properties": {
+        "accepted": {
+          "const": false
+        },
+        "raw_body_size_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "normalization_allowed": {
+          "const": false
+        },
+        "reason_code": {
+          "const": "verification_unavailable"
+        },
+        "signature_verified": {
+          "const": false
+        },
+        "timestamp_verified": {
+          "const": false
+        },
+        "replay_protection_verified": {
+          "const": false
+        },
+        "replay_key_fingerprint": {
+          "type": "null"
+        }
+      }
+    }
+  ]
+}

@@ -175,6 +175,38 @@
     "value": "synthetic-prohibited-value"
   },
   {
+    "name": "reject malformed wait-state fingerprint",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/wait_state_fingerprint",
+    "value": "not-a-sha256"
+  },
+  {
+    "name": "reject malformed baseline status fingerprint",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/baseline_status_fingerprint",
+    "value": "raw-open-status"
+  },
+  {
+    "name": "reject malformed baseline fingerprint key version",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/baseline_fingerprint_key_version",
+    "value": "rotated-without-version"
+  },
+  {
+    "name": "reject malformed baseline assignee fingerprint",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/baseline_assignee_fingerprint",
+    "value": "raw-assignee"
+  },
+  {
     "name": "reject mismatched delayed-state inbox",
     "schema": "delayed-observation-state",
     "base_fixture": "valid/delayed-observation-state--waiting.json",
@@ -183,12 +215,52 @@
     "value": 128031
   },
   {
-    "name": "reject non-HMAC delayed idempotency value",
+    "name": "reject non-HMAC delayed event identity value",
     "schema": "delayed-observation-state",
     "base_fixture": "valid/delayed-observation-state--waiting.json",
     "operation": "replace",
-    "path": "/idempotency_fingerprint",
+    "path": "/event_identity_fingerprint",
     "value": "plain-event-id"
+  },
+  {
+    "name": "reject malformed delayed event identity key version",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/event_identity_key_version",
+    "value": "unsigned-delivery-v1"
+  },
+  {
+    "name": "reject non-one-second synthetic delay",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--waiting.json",
+    "operation": "replace",
+    "path": "/delay_seconds",
+    "value": 30
+  },
+  {
+    "name": "reject too-short live chat delay",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--live-whatsapp.json",
+    "operation": "replace",
+    "path": "/delay_seconds",
+    "value": 29
+  },
+  {
+    "name": "reject synthetic key version in live delayed state",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--live-whatsapp.json",
+    "operation": "replace",
+    "path": "/baseline_fingerprint_key_version",
+    "value": "synthetic-v1"
+  },
+  {
+    "name": "reject too-long live email delay",
+    "schema": "delayed-observation-state",
+    "base_fixture": "valid/delayed-observation-state--live-email.json",
+    "operation": "replace",
+    "path": "/delay_seconds",
+    "value": 301
   },
   {
     "name": "reject unverified eligible recheck",

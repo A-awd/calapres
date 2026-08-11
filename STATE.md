@@ -168,8 +168,31 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   `approve`, `approve_until`, and `correct` as no-write previews only. Sanitized execution `40631`
   passed with persistence, knowledge publication, and customer egress all false.
 - The delay and post-delay cancellation stage is merged into the existing Edge. Its Wait carries
-  identifiers and HMAC fingerprints only, then requires a fresh Chatwoot re-read; the current
-  no-credential re-read slot fails closed outside the synthetic fixture.
+  identifiers, a canonical SHA-256 carrier fingerprint, the pinned baseline-HMAC key version, and
+  opaque baseline status/assignee fingerprints only; it carries no raw status, assignee, message,
+  or customer data. A fresh Chatwoot re-read must use the same pinned key version. The
+  compiled channel policy is 30–75 seconds for Instagram, TikTok, and WhatsApp and 120–300 seconds
+  for Email; the one-second path is synthetic-test-only. Live-shaped input keeps the brand kill
+  switch on, and the current no-credential path fails closed before Wait because a trusted live
+  baseline cannot yet be captured; the re-read slot also fails closed outside the synthetic fixture.
+- Strict source-only contracts now define the future signed Chatwoot ingress, transient live
+  re-read evidence, and post-delay cancellation decision. They cap the raw body at 1 MiB before
+  parsing/HMAC, bind request replay identity to the signed request rather than the unsigned Delivery
+  header, and separately derive stable business-event identity from an HMAC over the allowlisted
+  account/inbox/event/conversation/message tuple. Their post-delay rule performs two independent,
+  non-paginated reads from `anchor_message_id-1`; each raw response must contain 1–99 valid rows,
+  include the exact incoming/public anchor, and yield the same canonical set. Any newer
+  non-activity message—including another bot's output—cancels. They also compare
+  generation/status/assignee and forbid
+  the full evidence objects from Wait, Data Tables, or audit persistence. No live webhook or
+  Chatwoot credential was created.
+- The Edge now previews exact 10-column dedup, 10-column job, 18-column incident, and 17-column
+  audit rows. These projections are explicitly synthetic and non-persistable:
+  `write_executed=false`, `atomicity_guaranteed=false`, `persistence_ready=false`, and
+  `persistable=false`. A future live dedup `event_key` must use the stable business-event HMAC,
+  while the request replay fingerprint remains a separate short-lived transport check. Prior HMAC
+  key versions must be dual-read through the dedup TTL; the unsigned Delivery header never defines
+  event identity.
 - The order-index preview maps a validated Calapres contract to the table's exact 12 columns. A
   live n8n run caught an embedded Shopify-GID regex error before activation; it was fixed, a
   permanent embedded-Code syntax test was added, and sanitized post-fix execution `40619` passed
@@ -177,11 +200,19 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 - Sanitized manual executions proved the Core/Edge happy path, all four allowlisted channel
   mappings, and fail-closed behavior for unknown account/inbox, outgoing/private/bot events,
   invalid signature evidence, duplicate delivery, stale generation, returns, uncertain intent,
-  and non-low risk. Every tested result kept customer egress false.
+  and non-low risk. Post-sync execution `40651` proved that the source-synchronized synthetic
+  WhatsApp path used the configured Wait expression and exact no-write projections; the four-channel
+  delay ranges are covered by local runtime tests. It also proved the stable event-identity key,
+  exact Wait fingerprint, baseline key-version carry-through, null-reserved 10-column dedup
+  preview, and post-Wait integrity check. Every tested result kept
+  customer egress and persistence false. The Edge
+  remains inactive, unpublished, credential-free, and source-identical to its live draft.
 - GitHub now contains the brand registry, three append-only dated knowledge releases sourced from the live
   Calapres policy/FAQ pages, the approved response-style release, a proposed inactive model policy,
   generic Core contracts, stricter Calapres edge contracts, synthetic fixtures, and
-  standard-library contract/runtime guard tests. Thirty-four local tests pass.
+  standard-library contract/runtime guard tests. Seventy-two local tests pass, including hostile
+  request replay vs. event-idempotency, key rotation, body-binding, bounded re-read, same-second,
+  PII-poisoning, static-fingerprint, and cancellation-matrix cases.
 - Core grounding now verifies every cited knowledge ID and its authority against the selected
   context and verifies live-fact IDs exactly. It ignores the model's free-text draft and renders an
   `observe_draft` result only from versioned `customer_response_ar` or a verified live-source
@@ -194,9 +225,11 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 
 ### Next safe action
 
-After an action-time owner confirmation for those persistent-access gates, add the signed Chatwoot
-ingress and live re-read inside the existing Edge, bind only Calapres-scoped credentials, and test
-real events as private internal observations. Keep automatic customer-facing replies structurally
+After an action-time owner confirmation for those persistent-access gates, implement the already
+specified signed Chatwoot ingress and live re-read inside the existing Edge, bind only
+Calapres-scoped credentials, capture the pre-Wait baseline with the pinned identity-HMAC key,
+replace synthetic fingerprints with keyed live values, and test real
+events as private internal observations. Keep automatic customer-facing replies structurally
 absent until the separate activation decision and every safety gate pass.
 
 ## Multi-brand ownership-evidence standard — 2026-08-11

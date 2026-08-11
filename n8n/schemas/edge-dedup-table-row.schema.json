@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/edge-dedup-table-row.schema.json",
+  "title": "Sanitized Calapres business-event dedup row preview",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_key",
+    "delivery_id",
+    "message_id",
+    "conversation_id",
+    "channel",
+    "correlation_id",
+    "status",
+    "received_at",
+    "processed_at",
+    "expires_at"
+  ],
+  "properties": {
+    "event_key": {
+      "$comment": "Existing table-column alias whose only permitted value is event_identity_fingerprint. It must never contain replay_key_fingerprint, unsigned Delivery, or a raw identifier.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delivery_id": {
+      "$comment": "Null until a delivery identifier is proven to be inside the signed Chatwoot payload. The unsigned X-Chatwoot-Delivery header is never persisted here.",
+      "const": null
+    },
+    "message_id": {
+      "$comment": "Reserved live-table column. Sanitized preview does not persist the raw identifier.",
+      "const": null
+    },
+    "conversation_id": {
+      "$comment": "Reserved live-table column. Sanitized preview does not persist the raw identifier.",
+      "const": null
+    },
+    "channel": {
+      "$comment": "Reserved live-table column. Channel is derived from the allowlisted inbox, never trusted from payload brand claims.",
+      "const": null
+    },
+    "correlation_id": {
+      "$comment": "Reserved live-table column. Sanitized preview does not persist the raw correlation identifier.",
+      "const": null
+    },
+    "status": {
+      "enum": [
+        "claimed",
+        "processed",
+        "rejected",
+        "duplicate"
+      ]
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -44,7 +44,9 @@ signature boundary, retry lifecycle, and data contract.
 
 The current workflow source starts from sanitized manual fixtures. The live Chatwoot webhook is not
 connected. This keeps the first build useful for validation without granting persistent access or
-risking a customer reply.
+risking a customer reply. The compiled delay policy is 30–75 seconds for Instagram, TikTok, and
+WhatsApp and 120–300 seconds for Email; the one-second delay is available only to the sanitized
+fixture. A live-shaped input keeps the kill switch on.
 
 The four live n8n workflow shells now exist inside the isolated Calapres project. Core
 `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are both inactive and unpublished, have no public
@@ -53,7 +55,9 @@ unpublished, credential-free, and write-free. Owner Review Desk `hU7sAMAQSg9Obgk
 unpublished, credential-free, has caller policy `none`, and has no webhook, Data Table node,
 knowledge publication, or customer-egress path. Sanitized manual evidence was recorded for Core
 executions `40576` and `40600`–`40603`; Edge happy/channel executions `40577`, `40579`, `40581`,
-`40583`, post-correction run `40605`, and final v3 deterministic-rendering run `40625`; Edge fail-closed executions
+`40583`, post-correction run `40605`, final v3 deterministic-rendering run `40625`, and the
+source-sync/event-identity/synthetic-Wait-integrity/exact-projection run `40651`; the four-channel delay ranges are proven
+by the checked-in local runtime tests, not by that single WhatsApp fixture. Edge fail-closed executions
 `40585`–`40592`; the post-fix order-index run `40619`; and the owner-review no-write run `40631`.
 Execution IDs are evidence pointers,
 not a durable knowledge or incident store.
@@ -63,6 +67,15 @@ any live customer event is allowed to enter n8n.
 The merged delay extension is imported into the existing inactive Edge. The Shopify index is also
 imported inactive. Neither is published; neither has a credential, public webhook, Data Table
 write, Shopify write, or customer-send node.
+
+The signed-ingress, live-re-read, and post-delay-decision contracts are checked in but are not yet
+bound to live nodes. They enforce a 1 MiB pre-parse limit, raw-byte HMAC, replay identity independent
+of the unsigned Delivery header, exact timing/reference comparisons, and transient-only evidence.
+Full evidence is forbidden from Wait, Data Tables, and audit. The Edge's exact dedup/jobs/incidents/
+audit rows remain synthetic previews only: no row is persistable or ready for live storage.
+The Wait carrier binds its exact ordered identifier/control fields with canonical SHA-256 and
+carries only a pinned baseline-HMAC key version plus opaque status/assignee fingerprints. Live
+baseline capture is not bound yet, so live-shaped input stops before Wait.
 
 The empty approvals, incidents, and audit tables are now column-aligned to the exact no-write
 owner-review projections at 34, 18, and 17 columns. No row was inserted. The Desk requires exact
@@ -91,8 +104,13 @@ stop before retrieval or reasoning.
 The future Chatwoot branch must verify `X-Chatwoot-Signature` over the exact bytes
 `timestamp + "." + raw_body`, using `X-Chatwoot-Timestamp`, before parsing or using message
 content. It rejects malformed signatures, payloads over 1 MiB, timestamps older than 300 seconds,
-timestamps more than 60 seconds in the future, and replayed `X-Chatwoot-Delivery` values. A
+timestamps more than 60 seconds in the future, and replayed signed requests independently of
+`X-Chatwoot-Delivery`. A
 reformatted JSON body is not equivalent to the signed body.
+That request-replay fingerprint is not the durable event key. After signature verification and
+allowlisted parsing, the edge derives a separate stable HMAC from account, inbox, event,
+conversation, and message IDs. A platform redelivery with a fresh signature keeps the same event
+identity; retained prior key versions are dual-read through the dedup TTL.
 
 Chatwoot issue [#13809](https://github.com/chatwoot/chatwoot/issues/13809) reports a possible
 difference between the displayed webhook secret and the internal HMAC token. Therefore the live
@@ -101,21 +119,30 @@ disconnected. Bypassing signature verification is not an allowed fallback.
 
 ## Message journey in observation mode
 
-1. A future signed ingress must verify the transport signature and replay protection before the
-   payload reaches normalization. The current manual fixture uses a topology-created trusted test
-   wrapper; transport claims placed inside an event payload are ignored and fail closed.
+1. A future signed ingress must verify the raw-byte transport signature, timestamp window, body
+   size, and replay protection before the payload reaches normalization. Its replay key is derived
+   from the signed request, not `X-Chatwoot-Delivery`. The current manual fixture uses a
+   topology-created trusted test wrapper; transport claims placed inside an event payload are
+   ignored and fail closed.
 2. It resolves `brand_id=calapres` from the fixed account/inbox allowlist. A payload-supplied brand
    is never trusted.
 3. It converts the event to a strict envelope containing identifiers and content metadata only.
    The envelope does not persist the customer's text or attachment data.
-4. It claims an idempotency record and advances the exact conversation generation. A duplicate or
-   older generation stops.
+4. It derives the stable business-event HMAC from the allowlisted event tuple, claims that event
+   identity atomically, and advances the exact conversation generation. A redelivery, duplicate,
+   or older generation stops even when the request signature/timestamp changed.
 5. It drops the original event, content metadata, sender reference, and model candidate, then gives
-   the Wait node only account/inbox/channel IDs, conversation/message IDs, HMAC fingerprints,
-   generation, time, knowledge version, and `customer_egress_allowed=false`.
-6. After the delay it must re-read Chatwoot. It cancels when the read is unavailable/unverified,
-   the generation changed, a newer inbound or public human reply exists, the owner/status changed,
-   a private instruction appeared, or the brand kill switch is on.
+   the Wait node only account/inbox/channel IDs, conversation/message IDs, fingerprint fields,
+   generation, time, knowledge version, and `customer_egress_allowed=false`. The carrier includes
+   a canonical SHA-256 integrity fingerprint, a pinned baseline-HMAC key version, and opaque
+   status/assignee fingerprints—never the raw status or assignee.
+6. After the channel-appropriate delay it must re-read Chatwoot. It binds the exact incoming/public
+   anchor fingerprint, then performs two independent, non-paginated reads with
+   `after=anchor_message_id-1`. Each raw response must contain 1–99 valid rows, include the exact
+   anchor, and yield the same canonical message set. Numeric message IDs catch same-second events.
+   A 100-row response, changed set, invalid route/row, missing anchor, or any newer non-activity
+   message cancels; so do a stale generation, changed assignee/status, or the brand kill switch.
+   This bounded v1 rule deliberately makes no complete-history or stable-head claim.
 7. If a live commerce fact is needed, the edge must read it from Shopify. Until required scopes and
    live paths are proven, customer and order lookup remain disabled.
 8. A fixed Calapres-scoped model call may later return a provider-neutral structured candidate.
@@ -128,7 +155,10 @@ disconnected. Bypassing signature verification is not an allowed fallback.
    adapter.
 9. The Core returns only `no_action`, `observe_draft`, or `escalate`, and always returns
    `customer_egress_allowed=false`.
-10. The edge records a sanitized observation or incident. There is no customer-send node.
+10. The current edge creates only sanitized, non-persistable row previews. Actual durable writes
+    remain blocked until verified request-replay, business-event-HMAC, and identity-HMAC values and
+    safe atomic idempotency behavior exist.
+    There is no customer-send node.
 
 ## What lives where
 

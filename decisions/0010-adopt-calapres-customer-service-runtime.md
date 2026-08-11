@@ -104,6 +104,12 @@ registry until it passes the same live channel test as the four target inboxes.
 - Before any later send, the edge must re-read the conversation and cancel when it finds a newer
   inbound message, a newer public human reply, a private owner instruction, a changed owner/status,
   a consumed idempotency key, or a disabled brand/kill switch.
+- The re-read must bind the exact incoming/public anchor message to the Wait carrier and perform
+  two independent, non-paginated reads with `after=anchor_message_id-1`. Each raw response must
+  contain 1–99 valid rows, include the exact anchor, and produce the same canonical message set.
+  Same-second messages are ordered by numeric message ID; a 100-row response, any changed set,
+  invalid route/row, missing anchor, or newer non-activity message stops. This bounded v1 rule does
+  not claim complete-history coverage or use a cursor chain that Chatwoot ordering could skip.
 - A public human reply makes the conversation human-owned until an explicit bot-resume event or a
   new resolved-to-open lifecycle starts.
 
@@ -197,6 +203,38 @@ activation review; it is not required to prove the no-send observation path.
   because Captain is disconnected.
 - Webhook-driven execution is preferred over high-frequency polling. The Core sub-workflow is an
   internal implementation unit, not a second customer execution or responder.
+
+### Pre-activation safety bindings
+
+The Calapres edge compiles the registry delay policy as 30–75 seconds for Instagram, TikTok, and
+WhatsApp and 120–300 seconds for Email. A deterministic value is selected per event so a retry does
+not invent a different due time. The one-second path is synthetic-test-only; live-shaped input
+keeps the brand kill switch enabled until the live binding is approved.
+
+The future Chatwoot ingress must reject an empty or larger-than-1-MiB body before parsing or HMAC,
+verify the exact raw bytes and timestamp, and derive request replay identity from the signed request.
+After verified parsing, it must separately derive stable business-event identity with a
+brand-scoped HMAC over the ordered allowlisted account/inbox/event/conversation/message tuple. A
+redelivery with a new timestamp/signature has a new request-replay fingerprint but the same event
+fingerprint. Prior event-identity key versions must be retained and dual-read through the dedup TTL. The
+unsigned `X-Chatwoot-Delivery` header is optional metadata and must never let a replay acquire a new
+identity. Signed-ingress, live-re-read, and post-delay evidence are transient-only; full evidence
+cannot enter Wait, Data Tables, or durable audit.
+
+The identifiers-only Wait carrier binds its exact ordered fields with a canonical SHA-256
+fingerprint and includes only the pinned baseline-HMAC key version plus opaque status and assignee
+fingerprints. Raw status and assignee values are forbidden. The same HMAC key version must remain
+available through the maximum Wait interval and be used for the fresh Chatwoot comparison; until
+that pre-Wait baseline capture is credential-backed, live-shaped input fails closed before Wait.
+The carrier SHA detects unexpected in-execution mutation but is not an authorization boundary
+against an n8n project editor who could recompute it; project access isolation and the secret-keyed
+baseline fingerprints remain required security boundaries.
+
+The pre-activation Edge may render exact operational table-row previews for validation, but static
+fixture fingerprints are never live-persistable. Until a verified request replay claim, stable
+business-event HMAC, keyed identity HMAC, live schema recheck, and safe atomic idempotency
+implementation exist, every preview keeps
+`write_executed=false`, `persistence_ready=false`, and `persistable=false`.
 
 ## Activation gates
 

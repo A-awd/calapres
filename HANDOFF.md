@@ -57,12 +57,29 @@ runtime, its no-send boundary, and its persistent-access gates.
   is `none`, it contains no Data Table node, and its four decision actions remain previews with all
   writes and knowledge publication disabled.
 - The Edge now includes the identifiers-only Wait and post-delay recheck; there is no separate
-  delayed worker. The index maps only HMAC fingerprints and opaque Shopify references to the exact
-  12-column empty order-index table and still performs no write.
-- Repository contracts, synthetic fixtures, and thirty-four local tests cover the shared Core, strict
+  delayed worker. The compiled delay is 30–75 seconds for the three chat channels and 120–300
+  seconds for Email; one second is reserved for the sanitized fixture. The carrier binds its exact
+  identifier/control fields with SHA-256 and carries only a pinned baseline-HMAC key version plus
+  opaque status/assignee fingerprints. Live-shaped input keeps the kill switch on and fails closed
+  before Wait until the trusted baseline capture and no-credential re-read are replaced. The index maps only HMAC
+  fingerprints and opaque Shopify references to the exact 12-column empty order-index table and
+  still performs no write.
+- Source-only Chatwoot contracts now specify raw-byte HMAC verification, a 1 MiB pre-parse limit,
+  request replay protection independent of the unsigned Delivery header, a separate stable
+  business-event HMAC for idempotency across redeliveries, transient post-delay re-read evidence,
+  and two independent non-paginated reads from the anchor-minus-one cursor. Each read must contain
+  1–99 valid rows, include the exact incoming/public anchor, and yield the same canonical set;
+  any newer non-activity message or route/state mismatch cancels.
+  Full evidence is forbidden from Wait, Data Tables, and audit. No webhook or credential is live.
+- The Edge previews the exact dedup/jobs/incidents/audit table shapes but marks every projection
+  non-persistable and no-write. Static fixture fingerprints can never make a live event ready; a
+  verified request replay claim, stable business-event HMAC with key-version dual-read, and
+  identity-HMAC binding remain future live preconditions.
+- Repository contracts, synthetic fixtures, and seventy-two local tests cover the shared Core, strict
   knowledge/live-fact grounding, transport-claim rejection, the stricter Calapres edge, embedded
-  n8n Code syntax, the index table-row mapper, and the owner-decision trust boundary. Sanitized n8n
-  runs `40625`, `40619`, and Owner Review Desk run `40631` passed after the final fixes with
+  n8n Code syntax, channel delay, signed-ingress/re-read contracts, exact table-row projections,
+  the index mapper, and the owner-decision trust boundary. Sanitized n8n runs `40625`, `40651`,
+  `40619`, and Owner Review Desk run `40631` passed after the final fixes with
   customer egress, Data Table writes, knowledge publication, and Shopify writes all false.
   No n8n customer-service agent or automatic customer-facing reply is active.
 - The model's free-text draft has no authority and is not forwarded. A grounded observation draft
@@ -77,11 +94,13 @@ runtime, its no-send boundary, and its persistent-access gates.
 2. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
    Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
    observation.
-3. Add signed Chatwoot ingress to the existing Edge, emit trusted transport evidence from raw-body
-   HMAC verification, and replace the no-credential re-read slot with a live Chatwoot re-read after
-   the merged identifiers-only delay. Never connect a webhook directly to normalization. Prove a
-   real signed fixture because Chatwoot issue `#13809` may affect the displayed HMAC secret; never
-   bypass a failed signature check.
+3. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
+   evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned
+   identity-HMAC key version before Wait, and replace the no-credential re-read slot with a live
+   Chatwoot re-read after the merged identifiers-only delay using that same key version. Never connect a webhook directly to
+   normalization. Prove a real signed fixture because Chatwoot issue `#13809` may affect the
+   displayed HMAC secret; never bypass a failed signature check or use the unsigned Delivery header
+   as replay identity.
 4. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
    intervention, and verified Shopify retrieval. This does not authorize customer-facing replies.
 5. Review the four draft products directly in Shopify.

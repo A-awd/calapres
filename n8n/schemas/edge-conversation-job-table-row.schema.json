@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/edge-conversation-job-table-row.schema.json",
+  "title": "Exact live Calapres conversation-job table row preview",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_key",
+    "conversation_id",
+    "channel",
+    "generation_token",
+    "last_message_id",
+    "correlation_id",
+    "status",
+    "human_owned",
+    "due_at",
+    "updated_at"
+  ],
+  "properties": {
+    "job_key": {
+      "type": "string",
+      "pattern": "^calapres:[A-Za-z0-9_-]{1,128}$"
+    },
+    "conversation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "generation_token": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "last_message_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^calapres:[A-Za-z0-9_-]{1,64}:[A-Za-z0-9_-]{1,64}$"
+    },
+    "status": {
+      "enum": [
+        "waiting",
+        "superseded",
+        "ready",
+        "cancelled",
+        "observed"
+      ]
+    },
+    "human_owned": {
+      "type": "boolean"
+    },
+    "due_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "brand_id": "calapres",
-  "captured_at": "2026-08-11T18:49:38+03:00",
+  "captured_at": "2026-08-11T20:50:50+03:00",
   "n8n_project": {
     "name": "Calapres Customer Service",
     "id": "0kVami0vGGBbT7Cy",
@@ -45,14 +45,40 @@
         "delayed_observation_stage": "merged_into_edge",
         "wait_carrier_schema": "n8n/schemas/delayed-observation-state.schema.json",
         "post_delay_recheck_schema": "n8n/schemas/observation-recheck.schema.json",
+        "signed_ingress_schema": "n8n/schemas/chatwoot-ingress-verification.schema.json",
+        "event_identity_schema": "n8n/schemas/chatwoot-event-identity-evidence.schema.json",
+        "live_reread_evidence_schema": "n8n/schemas/chatwoot-live-reread-evidence.schema.json",
+        "post_delay_decision_schema": "n8n/schemas/chatwoot-post-delay-decision.schema.json",
+        "live_reread_scan_strategy": "two_independent_non_paginated_after_anchor_minus_one_raw_1_to_99",
+        "request_replay_and_business_event_identity_separated": true,
+        "event_identity_key_rotation_dual_read_required": true,
+        "delay_policy_version": "2026-08-11-v1",
+        "chat_delay_seconds": {
+          "minimum": 30,
+          "maximum": 75
+        },
+        "email_delay_seconds": {
+          "minimum": 120,
+          "maximum": 300
+        },
+        "live_kill_switch": true,
         "live_deployment": "imported_inactive",
         "node_count": 23,
-        "wait_state_contains_customer_content": false
+        "live_version_id": "eeb3b48f-5f2f-4649-932a-c20d05a4f496",
+        "wait_state_contains_customer_content": false,
+        "wait_state_fingerprint": "sha256-canonical-v1",
+        "baseline_fingerprint_key_version_carried": true,
+        "live_baseline_capture_bound": false,
+        "live_baseline_capture_fail_closed": true,
+        "signed_ingress_live": false,
+        "live_reread_bound": false,
+        "persistence_ready": false
       },
       "manual_test_execution_ids": {
         "happy_path": 40577,
         "post_risk_correction_happy_path": 40605,
         "post_delay_extension_happy_path": 40625,
+        "source_sync_and_projection_validation": 40651,
         "instagram": 40579,
         "tiktok": 40581,
         "email": 40583,
@@ -112,12 +138,16 @@
       "logical_name": "dedup",
       "id": "PgsnBFCtwWGysCdp",
       "schema": "n8n/schemas/dedup-record.schema.json",
+      "table_row_schema": "n8n/schemas/edge-dedup-table-row.schema.json",
+      "column_count": 10,
       "state": "empty"
     },
     {
       "logical_name": "jobs",
       "id": "9wy6FpcDoNbrK3BM",
       "schema": "n8n/schemas/conversation-job.schema.json",
+      "table_row_schema": "n8n/schemas/edge-conversation-job-table-row.schema.json",
+      "column_count": 10,
       "state": "empty"
     },
     {
@@ -143,6 +173,7 @@
       "id": "N3UJZWRMNehLX4l7",
       "schema": "n8n/schemas/incident.schema.json",
       "table_row_schema": "n8n/schemas/owner-incident-table-row.schema.json",
+      "edge_table_row_schema": "n8n/schemas/edge-incident-table-row.schema.json",
       "column_count": 18,
       "state": "empty"
     },
@@ -159,6 +190,7 @@
       "id": "4YBUAuuEgXYiaybJ",
       "schema": "n8n/schemas/audit-event.schema.json",
       "table_row_schema": "n8n/schemas/owner-audit-table-row.schema.json",
+      "edge_table_row_schema": "n8n/schemas/edge-audit-table-row.schema.json",
       "column_count": 17,
       "state": "empty"
     }
@@ -173,7 +205,16 @@
     "shopify_index_writes_enabled": false,
     "owner_review_writes_enabled": false,
     "owner_review_knowledge_publish_enabled": false,
+    "edge_persistence_ready": false,
+    "signed_chatwoot_ingress_live": false,
+    "chatwoot_live_reread_bound": false,
     "paused_catalog_table_reused": false,
     "secrets_recorded": false
+  },
+  "repository_validation": {
+    "tests_passed": 72,
+    "json_files_parsed": 88,
+    "edge_sdk_valid": true,
+    "edge_node_count": 23
   }
 }

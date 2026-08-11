@@ -1,0 +1,12 @@
+{
+  "job_key": "calapres:700001",
+  "conversation_id": "700001",
+  "channel": "whatsapp",
+  "generation_token": "900001",
+  "last_message_id": "900001",
+  "correlation_id": "calapres:700001:900001",
+  "status": "waiting",
+  "human_owned": false,
+  "due_at": "2026-08-11T12:00:01.000Z",
+  "updated_at": "2026-08-11T12:00:00.000Z"
+}

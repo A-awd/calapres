@@ -1,0 +1,12 @@
+{
+  "event_key": "9ee62926cfd806b00e5b45c93bafb9ccbe8d58b09bbb0de574c15b39c5802445",
+  "delivery_id": null,
+  "message_id": null,
+  "conversation_id": null,
+  "channel": null,
+  "correlation_id": null,
+  "status": "claimed",
+  "received_at": "2026-08-11T12:00:00.000Z",
+  "processed_at": null,
+  "expires_at": "2026-08-18T12:00:00.000Z"
+}

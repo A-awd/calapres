@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "idempotency_key": "9ee62926cfd806b00e5b45c93bafb9ccbe8d58b09bbb0de574c15b39c5802445",
+  "outcome": "observed_no_write",
+  "actor_type": "system",
+  "conversation_ref": "cwr_700001",
+  "incident_id": null,
+  "knowledge_version": "2026-08-11-v3",
+  "workflow_release": "calapres-customer-service-edge-v1",
+  "audit_id": "aud_333333333333333333333333",
+  "correlation_id": "calapres:700001:900001",
+  "created_at": "2026-08-11T12:00:02.000Z",
+  "decision": "observe_draft",
+  "details_sanitized": "decision=observe_draft;reason=grounded_draft_observed;intent=shipping_policy;risk=low;egress=false",
+  "event_type": "core_decision",
+  "reason_code": "grounded_draft_observed",
+  "source_ref": "src_333333333333333333333333"
+}

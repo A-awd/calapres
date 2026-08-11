@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-event-identity-evidence.schema.json",
+  "title": "Calapres verified-parse Chatwoot business-event identity evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "source",
+    "evidence_id",
+    "ingress_evidence_ref",
+    "brand_scope",
+    "event_identity_key_version",
+    "canonical_tuple_format",
+    "derived_channel",
+    "channel_source",
+    "event_identity_fingerprint",
+    "signature_verified_before_parse",
+    "replay_verified_before_parse",
+    "verified_parse",
+    "unsigned_delivery_used",
+    "payload_brand_used",
+    "raw_identifiers_in_evidence",
+    "durable_projection_field",
+    "transient_only",
+    "persistence_allowed",
+    "wait_payload_allowed",
+    "data_table_payload_allowed",
+    "audit_payload_allowed",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "const": "chatwoot_event_identity_v1"
+    },
+    "source": {
+      "const": "verified_parse_identity_topology"
+    },
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^cei_[a-f0-9]{24}$"
+    },
+    "ingress_evidence_ref": {
+      "type": "string",
+      "pattern": "^cwi_[a-f0-9]{24}$"
+    },
+    "brand_scope": {
+      "$comment": "This value comes from the isolated connector and identity-key scope, never from a payload brand claim.",
+      "const": "calapres"
+    },
+    "event_identity_key_version": {
+      "$comment": "Live redelivery checks must dual-read active and retained prior key versions through the business-dedup TTL.",
+      "type": "string",
+      "pattern": "^(synthetic-event-identity-v[1-9][0-9]*|calapres-identity-hmac-v[1-9][0-9]*)$"
+    },
+    "canonical_tuple_format": {
+      "$comment": "HMAC-SHA-256 input is UTF-8 minified JSON with only these ordered allowlisted fields. Channel is derived from inbox_id and is deliberately not duplicated in the tuple.",
+      "const": "json-minified-ordered:[schema_version,account_id,inbox_id,event,conversation_id,message_id]"
+    },
+    "derived_channel": {
+      "enum": [
+        "instagram",
+        "tiktok",
+        "whatsapp",
+        "email"
+      ]
+    },
+    "channel_source": {
+      "const": "allowlisted_inbox_mapping"
+    },
+    "event_identity_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "signature_verified_before_parse": {
+      "const": true
+    },
+    "replay_verified_before_parse": {
+      "const": true
+    },
+    "verified_parse": {
+      "const": true
+    },
+    "unsigned_delivery_used": {
+      "const": false
+    },
+    "payload_brand_used": {
+      "const": false
+    },
+    "raw_identifiers_in_evidence": {
+      "const": false
+    },
+    "durable_projection_field": {
+      "const": "event_identity_fingerprint"
+    },
+    "transient_only": {
+      "const": true
+    },
+    "persistence_allowed": {
+      "const": false
+    },
+    "wait_payload_allowed": {
+      "const": false
+    },
+    "data_table_payload_allowed": {
+      "const": false
+    },
+    "audit_payload_allowed": {
+      "const": false
+    },
+    "customer_egress_allowed": {
+      "const": false
+    }
+  }
+}

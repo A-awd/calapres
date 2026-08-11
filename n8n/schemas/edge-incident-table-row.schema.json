@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/edge-incident-table-row.schema.json",
+  "title": "Exact live Calapres incidents table row preview from the edge",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "incident_revision",
+    "correlation_id",
+    "reason_code",
+    "draft_ref",
+    "conversation_id",
+    "created_at",
+    "incident_id",
+    "incident_type",
+    "order_ref",
+    "owner_decision",
+    "proposed_action",
+    "resolved_at",
+    "severity",
+    "status",
+    "summary_sanitized",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "incident_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^calapres:[A-Za-z0-9_-]{1,64}:[A-Za-z0-9_-]{1,64}$"
+    },
+    "reason_code": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,80}$"
+    },
+    "draft_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^dft_[A-Za-z0-9_-]{6,128}$"
+    },
+    "conversation_id": {
+      "type": "string",
+      "pattern": "^cwr_[A-Za-z0-9_-]{6,128}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "incident_id": {
+      "type": "string",
+      "pattern": "^inc_[A-Za-z0-9_-]{8,80}$"
+    },
+    "incident_type": {
+      "enum": [
+        "knowledge_gap",
+        "identity_ambiguity",
+        "customer_complaint",
+        "return_or_refund",
+        "order_change",
+        "payment_dispute",
+        "privacy",
+        "legal",
+        "security",
+        "connector_failure",
+        "schema_failure",
+        "rate_limit",
+        "other"
+      ]
+    },
+    "order_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^sho_[A-Za-z0-9_-]{6,128}$"
+    },
+    "owner_decision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^dec_[A-Za-z0-9_-]{8,80}$"
+    },
+    "proposed_action": {
+      "enum": [
+        "review_case",
+        "reply_only",
+        "approve",
+        "approve_until",
+        "correct"
+      ]
+    },
+    "resolved_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "status": {
+      "enum": [
+        "open",
+        "awaiting_owner",
+        "resolved",
+        "dismissed"
+      ]
+    },
+    "summary_sanitized": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

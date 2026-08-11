@@ -15,8 +15,16 @@
     "conversation_fingerprint",
     "message_fingerprint",
     "correlation_id",
-    "idempotency_fingerprint",
+    "event_identity_key_version",
+    "event_identity_fingerprint",
     "generation",
+    "wait_state_fingerprint",
+    "baseline_fingerprint_key_version",
+    "baseline_status_fingerprint",
+    "baseline_assignee_fingerprint",
+    "delay_policy_version",
+    "delay_mode",
+    "delay_seconds",
     "not_before",
     "knowledge_version",
     "fixture_ref",
@@ -50,17 +58,18 @@
     },
     "conversation_id": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+      "pattern": "^[1-9][0-9]{0,15}$"
     },
     "anchor_message_id": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+      "pattern": "^[1-9][0-9]{0,15}$"
     },
     "conversation_fingerprint": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
     },
     "message_fingerprint": {
+      "$comment": "Brand-keyed HMAC-SHA-256 over domain calapres-message-anchor-v1 and ordered minified JSON [schema_version,brand_id,account_id,inbox_id,conversation_id,message_id,direction=inbound,visibility=public,event_identity_key_version,event_identity_fingerprint]. It authenticates the numeric customer anchor, type/visibility, and exact route; plain wait_state SHA is integrity-only.",
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
     },
@@ -70,13 +79,53 @@
       "maxLength": 128,
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"
     },
-    "idempotency_fingerprint": {
+    "event_identity_key_version": {
+      "$comment": "Pins the brand identity HMAC key version. Live business-event dedup must dual-read retained prior versions through the dedup TTL.",
+      "type": "string",
+      "pattern": "^(synthetic-event-identity-v[1-9][0-9]*|calapres-identity-hmac-v[1-9][0-9]*)$"
+    },
+    "event_identity_fingerprint": {
+      "$comment": "Stable business-event HMAC over the verified canonical Chatwoot tuple; distinct from request replay_key_fingerprint and independent of unsigned Delivery.",
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
     },
     "generation": {
       "type": "integer",
       "minimum": 1
+    },
+    "wait_state_fingerprint": {
+      "$comment": "SHA-256 of UTF-8 minified JSON with this field excluded and keys in this exact order: schema_version,brand_id,account_id,inbox_id,channel,conversation_id,anchor_message_id,conversation_fingerprint,message_fingerprint,correlation_id,event_identity_key_version,event_identity_fingerprint,generation,baseline_fingerprint_key_version,baseline_status_fingerprint,baseline_assignee_fingerprint,delay_policy_version,delay_mode,delay_seconds,not_before,knowledge_version,fixture_ref,customer_egress_allowed.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "baseline_fingerprint_key_version": {
+      "$comment": "Pins the brand-scoped HMAC key version across the Wait so the live re-read uses the same key and cannot report a false status or assignee change during rotation. synthetic-v1 is fixture-only.",
+      "type": "string",
+      "pattern": "^(synthetic-v[1-9][0-9]*|calapres-hmac-v[1-9][0-9]*)$"
+    },
+    "baseline_status_fingerprint": {
+      "$comment": "For live mode: HMAC-SHA-256 with the brand-scoped key named by baseline_fingerprint_key_version over UTF-8 calapres|<key_version>|status|<normalized_status>. The pinned key must remain readable through the maximum Wait interval; raw status is never carried into Wait. Synthetic fixtures use opaque non-live values.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "baseline_assignee_fingerprint": {
+      "$comment": "For live mode: HMAC-SHA-256 with the brand-scoped key named by baseline_fingerprint_key_version over UTF-8 calapres|<key_version>|assignee|<opaque_assignee_ref>. Use the fixed __UNASSIGNED__ sentinel when no assignee exists, and retain the pinned key through the maximum Wait interval. Raw assignee data is never carried into Wait. Synthetic fixtures use opaque non-live values.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "delay_policy_version": {
+      "const": "2026-08-11-v1"
+    },
+    "delay_mode": {
+      "enum": [
+        "synthetic_test",
+        "live_observation"
+      ]
+    },
+    "delay_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 300
     },
     "not_before": {
       "type": "string",
@@ -170,6 +219,113 @@
         "properties": {
           "inbox_id": {
             "const": 128326
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delay_mode": {
+            "const": "synthetic_test"
+          }
+        },
+        "required": [
+          "delay_mode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "delay_seconds": {
+            "const": 1
+          },
+          "fixture_ref": {
+            "type": "string"
+          },
+          "baseline_fingerprint_key_version": {
+            "const": "synthetic-v1"
+          },
+          "event_identity_key_version": {
+            "const": "synthetic-event-identity-v1"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delay_mode": {
+            "const": "live_observation"
+          }
+        },
+        "required": [
+          "delay_mode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "fixture_ref": {
+            "type": "null"
+          },
+          "baseline_fingerprint_key_version": {
+            "type": "string",
+            "pattern": "^calapres-hmac-v[1-9][0-9]*$"
+          },
+          "event_identity_key_version": {
+            "type": "string",
+            "pattern": "^calapres-identity-hmac-v[1-9][0-9]*$"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delay_mode": {
+            "const": "live_observation"
+          },
+          "channel": {
+            "enum": [
+              "instagram",
+              "tiktok",
+              "whatsapp"
+            ]
+          }
+        },
+        "required": [
+          "delay_mode",
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "delay_seconds": {
+            "minimum": 30,
+            "maximum": 75
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delay_mode": {
+            "const": "live_observation"
+          },
+          "channel": {
+            "const": "email"
+          }
+        },
+        "required": [
+          "delay_mode",
+          "channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "delay_seconds": {
+            "minimum": 120,
+            "maximum": 300
           }
         }
       }

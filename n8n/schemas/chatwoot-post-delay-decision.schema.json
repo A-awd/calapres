@@ -1,0 +1,505 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-post-delay-decision.schema.json",
+  "title": "Calapres Chatwoot post-delay cancellation decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "source",
+    "decision_id",
+    "evidence_ref",
+    "live_read_evidence",
+    "expected_generation",
+    "current_generation",
+    "generation_matches",
+    "wait_state_binding_verified",
+    "idempotency_consumed",
+    "brand_enabled",
+    "kill_switch",
+    "eligible_for_observation",
+    "observation_draft_allowed",
+    "cancellation_reason",
+    "evaluated_at",
+    "transient_only",
+    "persistence_allowed",
+    "wait_payload_allowed",
+    "data_table_payload_allowed",
+    "audit_payload_allowed",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "const": "chatwoot_post_delay_decision_v1"
+    },
+    "source": {
+      "const": "post_delay_cancellation_gate"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^cwd_[A-Za-z0-9_-]{8,80}$"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "pattern": "^cwr_[A-Za-z0-9_-]{8,80}$"
+    },
+    "live_read_evidence": {
+      "$ref": "chatwoot-live-reread-evidence.schema.json"
+    },
+    "expected_generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "current_generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generation_matches": {
+      "type": "boolean"
+    },
+    "wait_state_binding_verified": {
+      "$comment": "Runtime must recompute the Wait carrier and prove exact identity, event-identity, baseline, anchor fingerprint, and numeric anchor-ordering bindings before this may be true.",
+      "type": "boolean"
+    },
+    "idempotency_consumed": {
+      "type": "boolean"
+    },
+    "brand_enabled": {
+      "type": "boolean"
+    },
+    "kill_switch": {
+      "type": "boolean"
+    },
+    "eligible_for_observation": {
+      "type": "boolean"
+    },
+    "observation_draft_allowed": {
+      "type": "boolean"
+    },
+    "cancellation_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "live_reread_unavailable",
+        "wait_state_binding_mismatch",
+        "route_mismatch",
+        "brand_disabled",
+        "brand_kill_switch",
+        "idempotency_consumed",
+        "anchor_missing",
+        "stale_generation",
+        "newer_inbound",
+        "newer_non_activity",
+        "human_intervention",
+        "private_note_present",
+        "status_changed",
+        "assignee_changed"
+      ]
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "transient_only": {
+      "const": true
+    },
+    "persistence_allowed": {
+      "const": false
+    },
+    "wait_payload_allowed": {
+      "const": false
+    },
+    "data_table_payload_allowed": {
+      "const": false
+    },
+    "audit_payload_allowed": {
+      "const": false
+    },
+    "customer_egress_allowed": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "cancelled": {
+      "properties": {
+        "eligible_for_observation": {
+          "const": false
+        },
+        "observation_draft_allowed": {
+          "const": false
+        },
+        "cancellation_reason": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "eligible_for_observation": {
+          "const": true
+        },
+        "observation_draft_allowed": {
+          "const": true
+        },
+        "cancellation_reason": {
+          "type": "null"
+        },
+        "generation_matches": {
+          "const": true
+        },
+        "wait_state_binding_verified": {
+          "const": true
+        },
+        "idempotency_consumed": {
+          "const": false
+        },
+        "brand_enabled": {
+          "const": true
+        },
+        "kill_switch": {
+          "const": false
+        },
+        "live_read_evidence": {
+          "properties": {
+            "live_read_status": {
+              "const": "verified"
+            },
+            "source_verified": {
+              "const": true
+            },
+            "route_verified": {
+              "const": true
+            },
+            "anchor_message_present": {
+              "const": true
+            },
+            "anchor_is_latest_inbound": {
+              "const": true
+            },
+            "newer_inbound_present": {
+              "const": false
+            },
+            "public_human_reply_present": {
+              "const": false
+            },
+            "private_note_present": {
+              "const": false
+            },
+            "newer_non_activity_present": {
+              "const": false
+            },
+            "status_changed": {
+              "const": false
+            },
+            "assignee_changed": {
+              "const": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "wait_state_binding_mismatch"
+            },
+            "wait_state_binding_verified": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "live_reread_unavailable"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "live_read_status": {
+                  "enum": [
+                    "unauthorized",
+                    "forbidden",
+                    "not_found",
+                    "rate_limited",
+                    "unavailable",
+                    "schema_invalid",
+                    "scan_truncated",
+                    "scan_changed",
+                    "anchor_missing",
+                    "conversation_changed"
+                  ]
+                },
+                "source_verified": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "newer_non_activity"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "newer_non_activity_present": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "route_mismatch"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "live_read_status": {
+                  "const": "route_mismatch"
+                },
+                "route_verified": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "brand_disabled"
+            },
+            "brand_enabled": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "brand_kill_switch"
+            },
+            "kill_switch": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "idempotency_consumed"
+            },
+            "idempotency_consumed": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "anchor_missing"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "anchor_message_present": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "stale_generation"
+            },
+            "generation_matches": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "newer_inbound"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "anchor_is_latest_inbound": {
+                  "const": false
+                },
+                "newer_inbound_present": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "human_intervention"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "public_human_reply_present": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "private_note_present"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "private_note_present": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "status_changed"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "status_changed": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/cancelled"
+        },
+        {
+          "properties": {
+            "cancellation_reason": {
+              "const": "assignee_changed"
+            },
+            "live_read_evidence": {
+              "properties": {
+                "assignee_changed": {
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

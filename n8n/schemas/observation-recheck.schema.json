@@ -13,6 +13,10 @@
     "conversation_id",
     "anchor_message_id",
     "generation",
+    "wait_state_fingerprint",
+    "baseline_fingerprint_key_version",
+    "baseline_status_fingerprint",
+    "baseline_assignee_fingerprint",
     "evidence_source",
     "source_verified",
     "generation_matches",
@@ -54,15 +58,31 @@
     },
     "conversation_id": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+      "pattern": "^[1-9][0-9]{0,15}$"
     },
     "anchor_message_id": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9_-]{1,128}$"
+      "pattern": "^[1-9][0-9]{0,15}$"
     },
     "generation": {
       "type": "integer",
       "minimum": 1
+    },
+    "wait_state_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "baseline_fingerprint_key_version": {
+      "type": "string",
+      "pattern": "^(synthetic-v[1-9][0-9]*|calapres-hmac-v[1-9][0-9]*)$"
+    },
+    "baseline_status_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "baseline_assignee_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
     },
     "evidence_source": {
       "enum": [
