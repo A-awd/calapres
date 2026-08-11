@@ -17,6 +17,27 @@ actions isolated.
 Calapres is the first and only authorized pilot. No other brand account, store, channel, credential,
 or customer data may be connected until that brand is separately onboarded and approved.
 
+## Pre-implementation decision gate
+
+Before creating the Calapres pilot, complete a read-only live audit and record one implementation
+decision covering all of the following:
+
+- whether Chatwoot AgentBot/AI is used as the channel handoff surface or omitted in favor of a
+  single n8n-controlled responder;
+- where the reasoning runtime executes and how the system prevents Chatwoot and n8n from producing
+  two replies for the same customer event;
+- webhook verification, event deduplication, batching, delay cancellation, retry, status, and
+  owner-handoff behavior;
+- durable storage for the Brand Registry, knowledge versions, incidents, approvals, correlation
+  and idempotency keys, and audit history;
+- the exact boundary between Chatwoot conversation state, n8n orchestration state, Shopify live
+  facts, and the durable support-data store.
+
+Chatwoot message history and n8n execution history alone must not be treated as the durable
+knowledge or incident source of truth. Supabase remains prohibited by decision 0006; introducing
+any other persistent service requires a separate recorded architecture decision. Until this gate
+is closed, no customer-service workflow may be activated or allowed to send a customer message.
+
 ## Operating model
 
     Customer channels for each brand

@@ -5,7 +5,8 @@
 Shopify-native storefront and catalog readiness, plus a verified Calapres WhatsApp Cloud API
 channel. The Nawadir Dior supplier architecture and all Supabase-based Calapres architecture are
 retired. The Optix customer-service architecture is approved for design and a Calapres-only pilot,
-but no production customer-service bot is deployed yet.
+but no production customer-service bot is deployed yet. Its implementation runtime, Chatwoot
+AgentBot role, and durable support-data store must be decided after a read-only live audit.
 
 ## Approved architecture
 
@@ -80,12 +81,15 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 7. The approved Optix customer-service design has not yet been implemented in n8n; the existing
    live WhatsApp channel must remain the Calapres-only pilot until the observation and reply gates
    are validated.
+8. Chatwoot AgentBot/AI, n8n orchestration, and persistent support-data responsibilities have not
+   yet been assigned. Building before that decision risks duplicate replies and fragmented state.
 
 ## Next safe action
 
-Build the Calapres-only customer-service pilot in observation/test mode against the existing
-Chatwoot inbox, with no automatic customer reply until its brand routing, grounding, and owner
-review gates pass an end-to-end test.
+Audit the selected Chatwoot account and current n8n instance read-only, then record the exact
+reasoning runtime, AgentBot boundary, webhook/deduplication contract, and durable storage design.
+Only after that decision may the Calapres observation/test pilot be built; automatic customer
+replies remain disabled.
 
 ## Constraints
 
@@ -145,6 +149,14 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
 
 ### Next safe action
 
-Implement decision 0008 as a Calapres-only observation/test workflow against Chatwoot inbox
-`128058`. Prove exact brand routing, grounded drafting, deduplication, delay cancellation, and owner
-review before enabling any automatic customer-facing reply.
+Inspect Chatwoot account `179973`, inbox `128058`, and n8n read-only. Record the implementation
+decision for AgentBot, reasoning, deduplication, and durable storage, then build the Calapres-only
+observation pilot. Keep automatic customer-facing replies disabled until every gate passes.
+
+## Multi-brand ownership-evidence standard — 2026-08-11
+
+- Meta approved `Calapres | كالابريز` shortly after the permanent ownership page became available.
+- The owner has accepted that result as the operating basis for reusing the evidence-page pattern
+  for future brands.
+- Decision 0009 requires a neutral ownership registry with a separate permanent page for every
+  future verified brand. It does not authorize connecting or modifying another brand now.

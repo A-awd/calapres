@@ -17,6 +17,9 @@ decision record.
 - [0008 — Adopt the Optix multi-brand customer-service architecture](decisions/0008-optix-customer-service-architecture.md)
   — approved for design and a Calapres-only pilot; n8n remains an orchestration layer and every
   brand's knowledge, credentials, customer context, and store adapter stay isolated.
+- [0009 — Adopt a multi-brand ownership-evidence registry](decisions/0009-adopt-multibrand-ownership-evidence-registry.md)
+  — repeat the successful permanent ownership-proof pattern for each future verified brand while
+  keeping Calapres as the only active implementation.
 
 ## Superseded decisions
 

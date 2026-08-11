@@ -5,6 +5,8 @@
 Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native
 architecture, decision 0007 is binding for the isolated Calapres ownership-proof site, and decision
 0008 is binding for the Optix customer-service design and its Calapres-only pilot boundary.
+Decision 0009 makes the ownership-evidence page a future multi-brand standard without authorizing
+another brand implementation.
 
 ## Completed in the Supabase retirement
 
@@ -44,18 +46,22 @@ architecture, decision 0007 is binding for the isolated Calapres ownership-proof
 
 ## Exact next actions
 
-1. Implement decision 0008 as a Calapres-only observation/test workflow against Chatwoot inbox
-   `128058`; do not connect another brand or reuse stale identifiers.
-2. Prove brand routing, grounded draft generation, deduplication, delay cancellation, and owner
+1. Audit Chatwoot account `179973`, inbox `128058`, and the current n8n instance read-only. Decide
+   whether Chatwoot AgentBot participates, where reasoning executes, how duplicate replies are
+   prevented, and where durable multi-brand support data is stored.
+2. Record that implementation decision before creating or activating a workflow.
+3. Build decision 0008 as a Calapres-only observation/test pilot; do not connect another brand or
+   reuse stale identifiers.
+4. Prove brand routing, grounded draft generation, deduplication, delay cancellation, and owner
    review before enabling an automatic customer-facing reply.
-3. Review the four draft products directly in Shopify.
-4. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
-5. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
+5. Review the four draft products directly in Shopify.
+6. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
+7. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
    inclusion.
-6. Collect the missing commercial-register number, VAT number if applicable, verified phone, and
+8. Collect the missing commercial-register number, VAT number if applicable, verified phone, and
    complaint-response commitments.
-7. Reconcile the live theme source into `main` before further theme-code deployment.
-8. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
+9. Reconcile the live theme source into `main` before further theme-code deployment.
+10. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
 
 ## Do not do
 
@@ -103,6 +109,15 @@ project and acknowledging irreversibility.
 
 ### Resume action
 
-1. Continue with decision 0008 using Calapres only and Chatwoot inbox `128058`.
-2. Build observation mode first and verify exact brand routing and grounded drafts.
-3. Keep all automatic customer sends disabled until the owner-review and end-to-end gates pass.
+1. Continue with decisions 0008 and 0009, using Calapres only and Chatwoot inbox `128058`.
+2. Inspect Chatwoot and n8n read-only and settle AgentBot, reasoning, deduplication, and persistent
+   storage responsibilities before building.
+3. Build observation mode first and verify exact brand routing and grounded drafts.
+4. Keep all automatic customer sends disabled until the owner-review and end-to-end gates pass.
+
+## Paused catalog investigation
+
+- The official Shopify-synchronized catalog is associated with an old or inaccessible WABA rather
+  than the current operational Calapres WABA.
+- The owner explicitly paused this topic. Do not delete the official catalog, change its native
+  Shopify synchronization, or create a replacement catalog as a shortcut.
