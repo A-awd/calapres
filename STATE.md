@@ -38,6 +38,14 @@ records the source-only boundary.
 `support/brands/calapres/customer-service-release-lock.json` verifies the frozen source set. GitHub
 `main` remains the approved runtime baseline until this candidate is reviewed and merged.
 
+The release lock was refreshed in commit `b0d4ba8` after migrations 0004, 0007, and 0008 changed;
+the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
+`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
+has no saved webhook; its creation form was prepared but not submitted. Shopify read access is
+available through the connected read-only MCP, but no Shopify credential is present in the n8n
+project and no Shopify node has been added to Edge v2. The model credential is present, but the
+model call remains structurally closed and the budget guard remains deny-first.
+
 ## Approved architecture
 
     owner approval -> Shopify draft -> product review -> Shopify publication
