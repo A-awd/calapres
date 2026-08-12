@@ -15,6 +15,12 @@ const path = require('node:path');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const RUNTIME_PATH = path.join(REPO_ROOT, 'n8n', 'runtime', 'chatwoot-observation-stages.js');
+const RECONCILIATION_RUNTIME_PATH = path.join(
+  REPO_ROOT, 'n8n', 'runtime', 'chatwoot-reconciliation-runtime.js',
+);
+const RECONCILIATION_BRIDGE_PATH = path.join(
+  REPO_ROOT, 'n8n', 'runtime', 'chatwoot-reconciliation-ingress-bridge.js',
+);
 const OUTPUT_PATH = path.join(
   REPO_ROOT,
   'n8n',
@@ -23,7 +29,15 @@ const OUTPUT_PATH = path.join(
 );
 
 const runtimeSource = fs.readFileSync(RUNTIME_PATH, 'utf8');
+const reconciliationRuntimeSource = fs.readFileSync(RECONCILIATION_RUNTIME_PATH, 'utf8');
+const reconciliationBridgeSource = fs.readFileSync(RECONCILIATION_BRIDGE_PATH, 'utf8');
 const runtimeForCode = runtimeSource.replace(/\bmodule\.exports\b/g, '__edgeModule.exports');
+const reconciliationRuntimeForCode = reconciliationRuntimeSource.replace(
+  /\bmodule\.exports\b/g, '__reconciliationModule.exports',
+);
+const reconciliationBridgeForCode = reconciliationBridgeSource.replace(
+  /\bmodule\.exports\b/g, '__reconciliationBridgeModule.exports',
+);
 const priorSource = fs.readFileSync(OUTPUT_PATH, 'utf8');
 const supportMatch = priorSource.match(
   /const STAGED_SUPPORT_SOURCE = (".*");\nconst STAGED_BOOTSTRAP =/,
@@ -219,6 +233,161 @@ function respond(variable, name, statusCode, position, continueOutput = false) {
     },
   });
 }
+
+const RECON_PREPARE_CONTROL = String.raw`
+const executionId = typeof $execution === 'object' && $execution !== null ? String($execution.id || '') : '';
+if (!/^[A-Za-z0-9_-]{1,120}$/.test(executionId)) return [{ json: { reconciliation_ready: false, customer_egress_allowed: false } }];
+const control = __reconciliationRuntime.prepareControl({ brand_enabled: true, kill_switch: true, api_credential_available: false });
+return Object.keys(__reconciliationModule.exports.INBOX_CHANNELS).map((inboxId, index) => ({ json: {
+  reconciliation_ready: false, control, inbox_id: Number(inboxId), page: 1,
+  scan_id: 'cwrs_' + __edgeDependencies.sha256Hex(__edgeDependencies.utf8ToBytes('calapres:' + executionId)).slice(0, 24),
+  lease_owner_id: 'reconciliation_' + executionId, lease_token: 'reconciliation_lease_' + executionId,
+  execution_id: executionId, inbox_index: index, customer_egress_allowed: false,
+} }));
+`;
+
+const RECON_BUILD_SCAN_CLAIM = String.raw`
+try {
+  const source = $json;
+  const command = __reconciliationRuntime.buildScanClaimCommand({
+    inbox_id: source.inbox_id, scan_id: source.scan_id, lease_owner_id: source.lease_owner_id,
+    lease_token: source.lease_token, lease_duration_seconds: 300, max_pages: 1,
+  });
+  return [{ json: { ...source, reconciliation_ready: true, postgres_command: command, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'scan_claim_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_INTERPRET_SCAN = String.raw`
+const result = $json.result && typeof $json.result === 'object' ? $json.result : null;
+const value = result && result.value && typeof result.value === 'object' ? result.value : null;
+const leased = result && result.status === 'committed' && result.outcome === 'scan_lease_acquired' && value;
+return [{ json: { ...$('Prepare Reconciliation Control and Allowlisted Inbox Selection').item.json,
+  scan_lease: leased ? value : null, reconciliation_ready: Boolean(leased), customer_egress_allowed: false } }];
+`;
+
+const RECON_PREPARE_DISCOVERY = String.raw`
+try {
+  const request = __reconciliationRuntime.buildConversationDiscoveryRequest($json.control, { inbox_id: $json.inbox_id, page: 1 });
+  return [{ json: { ...$json, discovery_request: request, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { ...$json, reconciliation_ready: false, stage_failure: String(error && error.message || 'discovery_request_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_NORMALIZE_DISCOVERY = String.raw`
+try {
+  const envelope = __edgeHttpEnvelope($json);
+  const body = envelope.body || {};
+  const page = __reconciliationRuntime.normalizeConversationDiscoveryPage({
+    schema_version: '1.0', kind: 'chatwoot_reconciliation_conversation_page_projection_v1',
+    status_code: envelope.status_code, account_id: 179973, inbox_id: $json.inbox_id,
+    requested_page: 1, retry_after_seconds: null, error_code: envelope.error_code,
+    all_count: envelope.status_code === 200 && Array.isArray(body.data) ? body.data.length : null,
+    rows: envelope.status_code === 200 && Array.isArray(body.data) ? body.data.map((row) => ({
+      id: row.id, account_id: row.account_id || 179973, inbox_id: row.inbox_id || $json.inbox_id, status: row.status,
+    })) : null,
+  });
+  const snapshot = __reconciliationRuntime.buildDiscoverySnapshot({ pages: [page], page_cap_reached: false });
+  return [{ json: { ...$('Interpret Reconciliation Scan Lease').item.json, discovery_snapshot_a: snapshot, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { ...$('Interpret Reconciliation Scan Lease').item.json, reconciliation_ready: false, stage_failure: String(error && error.message || 'discovery_page_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_NORMALIZE_DISCOVERY_SECOND = String.raw`
+try {
+  const envelope = __edgeHttpEnvelope($json);
+  const body = envelope.body || {};
+  const page = __reconciliationRuntime.normalizeConversationDiscoveryPage({
+    schema_version: '1.0', kind: 'chatwoot_reconciliation_conversation_page_projection_v1',
+    status_code: envelope.status_code, account_id: 179973, inbox_id: $json.inbox_id,
+    requested_page: 1, retry_after_seconds: null, error_code: envelope.error_code,
+    all_count: envelope.status_code === 200 && Array.isArray(body.data) ? body.data.length : null,
+    rows: envelope.status_code === 200 && Array.isArray(body.data) ? body.data.map((row) => ({
+      id: row.id, account_id: row.account_id || 179973, inbox_id: row.inbox_id || $json.inbox_id, status: row.status,
+    })) : null,
+  });
+  const first = $('Normalize Reconciliation Discovery Snapshot A').item.json;
+  const snapshot = __reconciliationRuntime.buildDiscoverySnapshot({ pages: [page], page_cap_reached: false });
+  const coverage = __reconciliationRuntime.evaluateDiscoveryConvergence({ first_snapshot: first.discovery_snapshot_a, second_snapshot: snapshot });
+  return [{ json: { ...first, discovery_coverage: coverage, reconciliation_ready: coverage.bounded_convergence_passed, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'discovery_convergence_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_BUILD_CURSOR_READ = String.raw`
+try {
+  const conversationId = $json.discovery_coverage && $json.discovery_coverage.conversation_ids[0];
+  if (!conversationId || !$json.scan_lease) throw new Error('no_reconciliation_conversation');
+  return [{ json: { ...$json, conversation_id: conversationId, postgres_command: {
+    brand_id: 'calapres', account_id: 179973, inbox_id: $json.inbox_id, channel: __reconciliationModule.exports.INBOX_CHANNELS[$json.inbox_id],
+    conversation_id: conversationId, scan_id: $json.scan_id, scan_lease_token: $json.scan_lease.lease_token,
+    operation: 'read_chatwoot_reconciliation_cursor', customer_egress_allowed: false,
+  }, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'cursor_read_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_BUILD_MESSAGES_REQUEST = String.raw`
+try {
+  const cursor = $json.result && $json.result.value ? $json.result.value : $json.result;
+  const after = cursor && Number.isSafeInteger(cursor.after_message_id) ? cursor.after_message_id : 0;
+  const request = __reconciliationRuntime.buildMessagesAfterRequest($json.control, { inbox_id: $json.inbox_id, conversation_id: $json.conversation_id, after_message_id: after });
+  return [{ json: { ...$json, cursor, expected_after_message_id: after, messages_request: request, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'messages_request_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_FINALIZE_MESSAGES = String.raw`
+try {
+  const envelope = __edgeHttpEnvelope($json);
+  const body = envelope.body || {};
+  const page = __reconciliationRuntime.normalizeMessagesAfterPage({
+    schema_version: '1.0', kind: 'chatwoot_reconciliation_messages_after_projection_v1',
+    status_code: envelope.status_code, account_id: 179973, inbox_id: $json.inbox_id,
+    conversation_id: $json.conversation_id, requested_after_message_id: $json.expected_after_message_id,
+    retry_after_seconds: null, error_code: envelope.error_code,
+    rows: envelope.status_code === 200 && Array.isArray(body.payload) ? body.payload.map((row) => ({
+      id: row.id, account_id: row.account_id || 179973, inbox_id: row.inbox_id || $json.inbox_id,
+      conversation_id: row.conversation_id || $json.conversation_id, created_at: row.created_at,
+      message_type: row.message_type, private: row.private, sender_type: row.sender && row.sender.type || null,
+      attachment_count: Array.isArray(row.attachments) ? row.attachments.length : 0,
+    })) : null,
+  });
+  const finalization = __reconciliationRuntime.finalizeMessagesPage(page);
+  return [{ json: { ...$json, messages_page: page, messages_finalization: finalization, reconciliation_ready: finalization.status === 'ready', customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'messages_page_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_PREPARE_CANDIDATE = String.raw`
+try {
+  const candidate = $json.messages_finalization && $json.messages_finalization.event_candidates && $json.messages_finalization.event_candidates[0];
+  if (!candidate) return [{ json: { reconciliation_ready: false, customer_egress_allowed: false } }];
+  const plan = __reconciliationBridge.prepareCandidateIdentity({ messages_page: $json.messages_finalization, candidate, reconciliation_context: {
+    scan_id: $json.scan_id, scan_lease_token: $json.scan_lease.lease_token, expected_after_message_id: $json.expected_after_message_id,
+  }, execution_id: $json.execution_id });
+  return [{ json: { ...$json, candidate_plan: plan, hmac_requests: plan.hmac_requests, reconciliation_ready: true, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'candidate_identity_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_BUILD_CURSOR_ADVANCE = String.raw`
+try {
+  const finalization = $json.messages_finalization;
+  const command = __reconciliationRuntime.buildCursorAdvanceCommand({ finalization, scan_id: $json.scan_id, lease_token: $json.scan_lease.lease_token });
+  return [{ json: { ...$json, postgres_command: command, reconciliation_ready: true, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'cursor_advance_invalid'), customer_egress_allowed: false } }];
+}
+`;
 
 const INGRESS_PREFLIGHT = String.raw`
 let preflight = null;
@@ -1574,6 +1743,32 @@ declare('recoverySchedule', 'trigger', {
     position: [8160, 700],
   },
 });
+
+code('reconPrepareControl', 'Prepare Reconciliation Control and Allowlisted Inbox Selection', RECON_PREPARE_CONTROL, [8420, 700], true);
+code('reconBuildScanClaim', 'Build Chatwoot Reconciliation Scan Lease Command', RECON_BUILD_SCAN_CLAIM, [8680, 700], true);
+postgres('reconClaimScan', 11, 'claim_chatwoot_reconciliation_scan', [8940, 700], 'Postgres Reconciliation 11 - claim_chatwoot_reconciliation_scan', 'claim_chatwoot_reconciliation_scan', 'reconciliationPostgresCredential');
+code('reconInterpretScan', 'Interpret Reconciliation Scan Lease', RECON_INTERPRET_SCAN, [9200, 700], true);
+condition('reconScanOwned', 'Reconciliation Scan Lease Owned?', '$json.reconciliation_ready === true && $json.scan_lease !== null', [9460, 700]);
+code('reconPrepareDiscovery', 'Prepare Bounded Chatwoot Conversation Discovery', RECON_PREPARE_DISCOVERY, [9720, 700], true);
+chatwootGet('reconDiscoveryA', 'GET Chatwoot Reconciliation Discovery A', 'https://app.chatwoot.com/api/v1/accounts/179973/conversations?status=all&assignee_type=all&inbox_id={{ $json.inbox_id }}&page=1', [9980, 700]);
+code('reconNormalizeDiscoveryA', 'Normalize Reconciliation Discovery Snapshot A', RECON_NORMALIZE_DISCOVERY, [10240, 700], true);
+chatwootGet('reconDiscoveryB', 'GET Chatwoot Reconciliation Discovery B', 'https://app.chatwoot.com/api/v1/accounts/179973/conversations?status=all&assignee_type=all&inbox_id={{ $json.inbox_id }}&page=1', [10500, 700]);
+code('reconNormalizeDiscoveryB', 'Normalize Reconciliation Discovery Snapshot B and Prove Convergence', RECON_NORMALIZE_DISCOVERY_SECOND, [10760, 700], true);
+condition('reconConverged', 'Bounded Reconciliation Discovery Converged?', '$json.reconciliation_ready === true && $json.discovery_coverage.bounded_convergence_passed === true', [11020, 700]);
+code('reconBuildCursorRead', 'Build Reconciliation Cursor Read Command', RECON_BUILD_CURSOR_READ, [11280, 700], true);
+postgres('reconReadCursor', 13, 'read_chatwoot_reconciliation_cursor', [11540, 700], 'Postgres Reconciliation 13 - read_chatwoot_reconciliation_cursor', 'read_chatwoot_reconciliation_cursor', 'reconciliationPostgresCredential');
+code('reconBuildMessagesRequest', 'Build Bounded Messages After Cursor Request', RECON_BUILD_MESSAGES_REQUEST, [11800, 700], true);
+chatwootGet('reconMessages', 'GET Chatwoot Reconciliation Messages After Cursor', 'https://app.chatwoot.com/api/v1/accounts/179973/conversations/{{ $json.conversation_id }}/messages?after={{ $json.expected_after_message_id }}', [12060, 700]);
+code('reconFinalizeMessages', 'Validate Reconciliation Messages Page and Candidate Proof', RECON_FINALIZE_MESSAGES, [12320, 700], true);
+condition('reconMessagesReady', 'Reconciliation Page 1-99 Proof Ready?', '$json.reconciliation_ready === true && $json.messages_finalization.status === "ready"', [12580, 700]);
+code('reconPrepareCandidate', 'Prepare Reconciliation Candidate Identity HMAC Chain', RECON_PREPARE_CANDIDATE, [12840, 700], true);
+hmac('reconCandidateHmac01', 'Crypto Reconciliation 01 candidate_identity event_identity v1 Placeholder', '{{ $json.hmac_requests[0].material_utf8 }}', 'reconciliation_hmac_candidate_identity_01_event_identity_v1', 'eventIdentityHmacCredential', [13100, 700]);
+hmac('reconCandidateHmac02', 'Crypto Reconciliation 02 candidate_identity request_attempt_identity v1 Placeholder', '{{ $json.hmac_requests[1].material_utf8 }}', 'reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1', 'eventIdentityHmacCredential', [13230, 700]);
+hmac('reconCandidateHmac03', 'Crypto Reconciliation 03 candidate_identity event_identity v2 Placeholder', '{{ $json.hmac_requests[2].material_utf8 }}', 'reconciliation_hmac_candidate_identity_03_event_identity_v2', 'eventIdentityHmacCredential', [13360, 700]);
+hmac('reconCandidateHmac04', 'Crypto Reconciliation 04 candidate_identity request_attempt_identity v2 Placeholder', '{{ $json.hmac_requests[3].material_utf8 }}', 'reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2', 'eventIdentityHmacCredential', [13490, 700]);
+code('reconBuildCursorAdvance', 'Build Reconciliation Cursor Compare and Advance Command', RECON_BUILD_CURSOR_ADVANCE, [13750, 700], true);
+postgres('reconAdvanceCursor', 12, 'compare_and_advance_chatwoot_message_cursor', [14010, 700], 'Postgres Reconciliation 12 - compare_and_advance_chatwoot_message_cursor', 'compare_and_advance_chatwoot_message_cursor', 'reconciliationPostgresCredential');
+code('reconTerminal', 'Reconciliation Observation Terminal - No Send', "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];", [14270, 700]);
 code(
   'prepareWorkerClaim',
   'Prepare Worker Claim Without Conversation Identifier',
@@ -1761,7 +1956,27 @@ const preamble = `import { expr, ifElse, newCredential, node, trigger, workflow 
   `const STAGED_RUNTIME_PARITY_SHA256 = ${JSON.stringify(parityHash)};\n` +
   `const STAGED_SUPPORT_SOURCE = ${JSON.stringify(supportSource)};\n` +
   `const STAGED_BOOTSTRAP = ${JSON.stringify(
-    `const __edgeModule = { exports: {} };\n${runtimeForCode}\n${supportSource}`,
+    `const __edgeModule = { exports: {} };\n${runtimeForCode}\n${supportSource}\n` +
+    `const __reconciliationModule = { exports: {} };\n(function(){\n${reconciliationRuntimeForCode}\n})();\n` +
+    `const __reconciliationBridgeModule = { exports: {} };\n(function(){\n${reconciliationBridgeForCode}\n})();\n` +
+    `const __reconciliationRuntime = __reconciliationModule.exports.createChatwootReconciliationRuntime({\n` +
+    `  sha256Hex: (value) => __edgeDependencies.sha256Hex(value),\n` +
+    `  active_event_identity_key_version: 'calapres-identity-hmac-v1',\n` +
+    `  retained_event_identity_key_versions: ['calapres-identity-hmac-v2'],\n` +
+    `  activation_floor_at: '2026-08-12T00:00:00.000Z',\n` +
+    `  activation_policy_version: '2026-08-12-v1',\n` +
+    `});\n` +
+    `const __reconciliationBridge = __reconciliationBridgeModule.exports.createChatwootReconciliationIngressBridge({\n` +
+    `  sha256Hex: (value) => __edgeDependencies.sha256Hex(value),\n` +
+    `  validate_messages_page: (value) => __reconciliationRuntime.validateMessagesPage(value),\n` +
+    `  active_event_identity_key_version: 'calapres-identity-hmac-v1',\n` +
+    `  retained_event_identity_key_versions: ['calapres-identity-hmac-v2'],\n` +
+    `  event_to_storage_key_versions: { 'calapres-identity-hmac-v1': 'hmac-sha256-v1', 'calapres-identity-hmac-v2': 'hmac-sha256-v2' },\n` +
+    `  key_registry_version: 'calapres-storage-keys-v1', request_ttl_seconds: 300, event_retention_seconds: 604800, lease_duration_seconds: 300,\n` +
+    `  baseline_fingerprint_key_version: 'calapres-hmac-v1', knowledge_version: '2026-08-11-v3', retention_seconds: 7776000,\n` +
+    `  activation_floor_at: '2026-08-12T00:00:00.000Z',\n` +
+    `  activation_policy_version: '2026-08-12-v1',\n` +
+    `});`,
   )};\n\n` +
   `const webhookHmacCredential = newCredential('Calapres Chatwoot Webhook HMAC v1');\n` +
   `const eventIdentityHmacCredential = newCredential('Calapres Event Identity HMAC v1');\n` +
@@ -1996,21 +2211,48 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
       ),
   )
   .add(recoverySchedule)
-  .to(prepareWorkerClaim)
-  .to(postgresClaimDue)
-  .to(interpretWorkerLease)
+  .to(reconPrepareControl)
+  .to(reconBuildScanClaim)
+  .to(reconClaimScan)
+  .to(reconInterpretScan)
   .to(
-    workerLeaseOwned
+    reconScanOwned
       .onTrue(
-        attachTrustedControls
-          .to(prepareWorkerWait)
+        reconPrepareDiscovery
+          .to(reconDiscoveryA)
+          .to(reconNormalizeDiscoveryA)
+          .to(reconDiscoveryB)
+          .to(reconNormalizeDiscoveryB)
           .to(
-            workerWaitReady
-              .onTrue(getConversationBefore)
-              .onFalse(prepareRetry.to(retryReady)),
+            reconConverged
+              .onTrue(
+                reconBuildCursorRead
+                  .to(reconReadCursor)
+                  .to(reconBuildMessagesRequest)
+                  .to(reconMessages)
+                  .to(reconFinalizeMessages)
+                  .to(
+                    reconMessagesReady
+                      .onTrue(
+                        reconPrepareCandidate
+                          .to(reconCandidateHmac01)
+                          .to(reconCandidateHmac02)
+                          .to(reconCandidateHmac03)
+                          .to(reconCandidateHmac04)
+                          .to(reconBuildCursorAdvance)
+                          .to(reconAdvanceCursor)
+                          .to(reconTerminal)
+                          .to(prepareWorkerClaim)
+                          .to(postgresClaimDue)
+                          .to(interpretWorkerLease),
+                      )
+                      .onFalse(reconTerminal),
+                  ),
+              )
+              .onFalse(reconTerminal.to ? reconTerminal : terminalSafe),
           ),
       )
-      .onFalse(terminalSafe),
+      .onFalse(reconTerminal.to ? reconTerminal : terminalSafe),
   );
 `;
 

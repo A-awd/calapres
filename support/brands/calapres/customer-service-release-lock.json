@@ -1,0 +1,430 @@
+{
+  "schema_version": "1.0",
+  "release_id": "calapres-customer-service-observation-v1",
+  "brand_id": "calapres",
+  "mode": "synthetic_test_no_send",
+  "files": [
+    {
+      "path": "n8n/adapters/atomic-storage-contract.js",
+      "sha256": "d8490ec9e3878b6fa42fce5ed6b4e665eb3ebfbeb68aec66b783965967f6604f",
+      "bytes": 56887
+    },
+    {
+      "path": "n8n/adapters/in-memory-atomic-storage.js",
+      "sha256": "086aa628d5edc0d74b3f30443d960ddab680447c17f3a2830d4fc01cffe8bd5d",
+      "bytes": 77324
+    },
+    {
+      "path": "n8n/adapters/shopify-identity-adapter.js",
+      "sha256": "49905d3e497664f80b0387060a12088ba266336c0e11a1c9a8bab7b216cbb19b",
+      "bytes": 21006
+    },
+    {
+      "path": "n8n/deployments/calapres-customer-service-edge-v2.update-manifest.json",
+      "sha256": "06dbc9c6ec4154f47f8ce963af29c3acf3bdda1dc54a0104f2b634a7b9ff7ee2",
+      "bytes": 791
+    },
+    {
+      "path": "n8n/modules/compiled-context-trust-root.js",
+      "sha256": "b02d8b7956a1e156aa06d11e2a0ddfbcd61ae3bc963af0a7161889ff3b915af7",
+      "bytes": 1993
+    },
+    {
+      "path": "n8n/modules/context-compiler.js",
+      "sha256": "9ae279473963c3e9a98dca23008f646f2bc5cc9c124362587ea3a32a934f8813",
+      "bytes": 49253
+    },
+    {
+      "path": "n8n/modules/provider-neutral-llm-boundary.js",
+      "sha256": "b43e10f44c69c6aa2bd1b03055163a39c6b48ff0e9c0287e1f7bc32924e09cca",
+      "bytes": 70577
+    },
+    {
+      "path": "n8n/postgres/migrations/0001_calapres_cs_atomic_state.sql",
+      "sha256": "caa400b4fcebe03b6af9e9a05d0509cdd93e6be07ac822c854cf07f2a9a55478",
+      "bytes": 24641
+    },
+    {
+      "path": "n8n/postgres/migrations/0002_calapres_cs_atomic_functions.sql",
+      "sha256": "6c97b5a339ff8b5bcd5783dd957740eb840ac6109dfc7767b470d5e61e36a0ae",
+      "bytes": 82666
+    },
+    {
+      "path": "n8n/postgres/migrations/0003_calapres_cs_callable_boundary.sql",
+      "sha256": "b20f323ce0c8e63be032467daa4f32cb6c9f59afb1d6c35bc3d8810a27062f94",
+      "bytes": 7369
+    },
+    {
+      "path": "n8n/postgres/migrations/0004_calapres_cs_replay_recovery_queue.sql",
+      "sha256": "cb10eae55fac59bcb3680a9f5cbef41c7e7cbd6ec3f45d5698253c03da843251",
+      "bytes": 112687
+    },
+    {
+      "path": "n8n/postgres/migrations/0005_calapres_cs_chatwoot_reconciliation.sql",
+      "sha256": "ccecf17cdf4724bbfc540ad99ff5e4ee9570b82910053e2af099efc82e9328f9",
+      "bytes": 38555
+    },
+    {
+      "path": "n8n/postgres/migrations/0006_calapres_cs_chatwoot_reconciliation_cursor_read.sql",
+      "sha256": "686ed2387a3c7a80fae1562004304aa9db05e66203d32ebaa0eb3e58dcc29cd1",
+      "bytes": 19678
+    },
+    {
+      "path": "n8n/postgres/migrations/0007_calapres_cs_ingress_provenance_boundary.sql",
+      "sha256": "5007d03227303041dfca858fe168ffe7e402086e4bb1d3bc5b9d6cba5ba28385",
+      "bytes": 16163
+    },
+    {
+      "path": "n8n/postgres/postgres-atomic-storage.js",
+      "sha256": "cf52c4a4b9ffcfb041177fec564bb38b08f2ce5deeccffc423edb1e021a7d434",
+      "bytes": 8498
+    },
+    {
+      "path": "n8n/runtime/chatwoot-observation-runtime.js",
+      "sha256": "b84c66bc50306abb2447754948e1a3dba54a8142c70f19422c46bb471cfbd916",
+      "bytes": 78262
+    },
+    {
+      "path": "n8n/runtime/chatwoot-observation-stages.js",
+      "sha256": "0045d7cd9313919c175c81e724f285aad1d10830993ded77f8b23ec8aa1d2b1c",
+      "bytes": 55687
+    },
+    {
+      "path": "n8n/runtime/chatwoot-reconciliation-ingress-bridge.js",
+      "sha256": "197c4fadc6f9d2457618974d31d547fcc53fabc2416890b23d15508ccd096753",
+      "bytes": 54204
+    },
+    {
+      "path": "n8n/runtime/chatwoot-reconciliation-runtime.js",
+      "sha256": "ae5b99b544333d306285e6a16a034d241970cf5212074d1ba959ee3b3c35b22d",
+      "bytes": 50835
+    },
+    {
+      "path": "n8n/schemas/atomic-storage-result-envelope.schema.json",
+      "sha256": "c1f9f7154b2ee97d6c7b643b3d4b38090ec3524d9ffa365f33666ffebf4d62cd",
+      "bytes": 1767
+    },
+    {
+      "path": "n8n/schemas/audit-event.schema.json",
+      "sha256": "b581abccfef6e638f0cb4d1c25e15581361d954d38f9d3915bf869037051729c",
+      "bytes": 2470
+    },
+    {
+      "path": "n8n/schemas/calapres-event-envelope.schema.json",
+      "sha256": "4316fd36cdd9dbf4f6310ac7782fafa25b7f2254d84d74ac698bb0830c49b5cd",
+      "bytes": 1966
+    },
+    {
+      "path": "n8n/schemas/chatwoot-event-identity-evidence.schema.json",
+      "sha256": "c254c5fcc38a6f74a90b261fe0a40b27a8d4a25dbb8c1ceb851d1f5335a94fd5",
+      "bytes": 3284
+    },
+    {
+      "path": "n8n/schemas/chatwoot-ingress-verification.schema.json",
+      "sha256": "b85be9d2dd27ccb886c6b2e7bda172e598160ecf0dae3e35a4ac1b2bb39f45da",
+      "bytes": 11025
+    },
+    {
+      "path": "n8n/schemas/chatwoot-live-reread-evidence.schema.json",
+      "sha256": "fe972cff228b9499b0fd727a1d016249fa427888ee3753bb6c1e2fea18add163",
+      "bytes": 23916
+    },
+    {
+      "path": "n8n/schemas/chatwoot-post-delay-decision.schema.json",
+      "sha256": "76b15a2a5f0479787567b949f731c20b9c11463fd7e4fff0b2a98c81b88f31de",
+      "bytes": 11270
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-cursor-advance-command.schema.json",
+      "sha256": "7f2b21a3070b05df04029d05c3544d1eccddab47566ff6d8466b73e30e878bb1",
+      "bytes": 6912
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-cursor-finalization.schema.json",
+      "sha256": "72780b0c60da67e8d7bd86b1ac2ef2ca9d43bcfd68ec44a1dd67131aa3a04a21",
+      "bytes": 6924
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-discovery-coverage.schema.json",
+      "sha256": "67caad32324f1693c9bd4c274940bafa333d5a1c36c4c1e561b7186dfa37dd99",
+      "bytes": 1860
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-discovery-page.schema.json",
+      "sha256": "83869e69097dbf4859edbd584f1a36edf9cad0f5d9b7020ccc4c221beab33b19",
+      "bytes": 1695
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-event-candidate.schema.json",
+      "sha256": "ea53a532782da390d9d4563a557393cffa50cd49b58de0060aa97a1ee33a00b8",
+      "bytes": 4602
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-messages-page.schema.json",
+      "sha256": "eb118ce1a55ed27eea268a68bb6aa73141f4dff48a5ea812d5d364384bfbc6f6",
+      "bytes": 6353
+    },
+    {
+      "path": "n8n/schemas/chatwoot-reconciliation-scan-claim-command.schema.json",
+      "sha256": "36703e82e315eae1ecc3513f2eb972813da2960a4f47331996a66cf6a217c54e",
+      "bytes": 1761
+    },
+    {
+      "path": "n8n/schemas/compiled-brand-context.schema.json",
+      "sha256": "e884eed972e61066aa1138141bb594db1931f5cd2d35a2d646f13d83f20c8ba2",
+      "bytes": 15046
+    },
+    {
+      "path": "n8n/schemas/compiled-context-release-pin.schema.json",
+      "sha256": "fb417fbc79f7d4fefd90d1148bbeb20d81d40baaf4f553966f7da0eedac8e263",
+      "bytes": 1302
+    },
+    {
+      "path": "n8n/schemas/context-trust-anchor.schema.json",
+      "sha256": "07075164218ed8e2c8f6f743eb8c1310751f566ebc970b5d2b0e491f7d3ba93e",
+      "bytes": 3214
+    },
+    {
+      "path": "n8n/schemas/conversation-job.schema.json",
+      "sha256": "f731197321a555dc3c6597bb5adf8708ca7c79fa4910dba292d93ba3c2ee2af0",
+      "bytes": 1576
+    },
+    {
+      "path": "n8n/schemas/core-input.schema.json",
+      "sha256": "b56e709dff7e450b7be21a4e6dd8af25ff179167ad4d4e637c69505464c95c1b",
+      "bytes": 3513
+    },
+    {
+      "path": "n8n/schemas/core-output.schema.json",
+      "sha256": "9d55779e5134da84efe1393c025222e6c9b5fe8857062c67a6d217fd40cb6cd3",
+      "bytes": 7518
+    },
+    {
+      "path": "n8n/schemas/customer-links-table-row-v2.schema.json",
+      "sha256": "610d5be1a1125df8ced08f85c11bebd88fbb0b41a3a03451948b0cb604f6ed2c",
+      "bytes": 2324
+    },
+    {
+      "path": "n8n/schemas/customer-service-release-lock.schema.json",
+      "sha256": "7303d40a4f157241f5f38dd1496243e1a3cf2e733eb41e11479593718b569433",
+      "bytes": 1474
+    },
+    {
+      "path": "n8n/schemas/dedup-record.schema.json",
+      "sha256": "e61687fdc1199e02241a117f876e5734f0c41a1b7985acabbf74ec1f1484ec46",
+      "bytes": 1209
+    },
+    {
+      "path": "n8n/schemas/delayed-observation-state.schema.json",
+      "sha256": "8a06d3bec9fa63f6d9c2df560fc0ae878dab102718a69d704e816da3c1c5f4ea",
+      "bytes": 8930
+    },
+    {
+      "path": "n8n/schemas/edge-audit-table-row.schema.json",
+      "sha256": "677a024fd5e53cd298091341b60c38815341971834339502f223cdc85a5b34b7",
+      "bytes": 2418
+    },
+    {
+      "path": "n8n/schemas/edge-conversation-job-table-row.schema.json",
+      "sha256": "1c9d0dbfcaff2de9a178447b887e539a29622ef8b801d19fc9de3251f9c7aa44",
+      "bytes": 1556
+    },
+    {
+      "path": "n8n/schemas/edge-dedup-table-row.schema.json",
+      "sha256": "dc0b3e2555218e62b8f4352968c951a208258f1d7009f6ee3543d4c0753da6ea",
+      "bytes": 2053
+    },
+    {
+      "path": "n8n/schemas/edge-incident-table-row.schema.json",
+      "sha256": "63418df89662d6edbd83bd8253d25b884ccc5d1da72a38a558156158b63c2f56",
+      "bytes": 2875
+    },
+    {
+      "path": "n8n/schemas/event-envelope.schema.json",
+      "sha256": "a5b9818d7f28def01694b1af374cd85907cbb626034ff10aca8873b652acc511",
+      "bytes": 3575
+    },
+    {
+      "path": "n8n/schemas/identity-link.schema.json",
+      "sha256": "b7f298a165f9562f58c7a6a9425523951a7892bd316493a05b4c63fbcebd7c8c",
+      "bytes": 4138
+    },
+    {
+      "path": "n8n/schemas/incident.schema.json",
+      "sha256": "6e64277151937ee1b478e68b0b72f83515e65be667c47903d562203d4e55fbb2",
+      "bytes": 2979
+    },
+    {
+      "path": "n8n/schemas/llm-candidate.schema.json",
+      "sha256": "7c75eecff27b9979cf5b08a024d211a636c492bb6e9aab228b29718f466d8375",
+      "bytes": 3988
+    },
+    {
+      "path": "n8n/schemas/llm-sanitization-result.schema.json",
+      "sha256": "a8d521c2d7f77bfef69598809f48e2ac1e5414633ce7de8d663a46007bac7659",
+      "bytes": 3810
+    },
+    {
+      "path": "n8n/schemas/n8n-workflow-deployment-manifest.schema.json",
+      "sha256": "0753d73bdad113fe4314ec6dfa9b35aaec450e4853ec3dac6f287bc0c69e0d4b",
+      "bytes": 2002
+    },
+    {
+      "path": "n8n/schemas/observation-recheck.schema.json",
+      "sha256": "bf56f77be660d672199ec46a720628e2be2f0fdaf8ddb1e371debd6f20aa14c0",
+      "bytes": 4952
+    },
+    {
+      "path": "n8n/schemas/order-index-command.schema.json",
+      "sha256": "8ffb21702e730ce9963f94533ef3d437a4b93e1542de9201f4b99d4b6359c106",
+      "bytes": 1448
+    },
+    {
+      "path": "n8n/schemas/order-index-record.schema.json",
+      "sha256": "100c672016e889fc540e0177c27b702fbfce1bf2212244cb48f5bf3cd2ee5fa0",
+      "bytes": 2075
+    },
+    {
+      "path": "n8n/schemas/order-index-table-row.schema.json",
+      "sha256": "7e69fe43c230ee67a5ae132bc32e456a8c233032fc4067793ffc2fdead938d8e",
+      "bytes": 1932
+    },
+    {
+      "path": "n8n/schemas/owner-approval-required-row.schema.json",
+      "sha256": "10946156d6267eed8bb244c2d5ed854a6e7f5adae756edb05d374fafc4512971",
+      "bytes": 7648
+    },
+    {
+      "path": "n8n/schemas/owner-audit-table-row.schema.json",
+      "sha256": "fc6e249b1ce5f54138d67bb880622f1108bfddc53bd751df13d4677b055882b7",
+      "bytes": 2128
+    },
+    {
+      "path": "n8n/schemas/owner-decision.schema.json",
+      "sha256": "1fc9eeba53c2092056a83441f78da29e33c46d8b6c26f9ed2e633f659bd4fa2a",
+      "bytes": 5933
+    },
+    {
+      "path": "n8n/schemas/owner-incident-table-row.schema.json",
+      "sha256": "cf20a410604a7ae46d907aedd2e3190c7581bd7f1f77c9a40c5ef21a33f94c6a",
+      "bytes": 2578
+    },
+    {
+      "path": "n8n/schemas/owner-review-command.schema.json",
+      "sha256": "d67b55c5fc4c85c59f9d3d0a17cdeebb550b57c3eca524517d55a5dec6bad78f",
+      "bytes": 4819
+    },
+    {
+      "path": "n8n/schemas/owner-review-persistence-preview.schema.json",
+      "sha256": "9355d2f3196e2dbb0132107e8f99eec1931d7693e9a34c44aefb06ef8e08c6bd",
+      "bytes": 5651
+    },
+    {
+      "path": "n8n/schemas/provider-neutral-llm-parse-result.schema.json",
+      "sha256": "5f97383aea5608ae989475040123a92da817868d768fb7ab84750ceb2036cf1d",
+      "bytes": 1956
+    },
+    {
+      "path": "n8n/schemas/provider-neutral-llm-request.schema.json",
+      "sha256": "8effff1c48a52b9f62d7cd9612c7a53373627c9b0a1fa1e5d29240489d688b88",
+      "bytes": 9754
+    },
+    {
+      "path": "n8n/schemas/provider-neutral-llm-response-envelope.schema.json",
+      "sha256": "18109fa3b8349087a2b046b9df015964bf5f516b25bd4b5fbde98211e7222506",
+      "bytes": 832
+    },
+    {
+      "path": "n8n/schemas/verification-record.schema.json",
+      "sha256": "fcc19975936f1784d6d18db443998f430852d77ad83d47f4774a1043d28a1231",
+      "bytes": 2262
+    },
+    {
+      "path": "n8n/schemas/verification-table-row-v2.schema.json",
+      "sha256": "3a282900c11e63425f47a5f77146d383699a61e7be96b12118fb564bbccaac3f",
+      "bytes": 1783
+    },
+    {
+      "path": "n8n/workflows/calapres-customer-service-edge-v1.ts",
+      "sha256": "5208464addde9af5b4b98897467d836b0fc384ee89884f21de08c62e5d426a59",
+      "bytes": 80364
+    },
+    {
+      "path": "n8n/workflows/calapres-customer-service-edge-v2.ts",
+      "sha256": "7f7c18ec7cc3588939e8c90dc61ffbdec17b35ed2d5ec97ee5163aea2dcc8b1f",
+      "bytes": 400998
+    },
+    {
+      "path": "n8n/workflows/calapres-owner-review-desk-v1.ts",
+      "sha256": "5604a111b4a4af0bc819efb421bd9011bd7e169c6bac1ee2bb825f6397db34c1",
+      "bytes": 28087
+    },
+    {
+      "path": "n8n/workflows/calapres-shopify-order-index-v1.ts",
+      "sha256": "a1b47168dd544b56e15faa7306966a6697be48c0162c13df03c8ddd5d7664256",
+      "bytes": 10338
+    },
+    {
+      "path": "n8n/workflows/optix-customer-service-core-v1.ts",
+      "sha256": "9e8bdbdcdba4e46f7de96fd3a048d4e0fbaf4bcad8a9aa8f7f66e0ffb147ee79",
+      "bytes": 21907
+    },
+    {
+      "path": "support/brands/calapres/context-trust/2026-08-11-v1.json",
+      "sha256": "0dfbf3867f3936169cd7b9f3d7c79a97efa5fea36a435a1381ce9fc206ce78ac",
+      "bytes": 1777
+    },
+    {
+      "path": "support/brands/calapres/context-trust/compiled-context-release-v1.json",
+      "sha256": "5a0201f1e8c36782e454e36a289ddda7e7eb5a13289f7903c057a572adaa35ef",
+      "bytes": 510
+    },
+    {
+      "path": "support/brands/calapres/knowledge/2026-08-11-v1.json",
+      "sha256": "13988104845024bfd67584fe633a3edc5bde4ab1995ba08bbeaf5b84dc476175",
+      "bytes": 4014
+    },
+    {
+      "path": "support/brands/calapres/knowledge/2026-08-11-v2.json",
+      "sha256": "2cffebed5d41e65bec9ad1a9a264944a464f7b96a027bd929ea7e292d2ee4f14",
+      "bytes": 8712
+    },
+    {
+      "path": "support/brands/calapres/knowledge/2026-08-11-v3.json",
+      "sha256": "a6258110b18adfcd1090fb63c04122fe5369cb4ace1a92a3bb4854bbbdf8f833",
+      "bytes": 9740
+    },
+    {
+      "path": "support/brands/calapres/knowledge/manifest.json",
+      "sha256": "8ab861eb0f38cb97eb78fb60b392a800f1613b269441a28000819d85c26fba90",
+      "bytes": 1466
+    },
+    {
+      "path": "support/brands/calapres/model-policy/2026-08-11-v1.json",
+      "sha256": "f6299e277127bb6e7275a8ec6593f7cd1ed375772808dab085521f3b41129301",
+      "bytes": 1901
+    },
+    {
+      "path": "support/brands/calapres/model-policy/manifest.json",
+      "sha256": "6bec84cb6c0f6a4dacb48fc1c98d2d9bc7ff8699bf3b2e76bb1e51de3abb659e",
+      "bytes": 421
+    },
+    {
+      "path": "support/brands/calapres/registry.json",
+      "sha256": "02e39b518085d31f449fc1c8dcd88ffef35ce6396ffcb66dcdcc72ecbb482c04",
+      "bytes": 3393
+    },
+    {
+      "path": "support/brands/calapres/response-style/2026-08-11-v1.json",
+      "sha256": "e1d0bb174aa1a0a46bc10c743d6916320317694eb94b5ed2a97a8d37bc05e435",
+      "bytes": 3885
+    },
+    {
+      "path": "support/brands/calapres/response-style/manifest.json",
+      "sha256": "b86d1ad5d2ca3ed00037c0abd1563e9dce3eff3493ad640f8083d356901a662c",
+      "bytes": 410
+    }
+  ],
+  "release_digest_sha256": "fae72de3a31e6cce54323a366ff7417670459f12e51332e19d470203b584e48f"
+}
+

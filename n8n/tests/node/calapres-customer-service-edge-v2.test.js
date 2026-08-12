@@ -235,7 +235,7 @@ test('all four Calapres inboxes, account and 1MiB gate are pinned in embedded ru
   assert.match(embedded, /MAX_RAW_BODY_SIZE_BYTES = 1024 \* 1024/);
 });
 
-test('PostgreSQL boundary is exactly eight Edge functions and one Edge-only credential', () => {
+test('PostgreSQL boundary separates eight Edge functions and reconciliation functions', () => {
   const expected = [
     'claim_signed_webhook_request_replay',
     'claim_business_event',
@@ -245,9 +245,12 @@ test('PostgreSQL boundary is exactly eight Edge functions and one Edge-only cred
     'schedule_conversation_retry',
     'claim_due_conversation_retry',
     'transition_conversation_job',
+    'claim_chatwoot_reconciliation_scan',
+    'read_chatwoot_reconciliation_cursor',
+    'compare_and_advance_chatwoot_message_cursor',
   ];
   const postgres = byType('n8n-nodes-base.postgres');
-  assert.equal(postgres.length, 9);
+  assert.equal(postgres.length, 12);
   const actual = [];
   for (const configured of postgres) {
     assert.equal(configured.parameters.resource, 'database');
@@ -257,10 +260,13 @@ test('PostgreSQL boundary is exactly eight Edge functions and one Edge-only cred
       configured.parameters.options.queryReplacement,
       '={{ [JSON.stringify($json.postgres_command)] }}',
     );
-    assert.equal(
-      configured.credentials.postgres.name,
-      'Calapres Customer Service PostgreSQL Webhook and Worker Runtime',
-    );
+    const operation = configured.parameters.query.match(
+      /^SELECT calapres_cs\.atomic_([a-z_]+)\(\$1::jsonb\) AS result$/,
+    )[1];
+    assert.equal(configured.credentials.postgres.name,
+      configured.name.includes('Reconciliation')
+        ? 'Calapres Customer Service PostgreSQL Reconciliation Runtime'
+        : 'Calapres Customer Service PostgreSQL Webhook and Worker Runtime');
     assert.notEqual(configured.disabled, true);
     const match = configured.parameters.query.match(
       /^SELECT calapres_cs\.atomic_([a-z_]+)\(\$1::jsonb\) AS result$/,
@@ -298,7 +304,7 @@ test('PostgreSQL boundary is exactly eight Edge functions and one Edge-only cred
 
 test('Chatwoot baseline and bounded rereads are GET-only with one read credential', () => {
   const requests = byType('n8n-nodes-base.httpRequest');
-  assert.equal(requests.length, 5);
+  assert.equal(requests.length, 8);
   for (const configured of requests) {
     assert.equal(configured.parameters.method, 'GET');
     assert.equal(configured.parameters.sendBody, false);
@@ -311,6 +317,8 @@ test('Chatwoot baseline and bounded rereads are GET-only with one read credentia
   }
   assert.equal(requests.filter((configured) => /Messages Worker Reread/.test(configured.name)).length, 2);
   assert.equal(requests.filter((configured) => /Conversation (Before|After) Worker Reread/.test(configured.name)).length, 2);
+  assert.equal(requests.filter((configured) => /Reconciliation Discovery/.test(configured.name)).length, 2);
+  assert.equal(requests.filter((configured) => /Reconciliation Messages/.test(configured.name)).length, 1);
 });
 
 test('204, identifiers-only due-at Wait, Core and model-closed boundaries are explicit', () => {
