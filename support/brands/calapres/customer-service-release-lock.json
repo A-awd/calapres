@@ -56,8 +56,8 @@
     },
     {
       "path": "n8n/postgres/migrations/0004_calapres_cs_replay_recovery_queue.sql",
-      "sha256": "cb10eae55fac59bcb3680a9f5cbef41c7e7cbd6ec3f45d5698253c03da843251",
-      "bytes": 112687
+      "sha256": "9dba64d72dc7bf8ea88c8cf212c64a1b77982edb01f6b0775bece8e8aced12c8",
+      "bytes": 112693
     },
     {
       "path": "n8n/postgres/migrations/0005_calapres_cs_chatwoot_reconciliation.sql",
@@ -71,8 +71,13 @@
     },
     {
       "path": "n8n/postgres/migrations/0007_calapres_cs_ingress_provenance_boundary.sql",
-      "sha256": "5007d03227303041dfca858fe168ffe7e402086e4bb1d3bc5b9d6cba5ba28385",
-      "bytes": 16163
+      "sha256": "d638ee85fc842c3476d30d674495de1294227f7b76d4af9ceaf53277b304baf5",
+      "bytes": 15963
+    },
+    {
+      "path": "n8n/postgres/migrations/0008_calapres_cs_model_budget_guard.sql",
+      "sha256": "a7528834db5b8c583005e4a51235e3cb90a1a2dc33fe5e0f4a3526361fbe41bb",
+      "bytes": 9151
     },
     {
       "path": "n8n/postgres/postgres-atomic-storage.js",
@@ -425,5 +430,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "857079a76a26c6d3bb1ae32e07fd1b1deef2cc11f1d9387d938a7e58f73a60cd"
+  "release_digest_sha256": "7a018ed646d8f1c5cccaedeb53b238fdbc1b31b2c64049e3ad313c386c14a3fa"
 }
