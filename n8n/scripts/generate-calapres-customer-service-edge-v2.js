@@ -411,6 +411,19 @@ try {
 }
 `;
 
+const RECON_PREPARE_BASELINE = String.raw`
+try {
+  const envelope = __edgeHttpEnvelope($json);
+  const body = envelope.body || {};
+  const status = typeof body.status === 'string' ? body.status : null;
+  const assignee = body.meta && body.meta.assignee && body.meta.assignee.id;
+  if (envelope.status_code !== 200 || !status || !Number.isSafeInteger(assignee)) throw new Error('reconciliation_baseline_unavailable');
+  return [{ json: { ...$json, baseline_plan: { status, assignee: String(assignee), baseline_key_version: 'calapres-hmac-v1', customer_egress_allowed: false }, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'reconciliation_baseline_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
 const RECON_BUILD_REQUEST_CLAIM = String.raw`
 const projection = $json.reconciliation_projection;
 return [{ json: { ...$json, postgres_command: projection && projection.claim_request_replay_command || null, reconciliation_ready: Boolean(projection), customer_egress_allowed: false } }];
@@ -435,9 +448,27 @@ const ready = result && ['committed', 'duplicate_or_conflict'].includes(result.s
 return [{ json: { ...$json, business_result: result, business_claim: ready ? value : null, reconciliation_ready: Boolean(ready), customer_egress_allowed: false } }];
 `;
 
+const RECON_BUILD_ADVANCE = String.raw`
+try {
+  const projection = $json.reconciliation_projection;
+  const request = $json.request_claim;
+  const business = $json.business_claim;
+  const control = projection && projection.advance_conversation_generation_control;
+  if (!projection || !request || !business || !control || !$json.native_reconciliation_baseline_status_v1_hex || !$json.native_reconciliation_baseline_assignee_v1_hex) throw new Error('reconciliation_op4_inputs_missing');
+  return [{ json: { ...$json, postgres_command: { ...control, request_claim_id: request.claim_id, business_claim_id: business.claim_id, request_lease_owner_id: request.lease_owner_id, request_lease_token: request.lease_token, business_lease_owner_id: business.lease_owner_id, business_lease_token: business.lease_token, baseline_status_fingerprint: $json.native_reconciliation_baseline_status_v1_hex, baseline_assignee_fingerprint: $json.native_reconciliation_baseline_assignee_v1_hex, request_processing_lease_result: $json.request_result, business_prepared_or_completed_result: $json.business_result, ready_for_atomic_call: true, customer_egress_allowed: false }, reconciliation_ready: true, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'reconciliation_op4_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
 const RECON_BUILD_CURSOR_ADVANCE = String.raw`
 try {
-  const finalization = $json.messages_finalization;
+  const source = $json.messages_finalization;
+  const value = $json.result && $json.result.value && typeof $json.result.value === 'object' ? $json.result.value : null;
+  const candidates = source && Array.isArray(source.outcome_requirements) ? source.outcome_requirements.filter((row) => row.classification === 'event_candidate') : [];
+  if (!value || $json.result.status !== 'committed' || candidates.length !== 1) throw new Error('cursor_requires_one_durable_candidate');
+  const proofRows = source.outcome_requirements.map((row) => row.classification === 'deterministically_excluded' ? ({ message_id: row.message_id, classification: row.classification, outcome: 'deterministically_excluded', reason_code: row.required_reason_code, created_at: row.created_at, message_type: row.message_type, private: row.private, sender_type: row.sender_type, event_identity_key_version: null, event_identity_fingerprint: null, business_claim_id: null, job_id: null, generation: null }) : ({ message_id: row.message_id, classification: 'event_candidate', outcome: 'durable_bound', reason_code: null, created_at: null, message_type: null, private: null, sender_type: null, event_identity_key_version: $json.candidate_identity.active_event_identity_key_version, event_identity_fingerprint: $json.candidate_identity.event_identity_fingerprints[$json.candidate_identity.active_event_identity_key_version], business_claim_id: value.business_claim_id || $json.business_claim.claim_id, job_id: value.job_id, generation: value.generation }));
+  const finalization = { schema_version: '1.0', kind: 'chatwoot_reconciliation_cursor_finalization_v1', status: 'ready', reason_code: null, source: 'chatwoot_reconciliation_v1', brand_id: 'calapres', account_id: 179973, inbox_id: $json.inbox_id, channel: __reconciliationModule.exports.INBOX_CHANNELS[$json.inbox_id], conversation_id: $json.conversation_id, expected_after_message_id: $json.expected_after_message_id, new_after_message_id: source.proposed_next_after_message_id, activation_floor_at: '2026-08-12T00:00:00.000Z', activation_policy_version: '2026-08-12-v1', proof_rows: proofRows, page_binding_sha256: null, outcome_digest: null, row_count: proofRows.length, cursor_advance_ready: true, continue_required: false, no_loss_claimed: false, customer_egress_allowed: false };
   const command = __reconciliationRuntime.buildCursorAdvanceCommand({ finalization, scan_id: $json.scan_id, lease_token: $json.scan_lease.lease_token });
   return [{ json: { ...$json, postgres_command: command, reconciliation_ready: true, customer_egress_allowed: false } }];
 } catch (error) {
@@ -1828,15 +1859,21 @@ hmac('reconRouteHmac02', 'Crypto Reconciliation 06 route_identity conversation v
 hmac('reconRouteHmac03', 'Crypto Reconciliation 07 route_identity message_anchor v2 Placeholder', '{{ $json.route_hmac_requests[2].material_utf8 }}', 'reconciliation_hmac_route_identity_03_message_anchor_v2', 'eventIdentityHmacCredential', [14270, 700]);
 hmac('reconRouteHmac04', 'Crypto Reconciliation 08 route_identity conversation v2 Placeholder', '{{ $json.route_hmac_requests[3].material_utf8 }}', 'reconciliation_hmac_route_identity_04_conversation_v2', 'eventIdentityHmacCredential', [14400, 700]);
 code('reconFinalizeRoute', 'Finalize Reconciliation Route and Atomic Claims', RECON_FINALIZE_ROUTE, [14530, 700], true);
+chatwootGet('reconBaselineConversation', 'GET Reconciliation Conversation Baseline', 'https://app.chatwoot.com/api/v1/accounts/179973/conversations/{{ $json.candidate_identity.candidate.conversation_id }}', [14790, 700]);
+code('reconPrepareBaseline', 'Prepare Reconciliation Baseline HMAC', RECON_PREPARE_BASELINE, [15050, 700], true);
+hmac('reconBaselineStatus', 'Crypto Reconciliation Baseline Status v1 Placeholder', '{{ $json.baseline_plan.status }}', 'native_reconciliation_baseline_status_v1_hex', 'baselineHmacCredential', [15310, 700]);
+hmac('reconBaselineAssignee', 'Crypto Reconciliation Baseline Assignee v1 Placeholder', '{{ $json.baseline_plan.assignee }}', 'native_reconciliation_baseline_assignee_v1_hex', 'baselineHmacCredential', [15440, 700]);
 code('reconBuildRequestClaim', 'Build Reconciliation Request Replay Claim', RECON_BUILD_REQUEST_CLAIM, [14790, 700], true);
 postgres('reconClaimRequest', 1, 'claim_request_replay', [15050, 700], 'Postgres Reconciliation 01 - claim_reconciliation_request_replay', 'claim_reconciliation_request_replay', 'reconciliationPostgresCredential');
 code('reconInterpretRequest', 'Interpret Reconciliation Request Replay Claim', RECON_INTERPRET_REQUEST, [15310, 700], true);
 code('reconBuildBusinessClaim', 'Build Reconciliation Business Event Claim', RECON_BUILD_BUSINESS_CLAIM, [15570, 700], true);
 postgres('reconClaimBusiness', 2, 'claim_business_event', [15830, 700], 'Postgres Reconciliation 02 - claim_business_event', 'claim_business_event', 'reconciliationPostgresCredential');
 code('reconInterpretBusiness', 'Interpret Reconciliation Business Event Claim', RECON_INTERPRET_BUSINESS, [16090, 700], true);
-code('reconBuildCursorAdvance', 'Build Reconciliation Cursor Compare and Advance Command', RECON_BUILD_CURSOR_ADVANCE, [13750, 700], true);
-postgres('reconAdvanceCursor', 12, 'compare_and_advance_chatwoot_message_cursor', [16350, 700], 'Postgres Reconciliation 12 - compare_and_advance_chatwoot_message_cursor', 'compare_and_advance_chatwoot_message_cursor', 'reconciliationPostgresCredential');
-code('reconTerminal', 'Reconciliation Observation Terminal - No Send', "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];", [16610, 700]);
+code('reconBuildAdvance', 'Build Reconciliation Atomic Generation Command', RECON_BUILD_ADVANCE, [16350, 700], true);
+postgres('reconAdvanceGeneration', 4, 'advance_conversation_generation', [16610, 700], 'Postgres Reconciliation 04 - advance_reconciliation_conversation_generation', 'advance_reconciliation_conversation_generation', 'reconciliationPostgresCredential');
+code('reconBuildCursorAdvance', 'Build Reconciliation Cursor Compare and Advance Command', RECON_BUILD_CURSOR_ADVANCE, [16870, 700], true);
+postgres('reconAdvanceCursor', 12, 'compare_and_advance_chatwoot_message_cursor', [17130, 700], 'Postgres Reconciliation 12 - compare_and_advance_chatwoot_message_cursor', 'compare_and_advance_chatwoot_message_cursor', 'reconciliationPostgresCredential');
+code('reconTerminal', 'Reconciliation Observation Terminal - No Send', "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];", [17390, 700]);
 code(
   'prepareWorkerClaim',
   'Prepare Worker Claim Without Conversation Identifier',
@@ -2313,12 +2350,18 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                           .to(reconRouteHmac03)
                           .to(reconRouteHmac04)
                           .to(reconFinalizeRoute)
+                          .to(reconBaselineConversation)
+                          .to(reconPrepareBaseline)
+                          .to(reconBaselineStatus)
+                          .to(reconBaselineAssignee)
                           .to(reconBuildRequestClaim)
                           .to(reconClaimRequest)
                           .to(reconInterpretRequest)
                           .to(reconBuildBusinessClaim)
                           .to(reconClaimBusiness)
                           .to(reconInterpretBusiness)
+                          .to(reconBuildAdvance)
+                          .to(reconAdvanceGeneration)
                           .to(reconBuildCursorAdvance)
                           .to(reconAdvanceCursor)
                           .to(reconTerminal)

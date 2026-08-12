@@ -21,7 +21,7 @@
     },
     {
       "path": "n8n/deployments/calapres-customer-service-edge-v2.update-manifest.json",
-      "sha256": "6acef053e3e8a743ddffe3bed641bfedb7e6317466569548590af164df4a8597",
+      "sha256": "a14749249f9488833bab40a6ed029f6864aba44b0b9ebc30f9f7889cae081d58",
       "bytes": 791
     },
     {
@@ -351,8 +351,8 @@
     },
     {
       "path": "n8n/workflows/calapres-customer-service-edge-v2.ts",
-      "sha256": "5edb403c5f94730660b066691c4c9420a3482d0ab59335f551c7e5bc6092b120",
-      "bytes": 410912
+      "sha256": "ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95",
+      "bytes": 419392
     },
     {
       "path": "n8n/workflows/calapres-owner-review-desk-v1.ts",
@@ -425,6 +425,6 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "4f63e34401d89dee594f1f524306a103babc3d50f737df3998c6d91d388280c5"
+  "release_digest_sha256": "630c36dea67cf76fce8f4999f8135023395e849e04d696ec56a7d1be92194657"
 }
 

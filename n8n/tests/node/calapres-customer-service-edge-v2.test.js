@@ -247,11 +247,12 @@ test('PostgreSQL boundary separates eight Edge functions and reconciliation func
     'transition_conversation_job',
     'claim_chatwoot_reconciliation_scan',
     'claim_reconciliation_request_replay',
+    'advance_reconciliation_conversation_generation',
     'read_chatwoot_reconciliation_cursor',
     'compare_and_advance_chatwoot_message_cursor',
   ];
   const postgres = byType('n8n-nodes-base.postgres');
-  assert.equal(postgres.length, 14);
+  assert.equal(postgres.length, 15);
   const actual = [];
   for (const configured of postgres) {
     assert.equal(configured.parameters.resource, 'database');
@@ -305,7 +306,7 @@ test('PostgreSQL boundary separates eight Edge functions and reconciliation func
 
 test('Chatwoot baseline and bounded rereads are GET-only with one read credential', () => {
   const requests = byType('n8n-nodes-base.httpRequest');
-  assert.equal(requests.length, 8);
+  assert.equal(requests.length, 9);
   for (const configured of requests) {
     assert.equal(configured.parameters.method, 'GET');
     assert.equal(configured.parameters.sendBody, false);
