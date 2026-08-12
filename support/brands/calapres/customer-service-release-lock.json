@@ -15,13 +15,23 @@
       "bytes": 77324
     },
     {
+      "path": "n8n/adapters/shopify-client-credentials.js",
+      "sha256": "96e0e79162f5e8cc5e420ee4502dfd029a5db2979ff23f0455d42965a056bf2f",
+      "bytes": 4820
+    },
+    {
+      "path": "n8n/adapters/shopify-customer-lookup.js",
+      "sha256": "199a4c75bf86b7755584bd514e31d0d03910e9e51491e61c97bf55ae199fa862",
+      "bytes": 3126
+    },
+    {
       "path": "n8n/adapters/shopify-identity-adapter.js",
       "sha256": "49905d3e497664f80b0387060a12088ba266336c0e11a1c9a8bab7b216cbb19b",
       "bytes": 21006
     },
     {
       "path": "n8n/deployments/calapres-customer-service-edge-v2.update-manifest.json",
-      "sha256": "a14749249f9488833bab40a6ed029f6864aba44b0b9ebc30f9f7889cae081d58",
+      "sha256": "9ea2e924d814a0c31a0cd39a1ba06efdfe0ca772c3c97414ac18218129c61a54",
       "bytes": 791
     },
     {
@@ -356,8 +366,8 @@
     },
     {
       "path": "n8n/workflows/calapres-customer-service-edge-v2.ts",
-      "sha256": "ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95",
-      "bytes": 419392
+      "sha256": "875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301",
+      "bytes": 427781
     },
     {
       "path": "n8n/workflows/calapres-owner-review-desk-v1.ts",
@@ -430,5 +440,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "7a018ed646d8f1c5cccaedeb53b238fdbc1b31b2c64049e3ad313c386c14a3fa"
+  "release_digest_sha256": "64a20f3e0b3b7b8717bdacf44f43aa86af7f99d07e171262ae9f346dd98c0aa5"
 }

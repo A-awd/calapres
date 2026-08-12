@@ -1538,6 +1538,33 @@ const SHOPIFY_CUSTOMER_READ_UNAVAILABLE = String.raw`
 const source = $input.first().json || {};
 return [{ json: { ...source, shopify_lookup: { status: 'unavailable', reason_code: 'customer_phone_not_available', customer: null, persistable: false }, shopify_request: null, customer_egress_allowed: false } }];`;
 
+const BUILD_CORE_INPUT_WITH_SHOPIFY_FACTS = String.raw`
+const source = $input.first().json || {};
+const lookup = source.shopify_lookup && typeof source.shopify_lookup === 'object'
+  ? source.shopify_lookup : { status: 'unavailable' };
+const status = ['matched', 'not_found', 'ambiguous', 'unavailable'].includes(lookup.status)
+  ? lookup.status : 'unavailable';
+const verified = status === 'matched';
+const liveFact = verified ? {
+  live_fact_id: 'lf_shopify_customer_identity',
+  response_text: 'تم التحقق من وجود سجل عميل مطابق في متجر كالابريز.'
+} : null;
+return [{ json: {
+  schema_version: source.schema_version,
+  event: source.event,
+  runtime: { mode: 'observation', customer_egress_enabled: false, kill_switch: true },
+  capabilities: { customer_lookup: 'enabled', order_lookup: 'disabled' },
+  context: {
+    knowledge_version: source.context && source.context.knowledge_version
+      ? source.context.knowledge_version : 'unknown',
+    knowledge_facts: [],
+    live_facts_status: verified ? 'verified' : status === 'ambiguous' ? 'ambiguous' : 'unavailable',
+    verified_live_facts: liveFact ? [liveFact] : []
+  },
+  candidate: null,
+  customer_egress_allowed: false
+} }];`;
+
 const BUILD_COMPLETION = String.raw`
 const observation = $('Enforce Observation Only After Core').first().json;
 const worker = $('Finalize Post Delay Eligibility With Current Generation').first().json.worker;
@@ -2089,6 +2116,7 @@ condition('shopifyLookupReady', 'Shopify Customer Read Ready?', '$json.shopify_l
 shopifyCustomerRead('getShopifyCustomerRead', 'GET Shopify Customer Read Only', [16480, -1480]);
 code('normalizeShopifyCustomerRead', 'Normalize Shopify Customer Read Fail Closed', NORMALIZE_SHOPIFY_CUSTOMER_READ, [16740, -1480]);
 code('normalizeShopifyCustomerReadUnavailable', 'Shopify Customer Read Unavailable - No Guess', SHOPIFY_CUSTOMER_READ_UNAVAILABLE, [16480, -1240]);
+code('buildCoreInputWithShopifyFacts', 'Build Core Input With Shopify Facts', BUILD_CORE_INPUT_WITH_SHOPIFY_FACTS, [17000, -1480]);
 declare('callImmutableCore', 'node', {
   type: 'n8n-nodes-base.executeWorkflow', version: 1.3,
   config: {
@@ -2281,8 +2309,8 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                                                                                                                                                       .to(prepareShopifyCustomerLookup)
                                                                                                                                                       .to(
                                                                                                                                                         shopifyLookupReady
-                                                                                                                                                          .onTrue(getShopifyCustomerRead.to(normalizeShopifyCustomerRead).to(callImmutableCore))
-                                                                                                                                                          .onFalse(normalizeShopifyCustomerReadUnavailable.to(callImmutableCore)),
+                                                                                                                                                          .onTrue(getShopifyCustomerRead.to(normalizeShopifyCustomerRead).to(buildCoreInputWithShopifyFacts).to(callImmutableCore))
+                                                                                                                                                          .onFalse(normalizeShopifyCustomerReadUnavailable.to(buildCoreInputWithShopifyFacts).to(callImmutableCore)),
                                                                                                                                                       )
                                                                                                                                                       .to(enforceObservationOnly)
                                                                                                                                                       .to(buildCompletion)

@@ -3398,6 +3398,23 @@ const normalizeShopifyCustomerReadUnavailable = node({
   }
 });
 
+const buildCoreInputWithShopifyFacts = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Build Core Input With Shopify Facts",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": "\nconst source = $input.first().json || {};\nconst lookup = source.shopify_lookup && typeof source.shopify_lookup === 'object'\n  ? source.shopify_lookup : { status: 'unavailable' };\nconst status = ['matched', 'not_found', 'ambiguous', 'unavailable'].includes(lookup.status)\n  ? lookup.status : 'unavailable';\nconst verified = status === 'matched';\nconst liveFact = verified ? {\n  live_fact_id: 'lf_shopify_customer_identity',\n  response_text: 'تم التحقق من وجود سجل عميل مطابق في متجر كالابريز.'\n} : null;\nreturn [{ json: {\n  schema_version: source.schema_version,\n  event: source.event,\n  runtime: { mode: 'observation', customer_egress_enabled: false, kill_switch: true },\n  capabilities: { customer_lookup: 'enabled', order_lookup: 'disabled' },\n  context: {\n    knowledge_version: source.context && source.context.knowledge_version\n      ? source.context.knowledge_version : 'unknown',\n    knowledge_facts: [],\n    live_facts_status: verified ? 'verified' : status === 'ambiguous' ? 'ambiguous' : 'unavailable',\n    verified_live_facts: liveFact ? [liveFact] : []\n  },\n  candidate: null,\n  customer_egress_allowed: false\n} }];"
+    },
+    "position": [
+      17000,
+      -1480
+    ]
+  }
+});
+
 const callImmutableCore = node({
   "type": "n8n-nodes-base.executeWorkflow",
   "version": 1.3,
@@ -3779,8 +3796,8 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                                                                                                                                                       .to(prepareShopifyCustomerLookup)
                                                                                                                                                       .to(
                                                                                                                                                         shopifyLookupReady
-                                                                                                                                                          .onTrue(getShopifyCustomerRead.to(normalizeShopifyCustomerRead).to(callImmutableCore))
-                                                                                                                                                          .onFalse(normalizeShopifyCustomerReadUnavailable.to(callImmutableCore)),
+                                                                                                                                                          .onTrue(getShopifyCustomerRead.to(normalizeShopifyCustomerRead).to(buildCoreInputWithShopifyFacts).to(callImmutableCore))
+                                                                                                                                                          .onFalse(normalizeShopifyCustomerReadUnavailable.to(buildCoreInputWithShopifyFacts).to(callImmutableCore)),
                                                                                                                                                       )
                                                                                                                                                       .to(enforceObservationOnly)
                                                                                                                                                       .to(buildCompletion)
