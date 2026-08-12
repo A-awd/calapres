@@ -39,6 +39,8 @@ jobs:
   source-contracts:
     name: No-send contracts and release lock
     runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Check out source
         uses: actions/checkout@v4
