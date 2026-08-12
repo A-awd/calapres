@@ -14,6 +14,7 @@ class ReferenceAdapterTests(unittest.TestCase):
         self.assertIsNotNone(node, "Node.js is required for the local reference adapter harness")
         tests = [
             str(NODE_TEST_DIR / "atomic-storage-adapter.test.js"),
+            str(NODE_TEST_DIR / "shopify-client-credentials.test.js"),
             str(NODE_TEST_DIR / "shopify-identity-adapter.test.js"),
             str(NODE_TEST_DIR / "postgres-atomic-storage.test.js"),
         ]
