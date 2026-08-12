@@ -26,6 +26,12 @@ single-winner session locking. A temporary Neon branch matched the primary schem
 was removed after verification. Provider backup-restore service recovery and live Chatwoot
 observation remain unproven.
 
+Current recheck: Neon reports PostgreSQL 18.4, all eight migration records, four restricted runtime
+roles, and the expected deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20,
+monthly limit 45 USD). The existing n8n target passed synthetic valid-signature, modified-body, and
+invalid-signature webhook runs (executions 40786, 40787, and 40785); these were internal tests only and
+no customer message was sent. Targeted Node coverage passed 83/83. The workflow remains inactive.
+
 ## Preserved customer-service source release — 2026-08-12
 
 The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary, schemas, fixtures,

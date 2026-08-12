@@ -22,6 +22,11 @@ database clock, role separation, rollback, and one-winner locking; a temporary b
 comparison produced no diff and the branch was removed. This is not a provider backup-restore
 drill, and no live Chatwoot, model, or Shopify observation has occurred.
 
+The current Neon recheck reports PostgreSQL 18.4, migrations 0001–0008, four restricted runtime roles,
+and deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20, monthly limit 45 USD).
+The inactive n8n target passed internal synthetic valid-signature, modified-body, and invalid-signature
+webhook runs; targeted Node coverage passed 83/83. These tests did not send a customer message.
+
 For the frozen post-`bfb191c` customer-service source release, resume from branch
 `agent/preserve-calapres-customer-service-checkpoint` and read
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
