@@ -20,7 +20,20 @@ $roles$;
 
 -- Managed PostgreSQL providers may not allow role ownership changes unless
 -- the current administrative role is explicitly a member of the owner role.
-GRANT calapres_cs_function_owner TO postgres;
+-- Neon does not expose a login role named `postgres`; grant membership to the
+-- provider's project-owner role so SECURITY DEFINER functions can be owned by
+-- the locked function-owner role on both Neon and conventional PostgreSQL.
+DO $grant_owner$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'neondb_owner') THEN
+    EXECUTE 'GRANT calapres_cs_function_owner TO neondb_owner';
+  ELSIF EXISTS (SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'postgres') THEN
+    EXECUTE 'GRANT calapres_cs_function_owner TO postgres';
+  ELSE
+    RAISE EXCEPTION 'no supported database owner role is available';
+  END IF;
+END;
+$grant_owner$;
 GRANT USAGE, CREATE ON SCHEMA calapres_cs TO calapres_cs_function_owner;
 
 CREATE OR REPLACE FUNCTION calapres_cs._atomic_envelope(

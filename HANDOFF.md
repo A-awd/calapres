@@ -9,6 +9,11 @@ Decision 0009 makes the ownership-evidence page a future multi-brand standard wi
 another brand implementation. Decision 0010 is binding for the inactive Calapres observation
 runtime, its no-send boundary, and its persistent-access gates.
 
+Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database has migrations
+0001–0007 applied and the restricted n8n Webhook/Reconciliation credentials have passed SSL
+connection tests. Continue using the existing Edge target `e442GlRmKP4IO8pm`; do not create a
+workflow, activate it, publish it, or connect live Chatwoot traffic.
+
 For the frozen post-`bfb191c` customer-service source release, resume from branch
 `agent/preserve-calapres-customer-service-checkpoint` and read
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
@@ -102,7 +107,10 @@ merged.
 1. Continue with decision 0010 and `docs/calapres-customer-service-pilot.md`; do not recreate the
    already-built project, tables, Core, Edge, Order Index, Owner Review Desk, registry, knowledge
    releases, contracts, or fixtures.
-2. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
+2. Keep the Neon database and restricted credentials as the inactive PostgreSQL test foundation;
+   complete real transaction/concurrency/recovery and backup/restore evidence before any live
+   binding.
+3. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
    Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
    observation.
 3. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport

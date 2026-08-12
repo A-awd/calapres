@@ -8,6 +8,15 @@ retired. Decision 0010 closes the customer-service pre-implementation gate and a
 Calapres-only observation runtime. No production customer-service bot or automatic customer send
 is deployed.
 
+## PostgreSQL provider gate — 2026-08-12
+
+Neon is the selected PostgreSQL provider for the inactive Calapres observation runtime. Project
+`shiny-hill-38628371` / database `neondb` has migrations 0001–0007 applied, 22 Calapres tables,
+40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
+roles, and verified callable-boundary ACLs. No customer traffic, customer send, Shopify write,
+workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
+remains the only target and remains inactive; the source-only v2 update is not yet imported.
+
 ## Preserved customer-service source release — 2026-08-12
 
 The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary, schemas, fixtures,
