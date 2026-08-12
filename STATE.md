@@ -115,8 +115,10 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 
 ## Next safe action
 
-Next, verify the existing Chatwoot read binding with a synthetic/private read fixture, then create
-the remaining dedicated Calapres-scoped HMAC, LLM, and read-only Shopify bindings. Add the signed
+Next, verify the existing Chatwoot read binding with a synthetic/private read fixture. A project-scoped
+OpenAI credential now exists and passed n8n's connection test, but it is not bound to any model node
+and no model call is enabled. Create the remaining dedicated Calapres-scoped HMAC and read-only
+Shopify bindings. Add the signed
 ingress only after those checks and prove real four-channel observation. Keep the customer-egress
 branch absent.
 
@@ -252,7 +254,7 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
 - The live observation connection is intentionally not granted yet. A project-scoped Chatwoot read
   credential is bound to the existing Edge GET nodes, but no webhook or live fixture is enabled.
-  Dedicated LLM credential, identity-HMAC material, and any Shopify read-scope expansion remain
+  Model-node binding, identity-HMAC material, and any Shopify read-scope expansion remain
   deliberate persistent-access gates. The current Shopify credential lacks `read_customers`; live
   order/customer lookup remains disabled rather than guessed.
 
