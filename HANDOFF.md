@@ -37,9 +37,9 @@ Latest checkpoint: commit `86d59eb` binds the read-only Shopify customer lookup 
 Core input envelope. The preceding `8ebf82a` checkpoint adds the read-only Shopify client-credentials renewal contract
 and targeted tests. The preceding `b0d4ba8` checkpoint refreshes and verifies the customer-service release lock after
 migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
-`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
-has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and credential
-were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. Edge v2
+`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
+exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
+stored in the project-scoped n8n Crypto credential. Edge v2
 source and target have a Shopify read-only HTTP node and no model node; the imported target remains
 inactive. The new Shopify read-only app is installed and its Client Credentials token was tested
 directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL

@@ -42,10 +42,10 @@ records the source-only boundary.
 The release lock was refreshed in commit `86d59eb` after the read-only Shopify customer branch was
 bound to the strict Core input envelope;
 the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
-`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
-Chatwoot has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and
-credential used for the signed-URL check were removed after the inactive Edge returned HTTP 404.
-This restores the no-live-ingress safety state. Shopify read access is available through the
+`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
+exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
+stored in the project-scoped n8n Crypto credential. The Edge workflow remains inactive, so no
+customer traffic is processed and no customer message has been sent. Shopify read access is available through the
 connected read-only MCP and the inactive Edge target now has the read-only Shopify branch bound to
 the project OAuth2 credential. The model credential is present, but the model call remains
 structurally closed and the budget guard remains deny-first.
@@ -123,13 +123,14 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 7. The approved observation runtime now exists but remains inactive, unpublished, and disconnected
    from live customer events until the persistent-access gate is approved.
 8. A project-scoped Chatwoot Header Auth read credential now exists in n8n and is bound only to
-   the existing Edge v2 Chatwoot GET nodes; the workflow remains inactive and no webhook exists.
+   the existing Edge v2 Chatwoot GET nodes. Exactly one observation webhook exists and is subscribed
+   only to `message_created`; the workflow remains inactive.
    The recorded Shopify credential scopes still do not include `read_customers`; that access change
    remains a deliberate implementation gate.
 9. Two project-scoped internal Crypto credentials are now bound to the existing Edge HMAC nodes:
    event/route fingerprints and baseline/reread fingerprints. The Chatwoot webhook HMAC credential
-   remains intentionally uncreated until the real Chatwoot webhook is created; the workflow remains
-   inactive and no customer traffic is connected.
+   is now populated from the single observation webhook; the workflow remains inactive and no
+   customer traffic is processed.
 
 ## Next safe action
 
@@ -272,7 +273,8 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   response fragment. The Edge rejects or strips malformed/extra Core output. Event-payload
   transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
 - The live observation connection is intentionally not granted yet. A project-scoped Chatwoot read
-  credential is bound to the existing Edge GET nodes, but no webhook or live fixture is enabled.
+  credential is bound to the existing Edge GET nodes, and one observation webhook exists, but no
+  live fixture has been processed because Edge remains inactive.
   Model-node binding and identity-HMAC material remain deliberate persistent-access gates. A new
   Shopify Dev Dashboard app `Calapres Customer Service Read` is installed on `calapres.com` with
   only `read_customers`, `read_orders`, `read_products`, `read_inventory`, and `read_locations`. The n8n Shopify
