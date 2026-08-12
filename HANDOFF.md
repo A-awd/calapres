@@ -51,6 +51,9 @@ directly: Shopify returned a 24-hour token with only read scopes, and read-only 
 queries for shop/products and customer ID returned successfully without logging customer fields.
 The pre-existing credential-free Core dependency is published solely to satisfy n8n's sub-workflow
 dependency; it has no public trigger, customer data source, or customer egress.
+The first live synthetic raw-body POST reached the published Edge but returned `401`; Chatwoot's
+current account page says Webhooks require a paid plan. Live Chatwoot delivery is therefore unproven.
+Do not bypass or weaken HMAC verification; resolve the supported Chatwoot plan/secret binding first.
 The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
 Edge v2 now contains the read-only customer lookup branch and its source hash is recorded in the
 deployment manifest; the imported target contains the same branch. No Shopify write occurred.
