@@ -10,10 +10,11 @@ the checkpoint branch. Existing Edge v2 workflow `e442GlRmKP4IO8pm` is published
 observation/no-send mode at version `8d4d3e38-1ecd-47ee-beeb-fd2189e60f26`. The existing Chatwoot
 webhook secret binding was corrected in place; a signed synthetic POST returned HTTP 200. The
 full pinned fail-closed graph test completed as n8n execution `40798`. No customer message,
-private note, model call, or Shopify write occurred. A durable-job row was not created for the
-synthetic event because the first fixture used a nonexistent conversation; the live durable
-binding and reread gate therefore remain unproven until a permitted Chatwoot test conversation
-is exercised.
+private note, model call, or Shopify write occurred. A permitted synthetic event was then sent
+for existing test conversation `3`; the endpoint returned HTTP 200, but PostgreSQL still
+contained zero rows in `conversation_jobs`, `conversation_job_queue`, `request_replay_claims`, and
+`audit_events`. This is a live durable-binding blocker, not a success claim: HTTP acceptance did
+not prove durable persistence.
 
 ## Why this checkpoint exists
 
