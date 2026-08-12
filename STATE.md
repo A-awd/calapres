@@ -271,9 +271,14 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
 - The live observation connection is intentionally not granted yet. A project-scoped Chatwoot read
   credential is bound to the existing Edge GET nodes, but no webhook or live fixture is enabled.
-  Model-node binding, identity-HMAC material, and any Shopify read-scope expansion remain
-  deliberate persistent-access gates. The current Shopify credential lacks `read_customers`; live
-  order/customer lookup remains disabled rather than guessed.
+  Model-node binding and identity-HMAC material remain deliberate persistent-access gates. A new
+  Shopify Dev Dashboard app `Calapres Customer Service Read` is installed on `calapres.com` with
+  only `read_orders`, `read_products`, `read_inventory`, and `read_locations`. The n8n Shopify
+  OAuth2 credential was rejected and removed because the built-in type requested write scopes;
+  the generic n8n OAuth2 credential is saved with Client Credentials and the same read-only scopes.
+  Direct live evidence proved token issuance (`200`, `expires_in=86399`, read-only scope set) and
+  a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is not yet bound to
+  Edge v2, and no Shopify write or customer lookup has occurred.
 - The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
   first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,
   and the control was restored to `enabled=false`, `kill_switch=true`, `$45` ceiling. Test rows were

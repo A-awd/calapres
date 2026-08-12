@@ -32,14 +32,17 @@ rebuild these artifacts or claim production readiness from this checkpoint. The 
 remains inactive and unpublished; `main` remains authoritative until the preserved branch is
 reviewed and merged.
 
-Latest checkpoint: commit `b0d4ba8` refreshes and verifies the customer-service release lock after
+Latest checkpoint: commit `65260ac` adds the read-only Shopify client-credentials renewal contract
+and targeted tests. The preceding `b0d4ba8` checkpoint refreshes and verifies the customer-service release lock after
 migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
 has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and credential
-were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. No n8n
-Shopify credential exists, and Edge v2 still has no Shopify or model node; both remain blocked by
-their explicit read-only and draft-only gates. The connected Shopify MCP read succeeded with zero
-orders and performed no write.
+were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. Edge v2
+still has no Shopify or model node; both remain blocked by their explicit read-only and draft-only
+gates. The new Shopify read-only app is installed and its Client Credentials token was tested
+directly: Shopify returned a 24-hour token with only read scopes, and a read-only Admin GraphQL
+query returned successfully. The generic OAuth2 credential is saved in n8n but is not yet bound
+to Edge v2. No Shopify write occurred.
 
 ## Completed in the Supabase retirement
 
