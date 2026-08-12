@@ -34,9 +34,9 @@ before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fi
 The current Edge v2 source hash is
 `875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301`, and
 `support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
-rebuild these artifacts or claim production readiness from this checkpoint. The imported target
-remains inactive and unpublished; `main` remains authoritative until the preserved branch is
-reviewed and merged.
+rebuild these artifacts or claim production readiness from this checkpoint. The target is now
+published and active for observation only; `main` remains authoritative until the preserved branch
+is reviewed and merged.
 
 Latest checkpoint: commit `86d59eb` binds the read-only Shopify customer lookup result to the strict
 Core input envelope. The preceding `8ebf82a` checkpoint adds the read-only Shopify client-credentials renewal contract
@@ -45,10 +45,12 @@ migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
 exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
 stored in the project-scoped n8n Crypto credential. Edge v2
-source and target have a Shopify read-only HTTP node and no model node; the imported target remains
-inactive. The new Shopify read-only app is installed and its Client Credentials token was tested
+source and target have a Shopify read-only HTTP node and no model node; the target is published and
+active for observation only. The new Shopify read-only app is installed and its Client Credentials token was tested
 directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
 queries for shop/products and customer ID returned successfully without logging customer fields.
+The pre-existing credential-free Core dependency is published solely to satisfy n8n's sub-workflow
+dependency; it has no public trigger, customer data source, or customer egress.
 The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
 Edge v2 now contains the read-only customer lookup branch and its source hash is recorded in the
 deployment manifest; the imported target contains the same branch. No Shopify write occurred.

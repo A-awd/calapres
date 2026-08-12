@@ -15,9 +15,9 @@ Neon is the selected PostgreSQL provider for the inactive Calapres observation r
 model-budget guard with a hard `$45` monthly reservation ceiling, a 20-request daily conversation
 cap, and a default-on kill switch. It has 25 Calapres tables,
 40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
-roles, and verified callable-boundary ACLs. No customer traffic, customer send, Shopify write,
-workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
-remains the only target and remains inactive. The v2 source is now imported into that same target;
+roles, and verified callable-boundary ACLs. No customer traffic, customer send, or Shopify write has
+occurred. The existing Edge workflow `e442GlRmKP4IO8pm` remains the only target and is now published
+and active for observation. The v2 source is imported into that same target;
 its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials, and the
 read-only Shopify branch is present with the project OAuth2 read credential bound (149 nodes total).
 Node tests are 175/175 and Python tests are 92/92. A real two-session Neon check verified the
@@ -30,7 +30,8 @@ Current recheck: Neon reports PostgreSQL 18.4, all eight migration records, four
 roles, and the expected deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20,
 monthly limit 45 USD). The existing n8n target passed synthetic valid-signature, modified-body, and
 invalid-signature webhook runs (executions 40786, 40787, and 40785); these were internal tests only and
-no customer message was sent. Targeted Node coverage passed 83/83. The workflow remains inactive.
+no customer message was sent. Targeted Node coverage passed 83/83. The workflow is now active with
+published version `8d4d3e38-1ecd-47ee-beeb-fd2189e60f26`.
 
 ## Preserved customer-service source release — 2026-08-12
 
@@ -50,9 +51,9 @@ bound to the strict Core input envelope;
 the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
 exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
-stored in the project-scoped n8n Crypto credential. The Edge workflow remains inactive, so no
-customer traffic is processed and no customer message has been sent. Shopify read access is available through the
-connected read-only MCP and the inactive Edge target now has the read-only Shopify branch bound to
+stored in the project-scoped n8n Crypto credential. The Edge workflow is published and active for
+observation; no customer message has been sent. Shopify read access is available through the
+connected read-only MCP and the active Edge target has the read-only Shopify branch bound to
 the project OAuth2 credential. The model credential is present, but the model call remains
 structurally closed and the budget guard remains deny-first.
 
@@ -130,13 +131,13 @@ service, storage service, catalog queue, or mandatory orchestration layer.
    from live customer events until the persistent-access gate is approved.
 8. A project-scoped Chatwoot Header Auth read credential now exists in n8n and is bound only to
    the existing Edge v2 Chatwoot GET nodes. Exactly one observation webhook exists and is subscribed
-   only to `message_created`; the workflow remains inactive.
+   only to `message_created`; the workflow is now published and active for observation.
    The recorded Shopify credential scopes still do not include `read_customers`; that access change
    remains a deliberate implementation gate.
 9. Two project-scoped internal Crypto credentials are now bound to the existing Edge HMAC nodes:
    event/route fingerprints and baseline/reread fingerprints. The Chatwoot webhook HMAC credential
-   is now populated from the single observation webhook; the workflow remains inactive and no
-   customer traffic is processed.
+   is now populated from the single observation webhook; the workflow is active for observation and
+   no customer message has been sent.
 
 ## Next safe action
 
