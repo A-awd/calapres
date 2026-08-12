@@ -13,7 +13,8 @@ Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database h
 0001–0008 applied; migration 0008 adds the deny-first model budget guard. The restricted n8n
 Webhook/Reconciliation credentials have passed SSL
 connection tests. The checked-in Edge v2 is imported into the existing target `e442GlRmKP4IO8pm`
-with those two project-scoped credentials. Do not create a workflow, activate it, publish it, or
+with those two project-scoped credentials; the read-only Shopify branch is also present and bound
+to the project OAuth2 read credential. Do not create a workflow, activate it, publish it, or
 connect live Chatwoot traffic.
 
 The final local freeze passed Node 175/175 and Python 92/92. Real Neon two-session checks covered
@@ -39,13 +40,13 @@ migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
 has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and credential
 were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. Edge v2
-source has a Shopify read-only HTTP node and no model node; the imported target remains on the
-earlier source and inactive. The new Shopify read-only app is installed and its Client Credentials token was tested
+source and target have a Shopify read-only HTTP node and no model node; the imported target remains
+inactive. The new Shopify read-only app is installed and its Client Credentials token was tested
 directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
 queries for shop/products and customer ID returned successfully without logging customer fields.
 The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
 Edge v2 now contains the read-only customer lookup branch and its source hash is recorded in the
-deployment manifest; the imported target has not been updated. No Shopify write occurred.
+deployment manifest; the imported target contains the same branch. No Shopify write occurred.
 
 ## Completed in the Supabase retirement
 

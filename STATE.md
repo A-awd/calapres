@@ -18,7 +18,8 @@ cap, and a default-on kill switch. It has 25 Calapres tables,
 roles, and verified callable-boundary ACLs. No customer traffic, customer send, Shopify write,
 workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
 remains the only target and remains inactive. The v2 source is now imported into that same target;
-its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials.
+its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials, and the
+read-only Shopify branch is present with the project OAuth2 read credential bound (149 nodes total).
 Node tests are 175/175 and Python tests are 92/92. A real two-session Neon check verified the
 database clock, Webhook execute permission, Reconciliation denial, transaction rollback, and
 single-winner session locking. A temporary Neon branch matched the primary schema with no diff and
@@ -45,8 +46,8 @@ the lock check and targeted PostgreSQL tests pass. The final Edge URL is verifie
 Chatwoot has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and
 credential used for the signed-URL check were removed after the inactive Edge returned HTTP 404.
 This restores the no-live-ingress safety state. Shopify read access is available through the
-connected read-only MCP, but no Shopify credential is present in the n8n project and no Shopify
-node has been added to Edge v2. The model credential is present, but the model call remains
+connected read-only MCP and the inactive Edge target now has the read-only Shopify branch bound to
+the project OAuth2 credential. The model credential is present, but the model call remains
 structurally closed and the budget guard remains deny-first.
 
 ## Approved architecture
@@ -278,10 +279,10 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   OAuth2 credential was rejected and removed because the built-in type requested write scopes;
   the generic n8n OAuth2 credential is saved with Client Credentials and the same read-only scopes.
   Direct live evidence proved token issuance (`200`, `expires_in=86399`, read-only scope set) and
-  a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is not yet bound to
-  The Edge v2 source now contains a read-only Shopify customer lookup branch using the existing
-  Edge path, generic OAuth2, fail-closed exact-phone matching, and a strict Core-envelope adapter;
-  the inactive imported target has not been updated with this latest source. No Shopify write has occurred. After the owner-approved scope update, a direct
+  a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is bound only to the
+  inactive Edge target. The Edge v2 source and target contain a read-only Shopify customer lookup
+  branch using generic OAuth2, fail-closed exact-phone matching, and a strict Core-envelope adapter;
+  no Shopify write has occurred. After the owner-approved scope update, a direct
   customer-ID-only GraphQL read returned `200` without errors; no customer fields were logged.
 - The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
   first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,
