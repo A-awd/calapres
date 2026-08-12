@@ -3,6 +3,18 @@
 Status: preserved work in progress; source-only; not approved for import, credential binding,
 publication, activation, model calls, durable writes, or customer egress.
 
+## Continuation evidence — 2026-08-12
+
+The preserved source was completed and pushed at `aa35fa84fbdbe69c109bca1250c1b616f3b0430e` on
+the checkpoint branch. Existing Edge v2 workflow `e442GlRmKP4IO8pm` is published and active in
+observation/no-send mode at version `8d4d3e38-1ecd-47ee-beeb-fd2189e60f26`. The existing Chatwoot
+webhook secret binding was corrected in place; a signed synthetic POST returned HTTP 200. The
+full pinned fail-closed graph test completed as n8n execution `40798`. No customer message,
+private note, model call, or Shopify write occurred. A durable-job row was not created for the
+synthetic event because the first fixture used a nonexistent conversation; the live durable
+binding and reread gate therefore remain unproven until a permitted Chatwoot test conversation
+is exercised.
+
 ## Why this checkpoint exists
 
 This checkpoint preserves the complete Calapres-only customer-service work completed after GitHub
