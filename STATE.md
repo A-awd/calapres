@@ -17,6 +17,11 @@ roles, and verified callable-boundary ACLs. No customer traffic, customer send, 
 workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
 remains the only target and remains inactive. The v2 source is now imported into that same target;
 its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials.
+Node tests are 175/175 and Python tests are 92/92. A real two-session Neon check verified the
+database clock, Webhook execute permission, Reconciliation denial, transaction rollback, and
+single-winner session locking. A temporary Neon branch matched the primary schema with no diff and
+was removed after verification. Provider backup-restore service recovery and live Chatwoot
+observation remain unproven.
 
 ## Preserved customer-service source release — 2026-08-12
 

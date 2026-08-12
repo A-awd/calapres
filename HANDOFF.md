@@ -15,6 +15,11 @@ connection tests. The checked-in Edge v2 is imported into the existing target `e
 with those two project-scoped credentials. Do not create a workflow, activate it, publish it, or
 connect live Chatwoot traffic.
 
+The final local freeze passed Node 175/175 and Python 92/92. Real Neon two-session checks covered
+database clock, role separation, rollback, and one-winner locking; a temporary branch schema
+comparison produced no diff and the branch was removed. This is not a provider backup-restore
+drill, and no live Chatwoot, model, or Shopify observation has occurred.
+
 For the frozen post-`bfb191c` customer-service source release, resume from branch
 `agent/preserve-calapres-customer-service-checkpoint` and read
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
@@ -114,14 +119,14 @@ reviewed and merged.
 3. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
    Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
    observation.
-3. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
+4. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
    evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned
    identity-HMAC key version before Wait, and replace the no-credential re-read slot with a live
    Chatwoot re-read after the merged identifiers-only delay using that same key version. Never connect a webhook directly to
    normalization. Prove a real signed fixture because Chatwoot issue `#13809` may affect the
    displayed HMAC secret; never bypass a failed signature check or use the unsigned Delivery header
    as replay identity.
-4. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
+5. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
    intervention, and verified Shopify retrieval. This does not authorize customer-facing replies.
 5. Review the four draft products directly in Shopify.
 6. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
