@@ -114,6 +114,10 @@ service, storage service, catalog queue, or mandatory orchestration layer.
    the existing Edge v2 Chatwoot GET nodes; the workflow remains inactive and no webhook exists.
    The recorded Shopify credential scopes still do not include `read_customers`; that access change
    remains a deliberate implementation gate.
+9. Two project-scoped internal Crypto credentials are now bound to the existing Edge HMAC nodes:
+   event/route fingerprints and baseline/reread fingerprints. The Chatwoot webhook HMAC credential
+   remains intentionally uncreated until the real Chatwoot webhook is created; the workflow remains
+   inactive and no customer traffic is connected.
 
 ## Next safe action
 

@@ -122,6 +122,8 @@ reviewed and merged.
    confirmation before binding the dedicated Calapres OpenAI credential (project allowlist currently
    only `gpt-5.4-nano-2026-03-17`) to any model node or enabling a model call, then creating/sharing webhook-HMAC, identity-HMAC, or expanded Shopify
    access required for live observation.
+   Two internal project-scoped Crypto credentials are bound to the existing identity/route and
+   baseline/reread HMAC nodes. Keep the webhook HMAC secret separate until webhook creation.
 4. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
    evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned
    identity-HMAC key version before Wait, and replace the no-credential re-read slot with a live
