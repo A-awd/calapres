@@ -31,14 +31,15 @@ The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary,
 and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint` as a
 frozen candidate, now imported into the existing inactive target. Edge v2 contains the bounded four-inbox Chatwoot reconciliation
 scan/cursor graph inside the existing Edge, with the schedule disabled and all live authority closed.
-The source hash is `ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95`; the deployment
+The current source hash is `875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301`; the deployment
 manifest matches it, and
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 records the source-only boundary.
 `support/brands/calapres/customer-service-release-lock.json` verifies the frozen source set. GitHub
 `main` remains the approved runtime baseline until this candidate is reviewed and merged.
 
-The release lock was refreshed in commit `b0d4ba8` after migrations 0004, 0007, and 0008 changed;
+The release lock was refreshed in commit `86d59eb` after the read-only Shopify customer branch was
+bound to the strict Core input envelope;
 the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
 Chatwoot has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and
@@ -279,8 +280,8 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   Direct live evidence proved token issuance (`200`, `expires_in=86399`, read-only scope set) and
   a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is not yet bound to
   The Edge v2 source now contains a read-only Shopify customer lookup branch using the existing
-  Edge path, generic OAuth2, and fail-closed exact-phone matching; the inactive imported target has
-  not been updated yet. No Shopify write has occurred. After the owner-approved scope update, a direct
+  Edge path, generic OAuth2, fail-closed exact-phone matching, and a strict Core-envelope adapter;
+  the inactive imported target has not been updated with this latest source. No Shopify write has occurred. After the owner-approved scope update, a direct
   customer-ID-only GraphQL read returned `200` without errors; no customer fields were logged.
 - The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
   first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,

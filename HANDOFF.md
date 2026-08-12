@@ -25,21 +25,22 @@ For the frozen post-`bfb191c` customer-service source release, resume from branc
 `agent/preserve-calapres-customer-service-checkpoint` and read
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fixture, or test file.
-The frozen Edge v2 source hash is
-`ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95`, and
+The current Edge v2 source hash is
+`875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301`, and
 `support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
 rebuild these artifacts or claim production readiness from this checkpoint. The imported target
 remains inactive and unpublished; `main` remains authoritative until the preserved branch is
 reviewed and merged.
 
-Latest checkpoint: commit `8ebf82a` adds the read-only Shopify client-credentials renewal contract
+Latest checkpoint: commit `86d59eb` binds the read-only Shopify customer lookup result to the strict
+Core input envelope. The preceding `8ebf82a` checkpoint adds the read-only Shopify client-credentials renewal contract
 and targeted tests. The preceding `b0d4ba8` checkpoint refreshes and verifies the customer-service release lock after
 migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
 has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook and credential
 were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. Edge v2
-still has no Shopify or model node; both remain blocked by their explicit read-only and draft-only
-gates. The new Shopify read-only app is installed and its Client Credentials token was tested
+source has a Shopify read-only HTTP node and no model node; the imported target remains on the
+earlier source and inactive. The new Shopify read-only app is installed and its Client Credentials token was tested
 directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
 queries for shop/products and customer ID returned successfully without logging customer fields.
 The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
