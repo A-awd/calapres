@@ -15,6 +15,7 @@ class ReferenceAdapterTests(unittest.TestCase):
         tests = [
             str(NODE_TEST_DIR / "atomic-storage-adapter.test.js"),
             str(NODE_TEST_DIR / "shopify-client-credentials.test.js"),
+            str(NODE_TEST_DIR / "shopify-customer-lookup.test.js"),
             str(NODE_TEST_DIR / "shopify-identity-adapter.test.js"),
             str(NODE_TEST_DIR / "postgres-atomic-storage.test.js"),
         ]
