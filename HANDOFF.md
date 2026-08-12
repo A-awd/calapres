@@ -40,9 +40,10 @@ has no saved webhook and n8n has no live Chatwoot secret; the temporary webhook 
 were removed after a signed synthetic POST returned HTTP 404 while Edge was inactive. Edge v2
 still has no Shopify or model node; both remain blocked by their explicit read-only and draft-only
 gates. The new Shopify read-only app is installed and its Client Credentials token was tested
-directly: Shopify returned a 24-hour token with only read scopes, and a read-only Admin GraphQL
-query returned successfully. The generic OAuth2 credential is saved in n8n but is not yet bound
-to Edge v2. No Shopify write occurred.
+directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
+queries for shop/products and customer ID returned successfully without logging customer fields.
+The generic OAuth2 credential is saved in n8n with the expanded read-only scope set but is not yet
+bound to Edge v2. No Shopify write occurred.
 
 ## Completed in the Supabase retirement
 
