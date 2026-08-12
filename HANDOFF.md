@@ -34,10 +34,12 @@ reviewed and merged.
 
 Latest checkpoint: commit `b0d4ba8` refreshes and verifies the customer-service release lock after
 migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
-`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot has no
-saved webhook; the form was only prepared and not submitted. No n8n Shopify credential exists,
-and Edge v2 still has no Shopify or model node; both remain blocked by their explicit read-only and
-draft-only gates. The connected Shopify MCP read succeeded with zero orders and performed no write.
+`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
+one saved `message_created` webhook; its secret is stored only in the Chatwoot/n8n credential
+stores. A signed synthetic POST returned HTTP 404 because Edge remains inactive, so no live
+execution accepted it. No n8n Shopify credential exists, and Edge v2 still has no Shopify or model
+node; both remain blocked by their explicit read-only and draft-only gates. The connected Shopify
+MCP read succeeded with zero orders and performed no write.
 
 ## Completed in the Supabase retirement
 

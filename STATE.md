@@ -41,10 +41,13 @@ records the source-only boundary.
 The release lock was refreshed in commit `b0d4ba8` after migrations 0004, 0007, and 0008 changed;
 the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
-has no saved webhook; its creation form was prepared but not submitted. Shopify read access is
-available through the connected read-only MCP, but no Shopify credential is present in the n8n
-project and no Shopify node has been added to Edge v2. The model credential is present, but the
-model call remains structurally closed and the budget guard remains deny-first.
+has one saved webhook for `message_created` only, pointing to the verified Edge URL. Its secret is
+stored only in the Chatwoot/n8n credential stores; it is not recorded here. A signed synthetic POST
+was rejected with HTTP 404 because the Edge is still inactive, proving that no live execution is
+accepting traffic. Shopify read access is available through the connected read-only MCP, but no
+Shopify credential is present in the n8n project and no Shopify node has been added to Edge v2. The
+model credential is present, but the model call remains structurally closed and the budget guard
+remains deny-first.
 
 ## Approved architecture
 
