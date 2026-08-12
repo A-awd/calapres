@@ -22,11 +22,6 @@ BEGIN
 END;
 $roles$;
 
-ALTER ROLE calapres_cs_webhook_runtime
-  NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT;
-ALTER ROLE calapres_cs_reconciliation_runtime
-  NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT;
-
 REVOKE calapres_cs_webhook_runtime FROM calapres_cs_reconciliation_runtime;
 REVOKE calapres_cs_reconciliation_runtime FROM calapres_cs_webhook_runtime;
 REVOKE calapres_cs_edge_runtime FROM calapres_cs_webhook_runtime;

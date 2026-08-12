@@ -1290,21 +1290,21 @@ BEGIN
         'durable_reference_conflict'
       );
     ELSIF v_request.lifecycle_status = 'completed' THEN
-      IF v_request.reconciliation_scan_id IS DISTINCT FROM CASE
+      IF v_request.reconciliation_scan_id IS DISTINCT FROM (CASE
           WHEN (p_command ->> 'request_source') = 'chatwoot_reconciliation_api_v1'
             THEN p_command ->> 'reconciliation_scan_id'
           ELSE NULL
-        END
-        OR v_request.reconciliation_expected_after_message_id IS DISTINCT FROM CASE
+        END)
+        OR v_request.reconciliation_expected_after_message_id IS DISTINCT FROM (CASE
           WHEN (p_command ->> 'request_source') = 'chatwoot_reconciliation_api_v1'
             THEN (p_command ->> 'reconciliation_expected_after_message_id')::bigint
           ELSE NULL
-        END
-        OR v_request.reconciliation_page_binding_sha256 IS DISTINCT FROM CASE
+        END)
+        OR v_request.reconciliation_page_binding_sha256 IS DISTINCT FROM (CASE
           WHEN (p_command ->> 'request_source') = 'chatwoot_reconciliation_api_v1'
             THEN p_command ->> 'reconciliation_page_binding_sha256'
           ELSE NULL
-        END
+        END)
       THEN
         RETURN calapres_cs._atomic_envelope(
           p_operation, 'unknown', 'request_ingress_binding_mismatch', NULL,

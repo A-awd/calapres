@@ -18,12 +18,10 @@ BEGIN
 END;
 $roles$;
 
-ALTER ROLE calapres_cs_function_owner
-  NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT;
-ALTER ROLE calapres_cs_edge_runtime
-  NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT;
-ALTER ROLE calapres_cs_owner_runtime
-  NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT;
+-- Managed PostgreSQL providers may not allow role ownership changes unless
+-- the current administrative role is explicitly a member of the owner role.
+GRANT calapres_cs_function_owner TO postgres;
+GRANT USAGE, CREATE ON SCHEMA calapres_cs TO calapres_cs_function_owner;
 
 CREATE OR REPLACE FUNCTION calapres_cs._atomic_envelope(
   p_operation text,
@@ -2081,7 +2079,7 @@ ALTER FUNCTION calapres_cs._decision_option_valid(jsonb)
 ALTER FUNCTION calapres_cs._atomic_dispatch(text, jsonb)
   OWNER TO calapres_cs_function_owner;
 
-GRANT USAGE ON SCHEMA calapres_cs TO calapres_cs_function_owner;
+GRANT USAGE, CREATE ON SCHEMA calapres_cs TO calapres_cs_function_owner;
 GRANT SELECT, INSERT, UPDATE, DELETE
   ON ALL TABLES IN SCHEMA calapres_cs TO calapres_cs_function_owner;
 REVOKE ALL ON ALL FUNCTIONS IN SCHEMA calapres_cs FROM PUBLIC;
