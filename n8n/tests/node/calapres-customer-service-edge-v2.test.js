@@ -306,8 +306,11 @@ test('PostgreSQL boundary separates eight Edge functions and reconciliation func
 
 test('Chatwoot baseline and bounded rereads are GET-only with one read credential', () => {
   const requests = byType('n8n-nodes-base.httpRequest');
-  assert.equal(requests.length, 9);
-  for (const configured of requests) {
+  const chatwootRequests = requests.filter((configured) => configured.credentials.httpHeaderAuth);
+  const shopifyRequests = requests.filter((configured) => configured.credentials.oAuth2Api);
+  assert.equal(chatwootRequests.length, 9);
+  assert.equal(shopifyRequests.length, 1);
+  for (const configured of chatwootRequests) {
     assert.equal(configured.parameters.method, 'GET');
     assert.equal(configured.parameters.sendBody, false);
     assert.equal(configured.parameters.authentication, 'genericCredentialType');
@@ -317,6 +320,15 @@ test('Chatwoot baseline and bounded rereads are GET-only with one read credentia
     assert.equal(configured.parameters.options.response.response.fullResponse, true);
     assert.equal(configured.parameters.options.response.response.neverError, true);
   }
+  const shopify = shopifyRequests[0];
+  assert.equal(shopify.parameters.method, 'POST');
+  assert.equal(shopify.parameters.sendBody, true);
+  assert.equal(shopify.parameters.authentication, 'genericCredentialType');
+  assert.equal(shopify.parameters.genericAuthType, 'oAuth2Api');
+  assert.equal(shopify.credentials.oAuth2Api.name, 'Calapres Shopify Read Only OAuth2');
+  assert.match(shopify.parameters.url, /^https:\/\/unywbe-ub\.myshopify\.com\/admin\/api\/2026-07\//);
+  assert.equal(shopify.parameters.options.response.response.fullResponse, true);
+  assert.equal(shopify.parameters.options.response.response.neverError, true);
   assert.equal(requests.filter((configured) => /Messages Worker Reread/.test(configured.name)).length, 2);
   assert.equal(requests.filter((configured) => /Conversation (Before|After) Worker Reread/.test(configured.name)).length, 2);
   assert.equal(requests.filter((configured) => /Reconciliation Discovery/.test(configured.name)).length, 2);

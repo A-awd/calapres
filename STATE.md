@@ -278,7 +278,9 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   the generic n8n OAuth2 credential is saved with Client Credentials and the same read-only scopes.
   Direct live evidence proved token issuance (`200`, `expires_in=86399`, read-only scope set) and
   a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is not yet bound to
-  Edge v2, and no Shopify write has occurred. After the owner-approved scope update, a direct
+  The Edge v2 source now contains a read-only Shopify customer lookup branch using the existing
+  Edge path, generic OAuth2, and fail-closed exact-phone matching; the inactive imported target has
+  not been updated yet. No Shopify write has occurred. After the owner-approved scope update, a direct
   customer-ID-only GraphQL read returned `200` without errors; no customer fields were logged.
 - The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
   first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,

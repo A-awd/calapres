@@ -19,6 +19,7 @@ const baselineHmacCredential = newCredential('Calapres Baseline HMAC v1');
 const webhookWorkerPostgresCredential = newCredential('Calapres Customer Service PostgreSQL Webhook and Worker Runtime');
 const reconciliationPostgresCredential = newCredential('Calapres Customer Service PostgreSQL Reconciliation Runtime');
 const chatwootReadCredential = newCredential('Calapres Chatwoot Read Only');
+const shopifyReadCredential = newCredential('Calapres Shopify Read Only OAuth2');
 
 const manualObservationTest = trigger({
   "type": "n8n-nodes-base.manualTrigger",
@@ -3263,6 +3264,140 @@ const llmTrustGateClosed = node({
   }
 });
 
+const prepareShopifyCustomerLookup = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Prepare Shopify Customer Read - Exact Phone",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": "\nconst source = $input.first().json || {};\nconst conversation = $('GET Chatwoot Conversation Before Worker Reread').first().json || {};\nconst body = conversation.body && typeof conversation.body === 'object' ? conversation.body : {};\nconst candidates = [\n  body.meta && body.meta.sender && body.meta.sender.phone_number,\n  body.meta && body.meta.contact && body.meta.contact.phone_number,\n  body.contact && body.contact.phone_number,\n  body.phone_number\n].filter((value) => typeof value === 'string' && /^\\+[1-9][0-9]{7,14}$/.test(value.trim()));\nconst phones = [...new Set(candidates.map((value) => value.trim()))];\nconst ready = phones.length === 1;\nconst request = ready ? {\n  query: 'query CustomerByPhone($query: String!) { customers(first: 10, query: $query) { nodes { id phone firstName displayName } } }',\n  variables: { query: 'phone:' + phones[0] }\n} : null;\nreturn [{ json: { ...source, shopify_lookup_ready: ready, shopify_request: request, customer_egress_allowed: false } }];"
+    },
+    "position": [
+      15960,
+      -1400
+    ]
+  }
+});
+
+const shopifyLookupReady = ifElse({
+  "version": 2.3,
+  "config": {
+    "name": "Shopify Customer Read Ready?",
+    "parameters": {
+      "conditions": {
+        "options": {
+          "caseSensitive": true,
+          "leftValue": "",
+          "typeValidation": "strict",
+          "version": 2
+        },
+        "conditions": [
+          {
+            "leftValue": expr("{{ $json.shopify_lookup_ready === true }}"),
+            "rightValue": true,
+            "operator": {
+              "type": "boolean",
+              "operation": "true",
+              "singleValue": true
+            }
+          }
+        ],
+        "combinator": "and"
+      }
+    },
+    "position": [
+      16220,
+      -1400
+    ]
+  }
+});
+
+const getShopifyCustomerRead = node({
+  "type": "n8n-nodes-base.httpRequest",
+  "version": 4.5,
+  "config": {
+    "name": "GET Shopify Customer Read Only",
+    "parameters": {
+      "method": "POST",
+      "url": "https://unywbe-ub.myshopify.com/admin/api/2026-07/graphql.json",
+      "authentication": "genericCredentialType",
+      "genericAuthType": "oAuth2Api",
+      "sendHeaders": true,
+      "specifyHeaders": "keypair",
+      "headerParameters": {
+        "parameters": [
+          {
+            "name": "Accept",
+            "value": "application/json"
+          }
+        ]
+      },
+      "sendBody": true,
+      "specifyBody": "json",
+      "jsonBody": expr("{{ JSON.stringify($json.shopify_request) }}"),
+      "options": {
+        "timeout": 8000,
+        "redirect": {
+          "redirect": {
+            "followRedirects": false
+          }
+        },
+        "response": {
+          "response": {
+            "fullResponse": true,
+            "neverError": true,
+            "responseFormat": "json"
+          }
+        }
+      }
+    },
+    "credentials": {
+      "oAuth2Api": shopifyReadCredential
+    },
+    "onError": "continueRegularOutput",
+    "position": [
+      16480,
+      -1480
+    ]
+  }
+});
+
+const normalizeShopifyCustomerRead = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Normalize Shopify Customer Read Fail Closed",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": "\nconst source = $('Prepare Shopify Customer Read - Exact Phone').first().json || {};\nconst http = $input.first().json || {};\nconst response = http.body && typeof http.body === 'object' ? http.body : {};\nconst nodes = response.data && response.data.customers && Array.isArray(response.data.customers.nodes)\n  ? response.data.customers.nodes : [];\nconst expected = source.shopify_request && source.shopify_request.variables\n  ? String(source.shopify_request.variables.query || '').replace(/^phone:/, '') : '';\nconst exact = nodes.filter((node) => node && /^gid:\\/\\/shopify\\/Customer\\/[1-9][0-9]{0,30}$/.test(node.id || '') && node.phone === expected);\nlet lookup;\nif (http.statusCode !== 200 || (Array.isArray(response.errors) && response.errors.length > 0)) {\n  lookup = { status: 'unavailable', reason_code: 'shopify_read_failed', customer: null, persistable: false };\n} else if (exact.length === 0) {\n  lookup = { status: 'not_found', reason_code: 'customer_not_found', customer: null, persistable: false };\n} else if (exact.length !== 1) {\n  lookup = { status: 'ambiguous', reason_code: 'customer_match_ambiguous', customer: null, persistable: false };\n} else {\n  const customer = exact[0];\n  lookup = { status: 'matched', reason_code: null, customer: { customer_gid: customer.id, first_name: customer.firstName || null, display_name: customer.displayName || null }, persistable: false };\n}\nreturn [{ json: { ...source, shopify_lookup: lookup, shopify_request: null, customer_egress_allowed: false } }];"
+    },
+    "position": [
+      16740,
+      -1480
+    ]
+  }
+});
+
+const normalizeShopifyCustomerReadUnavailable = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Shopify Customer Read Unavailable - No Guess",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": "\nconst source = $input.first().json || {};\nreturn [{ json: { ...source, shopify_lookup: { status: 'unavailable', reason_code: 'customer_phone_not_available', customer: null, persistable: false }, shopify_request: null, customer_egress_allowed: false } }];"
+    },
+    "position": [
+      16480,
+      -1240
+    ]
+  }
+});
+
 const callImmutableCore = node({
   "type": "n8n-nodes-base.executeWorkflow",
   "version": 1.3,
@@ -3641,7 +3776,12 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                                                                                                                                                 postDelayEligible
                                                                                                                                                   .onTrue(
                                                                                                                                                     llmTrustGateClosed
-                                                                                                                                                      .to(callImmutableCore)
+                                                                                                                                                      .to(prepareShopifyCustomerLookup)
+                                                                                                                                                      .to(
+                                                                                                                                                        shopifyLookupReady
+                                                                                                                                                          .onTrue(getShopifyCustomerRead.to(normalizeShopifyCustomerRead).to(callImmutableCore))
+                                                                                                                                                          .onFalse(normalizeShopifyCustomerReadUnavailable.to(callImmutableCore)),
+                                                                                                                                                      )
                                                                                                                                                       .to(enforceObservationOnly)
                                                                                                                                                       .to(buildCompletion)
                                                                                                                                                       .to(postgresCompleteBusinessEvent)

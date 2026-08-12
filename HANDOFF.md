@@ -32,7 +32,7 @@ rebuild these artifacts or claim production readiness from this checkpoint. The 
 remains inactive and unpublished; `main` remains authoritative until the preserved branch is
 reviewed and merged.
 
-Latest checkpoint: commit `65260ac` adds the read-only Shopify client-credentials renewal contract
+Latest checkpoint: commit `8ebf82a` adds the read-only Shopify client-credentials renewal contract
 and targeted tests. The preceding `b0d4ba8` checkpoint refreshes and verifies the customer-service release lock after
 migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
 `https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot currently
@@ -42,8 +42,9 @@ still has no Shopify or model node; both remain blocked by their explicit read-o
 gates. The new Shopify read-only app is installed and its Client Credentials token was tested
 directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
 queries for shop/products and customer ID returned successfully without logging customer fields.
-The generic OAuth2 credential is saved in n8n with the expanded read-only scope set but is not yet
-bound to Edge v2. No Shopify write occurred.
+The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
+Edge v2 now contains the read-only customer lookup branch and its source hash is recorded in the
+deployment manifest; the imported target has not been updated. No Shopify write occurred.
 
 ## Completed in the Supabase retirement
 
