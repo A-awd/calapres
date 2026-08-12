@@ -118,8 +118,8 @@ reviewed and merged.
    binding.
 3. The project-scoped Chatwoot read credential is now bound only to the existing Edge v2 GET nodes;
    verify it with a private synthetic read before creating any webhook. Obtain action-time owner
-   confirmation before binding the dedicated Calapres OpenAI credential to any model node or
-   enabling a model call, then creating/sharing webhook-HMAC, identity-HMAC, or expanded Shopify
+   confirmation before binding the dedicated Calapres OpenAI credential (project allowlist currently
+   only `gpt-5.4-nano-2026-03-17`) to any model node or enabling a model call, then creating/sharing webhook-HMAC, identity-HMAC, or expanded Shopify
    access required for live observation.
 4. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
    evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned

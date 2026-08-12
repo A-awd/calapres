@@ -116,9 +116,10 @@ service, storage service, catalog queue, or mandatory orchestration layer.
 ## Next safe action
 
 Next, verify the existing Chatwoot read binding with a synthetic/private read fixture. A project-scoped
-OpenAI credential now exists and passed n8n's connection test, but it is not bound to any model node
-and no model call is enabled. Create the remaining dedicated Calapres-scoped HMAC and read-only
-Shopify bindings. Add the signed
+OpenAI credential now exists and passed n8n's connection test; the OpenAI project allowlist contains
+only `gpt-5.4-nano-2026-03-17`, selected for the lowest-cost Arabic draft phase. It is not bound to
+any model node and no model call is enabled. Create the remaining dedicated Calapres-scoped HMAC
+and read-only Shopify bindings. Add the signed
 ingress only after those checks and prove real four-channel observation. Keep the customer-egress
 branch absent.
 
