@@ -108,14 +108,17 @@ service, storage service, catalog queue, or mandatory orchestration layer.
    all workflows that reference it are already archived.
 7. The approved observation runtime now exists but remains inactive, unpublished, and disconnected
    from live customer events until the persistent-access gate is approved.
-8. n8n has no dedicated Calapres Chatwoot credential, and the recorded Shopify credential scopes
-   do not include `read_customers`; those access changes require deliberate implementation gates.
+8. A project-scoped Chatwoot Header Auth read credential now exists in n8n and is bound only to
+   the existing Edge v2 Chatwoot GET nodes; the workflow remains inactive and no webhook exists.
+   The recorded Shopify credential scopes still do not include `read_customers`; that access change
+   remains a deliberate implementation gate.
 
 ## Next safe action
 
-After action-time owner confirmation, create the dedicated Calapres-scoped Chatwoot, LLM, identity
-HMAC, and read-only Shopify bindings; then add the signed ingress and prove real four-channel
-observation. Keep the customer-egress branch absent.
+Next, verify the existing Chatwoot read binding with a synthetic/private read fixture, then create
+the remaining dedicated Calapres-scoped HMAC, LLM, and read-only Shopify bindings. Add the signed
+ingress only after those checks and prove real four-channel observation. Keep the customer-egress
+branch absent.
 
 ## Constraints
 
@@ -247,10 +250,11 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   `observe_draft` result only from versioned `customer_response_ar` or a verified live-source
   response fragment. The Edge rejects or strips malformed/extra Core output. Event-payload
   transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
-- The live observation connection is intentionally not granted yet. Chatwoot webhook/credential,
-  a dedicated Calapres LLM credential, identity-HMAC material, and any Shopify read-scope expansion
-  remain deliberate persistent-access gates. The current Shopify credential lacks `read_customers`;
-  live order/customer lookup remains disabled rather than guessed.
+- The live observation connection is intentionally not granted yet. A project-scoped Chatwoot read
+  credential is bound to the existing Edge GET nodes, but no webhook or live fixture is enabled.
+  Dedicated LLM credential, identity-HMAC material, and any Shopify read-scope expansion remain
+  deliberate persistent-access gates. The current Shopify credential lacks `read_customers`; live
+  order/customer lookup remains disabled rather than guessed.
 
 ### Next safe action
 

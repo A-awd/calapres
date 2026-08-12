@@ -116,9 +116,10 @@ reviewed and merged.
 2. Keep the Neon database and restricted credentials as the inactive PostgreSQL test foundation;
    complete real transaction/concurrency/recovery and backup/restore evidence before any live
    binding.
-3. Obtain action-time owner confirmation before creating/sharing the persistent Chatwoot, dedicated
-   Calapres LLM, webhook-HMAC, identity-HMAC, or expanded Shopify access required for live
-   observation.
+3. The project-scoped Chatwoot read credential is now bound only to the existing Edge v2 GET nodes;
+   verify it with a private synthetic read before creating any webhook. Obtain action-time owner
+   confirmation before creating/sharing the dedicated Calapres LLM, webhook-HMAC, identity-HMAC,
+   or expanded Shopify access required for live observation.
 4. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
    evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned
    identity-HMAC key version before Wait, and replace the no-credential re-read slot with a live
@@ -185,8 +186,9 @@ project and acknowledging irreversibility.
 
 1. Continue with decisions 0008–0010 and the already-built inactive runtime; do not recreate the
    project, tables, Core, Edge, index, registry, knowledge, style, policy, contracts, or fixtures.
-2. Obtain action-time owner confirmation for the dedicated Calapres Chatwoot/LLM/HMAC/Shopify read
-   access. Until then, do not create a live webhook or bind a credential.
+2. The dedicated Chatwoot read credential is bound to existing GET nodes only. Obtain action-time
+   owner confirmation for the LLM/HMAC/Shopify read access; until the signed fixture and database
+   gates pass, do not create a live webhook.
 3. After confirmation, test real Instagram `128031`, TikTok `128033`, WhatsApp `128058`, and Email
    `128326` events as private observation only; Website `128028` remains outside the allowlist.
 4. Keep every automatic customer send disabled until owner review and all end-to-end gates pass.
