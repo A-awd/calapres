@@ -25,6 +25,13 @@ decision record.
   a separate private Shopify index, a private no-write Owner Review Desk, scoped operational
   tables, channel-aware delay, signed-request replay protection, and a no-send observation gate;
   Captain and AgentBot do not respond and pre-activation row projections are non-persistable.
+- [0011 — Require transactional customer-service state](decisions/0011-require-transactional-customer-service-state.md)
+  — keep n8n Data Tables as no-send previews rather than atomic authority; require a provider-neutral
+  exactly-one-winner contract backed later by an owner-approved, dedicated managed PostgreSQL
+  boundary before durable internal observation or customer egress. The contract also governs a
+  bounded four-inbox Chatwoot reconciliation scan and per-conversation cursor without claiming
+  complete discovery, and separates signed-webhook, reconciliation, and owner database roles. No
+  provider or database is created by this decision, and Supabase remains prohibited.
 
 ## Superseded decisions
 

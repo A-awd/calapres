@@ -1,10 +1,11 @@
 # Calapres customer-service observation pilot
 
-Status: implementation source and isolated operational tables created; no live customer egress
+Status: Edge v2 and transactional-state implementation candidates are source-only; live Edge v1
+remains inactive; no live ingress, model call, durable write, or customer egress
 
 Date: 2026-08-11
 
-Authority: decisions 0008 and 0010
+Authority: decisions 0008, 0010, and 0011
 
 ## What is being built
 
@@ -13,9 +14,17 @@ index component, and one inactive private owner-review component:
 
 ```text
 four allowlisted Calapres inboxes
-  -> Calapres Customer Service Edge v1
-       -> identifiers-only Wait inside the same edge
-       -> fresh Chatwoot re-read or fail closed
+  -> Calapres Customer Service Edge v2 source candidate
+       -> signed request + recoverable request/event leases
+       -> pre-ack baseline fingerprints
+       -> combined PostgreSQL generation + durable due-job commit
+       -> HTTP 204 only after that commit
+       -> identifiers-only Wait or same-Edge schedule recovery
+       -> one due-job worker lease
+       -> fresh bounded Chatwoot re-read or fail closed
+       -> same disabled schedule: four-inbox best-effort discovery
+       -> one inbox scan lease + durable per-conversation cursor
+       -> no cursor move until every 1–99-row proof is verified
   -> private Optix Customer Service Core v1
   -> internal observation, incident, or no action
 
@@ -29,6 +38,7 @@ trusted private owner command (future)
 
 customer send path: absent
 Shopify write path: absent
+model-call path: closed
 ```
 
 The edge is the only component that knows Calapres account/inbox identifiers, operational tables,
@@ -42,11 +52,12 @@ to the strict Wait contract, a separate workflow adds no credential isolation or
 indexing remains separate because Shopify events/reconciliation have a different root trigger,
 signature boundary, retry lifecycle, and data contract.
 
-The current workflow source starts from sanitized manual fixtures. The live Chatwoot webhook is not
-connected. This keeps the first build useful for validation without granting persistent access or
-risking a customer reply. The compiled delay policy is 30–75 seconds for Instagram, TikTok, and
-WhatsApp and 120–300 seconds for Email; the one-second delay is available only to the sanitized
-fixture. A live-shaped input keeps the kill switch on.
+Edge v1 remains the source-synchronized live draft and starts from sanitized manual fixtures. Edge
+v2 is an immutable, source-only update candidate for that same workflow ID; it must never be
+created as a second Edge. Its production branch is present for validation but has placeholder
+credentials, a closed kill switch and model gate, and no live import. The compiled delay policy is
+30–75 seconds for Instagram, TikTok, and WhatsApp and 120–300 seconds for Email; the one-second
+delay is available only to the sanitized fixture.
 
 The four live n8n workflow shells now exist inside the isolated Calapres project. Core
 `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are both inactive and unpublished, have no public
@@ -68,9 +79,11 @@ The merged delay extension is imported into the existing inactive Edge. The Shop
 imported inactive. Neither is published; neither has a credential, public webhook, Data Table
 write, Shopify write, or customer-send node.
 
-The signed-ingress, live-re-read, and post-delay-decision contracts are checked in but are not yet
-bound to live nodes. They enforce a 1 MiB pre-parse limit, raw-byte HMAC, replay identity independent
-of the unsigned Delivery header, exact timing/reference comparisons, and transient-only evidence.
+The signed-ingress, live-re-read, post-delay-decision, and transactional-state contracts are
+checked in and represented in Edge v2 source but are not bound to live credentials or imported.
+They enforce a 1 MiB application-level pre-HMAC/JSON-use limit after n8n receives the request,
+raw-byte HMAC, replay identity independent of the unsigned Delivery header, exact timing/reference
+comparisons, and transient-only evidence.
 Full evidence is forbidden from Wait, Data Tables, and audit. The Edge's exact dedup/jobs/incidents/
 audit rows remain synthetic previews only: no row is persistable or ready for live storage.
 The Wait carrier binds its exact ordered identifier/control fields with canonical SHA-256 and
@@ -101,7 +114,7 @@ stop before retrieval or reasoning.
 
 ## Signed ingress gate
 
-The future Chatwoot branch must verify `X-Chatwoot-Signature` over the exact bytes
+The Edge v2 source branch verifies `X-Chatwoot-Signature` over the exact bytes
 `timestamp + "." + raw_body`, using `X-Chatwoot-Timestamp`, before parsing or using message
 content. It rejects malformed signatures, payloads over 1 MiB, timestamps older than 300 seconds,
 timestamps more than 60 seconds in the future, and replayed signed requests independently of
@@ -119,7 +132,7 @@ disconnected. Bypassing signature verification is not an allowed fallback.
 
 ## Message journey in observation mode
 
-1. A future signed ingress must verify the raw-byte transport signature, timestamp window, body
+1. The signed ingress verifies the raw-byte transport signature, timestamp window, body
    size, and replay protection before the payload reaches normalization. Its replay key is derived
    from the signed request, not `X-Chatwoot-Delivery`. The current manual fixture uses a
    topology-created trusted test wrapper; transport claims placed inside an event payload are
@@ -128,24 +141,40 @@ disconnected. Bypassing signature verification is not an allowed fallback.
    is never trusted.
 3. It converts the event to a strict envelope containing identifiers and content metadata only.
    The envelope does not persist the customer's text or attachment data.
-4. It derives the stable business-event HMAC from the allowlisted event tuple, claims that event
-   identity atomically, and advances the exact conversation generation. A redelivery, duplicate,
-   or older generation stops even when the request signature/timestamp changed.
-5. It drops the original event, content metadata, sender reference, and model candidate, then gives
+4. It gives the signed request and stable business event separate recoverable database leases. A
+   timeout reconciles with the same lease token; another live worker receives `503`; one expired
+   lease may be recovered.
+5. Before acknowledgement, it reads the exact Chatwoot conversation and computes opaque baseline
+   status/assignee and route/message fingerprints. One PostgreSQL transaction then advances the
+   conversation generation, creates the due job, stores only the strict recovery control bundle,
+   links both claims, and returns database-computed `due_at`. A 204 is forbidden before this commit.
+6. It drops the original event, content metadata, sender reference, and model candidate, then gives
    the Wait node only account/inbox/channel IDs, conversation/message IDs, fingerprint fields,
    generation, time, knowledge version, and `customer_egress_allowed=false`. The carrier includes
    a canonical SHA-256 integrity fingerprint, a pinned baseline-HMAC key version, and opaque
    status/assignee fingerprints—never the raw status or assignee.
-6. After the channel-appropriate delay it must re-read Chatwoot. It binds the exact incoming/public
+7. The continuing execution and a schedule trigger inside the same Edge compete for the next due
+   job. PostgreSQL gives one worker a lease and returns the same identifiers-only bundle, so a
+   crash after 204 does not depend on n8n execution history. The source-only recovery cadence is
+   30 minutes to avoid spending a production execution every minute; it is a crash fallback, not
+   the normal response delay, and remains inactive until the plan/cost gate is approved.
+8. The same disabled schedule also compensates for an account webhook that may not be delivered.
+   It leases each allowlisted inbox, compares two bounded conversation-list snapshots, and reads
+   each discovered conversation after its durable message cursor. A candidate must bind to the
+   same atomic business-event/job path before cursor movement; a deterministic exclusion carries
+   only safe time/type/private/sender evidence and is recomputed in PostgreSQL. A raw 100-message
+   result is `scan_truncated` and never moves the cursor. Discovery remains `best_effort` and never
+   claims complete account coverage.
+9. After the channel-appropriate delay the worker re-reads Chatwoot. It binds the exact incoming/public
    anchor fingerprint, then performs two independent, non-paginated reads with
    `after=anchor_message_id-1`. Each raw response must contain 1–99 valid rows, include the exact
    anchor, and yield the same canonical message set. Numeric message IDs catch same-second events.
    A 100-row response, changed set, invalid route/row, missing anchor, or any newer non-activity
    message cancels; so do a stale generation, changed assignee/status, or the brand kill switch.
    This bounded v1 rule deliberately makes no complete-history or stable-head claim.
-7. If a live commerce fact is needed, the edge must read it from Shopify. Until required scopes and
+10. If a live commerce fact is needed, the edge must read it from Shopify. Until required scopes and
    live paths are proven, customer and order lookup remain disabled.
-8. A fixed Calapres-scoped model call may later return a provider-neutral structured candidate.
+11. A fixed Calapres-scoped model call may later return a provider-neutral structured candidate.
    The contract includes intent, risk, requested action, draft, confidence, knowledge/live fact
    IDs, live-lookup need, and an escalation reason. It is untrusted until the Core matches every
    ID to the selected approved knowledge/live-fact set, rejects owner-only facts, and validates
@@ -153,11 +182,11 @@ disconnected. Bypassing signature verification is not an allowed fallback.
    forwarded as the grounded result: the Core renders that result only from versioned
    `customer_response_ar` text or a verified live-source response fragment supplied by the brand
    adapter.
-9. The Core returns only `no_action`, `observe_draft`, or `escalate`, and always returns
+12. The Core returns only `no_action`, `observe_draft`, or `escalate`, and always returns
    `customer_egress_allowed=false`.
-10. The current edge creates only sanitized, non-persistable row previews. Actual durable writes
-    remain blocked until verified request-replay, business-event-HMAC, and identity-HMAC values and
-    safe atomic idempotency behavior exist.
+13. Edge v2 contains only source-level PostgreSQL placeholders. Actual durable writes remain blocked
+    until migrations compile and pass real PostgreSQL concurrency, role, crash, backup, and restore
+    tests and the dedicated credentials are approved.
     There is no customer-send node.
 
 ## What lives where
@@ -169,7 +198,8 @@ disconnected. Bypassing signature verification is not an allowed fallback.
 | Brand registry, contracts, approved knowledge versions, workflow source | GitHub `main` |
 | Approved response style | `support/brands/calapres/response-style/manifest.json` |
 | Proposed model policy, inactive until approval | `support/brands/calapres/model-policy/manifest.json` |
-| Deduplication, generation jobs, verified identity references, incidents, approvals, audit | isolated Calapres n8n Data Tables |
+| Atomic request/event leases, generation jobs, incidents, approvals, audit | approved dedicated Calapres PostgreSQL boundary after live validation |
+| Shape previews and rebuildable diagnostics only | isolated Calapres n8n Data Tables |
 | Secrets and HMAC keys | credential vault only |
 
 n8n is orchestration, not a customer/order/knowledge source of truth. Chatwoot history and n8n
@@ -248,8 +278,9 @@ paused catalog state, or silently turns an owner answer into policy.
 ## Evidence required before live observation
 
 - repository schemas and fixtures pass locally;
-- Core, Edge, Shopify index, and Owner Review Desk sources compile and are imported inactive
-  without credentials;
+- Core, live Edge v1, Shopify index, and Owner Review Desk remain inactive without credentials;
+- Edge v2 source and its deployment manifest validate and target only existing Edge ID
+  `e442GlRmKP4IO8pm` with `create_allowed=false` and activation disabled;
 - the private Core has no public trigger or external credential;
 - the edge has no Chatwoot customer-send or Shopify mutation node;
 - the merged Wait carrier rejects message content and the no-credential live-re-read slot stops;
@@ -260,6 +291,15 @@ paused catalog state, or silently turns an owner answer into policy.
 - owner-review table projections match the exact 34/18/17-column approvals/incidents/audit schemas,
   while all owner-review writes and knowledge publication remain disabled;
 - signature and replay checks use trusted transport evidence, not fields supplied by a webhook;
+- HTTP 204 is graph-proven unreachable until the combined database commit returns a bound durable
+  job; lease-held/unknown paths return `503` and completed duplicates must reference that job;
+- the same-Edge recovery trigger and current execution have one due-job lease winner and repeat the
+  full post-delay Chatwoot check;
+- the same Edge's best-effort reconciliation path proves one scan lease per allowlisted inbox, two
+  bounded conversation snapshots, durable 1–99-row proof, exact historical retry, and no cursor
+  movement for a 100-row or incomplete result;
+- migrations `0001`–`0007` compile and pass clock, role, crash, alias-rotation, scan/cursor, and concurrent-
+  session tests on an isolated real PostgreSQL engine;
 - persistent Chatwoot access is explicitly approved and tested;
 - logs and execution saving expose no customer body or secret.
 

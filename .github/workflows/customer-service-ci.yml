@@ -1,0 +1,72 @@
+name: Calapres customer-service source guard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/customer-service-ci.yml"
+      - "n8n/**"
+      - "support/brands/calapres/**"
+      - "decisions/0008-optix-customer-service-architecture.md"
+      - "decisions/0010-adopt-calapres-customer-service-runtime.md"
+      - "decisions/0011-require-transactional-customer-service-state.md"
+      - "docs/calapres-customer-service-*.md"
+      - "docs/calapres-atomic-store-provider-evaluation.md"
+      - "docs/optix-customer-service-architecture.md"
+      - "STATE.md"
+      - "HANDOFF.md"
+      - "DECISIONS.md"
+  pull_request:
+    paths:
+      - ".github/workflows/customer-service-ci.yml"
+      - "n8n/**"
+      - "support/brands/calapres/**"
+      - "decisions/0008-optix-customer-service-architecture.md"
+      - "decisions/0010-adopt-calapres-customer-service-runtime.md"
+      - "decisions/0011-require-transactional-customer-service-state.md"
+      - "docs/calapres-customer-service-*.md"
+      - "docs/calapres-atomic-store-provider-evaluation.md"
+      - "docs/optix-customer-service-architecture.md"
+      - "STATE.md"
+      - "HANDOFF.md"
+      - "DECISIONS.md"
+
+permissions:
+  contents: read
+
+jobs:
+  source-contracts:
+    name: No-send contracts and release lock
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run Python contract tests
+        run: python -m unittest discover -s n8n/tests -p 'test_*.py'
+
+      - name: Run Node.js contract and attack tests
+        run: node --test n8n/tests/*.test.js n8n/tests/node/*.test.js
+
+      - name: Verify immutable customer-service release lock
+        run: python n8n/scripts/release_lock.py --check
+
+      - name: Reject generated Python cache files
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find n8n -type f \( -name '*.pyc' -o -name '*.pyo' \) -print -quit | grep -q .; then
+            echo "Generated Python cache file found under n8n/."
+            exit 1
+          fi

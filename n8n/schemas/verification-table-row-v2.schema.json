@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/verification-table-row-v2.schema.json",
+  "title": "Target exact flattened Calapres verification row with brand and key versions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brand_id",
+    "challenge_id",
+    "channel",
+    "contact_fingerprint",
+    "contact_fingerprint_key_version",
+    "challenge_hash",
+    "challenge_key_version",
+    "status",
+    "attempt_count",
+    "expires_at",
+    "consumed_at",
+    "correlation_id"
+  ],
+  "properties": {
+    "brand_id": { "const": "calapres" },
+    "challenge_id": { "type": "string", "pattern": "^ver_[A-Za-z0-9_-]{8,80}$" },
+    "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+    "contact_fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "contact_fingerprint_key_version": {
+      "type": "string",
+      "pattern": "^hmac-sha256-v[1-9][0-9]*$"
+    },
+    "challenge_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "challenge_key_version": {
+      "type": "string",
+      "pattern": "^hmac-sha256-v[1-9][0-9]*$"
+    },
+    "status": { "enum": ["pending", "verified", "failed", "expired", "consumed"] },
+    "attempt_count": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "expires_at": { "type": "string", "format": "date-time" },
+    "consumed_at": { "type": ["string", "null"], "format": "date-time" },
+    "correlation_id": { "type": "string", "pattern": "^[A-Za-z0-9:_-]{4,160}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "consumed" } } },
+      "then": {
+        "properties": {
+          "consumed_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "kind": "chatwoot_reconciliation_discovery_page_v1",
+  "status": "ready",
+  "reason_code": null,
+  "source": "chatwoot_reconciliation_v1",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "requested_page": 1,
+  "all_count": 2,
+  "conversation_ids": ["7001", "7002"],
+  "page_row_count": 2,
+  "coverage": "incomplete",
+  "cursor_advance_ready": false,
+  "api_retry_required": false,
+  "customer_egress_allowed": false
+}

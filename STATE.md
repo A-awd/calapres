@@ -8,6 +8,15 @@ retired. Decision 0010 closes the customer-service pre-implementation gate and a
 Calapres-only observation runtime. No production customer-service bot or automatic customer send
 is deployed.
 
+## Preserved customer-service WIP checkpoint — 2026-08-12
+
+The unfinished Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary, schemas,
+fixtures, and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint`.
+They are source-only and must not be treated as a live or production release. The exact stop point,
+known manifest-hash failure, live no-send boundary, and resumption sequence are recorded in
+[`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md).
+GitHub `main` remains the approved runtime baseline until this checkpoint is reviewed and merged.
+
 ## Approved architecture
 
     owner approval -> Shopify draft -> product review -> Shopify publication

@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "kind": "chatwoot_reconciliation_messages_page_v1",
+  "status": "ready",
+  "reason_code": null,
+  "source": "chatwoot_reconciliation_v1",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "conversation_id": "7001",
+  "requested_after_message_id": 0,
+  "proposed_next_after_message_id": 100,
+  "page_row_count": 1,
+  "page_full": false,
+  "continue_required_after_commit": false,
+  "event_candidates": [],
+  "deterministic_exclusions": [
+    {
+      "message_id": "100",
+      "reason_code": "before_activation_floor",
+      "activation_policy_version": "2026-08-12-v1"
+    }
+  ],
+  "outcome_requirements": [
+    {
+      "message_id": "100",
+      "classification": "deterministically_excluded",
+      "required_reason_code": "before_activation_floor",
+      "created_at": 1786492799,
+      "message_type": 0,
+      "private": false,
+      "sender_type": "contact",
+      "allowed_outcomes": ["deterministically_excluded"]
+    }
+  ],
+  "activation_floor_at": "2026-08-12T00:00:00.000Z",
+  "activation_policy_version": "2026-08-12-v1",
+  "incident_required": false,
+  "manual_resolution_required": false,
+  "cursor_advance_ready": false,
+  "api_retry_required": false,
+  "customer_egress_allowed": false,
+  "page_binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

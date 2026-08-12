@@ -1,0 +1,44 @@
+{
+  "synthetic_only": true,
+  "brand_id": "calapres",
+  "active_key": {
+    "key_version": "hmac-sha256-v2",
+    "secret": "synthetic-active-key-material-v2"
+  },
+  "retained_keys": [
+    {
+      "key_version": "hmac-sha256-v1",
+      "secret": "synthetic-retained-key-material-v1"
+    }
+  ],
+  "whatsapp": {
+    "channel": "whatsapp",
+    "inbox_id": "128058",
+    "chatwoot_contact_id": "700001",
+    "source_identity": "+966500000001"
+  },
+  "email": {
+    "channel": "email",
+    "inbox_id": "128326",
+    "chatwoot_contact_id": "700002",
+    "source_identity": "Synthetic.Buyer@Example.test"
+  },
+  "instagram": {
+    "channel": "instagram",
+    "inbox_id": "128031",
+    "chatwoot_contact_id": "700003",
+    "source_identity": "ig_synthetic_platform_id_001"
+  },
+  "tiktok": {
+    "channel": "tiktok",
+    "inbox_id": "128033",
+    "chatwoot_contact_id": "700004",
+    "source_identity": "tt_synthetic_platform_id_001"
+  },
+  "shopify_ids": {
+    "customer_one": "gid://shopify/Customer/900001",
+    "customer_other": "gid://shopify/Customer/900099",
+    "order_one": "gid://shopify/Order/800001",
+    "order_two": "gid://shopify/Order/800002"
+  }
+}

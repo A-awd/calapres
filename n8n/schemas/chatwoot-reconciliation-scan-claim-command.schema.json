@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-reconciliation-scan-claim-command.schema.json",
+  "title": "Future Calapres Chatwoot reconciliation scan claim command",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "operation",
+    "source",
+    "brand_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "scan_id",
+    "lease_owner_id",
+    "lease_token",
+    "lease_duration_seconds",
+    "max_pages",
+    "activation_floor_at",
+    "activation_policy_version",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "kind": { "const": "chatwoot_reconciliation_scan_claim_command_v1" },
+    "operation": { "const": "claim_chatwoot_reconciliation_scan" },
+    "source": { "const": "chatwoot_reconciliation_v1" },
+    "brand_id": { "const": "calapres" },
+    "account_id": { "const": 179973 },
+    "inbox_id": { "enum": [128031, 128033, 128058, 128326] },
+    "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+    "scan_id": { "type": "string", "pattern": "^cwrs_[a-f0-9]{24}$" },
+    "lease_owner_id": { "type": "string", "pattern": "^[A-Za-z0-9:_-]{4,160}$" },
+    "lease_token": { "type": "string", "pattern": "^[A-Za-z0-9:_-]{4,160}$" },
+    "lease_duration_seconds": { "type": "integer", "minimum": 30, "maximum": 900 },
+    "max_pages": { "type": "integer", "minimum": 1, "maximum": 100 },
+    "activation_floor_at": { "type": "string", "format": "date-time" },
+    "activation_policy_version": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"
+    },
+    "customer_egress_allowed": { "const": false }
+  }
+}

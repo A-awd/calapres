@@ -1,0 +1,8 @@
+{
+  "contract_verified": true,
+  "status": "unknown",
+  "operation": "claim_business_event",
+  "outcome": "uncertain",
+  "value": null,
+  "error_code": "timeout_unknown"
+}

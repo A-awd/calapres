@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "max_raw_body_size_bytes": 1048576,
+  "preflight": [
+    { "mutation": "empty_body", "expected_status": "rejected", "expected_reason": "payload_empty", "expected_code": 400 },
+    { "mutation": "oversized_body", "expected_status": "rejected", "expected_reason": "payload_too_large", "expected_code": 413 },
+    { "mutation": "stale_timestamp", "expected_status": "rejected", "expected_reason": "timestamp_stale", "expected_code": 401 },
+    { "mutation": "future_timestamp", "expected_status": "rejected", "expected_reason": "timestamp_future", "expected_code": 401 },
+    { "mutation": "malformed_signature", "expected_status": "rejected", "expected_reason": "signature_malformed", "expected_code": 401 },
+    { "mutation": "noncanonical_base64", "expected_status": "rejected", "expected_reason": "raw_body_base64_invalid", "expected_code": 400 }
+  ],
+  "post_delay": [
+    { "mutation": "newer_inbound", "expected_status": "cancelled", "expected_reason": "newer_inbound" },
+    { "mutation": "human_reply", "expected_status": "cancelled", "expected_reason": "human_intervention" },
+    { "mutation": "private_note", "expected_status": "cancelled", "expected_reason": "private_note_present" },
+    { "mutation": "stale_generation", "expected_status": "cancelled", "expected_reason": "stale_generation" },
+    { "mutation": "kill_switch", "expected_status": "cancelled", "expected_reason": "brand_kill_switch" },
+    { "mutation": "brand_disabled", "expected_status": "cancelled", "expected_reason": "brand_disabled" },
+    { "mutation": "idempotency_consumed", "expected_status": "cancelled", "expected_reason": "idempotency_consumed" }
+  ]
+}

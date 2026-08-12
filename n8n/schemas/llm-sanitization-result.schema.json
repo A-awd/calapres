@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/llm-sanitization-result.schema.json",
+  "title": "Transient customer-text sanitization result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "channel",
+    "disposition",
+    "reason_code",
+    "excerpt",
+    "excerpt_truncated",
+    "redaction_counts",
+    "guard",
+    "persistable",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+    "disposition": { "enum": ["call_model", "skip_and_escalate"] },
+    "reason_code": {
+      "enum": [
+        "sanitized_excerpt_ready",
+        "payment_data_detected",
+        "government_id_detected",
+        "address_risk_detected",
+        "encoded_or_obfuscated_risk",
+        "prompt_injection_suspected",
+        "cross_brand_scope_suspected",
+        "residual_pii_detected",
+        "message_too_large",
+        "attachment_only",
+        "no_semantic_text",
+        "sanitizer_internal_error"
+      ]
+    },
+    "excerpt": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "excerpt_truncated": { "type": "boolean" },
+    "redaction_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "email",
+        "phone",
+        "order_ref",
+        "payment",
+        "government_id",
+        "address",
+        "url",
+        "social_handle",
+        "long_number"
+      ],
+      "properties": {
+        "email": { "type": "integer", "minimum": 0 },
+        "phone": { "type": "integer", "minimum": 0 },
+        "order_ref": { "type": "integer", "minimum": 0 },
+        "payment": { "type": "integer", "minimum": 0 },
+        "government_id": { "type": "integer", "minimum": 0 },
+        "address": { "type": "integer", "minimum": 0 },
+        "url": { "type": "integer", "minimum": 0 },
+        "social_handle": { "type": "integer", "minimum": 0 },
+        "long_number": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "guard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt_injection_suspected",
+        "cross_brand_suspected",
+        "must_escalate",
+        "minimum_risk"
+      ],
+      "properties": {
+        "prompt_injection_suspected": { "type": "boolean" },
+        "cross_brand_suspected": { "type": "boolean" },
+        "must_escalate": { "type": "boolean" },
+        "minimum_risk": { "enum": ["low", "medium", "high", "unknown"] }
+      }
+    },
+    "persistable": { "const": false },
+    "customer_egress_allowed": { "const": false }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "disposition": { "const": "call_model" },
+        "reason_code": { "const": "sanitized_excerpt_ready" },
+        "excerpt": { "type": "string", "minLength": 1 },
+        "guard": {
+          "properties": {
+            "prompt_injection_suspected": { "const": false },
+            "cross_brand_suspected": { "const": false },
+            "must_escalate": { "const": false },
+            "minimum_risk": { "const": "low" }
+          }
+        }
+      },
+      "required": ["disposition", "reason_code", "excerpt", "guard"]
+    },
+    {
+      "properties": {
+        "disposition": { "const": "skip_and_escalate" },
+        "excerpt": { "type": "null" },
+        "excerpt_truncated": { "const": false },
+        "guard": {
+          "properties": {
+            "must_escalate": { "const": true }
+          }
+        }
+      },
+      "required": ["disposition", "excerpt", "excerpt_truncated", "guard"]
+    }
+  ]
+}

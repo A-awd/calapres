@@ -1,0 +1,437 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/compiled-brand-context.schema.json",
+  "title": "Deterministic version-bound brand context v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "trust_anchor",
+    "brand_identity",
+    "enabled_channels",
+    "brand_isolation",
+    "source_versions",
+    "source_paths",
+    "source_digests",
+    "freshness",
+    "knowledge",
+    "response_style",
+    "core_context",
+    "compiled_context_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "trust_anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["anchor_id", "anchor_digest", "status", "model_invocation_allowed"],
+      "properties": {
+        "anchor_id": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "anchor_digest": { "$ref": "#/$defs/digest" },
+        "status": { "const": "observation_build_only" },
+        "model_invocation_allowed": { "const": false }
+      }
+    },
+    "brand_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["display_name_en", "display_name_ar", "approved_public_name"],
+      "properties": {
+        "display_name_en": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "display_name_ar": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "approved_public_name": { "type": "string", "minLength": 1, "maxLength": 120 }
+      }
+    },
+    "enabled_channels": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["instagram", "tiktok", "whatsapp", "email"]
+      }
+    },
+    "brand_isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "forbidden_names", "forbidden_name_count", "forbidden_names_digest"],
+      "properties": {
+        "policy": { "const": "deny_explicit_cross_brand_references" },
+        "forbidden_names": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 2, "maxLength": 80 }
+        },
+        "forbidden_name_count": { "type": "integer", "minimum": 1, "maximum": 64 },
+        "forbidden_names_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "source_versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry_schema_version",
+        "knowledge_manifest_schema_version",
+        "knowledge_version",
+        "response_style_manifest_schema_version",
+        "response_style_version"
+      ],
+      "properties": {
+        "registry_schema_version": { "const": "1.0" },
+        "knowledge_manifest_schema_version": { "const": "1.0" },
+        "knowledge_version": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-v[1-9]\\d*$"
+        },
+        "response_style_manifest_schema_version": { "const": "1.0" },
+        "response_style_version": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-v[1-9]\\d*$"
+        }
+      }
+    },
+    "source_paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge_manifest",
+        "knowledge_release",
+        "response_style_manifest",
+        "response_style_release"
+      ],
+      "properties": {
+        "knowledge_manifest": { "$ref": "#/$defs/safe_path" },
+        "knowledge_release": { "$ref": "#/$defs/safe_path" },
+        "response_style_manifest": { "$ref": "#/$defs/safe_path" },
+        "response_style_release": { "$ref": "#/$defs/safe_path" }
+      }
+    },
+    "source_digests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry",
+        "knowledge_manifest",
+        "knowledge_release",
+        "response_style_manifest",
+        "response_style_release"
+      ],
+      "properties": {
+        "registry": { "$ref": "#/$defs/digest" },
+        "knowledge_manifest": { "$ref": "#/$defs/digest" },
+        "knowledge_release": { "$ref": "#/$defs/digest" },
+        "response_style_manifest": { "$ref": "#/$defs/digest" },
+        "response_style_release": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "policy_basis",
+        "source_snapshot_digests_present",
+        "as_of",
+        "max_source_age_days",
+        "oldest_source_retrieved_at",
+        "newest_source_retrieved_at",
+        "valid_through"
+      ],
+      "properties": {
+        "status": { "const": "verified_against_explicit_trust_policy" },
+        "policy_basis": { "const": "retrieved_at_plus_pinned_max_age" },
+        "source_snapshot_digests_present": { "const": false },
+        "as_of": { "type": "string", "format": "date-time" },
+        "max_source_age_days": { "type": "integer", "minimum": 1, "maximum": 366 },
+        "oldest_source_retrieved_at": { "$ref": "#/$defs/date" },
+        "newest_source_retrieved_at": { "$ref": "#/$defs/date" },
+        "valid_through": { "$ref": "#/$defs/date" }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "effective_at",
+        "approval_basis",
+        "capture_basis",
+        "supersedes",
+        "categories",
+        "sources",
+        "facts",
+        "renderable_fact_ids"
+      ],
+      "properties": {
+        "status": { "const": "approved" },
+        "effective_at": { "$ref": "#/$defs/date" },
+        "approval_basis": { "$ref": "#/$defs/repository_reference" },
+        "capture_basis": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "supersedes": {
+          "type": ["string", "null"],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-v[1-9]\\d*$"
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$" }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/knowledge_source" }
+        },
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/full_fact" }
+        },
+        "renderable_fact_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/knowledge_id" }
+        }
+      }
+    },
+    "response_style": { "$ref": "#/$defs/response_style" },
+    "core_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge_version",
+        "knowledge_facts",
+        "live_facts_status",
+        "verified_live_facts"
+      ],
+      "properties": {
+        "knowledge_version": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-v[1-9]\\d*$"
+        },
+        "knowledge_facts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/render_fact" }
+        },
+        "live_facts_status": { "const": "not_requested" },
+        "verified_live_facts": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "compiled_context_digest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "safe_path": {
+      "type": "string",
+      "pattern": "^support/brands/[a-z0-9-]+/[A-Za-z0-9._/-]+\\.json$"
+    },
+    "repository_reference": {
+      "type": "string",
+      "pattern": "^(?:decisions|docs)/[A-Za-z0-9._/-]+\\.md$"
+    },
+    "knowledge_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._:-]{2,120}$"
+    },
+    "authority": {
+      "enum": ["draft_only", "owner_required", "mandatory_stop"]
+    },
+    "knowledge_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "url", "retrieved_at", "source_updated_at", "use"],
+      "properties": {
+        "source_id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,80}$" },
+        "url": { "type": "string", "pattern": "^https://" },
+        "retrieved_at": { "$ref": "#/$defs/date" },
+        "source_updated_at": {
+          "type": ["string", "null"],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "use": { "type": "string", "minLength": 1, "maxLength": 120 }
+      }
+    },
+    "full_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge_id",
+        "category",
+        "statement_ar",
+        "authority",
+        "source_ref",
+        "response_text"
+      ],
+      "properties": {
+        "knowledge_id": { "$ref": "#/$defs/knowledge_id" },
+        "category": { "type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$" },
+        "statement_ar": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "authority": { "$ref": "#/$defs/authority" },
+        "source_ref": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "response_text": { "type": ["string", "null"], "minLength": 1, "maxLength": 1200 }
+      }
+    },
+    "render_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["knowledge_id", "authority", "response_text"],
+      "properties": {
+        "knowledge_id": { "$ref": "#/$defs/knowledge_id" },
+        "authority": { "const": "draft_only" },
+        "response_text": { "type": "string", "minLength": 1, "maxLength": 1200 }
+      }
+    },
+    "channel_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_sentences", "emoji_max", "formality"],
+      "properties": {
+        "max_sentences": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "emoji_max": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "formality": { "type": "string", "minLength": 1, "maxLength": 40 }
+      }
+    },
+    "email_channel_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_sentences", "emoji_max", "formality", "signature"],
+      "properties": {
+        "max_sentences": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "emoji_max": { "const": 0 },
+        "formality": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "signature": { "type": "string", "minLength": 1, "maxLength": 120 }
+      }
+    },
+    "response_style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "brand_id",
+        "version",
+        "status",
+        "effective_at",
+        "approval_basis",
+        "identity",
+        "language",
+        "channel_style",
+        "order_lookup_behavior",
+        "examples"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "brand_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,63}$" },
+        "version": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}-v[1-9]\\d*$" },
+        "status": { "const": "approved" },
+        "effective_at": { "$ref": "#/$defs/date" },
+        "approval_basis": { "$ref": "#/$defs/repository_reference" },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "public_name",
+            "arabic_brand_spelling",
+            "personal_employee_name",
+            "must_not_claim_human_identity"
+          ],
+          "properties": {
+            "public_name": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "arabic_brand_spelling": { "type": "string", "minLength": 1, "maxLength": 80 },
+            "personal_employee_name": { "type": "null" },
+            "must_not_claim_human_identity": { "const": true }
+          }
+        },
+        "language": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["default", "register", "rules"],
+          "properties": {
+            "default": { "const": "ar-SA" },
+            "register": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "rules": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+            }
+          }
+        },
+        "channel_style": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["whatsapp", "instagram", "tiktok", "email"],
+          "properties": {
+            "whatsapp": { "$ref": "#/$defs/channel_policy" },
+            "instagram": { "$ref": "#/$defs/channel_policy" },
+            "tiktok": { "$ref": "#/$defs/channel_policy" },
+            "email": { "$ref": "#/$defs/email_channel_policy" }
+          }
+        },
+        "order_lookup_behavior": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "proactive_before_question",
+            "whatsapp",
+            "email",
+            "instagram_tiktok",
+            "order_number_alone_proves_ownership",
+            "names_or_social_handles_can_link_identity",
+            "ambiguous_match"
+          ],
+          "properties": {
+            "proactive_before_question": { "const": true },
+            "whatsapp": { "type": "string", "minLength": 1, "maxLength": 500 },
+            "email": { "type": "string", "minLength": 1, "maxLength": 500 },
+            "instagram_tiktok": { "type": "string", "minLength": 1, "maxLength": 500 },
+            "order_number_alone_proves_ownership": { "const": false },
+            "names_or_social_handles_can_link_identity": { "const": false },
+            "ambiguous_match": { "type": "string", "minLength": 1, "maxLength": 500 }
+          }
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["scenario", "channel", "draft", "authority"],
+            "properties": {
+              "scenario": { "type": "string", "minLength": 1, "maxLength": 120 },
+              "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+              "draft": { "type": "string", "minLength": 1, "maxLength": 1200 },
+              "authority": { "type": "string", "minLength": 1, "maxLength": 120 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

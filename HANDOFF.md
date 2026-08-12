@@ -9,6 +9,14 @@ Decision 0009 makes the ownership-evidence page a future multi-brand standard wi
 another brand implementation. Decision 0010 is binding for the inactive Calapres observation
 runtime, its no-send boundary, and its persistent-access gates.
 
+For the unfinished post-`bfb191c` customer-service build, resume from branch
+`agent/preserve-calapres-customer-service-checkpoint` and read
+[`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
+before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fixture, or test file.
+Do not rebuild these artifacts, update the live Edge, bind credentials, or claim production
+readiness from this checkpoint. `main` remains authoritative until the preserved branch is reviewed
+and merged.
+
 ## Completed in the Supabase retirement
 
 1. Verified the canonical repository, branch, remote synchronization, and baseline revision.

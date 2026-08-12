@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "kind": "chatwoot_reconciliation_scan_claim_command_v1",
+  "operation": "claim_chatwoot_reconciliation_scan",
+  "source": "chatwoot_reconciliation_v1",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "scan_id": "cwrs_aaaaaaaaaaaaaaaaaaaaaaaa",
+  "lease_owner_id": "edge_reconciliation_worker_1",
+  "lease_token": "reconciliation_lease_1",
+  "lease_duration_seconds": 300,
+  "max_pages": 50,
+  "activation_floor_at": "2026-08-12T00:00:00.000Z",
+  "activation_policy_version": "2026-08-12-v1",
+  "customer_egress_allowed": false
+}

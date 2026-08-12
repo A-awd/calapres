@@ -22,6 +22,7 @@ source = source.slice(0, source.indexOf('export default'));
 
 const stubs = `
 const expr = (value) => '=' + value;
+const newCredential = (name) => ({ name });
 const node = (value) => ({
   type: value.type,
   typeVersion: value.version,

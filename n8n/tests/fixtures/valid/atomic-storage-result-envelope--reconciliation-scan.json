@@ -1,0 +1,22 @@
+{
+  "contract_verified": true,
+  "status": "committed",
+  "operation": "claim_chatwoot_reconciliation_scan",
+  "outcome": "scan_lease_claimed",
+  "value": {
+    "account_id": 179973,
+    "inbox_id": 128058,
+    "channel": "whatsapp",
+    "scan_id": "cwrs_aaaaaaaaaaaaaaaaaaaaaaaa",
+    "lease_owner_id": "edge_reconciliation_worker_1",
+    "lease_token": "reconciliation_lease_1",
+    "lease_claimed_at": "2026-08-12T01:00:00.000Z",
+    "lease_expires_at": "2026-08-12T01:05:00.000Z",
+    "lease_duration_seconds": 300,
+    "attempt_count": 1,
+    "max_pages": 50,
+    "activation_floor_at": "2026-08-12T00:00:00.000Z",
+    "activation_policy_version": "2026-08-12-v1"
+  },
+  "error_code": null
+}

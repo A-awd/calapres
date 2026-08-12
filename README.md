@@ -23,7 +23,10 @@ There is no external product database, authentication service, storage service, 
 supplier synchronization layer in the approved architecture. Supabase was retired by owner
 decision on 2026-07-29 and must not be reintroduced. n8n is not a product source. Decision 0008
 permits only a bounded, Calapres-first customer-service orchestration layer; every other n8n use
-still requires a separate recorded decision.
+still requires a separate recorded decision. Decision 0011 permits a dedicated transactional
+customer-service state boundary for opaque replay, job, incident, approval, and audit records only;
+it is not a product database, does not reintroduce Supabase, and remains source-only until an owner-
+approved managed PostgreSQL provider passes live validation.
 
 ## Product workflow
 
@@ -48,8 +51,10 @@ The Shopify theme is contained in:
 - `snippets/`
 - `templates/`
 
-The retired React application, database migrations, edge functions, and supplier synchronization
-code are not part of the current tree. Their history remains recoverable from Git.
+The retired React application, former product/supplier database migrations, edge functions, and
+supplier synchronization code are not part of the current tree. Their history remains recoverable
+from Git. The separately governed customer-service PostgreSQL candidate lives only under
+`n8n/postgres/` and cannot hold product authority or raw customer payloads.
 
 ## Operating documents
 
@@ -60,6 +65,8 @@ code are not part of the current tree. Their history remains recoverable from Gi
 - [LAUNCHER.md](LAUNCHER.md) — vendor-neutral session protocol.
 - [Optix Customer Service Architecture](docs/optix-customer-service-architecture.md) — approved
   multi-brand support design with Calapres as the first isolated pilot.
+- [Calapres customer-service operations](docs/calapres-customer-service-operations.md) — no-send
+  runtime, failure, recovery, retention, and promotion gates.
 
 ## SKU policy
 

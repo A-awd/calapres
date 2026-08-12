@@ -221,6 +221,15 @@ unsigned `X-Chatwoot-Delivery` header is optional metadata and must never let a 
 identity. Signed-ingress, live-re-read, and post-delay evidence are transient-only; full evidence
 cannot enter Wait, Data Tables, or durable audit.
 
+Every secret-keyed digest in Edge v2 is computed by a fixed native n8n Crypto node with a statically
+bound Calapres credential. One item moves directly through the required sequential Crypto nodes;
+each node writes one fixed digest field and the per-item finalizer reads only that same `$json`.
+Split/Merge, positional batching, `$input.all()`, `.first()`, caller-supplied digest metadata, and a
+Code-node secret are forbidden inside this chain. Code validates the exact result shape and its
+plan binding but does not claim to have performed cryptographic verification itself. The reviewed
+workflow graph, credential binding, source hash, and release lock are therefore part of this trust
+boundary; graph drift or a Crypto failure stops before any durable acknowledgement.
+
 The identifiers-only Wait carrier binds its exact ordered fields with a canonical SHA-256
 fingerprint and includes only the pinned baseline-HMAC key version plus opaque status and assignee
 fingerprints. Raw status and assignee values are forbidden. The same HMAC key version must remain

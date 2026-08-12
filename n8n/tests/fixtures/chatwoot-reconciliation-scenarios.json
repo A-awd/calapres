@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "account_id": 179973,
+  "activation_floor_at": "2026-08-12T00:00:00.000Z",
+  "activation_policy_version": "2026-08-12-v1",
+  "inboxes": {
+    "instagram": 128031,
+    "tiktok": 128033,
+    "whatsapp": 128058,
+    "email": 128326
+  },
+  "discovery_rows": [
+    {
+      "id": 7001,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "status": "open"
+    },
+    {
+      "id": 7002,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "status": "resolved"
+    }
+  ],
+  "message_rows": [
+    {
+      "id": 100,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492799,
+      "message_type": 0,
+      "private": false,
+      "sender_type": "contact",
+      "attachment_count": 0
+    },
+    {
+      "id": 101,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492801,
+      "message_type": 0,
+      "private": false,
+      "sender_type": "contact",
+      "attachment_count": 1
+    },
+    {
+      "id": 102,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492802,
+      "message_type": 0,
+      "private": true,
+      "sender_type": "contact",
+      "attachment_count": 0
+    },
+    {
+      "id": 103,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492803,
+      "message_type": 1,
+      "private": false,
+      "sender_type": "user",
+      "attachment_count": 0
+    },
+    {
+      "id": 104,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492804,
+      "message_type": 2,
+      "private": false,
+      "sender_type": null,
+      "attachment_count": 0
+    },
+    {
+      "id": 105,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492805,
+      "message_type": 3,
+      "private": false,
+      "sender_type": "user",
+      "attachment_count": 0
+    },
+    {
+      "id": 106,
+      "account_id": 179973,
+      "inbox_id": 128058,
+      "conversation_id": 7001,
+      "created_at": 1786492806,
+      "message_type": 0,
+      "private": false,
+      "sender_type": "agent_bot",
+      "attachment_count": 0
+    }
+  ]
+}

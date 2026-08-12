@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "kind": "chatwoot_reconciliation_event_candidate_v1",
+  "source": "chatwoot_reconciliation_v1",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "event": "message_created",
+  "conversation_id": "7001",
+  "message_id": "101",
+  "event_at": "2026-08-12T00:00:01.000Z",
+  "direction": "incoming",
+  "visibility": "public",
+  "sender_class": "contact",
+  "attachment_count": 1,
+  "canonical_tuple_format": "json-minified-ordered:[schema_version,account_id,inbox_id,event,conversation_id,message_id]",
+  "canonical_tuple": {
+    "schema_version": "1.0",
+    "account_id": 179973,
+    "inbox_id": 128058,
+    "event": "message_created",
+    "conversation_id": "7001",
+    "message_id": "101"
+  },
+  "active_event_identity_key_version": "calapres-identity-hmac-v1",
+  "retained_event_identity_key_versions": [],
+  "event_identity_hmac_requests": [
+    {
+      "purpose": "event_identity",
+      "key_version": "calapres-identity-hmac-v1",
+      "algorithm": "hmac-sha256",
+      "encoding": "hex",
+      "material_utf8": "{\"schema_version\":\"1.0\",\"account_id\":179973,\"inbox_id\":128058,\"event\":\"message_created\",\"conversation_id\":\"7001\",\"message_id\":\"101\"}"
+    }
+  ],
+  "activation_floor_at": "2026-08-12T00:00:00.000Z",
+  "activation_policy_version": "2026-08-12-v1",
+  "content_state": "deferred_live_reread",
+  "live_reread_required": true,
+  "raw_content_used": false,
+  "raw_contact_used": false,
+  "transient_only": true,
+  "persistence_allowed": false,
+  "wait_payload_allowed": false,
+  "audit_payload_allowed": false,
+  "customer_egress_allowed": false,
+  "candidate_ref": "cwr_aaaaaaaaaaaaaaaaaaaaaaaa",
+  "candidate_binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-reconciliation-discovery-coverage.schema.json",
+  "title": "Calapres bounded best-effort Chatwoot discovery coverage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "source",
+    "brand_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "status",
+    "reason_code",
+    "coverage",
+    "first_snapshot_digest",
+    "second_snapshot_digest",
+    "conversation_ids",
+    "bounded_convergence_passed",
+    "discovery_watermark_advance_allowed",
+    "no_loss_claimed",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "kind": { "const": "chatwoot_reconciliation_discovery_coverage_v1" },
+    "source": { "const": "chatwoot_reconciliation_v1" },
+    "brand_id": { "const": "calapres" },
+    "account_id": { "const": 179973 },
+    "inbox_id": { "enum": [128031, 128033, 128058, 128326] },
+    "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+    "status": { "enum": ["converged_bounded", "incomplete"] },
+    "reason_code": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z][a-z0-9_]{2,80}$"
+    },
+    "coverage": { "enum": ["best_effort", "incomplete"] },
+    "first_snapshot_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "second_snapshot_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "conversation_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[1-9][0-9]{0,30}$" }
+    },
+    "bounded_convergence_passed": { "type": "boolean" },
+    "discovery_watermark_advance_allowed": { "const": false },
+    "no_loss_claimed": { "const": false },
+    "customer_egress_allowed": { "const": false }
+  }
+}

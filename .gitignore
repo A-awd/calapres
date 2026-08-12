@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Python test/runtime caches
+__pycache__/
+*.py[cod]
+
 # Environment variables
 .env
 .env.local

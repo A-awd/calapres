@@ -645,15 +645,18 @@ class ContractTests(unittest.TestCase):
             set(sources),
             {
                 "calapres-customer-service-edge-v1.ts",
+                "calapres-customer-service-edge-v2.ts",
                 "calapres-owner-review-desk-v1.ts",
                 "calapres-shopify-order-index-v1.ts",
                 "optix-customer-service-core-v1.ts",
             },
         )
-        forbidden_node_types = {
+        source_only_transport_types = {
             "n8n-nodes-base.webhook",
             "n8n-nodes-base.respondToWebhook",
             "n8n-nodes-base.httpRequest",
+        }
+        forbidden_node_types = {
             "n8n-nodes-base.shopify",
             "n8n-nodes-base.emailSend",
             "n8n-nodes-base.gmail",
@@ -664,8 +667,14 @@ class ContractTests(unittest.TestCase):
         }
         for filename, source in sources.items():
             with self.subTest(workflow=filename):
-                for node_type in forbidden_node_types:
-                    self.assertNotIn(f"type: '{node_type}'", source)
+                disallowed = set(forbidden_node_types)
+                if filename != "calapres-customer-service-edge-v2.ts":
+                    disallowed.update(source_only_transport_types)
+                for node_type in disallowed:
+                    self.assertNotRegex(
+                        source,
+                        rf"(?:type|\"type\")\s*:\s*['\"]{re.escape(node_type)}['\"]",
+                    )
                 self.assertIn("customer_egress_allowed: false", source)
         self.assertIn(
             "n8n-nodes-base.executeWorkflowTrigger",
@@ -676,6 +685,13 @@ class ContractTests(unittest.TestCase):
         self.assertIn("Build Identifiers-only Post-Response Wait State", edge)
         self.assertIn("Chatwoot Live Re-read Slot - Fail Closed No Credential", edge)
         self.assertNotIn("calapres-delayed-observation-worker", "\n".join(sources))
+        edge_v2 = sources["calapres-customer-service-edge-v2.ts"]
+        self.assertIn("LLM Trust Gate Closed - No Call", edge_v2)
+        self.assertIn("POST Calapres Chatwoot Signed Raw Webhook", edge_v2)
+        self.assertNotRegex(
+            edge_v2,
+            r"(?:type|\"type\")\s*:\s*['\"]@n8n/n8n-nodes-langchain\.",
+        )
         index = sources["calapres-shopify-order-index-v1.ts"]
         self.assertIn("Private HMAC-only Index Command", index)
         self.assertIn("write_executed: false", index)

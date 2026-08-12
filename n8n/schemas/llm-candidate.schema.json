@@ -74,7 +74,7 @@
     },
     "knowledge_fact_ids": {
       "type": "array",
-      "maxItems": 32,
+      "maxItems": 8,
       "uniqueItems": true,
       "items": {
         "type": "string",
@@ -83,22 +83,22 @@
     },
     "live_fact_ids": {
       "type": "array",
-      "maxItems": 32,
+      "maxItems": 8,
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "pattern": "^lf_[A-Za-z0-9._:-]{3,120}$"
+        "pattern": "^(?:lf_[a-f0-9]{64}|[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12})$"
       }
     },
     "needs_live_lookup": {
       "type": "boolean"
     },
     "escalation_reason_code": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[a-z][a-z0-9_]{2,80}$"
+      "enum": [
+        "live_lookup_required",
+        "owner_review_required",
+        null
+      ]
     }
   },
   "allOf": [

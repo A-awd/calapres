@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/chatwoot-reconciliation-discovery-page.schema.json",
+  "title": "Calapres sanitized Chatwoot conversation discovery page",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "status",
+    "reason_code",
+    "source",
+    "brand_id",
+    "account_id",
+    "inbox_id",
+    "channel",
+    "requested_page",
+    "all_count",
+    "conversation_ids",
+    "page_row_count",
+    "coverage",
+    "cursor_advance_ready",
+    "api_retry_required",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "kind": { "const": "chatwoot_reconciliation_discovery_page_v1" },
+    "status": { "const": "ready" },
+    "reason_code": { "const": null },
+    "source": { "const": "chatwoot_reconciliation_v1" },
+    "brand_id": { "const": "calapres" },
+    "account_id": { "const": 179973 },
+    "inbox_id": { "enum": [128031, 128033, 128058, 128326] },
+    "channel": { "enum": ["instagram", "tiktok", "whatsapp", "email"] },
+    "requested_page": { "type": "integer", "minimum": 1, "maximum": 100 },
+    "all_count": { "type": "integer", "minimum": 0 },
+    "conversation_ids": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[1-9][0-9]{0,30}$" }
+    },
+    "page_row_count": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "coverage": { "const": "incomplete" },
+    "cursor_advance_ready": { "const": false },
+    "api_retry_required": { "const": false },
+    "customer_egress_allowed": { "const": false }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "anchor_id": "calapres-context-trust-2026-08-11-v1",
+  "brand_id": "calapres",
+  "status": "observation_build_only",
+  "model_invocation_allowed": false,
+  "current_knowledge_version": "2026-08-11-v3",
+  "current_response_style_version": "2026-08-11-v1",
+  "source_digests": {
+    "registry": "sha256:5299f725c9bd75eec41d541ec47dd538b6a1fcc1d0b4d64f9c225a9eebbdbfd9",
+    "knowledge_manifest": "sha256:3d59de7e771c4f9506291275db09b80b89c7e834ccf4c1cb604c0770906f7b1e",
+    "knowledge_release": "sha256:ec7be6bfaf7b9ca534210e9e211c6e767377dc1eb093ab9be9c8f3a42646e758",
+    "response_style_manifest": "sha256:f7d3d6a69d93e4c72ff4660ca60849d2eee51be431bd93cbc0d51e26b676cf74",
+    "response_style_release": "sha256:c20b4e4efacde54b1cbe4b86eb53ef67822fa0d286e75c4c3402a5dca0c7e44c"
+  },
+  "knowledge_history": [
+    {
+      "version": "2026-08-11-v1",
+      "canonical_digest": "sha256:340ff60fef16c83fe5ff14ee451c0ec314db88850d4c77acac99cf7bd082f32e"
+    },
+    {
+      "version": "2026-08-11-v2",
+      "canonical_digest": "sha256:7bfbeef7ca9234bd315572c48daba4fa87bc8221eb48b02c277e8f2448186135"
+    },
+    {
+      "version": "2026-08-11-v3",
+      "canonical_digest": "sha256:ec7be6bfaf7b9ca534210e9e211c6e767377dc1eb093ab9be9c8f3a42646e758"
+    }
+  ],
+  "response_style_history": [
+    {
+      "version": "2026-08-11-v1",
+      "canonical_digest": "sha256:c20b4e4efacde54b1cbe4b86eb53ef67822fa0d286e75c4c3402a5dca0c7e44c"
+    }
+  ],
+  "freshness_policy": {
+    "max_source_age_days": 30,
+    "allowed_source_hosts": [
+      "calapres.com",
+      "www.calapres.com"
+    ]
+  },
+  "brand_isolation": {
+    "forbidden_brand_names": [
+      "Rocantis",
+      "روكانتس",
+      "Oleel",
+      "أوليل",
+      "كالابريس"
+    ]
+  }
+}

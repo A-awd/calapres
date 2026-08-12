@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/compiled-context-release-pin.schema.json",
+  "title": "Independent compiled customer-service context release pin v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_id",
+    "brand_id",
+    "status",
+    "model_invocation_allowed",
+    "compiled_as_of",
+    "anchor_id",
+    "expected_anchor_digest",
+    "expected_compiled_context_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "release_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,120}$"
+    },
+    "brand_id": {
+      "const": "calapres"
+    },
+    "status": {
+      "const": "observation_build_only"
+    },
+    "model_invocation_allowed": {
+      "const": false
+    },
+    "compiled_as_of": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "anchor_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "expected_anchor_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "expected_compiled_context_digest": {
+      "$ref": "#/$defs/digest"
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

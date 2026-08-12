@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/provider-neutral-llm-parse-result.schema.json",
+  "title": "Fail-closed provider-neutral LLM parse result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "reason_code",
+    "request_ref",
+    "request_digest",
+    "compiled_context_digest",
+    "response_received_at",
+    "parsed_at",
+    "candidate",
+    "persistable",
+    "retry_allowed",
+    "fallback_allowed",
+    "customer_egress_allowed"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "status": { "enum": ["accepted", "rejected"] },
+    "reason_code": { "type": "string", "pattern": "^[a-z][a-z0-9_]{2,80}$" },
+    "request_ref": { "type": "string", "pattern": "^lr_[a-f0-9]{64}$" },
+    "request_digest": { "$ref": "#/$defs/digest" },
+    "compiled_context_digest": { "$ref": "#/$defs/digest" },
+    "response_received_at": { "type": "string", "format": "date-time" },
+    "parsed_at": { "type": "string", "format": "date-time" },
+    "candidate": {
+      "oneOf": [
+        { "$ref": "llm-candidate.schema.json" },
+        { "type": "null" }
+      ]
+    },
+    "persistable": { "const": false },
+    "retry_allowed": { "const": false },
+    "fallback_allowed": { "const": false },
+    "customer_egress_allowed": { "const": false }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "status": { "const": "accepted" },
+        "reason_code": { "const": "candidate_valid" },
+        "candidate": { "$ref": "llm-candidate.schema.json" }
+      },
+      "required": ["status", "reason_code", "candidate"]
+    },
+    {
+      "properties": {
+        "status": { "const": "rejected" },
+        "candidate": { "type": "null" }
+      },
+      "required": ["status", "candidate"]
+    }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

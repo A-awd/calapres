@@ -1,0 +1,17 @@
+{
+  "contract_verified": true,
+  "status": "committed",
+  "operation": "read_chatwoot_reconciliation_cursor",
+  "outcome": "cursor_read",
+  "value": {
+    "account_id": 179973,
+    "inbox_id": 128058,
+    "channel": "whatsapp",
+    "conversation_id": "700001",
+    "scan_id": "cwrs_aaaaaaaaaaaaaaaaaaaaaaaa",
+    "current_after_message_id": 0,
+    "activation_floor_at": "2026-08-12T00:00:00.000Z",
+    "activation_policy_version": "2026-08-12-v1"
+  },
+  "error_code": null
+}

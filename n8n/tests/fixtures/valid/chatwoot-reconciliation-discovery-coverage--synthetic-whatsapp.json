@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "kind": "chatwoot_reconciliation_discovery_coverage_v1",
+  "source": "chatwoot_reconciliation_v1",
+  "brand_id": "calapres",
+  "account_id": 179973,
+  "inbox_id": 128058,
+  "channel": "whatsapp",
+  "status": "converged_bounded",
+  "reason_code": null,
+  "coverage": "best_effort",
+  "first_snapshot_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "second_snapshot_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "conversation_ids": ["7001", "7002"],
+  "bounded_convergence_passed": true,
+  "discovery_watermark_advance_allowed": false,
+  "no_loss_claimed": false,
+  "customer_egress_allowed": false
+}

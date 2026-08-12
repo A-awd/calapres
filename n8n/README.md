@@ -15,6 +15,20 @@ a customer database, or a customer-facing bot release.
   deliberately unavailable and fails closed until the Chatwoot read and HMAC credential are approved.
   The compiled policy uses 30–75 seconds for Instagram/TikTok/WhatsApp, 120–300 seconds for Email,
   and one second only for the synthetic test fixture. Live-shaped input keeps the kill switch on.
+- `workflows/calapres-customer-service-edge-v2.ts` — the immutable source candidate for updating
+  that same Edge, never for creating a second Calapres edge. It keeps the manual synthetic branch
+  and adds a source-only production topology: signed raw-body ingress, native HMAC placeholders,
+  recoverable request/event leases, pre-acknowledgement Chatwoot baseline fingerprints, one
+  combined PostgreSQL generation/job commit, database-computed `due_at`, an identifiers-only Wait,
+  and a 30-minute crash-recovery schedule branch inside the same workflow. The schedule also
+  contains a gated four-inbox Chatwoot reconciliation path: one inbox scan lease, two bounded
+  conversation snapshots, a durable per-conversation message cursor, and no cursor advance until
+  every 1–99-row proof is verified. A 100-row result stops. Discovery remains explicitly
+  `best_effort`; it does not claim a complete account ledger. Both normal/recovery workers must win
+  the same due-job lease and repeat the bounded Chatwoot re-read before Core. The model gate and
+  customer egress are structurally closed. The deployment manifest targets the existing workflow ID with
+  `update_existing_only`; live import, credential binding, publishing, and activation remain
+  prohibited.
 - `workflows/optix-customer-service-core-v1.ts` — the private, credential-free rules sub-workflow.
   It cannot receive a public channel event or contact a customer.
 - `workflows/calapres-shopify-order-index-v1.ts` — a separate private, inactive index workflow
@@ -32,6 +46,23 @@ a customer database, or a customer-facing bot release.
   references the generic envelope and `llm-candidate.schema.json`; the Calapres edge must first
   pass `calapres-event-envelope.schema.json`.
 - `tests/fixtures/` — synthetic records only. They contain no production customer or order data.
+- `runtime/` — pure, credential-free staged Chatwoot verification and post-delay logic. Native n8n
+  nodes own HTTP, HMAC, PostgreSQL, and Wait effects; Code nodes do not read secrets or open
+  network connections. Each HMAC plan stays on one item through fixed sequential native Crypto
+  nodes and a per-item finalizer; there is no Split/Merge or positional result join. The finalizer
+  validates shape and binding but truthfully records that cryptographic verification was not
+  performed in Code. The reviewed graph and release hash are part of the credential boundary.
+- `modules/` — deterministic brand-context compiler and provider-neutral model boundary. Customer
+  excerpts are minimized and adversarially scanned; a model can classify/select approved IDs but
+  its free-text draft is never the grounded response. The compiled context is pinned by a fixed
+  trust artifact and final release lock, not by webhook data.
+- `adapters/` — the provider-neutral atomic contract, an in-memory concurrency reference used only
+  by tests, and the read-only Shopify identity adapter contract.
+- `postgres/` — a PostgreSQL adapter candidate and migrations `0001`–`0007`. They define a
+  Calapres-only key registry, recoverable replay/business leases, combined durable ingress commit,
+  database-authoritative lifecycle time, due-job recovery, best-effort reconciliation scan/cursor
+  compare-and-swap, and split Edge/owner execute-only roles.
+  They are not production-validated until compiled and raced on an isolated real PostgreSQL engine.
 
 The non-secret channel registry, knowledge releases, n8n project ID, and isolated Data Table IDs
 are recorded under `support/brands/calapres/`. The approved response-style release is indexed by
@@ -101,31 +132,43 @@ Decision 0010 authorizes eight empty, Calapres-scoped operational tables in the 
 Exact non-secret IDs live in `support/brands/calapres/runtime-manifest.json`. The existing paused
 catalog table is not part of this runtime.
 
-Data Tables do not provide a documented atomic uniqueness guarantee. They are acceptable for this
-no-send observation release only. Their presence must not be used as evidence that customer egress
-is safe. The current Edge table rows are shape previews only: `persistence_ready=false` and
-`persistable=false`. Live dedup must bind `event_key` to the stable business-event HMAC, atomically
-reserve it, and dual-read retained prior key versions through the dedup TTL. The signed-request
-replay fingerprint is a separate short-lived transport check; an unsigned Delivery header never
-defines event identity.
+Data Tables do not provide a documented atomic uniqueness guarantee. They remain empty
+shape/previews and cannot authorize durable observation or customer egress. The PostgreSQL
+candidate separates short-lived signed-request replay from stable business-event identity. A
+request starts under a recoverable processing lease; it is a safe completed duplicate only after
+one transaction links it to the business event, exact conversation generation, and durable due
+job. The job carries identifiers and keyed control fingerprints only—never the message body,
+phone, email, address, prompt, model draft, or Shopify payload. PostgreSQL creates all lifecycle
+timestamps from its clock. The unsigned Delivery header never defines replay or event identity.
 
 ## Import and activation order
 
 1. Validate this repository source and fixtures.
 2. Compile/import the private Core and keep it inactive until its manual fixture passes.
-3. Compile/import the Calapres edge and confirm it has no outbound customer node.
+3. Validate Edge v2 and its `update_existing_only` manifest, then update workflow
+   `e442GlRmKP4IO8pm` only. Never create another Calapres Edge. Keep the live v1 draft unchanged
+   until the provider, credentials, and inactive-import action are separately approved.
 4. Confirm the merged Wait carrier contains only the strict identifier/control contract, its
    canonical fingerprint and baseline key-version bindings verify after Wait, and live baseline
    capture plus the live-re-read placeholder fail closed until Chatwoot read and HMAC credentials
    are approved.
-5. Validate and import the Shopify order-index workflow inactive; do not bind a credential yet.
-6. Validate and import the private Owner Review Desk inactive with caller policy `none`; keep every
+5. Validate the PostgreSQL migrations in an isolated database. Prove database clock, key rotation,
+   crash recovery, one-winner due-job claims, role isolation, backup, and restore before any live
+   binding. The signed-webhook credential may execute only its eight fixed functions, the
+   reconciliation credential only its six fixed functions, and the Owner credential only its two
+   fixed functions. Shared logical operations use source-specific wrappers; the old generic Edge
+   role receives no callable function.
+6. Validate and import the Shopify order-index workflow inactive; do not bind a credential yet.
+7. Validate and import the private Owner Review Desk inactive with caller policy `none`; keep every
    persistence and publication path absent.
-7. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
-8. Exercise all synthetic fail-closed cases and inspect sanitized records.
-9. Handle the Chatwoot persistent-access gate and Shopify read-scope gate separately.
-10. Connect a live webhook only after signature and replay verification are real, not payload flags.
-11. Run observation with customer egress structurally absent.
+8. Bind the edge to the immutable Core v1 reference; never expose the Core by public webhook.
+9. Exercise all synthetic fail-closed, crash, duplicate, stale-generation, recovery, and graph-path
+   cases and inspect sanitized records.
+10. Handle the Chatwoot persistent-access gate, HMAC keys, PostgreSQL credential, model privacy
+   gate, and Shopify read-scope gate separately.
+11. Connect a live webhook only after the signed fixture, pre-ack baseline, combined durable commit,
+   and schedule recovery are proven. HTTP 204 is forbidden before the durable job exists.
+12. Run observation with the model call and customer egress structurally absent.
 
 Adding a send node, activating automatic customer replies, onboarding another brand, or granting
 write authority requires a later explicit owner approval and the remaining gates in decision 0010.

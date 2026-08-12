@@ -1,0 +1,14 @@
+{
+  "brand_id": "calapres",
+  "challenge_id": "ver_synthetic0002",
+  "channel": "instagram",
+  "contact_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "contact_fingerprint_key_version": "hmac-sha256-v2",
+  "challenge_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "challenge_key_version": "hmac-sha256-v3",
+  "status": "pending",
+  "attempt_count": 0,
+  "expires_at": "2026-08-11T15:10:00Z",
+  "consumed_at": null,
+  "correlation_id": "calapres:synthetic:0002"
+}

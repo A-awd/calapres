@@ -1,0 +1,22 @@
+{
+  "contract_verified": true,
+  "status": "committed",
+  "operation": "compare_and_advance_chatwoot_message_cursor",
+  "outcome": "cursor_advanced",
+  "value": {
+    "account_id": 179973,
+    "inbox_id": 128058,
+    "channel": "whatsapp",
+    "conversation_id": "700001",
+    "scan_id": "cwrs_aaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected_after_message_id": 0,
+    "new_after_message_id": 800001,
+    "page_binding_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "outcome_digest": "9999999999999999999999999999999999999999999999999999999999999999",
+    "row_count": 1,
+    "advanced_at": "2026-08-12T01:00:00.000Z",
+    "activation_floor_at": "2026-08-12T00:00:00.000Z",
+    "activation_policy_version": "2026-08-12-v1"
+  },
+  "error_code": null
+}

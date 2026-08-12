@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calapres.local/schemas/n8n-workflow-deployment-manifest.schema.json",
+  "title": "Calapres n8n source-only deployment manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "deployment_mode",
+    "brand_id",
+    "source_workflow",
+    "source_sha256",
+    "target_workflow_id",
+    "create_allowed",
+    "activation_allowed",
+    "publish_allowed",
+    "credential_binding_allowed",
+    "live_sync_executed",
+    "source_only",
+    "recovery_schedule"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/n8n-workflow-deployment-manifest.schema.json"
+    },
+    "schema_version": { "const": "1.0" },
+    "deployment_mode": { "const": "update_existing_only" },
+    "brand_id": { "const": "calapres" },
+    "source_workflow": {
+      "const": "n8n/workflows/calapres-customer-service-edge-v2.ts"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "target_workflow_id": { "const": "e442GlRmKP4IO8pm" },
+    "create_allowed": { "const": false },
+    "activation_allowed": { "const": false },
+    "publish_allowed": { "const": false },
+    "credential_binding_allowed": { "const": false },
+    "live_sync_executed": { "const": false },
+    "source_only": { "const": true },
+    "recovery_schedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled_in_source",
+        "interval_minutes",
+        "estimated_top_level_executions_per_30_day_month",
+        "purpose",
+        "approval_required_before_enable"
+      ],
+      "properties": {
+        "enabled_in_source": { "const": false },
+        "interval_minutes": { "const": 30 },
+        "estimated_top_level_executions_per_30_day_month": { "const": 1440 },
+        "purpose": { "const": "crash_recovery_only" },
+        "approval_required_before_enable": { "const": true }
+      }
+    }
+  }
+}

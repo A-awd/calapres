@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/A-awd/calapres/n8n/schemas/atomic-storage-result-envelope.schema.json",
+  "title": "Provider-neutral atomic storage result envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_verified",
+    "status",
+    "operation",
+    "outcome",
+    "value",
+    "error_code"
+  ],
+  "properties": {
+    "contract_verified": { "const": true },
+    "status": { "enum": ["committed", "duplicate_or_conflict", "unknown"] },
+    "operation": {
+      "enum": [
+        "claim_request_replay",
+        "claim_business_event",
+        "complete_business_event",
+        "advance_conversation_generation",
+        "read_generation",
+        "schedule_conversation_retry",
+        "claim_due_conversation_retry",
+        "transition_conversation_job",
+        "prepare_owner_review",
+        "compare_and_commit_owner_decision",
+        "claim_chatwoot_reconciliation_scan",
+        "compare_and_advance_chatwoot_message_cursor",
+        "read_chatwoot_reconciliation_cursor"
+      ]
+    },
+    "outcome": { "type": "string", "pattern": "^[a-z][a-z0-9_]{2,80}$" },
+    "value": { "type": ["object", "null"] },
+    "error_code": { "type": ["string", "null"], "pattern": "^[a-z][a-z0-9_]{2,80}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "unknown" } } },
+      "then": {
+        "properties": {
+          "value": { "type": "null" },
+          "error_code": { "type": "string", "pattern": "^[a-z][a-z0-9_]{2,80}$" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "enum": ["committed", "duplicate_or_conflict"] } } },
+      "then": { "properties": { "error_code": { "type": "null" } } }
+    }
+  ]
+}
