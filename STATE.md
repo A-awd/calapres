@@ -11,7 +11,7 @@ is deployed.
 ## PostgreSQL provider gate — 2026-08-12
 
 Neon is the selected PostgreSQL provider for the inactive Calapres observation runtime. Project
-`shiny-hill-38628371` / database `neondb` has migrations 0001–0008 applied, including a deny-first
+`shiny-hill-38628371` / database `neondb` has migrations 0001–0009 applied, including a deny-first
 model-budget guard with a hard `$45` monthly reservation ceiling, a 20-request daily conversation
 cap, and a default-on kill switch. It has 25 Calapres tables,
 40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
@@ -26,7 +26,7 @@ single-winner session locking. A temporary Neon branch matched the primary schem
 was removed after verification. Provider backup-restore service recovery and live Chatwoot
 observation remain unproven.
 
-Current recheck: Neon reports PostgreSQL 18.4, all eight migration records, four restricted runtime
+Current recheck: Neon reports PostgreSQL 18.4, all nine migration records, four restricted runtime
 roles, and the expected deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20,
 monthly limit 45 USD). The existing n8n target passed synthetic valid-signature, modified-body, and
 invalid-signature webhook runs (executions 40786, 40787, and 40785); these were internal tests only and
@@ -39,7 +39,7 @@ The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary,
 and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint` as a
 frozen candidate, now imported into the existing inactive target. Edge v2 contains the bounded four-inbox Chatwoot reconciliation
 scan/cursor graph inside the existing Edge, with the schedule disabled and all live authority closed.
-The current source hash is `875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301`; the deployment
+The current source hash is `b5b22d042912ffc79e75cd9a36f82984300883fee95b335feb8d964848df6e30`; the deployment
 manifest matches it, and
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 records the source-only boundary.
@@ -60,9 +60,13 @@ structurally closed and the budget guard remains deny-first.
 Live signature recheck found that the existing n8n Chatwoot HMAC credential did not match the secret
 shown by the existing Chatwoot webhook edit form. The existing credential was corrected in place
 without creating a new credential; the same synthetic raw-body POST then returned `200`, and Chatwoot
-shows exactly one enabled webhook. A durable business job is not claimed because synthetic
-conversation `7001` does not exist in Chatwoot; do not use a real customer conversation or send a
-message merely to manufacture this proof.
+shows exactly one enabled webhook. A permitted synthetic event for test conversation `3` returned
+HTTP 200 but exposed a PostgreSQL defect: `_edge_key_bundle_valid` joined all namespaces in its
+FULL OUTER JOIN, so unrelated key rows caused `key_coverage_incomplete` and prevented durable
+writes. Migration 0009 corrected the join; Neon now returns `committed / processing_claimed` for
+the atomic function. The existing Edge target was updated and published at version
+`bd5b77ec-54c7-4a8a-939d-43dea77a90d9`; it remains observation/no-send. No customer message,
+private note, model call, or Shopify write occurred.
 
 ## Approved architecture
 

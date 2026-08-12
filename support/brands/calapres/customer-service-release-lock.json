@@ -31,7 +31,7 @@
     },
     {
       "path": "n8n/deployments/calapres-customer-service-edge-v2.update-manifest.json",
-      "sha256": "9ea2e924d814a0c31a0cd39a1ba06efdfe0ca772c3c97414ac18218129c61a54",
+      "sha256": "0bfe5f130024c2ffb798529a3e1615bb3b6340c9c5cf1e49722f4880433c4a79",
       "bytes": 791
     },
     {
@@ -88,6 +88,11 @@
       "path": "n8n/postgres/migrations/0008_calapres_cs_model_budget_guard.sql",
       "sha256": "a7528834db5b8c583005e4a51235e3cb90a1a2dc33fe5e0f4a3526361fbe41bb",
       "bytes": 9151
+    },
+    {
+      "path": "n8n/postgres/migrations/0009_calapres_cs_key_bundle_namespace_join.sql",
+      "sha256": "bbbeea311c2b32104e9f02f939586c5ad9d4283ddedf7fff5cf41d0aaf89836b",
+      "bytes": 5981
     },
     {
       "path": "n8n/postgres/postgres-atomic-storage.js",
@@ -366,8 +371,8 @@
     },
     {
       "path": "n8n/workflows/calapres-customer-service-edge-v2.ts",
-      "sha256": "875a6471e511a1dcd6c8c9bcaa4b5f9b25761630db005f36d4930e1303410301",
-      "bytes": 427781
+      "sha256": "b5b22d042912ffc79e75cd9a36f82984300883fee95b335feb8d964848df6e30",
+      "bytes": 427680
     },
     {
       "path": "n8n/workflows/calapres-owner-review-desk-v1.ts",
@@ -440,5 +445,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "64a20f3e0b3b7b8717bdacf44f43aa86af7f99d07e171262ae9f346dd98c0aa5"
+  "release_digest_sha256": "fcf4376ff324d8b1871030b48f457e3d42149356d82a4443e602c3fc0a583c89"
 }

@@ -5,16 +5,21 @@ publication, activation, model calls, durable writes, or customer egress.
 
 ## Continuation evidence — 2026-08-12
 
-The preserved source was completed and pushed at `aa35fa84fbdbe69c109bca1250c1b616f3b0430e` on
+The preserved source was completed on the checkpoint branch; its final source hash is
+`b5b22d042912ffc79e75cd9a36f82984300883fee95b335feb8d964848df6e30`. It was originally pushed at
+`aa35fa84fbdbe69c109bca1250c1b616f3b0430e` on
 the checkpoint branch. Existing Edge v2 workflow `e442GlRmKP4IO8pm` is published and active in
-observation/no-send mode at version `8d4d3e38-1ecd-47ee-beeb-fd2189e60f26`. The existing Chatwoot
+observation/no-send mode at final version `bd5b77ec-54c7-4a8a-939d-43dea77a90d9`. The existing Chatwoot
 webhook secret binding was corrected in place; a signed synthetic POST returned HTTP 200. The
 full pinned fail-closed graph test completed as n8n execution `40798`. No customer message,
 private note, model call, or Shopify write occurred. A permitted synthetic event was then sent
 for existing test conversation `3`; the endpoint returned HTTP 200, but PostgreSQL still
 contained zero rows in `conversation_jobs`, `conversation_job_queue`, `request_replay_claims`, and
-`audit_events`. This is a live durable-binding blocker, not a success claim: HTTP acceptance did
-not prove durable persistence.
+`audit_events`. Root cause was isolated to `_edge_key_bundle_valid`: its FULL OUTER JOIN included
+unrelated registry namespaces. Migration 0009 scopes that join to the requested namespace; direct
+Neon verification now returns `committed / processing_claimed`. The existing target was updated and
+published at version `bd5b77ec-54c7-4a8a-939d-43dea77a90d9`; observation/no-send remains enabled.
+HTTP acceptance alone did not prove durable persistence.
 
 ## Why this checkpoint exists
 

@@ -2174,7 +2174,7 @@ const preamble = `import { expr, ifElse, newCredential, node, trigger, workflow 
     `const __reconciliationRuntime = __reconciliationModule.exports.createChatwootReconciliationRuntime({\n` +
     `  sha256Hex: (value) => __edgeDependencies.sha256Hex(value),\n` +
     `  active_event_identity_key_version: 'calapres-identity-hmac-v1',\n` +
-    `  retained_event_identity_key_versions: ['calapres-identity-hmac-v2'],\n` +
+    `  retained_event_identity_key_versions: [],\n` +
     `  activation_floor_at: '2026-08-12T00:00:00.000Z',\n` +
     `  activation_policy_version: '2026-08-12-v1',\n` +
     `});\n` +
@@ -2182,8 +2182,8 @@ const preamble = `import { expr, ifElse, newCredential, node, trigger, workflow 
     `  sha256Hex: (value) => __edgeDependencies.sha256Hex(value),\n` +
     `  validate_messages_page: (value) => __reconciliationRuntime.validateMessagesPage(value),\n` +
     `  active_event_identity_key_version: 'calapres-identity-hmac-v1',\n` +
-    `  retained_event_identity_key_versions: ['calapres-identity-hmac-v2'],\n` +
-    `  event_to_storage_key_versions: { 'calapres-identity-hmac-v1': 'hmac-sha256-v1', 'calapres-identity-hmac-v2': 'hmac-sha256-v2' },\n` +
+    `  retained_event_identity_key_versions: [],\n` +
+    `  event_to_storage_key_versions: { 'calapres-identity-hmac-v1': 'hmac-sha256-v1' },\n` +
     `  key_registry_version: 'calapres-storage-keys-v1', request_ttl_seconds: 300, event_retention_seconds: 604800, lease_duration_seconds: 300,\n` +
     `  baseline_fingerprint_key_version: 'calapres-hmac-v1', knowledge_version: '2026-08-11-v3', retention_seconds: 7776000,\n` +
     `  activation_floor_at: '2026-08-12T00:00:00.000Z',\n` +
