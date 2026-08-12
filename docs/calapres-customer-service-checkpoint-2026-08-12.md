@@ -61,3 +61,59 @@ created by this unfinished batch.
 5. Update `STATE.md` and `HANDOFF.md` with the final frozen evidence.
 6. Merge to `main` only after review. Live PostgreSQL compile/concurrency/role/backup validation and
    all persistent credentials remain later owner-approved gates.
+
+## Minimal-token resumption prompt
+
+Copy the following text into a new task. Use one agent and a cost-efficient model with medium
+reasoning for implementation; reserve higher reasoning for one final review only.
+
+```text
+أكمل مشروع خدمة عملاء كالابريز من الـcheckpoint المحفوظ، ولا تبدأ من الصفر ولا تعِد بناء أي
+جزء موجود.
+
+المصدر الملزم:
+- المستودع: A-awd/calapres
+- الفرع: agent/preserve-calapres-customer-service-checkpoint
+- Draft PR: https://github.com/A-awd/calapres/pull/4
+- نقطة البداية المحفوظة: commit b34d2fa772994d4c04bdc95d8a647c212befcd48
+- اقرأ أولًا AGENTS.md وREADME.md وSTATE.md وHANDOFF.md وLAUNCHER.md والقرارين 0010 و0011،
+  ثم docs/calapres-customer-service-checkpoint-2026-08-12.md. تحقق من GitHub وorigin قبل التعديل.
+
+قيود صارمة لتقليل التوكنز:
+1. استخدم وكيلًا واحدًا فقط. ممنوع إنشاء subagents أو parallel agents.
+2. لا تعِد البحث أو التصميم أو تدقيق المستودع كاملًا. اقرأ فقط الملفات المرتبطة مباشرة بالمرحلة.
+3. لا تضف أي براند آخر، ولا Supabase، ولا Captain/AgentBot، ولا تعدّل الكتالوج أو Shopify theme.
+4. لا تنشئ Workflow جديدًا لكالابريز؛ حدّث Edge V2 الحالي فقط، واستهدف workflow ID
+   e442GlRmKP4IO8pm عند الوصول إلى بوابة الاستيراد المعتمدة.
+5. لا توسّع المعمارية أو تكتب وثائق جديدة إلا لتسجيل الحالة النهائية المطلوبة.
+6. استخدم اختبارات مستهدفة أثناء التنفيذ، ثم شغّل الحزمة الكاملة مرة واحدة فقط عند التجميد.
+7. لا تطبع ملفات أو مخرجات طويلة. أعطِ تحديثات عربية قصيرة ومحددة.
+8. اعمل على checkpoints صغيرة وادفع كل مرحلة مستقرة إلى الفرع نفسه. إذا كان عداد الاستخدام
+   متاحًا، توقف وقدم كشف تقدم كل 25 ألف توكن، ولا تتجاوز 200 ألف توكن دون موافقتي.
+9. لا تلمس live n8n أو credentials أو PostgreSQL أو Chatwoot أو Shopify أو الإرسال للعملاء دون
+   موافقتي عند البوابة التي تتطلب ذلك.
+10. اكتب اسم البراند بالعربية دائمًا: كالابريز.
+
+الهدف العملي، دون إعادة هندسة:
+- إكمال الحد الأدنى الإنتاجي لخدمة عملاء كالابريز بالذكاء الاصطناعي دون موظف بشري للطلبات
+  الروتينية، مع تحويل الحالات الحساسة أو غير الموثوقة إلى المالك أو no-send بدل التخمين.
+- أبقِ البراندات الأخرى خارج النطاق.
+
+ترتيب العمل الملزم:
+1. تحقق أن الـcheckpoint لم يتغير، وشغّل الاختبارات المستهدفة التي تثبت أن العائق الحالي هو hash
+   الـdeployment manifest والمسار غير المجمّد فقط.
+2. أكمل دمج مسار Chatwoot reconciliation الموجود داخل Edge V2 نفسه باستخدام العقود والـruntime
+   وعمليات PostgreSQL الموجودة؛ لا تنشئ بنية بديلة.
+3. جمّد Edge V2، حدّث source_sha256 مرة واحدة، وأنشئ customer-service release lock.
+4. أصلح الاختبارات الحالية فقط حتى تصبح Node وPython وJSON وsyntax وgraph وsecret/PII checks
+   خضراء، ثم حدّث STATE.md وHANDOFF.md والوثائق القائمة باختصار.
+5. commit وpush إلى الفرع نفسه، وحدّث Draft PR #4. لا تدمج إلى main قبل المراجعة.
+6. بعد اكتمال المصدر، اطلب مني فقط المدخلات الخارجية الضرورية بالترتيب: اعتماد PostgreSQL، ثم
+   Chatwoot secret/read credential، ثم مفتاح النموذج، ثم Shopify read scopes. لا تطلبها قبل الحاجة.
+7. عند توفرها، اختبر PostgreSQL الحقيقي والعزل والسباقات، ثم signed Chatwoot fixture، ثم observation
+   بلا إرسال. بعد نجاح ذلك اربط النموذج وShopify للقراءة واختبر low-risk replies.
+8. لا تفعّل customer send إلا بعد اختبار end-to-end ناجح وموافقتي الصريحة النهائية.
+
+ابدأ بالتنفيذ مباشرة من الأدلة الحالية. لا تقدم خطة طويلة؛ أعطني في البداية خمس نقاط كحد أقصى عن
+الحالة، ثم نفّذ المرحلة الأولى.
+```
