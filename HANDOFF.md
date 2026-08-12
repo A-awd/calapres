@@ -11,8 +11,9 @@ runtime, its no-send boundary, and its persistent-access gates.
 
 Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database has migrations
 0001–0007 applied and the restricted n8n Webhook/Reconciliation credentials have passed SSL
-connection tests. Continue using the existing Edge target `e442GlRmKP4IO8pm`; do not create a
-workflow, activate it, publish it, or connect live Chatwoot traffic.
+connection tests. The checked-in Edge v2 is imported into the existing target `e442GlRmKP4IO8pm`
+with those two project-scoped credentials. Do not create a workflow, activate it, publish it, or
+connect live Chatwoot traffic.
 
 For the frozen post-`bfb191c` customer-service source release, resume from branch
 `agent/preserve-calapres-customer-service-checkpoint` and read
@@ -21,9 +22,9 @@ before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fi
 The frozen Edge v2 source hash is
 `ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95`, and
 `support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
-rebuild these artifacts, update the live Edge, bind credentials, or claim production readiness
-from this checkpoint. `main` remains authoritative until the preserved branch is reviewed and
-merged.
+rebuild these artifacts or claim production readiness from this checkpoint. The imported target
+remains inactive and unpublished; `main` remains authoritative until the preserved branch is
+reviewed and merged.
 
 ## Completed in the Supabase retirement
 

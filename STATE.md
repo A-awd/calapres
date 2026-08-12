@@ -15,13 +15,14 @@ Neon is the selected PostgreSQL provider for the inactive Calapres observation r
 40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
 roles, and verified callable-boundary ACLs. No customer traffic, customer send, Shopify write,
 workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
-remains the only target and remains inactive; the source-only v2 update is not yet imported.
+remains the only target and remains inactive. The v2 source is now imported into that same target;
+its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials.
 
 ## Preserved customer-service source release — 2026-08-12
 
 The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary, schemas, fixtures,
 and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint` as a
-source-only frozen candidate. Edge v2 now contains the bounded four-inbox Chatwoot reconciliation
+frozen candidate, now imported into the existing inactive target. Edge v2 contains the bounded four-inbox Chatwoot reconciliation
 scan/cursor graph inside the existing Edge, with the schedule disabled and all live authority closed.
 The source hash is `ca042477f15cbf5206a585907c95395d39fb3b7df0ca6ad3dc0385f4257a9e95`; the deployment
 manifest matches it, and
@@ -228,7 +229,8 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   exact Wait fingerprint, baseline key-version carry-through, null-reserved 10-column dedup
   preview, and post-Wait integrity check. Every tested result kept
   customer egress and persistence false. The Edge
-  remains inactive, unpublished, credential-free, and source-identical to its live draft.
+  remains inactive and unpublished; the imported graph is source-identical to the frozen Edge v2
+  source and carries only the two project-scoped PostgreSQL runtime credentials.
 - GitHub now contains the brand registry, three append-only dated knowledge releases sourced from the live
   Calapres policy/FAQ pages, the approved response-style release, a proposed inactive model policy,
   generic Core contracts, stricter Calapres edge contracts, synthetic fixtures, and

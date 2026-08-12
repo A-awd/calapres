@@ -17,6 +17,9 @@ publish, or connect live customer traffic at this decision.
 - Separate Webhook and Reconciliation login roles exist and inherit only their runtime roles;
   Owner functions remain separately bounded.
 - Both restricted n8n PostgreSQL credentials passed SSL-required connection tests.
+- The checked-in Edge v2 was imported into the existing workflow `e442GlRmKP4IO8pm`; the graph
+  has 143 nodes and 167 connections, remains inactive/unpublished, and uses the two project-scoped
+  PostgreSQL credentials.
 - Targeted Node tests passed 39/39 after making migration 0002 compatible with Neon’s absence of
   a login role named `postgres`.
 

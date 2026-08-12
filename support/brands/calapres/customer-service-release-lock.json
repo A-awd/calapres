@@ -46,8 +46,8 @@
     },
     {
       "path": "n8n/postgres/migrations/0002_calapres_cs_atomic_functions.sql",
-      "sha256": "6c97b5a339ff8b5bcd5783dd957740eb840ac6109dfc7767b470d5e61e36a0ae",
-      "bytes": 82666
+      "sha256": "2384ac9fbac31f46e456116f9482702669d1e10977735510aead0ec577849239",
+      "bytes": 83272
     },
     {
       "path": "n8n/postgres/migrations/0003_calapres_cs_callable_boundary.sql",
@@ -425,6 +425,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "630c36dea67cf76fce8f4999f8135023395e849e04d696ec56a7d1be92194657"
+  "release_digest_sha256": "857079a76a26c6d3bb1ae32e07fd1b1deef2cc11f1d9387d938a7e58f73a60cd"
 }
-
