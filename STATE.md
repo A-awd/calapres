@@ -57,11 +57,12 @@ connected read-only MCP and the active Edge target has the read-only Shopify bra
 the project OAuth2 credential. The model credential is present, but the model call remains
 structurally closed and the budget guard remains deny-first.
 
-Live observation blocker: a synthetic raw-body POST signed with the stored HMAC material reached the
-published Edge and returned `401`; no durable customer event or customer message was produced. The
-current Chatwoot account page reports that Webhooks are available only on paid plans, so a real
-Chatwoot delivery is not yet proven. Do not rotate, bypass, or weaken signature verification; resolve
-the Chatwoot plan/secret binding through the supported UI, then rerun the signed fixture.
+Live signature recheck found that the existing n8n Chatwoot HMAC credential did not match the secret
+shown by the existing Chatwoot webhook edit form. The existing credential was corrected in place
+without creating a new credential; the same synthetic raw-body POST then returned `200`, and Chatwoot
+shows exactly one enabled webhook. A durable business job is not claimed because synthetic
+conversation `7001` does not exist in Chatwoot; do not use a real customer conversation or send a
+message merely to manufacture this proof.
 
 ## Approved architecture
 
