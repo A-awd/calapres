@@ -1104,6 +1104,10 @@ const valueKeys = ['account_id','inbox_id','channel','conversation_id','anchor_m
   'baseline_status_fingerprint','baseline_assignee_fingerprint','delay_policy_version',
   'delay_seconds','knowledge_version','request_claim_id','business_claim_id','job_id','generation',
   'due_at','state'];
+const provenanceValueKeys = ['request_source','source_binding_sha256'];
+const reconciliationValueKeys = [
+  'reconciliation_scan_id','reconciliation_expected_after_message_id',
+  'reconciliation_page_binding_sha256'];
 const exactResult = result && Object.keys(result).length === envelopeKeys.length &&
   envelopeKeys.every((field) => Object.prototype.hasOwnProperty.call(result, field));
 const outcomeValid = mode === requiredMode && exactResult && result.contract_verified === true &&
@@ -1115,8 +1119,11 @@ const outcomeValid = mode === requiredMode && exactResult && result.contract_ver
     result.outcome === 'duplicate_ingress_bound'));
 if (outcomeValid && result.value && typeof result.value === 'object') {
   const value = result.value;
-  const exactValue = Object.keys(value).length === valueKeys.length &&
-    valueKeys.every((field) => Object.prototype.hasOwnProperty.call(value, field));
+  const exactValue = [valueKeys, valueKeys.concat(provenanceValueKeys),
+    valueKeys.concat(reconciliationValueKeys),
+    valueKeys.concat(provenanceValueKeys, reconciliationValueKeys)].some((fields) =>
+    Object.keys(value).length === fields.length &&
+    fields.every((field) => Object.prototype.hasOwnProperty.call(value, field)));
   const control = mode === 'completed_reconcile' ? expectedControl : command;
   const exactControl = exactValue && [
     'account_id','inbox_id','channel','conversation_id','anchor_message_id','correlation_id',
@@ -1124,9 +1131,13 @@ if (outcomeValid && result.value && typeof result.value === 'object') {
     'message_fingerprint','baseline_fingerprint_key_version','baseline_status_fingerprint',
     'baseline_assignee_fingerprint','delay_policy_version','delay_seconds','knowledge_version'
   ].every((field) => value[field] === control[field]);
+  const provenanceValuesValid = provenanceValueKeys.every((field) =>
+    !Object.prototype.hasOwnProperty.call(value, field) || value[field] === control[field]);
+  const reconciliationValuesValid = reconciliationValueKeys.every((field) =>
+    !Object.prototype.hasOwnProperty.call(value, field) || value[field] === control[field]);
   const stateValid = mode === 'completed_reconcile' ? value.state === 'completed'
     : value.state === 'pending';
-  if (exactControl && stateValid && value.request_claim_id === command.request_claim_id &&
+  if (exactControl && provenanceValuesValid && reconciliationValuesValid && stateValid && value.request_claim_id === command.request_claim_id &&
       value.business_claim_id === command.business_claim_id && value.job_id === command.job_id &&
       Number.isSafeInteger(value.generation) && value.generation > 0 &&
       typeof value.due_at === 'string' && Number.isFinite(Date.parse(value.due_at)) &&

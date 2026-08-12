@@ -10,7 +10,7 @@ another brand implementation. Decision 0010 is binding for the inactive Calapres
 runtime, its no-send boundary, and its persistent-access gates.
 
 Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database has migrations
-0001–0009 applied; migration 0008 adds the deny-first model budget guard and migration 0009 fixes
+0001–0010 applied; migration 0008 adds the deny-first model budget guard, migration 0009 fixes
 the namespace-scoped key-bundle join that blocked durable writes. The restricted n8n
 Webhook/Reconciliation credentials have passed SSL
 connection tests. The checked-in Edge v2 is imported into the existing target `e442GlRmKP4IO8pm`
@@ -23,7 +23,7 @@ database clock, role separation, rollback, and one-winner locking; a temporary b
 comparison produced no diff and the branch was removed. This is not a provider backup-restore
 drill, and no live Chatwoot, model, or Shopify observation has occurred.
 
-The current Neon recheck reports PostgreSQL 18.4, migrations 0001–0009, four restricted runtime roles,
+The current Neon recheck reports PostgreSQL 18.4, migrations 0001–0010, four restricted runtime roles,
 and deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20, monthly limit 45 USD).
 The inactive n8n target passed internal synthetic valid-signature, modified-body, and invalid-signature
 webhook runs; targeted Node coverage passed 83/83. These tests did not send a customer message.
@@ -33,7 +33,7 @@ For the frozen post-`bfb191c` customer-service source release, resume from branc
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fixture, or test file.
 The current Edge v2 source hash is
-`b5b22d042912ffc79e75cd9a36f82984300883fee95b335feb8d964848df6e30`, and
+`c3f2e3f00c6cfeeeba42966639303056fd178e7b67ed512a6d39c6da6e22d991`, and
 `support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
 rebuild these artifacts or claim production readiness from this checkpoint. The target is now
 published and active for observation only; `main` remains authoritative until the preserved branch
@@ -59,7 +59,7 @@ The first permitted synthetic event for test conversation `3` returned HTTP 200 
 durable rows. Root cause was confirmed in PostgreSQL: `_edge_key_bundle_valid` compared the
 request namespace against unrelated registry namespaces. Migration 0009 is applied and the
 atomic function now returns `committed / processing_claimed` in direct Neon verification. The n8n
-target was updated and published at version `bd5b77ec-54c7-4a8a-939d-43dea77a90d9`; it remains
+target was updated and published at version `55ff93fc-8400-4a55-8338-3cc5301f7f71`; it remains
 observation/no-send. The
 n8n end-to-end durable replay proof remains the final observation check; do not weaken HMAC or
 use customer data to manufacture it.

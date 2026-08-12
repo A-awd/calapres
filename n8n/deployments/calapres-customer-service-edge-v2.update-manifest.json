@@ -4,7 +4,7 @@
   "deployment_mode": "update_existing_only",
   "brand_id": "calapres",
   "source_workflow": "n8n/workflows/calapres-customer-service-edge-v2.ts",
-  "source_sha256": "b5b22d042912ffc79e75cd9a36f82984300883fee95b335feb8d964848df6e30",
+  "source_sha256": "c3f2e3f00c6cfeeeba42966639303056fd178e7b67ed512a6d39c6da6e22d991",
   "target_workflow_id": "e442GlRmKP4IO8pm",
   "create_allowed": false,
   "activation_allowed": false,
