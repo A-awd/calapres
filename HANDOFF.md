@@ -14,7 +14,7 @@ For the frozen post-`bfb191c` customer-service source release, resume from branc
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fixture, or test file.
 The frozen Edge v2 source hash is
-`7f7c18ec7cc3588939e8c90dc61ffbdec17b35ed2d5ec97ee5163aea2dcc8b1f`, and
+`5edb403c5f94730660b066691c4c9420a3482d0ab59335f551c7e5bc6092b120`, and
 `support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
 rebuild these artifacts, update the live Edge, bind credentials, or claim production readiness
 from this checkpoint. `main` remains authoritative until the preserved branch is reviewed and

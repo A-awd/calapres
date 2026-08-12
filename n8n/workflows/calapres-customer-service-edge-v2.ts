@@ -1987,6 +1987,252 @@ const reconCandidateHmac04 = node({
   }
 });
 
+const reconFinalizeCandidate = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Finalize Reconciliation Candidate Identity",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\ntry {\n  const plan = $json.candidate_plan;\n  const digestFields = {\n    reconciliation_hmac_candidate_identity_01_event_identity_v1: $json.reconciliation_hmac_candidate_identity_01_event_identity_v1,\n    reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1: $json.reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1,\n    reconciliation_hmac_candidate_identity_03_event_identity_v2: $json.reconciliation_hmac_candidate_identity_03_event_identity_v2,\n    reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2: $json.reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2,\n  };\n  const identity = __reconciliationBridge.finalizeCandidateIdentity({ ...plan, ...digestFields });\n  return [{ json: { ...$json, ...identity, candidate_identity: identity, customer_egress_allowed: false } }];\n} catch (error) {\n  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'candidate_hmac_invalid'), customer_egress_allowed: false } }];\n}\n"
+    },
+    "position": [
+      13750,
+      700
+    ]
+  }
+});
+
+const reconRouteHmac01 = node({
+  "type": "n8n-nodes-base.crypto",
+  "version": 2,
+  "config": {
+    "name": "Crypto Reconciliation 05 route_identity message_anchor v1 Placeholder",
+    "parameters": {
+      "action": "hmac",
+      "binaryData": false,
+      "type": "SHA256",
+      "dataPropertyName": "reconciliation_hmac_route_identity_01_message_anchor_v1",
+      "encoding": "hex",
+      "value": expr("{{ $json.route_hmac_requests[0].material_utf8 }}")
+    },
+    "credentials": {
+      "crypto": eventIdentityHmacCredential
+    },
+    "position": [
+      14010,
+      700
+    ]
+  }
+});
+
+const reconRouteHmac02 = node({
+  "type": "n8n-nodes-base.crypto",
+  "version": 2,
+  "config": {
+    "name": "Crypto Reconciliation 06 route_identity conversation v1 Placeholder",
+    "parameters": {
+      "action": "hmac",
+      "binaryData": false,
+      "type": "SHA256",
+      "dataPropertyName": "reconciliation_hmac_route_identity_02_conversation_v1",
+      "encoding": "hex",
+      "value": expr("{{ $json.route_hmac_requests[1].material_utf8 }}")
+    },
+    "credentials": {
+      "crypto": eventIdentityHmacCredential
+    },
+    "position": [
+      14140,
+      700
+    ]
+  }
+});
+
+const reconRouteHmac03 = node({
+  "type": "n8n-nodes-base.crypto",
+  "version": 2,
+  "config": {
+    "name": "Crypto Reconciliation 07 route_identity message_anchor v2 Placeholder",
+    "parameters": {
+      "action": "hmac",
+      "binaryData": false,
+      "type": "SHA256",
+      "dataPropertyName": "reconciliation_hmac_route_identity_03_message_anchor_v2",
+      "encoding": "hex",
+      "value": expr("{{ $json.route_hmac_requests[2].material_utf8 }}")
+    },
+    "credentials": {
+      "crypto": eventIdentityHmacCredential
+    },
+    "position": [
+      14270,
+      700
+    ]
+  }
+});
+
+const reconRouteHmac04 = node({
+  "type": "n8n-nodes-base.crypto",
+  "version": 2,
+  "config": {
+    "name": "Crypto Reconciliation 08 route_identity conversation v2 Placeholder",
+    "parameters": {
+      "action": "hmac",
+      "binaryData": false,
+      "type": "SHA256",
+      "dataPropertyName": "reconciliation_hmac_route_identity_04_conversation_v2",
+      "encoding": "hex",
+      "value": expr("{{ $json.route_hmac_requests[3].material_utf8 }}")
+    },
+    "credentials": {
+      "crypto": eventIdentityHmacCredential
+    },
+    "position": [
+      14400,
+      700
+    ]
+  }
+});
+
+const reconFinalizeRoute = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Finalize Reconciliation Route and Atomic Claims",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\ntry {\n  const identity = $json.candidate_identity;\n  const route = __reconciliationBridge.finalizeRouteAndProjectAtomicClaims({\n    ...identity,\n    reconciliation_hmac_route_identity_01_message_anchor_v1: $json.reconciliation_hmac_route_identity_01_message_anchor_v1,\n    reconciliation_hmac_route_identity_02_conversation_v1: $json.reconciliation_hmac_route_identity_02_conversation_v1,\n    reconciliation_hmac_route_identity_03_message_anchor_v2: $json.reconciliation_hmac_route_identity_03_message_anchor_v2,\n    reconciliation_hmac_route_identity_04_conversation_v2: $json.reconciliation_hmac_route_identity_04_conversation_v2,\n  });\n  return [{ json: { ...$json, reconciliation_projection: route, customer_egress_allowed: false } }];\n} catch (error) {\n  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'route_hmac_invalid'), customer_egress_allowed: false } }];\n}\n"
+    },
+    "position": [
+      14530,
+      700
+    ]
+  }
+});
+
+const reconBuildRequestClaim = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Build Reconciliation Request Replay Claim",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\nconst projection = $json.reconciliation_projection;\nreturn [{ json: { ...$json, postgres_command: projection && projection.claim_request_replay_command || null, reconciliation_ready: Boolean(projection), customer_egress_allowed: false } }];\n"
+    },
+    "position": [
+      14790,
+      700
+    ]
+  }
+});
+
+const reconClaimRequest = node({
+  "type": "n8n-nodes-base.postgres",
+  "version": 2.7,
+  "config": {
+    "name": "Postgres Reconciliation 01 - claim_reconciliation_request_replay",
+    "parameters": {
+      "resource": "database",
+      "operation": "executeQuery",
+      "query": "SELECT calapres_cs.atomic_claim_reconciliation_request_replay($1::jsonb) AS result",
+      "options": {
+        "queryBatching": "single",
+        "queryReplacement": expr("{{ [JSON.stringify($json.postgres_command)] }}"),
+        "replaceEmptyStrings": false
+      }
+    },
+    "credentials": {
+      "postgres": reconciliationPostgresCredential
+    },
+    "onError": "continueRegularOutput",
+    "position": [
+      15050,
+      700
+    ]
+  }
+});
+
+const reconInterpretRequest = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Interpret Reconciliation Request Replay Claim",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\nconst result = $json.result && typeof $json.result === 'object' ? $json.result : null;\nconst value = result && result.value && typeof result.value === 'object' ? result.value : null;\nconst ready = result && ['committed', 'duplicate_or_conflict'].includes(result.status) && value;\nreturn [{ json: { ...$json, request_result: result, request_claim: ready ? value : null, reconciliation_ready: Boolean(ready), customer_egress_allowed: false } }];\n"
+    },
+    "position": [
+      15310,
+      700
+    ]
+  }
+});
+
+const reconBuildBusinessClaim = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Build Reconciliation Business Event Claim",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\nconst projection = $json.reconciliation_projection;\nreturn [{ json: { ...$json, postgres_command: projection && projection.claim_business_event_command || null, reconciliation_ready: Boolean(projection && $json.request_claim), customer_egress_allowed: false } }];\n"
+    },
+    "position": [
+      15570,
+      700
+    ]
+  }
+});
+
+const reconClaimBusiness = node({
+  "type": "n8n-nodes-base.postgres",
+  "version": 2.7,
+  "config": {
+    "name": "Postgres Reconciliation 02 - claim_business_event",
+    "parameters": {
+      "resource": "database",
+      "operation": "executeQuery",
+      "query": "SELECT calapres_cs.atomic_claim_business_event($1::jsonb) AS result",
+      "options": {
+        "queryBatching": "single",
+        "queryReplacement": expr("{{ [JSON.stringify($json.postgres_command)] }}"),
+        "replaceEmptyStrings": false
+      }
+    },
+    "credentials": {
+      "postgres": reconciliationPostgresCredential
+    },
+    "onError": "continueRegularOutput",
+    "position": [
+      15830,
+      700
+    ]
+  }
+});
+
+const reconInterpretBusiness = node({
+  "type": "n8n-nodes-base.code",
+  "version": 2,
+  "config": {
+    "name": "Interpret Reconciliation Business Event Claim",
+    "parameters": {
+      "mode": "runOnceForAllItems",
+      "language": "javaScript",
+      "jsCode": STAGED_BOOTSTRAP + "\n\nconst result = $json.result && typeof $json.result === 'object' ? $json.result : null;\nconst value = result && result.value && typeof result.value === 'object' ? result.value : null;\nconst ready = result && ['committed', 'duplicate_or_conflict'].includes(result.status) && value;\nreturn [{ json: { ...$json, business_result: result, business_claim: ready ? value : null, reconciliation_ready: Boolean(ready), customer_egress_allowed: false } }];\n"
+    },
+    "position": [
+      16090,
+      700
+    ]
+  }
+});
+
 const reconBuildCursorAdvance = node({
   "type": "n8n-nodes-base.code",
   "version": 2,
@@ -2024,7 +2270,7 @@ const reconAdvanceCursor = node({
     },
     "onError": "continueRegularOutput",
     "position": [
-      14010,
+      16350,
       700
     ]
   }
@@ -2041,7 +2287,7 @@ const reconTerminal = node({
       "jsCode": "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];"
     },
     "position": [
-      14270,
+      16610,
       700
     ]
   }
@@ -3387,6 +3633,18 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                           .to(reconCandidateHmac02)
                           .to(reconCandidateHmac03)
                           .to(reconCandidateHmac04)
+                          .to(reconFinalizeCandidate)
+                          .to(reconRouteHmac01)
+                          .to(reconRouteHmac02)
+                          .to(reconRouteHmac03)
+                          .to(reconRouteHmac04)
+                          .to(reconFinalizeRoute)
+                          .to(reconBuildRequestClaim)
+                          .to(reconClaimRequest)
+                          .to(reconInterpretRequest)
+                          .to(reconBuildBusinessClaim)
+                          .to(reconClaimBusiness)
+                          .to(reconInterpretBusiness)
                           .to(reconBuildCursorAdvance)
                           .to(reconAdvanceCursor)
                           .to(reconTerminal)

@@ -246,11 +246,12 @@ test('PostgreSQL boundary separates eight Edge functions and reconciliation func
     'claim_due_conversation_retry',
     'transition_conversation_job',
     'claim_chatwoot_reconciliation_scan',
+    'claim_reconciliation_request_replay',
     'read_chatwoot_reconciliation_cursor',
     'compare_and_advance_chatwoot_message_cursor',
   ];
   const postgres = byType('n8n-nodes-base.postgres');
-  assert.equal(postgres.length, 12);
+  assert.equal(postgres.length, 14);
   const actual = [];
   for (const configured of postgres) {
     assert.equal(configured.parameters.resource, 'database');

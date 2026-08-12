@@ -14,7 +14,7 @@ The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary,
 and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint` as a
 source-only frozen candidate. Edge v2 now contains the bounded four-inbox Chatwoot reconciliation
 scan/cursor graph inside the existing Edge, with the schedule disabled and all live authority closed.
-The source hash is `7f7c18ec7cc3588939e8c90dc61ffbdec17b35ed2d5ec97ee5163aea2dcc8b1f`; the deployment
+The source hash is `5edb403c5f94730660b066691c4c9420a3482d0ab59335f551c7e5bc6092b120`; the deployment
 manifest matches it, and
 [`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
 records the source-only boundary.

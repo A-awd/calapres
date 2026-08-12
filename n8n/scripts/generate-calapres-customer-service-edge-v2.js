@@ -379,6 +379,62 @@ try {
 }
 `;
 
+const RECON_FINALIZE_CANDIDATE = String.raw`
+try {
+  const plan = $json.candidate_plan;
+  const digestFields = {
+    reconciliation_hmac_candidate_identity_01_event_identity_v1: $json.reconciliation_hmac_candidate_identity_01_event_identity_v1,
+    reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1: $json.reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1,
+    reconciliation_hmac_candidate_identity_03_event_identity_v2: $json.reconciliation_hmac_candidate_identity_03_event_identity_v2,
+    reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2: $json.reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2,
+  };
+  const identity = __reconciliationBridge.finalizeCandidateIdentity({ ...plan, ...digestFields });
+  return [{ json: { ...$json, ...identity, candidate_identity: identity, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'candidate_hmac_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_FINALIZE_ROUTE = String.raw`
+try {
+  const identity = $json.candidate_identity;
+  const route = __reconciliationBridge.finalizeRouteAndProjectAtomicClaims({
+    ...identity,
+    reconciliation_hmac_route_identity_01_message_anchor_v1: $json.reconciliation_hmac_route_identity_01_message_anchor_v1,
+    reconciliation_hmac_route_identity_02_conversation_v1: $json.reconciliation_hmac_route_identity_02_conversation_v1,
+    reconciliation_hmac_route_identity_03_message_anchor_v2: $json.reconciliation_hmac_route_identity_03_message_anchor_v2,
+    reconciliation_hmac_route_identity_04_conversation_v2: $json.reconciliation_hmac_route_identity_04_conversation_v2,
+  });
+  return [{ json: { ...$json, reconciliation_projection: route, customer_egress_allowed: false } }];
+} catch (error) {
+  return [{ json: { reconciliation_ready: false, stage_failure: String(error && error.message || 'route_hmac_invalid'), customer_egress_allowed: false } }];
+}
+`;
+
+const RECON_BUILD_REQUEST_CLAIM = String.raw`
+const projection = $json.reconciliation_projection;
+return [{ json: { ...$json, postgres_command: projection && projection.claim_request_replay_command || null, reconciliation_ready: Boolean(projection), customer_egress_allowed: false } }];
+`;
+
+const RECON_INTERPRET_REQUEST = String.raw`
+const result = $json.result && typeof $json.result === 'object' ? $json.result : null;
+const value = result && result.value && typeof result.value === 'object' ? result.value : null;
+const ready = result && ['committed', 'duplicate_or_conflict'].includes(result.status) && value;
+return [{ json: { ...$json, request_result: result, request_claim: ready ? value : null, reconciliation_ready: Boolean(ready), customer_egress_allowed: false } }];
+`;
+
+const RECON_BUILD_BUSINESS_CLAIM = String.raw`
+const projection = $json.reconciliation_projection;
+return [{ json: { ...$json, postgres_command: projection && projection.claim_business_event_command || null, reconciliation_ready: Boolean(projection && $json.request_claim), customer_egress_allowed: false } }];
+`;
+
+const RECON_INTERPRET_BUSINESS = String.raw`
+const result = $json.result && typeof $json.result === 'object' ? $json.result : null;
+const value = result && result.value && typeof result.value === 'object' ? result.value : null;
+const ready = result && ['committed', 'duplicate_or_conflict'].includes(result.status) && value;
+return [{ json: { ...$json, business_result: result, business_claim: ready ? value : null, reconciliation_ready: Boolean(ready), customer_egress_allowed: false } }];
+`;
+
 const RECON_BUILD_CURSOR_ADVANCE = String.raw`
 try {
   const finalization = $json.messages_finalization;
@@ -1766,9 +1822,21 @@ hmac('reconCandidateHmac01', 'Crypto Reconciliation 01 candidate_identity event_
 hmac('reconCandidateHmac02', 'Crypto Reconciliation 02 candidate_identity request_attempt_identity v1 Placeholder', '{{ $json.hmac_requests[1].material_utf8 }}', 'reconciliation_hmac_candidate_identity_02_request_attempt_identity_v1', 'eventIdentityHmacCredential', [13230, 700]);
 hmac('reconCandidateHmac03', 'Crypto Reconciliation 03 candidate_identity event_identity v2 Placeholder', '{{ $json.hmac_requests[2].material_utf8 }}', 'reconciliation_hmac_candidate_identity_03_event_identity_v2', 'eventIdentityHmacCredential', [13360, 700]);
 hmac('reconCandidateHmac04', 'Crypto Reconciliation 04 candidate_identity request_attempt_identity v2 Placeholder', '{{ $json.hmac_requests[3].material_utf8 }}', 'reconciliation_hmac_candidate_identity_04_request_attempt_identity_v2', 'eventIdentityHmacCredential', [13490, 700]);
+code('reconFinalizeCandidate', 'Finalize Reconciliation Candidate Identity', RECON_FINALIZE_CANDIDATE, [13750, 700], true);
+hmac('reconRouteHmac01', 'Crypto Reconciliation 05 route_identity message_anchor v1 Placeholder', '{{ $json.route_hmac_requests[0].material_utf8 }}', 'reconciliation_hmac_route_identity_01_message_anchor_v1', 'eventIdentityHmacCredential', [14010, 700]);
+hmac('reconRouteHmac02', 'Crypto Reconciliation 06 route_identity conversation v1 Placeholder', '{{ $json.route_hmac_requests[1].material_utf8 }}', 'reconciliation_hmac_route_identity_02_conversation_v1', 'eventIdentityHmacCredential', [14140, 700]);
+hmac('reconRouteHmac03', 'Crypto Reconciliation 07 route_identity message_anchor v2 Placeholder', '{{ $json.route_hmac_requests[2].material_utf8 }}', 'reconciliation_hmac_route_identity_03_message_anchor_v2', 'eventIdentityHmacCredential', [14270, 700]);
+hmac('reconRouteHmac04', 'Crypto Reconciliation 08 route_identity conversation v2 Placeholder', '{{ $json.route_hmac_requests[3].material_utf8 }}', 'reconciliation_hmac_route_identity_04_conversation_v2', 'eventIdentityHmacCredential', [14400, 700]);
+code('reconFinalizeRoute', 'Finalize Reconciliation Route and Atomic Claims', RECON_FINALIZE_ROUTE, [14530, 700], true);
+code('reconBuildRequestClaim', 'Build Reconciliation Request Replay Claim', RECON_BUILD_REQUEST_CLAIM, [14790, 700], true);
+postgres('reconClaimRequest', 1, 'claim_request_replay', [15050, 700], 'Postgres Reconciliation 01 - claim_reconciliation_request_replay', 'claim_reconciliation_request_replay', 'reconciliationPostgresCredential');
+code('reconInterpretRequest', 'Interpret Reconciliation Request Replay Claim', RECON_INTERPRET_REQUEST, [15310, 700], true);
+code('reconBuildBusinessClaim', 'Build Reconciliation Business Event Claim', RECON_BUILD_BUSINESS_CLAIM, [15570, 700], true);
+postgres('reconClaimBusiness', 2, 'claim_business_event', [15830, 700], 'Postgres Reconciliation 02 - claim_business_event', 'claim_business_event', 'reconciliationPostgresCredential');
+code('reconInterpretBusiness', 'Interpret Reconciliation Business Event Claim', RECON_INTERPRET_BUSINESS, [16090, 700], true);
 code('reconBuildCursorAdvance', 'Build Reconciliation Cursor Compare and Advance Command', RECON_BUILD_CURSOR_ADVANCE, [13750, 700], true);
-postgres('reconAdvanceCursor', 12, 'compare_and_advance_chatwoot_message_cursor', [14010, 700], 'Postgres Reconciliation 12 - compare_and_advance_chatwoot_message_cursor', 'compare_and_advance_chatwoot_message_cursor', 'reconciliationPostgresCredential');
-code('reconTerminal', 'Reconciliation Observation Terminal - No Send', "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];", [14270, 700]);
+postgres('reconAdvanceCursor', 12, 'compare_and_advance_chatwoot_message_cursor', [16350, 700], 'Postgres Reconciliation 12 - compare_and_advance_chatwoot_message_cursor', 'compare_and_advance_chatwoot_message_cursor', 'reconciliationPostgresCredential');
+code('reconTerminal', 'Reconciliation Observation Terminal - No Send', "return [{ json: { reconciliation_terminal: true, customer_egress_allowed: false } }];", [16610, 700]);
 code(
   'prepareWorkerClaim',
   'Prepare Worker Claim Without Conversation Identifier',
@@ -2239,6 +2307,18 @@ export default workflow('calapres-customer-service-edge-v2', 'Calapres | Custome
                           .to(reconCandidateHmac02)
                           .to(reconCandidateHmac03)
                           .to(reconCandidateHmac04)
+                          .to(reconFinalizeCandidate)
+                          .to(reconRouteHmac01)
+                          .to(reconRouteHmac02)
+                          .to(reconRouteHmac03)
+                          .to(reconRouteHmac04)
+                          .to(reconFinalizeRoute)
+                          .to(reconBuildRequestClaim)
+                          .to(reconClaimRequest)
+                          .to(reconInterpretRequest)
+                          .to(reconBuildBusinessClaim)
+                          .to(reconClaimBusiness)
+                          .to(reconInterpretBusiness)
                           .to(reconBuildCursorAdvance)
                           .to(reconAdvanceCursor)
                           .to(reconTerminal)
