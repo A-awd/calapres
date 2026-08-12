@@ -30,6 +30,10 @@ a customer database, or a customer-facing bot release.
   `update_existing_only`; live import, credential binding, publishing, and activation remain
   prohibited.
 - `workflows/optix-customer-service-core-v1.ts` — the private, credential-free rules sub-workflow.
+
+The model phase also has a deny-first PostgreSQL reservation guard in migration 0008. It is
+Calapres-only, defaults to disabled with a kill switch, reserves no more than $45/month internally,
+and caps each conversation at 20 requests/day. It stores counters only; no prompts or responses.
   It cannot receive a public channel event or contact a customer.
 - `workflows/calapres-shopify-order-index-v1.ts` — a separate private, inactive index workflow
   because Shopify order events and reconciliation are a different ingress domain. It accepts only

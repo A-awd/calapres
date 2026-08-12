@@ -10,7 +10,8 @@ another brand implementation. Decision 0010 is binding for the inactive Calapres
 runtime, its no-send boundary, and its persistent-access gates.
 
 Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database has migrations
-0001–0007 applied and the restricted n8n Webhook/Reconciliation credentials have passed SSL
+0001–0008 applied; migration 0008 adds the deny-first model budget guard. The restricted n8n
+Webhook/Reconciliation credentials have passed SSL
 connection tests. The checked-in Edge v2 is imported into the existing target `e442GlRmKP4IO8pm`
 with those two project-scoped credentials. Do not create a workflow, activate it, publish it, or
 connect live Chatwoot traffic.
@@ -115,7 +116,7 @@ reviewed and merged.
    releases, contracts, or fixtures.
 2. Keep the Neon database and restricted credentials as the inactive PostgreSQL test foundation;
    complete real transaction/concurrency/recovery and backup/restore evidence before any live
-   binding.
+   binding. The model budget guard is disabled by default and must remain so until the model phase.
 3. The project-scoped Chatwoot read credential is now bound only to the existing Edge v2 GET nodes;
    verify it with a private synthetic read before creating any webhook. Obtain action-time owner
    confirmation before binding the dedicated Calapres OpenAI credential (project allowlist currently

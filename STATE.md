@@ -11,7 +11,9 @@ is deployed.
 ## PostgreSQL provider gate — 2026-08-12
 
 Neon is the selected PostgreSQL provider for the inactive Calapres observation runtime. Project
-`shiny-hill-38628371` / database `neondb` has migrations 0001–0007 applied, 22 Calapres tables,
+`shiny-hill-38628371` / database `neondb` has migrations 0001–0008 applied, including a deny-first
+model-budget guard with a hard `$45` monthly reservation ceiling, a 20-request daily conversation
+cap, and a default-on kill switch. It has 25 Calapres tables,
 40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
 roles, and verified callable-boundary ACLs. No customer traffic, customer send, Shopify write,
 workflow activation, or publication has occurred. The existing Edge workflow `e442GlRmKP4IO8pm`
@@ -258,6 +260,10 @@ Never overwrite the live theme until its newer source is reconciled into `main`.
   Model-node binding, identity-HMAC material, and any Shopify read-scope expansion remain
   deliberate persistent-access gates. The current Shopify credential lacks `read_customers`; live
   order/customer lookup remains disabled rather than guessed.
+- The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
+  first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,
+  and the control was restored to `enabled=false`, `kill_switch=true`, `$45` ceiling. Test rows were
+  removed. No model request was made.
 
 ### Next safe action
 

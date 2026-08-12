@@ -1182,6 +1182,26 @@ test('migration 0007 separates ingress credentials and gates reconciliation firs
   assert.doesNotMatch(provenanceSql, /DROP\s+(?:SCHEMA|TABLE)/i);
 });
 
+test('migration 0008 installs a deny-first model budget guard', () => {
+  const migrationDir = join(__dirname, '../../postgres/migrations');
+  const budgetSql = readFileSync(
+    join(migrationDir, '0008_calapres_cs_model_budget_guard.sql'), 'utf8',
+  );
+
+  assert.match(budgetSql, /monthly_limit_microusd bigint NOT NULL DEFAULT 45000000/);
+  assert.match(budgetSql, /reservation_microusd bigint NOT NULL DEFAULT 50000/);
+  assert.match(budgetSql, /daily_conversation_request_limit integer NOT NULL DEFAULT 20/);
+  assert.match(budgetSql, /enabled boolean NOT NULL DEFAULT false/);
+  assert.match(budgetSql, /kill_switch boolean NOT NULL DEFAULT true/);
+  assert.match(budgetSql, /pg_advisory_xact_lock/);
+  assert.match(budgetSql, /outcome', 'monthly_budget_exhausted'/);
+  assert.match(budgetSql, /outcome', 'conversation_daily_cap'/);
+  assert.match(budgetSql, /GRANT EXECUTE ON FUNCTION calapres_cs\.atomic_reserve_model_budget\(jsonb\)\s+TO calapres_cs_webhook_runtime/);
+  assert.match(budgetSql, /GRANT EXECUTE ON FUNCTION calapres_cs\.owner_set_model_budget_control\(jsonb\)\s+TO calapres_cs_owner_runtime/);
+  assert.doesNotMatch(budgetSql, /(?:prompt|raw_message|message_body|transcript|phone|email|secret)\s+text/i);
+  assert.match(budgetSql, /VALUES \(8, 'calapres_cs_model_budget_guard'\)/);
+});
+
 test('adapter stays provider-neutral and exposes only fixed function SQL', () => {
   const source = readFileSync(join(__dirname, '../../postgres/postgres-atomic-storage.js'), 'utf8');
   assert.doesNotMatch(source, /process\.env|connectionString|require\(['"]pg['"]\)/);
