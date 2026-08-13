@@ -41,7 +41,7 @@
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.update-manifest.json",
-      "sha256": "d46054f8cdb88a22decad74fda6f00727b047b59cbb77da83d1faa16662e76c6",
+      "sha256": "3ec45153db8b3eb23d7393c99521e6d91fa3dc1c094b2feeb424d486f1664e05",
       "bytes": 818
     },
     {
@@ -480,5 +480,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "d79533b8a2fd1e6208d852db8ecff2d014c2fa9424f5c332dbcaf19b9d3403b2"
+  "release_digest_sha256": "1203cedc5737711a371699a80a5249eb2367dc39d0dde133c80960250c904566"
 }

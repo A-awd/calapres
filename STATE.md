@@ -25,6 +25,21 @@ anchor, scope suppression, kill switch, model failure, and a fully pinned succes
 No real customer message, private note, model request, or Shopify write was made by these tests.
 Execution payload retention is restored to disabled.
 
+After the GitHub source guard and Shopify CI both passed on commit `8c4d969`, the exact frozen
+draft was published to the same workflow. Live n8n now reports active version
+`941205ae-dab2-4684-b897-dee3655a2af7`, 83 nodes, two triggers, and success/error/manual/progress
+retention disabled. The prior active version `8c518aeb-22c2-4ab9-bcef-7418029386da` remains the
+rollback. Chatwoot has two pre-existing `message_created` webhooks: Edge observation and the MVP;
+no third webhook was created. A locally signed, non-customer outgoing fixture using the existing
+MVP Chatwoot secret returned HTTP 204 from the published endpoint, proving the live HMAC binding
+without entering PostgreSQL or customer send. A wrong-HMAC request returned 401.
+
+Neon remained at migration 13 with zero customer-reply events and zero unresolved sends after
+publication. The budget control is enabled with kill switch off, a 45 USD monthly ceiling,
+0.05 USD per reservation, and 20 model requests per conversation per day. The isolated validation
+branch was reset from main successfully; migration 13 and restricted execute permissions remained
+present after restore, while direct runtime table reads remained denied.
+
 ## Current phase
 
 Shopify-native storefront and catalog readiness, plus verified Calapres customer channels in

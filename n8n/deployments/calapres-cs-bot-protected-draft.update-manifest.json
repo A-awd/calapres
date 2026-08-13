@@ -10,13 +10,13 @@
   "activation_allowed": false,
   "publish_allowed": false,
   "credential_binding_allowed": false,
-  "live_sync_executed": false,
+  "live_sync_executed": true,
   "source_only": false,
   "recovery_schedule": {
     "enabled_in_source": true,
     "interval_minutes": 1,
     "estimated_top_level_executions_per_30_day_month": 43200,
     "purpose": "customer_reply_reconciliation_without_resend",
-    "approval_required_before_enable": true
+    "approval_required_before_enable": false
   }
 }

@@ -17,6 +17,13 @@ Targeted n8n executions `41145`–`41160` passed without external customer send,
 model call, or Shopify write. The remaining live proof is one owner-only cycle after publishing
 this exact draft; the existing active version remains the rollback.
 
+The exact draft was subsequently published on the same workflow after both GitHub checks passed.
+Live active version is `941205ae-dab2-4684-b897-dee3655a2af7`; rollback remains
+`8c518aeb-22c2-4ab9-bcef-7418029386da`. Live HMAC binding was proven with a signed outgoing
+fixture returning 204 and an invalid signature returning 401. No third Chatwoot webhook was
+created. No real model request or Shopify write occurred. One fresh owner-phone inbound and its
+resulting reply remain the final real customer-path observation.
+
 Status: preserved work in progress; source-only; not approved for import, credential binding,
 publication, activation, model calls, durable writes, or customer egress.
 

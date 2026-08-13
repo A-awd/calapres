@@ -23,6 +23,21 @@ the repository and CI freeze pass, the remaining live gate is publishing this ex
 existing-workflow draft and proving one owner-only inbound/reply/recovery cycle; retain the old
 active version as the rollback and do not merge PR #4 to `main` before review.
 
+Publication is now complete on the existing workflow: active version
+`941205ae-dab2-4684-b897-dee3655a2af7`. The old `8c518aeb-22c2-4ab9-bcef-7418029386da` remains
+available for rollback. GitHub Actions passed both customer-service and Shopify checks for
+`8c4d969`. Live HMAC was proven with a signed outgoing fixture that returned 204 and stopped
+before PostgreSQL; invalid HMAC returned 401. Chatwoot already contains the Edge observation
+webhook and the MVP webhook, both subscribed only to `message_created`; no webhook was added.
+Neon restore was tested by resetting the isolated branch from main while preserving its previous
+state under `calapres-cs-pre-restore-validation-2026-08-13`.
+
+The only proof still requiring the owner's phone is a fresh inbound WhatsApp message followed by
+the protected reply path. WhatsApp Web was not linked, so no OTP, QR, or credential was requested
+or bypassed. Do not simulate that customer action through another contact. Until that one
+owner-only live cycle is observed, distinguish the pinned full delivery proof from a real inbound
+customer delivery proof.
+
 ## Resume from
 
 Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native
