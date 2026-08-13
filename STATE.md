@@ -30,31 +30,31 @@ succeeds. No table, function signature, grant, or business logic changed.
 **Still not applied to live Neon** (still version 13) — this session again has no Neon MCP access;
 applying the now-fixed migration remains the owner's or a Neon-MCP-equipped session's action.
 
-**2. Shopify credential fix: prepared, config-validated, but blocked on one n8n-internal step,
-not Shopify OAuth.** `GET Shopify Orders Read Only` used generic credential `oAuth2Api:
-QKgLBMWQtO6G4zvM` ("Unnamed credential"), whose token Shopify reports invalid/expired. A working
-credential for the same store already exists in n8n — `Shopify-Calapres`
-(`shopifyOAuth2Api:QLsvwO73GFsQfy0w`) — no new app or credential was created. Switched the node to
-`authentication: predefinedCredentialType` / `nodeCredentialType: shopifyOAuth2Api` pointed at
-that credential (config validated via the n8n MCP node validator; method/URL/body/read-only
-behavior unchanged) and committed it to the frozen source. **Applying it live failed**: n8n
-rejected the update with `credential 'QLsvwO73GFsQfy0w' is not usable in this workflow's
-project` — `Shopify-Calapres` lives in the owner's personal n8n project, while workflow
-`kAyF0D3ZZHxc0Hwp` lives in the "Calapres Customer Service" **team** project, and n8n does not let
-a team-project workflow reference a personal-project credential. No tool available in this
-session can share or move a credential between n8n projects (confirmed: no such tool exists in
-the n8n MCP server's surface, and there is no n8n API key in this environment to fall back to a
-direct REST call, which would in any case be routing around the sanctioned tool surface). The
-live workflow was left completely unchanged by the failed atomic update — confirmed via a fresh
-read showing it still active at version `73e3e3f2` with the old credential intact.
+**2. Shopify credential fix: CONFIRMED LIVE and CONFIRMED TESTED with a real authenticated read.**
+`GET Shopify Orders Read Only` used generic credential `oAuth2Api:QKgLBMWQtO6G4zvM` ("Unnamed
+credential"), whose token Shopify reports invalid/expired. Switched it to the existing
+`Shopify-Calapres` credential (`shopifyOAuth2Api:QLsvwO73GFsQfy0w`) — no new app or credential
+created. First live-apply attempt failed (`credential 'QLsvwO73GFsQfy0w' is not usable in this
+workflow's project` — the credential lived in the owner's personal n8n project, the workflow in
+the "Calapres Customer Service" team project). **The owner resolved this via n8n's own Sharing
+tab** (shared, not moved, preserving all 18 other personal-workflow references to the same
+credential). The retried update applied. n8n's own validator then refused to let the update API
+clear the node's now-dead `oAuth2Api` credential-map entry (`node type ... does not accept
+credential 'oAuth2Api'` once `authentication` is `predefinedCredentialType`) — this entry has no
+effect on request behavior (the node only reads the `shopifyOAuth2Api` slot given the current
+`authentication` value), so the frozen source mirrors it verbatim for honest parity, and a test
+asserts it can never become reachable without `authentication` regressing first.
 
-**The one remaining action is an n8n UI step, distinct from and simpler than a Shopify OAuth
-consent screen**: open n8n → Credentials → `Shopify-Calapres` → Sharing → share it with (not move
-it to, to preserve ownership) project "Calapres Customer Service". No secret is exposed by this
-action. The moment it's done, the prepared `update_workflow` call (already drafted and
-config-validated in this session) can be applied and published immediately, followed by a
-read-only Shopify probe to confirm the credential actually authenticates before declaring this
-resolved.
+Before publishing, verified with a real, isolated read-only probe: a temporary manual-trigger
+branch (zero connections to any production node, Postgres call, or `Send Reply`) issued
+`{ shop { name myshopifyDomain } }` through the new credential and got a genuine `HTTP 200`:
+`{"shop":{"name":"Calapres","myshopifyDomain":"unywbe-ub.myshopify.com"}}`. Confirmed no
+`mutation` keyword anywhere in the node's parameters. Removed the probe branch and its temporary
+execution-retention override immediately after, re-verified full live/source parity (nodes,
+params, credentials, connections, disabled-state, settings byte-identical) and both graph
+invariants (single `Send Reply` inbound edge; single `Build Human Escalation` inbound edge;
+15-minute schedule trigger cannot reach `Send Reply`), then published as active version
+`3da4f1cd-494c-4f47-9907-3d1f68dc018b`.
 
 ## Remove intentional pre-send delay — 2026-08-13 (session 3)
 

@@ -10,17 +10,20 @@ Postgres 16 (not Neon) — clean apply, schema version 14, and the three new fun
 `{}`::jsonb correctly. Live Neon is still version 13; still needs a session with Neon MCP access
 (or the owner via the Neon console) to run the fixed file.
 
-**Shopify credential**: switched `GET Shopify Orders Read Only` to
-`predefinedCredentialType`/`shopifyOAuth2Api` pointed at the existing `Shopify-Calapres`
-credential (`QLsvwO73GFsQfy0w`) in the frozen source — committed, tested, config-validated. Live
-apply failed with `credential 'QLsvwO73GFsQfy0w' is not usable in this workflow's project`
-because that credential sits in the owner's personal n8n project while the workflow sits in the
-"Calapres Customer Service" team project. This needs exactly one n8n UI action — **Credentials →
-Shopify-Calapres → Sharing → share with project "Calapres Customer Service"** — not a Shopify
-OAuth screen, no secret exposed. No tool in this session's n8n MCP surface can do this
-programmatically. Once shared, the prepared `update_workflow` call is ready to apply and publish
-immediately, followed by a read-only Shopify probe before declaring it resolved. Live workflow
-itself is untouched (atomic update rolled back cleanly), still on the old expired credential.
+**Shopify credential: DONE, CONFIRMED LIVE.** The owner shared `Shopify-Calapres` with the
+"Calapres Customer Service" team project via n8n's own Sharing tab (not moved — all 18 other
+personal-workflow references to it stayed intact). The credential swap on
+`GET Shopify Orders Read Only` then applied. Verified with a real, isolated read-only probe before
+publishing (temporary manual-trigger branch, zero connections to production nodes/Postgres/Send
+Reply): `{ shop { name myshopifyDomain } }` returned genuine `HTTP 200`
+`{"shop":{"name":"Calapres","myshopifyDomain":"unywbe-ub.myshopify.com"}}`. No `mutation` keyword
+anywhere in the node. Probe branch and its temporary execution-retention override removed
+immediately after; live/source parity and both graph invariants (single `Send Reply` edge, single
+`Build Human Escalation` edge, schedule trigger can't reach `Send Reply`) re-verified before
+publish. Active version `3da4f1cd-494c-4f47-9907-3d1f68dc018b`. One cosmetic note: n8n's update
+API won't let a `setNodeCredential` call clear the node's now-dead `oAuth2Api` credential-map
+entry once `authentication` is `predefinedCredentialType` — it's inert (never read) and mirrored
+in the frozen source for honest parity; a test asserts it can never become reachable.
 
 ## Remove intentional pre-send delay — 2026-08-13 (session 3)
 
