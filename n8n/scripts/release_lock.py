@@ -116,9 +116,9 @@ def build_lock() -> dict[str, Any]:
         )
 
     release_payload = {
-        "release_id": "calapres-customer-service-observation-v1",
+        "release_id": "calapres-customer-service-protected-reply-v1",
         "brand_id": "calapres",
-        "mode": "synthetic_test_no_send",
+        "mode": "protected_customer_reply_candidate",
         "files": files,
     }
     return {

@@ -1,5 +1,28 @@
 # Handoff
 
+## Resume checkpoint — 2026-08-13
+
+Continue on branch `agent/preserve-calapres-customer-service-checkpoint`. The protected update of
+the existing MVP `kAyF0D3ZZHxc0Hwp` is draft version
+`941205ae-dab2-4684-b897-dee3655a2af7` with 83 nodes and source SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`. The still-active rollback is
+`8c518aeb-22c2-4ab9-bcef-7418029386da`. Do not create another workflow and do not modify Edge v2
+`e442GlRmKP4IO8pm`.
+
+Neon main and the isolated validation branch have migrations 0001–0013. The new recovery contract
+retries transient Chatwoot reads without resetting delivery state or increasing send attempts.
+Recovery verifies the stored reply digest and cannot reach `Send Reply`. The only incoming edge
+to `Send Reply` is output 0 of `Customer Egress Authorized?`. Shopify remains query-only, model
+spend is behind the database budget/kill-switch guard, and uncertain cases label for owner review.
+
+Synthetic executions `41145`–`41160` are the final graph evidence. Execution `41160` completed
+the pinned signed-ingress -> durable claim -> Chatwoot reread -> deterministic reply -> final
+reread -> send claim -> pinned Chatwoot send -> durable completion path. No external send occurred
+in that execution. Manual, success, error, and progress execution retention are disabled. After
+the repository and CI freeze pass, the remaining live gate is publishing this exact
+existing-workflow draft and proving one owner-only inbound/reply/recovery cycle; retain the old
+active version as the rollback and do not merge PR #4 to `main` before review.
+
 ## Resume from
 
 Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native

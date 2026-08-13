@@ -1,5 +1,30 @@
 # Project State
 
+## Calapres protected customer-reply candidate — 2026-08-13
+
+The existing live MVP workflow `kAyF0D3ZZHxc0Hwp` remains active at rollback version
+`8c518aeb-22c2-4ab9-bcef-7418029386da`. Its protected update is frozen as the unpublished
+83-node draft `941205ae-dab2-4684-b897-dee3655a2af7`; no duplicate workflow was created and
+Edge v2 `e442GlRmKP4IO8pm` was not changed. The frozen draft source SHA-256 is
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`.
+
+The protected draft verifies Chatwoot HMAC over the raw body, acknowledges eligible events only
+after a durable Neon claim, rereads Chatwoot before decision and send, uses deterministic
+greetings/FAQ/scope replies, reserves the model budget before a restricted model call, reads
+Shopify through GraphQL queries only, and requires an exact PostgreSQL send lease before the sole
+customer-egress node. Sensitive or uncertain cases receive the `human` label and no customer
+reply. Recovery verifies both the Chatwoot marker and reply SHA-256; transient read failures are
+rescheduled and recovery has no path to customer send.
+
+Neon main now has migrations 0001–0013. Migration 0013 was first proven on isolated branch
+`br-misty-glade-awba7bxf` and then applied to main. Runtime execute grants remain function-specific,
+direct table reads remain denied, and the live recovery queue had zero due rows. Targeted n8n
+executions `41145`–`41160` covered signature mismatch/staleness, wrong inbox, durable duplicate,
+PostgreSQL uncertainty, later human/private/AgentBot activity, an exactly-100-row page, malformed
+anchor, scope suppression, kill switch, model failure, and a fully pinned successful delivery.
+No real customer message, private note, model request, or Shopify write was made by these tests.
+Execution payload retention is restored to disabled.
+
 ## Current phase
 
 Shopify-native storefront and catalog readiness, plus verified Calapres customer channels in

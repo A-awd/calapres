@@ -1,0 +1,22 @@
+{
+  "$schema": "../schemas/n8n-workflow-deployment-manifest.schema.json",
+  "schema_version": "1.0",
+  "deployment_mode": "update_existing_only",
+  "brand_id": "calapres",
+  "source_workflow": "n8n/deployments/calapres-cs-bot-protected-draft.json",
+  "source_sha256": "6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619",
+  "target_workflow_id": "kAyF0D3ZZHxc0Hwp",
+  "create_allowed": false,
+  "activation_allowed": false,
+  "publish_allowed": false,
+  "credential_binding_allowed": false,
+  "live_sync_executed": false,
+  "source_only": false,
+  "recovery_schedule": {
+    "enabled_in_source": true,
+    "interval_minutes": 1,
+    "estimated_top_level_executions_per_30_day_month": 43200,
+    "purpose": "customer_reply_reconciliation_without_resend",
+    "approval_required_before_enable": true
+  }
+}

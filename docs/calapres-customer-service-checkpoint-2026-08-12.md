@@ -1,5 +1,22 @@
 # Calapres customer-service source checkpoint — 2026-08-12
 
+## Continuation freeze — 2026-08-13
+
+The working MVP was preserved before hardening. Existing workflow `kAyF0D3ZZHxc0Hwp` still runs
+rollback version `8c518aeb-22c2-4ab9-bcef-7418029386da`; its protected 83-node update is draft
+`941205ae-dab2-4684-b897-dee3655a2af7`. The sanitized frozen source is
+`n8n/deployments/calapres-cs-bot-protected-draft.json` with SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`.
+No duplicate workflow was created and Edge v2 `e442GlRmKP4IO8pm` was preserved.
+
+Neon migrations 0011–0013 add the customer-reply outbox, one-winner recovery queue, and transient
+recovery-read rescheduling. The protected graph requires raw-body HMAC, a durable claim before
+204, bounded Chatwoot rereads, exact send lease, reply-digest reconciliation, deterministic
+scope handling, model budget/kill switch, owner escalation, and Shopify read-only GraphQL.
+Targeted n8n executions `41145`–`41160` passed without external customer send, private note,
+model call, or Shopify write. The remaining live proof is one owner-only cycle after publishing
+this exact draft; the existing active version remains the rollback.
+
 Status: preserved work in progress; source-only; not approved for import, credential binding,
 publication, activation, model calls, durable writes, or customer egress.
 

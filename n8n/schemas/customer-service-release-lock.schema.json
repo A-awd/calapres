@@ -17,13 +17,13 @@
       "const": "1.0"
     },
     "release_id": {
-      "const": "calapres-customer-service-observation-v1"
+      "const": "calapres-customer-service-protected-reply-v1"
     },
     "brand_id": {
       "const": "calapres"
     },
     "mode": {
-      "const": "synthetic_test_no_send"
+      "const": "protected_customer_reply_candidate"
     },
     "files": {
       "type": "array",

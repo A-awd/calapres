@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "release_id": "calapres-customer-service-observation-v1",
+  "release_id": "calapres-customer-service-protected-reply-v1",
   "brand_id": "calapres",
-  "mode": "synthetic_test_no_send",
+  "mode": "protected_customer_reply_candidate",
   "files": [
     {
       "path": "n8n/adapters/atomic-storage-contract.js",
@@ -28,6 +28,21 @@
       "path": "n8n/adapters/shopify-identity-adapter.js",
       "sha256": "49905d3e497664f80b0387060a12088ba266336c0e11a1c9a8bab7b216cbb19b",
       "bytes": 21006
+    },
+    {
+      "path": "n8n/deployments/calapres-cs-bot-mvp-live-baseline.json",
+      "sha256": "488dc3a65e92f6514873e069c8c36786aa5f04f75d9c0f9219e4eea3e8de8abb",
+      "bytes": 11331
+    },
+    {
+      "path": "n8n/deployments/calapres-cs-bot-protected-draft.json",
+      "sha256": "6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619",
+      "bytes": 107374
+    },
+    {
+      "path": "n8n/deployments/calapres-cs-bot-protected-draft.update-manifest.json",
+      "sha256": "d46054f8cdb88a22decad74fda6f00727b047b59cbb77da83d1faa16662e76c6",
+      "bytes": 818
     },
     {
       "path": "n8n/deployments/calapres-customer-service-edge-v2.update-manifest.json",
@@ -98,6 +113,21 @@
       "path": "n8n/postgres/migrations/0010_calapres_cs_login_role_execute_grants.sql",
       "sha256": "071e7d50a199aee13d5e02cfba1f9db119523424e4bffe5f17b72267dff2c163",
       "bytes": 2200
+    },
+    {
+      "path": "n8n/postgres/migrations/0011_calapres_cs_customer_reply_outbox.sql",
+      "sha256": "20722da8a3730be1cc4aba248ed067cc645f414cf8c3ffe6ea82aa9417b52f8a",
+      "bytes": 43011
+    },
+    {
+      "path": "n8n/postgres/migrations/0012_calapres_cs_customer_reply_recovery.sql",
+      "sha256": "8a582fd5a29096eb9629756477f71b8d467f5831bf7a9660deb4d643f640fa5d",
+      "bytes": 8257
+    },
+    {
+      "path": "n8n/postgres/migrations/0013_calapres_cs_customer_reply_recovery_retry.sql",
+      "sha256": "30a4d1bd9eae4c339b3bb7b0e5c46b1d6d6bf67fd457d039c60c026b2c69ae85",
+      "bytes": 4433
     },
     {
       "path": "n8n/postgres/postgres-atomic-storage.js",
@@ -231,8 +261,8 @@
     },
     {
       "path": "n8n/schemas/customer-service-release-lock.schema.json",
-      "sha256": "7303d40a4f157241f5f38dd1496243e1a3cf2e733eb41e11479593718b569433",
-      "bytes": 1474
+      "sha256": "d9531590f921d4d11c12995b0773505da9e546b5ca94230b7f4f16ef2e87cb6e",
+      "bytes": 1490
     },
     {
       "path": "n8n/schemas/dedup-record.schema.json",
@@ -450,5 +480,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "553de279ae018b22724481db8b467c1e242a1aa10676d2c5b86f2d49aaafa4ef"
+  "release_digest_sha256": "d79533b8a2fd1e6208d852db8ecff2d014c2fa9424f5c332dbcaf19b9d3403b2"
 }
