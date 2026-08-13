@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
   "kind": "calapres_cs_protected_customer_reply_draft",
-  "captured_at": "2026-08-13T11:24:39.450Z",
+  "captured_at": "2026-08-13T13:20:00.000Z",
   "workflow_id": "kAyF0D3ZZHxc0Hwp",
   "workflow_name": "Calapres — CS Bot (MVP)",
   "draft_version_id": "941205ae-dab2-4684-b897-dee3655a2af7",
   "active_version_id": "8c518aeb-22c2-4ab9-bcef-7418029386da",
-  "node_count": 83,
+  "node_count": 82,
   "publish_state": "draft_not_published",
   "rollback_authority": "Keep active version 8c518aeb-22c2-4ab9-bcef-7418029386da until this protected draft passes freeze validation. This file updates the existing workflow only and must never create a duplicate.",
   "safety": {
@@ -16,7 +16,9 @@
     "recovery_customer_send_allowed": false,
     "shopify_access": "read_only_graphql_queries",
     "workflow_execution_data_saved": false,
-    "credential_secret_values_included": false
+    "credential_secret_values_included": false,
+    "chatwoot_webhook_signature_verifiable": false,
+    "ingress_authenticity": "capability_webhook_path_plus_authenticated_chatwoot_reread_anchor"
   },
   "settings": {
     "executionOrder": "v1",
@@ -299,7 +301,7 @@
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "\nconst p = $input.first().json || {};\nconst b = p.body && typeof p.body === 'object' ? p.body : {};\nconst accountId = Number(b.account && b.account.id);\nconst inboxId = Number(b.inbox && b.inbox.id || b.conversation && b.conversation.inbox_id);\nconst conversationId = Number(b.conversation && b.conversation.id);\nconst messageId = Number(b.id);\nconst content = typeof b.content === 'string' ? b.content.trim() : '';\nconst labels = Array.isArray(b.conversation && b.conversation.labels) ? b.conversation.labels : [];\nconst eligible = b.event === 'message_created' &&\n  (b.message_type === 'incoming' || b.message_type === 0) &&\n  b.private !== true && accountId === 179973 && inboxId === 128058 &&\n  Number.isSafeInteger(conversationId) && conversationId > 0 &&\n  Number.isSafeInteger(messageId) && messageId > 0 &&\n  content.length > 0 && content.length <= 4000 && !labels.includes('human');\nif (!eligible) return [];\nconst executionRef = String($execution.id || '0').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 48);\nconst context = {\n  brand_id: 'calapres', account_id: accountId, inbox_id: inboxId,\n  conversation_id: conversationId, inbound_message_id: messageId,\n  customer_text: content,\n  processing_lease_token: ('crp_' + conversationId + '_' + messageId + '_' + executionRef).slice(0, 124)\n};\nreturn [{ json: {\n  context,\n  request_binding_material: JSON.stringify([\n    'calapres-customer-reply-v1', accountId, inboxId, conversationId, messageId, content\n  ])\n} }];"
+        "jsCode": "\nconst p = $input.first().json || {};\nconst b = p.body && typeof p.body === 'object' ? p.body : {};\nconst accountId = Number(b.account && b.account.id);\nconst inboxId = Number(b.inbox && b.inbox.id || b.conversation && b.conversation.inbox_id);\nconst conversationId = Number(b.conversation && b.conversation.id);\nconst messageId = Number(b.id);\nconst content = typeof b.content === 'string' ? b.content.trim() : '';\nconst claimedSourceId = typeof b.source_id === 'string' ? b.source_id.trim() : '';\nconst claimedCreatedEpoch = Math.floor(Date.parse(String(b.created_at || '')) / 1000);\nconst labels = Array.isArray(b.conversation && b.conversation.labels) ? b.conversation.labels : [];\nconst eligible = b.event === 'message_created' &&\n  (b.message_type === 'incoming' || b.message_type === 0) &&\n  b.private !== true && accountId === 179973 && inboxId === 128058 &&\n  Number.isSafeInteger(conversationId) && conversationId > 0 &&\n  Number.isSafeInteger(messageId) && messageId > 0 &&\n  content.length > 0 && content.length <= 4000 && !labels.includes('human') &&\n  claimedSourceId.length > 0 && claimedSourceId.length <= 200 &&\n  Number.isSafeInteger(claimedCreatedEpoch) && claimedCreatedEpoch > 0;\nif (!eligible) return [];\nconst executionRef = String($execution.id || '0').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 48);\nconst context = {\n  brand_id: 'calapres', account_id: accountId, inbox_id: inboxId,\n  conversation_id: conversationId, inbound_message_id: messageId,\n  customer_text: content,\n  claimed_source_id: claimedSourceId, claimed_created_epoch: claimedCreatedEpoch,\n  processing_lease_token: ('crp_' + conversationId + '_' + messageId + '_' + executionRef).slice(0, 124)\n};\nreturn [{ json: {\n  context,\n  request_binding_material: JSON.stringify([\n    'calapres-customer-reply-v1', accountId, inboxId, conversationId, messageId, content\n  ])\n} }];"
       }
     },
     {
@@ -508,7 +510,7 @@
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "\nconst source = $('Interpret Customer Reply Event Claim').first().json || {};\nconst c = source.context || {};\nconst convHttp = $('GET Verified Chatwoot Conversation').first().json || {};\nconst msgHttp = $input.first().json || {};\nconst conv = convHttp.body && typeof convHttp.body === 'object' ? convHttp.body : {};\nconst messageBody = msgHttp.body && typeof msgHttp.body === 'object' ? msgHttp.body : {};\nconst rows = Array.isArray(messageBody.payload) ? messageBody.payload :\n  Array.isArray(msgHttp.body) ? msgHttp.body : [];\nconst labels = (Array.isArray(conv.labels) ? conv.labels : [])\n  .map((v) => typeof v === 'string' ? v : v && v.title)\n  .filter((v) => typeof v === 'string').slice(0, 30);\nconst fail = (code) => [{ json: { context: c, existing_labels: labels,\n  route_index: 0, error_code: code, decision_kind: null, reply_text: null } }];\nif (convHttp.statusCode !== 200 || msgHttp.statusCode !== 200) return fail('chatwoot_reread_failed');\nif (Number(conv.id) !== c.conversation_id || Number(conv.inbox_id) !== 128058) {\n  return fail('chatwoot_route_mismatch');\n}\nif (labels.includes('human')) return fail('human_label_present');\nif (rows.length >= 100) return fail('message_page_unbounded');\nconst anchor = rows.filter((row) => row && Number(row.id) === c.inbound_message_id);\nif (anchor.length !== 1) return fail('anchor_missing_or_duplicate');\nconst a = anchor[0];\nconst senderType = String(a.sender_type || a.sender && a.sender.type || '').toLowerCase();\nif (Number(a.account_id) !== 179973 || Number(a.inbox_id) !== 128058 ||\n    Number(a.conversation_id) !== c.conversation_id ||\n    Number(a.message_type) !== 0 || a.private !== false ||\n    !senderType.includes('contact') ||\n    String(a.content || '').trim() !== c.customer_text) return fail('anchor_mismatch');\nconst later = rows.filter((row) => row && Number(row.id) > c.inbound_message_id);\nif (later.some((row) => Number(row.message_type) === 0 && row.private === false)) {\n  return fail('newer_inbound_present');\n}\nif (later.some((row) => Number(row.message_type) === 1 || row.private === true)) {\n  return fail('human_or_bot_activity_present');\n}\nconst phoneCandidates = [\n  conv.meta && conv.meta.sender && conv.meta.sender.phone_number,\n  conv.meta && conv.meta.contact && conv.meta.contact.phone_number,\n  conv.contact && conv.contact.phone_number,\n  conv.phone_number\n].filter((v) => typeof v === 'string' && /^\\+[1-9][0-9]{7,14}$/.test(v.trim()));\nconst phones = [...new Set(phoneCandidates.map((v) => v.trim()))];\nconst recentContext = rows.filter((row) => row && [0, 1].includes(Number(row.message_type)) &&\n  row.private === false && typeof row.content === 'string')\n  .sort((x, y) => Number(x.id) - Number(y.id)).slice(-6)\n  .map((row) => ({ direction: Number(row.message_type) === 0 ? 'customer' : 'store',\n    text: String(row.content).slice(0, 500) }));\nconst normalized = c.customer_text.toLowerCase().replace(/[إأآ]/g, 'ا')\n  .replace(/ة/g, 'ه').replace(/\\s+/g, ' ').trim();\nconst orderToken = normalized.match(/^#?([0-9]{3,12})$/) ||\n  normalized.match(/(?:رقم\\\\s*(?:ال)?طلب(?:ي)?|طلب(?:ي)?\\\\s*رقم)\\\\s*[:#-]?\\\\s*([0-9]{3,12})(?:\\\\s|$)/i);\nconst orderNumber = orderToken ? '#' + orderToken[1] : null;\nconst base = { context: c, existing_labels: labels,\n  customer_phone: phones.length === 1 ? phones[0] : null,\n  order_number: orderNumber,\n  recent_context: recentContext, route_index: 0, error_code: null,\n  decision_kind: null, reply_text: null, scope_lease_token: null };\nif (/(الغاء|الغي|استرجاع|استرداد|ارجاع|استبدال|شكوى|تالف|مكسور|خطا|دفع.*مرتين|احتيال|غاضب|زعلان)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 5, error_code: 'sensitive_owner_review' } }];\n}\nif (/^(هلا|هلا والله|السلام عليكم|سلام|مرحبا|اهلا|صباح الخير|مساء الخير|هاي)[ .،!؟]*$/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'greeting',\n    reply_text: 'هلا والله، حياك الله في كالابريز. كيف أقدر أخدمك؟' } }];\n}\nif (orderNumber || /(طلب|طلبي|شحنه|شحنتي|تتبع|وين.*طلب|متى.*يوصل|وصل.*طلب)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 2, decision_kind: 'order' } }];\n}\nif (/(سعر|بكم|كم.*مبخر|الوان|لون|نقش|اسم).*(مبخر)|مبخر.*(سعر|بكم|الوان|لون|نقش|اسم)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'مبخرة كالابريز سعرها 390 ريال، ومتوفرة بالبيج والأبيض والرمادي، وممكن نقش الاسم عليها.' } }];\n}\nif (/(ستاند|ايباد|آيباد).*(سعر|بكم|كم)|سعر.*(ستاند|ايباد|آيباد)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'ستاند الآيباد للأعراس سعره 190 ريال.' } }];\n}\nif (/(توصلون|توصيل|الشحن|تشحنون)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'نوصل لجميع مناطق السعودية، وإذا تقصد طلبك الحالي أتأكد لك من حالته.' } }];\n}\nif (/(وش.*كالابريز|ايش.*كالابريز|وش تبيع|ايش تبيع|متجر.*ايش|عندكم ايش)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'كالابريز متجر للعطور النيشية والمباخر ومستلزمات الأعراس.' } }];\n}\nconst inScope = /(كالابريز|عطر|عطور|نيش|مبخر|بخور|ستاند|ايباد|آيباد|عرس|زواج|منتج|سعر|الوان|نقش|متجر|موقع|دفع|فاتوره|توصيل|شحن)/i.test(normalized);\nif (!inScope) return [{ json: { ...base, route_index: 4, decision_kind: 'out_of_scope',\n  reply_text: 'أنا مساعد خدمة عملاء كالابريز، وأقدر أساعدك بالمنتجات والطلبات والشحن فقط. وش تحتاج؟' } }];\nreturn [{ json: { ...base, route_index: 3, decision_kind: 'model' } }];"
+        "jsCode": "\nconst source = $('Interpret Customer Reply Event Claim').first().json || {};\nconst c = source.context || {};\nconst convHttp = $('GET Verified Chatwoot Conversation').first().json || {};\nconst msgHttp = $input.first().json || {};\nconst conv = convHttp.body && typeof convHttp.body === 'object' ? convHttp.body : {};\nconst messageBody = msgHttp.body && typeof msgHttp.body === 'object' ? msgHttp.body : {};\nconst rows = Array.isArray(messageBody.payload) ? messageBody.payload :\n  Array.isArray(msgHttp.body) ? msgHttp.body : [];\nconst labels = (Array.isArray(conv.labels) ? conv.labels : [])\n  .map((v) => typeof v === 'string' ? v : v && v.title)\n  .filter((v) => typeof v === 'string').slice(0, 30);\nconst fail = (code) => [{ json: { context: c, existing_labels: labels,\n  route_index: 0, error_code: code, decision_kind: null, reply_text: null } }];\nif (convHttp.statusCode !== 200 || msgHttp.statusCode !== 200) return fail('chatwoot_reread_failed');\nif (Number(conv.id) !== c.conversation_id || Number(conv.inbox_id) !== 128058) {\n  return fail('chatwoot_route_mismatch');\n}\nif (labels.includes('human')) return fail('human_label_present');\nif (rows.length >= 100) return fail('message_page_unbounded');\nconst anchor = rows.filter((row) => row && Number(row.id) === c.inbound_message_id);\nif (anchor.length !== 1) return fail('anchor_missing_or_duplicate');\nconst a = anchor[0];\nconst senderType = String(a.sender_type || a.sender && a.sender.type || '').toLowerCase();\nif (Number(a.account_id) !== 179973 || Number(a.inbox_id) !== 128058 ||\n    Number(a.conversation_id) !== c.conversation_id ||\n    Number(a.message_type) !== 0 || a.private !== false ||\n    !senderType.includes('contact') ||\n    String(a.content || '').trim() !== c.customer_text) return fail('anchor_mismatch');\nif (String(a.source_id || '').trim() !== c.claimed_source_id) return fail('anchor_source_mismatch');\nconst anchorEpoch = Number(a.created_at);\nif (!Number.isFinite(anchorEpoch) || Math.abs(anchorEpoch - c.claimed_created_epoch) > 5) {\n  return fail('anchor_timestamp_mismatch');\n}\nconst later = rows.filter((row) => row && Number(row.id) > c.inbound_message_id);\nif (later.some((row) => Number(row.message_type) === 0 && row.private === false)) {\n  return fail('newer_inbound_present');\n}\nif (later.some((row) => Number(row.message_type) === 1 || row.private === true)) {\n  return fail('human_or_bot_activity_present');\n}\nconst phoneCandidates = [\n  conv.meta && conv.meta.sender && conv.meta.sender.phone_number,\n  conv.meta && conv.meta.contact && conv.meta.contact.phone_number,\n  conv.contact && conv.contact.phone_number,\n  conv.phone_number\n].filter((v) => typeof v === 'string' && /^\\+[1-9][0-9]{7,14}$/.test(v.trim()));\nconst phones = [...new Set(phoneCandidates.map((v) => v.trim()))];\nconst recentContext = rows.filter((row) => row && [0, 1].includes(Number(row.message_type)) &&\n  row.private === false && typeof row.content === 'string')\n  .sort((x, y) => Number(x.id) - Number(y.id)).slice(-6)\n  .map((row) => ({ direction: Number(row.message_type) === 0 ? 'customer' : 'store',\n    text: String(row.content).slice(0, 500) }));\nconst normalized = c.customer_text.toLowerCase().replace(/[إأآ]/g, 'ا')\n  .replace(/ة/g, 'ه').replace(/\\s+/g, ' ').trim();\nconst orderToken = normalized.match(/^#?([0-9]{3,12})$/) ||\n  normalized.match(/(?:رقم\\\\s*(?:ال)?طلب(?:ي)?|طلب(?:ي)?\\\\s*رقم)\\\\s*[:#-]?\\\\s*([0-9]{3,12})(?:\\\\s|$)/i);\nconst orderNumber = orderToken ? '#' + orderToken[1] : null;\nconst base = { context: c, existing_labels: labels,\n  customer_phone: phones.length === 1 ? phones[0] : null,\n  order_number: orderNumber,\n  recent_context: recentContext, route_index: 0, error_code: null,\n  decision_kind: null, reply_text: null, scope_lease_token: null };\nif (/(الغاء|الغي|استرجاع|استرداد|ارجاع|استبدال|شكوى|تالف|مكسور|خطا|دفع.*مرتين|احتيال|غاضب|زعلان)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 5, error_code: 'sensitive_owner_review' } }];\n}\nif (/^(هلا|هلا والله|السلام عليكم|سلام|مرحبا|اهلا|صباح الخير|مساء الخير|هاي)[ .،!؟]*$/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'greeting',\n    reply_text: 'هلا والله، حياك الله في كالابريز. كيف أقدر أخدمك؟' } }];\n}\nif (orderNumber || /(طلب|طلبي|شحنه|شحنتي|تتبع|وين.*طلب|متى.*يوصل|وصل.*طلب)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 2, decision_kind: 'order' } }];\n}\nif (/(سعر|بكم|كم.*مبخر|الوان|لون|نقش|اسم).*(مبخر)|مبخر.*(سعر|بكم|الوان|لون|نقش|اسم)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'مبخرة كالابريز سعرها 390 ريال، ومتوفرة بالبيج والأبيض والرمادي، وممكن نقش الاسم عليها.' } }];\n}\nif (/(ستاند|ايباد|آيباد).*(سعر|بكم|كم)|سعر.*(ستاند|ايباد|آيباد)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'ستاند الآيباد للأعراس سعره 190 ريال.' } }];\n}\nif (/(توصلون|توصيل|الشحن|تشحنون)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'نوصل لجميع مناطق السعودية، وإذا تقصد طلبك الحالي أتأكد لك من حالته.' } }];\n}\nif (/(وش.*كالابريز|ايش.*كالابريز|وش تبيع|ايش تبيع|متجر.*ايش|عندكم ايش)/i.test(normalized)) {\n  return [{ json: { ...base, route_index: 1, decision_kind: 'faq',\n    reply_text: 'كالابريز متجر للعطور النيشية والمباخر ومستلزمات الأعراس.' } }];\n}\nconst inScope = /(كالابريز|عطر|عطور|نيش|مبخر|بخور|ستاند|ايباد|آيباد|عرس|زواج|منتج|سعر|الوان|نقش|متجر|موقع|دفع|فاتوره|توصيل|شحن)/i.test(normalized);\nif (!inScope) return [{ json: { ...base, route_index: 4, decision_kind: 'out_of_scope',\n  reply_text: 'أنا مساعد خدمة عملاء كالابريز، وأقدر أساعدك بالمنتجات والطلبات والشحن فقط. وش تحتاج؟' } }];\nreturn [{ json: { ...base, route_index: 3, decision_kind: 'model' } }];"
       }
     },
     {
@@ -1507,7 +1509,7 @@
     },
     {
       "id": "7ef68a17-7b42-40ac-ba82-8400bd629f94",
-      "name": "Prepare Signed Raw Chatwoot Ingress",
+      "name": "Prepare Raw Chatwoot Ingress",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -1517,12 +1519,12 @@
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "\nconst item=$input.first();const source=item&&item.json&&typeof item.json==='object'?item.json:{};\nconst headers=source.headers&&typeof source.headers==='object'?source.headers:{};\nconst lowered={};for(const [k,v] of Object.entries(headers))lowered[String(k).toLowerCase()]=v;\nconst reject=(code,error)=>[{json:{signature_ready:false,signature_verified:false,response_code:code,auth_error:error}}];\nconst rawBase64=item&&item.binary&&item.binary.data&&typeof item.binary.data.data==='string'?item.binary.data.data:(source.executionMode==='test'&&typeof source.raw_body_base64==='string'?source.raw_body_base64:'');\nif(!rawBase64)return reject(400,'raw_body_missing');\nlet raw;try{raw=Buffer.from(rawBase64,'base64');}catch(_e){return reject(400,'raw_body_invalid');}\nif(raw.length<1)return reject(400,'payload_empty');\nif(raw.length>1048576)return reject(413,'payload_too_large');\nconst contentType=String(lowered['content-type']||'');\nif(!/^application\\/json(?:\\s*;\\s*charset=(?:utf-8|utf8))?$/i.test(contentType))return reject(400,'content_type_invalid');\nconst timestamp=String(lowered['x-chatwoot-timestamp']||'');\nconst signature=String(lowered['x-chatwoot-signature']||'');\nif(!/^[0-9]{10}$/.test(timestamp))return reject(401,'timestamp_malformed');\nif(!/^sha256=[a-f0-9]{64}$/.test(signature))return reject(401,'signature_malformed');\nconst now=Math.floor(Date.now()/1000);const age=now-Number(timestamp);\nif(age>300)return reject(401,'timestamp_stale');\nif(age< -60)return reject(401,'timestamp_future');\nconst signed=Buffer.concat([Buffer.from(timestamp+'.','utf8'),raw]);\nreturn[{json:{signature_ready:true,signature_verified:false,response_code:0,\n  received_epoch_seconds:now,timestamp_header:timestamp,supplied_hmac_hex:signature.slice(7),raw_body_base64:raw.toString('base64')},\n  binary:{\n    signed_payload:{data:signed.toString('base64'),mimeType:'application/octet-stream',fileName:'signed-payload.bin'},\n  }}];"
+        "jsCode": "const item=$input.first();const source=item&&item.json&&typeof item.json==='object'?item.json:{};\nconst headers=source.headers&&typeof source.headers==='object'?source.headers:{};\nconst lowered={};for(const [k,v] of Object.entries(headers))lowered[String(k).toLowerCase()]=v;\nconst reject=(code,error)=>[{json:{ingress_ready:false,ingress_accepted:false,response_code:code,auth_error:error}}];\nconst rawBase64=item&&item.binary&&item.binary.data&&typeof item.binary.data.data==='string'?item.binary.data.data:(source.executionMode==='test'&&typeof source.raw_body_base64==='string'?source.raw_body_base64:'');\nif(!rawBase64)return reject(400,'raw_body_missing');\nlet raw;try{raw=Buffer.from(rawBase64,'base64');}catch(_e){return reject(400,'raw_body_invalid');}\nif(raw.length<1)return reject(400,'payload_empty');\nif(raw.length>1048576)return reject(413,'payload_too_large');\nconst contentType=String(lowered['content-type']||'');\nif(!/^application\\/json(?:\\s*;\\s*charset=(?:utf-8|utf8))?$/i.test(contentType))return reject(400,'content_type_invalid');\n// Chatwoot cloud signs webhook deliveries with an internal hmac_token that is not exposed by the\n// UI or REST API (chatwoot/chatwoot#13809), so no obtainable secret can verify the delivery\n// signature. Ingress authenticity therefore rests on the unguessable capability webhook path plus\n// the authoritative authenticated Chatwoot reread anchor that must match before any durable\n// decision or send. Delivery headers are recorded as advisory provenance only.\nreturn[{json:{ingress_ready:true,ingress_accepted:false,response_code:0,\n  received_epoch_seconds:Math.floor(Date.now()/1000),\n  advisory_timestamp_header:String(lowered['x-chatwoot-timestamp']||''),\n  advisory_signature_header:String(lowered['x-chatwoot-signature']||''),\n  advisory_delivery_header:String(lowered['x-chatwoot-delivery']||''),\n  raw_body_base64:raw.toString('base64')}}];"
       }
     },
     {
       "id": "de26255a-e971-4e59-be3b-ff6acf7cc257",
-      "name": "Webhook Signature Ready?",
+      "name": "Webhook Ingress Ready?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
@@ -1539,7 +1541,8 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.signature_ready === true }}",
+              "id": "ready",
+              "leftValue": "={{ $json.ingress_ready === true }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -1554,32 +1557,8 @@
       }
     },
     {
-      "id": "c0928c9a-4330-43f0-95d0-d79dff670c4c",
-      "name": "Verify Chatwoot Webhook Signature",
-      "type": "n8n-nodes-base.crypto",
-      "typeVersion": 2,
-      "position": [
-        660,
-        -240
-      ],
-      "parameters": {
-        "action": "hmac",
-        "binaryData": true,
-        "type": "SHA256",
-        "dataPropertyName": "computed_hmac_hex",
-        "encoding": "hex",
-        "binaryPropertyName": "signed_payload"
-      },
-      "credentials": {
-        "crypto": {
-          "id": "c4LH871aR2C624O6",
-          "name": "Crypto account 3"
-        }
-      }
-    },
-    {
       "id": "bfcc8e7a-9771-4a11-9903-83ed5ce0abfb",
-      "name": "Finalize Chatwoot Signature Gate",
+      "name": "Finalize Chatwoot Ingress Gate",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -1589,12 +1568,12 @@
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "\nconst item=$input.first();const j=item&&item.json&&typeof item.json==='object'?item.json:{};\nconst reject=(error)=>[{json:{signature_ready:false,signature_verified:false,response_code:401,auth_error:error}}];\nconst left=String(j.computed_hmac_hex||'');const right=String(j.supplied_hmac_hex||'');\nif(!/^[a-f0-9]{64}$/.test(left)||!/^[a-f0-9]{64}$/.test(right))return reject('hmac_result_invalid');\nlet diff=0;for(let i=0;i<64;i++)diff|=left.charCodeAt(i)^right.charCodeAt(i);\nif(diff!==0)return reject('signature_mismatch');\nconst now=Math.floor(Date.now()/1000);const received=Number(j.received_epoch_seconds);\nif(!Number.isSafeInteger(received)||now<received||now-received>300)return reject('hmac_comparison_stale');\nconst rawBase64=typeof j.raw_body_base64==='string'?j.raw_body_base64:'';\nif(!rawBase64)return[{json:{signature_ready:false,signature_verified:false,response_code:400,auth_error:'raw_body_missing'}}];\nlet body;try{body=JSON.parse(Buffer.from(rawBase64,'base64').toString('utf8'));}catch(_e){\n  return[{json:{signature_ready:false,signature_verified:false,response_code:400,auth_error:'payload_json_invalid'}}];\n}\nif(!body||typeof body!=='object'||Array.isArray(body))return[{json:{signature_ready:false,signature_verified:false,response_code:400,auth_error:'payload_not_object'}}];\nreturn[{json:{body,signature_verified:true,response_code:0}}];"
+        "jsCode": "const item=$input.first();const j=item&&item.json&&typeof item.json==='object'?item.json:{};\nconst reject=(code,error)=>[{json:{ingress_ready:false,ingress_accepted:false,response_code:code,auth_error:error}}];\nif(j.ingress_ready!==true)return reject(400,'ingress_not_ready');\nconst rawBase64=typeof j.raw_body_base64==='string'?j.raw_body_base64:'';\nif(!rawBase64)return reject(400,'raw_body_missing');\nlet body;try{body=JSON.parse(Buffer.from(rawBase64,'base64').toString('utf8'));}catch(_e){return reject(400,'payload_json_invalid');}\nif(!body||typeof body!=='object'||Array.isArray(body))return reject(400,'payload_not_object');\nreturn[{json:{body,ingress_accepted:true,response_code:0}}];"
       }
     },
     {
       "id": "d91698bd-5b3e-49ab-a3e3-5cbef7f0cf6b",
-      "name": "Chatwoot Signature Verified?",
+      "name": "Chatwoot Ingress Accepted?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
@@ -1611,7 +1590,7 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.signature_verified === true }}",
+              "leftValue": "={{ $json.ingress_accepted === true }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -1627,7 +1606,7 @@
     },
     {
       "id": "233cb660-b186-4b12-81b4-8566c32abf26",
-      "name": "Respond Chatwoot Signature Rejected",
+      "name": "Respond Chatwoot Ingress Rejected",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
@@ -1637,7 +1616,7 @@
       "parameters": {
         "respondWith": "noData",
         "options": {
-          "responseCode": "={{ Number($json.response_code || 401) }}"
+          "responseCode": "={{ Number($json.response_code || 400) }}"
         }
       }
     },
@@ -2672,65 +2651,54 @@
       "main": [
         [
           {
-            "node": "Prepare Signed Raw Chatwoot Ingress",
+            "node": "Prepare Raw Chatwoot Ingress",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare Signed Raw Chatwoot Ingress": {
+    "Prepare Raw Chatwoot Ingress": {
       "main": [
         [
           {
-            "node": "Webhook Signature Ready?",
+            "node": "Webhook Ingress Ready?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Webhook Signature Ready?": {
+    "Webhook Ingress Ready?": {
       "main": [
         [
           {
-            "node": "Verify Chatwoot Webhook Signature",
+            "node": "Finalize Chatwoot Ingress Gate",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Respond Chatwoot Signature Rejected",
+            "node": "Respond Chatwoot Ingress Rejected",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Verify Chatwoot Webhook Signature": {
+    "Finalize Chatwoot Ingress Gate": {
       "main": [
         [
           {
-            "node": "Finalize Chatwoot Signature Gate",
+            "node": "Chatwoot Ingress Accepted?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Finalize Chatwoot Signature Gate": {
-      "main": [
-        [
-          {
-            "node": "Chatwoot Signature Verified?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Chatwoot Signature Verified?": {
+    "Chatwoot Ingress Accepted?": {
       "main": [
         [
           {
@@ -2741,7 +2709,7 @@
         ],
         [
           {
-            "node": "Respond Chatwoot Signature Rejected",
+            "node": "Respond Chatwoot Ingress Rejected",
             "type": "main",
             "index": 0
           }

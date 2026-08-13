@@ -1,5 +1,16 @@
 # Handoff
 
+## Chatwoot HMAC defect and capability-URL ingress — 2026-08-13
+
+Real Chatwoot deliveries cannot be signature-verified (upstream chatwoot/chatwoot#13809: the
+signing `hmac_token` is not exposed anywhere). Decision 0013 replaces signature enforcement with
+capability-URL ingress plus the authenticated reread anchor; do not reintroduce a signature
+requirement until Chatwoot exposes the real signing key. The frozen source is 82 nodes, SHA-256
+`f24ee6f32a2768dae37f783d4bc7c7204f3c6397397ebc2698549eefbdaaaa9f`; ingress nodes are
+`Prepare Raw Chatwoot Ingress` → `Webhook Ingress Ready?` → `Finalize Chatwoot Ingress Gate` →
+`Chatwoot Ingress Accepted?`, with `Respond Chatwoot Ingress Rejected` fail-closed. `Send Reply`
+still has exactly one authorized inbound edge and recovery still cannot reach it.
+
 ## Recovery cadence quota fix — 2026-08-13
 
 The MVP recovery schedule now fires every 15 minutes (was every 1 minute). Frozen source SHA-256 is

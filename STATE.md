@@ -1,5 +1,21 @@
 # Project State
 
+## Chatwoot HMAC defect and capability-URL ingress — 2026-08-13
+
+The first real owner-phone WhatsApp inbound (Chatwoot message `792970340`, n8n execution `41243`)
+was rejected `signature_mismatch` by the protected ingress gate. Root cause is upstream defect
+chatwoot/chatwoot#13809: Chatwoot signs webhook deliveries with an internal `hmac_token` that is
+exposed through neither the UI nor the REST API, while the signing format itself matches the
+workflow implementation exactly. Because no obtainable secret can verify genuine deliveries,
+decision `0013-adopt-capability-url-ingress-after-chatwoot-hmac-defect` removes delivery-signature
+enforcement and rests ingress authenticity on the capability webhook path, the unchanged
+structural checks (raw body, 1 MiB, JSON-only parse after the gate), pinned account/inbox, the
+authenticated Chatwoot reread anchor, and the atomic claim/lease layer. The frozen source is now
+82 nodes; the `Crypto account 3` credential is unbound but retained. New source SHA-256 is
+`f24ee6f32a2768dae37f783d4bc7c7204f3c6397397ebc2698549eefbdaaaa9f`. Execution retention was
+enabled temporarily for the diagnostic capture and must be returned to no-save with the fix
+deployment. The owner-phone round trip remains the acceptance gate.
+
 ## Recovery cadence quota fix — 2026-08-13
 
 The protected MVP recovery schedule was reduced from every 1 minute to every 15 minutes inside the

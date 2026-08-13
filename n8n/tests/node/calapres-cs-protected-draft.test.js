@@ -104,3 +104,82 @@ test('frozen draft contains no credential secret values or customer fixtures', (
   assert.doesNotMatch(serialized, /postgres(?:ql)?:\/\/[^\s\"]+:[^@\s\"]+@/i);
   assert.doesNotMatch(serialized, /(?:raw_body|transcript|phone_number|email_address)\s*:/i);
 });
+
+function runGateNode(nodeName, item) {
+  const code = nodesByName.get(nodeName).parameters.jsCode;
+  const $input = { first: () => item };
+  return new Function('$input', 'Buffer', code)($input, Buffer)[0].json;
+}
+
+const anonymizedDelivery = {
+  account: { id: 179973, name: 'Calapres' },
+  content: 'اختبار هيكلي',
+  content_type: 'text',
+  conversation: { id: 3, inbox_id: 128058, labels: [], can_reply: true },
+  created_at: '2026-08-13T00:00:00.000Z',
+  id: 900000001,
+  inbox: { id: 128058, name: 'WhatsApp' },
+  message_type: 'incoming',
+  private: false,
+  sender: { id: 1, name: 'Test Contact', type: 'contact' },
+  event: 'message_created',
+};
+
+function deliveryItem(overrides = {}) {
+  const raw = Buffer.from(JSON.stringify(anonymizedDelivery), 'utf8');
+  return {
+    json: {
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        'x-chatwoot-timestamp': '1786625346',
+        'x-chatwoot-signature': 'sha256='.padEnd(71, 'a'),
+        'x-chatwoot-delivery': '00000000-0000-4000-8000-000000000000',
+        ...overrides.headers,
+      },
+    },
+    binary: { data: { data: (overrides.rawBase64 ?? raw.toString('base64')) } },
+  };
+}
+
+test('ingress gate has no signature dependency and keeps the fail-closed chain', () => {
+  const hmacNodes = workflow.nodes.filter((node) =>
+    node.type === 'n8n-nodes-base.crypto'
+    && ((node.parameters || {}).action === 'hmac' || node.credentials));
+  assert.deepEqual(hmacNodes, []);
+  assert.deepEqual(directTargets('Chatwoot In'), ['Prepare Raw Chatwoot Ingress']);
+  assert.deepEqual(directTargets('Prepare Raw Chatwoot Ingress'), ['Webhook Ingress Ready?']);
+  assert.deepEqual(
+    directTargets('Webhook Ingress Ready?'),
+    ['Finalize Chatwoot Ingress Gate', 'Respond Chatwoot Ingress Rejected'],
+  );
+  assert.deepEqual(
+    directTargets('Chatwoot Ingress Accepted?'),
+    ['Should Reply?', 'Respond Chatwoot Ingress Rejected'],
+  );
+});
+
+test('ingress gate accepts a Chatwoot-cloud-shaped delivery without verifying its signature', () => {
+  const prepared = runGateNode('Prepare Raw Chatwoot Ingress', deliveryItem());
+  assert.equal(prepared.ingress_ready, true);
+  assert.equal(prepared.response_code, 0);
+  assert.equal(prepared.advisory_signature_header.startsWith('sha256='), true);
+  const finalized = runGateNode('Finalize Chatwoot Ingress Gate', { json: prepared });
+  assert.equal(finalized.ingress_accepted, true);
+  assert.equal(finalized.body.event, 'message_created');
+  assert.equal(finalized.body.conversation.inbox_id, 128058);
+});
+
+test('ingress gate still fails closed on structural violations', () => {
+  const oversized = runGateNode('Prepare Raw Chatwoot Ingress',
+    deliveryItem({ rawBase64: Buffer.alloc(1048577, 0x7b).toString('base64') }));
+  assert.deepEqual([oversized.ingress_ready, oversized.response_code], [false, 413]);
+  const wrongType = runGateNode('Prepare Raw Chatwoot Ingress',
+    deliveryItem({ headers: { 'content-type': 'text/plain' } }));
+  assert.deepEqual([wrongType.ingress_ready, wrongType.response_code], [false, 400]);
+  const missing = runGateNode('Prepare Raw Chatwoot Ingress', { json: { headers: {} } });
+  assert.deepEqual([missing.ingress_ready, missing.response_code], [false, 400]);
+  const badJson = runGateNode('Finalize Chatwoot Ingress Gate', {
+    json: { ingress_ready: true, raw_body_base64: Buffer.from('not json').toString('base64') },
+  });
+  assert.deepEqual([badJson.ingress_accepted, badJson.response_code], [false, 400]);
+});
