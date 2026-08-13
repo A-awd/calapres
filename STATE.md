@@ -1,5 +1,41 @@
 # Project State
 
+## Self-service-first escalation with durable 24h SLA (decision 0014) — 2026-08-13 (session 2)
+
+The owner rejected the prior interpretation that cancellation/refund/complaint language or any
+Shopify/model failure should immediately add the `human` label. Corrected and implemented in the
+same workflow: `Build Human Escalation` now has exactly one inbound edge (explicit
+`customer_requested_human`, verified by a graph test). Every other previously-escalating case
+self-serves with a bounded, non-invented reply (order-status disclaimer for
+cancellation/refund/complaint, minimum-identifier clarification for Shopify failures/missing
+data/ambiguity, a fixed fallback sentence for model budget denial or untrusted output). A durable
+24-hour unresolved-case SLA (migration `0014_calapres_cs_customer_reply_sla_escalation.sql`,
+schema version 14) now backstops all of this: one open case per conversation
+(`calapres_cs.customer_reply_sla_cases`), `atomic_upsert_customer_reply_sla_case` (touch/resolve,
+never resets the clock on a repeated message), `atomic_claim_due_customer_reply_sla_escalation`
+(23h-48h claim window, `FOR UPDATE SKIP LOCKED` lease, same pattern as send-recovery),
+`atomic_finalize_customer_reply_sla_escalation` (escalated / resolved-as-ineligible / released for
+retry). The existing `Recover Ambiguous Sends Every 15 Minutes` trigger gained one isolated
+fan-out branch for this — no new trigger, workflow, webhook, or credential. Graph tests prove
+neither this branch nor the trigger can reach `Send Reply`. Frozen source SHA-256 is
+`5092f7311b033f362e03cb3f4953fca32f068596a820cd0958c38d7b9830e76e` (82 -> 99 nodes). Full
+Python (92) and Node (269+) suites pass.
+
+**Not yet Neon-verified**: this session has no Neon MCP access. Migration 0014 is written, its
+static contract tests pass, but it has not been applied to the live database. Until it is applied
+(by a session with Neon MCP access, or by the owner via the Neon console), the new
+`Postgres Customer Reply 14 Update SLA Case` and the SLA-escalation sub-branch's Postgres calls
+will error on every execution once published live — this is fail-loud, not fail-silent, and does
+not block or delay `Send Reply` (they are parallel, not sequential, confirmed by graph reachability
+tests), but the 24-hour escalation feature itself is not functionally live until the migration runs.
+
+**Separately, still unresolved**: the Shopify credential `QKgLBMWQtO6G4zvM` ("Unnamed credential",
+generic `oAuth2Api` type) returns Shopify's own `HTTP 401 "Invalid API key or access token"` when
+called through the exact live node/credential — this is an invalid/expired access token, not a
+scope-denial error (which would be a `200` with a GraphQL `ACCESS_DENIED` error instead). Fixing
+this requires an OAuth reauthorization only the account owner can complete in a browser; no scope
+change, credential replacement, or workaround can substitute for that.
+
 ## Owner-directed escalation policy correction — 2026-08-13
 
 The owner corrected a design defect: the bot was treating any Shopify/credential/data-gap

@@ -36,12 +36,12 @@
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.json",
-      "sha256": "f77279c1c844da3c62f1cc09ef8038f11a71ff510ae059c01c3327dfc551f02a",
-      "bytes": 111313
+      "sha256": "5092f7311b033f362e03cb3f4953fca32f068596a820cd0958c38d7b9830e76e",
+      "bytes": 130605
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.update-manifest.json",
-      "sha256": "96bb80bfa6ddaa2927b05bbf5aea02349f4d501a2573a49f59dde183f5dfb432",
+      "sha256": "719c842fad51f250d1f75056a6622fa1862f5b40963f462d4f84a160cc7dcbc7",
       "bytes": 818
     },
     {
@@ -128,6 +128,11 @@
       "path": "n8n/postgres/migrations/0013_calapres_cs_customer_reply_recovery_retry.sql",
       "sha256": "30a4d1bd9eae4c339b3bb7b0e5c46b1d6d6bf67fd457d039c60c026b2c69ae85",
       "bytes": 4433
+    },
+    {
+      "path": "n8n/postgres/migrations/0014_calapres_cs_customer_reply_sla_escalation.sql",
+      "sha256": "41eda5a000bead0104eb3303d778ce56203789b2e2f5b85e3d10ffd98835a24e",
+      "bytes": 20365
     },
     {
       "path": "n8n/postgres/postgres-atomic-storage.js",
@@ -480,5 +485,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "43ba8cb6f56313b750cd5a787b40e35d3cd802b27abe82ea60f1a8b1e66aed80"
+  "release_digest_sha256": "a6622e9ffd2b2810a6f8ecbbf050fa61ae7bb7cd8aa1b5b72cfa53a9dee519ef"
 }

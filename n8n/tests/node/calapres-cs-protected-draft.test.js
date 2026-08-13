@@ -314,7 +314,7 @@ test('Shopify credential and data-gap failures self-serve instead of escalating 
   assert.doesNotMatch(mismatch.reply_text, /5111/);
 });
 
-test('cancelled or refunded orders still escalate to the owner (sensitive money state)', () => {
+test('cancelled or refunded orders report the verified status directly, no escalation', () => {
   const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
   const $ = (mocks) => (name) => ({ first: () => mocks[name] });
   const cancelled = new Function('$', '$input', 'Buffer', buildCode)(
@@ -323,8 +323,55 @@ test('cancelled or refunded orders still escalate to the owner (sensitive money 
       { name: '#1001', cancelledAt: '2026-08-01T00:00:00Z', customer: { phone: '+966500000000', firstName: 'سلمان' },
         displayFinancialStatus: 'REFUNDED', displayFulfillmentStatus: 'UNFULFILLED', fulfillments: [] },
     ] } } } } }) }, Buffer)[0].json;
-  assert.equal(cancelled.send_ready, false);
-  assert.equal(cancelled.error_code, 'order_sensitive_status');
+  assert.equal(cancelled.send_ready, true);
+  assert.equal(cancelled.decision_kind, 'order');
+  assert.match(cancelled.reply_text, /ملغى|مسترجع/);
+});
+
+test('cancellation/refund/complaint requests self-serve first instead of an immediate human label', () => {
+  const routed = runAnchorRoute('ابغى الغي طلبي');
+  assert.deepEqual([routed.route_index, routed.decision_kind, routed.error_code], [2, 'sensitive_request', null]);
+  const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
+  const $ = (mocks) => (name) => ({ first: () => mocks[name] });
+  const withOrder = new Function('$', '$input', 'Buffer', buildCode)(
+    $({ 'Prepare Shopify Order Read': { json: { decision_kind: 'sensitive_request', shopify_lookup_mode: 'order_number', order_number: '#1002', customer_phone: '+966500000000' } } }),
+    { first: () => ({ json: { statusCode: 200, body: { data: { orders: { nodes: [
+      { name: '#1002', customer: { phone: '+966500000000', firstName: 'نورة' },
+        displayFinancialStatus: 'PAID', displayFulfillmentStatus: 'UNFULFILLED', fulfillments: [] },
+    ] } } } } }) }, Buffer)[0].json;
+  assert.equal(withOrder.send_ready, true);
+  assert.equal(withOrder.decision_kind, 'sensitive_request');
+  assert.match(withOrder.reply_text, /ما تم تنفيذ الإلغاء/);
+});
+
+test('model failures and budget denials fail safe with a bounded reply, never an immediate human label', () => {
+  const humanizeCode = nodesByName.get('Humanize Text').parameters.jsCode;
+  const $untrusted = (name) => ({ first: () => ({
+    'Interpret Model Budget Reservation': { json: { context: { conversation_id: 3, inbound_message_id: 900000010 } } },
+  }[name]) });
+  const untrusted = new Function('$', '$input', 'Buffer', humanizeCode)(
+    $untrusted, { first: () => ({ json: { output: 'not json at all' } }) }, Buffer)[0].json;
+  assert.equal(untrusted.send_ready, true);
+  assert.equal(untrusted.decision_kind, 'model_fallback');
+  assert.ok(untrusted.reply_text);
+
+  const fallbackCode = nodesByName.get('Prepare Model Unavailable Fallback').parameters.jsCode;
+  const budgetDenied = new Function('$input', 'Buffer', fallbackCode)(
+    { first: () => ({ json: { context: { conversation_id: 3, inbound_message_id: 900000011 } } }) }, Buffer)[0].json;
+  assert.equal(budgetDenied.send_ready, true);
+  assert.equal(budgetDenied.decision_kind, 'model_fallback');
+});
+
+test('Build Human Escalation is reachable only from an explicit customer human request', () => {
+  const incoming = [];
+  for (const [source, connection] of Object.entries(workflow.connections)) {
+    for (const [output, targets] of (connection.main || []).entries()) {
+      for (const target of targets || []) {
+        if (target.node === 'Build Human Escalation') incoming.push({ source, output });
+      }
+    }
+  }
+  assert.deepEqual(incoming, [{ source: 'Route Customer Service Decision', output: 5 }]);
 });
 
 test('explicit request for a human agent routes to owner escalation, not silence', () => {
