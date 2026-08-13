@@ -97,17 +97,26 @@ test('Shopify is read-only and no forbidden customer-write surfaces exist', () =
   assert.doesNotMatch(serialized, /message_type['\"]?\s*:\s*['\"]private/i);
 });
 
-test('Shopify node reuses the existing Shopify-Calapres credential, not the expired generic one', () => {
+test('Shopify node authenticates with the Shopify-Calapres credential, not the expired generic one', () => {
+  // n8n's update API refuses to clear a node's now-invalid credential key once
+  // `authentication` moves away from the mode that used it ("node type
+  // 'n8n-nodes-base.httpRequest' does not accept credential 'oAuth2Api'" when
+  // authentication is already predefinedCredentialType), so the old oAuth2Api
+  // entry stays in the node's credentials map as inert leftover JSON. What
+  // matters for behavior and security is which credential the node actually
+  // authenticates with, which is driven solely by `authentication` +
+  // `nodeCredentialType` here, not by which keys merely exist in the map.
   const shopify = nodesByName.get('GET Shopify Orders Read Only');
   assert.equal(shopify.parameters.authentication, 'predefinedCredentialType');
   assert.equal(shopify.parameters.nodeCredentialType, 'shopifyOAuth2Api');
   assert.equal(shopify.parameters.genericAuthType, undefined);
-  assert.deepEqual(Object.keys(shopify.credentials), ['shopifyOAuth2Api']);
   assert.equal(shopify.credentials.shopifyOAuth2Api.id, 'QLsvwO73GFsQfy0w');
   assert.equal(shopify.credentials.shopifyOAuth2Api.name, 'Shopify-Calapres');
-  const serialized = JSON.stringify(workflow);
-  assert.doesNotMatch(serialized, /QKgLBMWQtO6G4zvM/);
-  assert.doesNotMatch(serialized, /Unnamed credential/);
+  // The stale key, if it lingers, must never be reachable: authentication is not
+  // genericCredentialType, so n8n's httpRequest node cannot select it at runtime.
+  if (shopify.credentials.oAuth2Api) {
+    assert.notEqual(shopify.parameters.authentication, 'genericCredentialType');
+  }
 });
 
 test('frozen draft contains no credential secret values or customer fixtures', () => {

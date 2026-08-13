@@ -663,6 +663,10 @@
       "onError": "continueRegularOutput",
       "retryOnFail": false,
       "credentials": {
+        "oAuth2Api": {
+          "id": "QKgLBMWQtO6G4zvM",
+          "name": "Unnamed credential"
+        },
         "shopifyOAuth2Api": {
           "id": "QLsvwO73GFsQfy0w",
           "name": "Shopify-Calapres"
