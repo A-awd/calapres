@@ -281,5 +281,58 @@ test('product reference builds a Shopify query and replies only from live data',
   const empty = new Function('$', '$input', 'Buffer', buildCode)($, { first: () => ({ json: {
     statusCode: 200, body: { data: { products: { nodes: [] } } },
   } }) }, Buffer)[0].json;
-  assert.deepEqual([empty.send_ready, empty.error_code], [false, 'shopify_product_not_found']);
+  assert.equal(empty.send_ready, true);
+  assert.equal(empty.decision_kind, 'clarification');
+});
+
+test('Shopify credential and data-gap failures self-serve instead of escalating to a human', () => {
+  const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
+  const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
+  const $ = (mocks) => (name) => ({ first: () => mocks[name] });
+
+  // Shopify API/credential failure on an order lookup
+  const orderState = { shopify_lookup_mode: 'phone', customer_phone: '+966500000000' };
+  const failed = new Function('$', '$input', 'Buffer', buildCode)(
+    $({ 'Prepare Shopify Order Read': { json: orderState } }),
+    { first: () => ({ json: { statusCode: 500, body: {} } }) }, Buffer)[0].json;
+  assert.equal(failed.send_ready, true);
+  assert.match(failed.reply_text, /رقم الطلب/);
+
+  // No trusted phone and no order number: ask for the order number instead of escalating
+  const noPhone = new Function('$input', 'Buffer', prepCode)(
+    { first: () => ({ json: { decision_kind: 'order', customer_phone: null, order_number: null } }) }, Buffer)[0].json;
+  assert.equal(noPhone.send_ready, true);
+  assert.match(noPhone.reply_text, /رقم طلبك/);
+
+  // Identity mismatch: never reveal the order belongs to someone else, just ask to recheck
+  const mismatch = new Function('$', '$input', 'Buffer', buildCode)(
+    $({ 'Prepare Shopify Order Read': { json: { shopify_lookup_mode: 'order_number', order_number: '#1001', customer_phone: '+966500000000' } } }),
+    { first: () => ({ json: { statusCode: 200, body: { data: { orders: { nodes: [
+      { name: '#1001', customer: { phone: '+966511111111' } },
+    ] } } } } }) }, Buffer)[0].json;
+  assert.equal(mismatch.send_ready, true);
+  assert.doesNotMatch(mismatch.reply_text, /5111/);
+});
+
+test('cancelled or refunded orders still escalate to the owner (sensitive money state)', () => {
+  const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
+  const $ = (mocks) => (name) => ({ first: () => mocks[name] });
+  const cancelled = new Function('$', '$input', 'Buffer', buildCode)(
+    $({ 'Prepare Shopify Order Read': { json: { shopify_lookup_mode: 'order_number', order_number: '#1001', customer_phone: '+966500000000' } } }),
+    { first: () => ({ json: { statusCode: 200, body: { data: { orders: { nodes: [
+      { name: '#1001', cancelledAt: '2026-08-01T00:00:00Z', customer: { phone: '+966500000000', firstName: 'سلمان' },
+        displayFinancialStatus: 'REFUNDED', displayFulfillmentStatus: 'UNFULFILLED', fulfillments: [] },
+    ] } } } } }) }, Buffer)[0].json;
+  assert.equal(cancelled.send_ready, false);
+  assert.equal(cancelled.error_code, 'order_sensitive_status');
+});
+
+test('explicit request for a human agent routes to owner escalation, not silence', () => {
+  const out = runAnchorRoute('أبغى أتكلم مع موظف');
+  assert.deepEqual([out.route_index, out.error_code], [5, 'customer_requested_human']);
+});
+
+test('Shopify Order Read Ready false branch now reaches the send path, not human escalation', () => {
+  const conn = workflow.connections['Shopify Order Read Ready?'].main;
+  assert.deepEqual(conn[1], [{ node: 'Human Delay', type: 'main', index: 0 }]);
 });

@@ -1,5 +1,38 @@
 # Handoff
 
+## Owner-directed escalation policy correction — 2026-08-13
+
+The owner corrected a design defect: the bot was treating any Shopify/credential/data-gap
+failure as an immediate silent human handoff (adding the `human` label and going quiet),
+including on conversation #3 after the n8n Shopify credential failed an order lookup. The
+corrected, binding policy: escalate to the owner only when the customer explicitly asks for a
+human/agent, or a case stays unresolved 24 hours; every other Shopify failure or missing-data
+case must attempt self-service or ask for the single missing identifier, never add the
+`human` label or go silent. Fixed inside the same workflow only, same credential, no new
+resources: `Prepare Shopify Order Read` and `Build Verified Shopify Order Reply` now turn
+missing-phone, missing-product-topic, Shopify API/credential failure, order/customer ambiguity,
+identity mismatch (never revealing the order belongs to a different phone), product-not-found,
+and uncertain/partial fulfillment status into a direct clarification reply instead of
+`Build Human Escalation`; the `Shopify Order Read Ready?` false branch now points to
+`Human Delay` (the send path) instead of escalation. Cancelled/refunded orders still escalate
+(a resolved, sensitive money state matching the original mandatory refund/cancellation rule),
+as does an explicit customer request for a human agent (new router detection,
+`error_code: customer_requested_human`) and existing model/budget/kill-switch uncertainty
+paths. A 24-hour unresolved-case escalation was not implemented in this pass — it requires new
+durable SLA-tracking state and is out of scope for this fix; flagged as a follow-up.
+
+Conversation #3's `human` label, added under the prior incorrect policy, was removed live via
+a temporary, isolated, sentinel-gated branch reusing the existing `Header Auth account 3`
+credential and the existing `POST Chatwoot Human Label` node's endpoint pattern (dead-end,
+zero interaction with production Postgres/send logic, fanned out from an existing connection
+without removing it). Chatwoot's own activity log recorded `خدمة عملاء كالابريز أزال human`
+at 13:43:45Z; a control probe afterward failed only `anchor_missing_or_duplicate` (expected
+for a synthetic message id), not `human_label_present`, confirming `Should Reply?` /
+the anchor's live label check no longer blocks the conversation. The scaffold nodes were fully
+removed immediately after; live graph was re-verified to match the frozen source exactly
+(82 nodes, single `Send Reply` inbound edge, recovery isolated, no-save settings restored).
+New source SHA-256 is `f77279c1c844da3c62f1cc09ef8038f11a71ff510ae059c01c3327dfc551f02a`.
+
 ## Owner feedback fixes: classification, live Shopify reference, delivery audit — 2026-08-13
 
 Owner-reported functional failures were diagnosed from live evidence (no-send diagnostic
