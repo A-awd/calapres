@@ -381,5 +381,15 @@ test('explicit request for a human agent routes to owner escalation, not silence
 
 test('Shopify Order Read Ready false branch now reaches the send path, not human escalation', () => {
   const conn = workflow.connections['Shopify Order Read Ready?'].main;
-  assert.deepEqual(conn[1], [{ node: 'Human Delay', type: 'main', index: 0 }]);
+  assert.deepEqual(conn[1], [{ node: 'Pre-Send Continuation', type: 'main', index: 0 }]);
+});
+
+test('no intentional pre-send delay: Pre-Send Continuation waits zero seconds', () => {
+  const node = nodesByName.get('Pre-Send Continuation');
+  assert.equal(node.type, 'n8n-nodes-base.wait');
+  assert.deepEqual(node.parameters, { amount: 0, unit: 'seconds' });
+  assert.equal(nodesByName.has('Human Delay'), false);
+  const targets = directTargets('Pre-Send Continuation');
+  assert.ok(targets.includes('GET Final Chatwoot Conversation'));
+  assert.ok(targets.includes('Prepare SLA Case Update'));
 });

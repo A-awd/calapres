@@ -245,7 +245,7 @@
     },
     {
       "id": "fe4112f0-be53-41e5-85bc-b21e4dfde1c3",
-      "name": "Human Delay",
+      "name": "Pre-Send Continuation",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
@@ -253,7 +253,7 @@
         140
       ],
       "parameters": {
-        "amount": 5,
+        "amount": 0,
         "unit": "seconds"
       },
       "webhookId": "6ce6615e-b5cc-4843-a9bb-4def02b3cd6f"
@@ -268,7 +268,7 @@
         140
       ],
       "parameters": {
-        "jsCode": "\nconst s=$('Interpret Model Budget Reservation').first().json||{};\nconst stripOpen=new RegExp('^\\\\x60+(?:json)?\\\\s*','i');const stripClose=new RegExp('\\\\s*\\\\x60+$');\nconst raw=String($input.first().json.output||'').trim().replace(stripOpen,'').replace(stripClose,'');\nlet p=null;try{p=JSON.parse(raw);}catch(e){}\nconst bad=!p||typeof p.reply!=='string'||p.reply.trim().length<2||p.reply.trim().length>350||typeof p.confidence!=='number'||p.confidence<0.85||p.escalate!==false;\nconst fallback='ما قدرت أفهم طلبك بالضبط، ممكن توضح أكثر أو تسأل عن المنتجات أو الطلبات أو الشحن؟';\nif(bad)return[{json:{...s,send_ready:true,decision_kind:'model_fallback',reply_text:fallback}}];\nlet t=p.reply.trim().replace(/[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{FE0F}\\u{200D}]/gu,'').replace(/[*_\\x60~#>]/g,'').replace(/\\s*[\\u2012-\\u2015]\\s*/g,'، ').replace(/\\s+-\\s+/g,'، ').replace(/\\n+/g,' ').replace(/\\s{2,}/g,' ').trim();\nconst parts=t.split(/(?<=[.؟!])\\s+/).filter(Boolean);if(parts.length>2)t=parts.slice(0,2).join(' ');\nif(!t||t.length>350||/(تم شحن|طلبك رقم|تم الغاء|تم الاسترجاع|تم رد المبلغ|رقم التتبع)/i.test(t))\n  return[{json:{...s,send_ready:true,decision_kind:'model_fallback',reply_text:fallback}}];\nreturn[{json:{...s,send_ready:true,decision_kind:'model',reply_text:t}}];",
+        "jsCode": "\nconst s=$('Interpret Model Budget Reservation').first().json||{};\nconst stripOpen=new RegExp('^\\\\x60+(?:json)?\\\\s*','i');const stripClose=new RegExp('\\\\s*\\\\x60+$');\nconst raw=String($input.first().json.output||'').trim().replace(stripOpen,'').replace(stripClose,'');\nlet p=null;try{p=JSON.parse(raw);}catch(e){}\nconst bad=!p||typeof p.reply!=='string'||p.reply.trim().length<2||p.reply.trim().length>350||typeof p.confidence!=='number'||p.confidence<0.85||p.escalate!==false;\nconst fallback='ما قدرت أفهم طلبك بالضبط، ممكن توضح أكثر أو تسأل عن المنتجات أو الطلبات أو الشحن؟';\nif(bad)return[{json:{...s,send_ready:true,decision_kind:'model_fallback',reply_text:fallback}}];\nlet t=p.reply.trim().replace(/[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{FE0F}\\u{200D}]/gu,'').replace(/[*_\\x60~#>]/g,'').replace(/\\s*[‒-―]\\s*/g,'، ').replace(/\\s+-\\s+/g,'، ').replace(/\\n+/g,' ').replace(/\\s{2,}/g,' ').trim();\nconst parts=t.split(/(?<=[.؟!])\\s+/).filter(Boolean);if(parts.length>2)t=parts.slice(0,2).join(' ');\nif(!t||t.length>350||/(تم شحن|طلبك رقم|تم الغاء|تم الاسترجاع|تم رد المبلغ|رقم التتبع)/i.test(t))\n  return[{json:{...s,send_ready:true,decision_kind:'model_fallback',reply_text:fallback}}];\nreturn[{json:{...s,send_ready:true,decision_kind:'model',reply_text:t}}];",
         "mode": "runOnceForAllItems",
         "language": "javaScript"
       }
@@ -1101,7 +1101,7 @@
       ],
       "parameters": {
         "method": "GET",
-        "url": "=https://app.chatwoot.com/api/v1/accounts/179973/conversations/{{ $('Human Delay').item.json.context.conversation_id }}/messages?after={{ $('Human Delay').item.json.context.inbound_message_id - 1 }}",
+        "url": "=https://app.chatwoot.com/api/v1/accounts/179973/conversations/{{ $('Pre-Send Continuation').item.json.context.conversation_id }}/messages?after={{ $('Pre-Send Continuation').item.json.context.inbound_message_id - 1 }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -1154,7 +1154,7 @@
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
-        "jsCode": "\nconst s=$('Human Delay').first().json||{};const c=s.context||{};\nconst ch=$('GET Final Chatwoot Conversation').first().json||{};const mh=$input.first().json||{};\nconst conv=ch.body&&typeof ch.body==='object'?ch.body:{};\nconst mb=mh.body&&typeof mh.body==='object'?mh.body:{};\nconst rows=Array.isArray(mb.payload)?mb.payload:Array.isArray(mh.body)?mh.body:[];\nconst labels=(Array.isArray(conv.labels)?conv.labels:[]).map((v)=>typeof v==='string'?v:v&&v.title).filter(Boolean);\nlet error=null;\nif(ch.statusCode!==200||mh.statusCode!==200)error='final_reread_failed';\nelse if(Number(conv.id)!==c.conversation_id||Number(conv.inbox_id)!==128058)error='final_route_mismatch';\nelse if(labels.includes('human'))error='human_label_present';\nelse if(rows.length>=100)error='final_page_unbounded';\nconst anchor=rows.filter((r)=>r&&Number(r.id)===c.inbound_message_id);\nif(!error&&(anchor.length!==1||Number(anchor[0].message_type)!==0||anchor[0].private!==false||String(anchor[0].content||'').trim()!==c.customer_text))error='final_anchor_mismatch';\nconst later=rows.filter((r)=>r&&Number(r.id)>c.inbound_message_id);\nif(!error&&later.some((r)=>Number(r.message_type)===0&&r.private===false))error='newer_inbound_present';\nif(!error&&later.some((r)=>Number(r.message_type)===1||r.private===true))error='human_or_bot_activity_present';\nif(error)return[{json:{...s,send_ready:false,error_code:error,postgres_command:{brand_id:'calapres',account_id:c.account_id,inbox_id:c.inbox_id,conversation_id:c.conversation_id,inbound_message_id:c.inbound_message_id,processing_lease_token:c.processing_lease_token,target_state:error.includes('human')||error.includes('newer')?'cancelled':'failed',error_code:error}}}];\nconst maxId=Math.max(c.inbound_message_id,...rows.map((r)=>Number(r&&r.id)).filter(Number.isSafeInteger));\nconst er=String($execution.id||'0').replace(/[^A-Za-z0-9_-]/g,'').slice(0,40);\nreturn[{json:{...s,send_ready:true,final_reread_message_id:maxId,reply_hash_material:String(s.reply_text),reread_hash_material:JSON.stringify(['calapres-final-reread-v1',c.account_id,c.inbox_id,c.conversation_id,c.inbound_message_id,maxId,labels.sort(),rows.map((r)=>[Number(r.id),Number(r.message_type),r.private===true])]),send_ref:('csr_'+c.conversation_id+'_'+c.inbound_message_id).slice(0,123),send_lease_token:('crs_send_'+c.conversation_id+'_'+c.inbound_message_id+'_'+er).slice(0,124)}}];"
+        "jsCode": "\nconst s=$('Pre-Send Continuation').first().json||{};const c=s.context||{};\nconst ch=$('GET Final Chatwoot Conversation').first().json||{};const mh=$input.first().json||{};\nconst conv=ch.body&&typeof ch.body==='object'?ch.body:{};\nconst mb=mh.body&&typeof mh.body==='object'?mh.body:{};\nconst rows=Array.isArray(mb.payload)?mb.payload:Array.isArray(mh.body)?mh.body:[];\nconst labels=(Array.isArray(conv.labels)?conv.labels:[]).map((v)=>typeof v==='string'?v:v&&v.title).filter(Boolean);\nlet error=null;\nif(ch.statusCode!==200||mh.statusCode!==200)error='final_reread_failed';\nelse if(Number(conv.id)!==c.conversation_id||Number(conv.inbox_id)!==128058)error='final_route_mismatch';\nelse if(labels.includes('human'))error='human_label_present';\nelse if(rows.length>=100)error='final_page_unbounded';\nconst anchor=rows.filter((r)=>r&&Number(r.id)===c.inbound_message_id);\nif(!error&&(anchor.length!==1||Number(anchor[0].message_type)!==0||anchor[0].private!==false||String(anchor[0].content||'').trim()!==c.customer_text))error='final_anchor_mismatch';\nconst later=rows.filter((r)=>r&&Number(r.id)>c.inbound_message_id);\nif(!error&&later.some((r)=>Number(r.message_type)===0&&r.private===false))error='newer_inbound_present';\nif(!error&&later.some((r)=>Number(r.message_type)===1||r.private===true))error='human_or_bot_activity_present';\nif(error)return[{json:{...s,send_ready:false,error_code:error,postgres_command:{brand_id:'calapres',account_id:c.account_id,inbox_id:c.inbox_id,conversation_id:c.conversation_id,inbound_message_id:c.inbound_message_id,processing_lease_token:c.processing_lease_token,target_state:error.includes('human')||error.includes('newer')?'cancelled':'failed',error_code:error}}}];\nconst maxId=Math.max(c.inbound_message_id,...rows.map((r)=>Number(r&&r.id)).filter(Number.isSafeInteger));\nconst er=String($execution.id||'0').replace(/[^A-Za-z0-9_-]/g,'').slice(0,40);\nreturn[{json:{...s,send_ready:true,final_reread_message_id:maxId,reply_hash_material:String(s.reply_text),reread_hash_material:JSON.stringify(['calapres-final-reread-v1',c.account_id,c.inbox_id,c.conversation_id,c.inbound_message_id,maxId,labels.sort(),rows.map((r)=>[Number(r.id),Number(r.message_type),r.private===true])]),send_ref:('csr_'+c.conversation_id+'_'+c.inbound_message_id).slice(0,123),send_lease_token:('crs_send_'+c.conversation_id+'_'+c.inbound_message_id+'_'+er).slice(0,124)}}];"
       }
     },
     {
@@ -2536,7 +2536,7 @@
         ],
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
@@ -2609,7 +2609,7 @@
         ],
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
@@ -2642,7 +2642,7 @@
       "main": [
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
@@ -2733,7 +2733,7 @@
       "main": [
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
@@ -2813,7 +2813,7 @@
         ]
       ]
     },
-    "Human Delay": {
+    "Pre-Send Continuation": {
       "main": [
         [
           {
@@ -3332,7 +3332,7 @@
       "main": [
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
@@ -3377,7 +3377,7 @@
       "main": [
         [
           {
-            "node": "Human Delay",
+            "node": "Pre-Send Continuation",
             "type": "main",
             "index": 0
           }
