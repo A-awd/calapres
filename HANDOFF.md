@@ -1,5 +1,17 @@
 # Handoff
 
+## Verified Calapres social inbox allowlist live — 2026-08-13 (session 6)
+
+Enabled the existing workflow for the verified Calapres Chatwoot inboxes: Instagram `128031`,
+TikTok `128033`, and WhatsApp `128058`; website `128028` remains rejected. This was a six-node
+parameter-only update to the same 99-node workflow, preserving dynamic inbox binding through final
+reread, send proof, and recovery. Social-channel order questions without a trusted phone ask for
+the order number and do not disclose Shopify identity or order data. Active version
+`523a1bc0-daea-4d81-95e0-8912e4630455`; source SHA-256
+`fa418c30417e43f15924ce7c545059bf612545523a13b6daeb2015bb75dffadc`; commit `dec732e`. Targeted
+tests 27/27 and both CI workflows green. Source/configuration is confirmed; real inbound Instagram
+and TikTok messages remain the required channel-delivery proof.
+
 ## Contextual bounded replies live — 2026-08-13 (session 5)
 
 Fixed the owner's observed canned behavior at its actual source: unknown/off-topic messages were

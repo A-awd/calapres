@@ -1,5 +1,20 @@
 # Project State
 
+## Verified Calapres social inbox allowlist live — 2026-08-13 (session 6)
+
+The existing workflow was intentionally hard-coded to WhatsApp inbox `128058`, so Instagram and
+TikTok messages were rejected before the model. Confirmed the live Chatwoot inboxes as Instagram
+`128031`, TikTok `128033`, WhatsApp `128058`, and website `128028`. Expanded the same 99-node
+workflow to an exact allowlist of the first three; the website remains excluded. Inbox identity is
+carried and rechecked through ingress, Chatwoot anchor reread, final reread, send proof, and recovery.
+Social contacts without a trusted phone cannot infer a Shopify identity and are asked for an order
+number without disclosing customer/order data. Published active version
+`523a1bc0-daea-4d81-95e0-8912e4630455`. Frozen source SHA-256
+`fa418c30417e43f15924ce7c545059bf612545523a13b6daeb2015bb75dffadc`; implementation commit
+`dec732e007672ae48d7da64f67e6b5f1f1f82f0c`. Targeted tests passed 27/27 and both GitHub CI
+workflows passed. No duplicate workflow, webhook, node, or credential was created. A real inbound
+reply on Instagram and TikTok is still required to prove each platform's end-to-end delivery.
+
 ## Contextual bounded replies live — 2026-08-13 (session 5)
 
 The repetitive off-topic response was not a weak-model failure: `Verify Chatwoot Anchor and
