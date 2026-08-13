@@ -239,16 +239,16 @@ test('anchor verification accepts real Chatwoot API rows that omit account_id', 
   assert.equal(bad.error_code, 'anchor_mismatch');
 });
 
-function runAnchorRoute(text) {
+function runAnchorRoute(text, { inboxId = 128058, phone = '+966500000000' } = {}) {
   const code = nodesByName.get('Verify Chatwoot Anchor and Route').parameters.jsCode;
   const context = {
-    brand_id: 'calapres', account_id: 179973, inbox_id: 128058, conversation_id: 3,
+    brand_id: 'calapres', account_id: 179973, inbox_id: inboxId, conversation_id: 3,
     inbound_message_id: 900000003, customer_text: text,
     claimed_source_id: 'wamid.TEST900000003', claimed_created_epoch: 1786626850,
     processing_lease_token: 'crp_3_900000003_test',
   };
   const apiRow = {
-    id: 900000003, content: text, inbox_id: 128058, conversation_id: 3,
+    id: 900000003, content: text, inbox_id: inboxId, conversation_id: 3,
     message_type: 0, content_type: 'text', status: 'sent', created_at: 1786626850,
     private: false, source_id: 'wamid.TEST900000003',
     sender: { id: 1, name: 'Test Contact', type: 'contact' },
@@ -256,13 +256,50 @@ function runAnchorRoute(text) {
   const mocks = {
     'Interpret Customer Reply Event Claim': { json: { context } },
     'GET Verified Chatwoot Conversation': { json: { statusCode: 200, body: {
-      id: 3, inbox_id: 128058, labels: [], meta: { sender: { phone_number: '+966500000000' } },
+      id: 3, inbox_id: inboxId, labels: [],
+      meta: { sender: phone ? { phone_number: phone } : {} },
     } } },
   };
   const $ = (name) => ({ first: () => mocks[name] });
   const $input = { first: () => ({ json: { statusCode: 200, body: { payload: [apiRow] } } }) };
   return new Function('$', '$input', 'Buffer', code)($, $input, Buffer)[0].json;
 }
+
+test('only Calapres WhatsApp, Instagram, and TikTok inboxes can enter and complete customer egress', () => {
+  const shouldReply = nodesByName.get('Should Reply?');
+  const conditions = shouldReply.parameters.conditions.conditions;
+  const event = conditions.find((condition) => condition.id === 'event');
+  const inbox = conditions.find((condition) => condition.id === 'inbox');
+  assert.equal(event.leftValue, '={{ $json.body.event }}');
+  assert.match(inbox.leftValue, /128031, 128033, 128058/);
+  assert.doesNotMatch(inbox.leftValue, /128028/);
+
+  for (const inboxId of [128031, 128033, 128058]) {
+    const out = runAnchorRoute('هلا', { inboxId, phone: inboxId === 128058 ? '+966500000000' : null });
+    assert.deepEqual([out.context.inbox_id, out.route_index, out.decision_kind],
+      [inboxId, 1, 'greeting']);
+  }
+  const website = runAnchorRoute('هلا', { inboxId: 128028, phone: null });
+  assert.equal(website.error_code, 'chatwoot_route_mismatch');
+
+  const source = JSON.stringify(workflow);
+  assert.match(source, /\[128031,128033,128058\]\.includes\(Number\(c\.inbox_id\)\)/);
+  assert.match(source, /Number\(b\.inbox_id\)===Number\(s\.context\.inbox_id\)/);
+  assert.match(source, /inbox_id:Number\(v\.inbox_id\)/);
+});
+
+test('social channels never infer Shopify identity without a trusted phone', () => {
+  for (const inboxId of [128031, 128033]) {
+    const order = runAnchorRoute('وين طلبي', { inboxId, phone: null });
+    assert.equal(order.decision_kind, 'order');
+    assert.equal(order.customer_phone, null);
+    const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
+    const prepared = new Function('$input', 'Buffer', prepCode)(
+      { first: () => ({ json: order }) }, Buffer)[0].json;
+    assert.equal(prepared.shopify_lookup_ready, false);
+    assert.match(prepared.reply_text, /رقم طلبك/);
+  }
+});
 
 test('store questions stay deterministic while unknown conversation reaches the bounded model', () => {
   for (const q of ['وين مقركم', 'انتم في مصر ؟', 'انتم في الكويت ؟', 'انت وين']) {
