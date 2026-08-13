@@ -30,11 +30,29 @@ test('migration 0014 claims due cases atomically and never grants send/customer 
 
 test('migration 0014 finalize supports escalated, released, and ineligible-resolved outcomes only', () => {
   assert.match(sql, /CREATE OR REPLACE FUNCTION calapres_cs\.atomic_finalize_customer_reply_sla_escalation/);
-  assert.match(sql, /v_outcome NOT IN \('escalated', 'released', 'ineligible'\)/);
+  assert.match(sql, /COALESCE\(v_outcome, ''\) NOT IN \('escalated', 'released', 'ineligible'\)/);
   assert.match(sql, /SET state = 'escalated'/);
   assert.match(sql, /SET state = 'resolved'/);
   assert.match(sql, /SET state = 'open', escalation_lease_token = NULL/);
   assert.match(sql, /v_retry_delay NOT BETWEEN 60 AND 900/);
+});
+
+test('migration 0014 guard clauses reject a fully empty command instead of letting NULL bypass validation', () => {
+  // COALESCE(x, '') !~ pattern / <> 'calapres' is required: a bare `x !~ pattern` or
+  // `x <> 'calapres'` evaluates to NULL (not TRUE) when the jsonb key is absent, and
+  // `IF NULL THEN` silently skips the rejection in plpgsql, letting an empty/malformed
+  // command fall through into the writes below instead of a clean schema_invalid reply.
+  assert.match(sql, /IF COALESCE\(v_brand, ''\) <> 'calapres'\s*\n\s*OR COALESCE\(p_command ->> 'account_id', ''\) !~/);
+  assert.match(sql, /OR COALESCE\(v_outcome, ''\) NOT IN \('touch', 'resolve'\) THEN/);
+  assert.match(sql, /OR COALESCE\(v_worker_token, ''\) !~ '\^sla_recovery_/);
+  assert.match(sql, /OR COALESCE\(p_command ->> 'minimum_age_seconds', ''\) !~/);
+  assert.match(sql, /OR COALESCE\(p_command ->> 'case_opened_message_id', ''\) !~/);
+  assert.match(sql, /OR COALESCE\(v_lease_token, ''\) !~ '\^sla_recovery_/);
+  assert.match(sql, /IF COALESCE\(p_command ->> 'retry_delay_seconds', ''\) !~ '\^\[1-9\]\[0-9\]\{1,3\}\$' THEN/);
+  // No bare (non-COALESCE-guarded) nullable comparison should remain in any guard clause.
+  assert.doesNotMatch(sql, /IF v_brand <> 'calapres'/);
+  assert.doesNotMatch(sql, /\n\s*OR p_command ->> '[a-z_]+' !~/);
+  assert.doesNotMatch(sql, /IF p_command ->> 'retry_delay_seconds' !~/);
 });
 
 test('migration 0014 keeps direct table access denied and grants EXECUTE only to the webhook runtime', () => {
@@ -57,4 +75,22 @@ test('migration 0014 functions pin SECURITY DEFINER and the exact search_path co
 
 test('migration 0014 registers as schema version 14', () => {
   assert.match(sql, /VALUES \(14, 'calapres_cs_customer_reply_sla_escalation'\)/);
+});
+
+test('migration 0014 comments never contain a semicolon a naive statement-splitter could split on', () => {
+  // A Neon prepare/apply flow that splits the file on ';' without being aware it can
+  // appear inside a `--` line comment will treat the text after that semicolon as the
+  // start of a new statement. This previously produced "syntax error at or near \"no\""
+  // from the comment "...timestamps only; no customer text." Every `--` comment in this
+  // file must be free of embedded semicolons so no migration-tooling text splitter can
+  // misparse it, regardless of whether it is comment/dollar-quote aware.
+  const lines = sql.split('\n');
+  const offenders = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    const idx = lines[i].indexOf('--');
+    if (idx !== -1 && lines[i].slice(idx).includes(';')) {
+      offenders.push(`line ${i + 1}: ${lines[i].trim()}`);
+    }
+  }
+  assert.deepEqual(offenders, []);
 });

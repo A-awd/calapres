@@ -1,5 +1,5 @@
 -- Calapres customer-reply 24-hour unresolved-case SLA escalation.
--- Stores durable case identity and unresolved-since timestamps only; no customer text.
+-- Stores durable case identity and unresolved-since timestamps only, no customer text.
 -- Immediate human escalation is reserved for an explicit customer request. Every other
 -- unresolved case (Shopify failure, missing identifier, cancellation/refund/complaint,
 -- model denial) waits for this durable 24-hour clock instead of labeling immediately.
@@ -69,12 +69,12 @@ DECLARE
   v_now timestamptz := transaction_timestamp();
   v_case calapres_cs.customer_reply_sla_cases%ROWTYPE;
 BEGIN
-  IF v_brand <> 'calapres'
-     OR p_command ->> 'account_id' !~ '^[1-9][0-9]{0,9}$'
-     OR p_command ->> 'inbox_id' !~ '^[1-9][0-9]{0,9}$'
-     OR p_command ->> 'conversation_id' !~ '^[1-9][0-9]{0,15}$'
-     OR p_command ->> 'inbound_message_id' !~ '^[1-9][0-9]{0,15}$'
-     OR v_outcome NOT IN ('touch', 'resolve') THEN
+  IF COALESCE(v_brand, '') <> 'calapres'
+     OR COALESCE(p_command ->> 'account_id', '') !~ '^[1-9][0-9]{0,9}$'
+     OR COALESCE(p_command ->> 'inbox_id', '') !~ '^[1-9][0-9]{0,9}$'
+     OR COALESCE(p_command ->> 'conversation_id', '') !~ '^[1-9][0-9]{0,15}$'
+     OR COALESCE(p_command ->> 'inbound_message_id', '') !~ '^[1-9][0-9]{0,15}$'
+     OR COALESCE(v_outcome, '') NOT IN ('touch', 'resolve') THEN
     RETURN jsonb_build_object(
       'contract_verified', true, 'operation', 'upsert_customer_reply_sla_case',
       'status', 'rejected', 'outcome', 'invalid_command',
@@ -110,7 +110,7 @@ BEGIN
         'value', NULL, 'customer_egress_allowed', false);
     END IF;
     IF v_case.last_activity_message_id > v_message THEN
-      -- A newer unresolved message already reopened/extended this case; do not resolve
+      -- A newer unresolved message already reopened/extended this case, do not resolve
       -- a case out from under a message that arrived after the one being finalized.
       RETURN jsonb_build_object(
         'contract_verified', true, 'operation', 'upsert_customer_reply_sla_case',
@@ -132,7 +132,7 @@ BEGIN
       'customer_egress_allowed', false);
   END IF;
 
-  -- outcome = 'touch': open a new case only if none is currently open; never move
+  -- outcome = 'touch': open a new case only if none is currently open, never move
   -- first_unresolved_at backward or forward for an already-open case.
   IF FOUND THEN
     IF v_case.last_activity_message_id >= v_message THEN
@@ -165,7 +165,7 @@ BEGIN
       (v_brand, v_account, v_inbox, v_conversation, v_message, v_message, 'open', v_now)
     RETURNING * INTO v_case;
   EXCEPTION WHEN unique_violation THEN
-    -- Concurrent opener won; reread and touch instead of erroring.
+    -- Concurrent opener won, reread and touch instead of erroring.
     SELECT * INTO v_case FROM calapres_cs.customer_reply_sla_cases
     WHERE brand_id = v_brand AND account_id = v_account AND inbox_id = v_inbox
       AND conversation_id = v_conversation AND state IN ('open', 'claimed_for_escalation')
@@ -204,10 +204,10 @@ DECLARE
   v_now timestamptz := transaction_timestamp();
   v_case calapres_cs.customer_reply_sla_cases%ROWTYPE;
 BEGIN
-  IF v_brand <> 'calapres'
-     OR v_worker_token !~ '^sla_recovery_[A-Za-z0-9_-]{8,110}$'
-     OR p_command ->> 'minimum_age_seconds' !~ '^[1-9][0-9]{0,6}$'
-     OR p_command ->> 'lease_duration_seconds' !~ '^[1-9][0-9]{0,2}$' THEN
+  IF COALESCE(v_brand, '') <> 'calapres'
+     OR COALESCE(v_worker_token, '') !~ '^sla_recovery_[A-Za-z0-9_-]{8,110}$'
+     OR COALESCE(p_command ->> 'minimum_age_seconds', '') !~ '^[1-9][0-9]{0,6}$'
+     OR COALESCE(p_command ->> 'lease_duration_seconds', '') !~ '^[1-9][0-9]{0,2}$' THEN
     RETURN jsonb_build_object(
       'contract_verified', true, 'operation', 'claim_due_customer_reply_sla_escalation',
       'status', 'rejected', 'outcome', 'invalid_command',
@@ -217,7 +217,7 @@ BEGIN
   v_min_age := (p_command ->> 'minimum_age_seconds')::integer;
   v_lease_ttl := (p_command ->> 'lease_duration_seconds')::integer;
   IF v_min_age NOT BETWEEN 82800 AND 172800 OR v_lease_ttl NOT BETWEEN 30 AND 300 THEN
-    -- 82800s (23h) floor guards against clock skew; 172800s (48h) ceiling is a sanity bound.
+    -- 82800s (23h) floor guards against clock skew, 172800s (48h) ceiling is a sanity bound.
     RETURN jsonb_build_object(
       'contract_verified', true, 'operation', 'claim_due_customer_reply_sla_escalation',
       'status', 'rejected', 'outcome', 'range_invalid',
@@ -286,13 +286,13 @@ DECLARE
   v_now timestamptz := transaction_timestamp();
   v_case calapres_cs.customer_reply_sla_cases%ROWTYPE;
 BEGIN
-  IF v_brand <> 'calapres'
-     OR p_command ->> 'account_id' !~ '^[1-9][0-9]{0,9}$'
-     OR p_command ->> 'inbox_id' !~ '^[1-9][0-9]{0,9}$'
-     OR p_command ->> 'conversation_id' !~ '^[1-9][0-9]{0,15}$'
-     OR p_command ->> 'case_opened_message_id' !~ '^[1-9][0-9]{0,15}$'
-     OR v_lease_token !~ '^sla_recovery_[A-Za-z0-9_-]{8,110}$'
-     OR v_outcome NOT IN ('escalated', 'released', 'ineligible') THEN
+  IF COALESCE(v_brand, '') <> 'calapres'
+     OR COALESCE(p_command ->> 'account_id', '') !~ '^[1-9][0-9]{0,9}$'
+     OR COALESCE(p_command ->> 'inbox_id', '') !~ '^[1-9][0-9]{0,9}$'
+     OR COALESCE(p_command ->> 'conversation_id', '') !~ '^[1-9][0-9]{0,15}$'
+     OR COALESCE(p_command ->> 'case_opened_message_id', '') !~ '^[1-9][0-9]{0,15}$'
+     OR COALESCE(v_lease_token, '') !~ '^sla_recovery_[A-Za-z0-9_-]{8,110}$'
+     OR COALESCE(v_outcome, '') NOT IN ('escalated', 'released', 'ineligible') THEN
     RETURN jsonb_build_object(
       'contract_verified', true, 'operation', 'finalize_customer_reply_sla_escalation',
       'status', 'rejected', 'outcome', 'invalid_command',
@@ -344,7 +344,7 @@ BEGIN
 
   IF v_outcome = 'ineligible' THEN
     -- Chatwoot reread showed the case is already human-labelled, resolved, or otherwise
-    -- no longer eligible; resolve it here so the scheduler never reclaims it again.
+    -- no longer eligible, resolve it here so the scheduler never reclaims it again.
     UPDATE calapres_cs.customer_reply_sla_cases
     SET state = 'resolved', resolved_at = v_now,
         escalation_lease_token = NULL, escalation_lease_expires_at = NULL,
@@ -360,9 +360,9 @@ BEGIN
       'customer_egress_allowed', false);
   END IF;
 
-  -- outcome = 'released': transient Chatwoot failure; retry later without resetting
+  -- outcome = 'released': transient Chatwoot failure, retry later without resetting
   -- first_unresolved_at and without granting any label-application authority.
-  IF p_command ->> 'retry_delay_seconds' !~ '^[1-9][0-9]{1,3}$' THEN
+  IF COALESCE(p_command ->> 'retry_delay_seconds', '') !~ '^[1-9][0-9]{1,3}$' THEN
     RETURN jsonb_build_object(
       'contract_verified', true, 'operation', 'finalize_customer_reply_sla_escalation',
       'status', 'rejected', 'outcome', 'invalid_command',
