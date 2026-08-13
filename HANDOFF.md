@@ -1,5 +1,62 @@
 # Handoff
 
+## New-conversation handoff — 2026-08-13 14:56 +03
+
+Start by fetching GitHub and checking out
+`agent/preserve-calapres-customer-service-checkpoint`. At session close, local HEAD, `origin`, and
+Draft PR #4 all pointed to `6889b74a5539b3dc4d1337fe76ff97074d9fade3`, and the customer-service
+guard plus both Shopify checks were green. Read the first sections of `STATE.md` and this file
+before older historical sections; some lower sections intentionally preserve superseded evidence.
+
+Do not rebuild anything. The protected source is
+`n8n/deployments/calapres-cs-bot-protected-draft.json`, SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`. Its release lock contains
+95 files and digest `1203cedc5737711a371699a80a5249eb2367dc39d0dde133c80960250c904566`.
+The final frozen checks were Node 249/249 and Python 92/92, with JSON, syntax, graph, secret/PII,
+and release-lock checks green.
+
+Live n8n state at handoff:
+
+- existing workflow `kAyF0D3ZZHxc0Hwp` is active on protected version
+  `941205ae-dab2-4684-b897-dee3655a2af7`, with 83 nodes and two triggers;
+- `8c518aeb-22c2-4ab9-bcef-7418029386da` is the rollback version;
+- Edge v2 `e442GlRmKP4IO8pm` remains preserved and unchanged;
+- execution payload retention is disabled;
+- Chatwoot has the two pre-existing `message_created` webhooks only: Edge observation and MVP;
+- do not create a third webhook, duplicate workflow, or parallel responder.
+
+Live Neon state at handoff:
+
+- project `shiny-hill-38628371`, database `neondb`, main branch
+  `br-broad-brook-awxulst4`;
+- migrations 0001–0013 are applied;
+- isolated validation branch `br-misty-glade-awba7bxf` passed reset-from-main restore validation;
+- its prior state is preserved at `calapres-cs-pre-restore-validation-2026-08-13`;
+- runtime execute grants are function-specific and direct table reads are denied;
+- budget control is enabled, kill switch is off, monthly ceiling is USD 45, reservation is
+  USD 0.05, and the daily conversation request limit is 20;
+- one old synthetic USD 0.05 reservation remains as audit evidence; do not mistake it for real
+  customer spend.
+
+The synthetic execution matrix is recorded as `41145`–`41160`. Execution `41160` proved the full
+pinned path through send authorization and durable completion without an external synthetic send.
+Live HMAC binding was separately proved with a signed outgoing fixture returning 204; a wrong HMAC
+returned 401. Exactly one manual technical message was sent to the owner's conversation #3. No
+Shopify write or private note occurred.
+
+The only material real-world proof still missing is an owner-only fresh inbound WhatsApp cycle:
+observe exactly one protected reply, verify the corresponding durable Neon event and send
+completion, then replay the same event and prove no duplicate reply. Do not use another contact,
+do not expose secrets, and do not merge PR #4 to `main` before review.
+
+Claude Code is now the implementation engineer and Codex is the independent auditor. Claude Code
+was instructed to inspect first, preserve the active working version, and report exact evidence.
+Its result is pending and must not be trusted merely because an n8n execution succeeds. Compare
+its commit, source hash, live workflow/version/node count, Neon writes, Chatwoot behavior, replay,
+and outbound effects against this handoff. If it changes the architecture, creates a duplicate,
+weakens HMAC/idempotency/budget/reread protections, or cannot prove the final inbound cycle, treat
+that as a blocker and preserve the current rollback.
+
 ## Resume checkpoint — 2026-08-13
 
 Continue on branch `agent/preserve-calapres-customer-service-checkpoint`. The protected update of

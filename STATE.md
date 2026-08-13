@@ -1,11 +1,44 @@
 # Project State
 
+## Clean-session checkpoint — 2026-08-13 14:56 +03
+
+GitHub and `origin` were rechecked immediately before closing the long implementation session.
+Branch `agent/preserve-calapres-customer-service-checkpoint`, Draft PR #4, and the local checkout
+all pointed to `6889b74a5539b3dc4d1337fe76ff97074d9fade3`; all three GitHub checks were green.
+The protected customer-reply source remains frozen at SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`, and the release lock
+digest remains `1203cedc5737711a371699a80a5249eb2367dc39d0dde133c80960250c904566`.
+
+The current live n8n truth is that the existing MVP workflow `kAyF0D3ZZHxc0Hwp` is active on the
+protected 83-node version `941205ae-dab2-4684-b897-dee3655a2af7`. Version
+`8c518aeb-22c2-4ab9-bcef-7418029386da` is the retained rollback. Edge v2
+`e442GlRmKP4IO8pm` was preserved and was not replaced or duplicated. No new workflow or Chatwoot
+webhook was created during the protected activation.
+
+The frozen verification result remains Node 249/249, Python 92/92, plus green JSON, syntax, graph,
+release-lock, secret, and PII checks. Neon main remains on migrations 0001–0013 with restricted
+runtime roles, direct table access denied, and the database budget control enabled with kill switch
+off, a USD 45 monthly ceiling, a USD 0.05 reservation, and 20 requests per conversation per day.
+No Shopify write, private note, or model request occurred in the final synthetic test batch.
+
+One technical manual message was sent only to the owner's Chatwoot conversation #3. The final
+owner-phone inbound proof is still not recorded: a fresh inbound WhatsApp message must produce
+exactly one protected reply, durable event/send completion must be verified in Neon, and replay
+must not create a second reply. Until that evidence exists, do not call the system fully proven
+end to end for real inbound traffic.
+
+Claude Code has been given the implementation/audit continuation prompt, but no future claim or
+change from that run is authoritative until it is compared with GitHub, the exact live n8n version,
+Neon, and Chatwoot. The next clean session should audit Claude Code's output against this checkpoint,
+preserve the working protected version, and avoid redesign, duplicate workflows, another webhook,
+or a premature merge to `main`.
+
 ## Calapres protected customer-reply candidate — 2026-08-13
 
-The existing live MVP workflow `kAyF0D3ZZHxc0Hwp` remains active at rollback version
-`8c518aeb-22c2-4ab9-bcef-7418029386da`. Its protected update is frozen as the unpublished
-83-node draft `941205ae-dab2-4684-b897-dee3655a2af7`; no duplicate workflow was created and
-Edge v2 `e442GlRmKP4IO8pm` was not changed. The frozen draft source SHA-256 is
+The existing live MVP workflow `kAyF0D3ZZHxc0Hwp` is active on protected version
+`941205ae-dab2-4684-b897-dee3655a2af7`; rollback version
+`8c518aeb-22c2-4ab9-bcef-7418029386da` remains available. No duplicate workflow was created and
+Edge v2 `e442GlRmKP4IO8pm` was not changed. The frozen protected source SHA-256 is
 `6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`.
 
 The protected draft verifies Chatwoot HMAC over the raw body, acknowledges eligible events only
