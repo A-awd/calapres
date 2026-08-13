@@ -131,8 +131,8 @@
     },
     {
       "path": "n8n/postgres/migrations/0014_calapres_cs_customer_reply_sla_escalation.sql",
-      "sha256": "1b1f0e7056838378fdc56e5ed986d7a32c1711a604d0b90e0e2ae248efab036d",
-      "bytes": 20617
+      "sha256": "e82c8bd0636a22198560b1483633e26322d572a6087ef44b1efadd5139bbcf96",
+      "bytes": 20646
     },
     {
       "path": "n8n/postgres/postgres-atomic-storage.js",
@@ -485,5 +485,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "4f92c3f956817551d8c30772d2fb945c67dbaf15a7bbd7ce7d4fe482ef23a15e"
+  "release_digest_sha256": "685654d6b5a68d8c4204dd480610f8989c336676bbe2c4d38d21c618188054d0"
 }

@@ -22,7 +22,8 @@ test('migration 0014 durably tracks one open case per conversation without reset
 test('migration 0014 claims due cases atomically and never grants send/customer egress', () => {
   assert.match(sql, /CREATE OR REPLACE FUNCTION calapres_cs\.atomic_claim_due_customer_reply_sla_escalation/);
   assert.match(sql, /FOR UPDATE SKIP LOCKED/);
-  assert.match(sql, /state = 'open'/);
+  assert.match(sql, /state IN \('open', 'claimed_for_escalation'\)/);
+  assert.match(sql, /escalation_lease_expires_at IS NULL OR escalation_lease_expires_at <= v_now/);
   assert.match(sql, /v_min_age NOT BETWEEN 82800 AND 172800/);
   assert.match(sql, /customer_egress_allowed', false/);
   assert.doesNotMatch(sql, /customer_egress_allowed', true/);

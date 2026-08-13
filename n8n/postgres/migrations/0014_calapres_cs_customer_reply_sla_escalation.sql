@@ -228,7 +228,7 @@ BEGIN
   SELECT * INTO v_case
   FROM calapres_cs.customer_reply_sla_cases
   WHERE brand_id = v_brand
-    AND state = 'open'
+    AND state IN ('open', 'claimed_for_escalation')
     AND first_unresolved_at <= v_now - make_interval(secs => v_min_age)
     AND (escalation_lease_expires_at IS NULL OR escalation_lease_expires_at <= v_now)
   ORDER BY first_unresolved_at, conversation_id
