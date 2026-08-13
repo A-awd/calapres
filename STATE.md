@@ -17,7 +17,7 @@ Saudi-store FAQs, personal questions stay out-of-scope. (4) Product price/color 
 route to a live Shopify products query and reply only from returned data (title + SAR price),
 escalating when nothing is found; the memorized 390/190 price facts were removed from both the
 router and the model prompt, and the model is instructed to escalate price/stock questions.
-New source SHA-256 is `75bd3e3e76e5a52a9b1f1d66ee859f1e04b9c9a5475480d7f0328d01ca3b5340`.
+New source SHA-256 is `2aec6eacb67cb8b343397f2318a0e6112bdd2a2eee959a448b30e6de480a8fb3`.
 
 ## First live customer round trip — 2026-08-13 13:22 UTC
 

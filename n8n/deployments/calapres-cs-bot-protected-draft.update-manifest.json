@@ -4,7 +4,7 @@
   "deployment_mode": "update_existing_only",
   "brand_id": "calapres",
   "source_workflow": "n8n/deployments/calapres-cs-bot-protected-draft.json",
-  "source_sha256": "75bd3e3e76e5a52a9b1f1d66ee859f1e04b9c9a5475480d7f0328d01ca3b5340",
+  "source_sha256": "2aec6eacb67cb8b343397f2318a0e6112bdd2a2eee959a448b30e6de480a8fb3",
   "target_workflow_id": "kAyF0D3ZZHxc0Hwp",
   "create_allowed": false,
   "activation_allowed": false,
