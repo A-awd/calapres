@@ -1,5 +1,37 @@
 # Handoff
 
+## Remove intentional pre-send delay — 2026-08-13 (session 3)
+
+Owner requirement: no deliberate human-like pause before the customer reply; only unavoidable
+API/DB/model processing time between verification and send. Implemented as a minimal rename +
+parameter change on the existing `n8n-nodes-base.wait` node: `Human Delay` (`amount: 5`) ->
+`Pre-Send Continuation` (`amount: 0`), propagated to its two downstream references. Frozen source
+SHA-256 `23e459dc36277e848318a5ba50c2c6596b78ab4dcf68868289e97ce078bff21b`, 99 nodes (unchanged
+count — rename/parameter only). No security or durability gate touched; see STATE.md for the full
+list of re-verified invariants and the graph-parity diff (empty on nodes, params, credentials, and
+connections).
+
+Live workflow `kAyF0D3ZZHxc0Hwp` published as active version `73e3e3f2-c507-426a-bf7b-e1300fdd0c4e`.
+Same update restored `saveManualExecutions/saveDataErrorExecution/saveDataSuccessExecution` to
+`false/none/none` (previously left at diagnostic `true/all/all` settings from earlier work this
+session — an identified and now-fixed carry-over bug, not a new issue). Rollback points preserved
+and restorable: `8c518aeb-22c2-4ab9-bcef-7418029386da` (original baseline),
+`7cca9e9b-6092-444b-8cb8-7735c39a9b5f` (pre-zero-delay 99-node SLA/escalation graph).
+
+Latency: no new real inbound message has occurred since publish (deliberately not synthesized —
+see STATE.md for why). Computed from real production execution `41342` (real owner WhatsApp
+message on conversation #3): old total inbound-to-reply-sent was 9.75s, of which exactly 5.000s
+was the now-removed fixed wait; projected new latency is ≈4.75s, bounded by Chatwoot
+anchor-reread + Postgres claim/lease + final Chatwoot send API time. Directly observing the new
+number requires one real inbound message — the same unavoidable step needed for the final Outcome
+3 acceptance test.
+
+Still open, both owner-only unavoidable actions (not fixable by any tool available to this
+session): (1) Shopify credential `QKgLBMWQtO6G4zvM` returns Shopify's own `401 Invalid API key or
+access token` — needs a browser OAuth reauthorization by the account owner; (2) migration `0014`
+(24h SLA tables/functions) is written and statically tested but not yet applied to the live Neon
+database — this session has no Neon MCP tool access.
+
 ## Self-service-first escalation with durable 24h SLA (decision 0014) — 2026-08-13 (session 2)
 
 The owner rejected the prior interpretation that cancellation/refund/complaint language or any

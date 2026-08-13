@@ -1,5 +1,46 @@
 # Project State
 
+## Remove intentional pre-send delay — 2026-08-13 (session 3)
+
+The owner removed the requirement for a human-like pause before replying. The `n8n-nodes-base.wait`
+node that previously held every reply for a fixed 5 seconds was renamed from `Human Delay` to
+`Pre-Send Continuation` and its wait set to 0 seconds (frozen source SHA-256
+`23e459dc36277e848318a5ba50c2c6596b78ab4dcf68868289e97ce078bff21b`, still 99 nodes — this is a
+parameter/rename change only, no nodes added or removed). The rename was propagated to its two
+downstream references (`GET Final Chatwoot Messages` URL, `Verify Final Chatwoot Reread` jsCode).
+No other gate changed: raw-body ingress checks, the Chatwoot capability-URL + anchor-reread model
+(HMAC verification was already removed for an unrelated, upstream Chatwoot defect — see decision
+0013), replay/idempotency, Neon durability, brand/inbox isolation, identity checks, Shopify read
+verification, model budget/kill switch, the final reread/anchor cancellation, the send lease, the
+15-minute recovery/SLA schedule branch, and the single `Send Reply` node are all unchanged and
+re-verified byte-identical against the live workflow after publish (node params, credentials, and
+the full connection edge-set diff came back empty; `Send Reply` still has exactly one inbound edge
+from `Customer Egress Authorized?`, `Build Human Escalation` still has exactly one inbound edge
+from `Route Customer Service Decision` output 5, and the 15-minute schedule trigger still cannot
+reach `Send Reply`). Live workflow `kAyF0D3ZZHxc0Hwp` published as active version
+`73e3e3f2-c507-426a-bf7b-e1300fdd0c4e`; this update also restored the execution-retention settings
+to `saveManualExecutions:false, saveDataErrorExecution:'none', saveDataSuccessExecution:'none'`,
+which had been left on `true`/`all`/`all` from earlier diagnostic sessions. Rollback points
+preserved: `8c518aeb-22c2-4ab9-bcef-7418029386da` (original pre-session baseline) and
+`7cca9e9b-6092-444b-8cb8-7735c39a9b5f` (last full 99-node SLA/escalation graph with the old 5s
+wait), both still restorable via `mcp__n8n__restore_workflow_version`.
+
+**Measured latency**: no new real inbound message has arrived since publish, so the zero-delay
+code path itself has not yet produced a directly observed round trip — synthesizing a fake inbound
+customer event to manufacture that number is exactly what this project's evidence rules forbid.
+Instead this is computed from a real, already-recorded production round trip: execution `41342`
+(webhook-triggered, real owner WhatsApp message "مين انت" on conversation #3 at
+2026-08-13T14:18:40Z, under the pre-zero-delay code) shows the `Chatwoot In` webhook received at
+`14:18:41.340Z` and `Send Reply` completing (HTTP 200 to Chatwoot) at `14:18:51.093Z` — a total
+inbound-to-reply-sent latency of 9.75s, of which the `Human Delay` node alone consumed exactly
+5.000s (verified from its own `executionTime` in the execution record). Subtracting that fixed,
+now-removed wait projects a same-shape round trip at **≈4.75s**, all of it unavoidable Chatwoot
+anchor-reread, Postgres claim/lease, and final Chatwoot send API time. This is a computed
+projection from real historical data (CONFIRMED TESTED for the 5.000s removed component; DOCUMENTED
+projection for the ≈4.75s remainder), not a CONFIRMED LIVE measurement of the new zero-delay path —
+that requires one real new inbound message, which is also the one unavoidable step left for
+Outcome 3 below.
+
 ## Self-service-first escalation with durable 24h SLA (decision 0014) — 2026-08-13 (session 2)
 
 The owner rejected the prior interpretation that cancellation/refund/complaint language or any
