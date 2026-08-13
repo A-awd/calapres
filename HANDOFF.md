@@ -1,5 +1,27 @@
 # Handoff
 
+## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) — 2026-08-13 (session 4)
+
+**Migration 0014**: fixed a semicolon-inside-`--`-comment defect that broke Neon's migration
+splitter (`syntax error at or near "no"`), and a NULL-comparison validation-bypass bug the fix
+process exposed (empty/malformed jsonb commands could reach a raw `INSERT` instead of a clean
+rejection). Verified both fixes by replaying all 14 migrations against a disposable local
+Postgres 16 (not Neon) — clean apply, schema version 14, and the three new functions now reject
+`{}`::jsonb correctly. Live Neon is still version 13; still needs a session with Neon MCP access
+(or the owner via the Neon console) to run the fixed file.
+
+**Shopify credential**: switched `GET Shopify Orders Read Only` to
+`predefinedCredentialType`/`shopifyOAuth2Api` pointed at the existing `Shopify-Calapres`
+credential (`QLsvwO73GFsQfy0w`) in the frozen source — committed, tested, config-validated. Live
+apply failed with `credential 'QLsvwO73GFsQfy0w' is not usable in this workflow's project`
+because that credential sits in the owner's personal n8n project while the workflow sits in the
+"Calapres Customer Service" team project. This needs exactly one n8n UI action — **Credentials →
+Shopify-Calapres → Sharing → share with project "Calapres Customer Service"** — not a Shopify
+OAuth screen, no secret exposed. No tool in this session's n8n MCP surface can do this
+programmatically. Once shared, the prepared `update_workflow` call is ready to apply and publish
+immediately, followed by a read-only Shopify probe before declaring it resolved. Live workflow
+itself is untouched (atomic update rolled back cleanly), still on the old expired credential.
+
 ## Remove intentional pre-send delay — 2026-08-13 (session 3)
 
 Owner requirement: no deliberate human-like pause before the customer reply; only unavoidable

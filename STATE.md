@@ -1,5 +1,61 @@
 # Project State
 
+## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) — 2026-08-13 (session 4)
+
+Three independent findings this session, each fixed at the root cause, not worked around:
+
+**1. Migration 0014 syntax error, now fixed and replay-verified.** The owner ran migration
+`0014_calapres_cs_customer_reply_sla_escalation.sql` through Neon's safe temporary-branch
+migration flow (live Neon is still schema version 13); Postgres rejected it with `syntax error
+at or near "no"`. Root cause: several `--` line comments contained an embedded semicolon (e.g.
+`-- ...timestamps only; no customer text.`); a statement splitter that isn't aware `;` can appear
+inside a SQL comment treats it as a statement boundary, so `no customer text.` gets parsed as raw
+SQL. Removed the semicolon from all seven affected comments (wording only, no logic change) and
+added a regression test that fails if one reappears. Verified by initializing a disposable local
+PostgreSQL 16 instance (never touched Neon) and replaying migrations `0001` through `0014` in
+order against it — all 14 apply cleanly, schema lands at version 14.
+
+That same local replay also surfaced a second, independent defect while probing the new
+functions with an empty `{}` command: their validation guard clauses used bare
+`x <> 'calapres'` / `x !~ pattern` checks, which evaluate to `NULL` (not `TRUE`) when the jsonb
+key is absent — and `IF NULL THEN` silently skips the rejection in plpgsql. For the claim/finalize
+functions this only degraded to a generic "queue empty"/"lease invalid" response (accidentally
+safe), but for `atomic_upsert_customer_reply_sla_case`'s `touch` path a fully empty command
+reached the `INSERT` and raised a raw NOT NULL constraint violation instead of the intended
+`schema_invalid` rejection — a real gap in the fail-closed contract every other function in this
+schema already keeps. Wrapped every such comparison in `COALESCE(x, '')` across all three new
+functions; re-verified locally that `{}` is now cleanly rejected and a well-formed command still
+succeeds. No table, function signature, grant, or business logic changed.
+
+**Still not applied to live Neon** (still version 13) — this session again has no Neon MCP access;
+applying the now-fixed migration remains the owner's or a Neon-MCP-equipped session's action.
+
+**2. Shopify credential fix: prepared, config-validated, but blocked on one n8n-internal step,
+not Shopify OAuth.** `GET Shopify Orders Read Only` used generic credential `oAuth2Api:
+QKgLBMWQtO6G4zvM` ("Unnamed credential"), whose token Shopify reports invalid/expired. A working
+credential for the same store already exists in n8n — `Shopify-Calapres`
+(`shopifyOAuth2Api:QLsvwO73GFsQfy0w`) — no new app or credential was created. Switched the node to
+`authentication: predefinedCredentialType` / `nodeCredentialType: shopifyOAuth2Api` pointed at
+that credential (config validated via the n8n MCP node validator; method/URL/body/read-only
+behavior unchanged) and committed it to the frozen source. **Applying it live failed**: n8n
+rejected the update with `credential 'QLsvwO73GFsQfy0w' is not usable in this workflow's
+project` — `Shopify-Calapres` lives in the owner's personal n8n project, while workflow
+`kAyF0D3ZZHxc0Hwp` lives in the "Calapres Customer Service" **team** project, and n8n does not let
+a team-project workflow reference a personal-project credential. No tool available in this
+session can share or move a credential between n8n projects (confirmed: no such tool exists in
+the n8n MCP server's surface, and there is no n8n API key in this environment to fall back to a
+direct REST call, which would in any case be routing around the sanctioned tool surface). The
+live workflow was left completely unchanged by the failed atomic update — confirmed via a fresh
+read showing it still active at version `73e3e3f2` with the old credential intact.
+
+**The one remaining action is an n8n UI step, distinct from and simpler than a Shopify OAuth
+consent screen**: open n8n → Credentials → `Shopify-Calapres` → Sharing → share it with (not move
+it to, to preserve ownership) project "Calapres Customer Service". No secret is exposed by this
+action. The moment it's done, the prepared `update_workflow` call (already drafted and
+config-validated in this session) can be applied and published immediately, followed by a
+read-only Shopify probe to confirm the credential actually authenticates before declaring this
+resolved.
+
 ## Remove intentional pre-send delay — 2026-08-13 (session 3)
 
 The owner removed the requirement for a human-like pause before replying. The `n8n-nodes-base.wait`
