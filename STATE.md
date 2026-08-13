@@ -1,5 +1,27 @@
 # Project State
 
+## Contextual bounded replies live — 2026-08-13 (session 5)
+
+The repetitive off-topic response was not a weak-model failure: `Verify Chatwoot Anchor and
+Route` bypassed the model for every unclassified message and emitted one hard-coded sentence,
+while the model prompt repeated that same sentence as a mandatory answer. Removed that static
+route. Unclassified messages now reach the existing restricted GPT-5.4 path with the exact
+customer message and recent conversation context; the prompt varies natural Saudi-Arabic replies,
+handles brief social conversation, gives only very short safe general answers, redirects unrelated
+tasks with a topic-specific boundary, and never invents Calapres, Shopify, order, or product facts.
+Business-unclear messages ask one useful clarification. `Humanize Text` now permits up to three
+short sentences and rejects confidence outside 0..1; model temperature is 0.4.
+
+Published on the same live workflow `kAyF0D3ZZHxc0Hwp` with no added/removed nodes or duplicate
+workflow: active version `a2e3352f-36d4-49e2-b585-3197dea3e322`, 99 nodes. Source SHA-256
+`e62a0afc063953b0eff5f613f70601d1af453945a566fd2febc615900b015337`; implementation commit
+`f2c23627177882339143fb4a6b4b07064e9a5814`. Source/live node parity and settings were verified;
+the only serialization difference is an omitted empty false-output array on `SLA Case Claimed?`
+and has no behavior. Both CI workflows passed on the implementation commit (275 Node tests and
+92 Python tests). Existing model budget, per-conversation limit, kill switch, final Chatwoot
+reread, send lease, Shopify read-only boundary, and no-execution-data-retention settings remain
+unchanged.
+
 ## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) — 2026-08-13 (session 4)
 
 Three independent findings this session, each fixed at the root cause, not worked around:

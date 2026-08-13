@@ -1,5 +1,24 @@
 # Handoff
 
+## Contextual bounded replies live — 2026-08-13 (session 5)
+
+Fixed the owner's observed canned behavior at its actual source: unknown/off-topic messages were
+being answered by one hard-coded router sentence without reaching GPT. They now use the existing
+restricted GPT-5.4 route with recent Chatwoot context and natural, varied Saudi-Arabic behavior;
+brief social exchanges and safe simple facts are handled naturally, genuinely unrelated work gets
+a topic-specific concise boundary and redirect, and unclear business requests get one useful
+clarification. The model still cannot invent store/order facts or perform open-ended unrelated
+tasks. `Humanize Text` accepts up to three short sentences and enforces confidence 0..1;
+temperature is 0.4.
+
+Live workflow remains `kAyF0D3ZZHxc0Hwp`, 99 nodes, active version
+`a2e3352f-36d4-49e2-b585-3197dea3e322`; no workflow/node duplication. Frozen source SHA-256 is
+`e62a0afc063953b0eff5f613f70601d1af453945a566fd2febc615900b015337`, implementation commit
+`f2c23627177882339143fb4a6b4b07064e9a5814`. Source/live parity verified and both CI workflows
+passed (275 Node, 92 Python). Budget caps, kill switch, idempotency, final reread/send lease,
+Shopify read-only scope, and no execution-data retention are unchanged. Live Neon remains schema
+version 13; migration 0014 is still a separate explicit-approval gate.
+
 ## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) — 2026-08-13 (session 4)
 
 **Migration 0014**: fixed a semicolon-inside-`--`-comment defect that broke Neon's migration
