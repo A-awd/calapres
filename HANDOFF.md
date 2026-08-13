@@ -1,5 +1,23 @@
 # Handoff
 
+## First live customer round trip — 2026-08-13 13:22 UTC
+
+After the anchor fix was published as live version `50dc7cd0-71ab-4e19-b57a-e6682a998380`
+(commit `991a517`), the owner's real WhatsApp inbound completed the full protected path in
+production for the first time. Independently audited evidence (Codex, live Neon + Chatwoot):
+greeting inbound `793040533` reached state `sent` with `send_attempt_count=1`, outgoing Chatwoot
+message `793040908`, `sent_at` 13:22:07Z; a following out-of-scope inbound `793041254` reached
+state `sent` with one attempt, outgoing `793041537`, 13:22:24Z. Conversation #3 shows both
+replies with WhatsApp delivery ticks. Exactly one reply per inbound; no private note; no Shopify
+write; deterministic routes only (no model call). Execution retention remained disabled during
+these production sends. Diagnostic manual executions `41267`–`41272` earlier the same hour ran on
+the pre-fix anchor and terminated fail-closed without any send.
+
+Still outstanding before declaring full operational readiness: live out-of-scope suppression
+(second notice inside 24h must be silent), live sensitive-message escalation (`human` label, no
+customer send), a live model-route reply with budget reservation, and an optional safe order
+lookup; ambiguous-send recovery remains proven synthetically only.
+
 ## Real-inbound anchor fix — 2026-08-13
 
 The first real inbound after the capability-URL ingress deploy passed ingress, produced a live
