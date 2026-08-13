@@ -264,7 +264,7 @@ function runAnchorRoute(text) {
   return new Function('$', '$input', 'Buffer', code)($, $input, Buffer)[0].json;
 }
 
-test('store location and identity questions are answered, not treated out of scope', () => {
+test('store questions stay deterministic while unknown conversation reaches the bounded model', () => {
   for (const q of ['وين مقركم', 'انتم في مصر ؟', 'انتم في الكويت ؟', 'انت وين']) {
     const out = runAnchorRoute(q);
     assert.equal(out.decision_kind, 'faq', q);
@@ -273,7 +273,29 @@ test('store location and identity questions are answered, not treated out of sco
   const who = runAnchorRoute('انت مين');
   assert.equal(who.decision_kind, 'faq');
   const personal = runAnchorRoute('وش اسمي ؟');
-  assert.equal(personal.decision_kind, 'out_of_scope');
+  assert.deepEqual(
+    [personal.route_index, personal.decision_kind, personal.model_scope],
+    [3, 'model', 'non_business'],
+  );
+});
+
+test('bounded model is conversational instead of repeating one canned out-of-scope sentence', () => {
+  const brain = nodesByName.get('Calapres Brain');
+  const prompt = brain.parameters.options.systemMessage;
+  const model = nodesByName.get('OpenAI Calapres Restricted Model');
+  assert.match(prompt, /رد على كلامه نفسه بدل رد عام محفوظ/);
+  assert.match(prompt, /معلومة عامة بسيطة وآمنة/);
+  assert.match(prompt, /ممنوع نسخ جملة رفض ثابتة/);
+  assert.match(prompt, /من جملة إلى ثلاث جمل قصيرة/);
+  assert.doesNotMatch(prompt,
+    /أقدر أساعدك بالمنتجات والطلبات والشحن فقط\. وش تحتاج؟/);
+  assert.equal(model.parameters.options.temperature, 0.4);
+
+  const businessUnclear = runAnchorRoute('ممكن تساعدني أختار منتج مناسب؟');
+  assert.deepEqual(
+    [businessUnclear.route_index, businessUnclear.decision_kind, businessUnclear.model_scope],
+    [3, 'model', 'business_unclear'],
+  );
 });
 
 test('product price questions route to the live Shopify reference, not memorized facts', () => {
@@ -382,6 +404,33 @@ test('model failures and budget denials fail safe with a bounded reply, never an
     { first: () => ({ json: { context: { conversation_id: 3, inbound_message_id: 900000011 } } }) }, Buffer)[0].json;
   assert.equal(budgetDenied.send_ready, true);
   assert.equal(budgetDenied.decision_kind, 'model_fallback');
+});
+
+test('model output validation accepts three natural sentences and rejects invalid confidence', () => {
+  const humanizeCode = nodesByName.get('Humanize Text').parameters.jsCode;
+  const $ = (name) => ({ first: () => ({
+    'Interpret Model Budget Reservation': { json: {
+      context: { conversation_id: 3, inbound_message_id: 900000012 },
+    } },
+  }[name]) });
+  const natural = new Function('$', '$input', 'Buffer', humanizeCode)(
+    $, { first: () => ({ json: { output: JSON.stringify({
+      reply: 'أكيد أفهم سؤالك. أقدر أجاوبك باختصار. وبعدها أخدمك في كالابريز.',
+      confidence: 0.91,
+      escalate: false,
+    }) } }) }, Buffer,
+  )[0].json;
+  assert.equal(natural.decision_kind, 'model');
+  assert.match(natural.reply_text, /وبعدها أخدمك/);
+
+  const invalid = new Function('$', '$input', 'Buffer', humanizeCode)(
+    $, { first: () => ({ json: { output: JSON.stringify({
+      reply: 'رد غير موثوق',
+      confidence: 1.2,
+      escalate: false,
+    }) } }) }, Buffer,
+  )[0].json;
+  assert.equal(invalid.decision_kind, 'model_fallback');
 });
 
 test('Build Human Escalation is reachable only from an explicit customer human request', () => {
