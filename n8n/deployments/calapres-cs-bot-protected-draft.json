@@ -629,8 +629,8 @@
       "parameters": {
         "method": "POST",
         "url": "https://unywbe-ub.myshopify.com/admin/api/2026-07/graphql.json",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "oAuth2Api",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "shopifyOAuth2Api",
         "sendHeaders": true,
         "specifyHeaders": "keypair",
         "headerParameters": {
@@ -663,9 +663,9 @@
       "onError": "continueRegularOutput",
       "retryOnFail": false,
       "credentials": {
-        "oAuth2Api": {
-          "id": "QKgLBMWQtO6G4zvM",
-          "name": "Unnamed credential"
+        "shopifyOAuth2Api": {
+          "id": "QLsvwO73GFsQfy0w",
+          "name": "Shopify-Calapres"
         }
       }
     },

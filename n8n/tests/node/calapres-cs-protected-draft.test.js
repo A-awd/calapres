@@ -97,6 +97,19 @@ test('Shopify is read-only and no forbidden customer-write surfaces exist', () =
   assert.doesNotMatch(serialized, /message_type['\"]?\s*:\s*['\"]private/i);
 });
 
+test('Shopify node reuses the existing Shopify-Calapres credential, not the expired generic one', () => {
+  const shopify = nodesByName.get('GET Shopify Orders Read Only');
+  assert.equal(shopify.parameters.authentication, 'predefinedCredentialType');
+  assert.equal(shopify.parameters.nodeCredentialType, 'shopifyOAuth2Api');
+  assert.equal(shopify.parameters.genericAuthType, undefined);
+  assert.deepEqual(Object.keys(shopify.credentials), ['shopifyOAuth2Api']);
+  assert.equal(shopify.credentials.shopifyOAuth2Api.id, 'QLsvwO73GFsQfy0w');
+  assert.equal(shopify.credentials.shopifyOAuth2Api.name, 'Shopify-Calapres');
+  const serialized = JSON.stringify(workflow);
+  assert.doesNotMatch(serialized, /QKgLBMWQtO6G4zvM/);
+  assert.doesNotMatch(serialized, /Unnamed credential/);
+});
+
 test('frozen draft contains no credential secret values or customer fixtures', () => {
   const serialized = JSON.stringify(workflow);
   assert.doesNotMatch(serialized, /sk-[A-Za-z0-9_-]{16,}/);
