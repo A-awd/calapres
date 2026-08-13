@@ -1,5 +1,19 @@
 # Handoff
 
+## Real-inbound anchor fix — 2026-08-13
+
+The first real inbound after the capability-URL ingress deploy passed ingress, produced a live
+durable claim in Neon (first live proof of the restricted Postgres path), and both authenticated
+Chatwoot rereads returned 200 — then every event failed `anchor_mismatch`. Root cause, proven by
+live diagnostic executions 41267–41272: the conversation-messages API omits `account_id` from
+message rows (unlike webhook payload rows), so the anchor's `account_id === 179973` comparison
+failed on all genuine messages; the old pinned fixtures had assumed the wrong row shape. The
+anchor now validates `account_id` only when the field is present (the API call itself is pinned
+to account 179973 by URL), and `Prepare Raw Chatwoot Ingress` gained a non-production-only
+base64 diagnostic input used for owner-initiated manual runs. A regression test exercises the
+anchor against real API-shaped rows. New source SHA-256 is
+`3a10cd938146c828ff43c44fe20cf2ce992d4d632836c0b90b9e6c47aa1e1f85`.
+
 ## Chatwoot HMAC defect and capability-URL ingress — 2026-08-13
 
 Real Chatwoot deliveries cannot be signature-verified (upstream chatwoot/chatwoot#13809: the

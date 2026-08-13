@@ -183,3 +183,36 @@ test('ingress gate still fails closed on structural violations', () => {
   });
   assert.deepEqual([badJson.ingress_accepted, badJson.response_code], [false, 400]);
 });
+
+test('anchor verification accepts real Chatwoot API rows that omit account_id', () => {
+  const code = nodesByName.get('Verify Chatwoot Anchor and Route').parameters.jsCode;
+  const context = {
+    brand_id: 'calapres', account_id: 179973, inbox_id: 128058, conversation_id: 3,
+    inbound_message_id: 900000002, customer_text: 'هلا',
+    claimed_source_id: 'wamid.TEST900000002', claimed_created_epoch: 1786626850,
+    processing_lease_token: 'crp_3_900000002_test',
+  };
+  const apiRow = {
+    id: 900000002, content: 'هلا', inbox_id: 128058, conversation_id: 3,
+    message_type: 0, content_type: 'text', status: 'sent', created_at: 1786626850,
+    private: false, source_id: 'wamid.TEST900000002',
+    sender: { id: 1, name: 'Test Contact', type: 'contact', phone_number: '+966500000000' },
+  };
+  const mocks = {
+    'Interpret Customer Reply Event Claim': { json: { context } },
+    'GET Verified Chatwoot Conversation': { json: { statusCode: 200, body: {
+      id: 3, inbox_id: 128058, labels: [],
+      meta: { sender: { phone_number: '+966500000000' } },
+    } } },
+  };
+  const $ = (name) => ({ first: () => mocks[name] });
+  const $input = { first: () => ({ json: { statusCode: 200, body: { payload: [apiRow] } } }) };
+  const out = new Function('$', '$input', 'Buffer', code)($, $input, Buffer)[0].json;
+  assert.equal(out.error_code, null);
+  assert.equal(out.decision_kind, 'greeting');
+  assert.equal(out.route_index, 1);
+  const wrongAccountRow = { ...apiRow, account_id: 999 };
+  const $badInput = { first: () => ({ json: { statusCode: 200, body: { payload: [wrongAccountRow] } } }) };
+  const bad = new Function('$', '$input', 'Buffer', code)($, $badInput, Buffer)[0].json;
+  assert.equal(bad.error_code, 'anchor_mismatch');
+});
