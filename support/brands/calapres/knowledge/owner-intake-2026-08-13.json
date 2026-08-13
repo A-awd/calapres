@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "brand_name_ar": "كالابريز",
+  "status": "owner_intake_in_progress",
+  "captured_at": "2026-08-13",
+  "scope": "calapres_only",
+  "publication_state": "not_compiled_not_live",
+  "answers": [
+    {
+      "question_number": 1,
+      "topic": "brand_description",
+      "answer_ar": "كالابريز متجر يبيع مباخر فاخرة. قد يتطور نطاق البراند مستقبلًا، لكن هذا هو الوصف الحالي."
+    },
+    {
+      "question_number": 2,
+      "topic": "current_products",
+      "answer_ar": "تبيع كالابريز المباخر الفاخرة، مع إمكانية نحت اسم العميل عليها."
+    },
+    {
+      "question_number": 3,
+      "topic": "excluded_products",
+      "answer_ar": "لا تقدم كالابريز حاليًا أي منتجات غير المباخر."
+    },
+    {
+      "question_number": 4,
+      "topic": "sales_channel",
+      "answer_ar": "كالابريز متجر إلكتروني فقط، ولا يوجد معرض أو مقر يستقبل العملاء."
+    },
+    {
+      "question_number": 5,
+      "topic": "service_regions",
+      "answer_ar": "تخدم كالابريز جميع مدن السعودية والكويت والبحرين وقطر والإمارات وعمان."
+    },
+    {
+      "question_number": 6,
+      "topic": "brand_differentiation",
+      "answer_ar": "تتميز كالابريز بفخامة المباخر والجلد والمواد المستخدمة."
+    },
+    {
+      "question_number": 7,
+      "topic": "approved_brand_introduction",
+      "answer_ar": "كالابريز علامة تجارية سعودية لبيع المباخر."
+    },
+    {
+      "question_number": 8,
+      "topic": "forbidden_product_claims",
+      "answer_ar": "يُمنع ذكر العطور أو العطور النيشية أو أي منتج غير المباخر."
+    },
+    {
+      "question_number": 9,
+      "topic": "brand_voice",
+      "answer_ar": "يتحدث بصيغة إحنا وبعامية طبيعية، بدل نحن أو المتجر عند الحديث باسم كالابريز."
+    },
+    {
+      "question_number": 10,
+      "topic": "assistant_identity",
+      "owner_preference_ar": "يكون الأسلوب طبيعيًا جدًا ولا يبادر بإخبار العميل أنه بوت أو مساعد آلي.",
+      "implementation_constraint_ar": "لا يدّعي أنه إنسان ولا ينتحل اسم موظف، وإذا سُئل مباشرة عن طبيعته يجيب بصدق وباختصار ثم يعود للخدمة."
+    }
+  ],
+  "known_conflicts_to_resolve_before_publish": [
+    {
+      "topic": "shipping_regions",
+      "existing_claim": "الشحن داخل السعودية فقط.",
+      "owner_answer": "جميع مدن السعودية والكويت والبحرين وقطر والإمارات وعمان.",
+      "required_check": "التحقق من إعدادات وأسعار الشحن الحية في Shopify قبل اعتماد الرد للعملاء."
+    },
+    {
+      "topic": "product_scope",
+      "existing_claim": "العطور النيشية والمباخر ومستلزمات الأعراس وستاند الآيباد.",
+      "owner_answer": "المباخر فقط.",
+      "required_check": "حذف الادعاءات القديمة عند تجميع إصدار المعرفة الجديد، بعد اكتمال الاستبيان والاختبارات."
+    }
+  ]
+}
