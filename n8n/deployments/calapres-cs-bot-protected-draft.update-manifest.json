@@ -4,7 +4,7 @@
   "deployment_mode": "update_existing_only",
   "brand_id": "calapres",
   "source_workflow": "n8n/deployments/calapres-cs-bot-protected-draft.json",
-  "source_sha256": "6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619",
+  "source_sha256": "30b477d79c988c922fd5a3c7d04febbf4fe9255ed84fbe65e9a840f95a001818",
   "target_workflow_id": "kAyF0D3ZZHxc0Hwp",
   "create_allowed": false,
   "activation_allowed": false,
@@ -14,8 +14,8 @@
   "source_only": false,
   "recovery_schedule": {
     "enabled_in_source": true,
-    "interval_minutes": 1,
-    "estimated_top_level_executions_per_30_day_month": 43200,
+    "interval_minutes": 15,
+    "estimated_top_level_executions_per_30_day_month": 2880,
     "purpose": "customer_reply_reconciliation_without_resend",
     "approval_required_before_enable": false
   }

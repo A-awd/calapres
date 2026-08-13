@@ -1,5 +1,15 @@
 # Handoff
 
+## Recovery cadence quota fix — 2026-08-13
+
+The MVP recovery schedule now fires every 15 minutes (was every 1 minute). Frozen source SHA-256 is
+`30b477d79c988c922fd5a3c7d04febbf4fe9255ed84fbe65e9a840f95a001818`; release-lock digest is
+`f55598279f17dd6b03857c9fbeb63815e5c0e0a8d6937bf3ca01049beeb22e93`. The schedule trigger is named
+`Recover Ambiguous Sends Every 15 Minutes` and still cannot reach `Send Reply`. Expected monthly
+schedule cost is ~2,880 executions against the 10,000-execution n8n Pro plan. Do not restore the
+1-minute cadence without recomputing plan headroom. The live workflow `kAyF0D3ZZHxc0Hwp` must match
+this source exactly; rollback `8c518aeb-22c2-4ab9-bcef-7418029386da` is retained.
+
 ## New-conversation handoff — 2026-08-13 14:56 +03
 
 Start by fetching GitHub and checking out

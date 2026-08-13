@@ -69,7 +69,7 @@ test('customer egress has one fail-closed gate and recovery can never reach it',
     }
   }
   assert.deepEqual(incoming, [{ source: 'Customer Egress Authorized?', output: 0 }]);
-  assert.equal(reachableFrom('Recover Ambiguous Sends Every Minute').has('Send Reply'), false);
+  assert.equal(reachableFrom('Recover Ambiguous Sends Every 15 Minutes').has('Send Reply'), false);
   assert.equal(workflow.safety.recovery_customer_send_allowed, false);
 });
 

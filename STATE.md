@@ -1,5 +1,24 @@
 # Project State
 
+## Recovery cadence quota fix — 2026-08-13
+
+The protected MVP recovery schedule was reduced from every 1 minute to every 15 minutes inside the
+frozen source `n8n/deployments/calapres-cs-bot-protected-draft.json`. Rationale: the n8n Pro plan
+allows 10,000 executions per month and August usage was already 2,086; a 1-minute cadence alone
+consumes ~43,200 executions per 30 days and would exhaust the plan around 2026-08-19. Fifteen
+minutes matches the 900-second maximum retry delay enforced by migration 0013's
+`atomic_release_customer_reply_recovery` contract, keeps reconciliation SLA within one DB retry
+ceiling, and costs ~2,880 executions per 30 days (~29% of plan), leaving headroom for both
+Chatwoot-triggered workflows. The trigger node was renamed to
+`Recover Ambiguous Sends Every 15 Minutes`; recovery still has no send path. The update manifest
+now records `interval_minutes: 15` and 2,880 estimated monthly executions. New source SHA-256 is
+`30b477d79c988c922fd5a3c7d04febbf4fe9255ed84fbe65e9a840f95a001818` and the regenerated release-lock
+digest is `f55598279f17dd6b03857c9fbeb63815e5c0e0a8d6937bf3ca01049beeb22e93`. Python 92/92,
+Node 249/249, and the release-lock check all passed after the change. The live workflow
+`kAyF0D3ZZHxc0Hwp` is being updated to this exact source; the retained rollback version
+`8c518aeb-22c2-4ab9-bcef-7418029386da` is unchanged. The owner-phone inbound proof remains the
+final outstanding evidence.
+
 ## Clean-session checkpoint — 2026-08-13 14:56 +03
 
 GitHub and `origin` were rechecked immediately before closing the long implementation session.

@@ -1643,7 +1643,7 @@
     },
     {
       "id": "34d102fc-0092-4cc9-9848-936d0d06255e",
-      "name": "Recover Ambiguous Sends Every Minute",
+      "name": "Recover Ambiguous Sends Every 15 Minutes",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
@@ -1655,7 +1655,7 @@
           "interval": [
             {
               "field": "minutes",
-              "minutesInterval": 1
+              "minutesInterval": 15
             }
           ]
         },
@@ -2748,17 +2748,6 @@
         ]
       ]
     },
-    "Recover Ambiguous Sends Every Minute": {
-      "main": [
-        [
-          {
-            "node": "Build Customer Reply Recovery Claim",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Build Customer Reply Recovery Claim": {
       "main": [
         [
@@ -2998,7 +2987,17 @@
           }
         ]
       ]
+    },
+    "Recover Ambiguous Sends Every 15 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Build Customer Reply Recovery Claim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   }
 }
-
