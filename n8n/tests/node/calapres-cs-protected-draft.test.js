@@ -216,3 +216,70 @@ test('anchor verification accepts real Chatwoot API rows that omit account_id', 
   const bad = new Function('$', '$input', 'Buffer', code)($, $badInput, Buffer)[0].json;
   assert.equal(bad.error_code, 'anchor_mismatch');
 });
+
+function runAnchorRoute(text) {
+  const code = nodesByName.get('Verify Chatwoot Anchor and Route').parameters.jsCode;
+  const context = {
+    brand_id: 'calapres', account_id: 179973, inbox_id: 128058, conversation_id: 3,
+    inbound_message_id: 900000003, customer_text: text,
+    claimed_source_id: 'wamid.TEST900000003', claimed_created_epoch: 1786626850,
+    processing_lease_token: 'crp_3_900000003_test',
+  };
+  const apiRow = {
+    id: 900000003, content: text, inbox_id: 128058, conversation_id: 3,
+    message_type: 0, content_type: 'text', status: 'sent', created_at: 1786626850,
+    private: false, source_id: 'wamid.TEST900000003',
+    sender: { id: 1, name: 'Test Contact', type: 'contact' },
+  };
+  const mocks = {
+    'Interpret Customer Reply Event Claim': { json: { context } },
+    'GET Verified Chatwoot Conversation': { json: { statusCode: 200, body: {
+      id: 3, inbox_id: 128058, labels: [], meta: { sender: { phone_number: '+966500000000' } },
+    } } },
+  };
+  const $ = (name) => ({ first: () => mocks[name] });
+  const $input = { first: () => ({ json: { statusCode: 200, body: { payload: [apiRow] } } }) };
+  return new Function('$', '$input', 'Buffer', code)($, $input, Buffer)[0].json;
+}
+
+test('store location and identity questions are answered, not treated out of scope', () => {
+  for (const q of ['وين مقركم', 'انتم في مصر ؟', 'انتم في الكويت ؟', 'انت وين']) {
+    const out = runAnchorRoute(q);
+    assert.equal(out.decision_kind, 'faq', q);
+    assert.match(out.reply_text, /سعودي/);
+  }
+  const who = runAnchorRoute('انت مين');
+  assert.equal(who.decision_kind, 'faq');
+  const personal = runAnchorRoute('وش اسمي ؟');
+  assert.equal(personal.decision_kind, 'out_of_scope');
+});
+
+test('product price questions route to the live Shopify reference, not memorized facts', () => {
+  const priced = runAnchorRoute('بكم المبخرة');
+  assert.deepEqual([priced.route_index, priced.decision_kind, priced.product_topic], [2, 'product', 'مبخر']);
+  const stand = runAnchorRoute('سعر ستاند الايباد');
+  assert.deepEqual([stand.decision_kind, stand.product_topic], ['product', 'ستاند']);
+  assert.equal(JSON.stringify(workflow).includes('390 ريال'), false);
+  assert.equal(JSON.stringify(workflow).includes('190 ريال'), false);
+});
+
+test('product reference builds a Shopify query and replies only from live data', () => {
+  const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
+  const prep = new Function('$input', 'Buffer',
+    prepCode)({ first: () => ({ json: { decision_kind: 'product', product_topic: 'مبخر' } }) }, Buffer)[0].json;
+  assert.equal(prep.shopify_lookup_mode, 'product_info');
+  assert.match(prep.shopify_request.variables.query, /مبخر/);
+  const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
+  const mocks = { 'Prepare Shopify Order Read': { json: prep } };
+  const $ = (name) => ({ first: () => mocks[name] });
+  const good = new Function('$', '$input', 'Buffer', buildCode)($, { first: () => ({ json: {
+    statusCode: 200, body: { data: { products: { nodes: [{ title: 'مبخرة كالابريز — الأبيض',
+      status: 'ACTIVE', priceRangeV2: { minVariantPrice: { amount: '390.0', currencyCode: 'SAR' } } }] } } },
+  } }) }, Buffer)[0].json;
+  assert.equal(good.send_ready, true);
+  assert.match(good.reply_text, /390/);
+  const empty = new Function('$', '$input', 'Buffer', buildCode)($, { first: () => ({ json: {
+    statusCode: 200, body: { data: { products: { nodes: [] } } },
+  } }) }, Buffer)[0].json;
+  assert.deepEqual([empty.send_ready, empty.error_code], [false, 'shopify_product_not_found']);
+});

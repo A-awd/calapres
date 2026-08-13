@@ -1,5 +1,24 @@
 # Project State
 
+## Owner feedback fixes: classification, live Shopify reference, delivery audit — 2026-08-13
+
+Owner-reported functional failures were diagnosed from live evidence (no-send diagnostic
+executions 41316-41317). Findings: (1) all three outgoing replies carry Meta-confirmed
+`delivered` status with real WhatsApp wamid source_ids addressed to the owner's number, so
+transport works; the phone-side report needs the owner to check the business-number chat.
+(2) The bot itself escalated conversation #3 at 13:26:23Z (activity message: human label added)
+after `بلغي الطلب` hit the order path and the n8n Shopify credential failed the customers query
+— the same query succeeds with valid scopes, so the n8n Shopify OAuth credential is missing
+read_customers/read_orders (and needs read_products for the new product path); until fixed the
+order and product paths escalate fail-closed by design. The human label also explains the bot's
+silence on later messages. (3) Store location/identity questions (وين مقركم، انتم في مصر؟) were
+misrouted out-of-scope and then suppressed; the router now answers them deterministically as
+Saudi-store FAQs, personal questions stay out-of-scope. (4) Product price/color questions now
+route to a live Shopify products query and reply only from returned data (title + SAR price),
+escalating when nothing is found; the memorized 390/190 price facts were removed from both the
+router and the model prompt, and the model is instructed to escalate price/stock questions.
+New source SHA-256 is `75bd3e3e76e5a52a9b1f1d66ee859f1e04b9c9a5475480d7f0328d01ca3b5340`.
+
 ## First live customer round trip — 2026-08-13 13:22 UTC
 
 After the anchor fix was published as live version `50dc7cd0-71ab-4e19-b57a-e6682a998380`
