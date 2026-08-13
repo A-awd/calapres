@@ -302,9 +302,31 @@ test('product price questions route to the live Shopify reference, not memorized
   const priced = runAnchorRoute('بكم المبخرة');
   assert.deepEqual([priced.route_index, priced.decision_kind, priced.product_topic], [2, 'product', 'مبخر']);
   const stand = runAnchorRoute('سعر ستاند الايباد');
-  assert.deepEqual([stand.decision_kind, stand.product_topic], ['product', 'ستاند']);
+  assert.deepEqual(
+    [stand.route_index, stand.decision_kind, stand.product_topic],
+    [1, 'faq', undefined],
+  );
+  assert.match(stand.reply_text, /المباخر الفاخرة فقط/);
+  const perfume = runAnchorRoute('عندكم عطور نيشية؟');
+  assert.deepEqual(
+    [perfume.route_index, perfume.decision_kind, perfume.product_topic],
+    [1, 'faq', undefined],
+  );
+  assert.match(perfume.reply_text, /المباخر الفاخرة فقط/);
+  const catalog = runAnchorRoute('وش تقدمون؟');
+  assert.deepEqual([catalog.route_index, catalog.decision_kind], [1, 'faq']);
+  assert.match(catalog.reply_text, /المباخر الفاخرة/);
+  assert.doesNotMatch(catalog.reply_text, /عطور|ستاند|أعراس/);
   assert.equal(JSON.stringify(workflow).includes('390 ريال'), false);
   assert.equal(JSON.stringify(workflow).includes('190 ريال'), false);
+});
+
+test('Calapres model facts are burner-only and reject stale assistant claims as authority', () => {
+  const prompt = nodesByName.get('Calapres Brain').parameters.options.systemMessage;
+  assert.match(prompt, /مباخر كالابريز الفاخرة فقط/);
+  assert.match(prompt, /ردود المتجر السابقة سياق حواري وليست مصدر حقائق/);
+  assert.match(prompt, /ممنوع ذكر العطور أو العطور النيشية أو ستاند الآيباد أو مستلزمات الأعراس/);
+  assert.match(prompt, /علامة تجارية سعودية لبيع المباخر/);
 });
 
 test('product reference builds a Shopify query and replies only from live data', () => {
