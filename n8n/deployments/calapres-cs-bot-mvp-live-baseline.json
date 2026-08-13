@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0",
+  "kind": "calapres_cs_mvp_live_rollback_checkpoint",
+  "captured_at": "2026-08-13T09:20:00Z",
+  "workflow_id": "kAyF0D3ZZHxc0Hwp",
+  "workflow_name": "Calapres — CS Bot (MVP)",
+  "active_version_id": "8c518aeb-22c2-4ab9-bcef-7418029386da",
+  "rollback_authority": "Restore this exact n8n version ID. This sanitized file is evidence, not a credential-bearing import.",
+  "node_count": 8,
+  "model_id": "gpt-5.4",
+  "customer_send_live": true,
+  "secret_policy": "Webhook path, account identifier, and secret values are intentionally excluded.",
+  "nodes": [
+    {
+      "id": "51322da9-2f25-44d5-a9c2-4cad27f4d42b",
+      "name": "Chatwoot In",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        112
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "<redacted-live-webhook-path>",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "webhookId": "b293c1e0-582a-42aa-b48f-065e978f9da5"
+    },
+    {
+      "id": "59826bac-b12b-4a53-8217-1b7164e0531b",
+      "name": "Should Reply?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        112
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cond-event",
+              "leftValue": "={{ $json.body.event }}",
+              "operator": {
+                "operation": "equals",
+                "type": "string"
+              },
+              "rightValue": "message_created"
+            },
+            {
+              "id": "cond-incoming",
+              "leftValue": "={{ $json.body.message_type }}",
+              "operator": {
+                "operation": "equals",
+                "type": "string"
+              },
+              "rightValue": "incoming"
+            },
+            {
+              "id": "cond-content",
+              "leftValue": "={{ $json.body.content }}",
+              "operator": {
+                "operation": "notEmpty",
+                "singleValue": true,
+                "type": "string"
+              },
+              "rightValue": ""
+            },
+            {
+              "id": "cond-human",
+              "leftValue": "={{ ($json.body.conversation.labels || []).includes(\"human\") }}",
+              "operator": {
+                "operation": "false",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            },
+            {
+              "id": "cond-inbox",
+              "leftValue": "={{ [128058, 128031, 128033].includes($json.body.inbox ? $json.body.inbox.id : $json.body.conversation.inbox_id) }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "56e0ab52-438b-4efe-a650-9d7130cce7a0",
+      "name": "Calapres Brain",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        448,
+        112
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.content }}",
+        "options": {
+          "systemMessage": "أنت موظف خدمة عملاء سعودي في متجر كالابريز للعطور النيشية والمباخر ومستلزمات الأعراس. تكتب من جوالك مثل أي موظف حقيقي.\n\nالمنتجات:\nمبخرة كالابريز بـ 390 ريال، ألوانها بيج وأبيض ورمادي، فيها نقش بالاسم. وستاند آيباد للأعراس بـ 190 ريال. وعطور نيش في موقع calapres.com\n\nقاعدة ذهبية واحدة تحكم كل رد: لا تخترع ولا تخمّن أبداً. لا تدخل تفصيلاً أو موضوعاً لم يذكره العميل حرفياً أو يفهم منه بوضوح أنه يقصده. لا تفترض أبداً أن العميل يقصد هدية عرس أو تذكاري أو أي تفصيل ما ذكره صراحة.\n\nإذا رسالة العميل غير واضحة، أو فيها عامية ثقيلة أو رموز ما تفهمها، أو غاضبة أو غير متعلقة بالمتجر: لا تحاول تخمين قصدها ولا ترد بموضوع جديد من عندك. بدلاً من ذلك، اسأله بوضوح جملة واحدة قصيرة تعيد له نفس كلماته وتطلب توضيح، مثل: مافهمت عليك، وضح لي أكثر لاو سمحت. أو إذا كان فيها كلام غير مفهوم أو لهجة غريبة: قل ما وصلت قصدك، ممكن توضحلي أكثر؟. لا تكمل الجملة بتخمين موضوع جديد.\n\nقواعد الكتابة المطلقة:\nممنوع منعاً باتاً: أي إيموجي. أي شرطة طويلة أو قصيرة للفصل بين الكلام. أي نجوم أو شرطات سفلية أو رموز تنسيق. أي قوائم أو نقاط. أي رد أطول من جملتين.\nاكتب بالفواصل العادية والنقطة فقط، مثل رسالة واتساب عادية من شخص مستعجل شوي.\nاللهجة: عامية سعودية طبيعية. ممنوع الفصحى الرسمية.\nطول الرد: جملة واحدة غالباً. جملتين إذا اضطريت. لا تكرر التحية في محادثة مستمرة.\n\nقواعد المعلومات:\nلا تخترع معلومة. سؤال طلب أو شحنة: قل ثواني أتأكد لك من الشحن وأرد عليك. لا تطلب رقم طلب ولا جوال. الشحن داخل السعودية."
+        }
+      }
+    },
+    {
+      "id": "4a20a122-4414-4710-a31c-fb1e92a64043",
+      "name": "OpenAI Nano",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        336
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5.4",
+          "cachedResultName": "gpt-5.4"
+        },
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "XQna9OLsCGFUay3q",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "id": "67087f2c-da72-4558-b2b1-ab643503054e",
+      "name": "Send Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        800,
+        112
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.chatwoot.com/api/v1/accounts/<redacted-account-id>/conversations/{{ $('Chatwoot In').item.json.body.conversation.id }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ content: $json.output, message_type: \"outgoing\" }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t76jS10WMK1hD1cm",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "id": "288dd594-887f-4008-a89a-dea0cc536ee2",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1100,
+        520
+      ],
+      "parameters": {
+        "contextWindowLength": 12,
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.conversation.id }}"
+      }
+    },
+    {
+      "id": "fe4112f0-be53-41e5-85bc-b21e4dfde1c3",
+      "name": "Human Delay",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        140
+      ],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "webhookId": "6ce6615e-b5cc-4843-a9bb-4def02b3cd6f"
+    },
+    {
+      "id": "65edbb47-081e-479e-993e-72e47020bb39",
+      "name": "Humanize Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        140
+      ],
+      "parameters": {
+        "jsCode": "const items = $input.all();\nfor (const item of items) {\n  let t = String(item.json.output || '');\n  // إزالة كل الإيموجيات\n  t = t.replace(/[\\u{1F300}-\\u{1FAFF}\\u{1F000}-\\u{1F0FF}\\u{2600}-\\u{27BF}\\u{FE0F}\\u{200D}\\u{2B00}-\\u{2BFF}\\u{1F900}-\\u{1F9FF}]/gu, '');\n  // إزالة رموز التنسيق: نجوم، شرطات سفلية، باكتيك\n  t = t.replace(/[*_`~#>]/g, '');\n  // تحويل الشرطات الطويلة والقصيرة الفاصلة إلى فاصلة عادية\n  t = t.replace(/\\s*[\\u2014\\u2013\\u2012\\u2015]\\s*/g, '، ');\n  t = t.replace(/\\s+-\\s+/g, '، ');\n  t = t.replace(/--+/g, '، ');\n  // إزالة النقاط المرقمة والقوائم في بداية الأسطر\n  t = t.replace(/^\\s*[\\d٠-٩]+[.)]\\s*/gm, '');\n  t = t.replace(/^\\s*[\\u2022\\u25CF\\u25AA-]\\s*/gm, '');\n  // دمج الأسطر المتعددة في سطر واحد طبيعي\n  t = t.replace(/\\n{2,}/g, ' ').replace(/\\n/g, ' ');\n  // تنظيف المسافات المكررة والفواصل المكسورة\n  t = t.replace(/\\s{2,}/g, ' ').replace(/،\\s*،/g, '،').replace(/\\s+([،.؟!])/g, '$1').trim();\n  // قص أي رد أطول من جملتين: نأخذ أول جملتين فقط\n  const parts = t.split(/(?<=[.؟!])\\s+/).filter(s => s.trim().length > 0);\n  if (parts.length > 2) { t = parts.slice(0, 2).join(' '); }\n  item.json.output = t;\n}\nreturn items;"
+      }
+    }
+  ],
+  "connections": {
+    "Chatwoot In": {
+      "main": [
+        [
+          {
+            "node": "Should Reply?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Reply?": {
+      "main": [
+        [
+          {
+            "node": "Calapres Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Nano": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Calapres Brain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Calapres Brain",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Human Delay": {
+      "main": [
+        [
+          {
+            "node": "Send Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calapres Brain": {
+      "main": [
+        [
+          {
+            "node": "Humanize Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Humanize Text": {
+      "main": [
+        [
+          {
+            "node": "Human Delay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "node_groups": []
+}
