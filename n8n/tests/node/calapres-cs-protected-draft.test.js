@@ -301,6 +301,22 @@ test('social channels never infer Shopify identity without a trusted phone', () 
   }
 });
 
+test('social webhook ingress accepts numeric source ids and unix timestamps', () => {
+  const code = nodesByName.get('Prepare Customer Reply Ingress').parameters.jsCode;
+  const input = { json: { body: {
+    event: 'message_created', message_type: 'incoming', private: false,
+    account: { id: 179973 }, inbox: { id: 128031 },
+    conversation: { id: 44, labels: [] }, id: 991, content: 'هلا',
+    source_id: 778899, created_at: 1786626850,
+  } } };
+  const $input = { first: () => input };
+  const $execution = { id: 'social-test' };
+  const out = new Function('$input', '$execution', 'Buffer', code)($input, $execution, Buffer)[0].json;
+  assert.equal(out.context.claimed_source_id, '778899');
+  assert.equal(out.context.claimed_created_epoch, 1786626850);
+  assert.equal(out.context.inbox_id, 128031);
+});
+
 test('store questions stay deterministic while unknown conversation reaches the bounded model', () => {
   for (const q of ['وين مقركم', 'انتم في مصر ؟', 'انتم في الكويت ؟', 'انت وين']) {
     const out = runAnchorRoute(q);
@@ -356,6 +372,19 @@ test('product price questions route to the live Shopify reference, not memorized
   assert.doesNotMatch(catalog.reply_text, /عطور|ستاند|أعراس/);
   assert.equal(JSON.stringify(workflow).includes('390 ريال'), false);
   assert.equal(JSON.stringify(workflow).includes('190 ريال'), false);
+});
+
+test('broad catalog and price questions read the active Shopify catalog', () => {
+  const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
+  for (const text of ['وش الأنواع والأسعار المتوفرة؟', 'عطيني أسعارها', 'بكم']) {
+    const routed = runAnchorRoute(text);
+    assert.deepEqual([routed.route_index, routed.decision_kind], [2, 'product'], text);
+    const prepared = new Function('$input', 'Buffer', prepCode)(
+      { first: () => ({ json: routed }) }, Buffer)[0].json;
+    assert.equal(prepared.shopify_lookup_ready, true, text);
+    assert.equal(prepared.shopify_lookup_mode, 'product_catalog', text);
+    assert.equal(prepared.shopify_request.variables.query, 'status:ACTIVE', text);
+  }
 });
 
 test('Calapres model facts are burner-only and reject stale assistant claims as authority', () => {
