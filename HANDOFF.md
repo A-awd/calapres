@@ -1,5 +1,31 @@
 # Handoff
 
+## Verification update — 2026-08-14
+
+Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit
+`e269ccb38b80f4156f065b3e5660b177f3c281b3`, Draft PR #4. GitHub confirmed the protected source
+digest `2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`; live n8n read confirmed
+workflow `kAyF0D3ZZHxc0Hwp`, version `aa654b47-1b8f-4132-979e-0199454028a2`, 99 nodes, and no
+execution-data retention. No external message, Shopify write, workflow, webhook, or credential was
+created during this continuation.
+
+The current GitHub guard failure was release-lock drift, not a workflow-contract failure: source
+and manifest changed in `36c289f`, and migration 0015 was not locked. The lock was regenerated and
+local `release_lock.py --check` passes with digest
+`90e549cc03507c3d23abfea118ecec96f026b94e8eb562e1308bbb8777de4c26`.
+
+Neon live verification confirmed schema versions 0014 and 0015 in `calapres_cs.schema_migrations`
+for `shiny-hill-38628371/neondb`. Recent durable records include unresolved `processing` events on
+WhatsApp and Instagram without a decision or Chatwoot message id. Treat this as confirmed live
+state requiring diagnosis, not as delivery proof. The current selected Node tests pass 40/40;
+older checkpoint language saying 32/32 is historical.
+
+Remaining acceptance gates are unchanged and must be proven separately: a real WhatsApp catalog
+question reaching Shopify and a physically received grounded answer; real Instagram and TikTok
+platform delivery; then an evidence-based canonical responder/webhook decision with rollback. Do
+not synthesize customer messages, expose secrets or PII, write Shopify, or retire either existing
+responder/webhook.
+
 ## Clean-session handoff — 2026-08-14
 
 Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit

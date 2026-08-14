@@ -1,5 +1,32 @@
 # Project State
 
+## Checkpoint verification and release-lock repair — 2026-08-14
+
+This section supersedes older live-status claims below where they conflict. GitHub confirmed Draft
+PR #4 is open on `agent/preserve-calapres-customer-service-checkpoint` at
+`e269ccb38b80f4156f065b3e5660b177f3c281b3`, with the frozen source SHA-256
+`2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`. The n8n read confirmed the
+same live responder `kAyF0D3ZZHxc0Hwp`, active version `aa654b47-1b8f-4132-979e-0199454028a2`, 99
+nodes, and diagnostic execution retention disabled. No workflow, webhook, credential, Shopify
+write, or external synthetic message was created or sent during this verification.
+
+GitHub CI had one genuine guard failure because commit `36c289f` changed the frozen source and
+manifest and added migration 0015 without refreshing the immutable release lock. The lock was
+regenerated from the current repository files; it now verifies locally with digest
+`90e549cc03507c3d23abfea118ecec96f026b94e8eb562e1308bbb8777de4c26` and explicitly covers
+`0015_calapres_cs_customer_reply_omnichannel.sql`.
+
+Neon live verification confirmed schema migrations 0014 and 0015 are applied to project
+`shiny-hill-38628371`, database `neondb`, and the expected `customer_reply_sla_cases` table exists.
+This is confirmed live. It does not prove customer delivery. The latest durable rows include
+WhatsApp and Instagram events still in `processing` with no decision or Chatwoot message id; this
+is evidence of an unresolved operational symptom, not proof of a route or delivery failure cause.
+The selected source tests pass 40/40 (the prior checkpoint's targeted count was 32/32).
+
+The unresolved gates remain: fresh WhatsApp catalog question through Shopify to a physically
+received answer; fresh Instagram and TikTok platform delivery trace; and canonical responder /
+webhook decision with rollback. Do not claim any of these from n8n, Chatwoot, or Neon alone.
+
 ## Clean-session handoff — 2026-08-14
 
 This section supersedes older live-status claims below where they conflict. The current protected
