@@ -1,5 +1,47 @@
 # Project State
 
+## Clean-session handoff — 2026-08-14
+
+This section supersedes older live-status claims below where they conflict. The current protected
+branch is `agent/preserve-calapres-customer-service-checkpoint` at commit `36c289fb00aa6e224030ad6ea8d2d460b7e085f7`.
+The frozen 99-node responder source is `n8n/deployments/calapres-cs-bot-protected-draft.json`, SHA-256
+`2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`.
+
+Current live responder: workflow `kAyF0D3ZZHxc0Hwp`, active version
+`aa654b47-1b8f-4132-979e-0199454028a2`, 99 nodes. Diagnostic retention was closed after inspection:
+success/error data `none`, execution progress `false`, manual executions `false`. Edge workflow
+`e442GlRmKP4IO8pm` and two existing Chatwoot webhooks still exist; no third workflow or webhook was
+created. Canonical responder consolidation remains unresolved and must not be guessed.
+
+Live Neon project `shiny-hill-38628371`, database `neondb`, now has migrations 0014 and 0015.
+Migration 0015 expanded the exact customer-reply outbox/function allowlist to Instagram `128031`,
+TikTok `128033`, and WhatsApp `128058`; website `128028` remains excluded. Before 0015, real social
+executions `41693`/`41695` reached n8n but Postgres returned `route_invalid`. After 0015, replay
+completed and Chatwoot created TikTok message `794491944` and Instagram message `794491968`.
+Because the owner subsequently reported no visible platform delivery, Instagram/TikTok end-to-end
+delivery is **not proven** and remains an active blocker despite successful n8n/Chatwoot evidence.
+
+The current responder routes broad catalog/price questions (`بكم`, `وش الأنواع`, `عطيني أسعارها`)
+to Shopify read-only `product_catalog` instead of allowing an ungrounded model answer. Shopify was
+independently confirmed to contain three active burners (white, beige, gray), each 390 SAR. This
+source/live configuration is confirmed, but no fresh inbound WhatsApp execution after active version
+`aa654b47-1b8f-4132-979e-0199454028a2` has proven the full Shopify catalog reply path. Do not claim
+catalog E2E success until that evidence exists. Shopify inventory returned zero, so do not claim
+availability without an approved inventory policy.
+
+The first catalog/social publish failed operationally and was rolled back (`b08e406`) when all
+channels appeared stopped. Later evidence identified the root cause as missing live migration 0014
+plus WhatsApp-only database constraints, not the catalog routing patch. Migrations 0014/0015 were
+then applied and the patch was re-applied in `36c289f`. Latest targeted tests passed 32/32 (29
+protected-draft plus 3 omnichannel-migration). Full-suite and current GitHub CI status were not
+rechecked at this checkpoint.
+
+Next safe work is evidence-driven only: (1) prove a fresh WhatsApp catalog question actually reaches
+Shopify and returns grounded titles/prices; (2) trace fresh Instagram and TikTok inbound messages
+through platform -> Chatwoot -> n8n -> Chatwoot -> platform delivery; (3) only after evidence, decide
+which existing responder/webhook is canonical and retire duplicates through an explicit reviewed
+change. Never expose secrets/PII, add Shopify writes, or infer success from an n8n execution alone.
+
 ## Verified Calapres social inbox allowlist live — 2026-08-13 (session 6)
 
 The existing workflow was intentionally hard-coded to WhatsApp inbox `128058`, so Instagram and

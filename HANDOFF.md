@@ -1,5 +1,33 @@
 # Handoff
 
+## Clean-session handoff — 2026-08-14
+
+Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit
+`36c289fb00aa6e224030ad6ea8d2d460b7e085f7`. Read this section and the matching top section in
+`STATE.md` before touching anything; they supersede older live snapshots below. Frozen responder
+SHA-256: `2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`.
+
+- Live responder: `kAyF0D3ZZHxc0Hwp`, active version `aa654b47-1b8f-4132-979e-0199454028a2`,
+  99 nodes. Execution-data diagnostics are off again.
+- Live Neon `shiny-hill-38628371` / `neondb`: migrations 0014 and 0015 are applied. Exact allowed
+  inboxes are Instagram `128031`, TikTok `128033`, WhatsApp `128058`; website `128028` is rejected.
+- Social evidence is split: n8n/Chatwoot replay succeeded and created messages `794491944` and
+  `794491968`, but the owner did not observe Instagram/TikTok delivery. Treat both channels as not
+  end-to-end proven and trace a fresh message without creating another webhook.
+- Broad WhatsApp price/catalog routing is present and Shopify is read-only, but a fresh post-version
+  `aa654...` inbound execution has not proved the route. Verify it with a real catalog question and
+  inspect the Shopify node plus the physically received answer.
+- Existing Edge workflow `e442GlRmKP4IO8pm` and two Chatwoot webhooks remain. Do not create a third.
+  Canonical-responder consolidation is unresolved and requires evidence before any retirement.
+- Latest targeted tests: 32/32. Full suite and current GitHub CI were not rechecked here.
+
+Preserve the rollback chronology: initial catalog/social patch -> owner observed outage -> immediate
+revert `b08e406` -> discovery of missing migration 0014 and WhatsApp-only DB constraints -> apply
+0014/0015 -> reapply in `36c289f`. Do not misattribute the outage or rebuild the workflow.
+
+The next agent should verify GitHub/origin first, inspect only these unresolved gates, keep Shopify
+read-only, avoid secrets/PII, and never equate successful n8n execution with customer delivery.
+
 ## Verified Calapres social inbox allowlist live — 2026-08-13 (session 6)
 
 Enabled the existing workflow for the verified Calapres Chatwoot inboxes: Instagram `128031`,
