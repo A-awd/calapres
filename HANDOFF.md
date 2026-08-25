@@ -1,5 +1,15 @@
 # Handoff
 
+## Owner-test correction — 2026-08-25
+
+Do not treat the first activation as end-to-end success. The owner's WhatsApp screenshot proved
+that two valid burner price descriptions were sent to the generic clarification. The scope parser
+mistook the color word after `المبخره` for an external merchant. The corrected closed descriptor
+grammar is live on the same workflow at version `d3d320d6-63be-4134-b333-a4941bf2480a`, still 100
+nodes, with no graph, credential, webhook, inbox, or send-edge change. Targeted tests pass 51/51.
+Rollback target is `1afb2f65-0f5c-4a87-9525-03a11088d6ff`. Wait for the owner to repeat the exact
+green/orange burner question and confirm the physically visible reply before claiming success.
+
 ## Governed responder activation — 2026-08-25
 
 The owner explicitly authorized live testing. Existing workflow `kAyF0D3ZZHxc0Hwp` is active on

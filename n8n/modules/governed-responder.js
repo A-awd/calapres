@@ -364,7 +364,7 @@ function createGovernedResponder(release) {
       /(?:^|\s)(?:order|product|burner|catalog)\b.{0,32}\b(?:on|from|at|via|with|for|sold\s+by|listed\s+by|hosted\s+by)\s+(?!(?:calapres|your|our|the)\s+store\b)[\p{L}\p{N}][\p{L}\p{N}-]*/u,
       /(?:^|\s)(?!(?:my|the|a|an|your|our|calapres|track|tracking|check|retrieve|find|show)\s)[a-z0-9-]+\s+(?:order|product|burner|catalog)\b/u,
       /(?:^|\s)(?:طلبي|الطلب|طلب|مبخره|منتج|كتالوج)(?![\p{L}\p{N}])\s+.{0,12}(?:في|من|على)\s+(?!(?:كالابريز|متجرنا|المتجر)(?![\p{L}\p{N}]))[\p{L}\p{N}-]+/u,
-      /(?:^|\s)(?:طلبي|الطلب|طلب|مبخره|منتج|كتالوج)(?![\p{L}\p{N}])\s+(?!(?:رقم|وين|وصل|حاله|تتبع|صار|عندكم|كالابريز|المتجر)(?![\p{L}\p{N}]))[\p{L}][\p{L}\p{N}-]*/u,
+      /(?:^|\s)(?:طلبي|الطلب|طلب|مبخره|المبخره|منتج|كتالوج)(?![\p{L}\p{N}])\s+(?!(?:رقم|وين|وصل|حاله|تتبع|صار|عندكم|كالابريز|المتجر|الخضراء|خضراء|الرماديه|رماديه|البيضاء|بيضاء|البيج|بيج|السوداء|سوداء|البنيه|بنيه|الذهبيه|ذهبيه|الفضيه|فضيه|البرتقاليه|برتقاليه|المخططه|مخططه)(?![\p{L}\p{N}]))[\p{L}][\p{L}\p{N}-]*/u,
     ]);
     if (externalMerchantContext && !explicitCalapresAnchor) {
       if (input && input.scope_notice_sent === true) {
@@ -394,6 +394,7 @@ function createGovernedResponder(release) {
     ];
     const standaloneProductPatterns = [
       /^(?:كم|وش)\s+سعر\s+المبخره$/u,
+      /^(?:بكم|(?:كم|وش)\s+سعر)\s+(?:مبخره|المبخره)(?:\s+كالابريز)?(?:\s+(?:الخضراء|خضراء|الرماديه|رماديه|البيضاء|بيضاء|البيج|بيج|السوداء|سوداء|البنيه|بنيه|الذهبيه|ذهبيه|الفضيه|فضيه|البرتقاليه|برتقاليه|المخططه|مخططه|بالبرتقالي|بالبرتقاليه|بالاخضر|بالابيض|بالاسود|بالرمادي|بالبيج|بالبني|بالذهبي|بالفضي)){0,6}$/u,
       /^وش\s+المنتجات\s+الموجوده(?:\s+عندكم)?$/u,
       /^show\s+(?:me\s+)?your\s+catalog$/u,
       /^what\s+is\s+(?:the\s+burner\s+price|the\s+price\s+of\s+the\s+burner)$/u,

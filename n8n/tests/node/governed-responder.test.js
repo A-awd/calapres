@@ -534,6 +534,34 @@ test('store intents select only closed static replies or Shopify reads', () => {
   }
 });
 
+test('owner WhatsApp burner descriptions authorize the Shopify catalog while unrelated prices stay blocked', () => {
+  const responder = createGovernedResponder(release);
+  for (const message of [
+    'بكم المبخره الخضراء',
+    'بكم المبخره الخضراء المخططه بالبرتقالي',
+    'كم سعر المبخرة الرمادية؟',
+    'وش سعر مبخرة كالابريز البيضاء',
+  ]) {
+    assertDecisionContract(responder.decide({ message }), {
+      route: 'dynamic_read',
+      decision_kind: 'faq',
+      response_id: 'dynamic.product-catalog',
+      tool_allowed: true,
+    });
+  }
+
+  for (const message of [
+    'بكم الحاشي',
+    'بكم السياره',
+    'بكم مبخرة أمازون الخضراء',
+    'بكم المبخرة الخضراء من أمازون',
+  ]) {
+    const decision = responder.decide({ message });
+    assertDecisionContract(decision, { tool_allowed: false });
+    assert.equal(decision.dynamic_read, null, message);
+  }
+});
+
 test('Arabic and Persian order digits normalize to an ASCII lookup hint', () => {
   const responder = createGovernedResponder(release);
   for (const testCase of matrix.order_number_cases) {

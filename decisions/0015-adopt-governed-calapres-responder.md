@@ -35,3 +35,10 @@ fresh live reread confirmed active/draft parity, the governed-router edges, and 
 send authorization edge. Version `aa654b47-1b8f-4132-979e-0199454028a2` is the rollback target.
 Real platform delivery remains a separate owner acceptance test for TikTok, Instagram, and
 WhatsApp.
+
+The first owner WhatsApp test then exposed a false-negative boundary: valid green and
+green/orange-striped burner price descriptions were classified as external-merchant text. The
+closed product grammar was corrected without broadening unrelated price requests. Corrected active
+version `d3d320d6-63be-4134-b333-a4941bf2480a` passed 51/51 targeted tests; immediate rollback is
+`1afb2f65-0f5c-4a87-9525-03a11088d6ff`. Owner-visible delivery is still pending and is not implied
+by publication.

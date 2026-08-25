@@ -1,5 +1,22 @@
 # Project State
 
+## Owner-test correction: burner color descriptions — 2026-08-25
+
+The first governed live version was not acceptable. Owner WhatsApp evidence showed `بكم المبخره
+الخضراء` and `بكم المبخره الخضراء المخططه بالبرتقالي` receiving the generic store clarification
+instead of a Shopify price read. Root cause was an over-broad external-merchant rule that treated
+the first color word after `المبخره` as if it were a merchant name. This disproved the earlier
+activation claim as an end-to-end success.
+
+The rule now accepts a closed list of burner color/pattern descriptors only inside an explicit
+burner price request. `بكم الحاشي`, `بكم السياره`, bare external merchants, and product requests
+from an external merchant remain unable to authorize Shopify or the model. Targeted tests pass
+51/51, including the two exact owner messages and external controls. The same 100-node workflow is
+active on corrected version `d3d320d6-63be-4134-b333-a4941bf2480a`; live reread confirmed
+active/draft parity and the corrected embedded descriptor rules. Version
+`1afb2f65-0f5c-4a87-9525-03a11088d6ff` is the immediate rollback target. A new owner-visible reply
+is still required before claiming the correction works end to end.
+
 ## Governed Calapres responder live — 2026-08-25
 
 The owner explicitly approved live activation for channel testing. The existing responder

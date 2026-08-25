@@ -40,7 +40,7 @@ function reachableFrom(source) {
 
 test('protected Calapres draft preserves the reviewed rollback and no-save settings', () => {
   assert.equal(workflow.workflow_id, 'kAyF0D3ZZHxc0Hwp');
-  assert.equal(workflow.active_version_id, '1afb2f65-0f5c-4a87-9525-03a11088d6ff');
+  assert.equal(workflow.active_version_id, 'd3d320d6-63be-4134-b333-a4941bf2480a');
   assert.equal(workflow.publish_state, 'published_active');
   assert.equal(workflow.node_count, workflow.nodes.length);
   assert.equal(workflow.settings.saveDataSuccessExecution, 'none');
@@ -84,6 +84,16 @@ test('governed scope router blocks external questions and never authorizes the m
   assert.equal(product.dynamic_read, 'product_catalog');
   assert.equal(product.model_allowed, false);
   assert.equal(product.tool_allowed, true);
+
+  for (const customerText of [
+    'بكم المبخره الخضراء',
+    'بكم المبخره الخضراء المخططه بالبرتقالي',
+  ]) {
+    const describedProduct = runGovernedRoute({ context: { customer_text: customerText } });
+    assert.equal(describedProduct.route_index, 2, customerText);
+    assert.equal(describedProduct.dynamic_read, 'product_catalog', customerText);
+    assert.equal(describedProduct.tool_allowed, true, customerText);
+  }
 });
 
 test('all node expressions and graph edges resolve to existing nodes', () => {
