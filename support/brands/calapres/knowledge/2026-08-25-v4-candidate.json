@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "version": "2026-08-25-v4-candidate",
+  "status": "candidate_offline",
+  "effective_at": "2026-08-25",
+  "approval_basis": "docs/calapres-governed-responder-spec.md",
+  "supersedes_approved": "2026-08-11-v3",
+  "change_summary": "Candidate-only deterministic response library for the offline governed responder.",
+  "entries": [
+    {
+      "response_id": "scope.store-redirect",
+      "knowledge_id": "scope.store-redirect",
+      "customer_response_ar": "أقدر أساعدك فقط في كالابريز: المباخر، الطلبات، الدفع، والشحن. وش تحب تعرف عن المتجر؟",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "boundary",
+      "authority": "approved_reply",
+      "supported_intents": ["out_of_scope", "prompt_injection"]
+    },
+    {
+      "response_id": "greeting.welcome",
+      "knowledge_id": "greeting.welcome",
+      "customer_response_ar": "هلا بك في كالابريز! كيف أقدر أخدمك؟",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["greeting"]
+    },
+    {
+      "response_id": "brand.introduction",
+      "knowledge_id": "brand.introduction",
+      "customer_response_ar": "كالابريز علامة تجارية سعودية للمباخر الفاخرة، ومتجرنا إلكتروني فقط.",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["brand_identity", "store_location"]
+    },
+    {
+      "response_id": "brand.assistant-identity",
+      "knowledge_id": "brand.assistant-identity",
+      "customer_response_ar": "أنا مساعد خدمة عملاء كالابريز الآلي، وأقدر أساعدك في أسئلة المتجر والطلبات.",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["assistant_identity"]
+    },
+    {
+      "response_id": "product.scope-burners",
+      "knowledge_id": "product.scope-burners",
+      "customer_response_ar": "كالابريز متجر متخصص في المباخر الفاخرة.",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["product_scope"]
+    },
+    {
+      "response_id": "product.engraving",
+      "knowledge_id": "product.engraving",
+      "customer_response_ar": "نعم، يتوفر حفر اسم أو شعار حسب الخيار الموضح في المنتج.",
+      "source_ref": "faq",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["engraving"]
+    },
+    {
+      "response_id": "order.how-to-order",
+      "knowledge_id": "order.how-to-order",
+      "customer_response_ar": "تقدر تضيف المنتج للسلة وتكمل خطوات الطلب مباشرة من المتجر.",
+      "source_ref": "faq",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "approved_reply",
+      "supported_intents": ["how_to_order"]
+    },
+    {
+      "response_id": "clarification.store-topic",
+      "knowledge_id": "clarification.store-topic",
+      "customer_response_ar": "أكيد، وش حاب تعرف عن منتجات كالابريز أو طلبك؟",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "boundary",
+      "authority": "approved_reply",
+      "supported_intents": ["store_clarification", "shipping_conflict"]
+    },
+    {
+      "response_id": "handoff.human-request",
+      "knowledge_id": "handoff.human-request",
+      "customer_response_ar": "أكيد، بحوّل طلبك لفريق خدمة العملاء.",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "handoff",
+      "authority": "approved_reply",
+      "supported_intents": ["human_request"]
+    },
+    {
+      "response_id": "handoff.attachment",
+      "knowledge_id": "handoff.attachment",
+      "customer_response_ar": "وصلني محتوى غير نصي، وبحوّله لفريق خدمة العملاء للمراجعة.",
+      "source_ref": "docs/calapres-governed-responder-spec.md",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "handoff",
+      "authority": "approved_reply",
+      "supported_intents": ["attachment", "unsupported_content_kind"]
+    },
+    {
+      "response_id": "dynamic.product-catalog",
+      "knowledge_id": "dynamic.product-catalog",
+      "source_ref": "shopify",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "live_shopify",
+      "authority": "live_read_required",
+      "supported_intents": ["product_catalog", "product_price"]
+    },
+    {
+      "response_id": "dynamic.order-status",
+      "knowledge_id": "dynamic.order-status",
+      "source_ref": "shopify",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "live_shopify",
+      "authority": "live_read_required",
+      "supported_intents": ["order_status", "tracking"]
+    },
+    {
+      "response_id": "shipping.regions-conflict",
+      "knowledge_id": "shipping.regions-conflict",
+      "source_ref": "owner-intake-2026-08-13-and-storefront-policy-conflict",
+      "reviewed_at": "2026-08-25",
+      "fact_mode": "static",
+      "authority": "owner_required",
+      "supported_intents": ["shipping_regions"]
+    }
+  ]
+}

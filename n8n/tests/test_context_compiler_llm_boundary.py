@@ -4,7 +4,12 @@ import subprocess
 import unittest
 from pathlib import Path
 
-from test_contracts import read_json, schema_name, validate
+from n8n.tests.node_test_summary import parse_node_test_summary
+
+try:
+    from test_contracts import read_json, schema_name, validate
+except ModuleNotFoundError:  # pragma: no cover - supports package execution
+    from n8n.tests.test_contracts import read_json, schema_name, validate
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -30,8 +35,9 @@ class ContextCompilerLlmBoundaryNodeTests(unittest.TestCase):
             0,
             f"stdout:\n{result.stdout}\n\nstderr:\n{result.stderr}",
         )
-        self.assertIn("# pass 51", result.stdout)
-        self.assertIn("# fail 0", result.stdout)
+        passed, failed = parse_node_test_summary(result.stdout)
+        self.assertGreaterEqual(passed, 51)
+        self.assertEqual(failed, 0)
 
     def test_runtime_shapes_validate_against_repository_schemas(self):
         script = r"""

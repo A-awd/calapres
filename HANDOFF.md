@@ -1,5 +1,21 @@
 # Handoff
 
+## Governed responder activation — 2026-08-25
+
+The owner explicitly authorized live testing. Existing workflow `kAyF0D3ZZHxc0Hwp` is active on
+version `1afb2f65-0f5c-4a87-9525-03a11088d6ff` with 100 nodes. The only new live node is `Governed
+Customer Scope Router`, connected `Verify Chatwoot Anchor and Route -> Governed Customer Scope
+Router -> Route Customer Service Decision`. It embeds knowledge candidate
+`2026-08-25-v4-candidate`, never emits the model route, and limits Shopify to exact read-only
+product/order capabilities. External questions use the pinned store redirect.
+
+No new workflow, webhook, Chatwoot inbox, Captain, AgentBot, credential, or send path was created.
+The single inbound edge to `Send Reply` remains `Customer Egress Authorized?` output 0. Local
+targeted tests passed 50/50, and the post-publish n8n reread confirmed active/draft parity and the
+expected graph. Roll back to version `aa654b47-1b8f-4132-979e-0199454028a2` if the owner's real
+TikTok, Instagram, or WhatsApp tests expose a regression. Do not describe any channel as proven
+until the owner confirms the physically visible reply and the matching execution is inspected.
+
 ## Verification update — 2026-08-14
 
 Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit

@@ -32,6 +32,10 @@ decision record.
   bounded four-inbox Chatwoot reconciliation scan and per-conversation cursor without claiming
   complete discovery, and separates signed-webhook, reconciliation, and owner database roles. No
   provider or database is created by this decision, and Supabase remains prohibited.
+- [0015 — Adopt the governed Calapres response library and scope gate](decisions/0015-adopt-governed-calapres-responder.md)
+  — keep one existing responder and send path; select customer replies only from versioned
+  Calapres knowledge or exact Shopify read-only capabilities, and redirect external questions
+  without authorizing the model.
 
 ## Superseded decisions
 

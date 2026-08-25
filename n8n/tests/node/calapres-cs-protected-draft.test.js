@@ -20,6 +20,12 @@ function directTargets(source) {
     .map((edge) => edge.node);
 }
 
+function runGovernedRoute(state) {
+  const code = nodesByName.get('Governed Customer Scope Router').parameters.jsCode;
+  const $input = { first: () => ({ json: state }) };
+  return new Function('$input', code)($input)[0].json;
+}
+
 function reachableFrom(source) {
   const reached = new Set();
   const pending = [source];
@@ -34,12 +40,50 @@ function reachableFrom(source) {
 
 test('protected Calapres draft preserves the reviewed rollback and no-save settings', () => {
   assert.equal(workflow.workflow_id, 'kAyF0D3ZZHxc0Hwp');
-  assert.equal(workflow.active_version_id, '8c518aeb-22c2-4ab9-bcef-7418029386da');
-  assert.equal(workflow.publish_state, 'draft_not_published');
+  assert.equal(workflow.active_version_id, '1afb2f65-0f5c-4a87-9525-03a11088d6ff');
+  assert.equal(workflow.publish_state, 'published_active');
   assert.equal(workflow.node_count, workflow.nodes.length);
   assert.equal(workflow.settings.saveDataSuccessExecution, 'none');
   assert.equal(workflow.settings.saveDataErrorExecution, 'none');
   assert.equal(workflow.settings.saveManualExecutions, false);
+});
+
+test('governed scope router is inserted between verified anchor and the existing decision switch', () => {
+  assert.ok(nodesByName.has('Governed Customer Scope Router'));
+  assert.deepEqual(
+    directTargets('Verify Chatwoot Anchor and Route'),
+    ['Governed Customer Scope Router'],
+  );
+  assert.deepEqual(
+    directTargets('Governed Customer Scope Router'),
+    ['Route Customer Service Decision'],
+  );
+  assert.equal(workflow.nodes.length, 100);
+  assert.equal(workflow.node_count, 100);
+});
+
+test('governed scope router blocks external questions and never authorizes the model', () => {
+  const weather = runGovernedRoute({
+    context: { customer_text: 'ما هو طقس لندن اليوم؟' },
+  });
+  assert.equal(weather.route_index, 4);
+  assert.equal(weather.decision_kind, 'out_of_scope');
+  assert.equal(weather.response_id, 'scope.store-redirect');
+  assert.equal(weather.model_allowed, false);
+  assert.equal(weather.tool_allowed, false);
+  assert.equal(
+    weather.reply_text,
+    'أقدر أساعدك فقط في كالابريز: المباخر، الطلبات، الدفع، والشحن. وش تحب تعرف عن المتجر؟',
+  );
+
+  const product = runGovernedRoute({
+    context: { customer_text: 'كم سعر المبخرة؟' },
+  });
+  assert.equal(product.route_index, 2);
+  assert.equal(product.decision_kind, 'faq');
+  assert.equal(product.dynamic_read, 'product_catalog');
+  assert.equal(product.model_allowed, false);
+  assert.equal(product.tool_allowed, true);
 });
 
 test('all node expressions and graph edges resolve to existing nodes', () => {
@@ -332,13 +376,13 @@ test('store questions stay deterministic while unknown conversation reaches the 
   );
 });
 
-test('bounded model is conversational instead of repeating one canned out-of-scope sentence', () => {
+test('dormant model is forbidden from answering external information', () => {
   const brain = nodesByName.get('Calapres Brain');
   const prompt = brain.parameters.options.systemMessage;
   const model = nodesByName.get('OpenAI Calapres Restricted Model');
-  assert.match(prompt, /رد على كلامه نفسه بدل رد عام محفوظ/);
-  assert.match(prompt, /معلومة عامة بسيطة وآمنة/);
-  assert.match(prompt, /ممنوع نسخ جملة رفض ثابتة/);
+  assert.match(prompt, /ممنوع الإجابة عن أي سؤال خارج متجر كالابريز/);
+  assert.match(prompt, /الطقس والأخبار والمعلومات العامة/);
+  assert.doesNotMatch(prompt, /يجوز جواب مختصر جدًا/);
   assert.match(prompt, /من جملة إلى ثلاث جمل قصيرة/);
   assert.doesNotMatch(prompt,
     /أقدر أساعدك بالمنتجات والطلبات والشحن فقط\. وش تحتاج؟/);
@@ -374,11 +418,11 @@ test('product price questions route to the live Shopify reference, not memorized
   assert.equal(JSON.stringify(workflow).includes('190 ريال'), false);
 });
 
-test('broad catalog and price questions read the active Shopify catalog', () => {
+test('approved catalog and price questions read the active Shopify catalog', () => {
   const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
-  for (const text of ['وش الأنواع والأسعار المتوفرة؟', 'عطيني أسعارها', 'بكم']) {
-    const routed = runAnchorRoute(text);
-    assert.deepEqual([routed.route_index, routed.decision_kind], [2, 'product'], text);
+  for (const text of ['وش المنتجات الموجودة؟', 'كم سعر المبخرة؟', 'Show your catalog']) {
+    const routed = runGovernedRoute(runAnchorRoute(text));
+    assert.deepEqual([routed.route_index, routed.decision_kind], [2, 'faq'], text);
     const prepared = new Function('$input', 'Buffer', prepCode)(
       { first: () => ({ json: routed }) }, Buffer)[0].json;
     assert.equal(prepared.shopify_lookup_ready, true, text);
@@ -398,7 +442,7 @@ test('Calapres model facts are burner-only and reject stale assistant claims as 
 test('product reference builds a Shopify query and replies only from live data', () => {
   const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
   const prep = new Function('$input', 'Buffer',
-    prepCode)({ first: () => ({ json: { decision_kind: 'product', product_topic: 'مبخر' } }) }, Buffer)[0].json;
+    prepCode)({ first: () => ({ json: { decision_kind: 'faq', dynamic_read: 'product_info', product_topic: 'مبخر' } }) }, Buffer)[0].json;
   assert.equal(prep.shopify_lookup_mode, 'product_info');
   assert.match(prep.shopify_request.variables.query, /مبخر/);
   const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
@@ -484,14 +528,14 @@ test('model failures and budget denials fail safe with a bounded reply, never an
   const untrusted = new Function('$', '$input', 'Buffer', humanizeCode)(
     $untrusted, { first: () => ({ json: { output: 'not json at all' } }) }, Buffer)[0].json;
   assert.equal(untrusted.send_ready, true);
-  assert.equal(untrusted.decision_kind, 'model_fallback');
+  assert.equal(untrusted.decision_kind, 'clarification');
   assert.ok(untrusted.reply_text);
 
   const fallbackCode = nodesByName.get('Prepare Model Unavailable Fallback').parameters.jsCode;
   const budgetDenied = new Function('$input', 'Buffer', fallbackCode)(
     { first: () => ({ json: { context: { conversation_id: 3, inbound_message_id: 900000011 } } }) }, Buffer)[0].json;
   assert.equal(budgetDenied.send_ready, true);
-  assert.equal(budgetDenied.decision_kind, 'model_fallback');
+  assert.equal(budgetDenied.decision_kind, 'clarification');
 });
 
 test('model output validation accepts three natural sentences and rejects invalid confidence', () => {
@@ -518,7 +562,7 @@ test('model output validation accepts three natural sentences and rejects invali
       escalate: false,
     }) } }) }, Buffer,
   )[0].json;
-  assert.equal(invalid.decision_kind, 'model_fallback');
+  assert.equal(invalid.decision_kind, 'clarification');
 });
 
 test('Build Human Escalation is reachable only from an explicit customer human request', () => {

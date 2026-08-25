@@ -3,6 +3,8 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from n8n.tests.node_test_summary import parse_node_test_summary
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = (
@@ -36,7 +38,9 @@ class ChatwootReconciliationIngressBridgeTests(unittest.TestCase):
             0,
             f"Reconciliation ingress bridge failed:\n{completed.stdout}\n{completed.stderr}",
         )
-        self.assertIn("# pass 16", completed.stdout)
+        passed, failed = parse_node_test_summary(completed.stdout)
+        self.assertGreaterEqual(passed, 16)
+        self.assertEqual(failed, 0)
 
     def test_source_is_pure_and_explicitly_not_a_signed_webhook_gate(self):
         source = RUNTIME.read_text(encoding="utf-8")

@@ -1,10 +1,11 @@
 import json
 import os
-import re
 import shutil
 import subprocess
 import unittest
 from pathlib import Path
+
+from n8n.tests.node_test_summary import parse_node_test_summary
 
 try:
     from test_contracts import schema_name, validate
@@ -57,10 +58,9 @@ class ChatwootProductionRuntimeTests(unittest.TestCase):
             0,
             (result.stderr or result.stdout).strip(),
         )
-        match = re.search(r"^# pass ([0-9]+)$", result.stdout, re.MULTILINE)
-        self.assertIsNotNone(match, result.stdout)
-        self.assertGreaterEqual(int(match.group(1)), 18)
-        self.assertIn("# fail 0", result.stdout)
+        passed, failed = parse_node_test_summary(result.stdout)
+        self.assertGreaterEqual(passed, 18)
+        self.assertEqual(failed, 0)
 
     def test_runtime_outputs_match_existing_strict_contracts(self):
         result = self.run_node(SAMPLE_PATH)

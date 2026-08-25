@@ -1,5 +1,27 @@
 # Project State
 
+## Governed Calapres responder live — 2026-08-25
+
+The owner explicitly approved live activation for channel testing. The existing responder
+`kAyF0D3ZZHxc0Hwp` was updated in place and published as active version
+`1afb2f65-0f5c-4a87-9525-03a11088d6ff`, 100 nodes. One deterministic `Governed Customer Scope
+Router` now sits between the authenticated Chatwoot anchor check and the existing decision switch.
+No workflow, webhook, Chatwoot inbox, Captain, AgentBot, credential, or customer-send path was
+created; `Send Reply` still has exactly one inbound authorization edge.
+
+The live router uses candidate knowledge version `2026-08-25-v4-candidate`. External questions
+receive the pinned Calapres redirect and cannot authorize a model or tool. Only exact store intents
+can select approved static replies or Shopify read-only product/order reads; the governed router
+never emits the model output. The dormant model prompt was also tightened to forbid external facts.
+Product results now say `لقيت في المتجر الآن` and do not claim inventory availability.
+
+Local targeted verification passed 50/50 before publish. A fresh n8n read after publish confirmed
+the active/draft version match, the 100-node graph, the governed-router edges, and the single
+`Customer Egress Authorized? -> Send Reply` edge. Previous active version
+`aa654b47-1b8f-4132-979e-0199454028a2` remains the exact rollback target. End-to-end delivery from
+TikTok, Instagram, and WhatsApp is now awaiting the owner's real channel tests and must not be
+claimed from workflow publication alone.
+
 ## Checkpoint verification and release-lock repair — 2026-08-14
 
 This section supersedes older live-status claims below where they conflict. GitHub confirmed Draft

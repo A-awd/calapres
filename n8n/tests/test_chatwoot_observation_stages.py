@@ -1,10 +1,11 @@
 import json
 import os
-import re
 import shutil
 import subprocess
 import unittest
 from pathlib import Path
+
+from n8n.tests.node_test_summary import parse_node_test_summary
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -49,10 +50,9 @@ class ChatwootObservationStageTests(unittest.TestCase):
             0,
             (completed.stderr or completed.stdout).strip(),
         )
-        match = re.search(r"^# pass ([0-9]+)$", completed.stdout, re.MULTILINE)
-        self.assertIsNotNone(match, completed.stdout)
-        self.assertGreaterEqual(int(match.group(1)), 15)
-        self.assertIn("# fail 0", completed.stdout)
+        passed, failed = parse_node_test_summary(completed.stdout)
+        self.assertGreaterEqual(passed, 15)
+        self.assertEqual(failed, 0)
 
     def test_runtime_and_exact_node_test_are_valid_javascript(self):
         for path in (RUNTIME_PATH, NODE_TEST_PATH):
