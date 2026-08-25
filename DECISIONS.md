@@ -39,7 +39,11 @@ decision record.
 - [0016 — Adopt a grounded support agent with isolated brand packs](decisions/0016-adopt-grounded-support-agent.md)
   — use the existing restricted model only for strict semantic classification, validate its output
   deterministically, read live Shopify facts through bounded brand-filtered queries, and render
-  replies from an isolated brand pack without web search or cross-brand access.
+  replies from an isolated brand pack without web search or cross-brand access. Its requirement for
+  deterministic customer-visible prose is superseded by decision 0017.
+- [0017 — Adopt grounded natural response composition](decisions/0017-adopt-grounded-natural-response-composer.md)
+  — preserve deterministic facts and send controls, but express each grounded draft through a
+  context-aware natural composer with strict output parsing and deterministic hallucination checks.
 
 ## Superseded decisions
 

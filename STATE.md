@@ -1,5 +1,29 @@
 # Project State
 
+## Grounded natural conversation live — 2026-08-25
+
+The owner's rejection of repetitive WhatsApp and Instagram replies was correct: the classifier-only
+design still rendered final prose from fixed templates, and a field-name mismatch discarded the
+verified Chatwoot transcript before it reached the model. TikTok also had a separate ingress gap:
+the outer gate accepted only the string `incoming`, while Chatwoot can emit numeric `0`.
+
+The same responder `kAyF0D3ZZHxc0Hwp` is now active at version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`, 107 nodes. No parallel workflow, webhook, inbox, Captain,
+AgentBot, credential, or send path was created. The inbound gate accepts both valid direction forms;
+recent conversation is canonical `incoming/outgoing + content`; the classifier has its own strict
+parser; and every customer-visible grounded draft now passes through one context-aware natural
+Saudi-Arabic composer before the unchanged pre-send controls.
+
+The composer has no external tools and cannot decide facts. A deterministic validator rejects
+malformed, low-confidence, ungrounded, overlong, invented-number, and untrusted-action output, then
+uses the original grounded draft. Fresh n8n readback confirmed the published 107-node version, the
+new model/parser connections, the existing OpenAI credential, and the unchanged single
+`Customer Egress Authorized? -> Send Reply` edge. The update produced only two pre-existing
+disconnected-node warnings. Repository verification passes 277/277 Node tests, 92/92 Python tests,
+and the refreshed customer-service release lock. No synthetic channel message was sent, so owner-visible WhatsApp,
+Instagram, and TikTok behavior remains the final end-to-end observation rather than a publication
+claim. Rollback target: `ab7db7ab-0195-45dd-a061-8e4e8b157d46`.
+
 ## Grounded support agent live for owner testing — 2026-08-25
 
 The fixed keyword grammar failed the owner's acceptance test and is no longer the primary

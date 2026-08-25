@@ -1,5 +1,25 @@
 # Handoff
 
+## Grounded natural conversation live — 2026-08-25
+
+Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`, 107 nodes. Decision 0017 supersedes decision 0016 only where
+0016 required deterministic customer-visible prose. Facts still come only from the isolated
+Calapres pack or bounded Shopify reads; external lookup and Shopify writes remain unavailable.
+
+Root causes fixed in place: numeric TikTok `message_type=0` now passes the same ingress condition as
+string `incoming`; verified recent Chatwoot messages now use the canonical fields consumed by the
+classifier; the classifier has a dedicated structured parser; and every grounded draft passes
+through one natural Saudi-Arabic composer plus a deterministic validator. New numbers, unsupported
+actions, malformed output, or confidence below 0.85 fall back to the original grounded draft.
+
+Fresh active-version readback confirmed the new nodes, parsers, OpenAI credential, graph connections,
+and 107-node count. Repository verification passes 277/277 Node tests, 92/92 Python tests, and the
+refreshed release lock. No duplicate workflow or synthetic customer message was created. The immediate
+rollback target is `ab7db7ab-0195-45dd-a061-8e4e8b157d46`. The only remaining behavioral evidence is
+the owner's own message through WhatsApp, Instagram, and TikTok; inspect the resulting execution if
+any channel does not visibly reply, but do not reopen the architecture or create a test copy.
+
 ## Grounded support agent owner test — 2026-08-25
 
 Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version

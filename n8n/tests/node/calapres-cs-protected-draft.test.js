@@ -66,7 +66,7 @@ function reachableFrom(source) {
 
 test('protected Calapres draft preserves the reviewed rollback and no-save settings', () => {
   assert.equal(workflow.workflow_id, 'kAyF0D3ZZHxc0Hwp');
-  assert.equal(workflow.active_version_id, 'ab7db7ab-0195-45dd-a061-8e4e8b157d46');
+  assert.equal(workflow.active_version_id, 'b67ae1e3-98df-4665-9bee-29754d1beafd');
   assert.equal(workflow.publish_state, 'published_active');
   assert.equal(workflow.node_count, workflow.nodes.length);
   assert.equal(workflow.settings.saveDataSuccessExecution, 'none');
@@ -84,8 +84,8 @@ test('governed scope router is inserted between verified anchor and the existing
     directTargets('Governed Customer Scope Router'),
     ['Route Customer Service Decision'],
   );
-  assert.equal(workflow.nodes.length, 100);
-  assert.equal(workflow.node_count, 100);
+  assert.equal(workflow.nodes.length, 107);
+  assert.equal(workflow.node_count, 107);
 });
 
 test('governed scope router sends every customer message to the bounded classifier without tool authority', () => {
@@ -417,8 +417,11 @@ test('the model is a strict low-randomness classifier and cannot answer external
   assert.match(prompt, /أي طقس أو أخبار/);
   assert.equal(model.parameters.options.temperature, 0);
   assert.equal(model.parameters.options.reasoningEffort, 'low');
-  assert.equal(model.parameters.options.textFormat.textOptions.strict, true);
-  assert.equal(model.parameters.options.textFormat.textOptions.schema.additionalProperties, false);
+  assert.equal(brain.parameters.hasOutputParser, true);
+  assert.equal(model.parameters.options.textFormat, undefined);
+  const parser = nodesByName.get('Calapres Classification Parser');
+  assert.equal(parser.type, '@n8n/n8n-nodes-langchain.outputParserStructured');
+  assert.equal(JSON.parse(parser.parameters.inputSchema).additionalProperties, false);
   assert.equal(model.parameters.builtInTools, undefined);
 
   const businessUnclear = runAnchorRoute('ممكن تساعدني أختار منتج مناسب؟');
@@ -634,7 +637,7 @@ test('explicit request for a human agent routes to owner escalation, not silence
 
 test('Shopify Order Read Ready false branch now reaches the send path, not human escalation', () => {
   const conn = workflow.connections['Shopify Order Read Ready?'].main;
-  assert.deepEqual(conn[1], [{ node: 'Pre-Send Continuation', type: 'main', index: 0 }]);
+  assert.deepEqual(conn[1], [{ node: 'Prepare Natural Response Composition', type: 'main', index: 0 }]);
 });
 
 test('no intentional pre-send delay: Pre-Send Continuation waits zero seconds', () => {

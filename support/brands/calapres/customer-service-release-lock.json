@@ -36,12 +36,12 @@
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.json",
-      "sha256": "92ea22c5da39350843ca63c8d1a5031951a546eff979453e4ff6ece23caedd2c",
-      "bytes": 198067
+      "sha256": "763694b92e5df467d879acbff7d1496d070c034aa34cccd60be239a47ce65fea",
+      "bytes": 206818
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.update-manifest.json",
-      "sha256": "4b3eb7051af677468d4607d1ae1401ef2ccd763a14d3de4ffcc7b107d8bb315c",
+      "sha256": "256e3c1e91b898a5637b7997e8cd540a1edf78182b7ee2f41d7fdbed2e9c9b30",
       "bytes": 818
     },
     {
@@ -446,8 +446,8 @@
     },
     {
       "path": "support/brands/calapres/agent/2026-08-25-v1-candidate.json",
-      "sha256": "852b171c328def195829c870d09a312e391fd64f517a361ac5200c593e23874b",
-      "bytes": 4220
+      "sha256": "4324d46078632b9f045185a8d1ce40bb9340580fdc685d1d3e4808e4bff6dcc9",
+      "bytes": 4437
     },
     {
       "path": "support/brands/calapres/agent/manifest.json",
@@ -510,5 +510,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "2d14d75c30495be429d684a48317e3c3e5e9040279c62c231a2b5fa765951b94"
+  "release_digest_sha256": "5a530604c1c0c6cbe0329e0fbf41f768353693c6fac65a0fe575b07ace8031fb"
 }
