@@ -1,5 +1,26 @@
 # Handoff
 
+## Grounded support agent owner test — 2026-08-25
+
+Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version
+`ab7db7ab-0195-45dd-a061-8e4e8b157d46`, 100 nodes. Decision 0016 supersedes decision 0015 only where
+0015 made fixed grammar the primary understanding layer. The existing restricted model now returns
+strict classification JSON; the grounded engine revalidates it and alone selects an approved
+static fact, a read-only Shopify product/order lookup, a store boundary, clarification, or human
+handoff. There is no web-search tool and no model-authored customer prose.
+
+No workflow, webhook, inbox, Captain, AgentBot, credential, or customer-send path was created.
+The one inbound edge to `Send Reply` remains `Customer Egress Authorized?` output 0. The model is
+temperature zero with strict schema; product queries are capped and include the Calapres vendor and
+burner product-type filter. Node tests pass 322/322 and Python tests pass 92/92. The previous
+deterministic version `d3d320d6-63be-4134-b333-a4941bf2480a` is the behavioral rollback target.
+
+End-to-end delivery is not yet proven. Ask the owner to send, through a real connected channel:
+`أبغى أشتري سيارة`, `ما هو طقس لندن اليوم؟`, and
+`بكم المبخره الخضراء المخططه بالبرتقالي`. Confirm the physically visible replies and then inspect
+the matching executions. The expected last response must say the described product was not found
+and list the live white, beige, and gray catalog alternatives and prices; it must not say available.
+
 ## Owner-test correction — 2026-08-25
 
 Do not treat the first activation as end-to-end success. The owner's WhatsApp screenshot proved

@@ -1,5 +1,32 @@
 # Project State
 
+## Grounded support agent live for owner testing — 2026-08-25
+
+The fixed keyword grammar failed the owner's acceptance test and is no longer the primary
+understanding layer. The same responder `kAyF0D3ZZHxc0Hwp` now uses its existing restricted model
+only to classify meaning into an exact schema. A deterministic engine validates the brand, intent,
+confidence, capability, and fields before any route is allowed. The model cannot write the customer
+reply, search the web, choose an endpoint, or grant a new capability.
+
+The Calapres brand pack is isolated and records identity, the burner category, approved static
+facts, allowed intents, and allowed read capabilities. Product questions use a capped Shopify
+GraphQL query filtered to active Calapres burners; titles and prices are read at reply time. No
+inventory availability is inferred, and Shopify mutations remain prohibited. External requests
+such as cars or London weather receive a subject-aware store redirect without an external lookup.
+
+The existing 100-node workflow is active at version
+`ab7db7ab-0195-45dd-a061-8e4e8b157d46`. Fresh n8n reread confirmed active/draft parity, no execution
+retention, `Humanize Text -> Route Customer Service Decision`, human acknowledgement returning to
+the existing pre-send checks, and the unchanged single
+`Customer Egress Authorized? -> Send Reply` edge. The last deterministic governed version
+`d3d320d6-63be-4134-b333-a4941bf2480a` is the behavioral rollback target.
+
+Repository verification passes 322/322 Node tests and 92/92 Python tests. Strict model-node
+configuration validation passes. This proves source and graph contracts only. Owner-visible
+WhatsApp, Instagram, and TikTok delivery is still unproven; do not claim end-to-end success until
+the exact car, weather, and unmatched green/orange burner messages are physically observed and the
+matching executions are inspected.
+
 ## Owner-test correction: burner color descriptions — 2026-08-25
 
 The first governed live version was not acceptable. Owner WhatsApp evidence showed `بكم المبخره

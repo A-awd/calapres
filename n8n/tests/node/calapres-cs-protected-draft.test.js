@@ -26,6 +26,32 @@ function runGovernedRoute(state) {
   return new Function('$input', code)($input)[0].json;
 }
 
+function classifierOutput(overrides = {}) {
+  return {
+    schema_version: '1.0',
+    brand_id: 'calapres',
+    intent: 'out_of_scope',
+    confidence: 0.98,
+    catalog_relation: 'outside_catalog',
+    requested_subject_ar: 'سيارة',
+    knowledge_fact_id: null,
+    capability: null,
+    product_search_terms: [],
+    order_number: null,
+    needs_human: false,
+    reason_code: 'outside_catalog',
+    ...overrides,
+  };
+}
+
+function runGroundedClassification(prepared, output) {
+  const code = nodesByName.get('Humanize Text').parameters.jsCode;
+  const $ = () => ({ first: () => ({ json: prepared }) });
+  return new Function('$', '$input', code)($, {
+    first: () => ({ json: { output: JSON.stringify(output) } }),
+  })[0].json;
+}
+
 function reachableFrom(source) {
   const reached = new Set();
   const pending = [source];
@@ -40,7 +66,7 @@ function reachableFrom(source) {
 
 test('protected Calapres draft preserves the reviewed rollback and no-save settings', () => {
   assert.equal(workflow.workflow_id, 'kAyF0D3ZZHxc0Hwp');
-  assert.equal(workflow.active_version_id, 'd3d320d6-63be-4134-b333-a4941bf2480a');
+  assert.equal(workflow.active_version_id, 'ab7db7ab-0195-45dd-a061-8e4e8b157d46');
   assert.equal(workflow.publish_state, 'published_active');
   assert.equal(workflow.node_count, workflow.nodes.length);
   assert.equal(workflow.settings.saveDataSuccessExecution, 'none');
@@ -62,37 +88,33 @@ test('governed scope router is inserted between verified anchor and the existing
   assert.equal(workflow.node_count, 100);
 });
 
-test('governed scope router blocks external questions and never authorizes the model', () => {
+test('governed scope router sends every customer message to the bounded classifier without tool authority', () => {
   const weather = runGovernedRoute({
     context: { customer_text: 'ما هو طقس لندن اليوم؟' },
   });
-  assert.equal(weather.route_index, 4);
-  assert.equal(weather.decision_kind, 'out_of_scope');
-  assert.equal(weather.response_id, 'scope.store-redirect');
-  assert.equal(weather.model_allowed, false);
+  assert.equal(weather.route_index, 3);
+  assert.equal(weather.decision_kind, 'grounded_classification');
+  assert.equal(weather.model_allowed, true);
   assert.equal(weather.tool_allowed, false);
-  assert.equal(
-    weather.reply_text,
-    'أقدر أساعدك فقط في كالابريز: المباخر، الطلبات، الدفع، والشحن. وش تحب تعرف عن المتجر؟',
-  );
+  assert.equal(weather.classifier_input.customer_message, 'ما هو طقس لندن اليوم؟');
+  assert.deepEqual(weather.classifier_input.external_information_tools, []);
 
   const product = runGovernedRoute({
     context: { customer_text: 'كم سعر المبخرة؟' },
   });
-  assert.equal(product.route_index, 2);
-  assert.equal(product.decision_kind, 'faq');
-  assert.equal(product.dynamic_read, 'product_catalog');
-  assert.equal(product.model_allowed, false);
-  assert.equal(product.tool_allowed, true);
+  assert.equal(product.route_index, 3);
+  assert.equal(product.decision_kind, 'grounded_classification');
+  assert.equal(product.model_allowed, true);
+  assert.equal(product.tool_allowed, false);
 
   for (const customerText of [
     'بكم المبخره الخضراء',
     'بكم المبخره الخضراء المخططه بالبرتقالي',
   ]) {
     const describedProduct = runGovernedRoute({ context: { customer_text: customerText } });
-    assert.equal(describedProduct.route_index, 2, customerText);
-    assert.equal(describedProduct.dynamic_read, 'product_catalog', customerText);
-    assert.equal(describedProduct.tool_allowed, true, customerText);
+    assert.equal(describedProduct.route_index, 3, customerText);
+    assert.equal(describedProduct.decision_kind, 'grounded_classification', customerText);
+    assert.equal(describedProduct.tool_allowed, false, customerText);
   }
 });
 
@@ -386,17 +408,18 @@ test('store questions stay deterministic while unknown conversation reaches the 
   );
 });
 
-test('dormant model is forbidden from answering external information', () => {
+test('the model is a strict low-randomness classifier and cannot answer external information', () => {
   const brain = nodesByName.get('Calapres Brain');
   const prompt = brain.parameters.options.systemMessage;
   const model = nodesByName.get('OpenAI Calapres Restricted Model');
-  assert.match(prompt, /ممنوع الإجابة عن أي سؤال خارج متجر كالابريز/);
-  assert.match(prompt, /الطقس والأخبار والمعلومات العامة/);
-  assert.doesNotMatch(prompt, /يجوز جواب مختصر جدًا/);
-  assert.match(prompt, /من جملة إلى ثلاث جمل قصيرة/);
-  assert.doesNotMatch(prompt,
-    /أقدر أساعدك بالمنتجات والطلبات والشحن فقط\. وش تحتاج؟/);
-  assert.equal(model.parameters.options.temperature, 0.4);
+  assert.match(prompt, /صنّف المعنى فقط/);
+  assert.match(prompt, /لا تكتب ردًا للعميل/);
+  assert.match(prompt, /أي طقس أو أخبار/);
+  assert.equal(model.parameters.options.temperature, 0);
+  assert.equal(model.parameters.options.reasoningEffort, 'low');
+  assert.equal(model.parameters.options.textFormat.textOptions.strict, true);
+  assert.equal(model.parameters.options.textFormat.textOptions.schema.additionalProperties, false);
+  assert.equal(model.parameters.builtInTools, undefined);
 
   const businessUnclear = runAnchorRoute('ممكن تساعدني أختار منتج مناسب؟');
   assert.deepEqual(
@@ -431,44 +454,69 @@ test('product price questions route to the live Shopify reference, not memorized
 test('approved catalog and price questions read the active Shopify catalog', () => {
   const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
   for (const text of ['وش المنتجات الموجودة؟', 'كم سعر المبخرة؟', 'Show your catalog']) {
-    const routed = runGovernedRoute(runAnchorRoute(text));
+    const preparedClassification = runGovernedRoute(runAnchorRoute(text));
+    const routed = runGroundedClassification(preparedClassification, classifierOutput({
+      intent: 'product_search',
+      catalog_relation: 'possible_product',
+      requested_subject_ar: 'مبخرة',
+      capability: 'product_search',
+      product_search_terms: ['مبخرة'],
+      reason_code: 'shopify_product_search_required',
+    }));
     assert.deepEqual([routed.route_index, routed.decision_kind], [2, 'faq'], text);
     const prepared = new Function('$input', 'Buffer', prepCode)(
       { first: () => ({ json: routed }) }, Buffer)[0].json;
     assert.equal(prepared.shopify_lookup_ready, true, text);
-    assert.equal(prepared.shopify_lookup_mode, 'product_catalog', text);
-    assert.equal(prepared.shopify_request.variables.query, 'status:ACTIVE', text);
+    assert.equal(prepared.shopify_lookup_mode, 'grounded_product_search', text);
+    assert.match(prepared.shopify_request.variables.search, /vendor:"\u0643\u0627\u0644\u0627\u0628\u0631\u064a\u0632"/, text);
+    assert.match(prepared.shopify_request.variables.search, /product_type:"\u0645\u0628\u0627\u062e\u0631"/, text);
   }
 });
 
-test('Calapres model facts are burner-only and reject stale assistant claims as authority', () => {
+test('Calapres classifier receives only the isolated brand pack and approved facts', () => {
   const prompt = nodesByName.get('Calapres Brain').parameters.options.systemMessage;
-  assert.match(prompt, /مباخر كالابريز الفاخرة فقط/);
-  assert.match(prompt, /ردود المتجر السابقة سياق حواري وليست مصدر حقائق/);
-  assert.match(prompt, /ممنوع ذكر العطور أو العطور النيشية أو ستاند الآيباد أو مستلزمات الأعراس/);
-  assert.match(prompt, /علامة تجارية سعودية لبيع المباخر/);
+  assert.match(prompt, /استخدم فقط هوية البراند والفئات والحقائق/);
+  const prepared = runGovernedRoute({ context: { customer_text: 'وش تبيعون؟' } });
+  assert.equal(prepared.classifier_input.brand.brand_id, 'calapres');
+  assert.deepEqual(prepared.classifier_input.brand.allowed_categories_ar, ['المباخر الفاخرة']);
+  assert.match(prepared.classifier_input.brand.business_summary_ar, /متجر سعودي/);
+  assert.ok(prepared.classifier_input.brand.approved_facts.every((fact) => fact.fact_id));
+  assert.deepEqual(prepared.classifier_input.external_information_tools, []);
 });
 
 test('product reference builds a Shopify query and replies only from live data', () => {
   const prepCode = nodesByName.get('Prepare Shopify Order Read').parameters.jsCode;
-  const prep = new Function('$input', 'Buffer',
-    prepCode)({ first: () => ({ json: { decision_kind: 'faq', dynamic_read: 'product_info', product_topic: 'مبخر' } }) }, Buffer)[0].json;
-  assert.equal(prep.shopify_lookup_mode, 'product_info');
-  assert.match(prep.shopify_request.variables.query, /مبخر/);
+  const classified = runGroundedClassification(
+    runGovernedRoute({ context: { customer_text: 'بكم المبخرة الخضراء؟' } }),
+    classifierOutput({
+      intent: 'product_search', catalog_relation: 'possible_product',
+      requested_subject_ar: 'المبخرة الخضراء', capability: 'product_search',
+      product_search_terms: ['أخضر'], reason_code: 'shopify_product_search_required',
+    }),
+  );
+  const prep = new Function('$input', 'Buffer', prepCode)(
+    { first: () => ({ json: classified }) }, Buffer)[0].json;
+  assert.equal(prep.shopify_lookup_mode, 'grounded_product_search');
+  assert.match(prep.shopify_request.variables.search, /أخضر\*/);
   const buildCode = nodesByName.get('Build Verified Shopify Order Reply').parameters.jsCode;
   const mocks = { 'Prepare Shopify Order Read': { json: prep } };
   const $ = (name) => ({ first: () => mocks[name] });
   const good = new Function('$', '$input', 'Buffer', buildCode)($, { first: () => ({ json: {
-    statusCode: 200, body: { data: { products: { nodes: [{ title: 'مبخرة كالابريز — الأبيض',
-      status: 'ACTIVE', priceRangeV2: { minVariantPrice: { amount: '390.0', currencyCode: 'SAR' } } }] } } },
+    statusCode: 200, body: { data: {
+      matches: { nodes: [] },
+      catalog: { nodes: [{ title: 'مبخرة كالابريز — الأبيض',
+        status: 'ACTIVE', priceRangeV2: { minVariantPrice: { amount: '390.0', currencyCode: 'SAR' } } }] },
+    } },
   } }) }, Buffer)[0].json;
   assert.equal(good.send_ready, true);
   assert.match(good.reply_text, /390/);
+  assert.match(good.reply_text, /ما لقيت/);
   const empty = new Function('$', '$input', 'Buffer', buildCode)($, { first: () => ({ json: {
-    statusCode: 200, body: { data: { products: { nodes: [] } } },
+    statusCode: 200, body: { data: { matches: { nodes: [] }, catalog: { nodes: [] } } },
   } }) }, Buffer)[0].json;
   assert.equal(empty.send_ready, true);
-  assert.equal(empty.decision_kind, 'clarification');
+  assert.equal(empty.decision_kind, 'faq');
+  assert.match(empty.reply_text, /ما لقيت/);
 });
 
 test('Shopify credential and data-gap failures self-serve instead of escalating to a human', () => {
@@ -548,29 +596,21 @@ test('model failures and budget denials fail safe with a bounded reply, never an
   assert.equal(budgetDenied.decision_kind, 'clarification');
 });
 
-test('model output validation accepts three natural sentences and rejects invalid confidence', () => {
+test('model output validation accepts only the strict classifier contract and rejects invalid confidence', () => {
   const humanizeCode = nodesByName.get('Humanize Text').parameters.jsCode;
-  const $ = (name) => ({ first: () => ({
-    'Interpret Model Budget Reservation': { json: {
-      context: { conversation_id: 3, inbound_message_id: 900000012 },
-    } },
-  }[name]) });
+  const prepared = runGovernedRoute({ context: {
+    conversation_id: 3, inbound_message_id: 900000012, customer_text: 'أبغى أشتري سيارة',
+  } });
+  const $ = () => ({ first: () => ({ json: prepared }) });
   const natural = new Function('$', '$input', 'Buffer', humanizeCode)(
-    $, { first: () => ({ json: { output: JSON.stringify({
-      reply: 'أكيد أفهم سؤالك. أقدر أجاوبك باختصار. وبعدها أخدمك في كالابريز.',
-      confidence: 0.91,
-      escalate: false,
-    }) } }) }, Buffer,
+    $, { first: () => ({ json: { output: JSON.stringify(classifierOutput()) } }) }, Buffer,
   )[0].json;
-  assert.equal(natural.decision_kind, 'model');
-  assert.match(natural.reply_text, /وبعدها أخدمك/);
+  assert.equal(natural.decision_kind, 'out_of_scope');
+  assert.match(natural.reply_text, /سيارة/);
+  assert.match(natural.reply_text, /مباخر/);
 
   const invalid = new Function('$', '$input', 'Buffer', humanizeCode)(
-    $, { first: () => ({ json: { output: JSON.stringify({
-      reply: 'رد غير موثوق',
-      confidence: 1.2,
-      escalate: false,
-    }) } }) }, Buffer,
+    $, { first: () => ({ json: { output: JSON.stringify(classifierOutput({ confidence: 1.2 })) } }) }, Buffer,
   )[0].json;
   assert.equal(invalid.decision_kind, 'clarification');
 });

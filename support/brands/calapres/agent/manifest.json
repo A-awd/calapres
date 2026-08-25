@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "current_version": "2026-08-25-v1-candidate",
+  "versions": [
+    {
+      "version": "2026-08-25-v1-candidate",
+      "path": "support/brands/calapres/agent/2026-08-25-v1-candidate.json",
+      "status": "live_owner_test",
+      "effective_at": "2026-08-25",
+      "approval_gate": "repository_tests_and_owner_visible_channel_proof",
+      "supersedes": null
+    }
+  ]
+}

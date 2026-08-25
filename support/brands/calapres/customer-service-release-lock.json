@@ -36,12 +36,12 @@
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.json",
-      "sha256": "2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a",
-      "bytes": 133495
+      "sha256": "92ea22c5da39350843ca63c8d1a5031951a546eff979453e4ff6ece23caedd2c",
+      "bytes": 198067
     },
     {
       "path": "n8n/deployments/calapres-cs-bot-protected-draft.update-manifest.json",
-      "sha256": "a0ad48568459c5246f09d9ac4630c8c0c44470a043e8fe7ff3f21762f452bf3f",
+      "sha256": "4b3eb7051af677468d4607d1ae1401ef2ccd763a14d3de4ffcc7b107d8bb315c",
       "bytes": 818
     },
     {
@@ -58,6 +58,16 @@
       "path": "n8n/modules/context-compiler.js",
       "sha256": "9ae279473963c3e9a98dca23008f646f2bc5cc9c124362587ea3a32a934f8813",
       "bytes": 49253
+    },
+    {
+      "path": "n8n/modules/governed-responder.js",
+      "sha256": "844c74c8e9824349b6f2bafde53a905298f6438bf7bd6f6510e79e5bd2999873",
+      "bytes": 25874
+    },
+    {
+      "path": "n8n/modules/grounded-support-agent.js",
+      "sha256": "1f63a432bfc3727c22b48eb4ec0a48a8bade6c9d2e8a9f1ad61cfac4228438a2",
+      "bytes": 16113
     },
     {
       "path": "n8n/modules/provider-neutral-llm-boundary.js",
@@ -435,6 +445,16 @@
       "bytes": 21907
     },
     {
+      "path": "support/brands/calapres/agent/2026-08-25-v1-candidate.json",
+      "sha256": "852b171c328def195829c870d09a312e391fd64f517a361ac5200c593e23874b",
+      "bytes": 4220
+    },
+    {
+      "path": "support/brands/calapres/agent/manifest.json",
+      "sha256": "2fa688a24dc7442be3b5b5ec6e61b97f8416b31a75e9e93f550134afaa2766f5",
+      "bytes": 428
+    },
+    {
       "path": "support/brands/calapres/context-trust/2026-08-11-v1.json",
       "sha256": "0dfbf3867f3936169cd7b9f3d7c79a97efa5fea36a435a1381ce9fc206ce78ac",
       "bytes": 1777
@@ -490,5 +510,5 @@
       "bytes": 410
     }
   ],
-  "release_digest_sha256": "90e549cc03507c3d23abfea118ecec96f026b94e8eb562e1308bbb8777de4c26"
+  "release_digest_sha256": "2d14d75c30495be429d684a48317e3c3e5e9040279c62c231a2b5fa765951b94"
 }

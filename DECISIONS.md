@@ -34,8 +34,12 @@ decision record.
   provider or database is created by this decision, and Supabase remains prohibited.
 - [0015 — Adopt the governed Calapres response library and scope gate](decisions/0015-adopt-governed-calapres-responder.md)
   — keep one existing responder and send path; select customer replies only from versioned
-  Calapres knowledge or exact Shopify read-only capabilities, and redirect external questions
-  without authorizing the model.
+  Calapres knowledge or exact Shopify read-only capabilities, and redirect external questions.
+  Its fixed grammar as the primary understanding layer is superseded by decision 0016.
+- [0016 — Adopt a grounded support agent with isolated brand packs](decisions/0016-adopt-grounded-support-agent.md)
+  — use the existing restricted model only for strict semantic classification, validate its output
+  deterministically, read live Shopify facts through bounded brand-filtered queries, and render
+  replies from an isolated brand pack without web search or cross-brand access.
 
 ## Superseded decisions
 

@@ -76,6 +76,7 @@ def release_paths() -> list[Path]:
 
     paths.add((BRAND_ROOT / "registry.json").resolve())
     for relative_manifest in (
+        "agent/manifest.json",
         "knowledge/manifest.json",
         "response-style/manifest.json",
         "model-policy/manifest.json",
