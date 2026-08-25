@@ -9,6 +9,9 @@ reaching its model route. Workflow `kAyF0D3ZZHxc0Hwp` is now unpublished; fresh 
 `b67ae1e3-98df-4665-9bee-29754d1beafd` remains intact for rollback only.
 Every lower section that describes this workflow as active is a historical snapshot superseded by
 this section; do not infer current activation from it.
+The preserved draft is not a production-ready fallback by itself. Before any separately approved
+reactivation, re-audit its expired-processing recovery, routing, knowledge grounding, and physical
+channel delivery; the pre-switch system had confirmed gaps in all four areas.
 
 Existing Chatwoot Captain assistant `Calapres Assistant` (`2187`) is connected to WhatsApp
 `128058`, Instagram `128031`, and TikTok `128033`. Email and website are not connected. The

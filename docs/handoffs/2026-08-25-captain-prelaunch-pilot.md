@@ -86,6 +86,27 @@ quality risk if live replies expose it.
   copies or prolonged synthetic testing. There are no external customers yet; owner messages are
   the acceptance traffic.
 
+### Inherited n8n diagnosis
+
+[Observed on 2026-08-25 at 07:14 Asia/Riyadh, historical and not current] Neon contained 89
+customer-reply events, of which 44 were `sent`; 11 `processing` events had expired leases, seven
+business events were `prepared` with expired leases, and two request-replay claims remained in
+`processing`. No new event had appeared after 2026-08-19. The established failure mechanism was
+that the workflow could durably claim an event, return HTTP 204 to Chatwoot, then stop before final
+processing; recovery covered `sending` or `ambiguous`, not expired `processing`. Chatwoot would
+normally not redeliver an event already acknowledged with 204. These counts are deliberately
+dated and must not be treated as current without a fresh read-only check.
+
+The older 99-node responder also had confirmed semantic and conversational defects: ambiguous
+Arabic words routed ordering, shipping, and engraving questions incorrectly; Arabic order-number
+digits and follow-up order numbers were mishandled; product failures could ask for an order number;
+media-only messages were ignored; a `human` label could cause later silence; and creation of a
+Chatwoot message was mistaken for physical social-channel delivery. Later revisions attempted to
+correct parts of this behavior, but the final owner-visible 107-node trial still repeated the
+fixed clarification. Therefore the preserved draft is rollback source only, not a validated
+production fallback. A future reactivation would require a fresh read-only audit and explicit
+approval, not a simple republish.
+
 ## Immediate next action
 
 The owner should send normal messages through WhatsApp, Instagram, and TikTok and record the
