@@ -2,6 +2,8 @@
 
 ## Captain prelaunch pilot — 2026-08-25
 
+Detailed closeout: [Captain prelaunch customer-service handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+
 Resume from decision 0018. Chatwoot Captain assistant `Calapres Assistant` (`2187`) is the only
 automatic responder and is connected to WhatsApp `128058`, Instagram `128031`, and TikTok
 `128033`. Email and website remain disconnected. n8n workflow `kAyF0D3ZZHxc0Hwp` is unpublished;

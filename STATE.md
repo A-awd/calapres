@@ -7,6 +7,8 @@ evidence showed the 107-node workflow repeatedly returning the exact fixed clari
 reaching its model route. Workflow `kAyF0D3ZZHxc0Hwp` is now unpublished; fresh n8n readback shows
 `active=false` and `activeVersionId=null`. Its draft version
 `b67ae1e3-98df-4665-9bee-29754d1beafd` remains intact for rollback only.
+Every lower section that describes this workflow as active is a historical snapshot superseded by
+this section; do not infer current activation from it.
 
 Existing Chatwoot Captain assistant `Calapres Assistant` (`2187`) is connected to WhatsApp
 `128058`, Instagram `128031`, and TikTok `128033`. Email and website are not connected. The
@@ -18,6 +20,18 @@ The current Chatwoot plan does not permit Captain custom tools. Captain can answ
 Calapres documents, FAQs, conversation context, and public product pages, but it cannot perform a
 live Shopify order lookup; order-status requests must hand off to a human. Long-term Captain
 memories, contact access, source citations, and automatic FAQ generation remain disabled.
+
+The Captain knowledge surface currently contains 22 documents and 72 approved FAQs. Read-only
+inspection found useful Calapres pages mixed with broad or unrelated agentic/privacy/UCP material.
+No document or FAQ was deleted because cleanup is destructive and was not approved. The explicit
+Calapres-only guardrail mitigates this during the pilot, but the knowledge set remains a quality
+risk that must be reviewed separately if real-channel replies cite or reflect unrelated content.
+
+The Shopify snapshot used for the assistant identity showed exactly three active burner products
+(white, beige, and gray) at SAR 390 each, with zero reported inventory. This is drift-prone and
+must be refreshed read-only before any later factual change. Never claim stock availability. A
+compare-at price of SAR 490 appeared in Captain knowledge but was not independently verified from
+the Shopify read and must not be asserted as a confirmed discount.
 
 Playground checks passed for the car, Mykonos ticket, missing green/orange burner, and order-status
 cases. This is not channel delivery proof. The exact next action is owner testing through the three
