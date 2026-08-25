@@ -7,6 +7,11 @@ egress is authorized by this document.
 
 Authority: decisions 0008, 0010, and 0011
 
+> **Current operating status (2026-08-25):** Decision 0018 supersedes this n8n runbook for the
+> active prelaunch customer-facing responder. The n8n responder is unpublished and Chatwoot
+> Captain is connected only to WhatsApp, Instagram, and TikTok. Keep this document as rollback and
+> historical safety reference; do not reactivate its automatic path while Captain is connected.
+
 ## Purpose
 
 This runbook defines how the Calapres customer-service runtime must start, stop, fail, recover, and

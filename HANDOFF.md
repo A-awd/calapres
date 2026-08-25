@@ -1,5 +1,27 @@
 # Handoff
 
+## Captain prelaunch pilot — 2026-08-25
+
+Resume from decision 0018. Chatwoot Captain assistant `Calapres Assistant` (`2187`) is the only
+automatic responder and is connected to WhatsApp `128058`, Instagram `128031`, and TikTok
+`128033`. Email and website remain disconnected. n8n workflow `kAyF0D3ZZHxc0Hwp` is unpublished;
+fresh readback showed `active=false` and no active version. Do not reconnect or publish it while
+Captain is connected.
+
+Captain now has the exact Calapres-only scope guardrail, a natural Saudi-Arabic response guideline
+that explicitly forbids `وش حاب تعرف عن منتجات كالابريز أو طلبك؟`, and a corrected identity for
+the live white, beige, and gray burner catalog. Its Playground replies were materially better for
+the owner's car, Mykonos-ticket, missing green/orange burner, and order-status examples. No paid
+upgrade or additional service was added.
+
+The current plan blocks Captain custom tools. Treat product-page knowledge as crawled support
+content rather than a guaranteed live Shopify read, and hand order-status questions to a human.
+Long-term memories, contact access, citations, and automatic FAQ generation remain off. The only
+next action is the owner's real WhatsApp, Instagram, and TikTok test. Record the physically visible
+reply before claiming success. If rollback is required, disconnect Captain from all three inboxes
+first, then and only then consider republishing preserved n8n draft version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`.
+
 ## Grounded natural conversation live — 2026-08-25
 
 Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version

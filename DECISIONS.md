@@ -44,6 +44,10 @@ decision record.
 - [0017 — Adopt grounded natural response composition](decisions/0017-adopt-grounded-natural-response-composer.md)
   — preserve deterministic facts and send controls, but express each grounded draft through a
   context-aware natural composer with strict output parsing and deterministic hallucination checks.
+- [0018 — Adopt Chatwoot Captain for the prelaunch customer-service pilot](decisions/0018-adopt-chatwoot-captain-prelaunch-pilot.md)
+  — make the existing Captain assistant the only automatic responder on WhatsApp, Instagram, and
+  TikTok; keep the failed n8n responder unpublished, add no paid service, and hand live order-status
+  cases to a human because Captain custom tools are unavailable on the current plan.
 
 ## Superseded decisions
 

@@ -27,6 +27,9 @@ still requires a separate recorded decision. Decision 0011 permits a dedicated t
 customer-service state boundary for opaque replay, job, incident, approval, and audit records only;
 it is not a product database, does not reintroduce Supabase, and remains source-only until an owner-
 approved managed PostgreSQL provider passes live validation.
+Decision 0018 makes the existing Chatwoot Captain assistant the active prelaunch responder on the
+three social inboxes and keeps the failed n8n responder unpublished. It adds no paid service and
+does not change Shopify's authority.
 
 ## Product workflow
 

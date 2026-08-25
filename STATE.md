@@ -1,5 +1,29 @@
 # Project State
 
+## Chatwoot Captain live for owner prelaunch evaluation — 2026-08-25
+
+Decision 0018 supersedes the n8n responder as the active conversational architecture. Real owner
+evidence showed the 107-node workflow repeatedly returning the exact fixed clarification despite
+reaching its model route. Workflow `kAyF0D3ZZHxc0Hwp` is now unpublished; fresh n8n readback shows
+`active=false` and `activeVersionId=null`. Its draft version
+`b67ae1e3-98df-4665-9bee-29754d1beafd` remains intact for rollback only.
+
+Existing Chatwoot Captain assistant `Calapres Assistant` (`2187`) is connected to WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`. Email and website are not connected. The
+assistant has a Calapres-only guardrail, a natural Saudi-Arabic response guideline that forbids the
+rejected fixed phrase, and a corrected burner-store identity grounded in the three live Shopify
+products. No plan upgrade, new service, workflow, inbox, credential, or Shopify write occurred.
+
+The current Chatwoot plan does not permit Captain custom tools. Captain can answer from its stored
+Calapres documents, FAQs, conversation context, and public product pages, but it cannot perform a
+live Shopify order lookup; order-status requests must hand off to a human. Long-term Captain
+memories, contact access, source citations, and automatic FAQ generation remain disabled.
+
+Playground checks passed for the car, Mykonos ticket, missing green/orange burner, and order-status
+cases. This is not channel delivery proof. The exact next action is owner testing through the three
+connected channels, followed by inspection of any failed channel. Never publish the preserved n8n
+responder while Captain is connected.
+
 ## Grounded natural conversation live — 2026-08-25
 
 The owner's rejection of repetitive WhatsApp and Instagram replies was correct: the classifier-only

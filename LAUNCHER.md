@@ -24,12 +24,15 @@ Shopify is the operational source of truth. GitHub is the technical source of tr
 Supabase is retired. Do not inspect it during normal Calapres work, do not restore its code, and do
 not make it a prerequisite for Shopify operations.
 
-For customer-service work, start from decisions 0008, 0010, and 0011 plus
+For customer-service work, start from decisions 0008, 0010, 0011, and 0018 plus
 `docs/calapres-customer-service-operations.md`. The live n8n workflows remain inactive unless
 `STATE.md` proves otherwise. Never create a duplicate Calapres Edge, attach another brand's
 credential, acknowledge a webhook before its durable ingress job exists, treat n8n Data Tables or
 execution history as atomic authority, enable a model/customer-send path, or provision PostgreSQL
 without the separately recorded gates.
+
+When decision 0018 is active, keep Captain as the only responder on its connected inboxes and keep
+the preserved n8n responder unpublished. Never run both responders on the same inbox.
 
 ## After meaningful work
 
