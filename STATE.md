@@ -1,17 +1,32 @@
 # Project State
 
-## Named stable Captain baseline — 2026-08-26
+## Calapres Captain v1.0 stable closeout — 2026-08-26
 
-The owner named the first acceptable configuration `Calapres Captain v1.0 — Stable` before any
-further knowledge experiments. The live assistant was not renamed or modified for versioning.
-The durable baseline records assistant `2187`, its three connected social inboxes, Audience
-`Everyone`, Schedule `Anytime`, the assignment automation, the active behavioral rules, the known
-knowledge risks, and the unpublished n8n boundary.
+[Verified, owner-observed] The owner accepted the current Captain behavior as the best configuration
+reached so far in this project. A physically visible WhatsApp reply was direct, natural, aware of
+the store's burner scope and known shipping boundary, and kept uncertainty inside the same chat
+instead of referring the customer to email. This acceptance is the reason the configuration is the
+protected baseline; it is not a claim that every future fact or channel path is already complete.
 
-Baseline: [Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
-Future changes must be additive, one recorded group at a time, beginning with `v1.1`; do not delete
-baseline knowledge or publish the n8n responder in parallel. The checkpoint is a documented and
-tagged repository baseline, not a native Chatwoot cloud snapshot.
+[Verified] The live assistant was not renamed or changed for versioning. Assistant `2187` remains
+connected to WhatsApp `128058`, Instagram `128031`, and TikTok `128033`, with Audience `Everyone`,
+Schedule `Anytime`, and the existing assignment automation. The n8n responder
+`kAyF0D3ZZHxc0Hwp` remains unpublished and must not run alongside Captain.
+
+[Evidence boundary] The accepted visible reply proves the final baseline behavior and delivery on
+WhatsApp only. This closeout does not newly prove the same final behavior on Instagram or TikTok,
+and Captain still has no live Shopify order tool.
+
+Canonical baseline:
+[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
+GitHub rollback branch: `captain-v1.0-stable`.
+Detailed closeout:
+[Captain prelaunch customer-service handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+
+The immediate next action is `v1.1`: add only one recorded group of owner-approved knowledge,
+starting from the pending facts in the baseline, explain the completed group, and stop for owner
+review before the next group. Do not delete baseline knowledge, change the architecture, add a paid
+service, or publish the n8n responder.
 
 ## Captain conversation-entry and assignment correction — 2026-08-25
 

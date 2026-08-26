@@ -1,18 +1,27 @@
 # Handoff
 
-## Calapres Captain v1.0 stable baseline — 2026-08-26
+## Resume here — Calapres Captain v1.0 stable — 2026-08-26
 
-The owner accepted the current behavior and required a named rollback point before further
-experiments. Resume from
-[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
-Do not rename or replace live assistant `2187`, delete baseline knowledge, change its three social
-inbox connections, or publish the n8n responder. Record the next knowledge addition as `v1.1`,
-verify it in Playground, and roll back only that recorded delta if behavior worsens.
+[Verified, owner-observed] The owner accepted the current Captain behavior as the best configuration
+reached so far in this project after a physically visible WhatsApp reply gave a direct, natural,
+store-grounded answer and kept an uncertain shipping request inside the same chat without referring
+the customer to email. Preserve this result as the behavioral baseline.
 
-The baseline is a durable written snapshot plus repository tag, not a native Chatwoot version. Its
-safety depends on additive experiments and exact delta records. Owner-supplied product, engraving,
-shipping, payment, and returns facts are listed as pending input for the next version and have not
-been treated as part of `v1.0`.
+Read
+[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md),
+[decision 0018](decisions/0018-adopt-chatwoot-captain-prelaunch-pilot.md), and the
+[detailed Captain handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+The canonical branch is `main`; the GitHub rollback branch is `captain-v1.0-stable`.
+
+Assistant `2187` remains the only automatic responder on WhatsApp `128058`, Instagram `128031`,
+and TikTok `128033`. The existing assignment automation, Audience `Everyone`, and Schedule
+`Anytime` must remain unchanged. The n8n responder `kAyF0D3ZZHxc0Hwp` remains unpublished.
+
+The immediate next action is a single additive `v1.1` knowledge group using the pending
+owner-supplied facts already listed in the baseline. Explain and verify that group, then stop before
+adding another. Do not rename or replace Captain, delete baseline knowledge, change architecture,
+buy or enable a paid service, publish n8n, or claim live order lookup. The accepted WhatsApp result
+does not by itself verify the final baseline on Instagram or TikTok.
 
 ## Captain routing correction — 2026-08-25
 
@@ -29,10 +38,11 @@ four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp), and assigns
 Audience is `Everyone` and Schedule is `Anytime`.
 
 The n8n responder remains unpublished with no active version. No synthetic or operator-authored
-customer message was sent. The exact next action is one new owner message on each of WhatsApp,
-Instagram, and TikTok. A visible reply is still required before claiming end-to-end success. If a
-channel is silent, inspect the reopened conversation status and Captain activity before changing
-knowledge, guardrails, or architecture.
+customer message was sent during this routing correction. This evidence boundary was later
+superseded for WhatsApp only by the owner's physically visible, accepted Captain reply recorded in
+the 2026-08-26 stable closeout above. Final Instagram and TikTok behavior remains unverified in
+this closeout; inspect the exact channel before changing global knowledge, guardrails, or
+architecture.
 
 ## Captain prelaunch pilot — 2026-08-25
 

@@ -85,3 +85,13 @@ On 2026-08-26 the owner named the first acceptable operating configuration
 additive, versioned from `v1.1`, and reversible by removing only the recorded new delta. This label
 does not imply that Chatwoot provides a native cloud snapshot or that destructive knowledge edits
 are recoverable.
+
+## Owner acceptance rationale
+
+On 2026-08-26 the owner accepted this as the best configuration reached so far in the project. The
+accepted visible WhatsApp behavior was direct, natural, grounded in the store's actual scope,
+responsive to conversation context, and kept uncertainty inside the same chat rather than sending
+the customer to email. This observed improvement over the repeated fixed fallback is why
+`Calapres Captain v1.0 — Stable` is the protected baseline. The acceptance does not authorize a
+plan upgrade, live order tool, knowledge deletion, architecture change, or n8n reactivation, and it
+does not by itself verify the final baseline on Instagram or TikTok.

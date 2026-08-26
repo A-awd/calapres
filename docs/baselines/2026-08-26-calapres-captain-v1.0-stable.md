@@ -11,6 +11,18 @@ It records the live operating meaning without renaming or modifying the live ass
 experiments must be recorded as explicit deltas from this baseline and must not delete existing
 knowledge or run the preserved n8n responder in parallel.
 
+## Owner acceptance rationale
+
+The owner accepted this as the best configuration reached so far in the project because its
+physically visible WhatsApp reply was direct, natural, aware of the conversation and Calapres store
+scope, and kept an unconfirmed shipping request inside the same chat instead of referring the
+customer to email. It materially corrected the preceding repetitive fixed-response behavior.
+
+This acceptance is the reason for protecting `v1.0` as the baseline. It proves the accepted final
+behavior and delivery on WhatsApp only; it does not claim that Instagram and TikTok have equivalent
+final-baseline proof, that Captain can read live orders, or that every pending business fact is
+already loaded.
+
 ## Active responder and routing
 
 - Chatwoot account: `179973`.
@@ -89,6 +101,6 @@ not claimed as part of this baseline until added and verified as a separate vers
    baseline guidance above.
 6. Never publish the n8n responder while Captain is connected.
 
-This document and the repository tag `captain-v1.0-stable` are the durable local checkpoint. They
+This document on GitHub `main` and the GitHub branch `captain-v1.0-stable` are the durable checkpoint. They
 do not create a native Chatwoot cloud snapshot; safe rollback depends on recording every later
 delta and avoiding destructive knowledge edits.

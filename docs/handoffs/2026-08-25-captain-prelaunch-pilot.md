@@ -2,9 +2,11 @@
 
 Date: 2026-08-25
 
-Last verified: 2026-08-25 20:03 Asia/Riyadh (UTC+03:00)
+Last verified: 2026-08-26 08:17 Asia/Riyadh (UTC+03:00)
 
-Pre-publication baseline: `35f9e9437ebf61e73856e064e2089b3a14f176fc`
+Original pre-publication baseline: `35f9e9437ebf61e73856e064e2089b3a14f176fc`
+
+Closeout pre-publication baseline: `6da4f909a5647cabf261db4f6208a1c84182f7fb`
 
 ## Identity and scope
 
@@ -28,9 +30,14 @@ Instagram `128031`, and TikTok `128033`. Email and website are not connected.
 rollback. Historical sections describing it as active are superseded; never run it alongside
 Captain.
 
-[Unknown] Captain has not yet been proven end to end by a new physically visible reply on any of
-the three connected channels after this switch. Playground behavior is configuration evidence,
-not channel-delivery evidence.
+[Verified, WhatsApp only] The owner supplied a physically visible WhatsApp reply from the final
+Captain configuration and accepted its behavior as the best reached so far. The reply directly
+handled the store question, used natural contextual wording, and kept an uncertain Brazil-shipping
+request inside the chat without sending the customer to email.
+
+[Unknown] This closeout does not contain equivalent final-baseline delivery proof for Instagram or
+TikTok. Playground evidence remains configuration evidence, and Captain still cannot perform a
+live Shopify order lookup.
 
 [Verified] The first silent owner test used already-open historical conversations. Captain checks
 eligibility when a conversation is created or a resolved conversation reopens, not on every new
@@ -40,6 +47,24 @@ message in an existing Open conversation. All seven historical conversations are
 [Verified] One enabled Chatwoot automation rule assigns every newly created conversation from the
 four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp) to
 `خدمة عملاء كالابريز`. Captain remains connected only to the three social inboxes.
+
+## Closeout update — 2026-08-26
+
+- [Approved and verified] The accepted configuration is named
+  `Calapres Captain v1.0 — Stable` because the owner judged it the best behavior reached so far,
+  particularly its direct, natural, context-aware WhatsApp reply and same-chat handling of an
+  unconfirmed fact.
+- [Verified] The baseline is published on GitHub `main` and pinned by branch
+  `captain-v1.0-stable`. This is a documentation and rollback reference, not a native Chatwoot
+  cloud snapshot.
+- [Approved, not executed] The owner supplied the product, engraving, shipping, payment, and return
+  facts listed in the baseline for a future `v1.1` knowledge addition. They are not part of the
+  accepted `v1.0` behavior until added and verified as a recorded delta.
+- [Not approved] No architecture change, paid service, Captain plan upgrade, custom order tool,
+  knowledge deletion, n8n republish, or bulk test copy.
+- [Constraint] Work one bounded knowledge group at a time, explain what changed and what was
+  learned, then stop for owner review. Durable project work must be published to GitHub rather than
+  left only on the computer or in a conversation.
 
 ## Work performed and verification
 
@@ -122,17 +147,16 @@ approval, not a simple republish.
 
 ## Immediate next action
 
-The owner should now send one normal new message through WhatsApp, Instagram, and TikTok. Each
-message will reopen its resolved conversation and provide the first valid Captain channel test.
-Record the physically visible replies. Do not change the architecture before seeing this evidence.
+Start `v1.1` without changing the architecture. First refresh drift-prone live Chatwoot and
+Shopify facts read-only. Then add one coherent, owner-approved knowledge group from the pending
+facts in the stable baseline, record the exact delta, verify the specific behavior, explain the
+result, and stop before the next group.
 
-If a channel fails, inspect that exact channel path first: Captain-to-inbox connection, incoming
-conversation, and outgoing delivery. If the reply is repetitive or factually wrong, inspect the
-specific Captain conversation and cited knowledge before changing global guardrails. For TikTok,
-do not assume a response-quality problem when the actual fault may be channel delivery.
-
-If rollback becomes necessary, disconnect Captain from all three inboxes first. Only then may a
-separately approved action consider republishing the preserved n8n version. Never operate both.
+Preserve assistant `2187`, the three Captain inbox connections, Audience `Everyone`, Schedule
+`Anytime`, and the assignment automation. Keep n8n workflow `kAyF0D3ZZHxc0Hwp` unpublished.
+Do not delete or rewrite baseline knowledge. Do not add paid services or claim a live order lookup.
+If later checking Instagram or TikTok, treat it as channel-specific evidence and do not reopen the
+architecture merely because one channel fails.
 
 ## Privacy and preservation boundary
 
@@ -151,4 +175,5 @@ transcript preservation.
 5. `DECISIONS.md`
 6. `LAUNCHER.md`
 7. `decisions/0018-adopt-chatwoot-captain-prelaunch-pilot.md`
-8. This detailed handoff
+8. `docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md`
+9. This detailed handoff
