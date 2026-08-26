@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # 0018 — Adopt Chatwoot Captain for the prelaunch customer-service pilot
 
 Date: 2026-08-25
