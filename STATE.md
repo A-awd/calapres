@@ -1,939 +1,149 @@
-# Project State
-
-## Calapres Captain v1.0 stable closeout â€” 2026-08-26
-
-[Verified, owner-observed] The owner accepted the current Captain behavior as the best configuration
-reached so far in this project. A physically visible WhatsApp reply was direct, natural, aware of
-the store's burner scope and known shipping boundary, and kept uncertainty inside the same chat
-instead of referring the customer to email. This acceptance is the reason the configuration is the
-protected baseline; it is not a claim that every future fact or channel path is already complete.
-
-[Verified] The live assistant was not renamed or changed for versioning. Assistant `2187` remains
-connected to WhatsApp `128058`, Instagram `128031`, and TikTok `128033`, with Audience `Everyone`,
-Schedule `Anytime`, and the existing assignment automation. The n8n responder
-`kAyF0D3ZZHxc0Hwp` remains unpublished and must not run alongside Captain.
-
-[Evidence boundary] The accepted visible reply proves the final baseline behavior and delivery on
-WhatsApp only. This closeout does not newly prove the same final behavior on Instagram or TikTok,
-and Captain still has no live Shopify order tool.
-
-Canonical baseline:
-[Calapres Captain v1.0 â€” Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
-GitHub rollback branch: `captain-v1.0-stable`.
-Detailed closeout:
-[Captain prelaunch customer-service handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
-
-The immediate next action is `v1.1`: add only one recorded group of owner-approved knowledge,
-starting from the pending facts in the baseline, explain the completed group, and stop for owner
-review before the next group. Do not delete baseline knowledge, change the architecture, add a paid
-service, or publish the n8n responder.
-
-## Captain conversation-entry and assignment correction â€” 2026-08-25
-
-The first real-channel attempt after Captain connection produced no reply because the owner's
-messages were added to already-open historical conversations. Chatwoot evaluates Captain audience
-and schedule when a conversation is created or when a resolved conversation reopens, not for every
-new message inside an existing open conversation. This was a conversation-state defect, not an
-inbox-ingress failure: the new WhatsApp and TikTok messages were visible in Chatwoot, their
-conversations were assigned to `Ø®Ø¯Ù…Ø© Ø¹Ù…Ù„Ø§Ø¡ ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²`, and Captain remained connected.
-
-All seven existing conversations were assigned to `Ø®Ø¯Ù…Ø© Ø¹Ù…Ù„Ø§Ø¡ ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²` and marked resolved so
-the next inbound message reopens a Captain-eligible conversation. Chatwoot then showed zero
-unassigned conversations. One active account automation rule now assigns every newly created
-conversation from the four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp) to
-`Ø®Ø¯Ù…Ø© Ø¹Ù…Ù„Ø§Ø¡ ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²`; this removes reliance on availability-based default auto-assignment.
-
-Fresh readback confirmed Captain still connected only to WhatsApp `128058`, Instagram `128031`,
-and TikTok `128033`, with Audience `Everyone` and Schedule `Anytime`. The preserved n8n responder
-`kAyF0D3ZZHxc0Hwp` remains unpublished (`active=false`, `activeVersionId=null`), so no second
-automatic responder is competing. No message was sent by the operator. The correction is
-configuration-verified but not yet end-to-end proven: the next owner-originated message on each
-social channel must visibly receive a Captain reply before success is claimed.
-
-## Chatwoot Captain live for owner prelaunch evaluation â€” 2026-08-25
-
-Decision 0018 supersedes the n8n responder as the active conversational architecture. Real owner
-evidence showed the 107-node workflow repeatedly returning the exact fixed clarification despite
-reaching its model route. Workflow `kAyF0D3ZZHxc0Hwp` is now unpublished; fresh n8n readback shows
-`active=false` and `activeVersionId=null`. Its draft version
-`b67ae1e3-98df-4665-9bee-29754d1beafd` remains intact for rollback only.
-Every lower section that describes this workflow as active is a historical snapshot superseded by
-this section; do not infer current activation from it.
-The preserved draft is not a production-ready fallback by itself. Before any separately approved
-reactivation, re-audit its expired-processing recovery, routing, knowledge grounding, and physical
-channel delivery; the pre-switch system had confirmed gaps in all four areas.
-
-Existing Chatwoot Captain assistant `Calapres Assistant` (`2187`) is connected to WhatsApp
-`128058`, Instagram `128031`, and TikTok `128033`. Email and website are not connected. The
-assistant has a Calapres-only guardrail, a natural Saudi-Arabic response guideline that forbids the
-rejected fixed phrase, and a corrected burner-store identity grounded in the three live Shopify
-products. No plan upgrade, new service, workflow, inbox, credential, or Shopify write occurred.
-
-The current Chatwoot plan does not permit Captain custom tools. Captain can answer from its stored
-Calapres documents, FAQs, conversation context, and public product pages, but it cannot perform a
-live Shopify order lookup; order-status requests must hand off to a human. Long-term Captain
-memories, contact access, source citations, and automatic FAQ generation remain disabled.
-
-The Captain knowledge surface currently contains 22 documents and 72 approved FAQs. Read-only
-inspection found useful Calapres pages mixed with broad or unrelated agentic/privacy/UCP material.
-No document or FAQ was deleted because cleanup is destructive and was not approved. The explicit
-Calapres-only guardrail mitigates this during the pilot, but the knowledge set remains a quality
-risk that must be reviewed separately if real-channel replies cite or reflect unrelated content.
-
-The Shopify snapshot used for the assistant identity showed exactly three active burner products
-(white, beige, and gray) at SAR 390 each, with zero reported inventory. This is drift-prone and
-must be refreshed read-only before any later factual change. Never claim stock availability. A
-compare-at price of SAR 490 appeared in Captain knowledge but was not independently verified from
-the Shopify read and must not be asserted as a confirmed discount.
-
-Playground checks passed for the car, Mykonos ticket, missing green/orange burner, and order-status
-cases. This is not channel delivery proof. The exact next action is owner testing through the three
-connected channels, followed by inspection of any failed channel. Never publish the preserved n8n
-responder while Captain is connected.
-
-## Grounded natural conversation live â€” 2026-08-25
-
-The owner's rejection of repetitive WhatsApp and Instagram replies was correct: the classifier-only
-design still rendered final prose from fixed templates, and a field-name mismatch discarded the
-verified Chatwoot transcript before it reached the model. TikTok also had a separate ingress gap:
-the outer gate accepted only the string `incoming`, while Chatwoot can emit numeric `0`.
-
-The same responder `kAyF0D3ZZHxc0Hwp` is now active at version
-`b67ae1e3-98df-4665-9bee-29754d1beafd`, 107 nodes. No parallel workflow, webhook, inbox, Captain,
-AgentBot, credential, or send path was created. The inbound gate accepts both valid direction forms;
-recent conversation is canonical `incoming/outgoing + content`; the classifier has its own strict
-parser; and every customer-visible grounded draft now passes through one context-aware natural
-Saudi-Arabic composer before the unchanged pre-send controls.
-
-The composer has no external tools and cannot decide facts. A deterministic validator rejects
-malformed, low-confidence, ungrounded, overlong, invented-number, and untrusted-action output, then
-uses the original grounded draft. Fresh n8n readback confirmed the published 107-node version, the
-new model/parser connections, the existing OpenAI credential, and the unchanged single
-`Customer Egress Authorized? -> Send Reply` edge. The update produced only two pre-existing
-disconnected-node warnings. Repository verification passes 277/277 Node tests, 92/92 Python tests,
-and the refreshed customer-service release lock. No synthetic channel message was sent, so owner-visible WhatsApp,
-Instagram, and TikTok behavior remains the final end-to-end observation rather than a publication
-claim. Rollback target: `ab7db7ab-0195-45dd-a061-8e4e8b157d46`.
-
-## Grounded support agent live for owner testing â€” 2026-08-25
-
-The fixed keyword grammar failed the owner's acceptance test and is no longer the primary
-understanding layer. The same responder `kAyF0D3ZZHxc0Hwp` now uses its existing restricted model
-only to classify meaning into an exact schema. A deterministic engine validates the brand, intent,
-confidence, capability, and fields before any route is allowed. The model cannot write the customer
-reply, search the web, choose an endpoint, or grant a new capability.
-
-The Calapres brand pack is isolated and records identity, the burner category, approved static
-facts, allowed intents, and allowed read capabilities. Product questions use a capped Shopify
-GraphQL query filtered to active Calapres burners; titles and prices are read at reply time. No
-inventory availability is inferred, and Shopify mutations remain prohibited. External requests
-such as cars or London weather receive a subject-aware store redirect without an external lookup.
-
-The existing 100-node workflow is active at version
-`ab7db7ab-0195-45dd-a061-8e4e8b157d46`. Fresh n8n reread confirmed active/draft parity, no execution
-retention, `Humanize Text -> Route Customer Service Decision`, human acknowledgement returning to
-the existing pre-send checks, and the unchanged single
-`Customer Egress Authorized? -> Send Reply` edge. The last deterministic governed version
-`d3d320d6-63be-4134-b333-a4941bf2480a` is the behavioral rollback target.
-
-Repository verification passes 322/322 Node tests and 92/92 Python tests. Strict model-node
-configuration validation passes. This proves source and graph contracts only. Owner-visible
-WhatsApp, Instagram, and TikTok delivery is still unproven; do not claim end-to-end success until
-the exact car, weather, and unmatched green/orange burner messages are physically observed and the
-matching executions are inspected.
-
-## Owner-test correction: burner color descriptions â€” 2026-08-25
-
-The first governed live version was not acceptable. Owner WhatsApp evidence showed `Ø¨ÙƒÙ… Ø§Ù„Ù…Ø¨Ø®Ø±Ù‡
-Ø§Ù„Ø®Ø¶Ø±Ø§Ø¡` and `Ø¨ÙƒÙ… Ø§Ù„Ù…Ø¨Ø®Ø±Ù‡ Ø§Ù„Ø®Ø¶Ø±Ø§Ø¡ Ø§Ù„Ù…Ø®Ø·Ø·Ù‡ Ø¨Ø§Ù„Ø¨Ø±ØªÙ‚Ø§Ù„ÙŠ` receiving the generic store clarification
-instead of a Shopify price read. Root cause was an over-broad external-merchant rule that treated
-the first color word after `Ø§Ù„Ù…Ø¨Ø®Ø±Ù‡` as if it were a merchant name. This disproved the earlier
-activation claim as an end-to-end success.
-
-The rule now accepts a closed list of burner color/pattern descriptors only inside an explicit
-burner price request. `Ø¨ÙƒÙ… Ø§Ù„Ø­Ø§Ø´ÙŠ`, `Ø¨ÙƒÙ… Ø§Ù„Ø³ÙŠØ§Ø±Ù‡`, bare external merchants, and product requests
-from an external merchant remain unable to authorize Shopify or the model. Targeted tests pass
-51/51, including the two exact owner messages and external controls. The same 100-node workflow is
-active on corrected version `d3d320d6-63be-4134-b333-a4941bf2480a`; live reread confirmed
-active/draft parity and the corrected embedded descriptor rules. Version
-`1afb2f65-0f5c-4a87-9525-03a11088d6ff` is the immediate rollback target. A new owner-visible reply
-is still required before claiming the correction works end to end.
-
-## Governed Calapres responder live â€” 2026-08-25
-
-The owner explicitly approved live activation for channel testing. The existing responder
-`kAyF0D3ZZHxc0Hwp` was updated in place and published as active version
-`1afb2f65-0f5c-4a87-9525-03a11088d6ff`, 100 nodes. One deterministic `Governed Customer Scope
-Router` now sits between the authenticated Chatwoot anchor check and the existing decision switch.
-No workflow, webhook, Chatwoot inbox, Captain, AgentBot, credential, or customer-send path was
-created; `Send Reply` still has exactly one inbound authorization edge.
-
-The live router uses candidate knowledge version `2026-08-25-v4-candidate`. External questions
-receive the pinned Calapres redirect and cannot authorize a model or tool. Only exact store intents
-can select approved static replies or Shopify read-only product/order reads; the governed router
-never emits the model output. The dormant model prompt was also tightened to forbid external facts.
-Product results now say `Ù„Ù‚ÙŠØª ÙÙŠ Ø§Ù„Ù…ØªØ¬Ø± Ø§Ù„Ø¢Ù†` and do not claim inventory availability.
-
-Local targeted verification passed 50/50 before publish. A fresh n8n read after publish confirmed
-the active/draft version match, the 100-node graph, the governed-router edges, and the single
-`Customer Egress Authorized? -> Send Reply` edge. Previous active version
-`aa654b47-1b8f-4132-979e-0199454028a2` remains the exact rollback target. End-to-end delivery from
-TikTok, Instagram, and WhatsApp is now awaiting the owner's real channel tests and must not be
-claimed from workflow publication alone.
-
-## Checkpoint verification and release-lock repair â€” 2026-08-14
-
-This section supersedes older live-status claims below where they conflict. GitHub confirmed Draft
-PR #4 is open on `agent/preserve-calapres-customer-service-checkpoint` at
-`e269ccb38b80f4156f065b3e5660b177f3c281b3`, with the frozen source SHA-256
-`2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`. The n8n read confirmed the
-same live responder `kAyF0D3ZZHxc0Hwp`, active version `aa654b47-1b8f-4132-979e-0199454028a2`, 99
-nodes, and diagnostic execution retention disabled. No workflow, webhook, credential, Shopify
-write, or external synthetic message was created or sent during this verification.
-
-GitHub CI had one genuine guard failure because commit `36c289f` changed the frozen source and
-manifest and added migration 0015 without refreshing the immutable release lock. The lock was
-regenerated from the current repository files; it now verifies locally with digest
-`90e549cc03507c3d23abfea118ecec96f026b94e8eb562e1308bbb8777de4c26` and explicitly covers
-`0015_calapres_cs_customer_reply_omnichannel.sql`.
-
-Neon live verification confirmed schema migrations 0014 and 0015 are applied to project
-`shiny-hill-38628371`, database `neondb`, and the expected `customer_reply_sla_cases` table exists.
-This is confirmed live. It does not prove customer delivery. The latest durable rows include
-WhatsApp and Instagram events still in `processing` with no decision or Chatwoot message id; this
-is evidence of an unresolved operational symptom, not proof of a route or delivery failure cause.
-The selected source tests pass 40/40 (the prior checkpoint's targeted count was 32/32).
-
-The unresolved gates remain: fresh WhatsApp catalog question through Shopify to a physically
-received answer; fresh Instagram and TikTok platform delivery trace; and canonical responder /
-webhook decision with rollback. Do not claim any of these from n8n, Chatwoot, or Neon alone.
-
-## Clean-session handoff â€” 2026-08-14
-
-This section supersedes older live-status claims below where they conflict. The current protected
-branch is `agent/preserve-calapres-customer-service-checkpoint` at commit `36c289fb00aa6e224030ad6ea8d2d460b7e085f7`.
-The frozen 99-node responder source is `n8n/deployments/calapres-cs-bot-protected-draft.json`, SHA-256
-`2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`.
-
-Current live responder: workflow `kAyF0D3ZZHxc0Hwp`, active version
-`aa654b47-1b8f-4132-979e-0199454028a2`, 99 nodes. Diagnostic retention was closed after inspection:
-success/error data `none`, execution progress `false`, manual executions `false`. Edge workflow
-`e442GlRmKP4IO8pm` and two existing Chatwoot webhooks still exist; no third workflow or webhook was
-created. Canonical responder consolidation remains unresolved and must not be guessed.
-
-Live Neon project `shiny-hill-38628371`, database `neondb`, now has migrations 0014 and 0015.
-Migration 0015 expanded the exact customer-reply outbox/function allowlist to Instagram `128031`,
-TikTok `128033`, and WhatsApp `128058`; website `128028` remains excluded. Before 0015, real social
-executions `41693`/`41695` reached n8n but Postgres returned `route_invalid`. After 0015, replay
-completed and Chatwoot created TikTok message `794491944` and Instagram message `794491968`.
-Because the owner subsequently reported no visible platform delivery, Instagram/TikTok end-to-end
-delivery is **not proven** and remains an active blocker despite successful n8n/Chatwoot evidence.
-
-The current responder routes broad catalog/price questions (`Ø¨ÙƒÙ…`, `ÙˆØ´ Ø§Ù„Ø£Ù†ÙˆØ§Ø¹`, `Ø¹Ø·ÙŠÙ†ÙŠ Ø£Ø³Ø¹Ø§Ø±Ù‡Ø§`)
-to Shopify read-only `product_catalog` instead of allowing an ungrounded model answer. Shopify was
-independently confirmed to contain three active burners (white, beige, gray), each 390 SAR. This
-source/live configuration is confirmed, but no fresh inbound WhatsApp execution after active version
-`aa654b47-1b8f-4132-979e-0199454028a2` has proven the full Shopify catalog reply path. Do not claim
-catalog E2E success until that evidence exists. Shopify inventory returned zero, so do not claim
-availability without an approved inventory policy.
-
-The first catalog/social publish failed operationally and was rolled back (`b08e406`) when all
-channels appeared stopped. Later evidence identified the root cause as missing live migration 0014
-plus WhatsApp-only database constraints, not the catalog routing patch. Migrations 0014/0015 were
-then applied and the patch was re-applied in `36c289f`. Latest targeted tests passed 32/32 (29
-protected-draft plus 3 omnichannel-migration). Full-suite and current GitHub CI status were not
-rechecked at this checkpoint.
-
-Next safe work is evidence-driven only: (1) prove a fresh WhatsApp catalog question actually reaches
-Shopify and returns grounded titles/prices; (2) trace fresh Instagram and TikTok inbound messages
-through platform -> Chatwoot -> n8n -> Chatwoot -> platform delivery; (3) only after evidence, decide
-which existing responder/webhook is canonical and retire duplicates through an explicit reviewed
-change. Never expose secrets/PII, add Shopify writes, or infer success from an n8n execution alone.
-
-## Verified Calapres social inbox allowlist live â€” 2026-08-13 (session 6)
-
-The existing workflow was intentionally hard-coded to WhatsApp inbox `128058`, so Instagram and
-TikTok messages were rejected before the model. Confirmed the live Chatwoot inboxes as Instagram
-`128031`, TikTok `128033`, WhatsApp `128058`, and website `128028`. Expanded the same 99-node
-workflow to an exact allowlist of the first three; the website remains excluded. Inbox identity is
-carried and rechecked through ingress, Chatwoot anchor reread, final reread, send proof, and recovery.
-Social contacts without a trusted phone cannot infer a Shopify identity and are asked for an order
-number without disclosing customer/order data. Published active version
-`523a1bc0-daea-4d81-95e0-8912e4630455`. Frozen source SHA-256
-`fa418c30417e43f15924ce7c545059bf612545523a13b6daeb2015bb75dffadc`; implementation commit
-`dec732e007672ae48d7da64f67e6b5f1f1f82f0c`. Targeted tests passed 27/27 and both GitHub CI
-workflows passed. No duplicate workflow, webhook, node, or credential was created. A real inbound
-reply on Instagram and TikTok is still required to prove each platform's end-to-end delivery.
-
-## Contextual bounded replies live â€” 2026-08-13 (session 5)
-
-The repetitive off-topic response was not a weak-model failure: `Verify Chatwoot Anchor and
-Route` bypassed the model for every unclassified message and emitted one hard-coded sentence,
-while the model prompt repeated that same sentence as a mandatory answer. Removed that static
-route. Unclassified messages now reach the existing restricted GPT-5.4 path with the exact
-customer message and recent conversation context; the prompt varies natural Saudi-Arabic replies,
-handles brief social conversation, gives only very short safe general answers, redirects unrelated
-tasks with a topic-specific boundary, and never invents Calapres, Shopify, order, or product facts.
-Business-unclear messages ask one useful clarification. `Humanize Text` now permits up to three
-short sentences and rejects confidence outside 0..1; model temperature is 0.4.
-
-Published on the same live workflow `kAyF0D3ZZHxc0Hwp` with no added/removed nodes or duplicate
-workflow: active version `a2e3352f-36d4-49e2-b585-3197dea3e322`, 99 nodes. Source SHA-256
-`e62a0afc063953b0eff5f613f70601d1af453945a566fd2febc615900b015337`; implementation commit
-`f2c23627177882339143fb4a6b4b07064e9a5814`. Source/live node parity and settings were verified;
-the only serialization difference is an omitted empty false-output array on `SLA Case Claimed?`
-and has no behavior. Both CI workflows passed on the implementation commit (275 Node tests and
-92 Python tests). Existing model budget, per-conversation limit, kill switch, final Chatwoot
-reread, send lease, Shopify read-only boundary, and no-execution-data-retention settings remain
-unchanged.
-
-## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) â€” 2026-08-13 (session 4)
-
-Three independent findings this session, each fixed at the root cause, not worked around:
-
-**1. Migration 0014 syntax error, now fixed and replay-verified.** The owner ran migration
-`0014_calapres_cs_customer_reply_sla_escalation.sql` through Neon's safe temporary-branch
-migration flow (live Neon is still schema version 13); Postgres rejected it with `syntax error
-at or near "no"`. Root cause: several `--` line comments contained an embedded semicolon (e.g.
-`-- ...timestamps only; no customer text.`); a statement splitter that isn't aware `;` can appear
-inside a SQL comment treats it as a statement boundary, so `no customer text.` gets parsed as raw
-SQL. Removed the semicolon from all seven affected comments (wording only, no logic change) and
-added a regression test that fails if one reappears. Verified by initializing a disposable local
-PostgreSQL 16 instance (never touched Neon) and replaying migrations `0001` through `0014` in
-order against it â€” all 14 apply cleanly, schema lands at version 14.
-
-That same local replay also surfaced a second, independent defect while probing the new
-functions with an empty `{}` command: their validation guard clauses used bare
-`x <> 'calapres'` / `x !~ pattern` checks, which evaluate to `NULL` (not `TRUE`) when the jsonb
-key is absent â€” and `IF NULL THEN` silently skips the rejection in plpgsql. For the claim/finalize
-functions this only degraded to a generic "queue empty"/"lease invalid" response (accidentally
-safe), but for `atomic_upsert_customer_reply_sla_case`'s `touch` path a fully empty command
-reached the `INSERT` and raised a raw NOT NULL constraint violation instead of the intended
-`schema_invalid` rejection â€” a real gap in the fail-closed contract every other function in this
-schema already keeps. Wrapped every such comparison in `COALESCE(x, '')` across all three new
-functions; re-verified locally that `{}` is now cleanly rejected and a well-formed command still
-succeeds. No table, function signature, grant, or business logic changed.
-
-**Still not applied to live Neon** (still version 13) â€” this session again has no Neon MCP access;
-applying the now-fixed migration remains the owner's or a Neon-MCP-equipped session's action.
-
-**2. Shopify credential fix: CONFIRMED LIVE and CONFIRMED TESTED with a real authenticated read.**
-`GET Shopify Orders Read Only` used generic credential `oAuth2Api:QKgLBMWQtO6G4zvM` ("Unnamed
-credential"), whose token Shopify reports invalid/expired. Switched it to the existing
-`Shopify-Calapres` credential (`shopifyOAuth2Api:QLsvwO73GFsQfy0w`) â€” no new app or credential
-created. First live-apply attempt failed (`credential 'QLsvwO73GFsQfy0w' is not usable in this
-workflow's project` â€” the credential lived in the owner's personal n8n project, the workflow in
-the "Calapres Customer Service" team project). **The owner resolved this via n8n's own Sharing
-tab** (shared, not moved, preserving all 18 other personal-workflow references to the same
-credential). The retried update applied. n8n's own validator then refused to let the update API
-clear the node's now-dead `oAuth2Api` credential-map entry (`node type ... does not accept
-credential 'oAuth2Api'` once `authentication` is `predefinedCredentialType`) â€” this entry has no
-effect on request behavior (the node only reads the `shopifyOAuth2Api` slot given the current
-`authentication` value), so the frozen source mirrors it verbatim for honest parity, and a test
-asserts it can never become reachable without `authentication` regressing first.
-
-Before publishing, verified with a real, isolated read-only probe: a temporary manual-trigger
-branch (zero connections to any production node, Postgres call, or `Send Reply`) issued
-`{ shop { name myshopifyDomain } }` through the new credential and got a genuine `HTTP 200`:
-`{"shop":{"name":"Calapres","myshopifyDomain":"unywbe-ub.myshopify.com"}}`. Confirmed no
-`mutation` keyword anywhere in the node's parameters. Removed the probe branch and its temporary
-execution-retention override immediately after, re-verified full live/source parity (nodes,
-params, credentials, connections, disabled-state, settings byte-identical) and both graph
-invariants (single `Send Reply` inbound edge; single `Build Human Escalation` inbound edge;
-15-minute schedule trigger cannot reach `Send Reply`), then published as active version
-`3da4f1cd-494c-4f47-9907-3d1f68dc018b`.
-
-## Remove intentional pre-send delay â€” 2026-08-13 (session 3)
-
-The owner removed the requirement for a human-like pause before replying. The `n8n-nodes-base.wait`
-node that previously held every reply for a fixed 5 seconds was renamed from `Human Delay` to
-`Pre-Send Continuation` and its wait set to 0 seconds (frozen source SHA-256
-`23e459dc36277e848318a5ba50c2c6596b78ab4dcf68868289e97ce078bff21b`, still 99 nodes â€” this is a
-parameter/rename change only, no nodes added or removed). The rename was propagated to its two
-downstream references (`GET Final Chatwoot Messages` URL, `Verify Final Chatwoot Reread` jsCode).
-No other gate changed: raw-body ingress checks, the Chatwoot capability-URL + anchor-reread model
-(HMAC verification was already removed for an unrelated, upstream Chatwoot defect â€” see decision
-0013), replay/idempotency, Neon durability, brand/inbox isolation, identity checks, Shopify read
-verification, model budget/kill switch, the final reread/anchor cancellation, the send lease, the
-15-minute recovery/SLA schedule branch, and the single `Send Reply` node are all unchanged and
-re-verified byte-identical against the live workflow after publish (node params, credentials, and
-the full connection edge-set diff came back empty; `Send Reply` still has exactly one inbound edge
-from `Customer Egress Authorized?`, `Build Human Escalation` still has exactly one inbound edge
-from `Route Customer Service Decision` output 5, and the 15-minute schedule trigger still cannot
-reach `Send Reply`). Live workflow `kAyF0D3ZZHxc0Hwp` published as active version
-`73e3e3f2-c507-426a-bf7b-e1300fdd0c4e`; this update also restored the execution-retention settings
-to `saveManualExecutions:false, saveDataErrorExecution:'none', saveDataSuccessExecution:'none'`,
-which had been left on `true`/`all`/`all` from earlier diagnostic sessions. Rollback points
-preserved: `8c518aeb-22c2-4ab9-bcef-7418029386da` (original pre-session baseline) and
-`7cca9e9b-6092-444b-8cb8-7735c39a9b5f` (last full 99-node SLA/escalation graph with the old 5s
-wait), both still restorable via `mcp__n8n__restore_workflow_version`.
-
-**Measured latency**: no new real inbound message has arrived since publish, so the zero-delay
-code path itself has not yet produced a directly observed round trip â€” synthesizing a fake inbound
-customer event to manufacture that number is exactly what this project's evidence rules forbid.
-Instead this is computed from a real, already-recorded production round trip: execution `41342`
-(webhook-triggered, real owner WhatsApp message "Ù…ÙŠÙ† Ø§Ù†Øª" on conversation #3 at
-2026-08-13T14:18:40Z, under the pre-zero-delay code) shows the `Chatwoot In` webhook received at
-`14:18:41.340Z` and `Send Reply` completing (HTTP 200 to Chatwoot) at `14:18:51.093Z` â€” a total
-inbound-to-reply-sent latency of 9.75s, of which the `Human Delay` node alone consumed exactly
-5.000s (verified from its own `executionTime` in the execution record). Subtracting that fixed,
-now-removed wait projects a same-shape round trip at **â‰ˆ4.75s**, all of it unavoidable Chatwoot
-anchor-reread, Postgres claim/lease, and final Chatwoot send API time. This is a computed
-projection from real historical data (CONFIRMED TESTED for the 5.000s removed component; DOCUMENTED
-projection for the â‰ˆ4.75s remainder), not a CONFIRMED LIVE measurement of the new zero-delay path â€”
-that requires one real new inbound message, which is also the one unavoidable step left for
-Outcome 3 below.
-
-## Self-service-first escalation with durable 24h SLA (decision 0014) â€” 2026-08-13 (session 2)
-
-The owner rejected the prior interpretation that cancellation/refund/complaint language or any
-Shopify/model failure should immediately add the `human` label. Corrected and implemented in the
-same workflow: `Build Human Escalation` now has exactly one inbound edge (explicit
-`customer_requested_human`, verified by a graph test). Every other previously-escalating case
-self-serves with a bounded, non-invented reply (order-status disclaimer for
-cancellation/refund/complaint, minimum-identifier clarification for Shopify failures/missing
-data/ambiguity, a fixed fallback sentence for model budget denial or untrusted output). A durable
-24-hour unresolved-case SLA (migration `0014_calapres_cs_customer_reply_sla_escalation.sql`,
-schema version 14) now backstops all of this: one open case per conversation
-(`calapres_cs.customer_reply_sla_cases`), `atomic_upsert_customer_reply_sla_case` (touch/resolve,
-never resets the clock on a repeated message), `atomic_claim_due_customer_reply_sla_escalation`
-(23h-48h claim window, `FOR UPDATE SKIP LOCKED` lease, same pattern as send-recovery),
-`atomic_finalize_customer_reply_sla_escalation` (escalated / resolved-as-ineligible / released for
-retry). The existing `Recover Ambiguous Sends Every 15 Minutes` trigger gained one isolated
-fan-out branch for this â€” no new trigger, workflow, webhook, or credential. Graph tests prove
-neither this branch nor the trigger can reach `Send Reply`. Frozen source SHA-256 is
-`5092f7311b033f362e03cb3f4953fca32f068596a820cd0958c38d7b9830e76e` (82 -> 99 nodes). Full
-Python (92) and Node (269+) suites pass.
-
-**Not yet Neon-verified**: this session has no Neon MCP access. Migration 0014 is written, its
-static contract tests pass, but it has not been applied to the live database. Until it is applied
-(by a session with Neon MCP access, or by the owner via the Neon console), the new
-`Postgres Customer Reply 14 Update SLA Case` and the SLA-escalation sub-branch's Postgres calls
-will error on every execution once published live â€” this is fail-loud, not fail-silent, and does
-not block or delay `Send Reply` (they are parallel, not sequential, confirmed by graph reachability
-tests), but the 24-hour escalation feature itself is not functionally live until the migration runs.
-
-**Separately, still unresolved**: the Shopify credential `QKgLBMWQtO6G4zvM` ("Unnamed credential",
-generic `oAuth2Api` type) returns Shopify's own `HTTP 401 "Invalid API key or access token"` when
-called through the exact live node/credential â€” this is an invalid/expired access token, not a
-scope-denial error (which would be a `200` with a GraphQL `ACCESS_DENIED` error instead). Fixing
-this requires an OAuth reauthorization only the account owner can complete in a browser; no scope
-change, credential replacement, or workaround can substitute for that.
-
-## Owner-directed escalation policy correction â€” 2026-08-13
-
-The owner corrected a design defect: the bot was treating any Shopify/credential/data-gap
-failure as an immediate silent human handoff (adding the `human` label and going quiet),
-including on conversation #3 after the n8n Shopify credential failed an order lookup. The
-corrected, binding policy: escalate to the owner only when the customer explicitly asks for a
-human/agent, or a case stays unresolved 24 hours; every other Shopify failure or missing-data
-case must attempt self-service or ask for the single missing identifier, never add the
-`human` label or go silent. Fixed inside the same workflow only, same credential, no new
-resources: `Prepare Shopify Order Read` and `Build Verified Shopify Order Reply` now turn
-missing-phone, missing-product-topic, Shopify API/credential failure, order/customer ambiguity,
-identity mismatch (never revealing the order belongs to a different phone), product-not-found,
-and uncertain/partial fulfillment status into a direct clarification reply instead of
-`Build Human Escalation`; the `Shopify Order Read Ready?` false branch now points to
-`Human Delay` (the send path) instead of escalation. Cancelled/refunded orders still escalate
-(a resolved, sensitive money state matching the original mandatory refund/cancellation rule),
-as does an explicit customer request for a human agent (new router detection,
-`error_code: customer_requested_human`) and existing model/budget/kill-switch uncertainty
-paths. A 24-hour unresolved-case escalation was not implemented in this pass â€” it requires new
-durable SLA-tracking state and is out of scope for this fix; flagged as a follow-up.
-
-Conversation #3's `human` label, added under the prior incorrect policy, was removed live via
-a temporary, isolated, sentinel-gated branch reusing the existing `Header Auth account 3`
-credential and the existing `POST Chatwoot Human Label` node's endpoint pattern (dead-end,
-zero interaction with production Postgres/send logic, fanned out from an existing connection
-without removing it). Chatwoot's own activity log recorded `Ø®Ø¯Ù…Ø© Ø¹Ù…Ù„Ø§Ø¡ ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ² Ø£Ø²Ø§Ù„ human`
-at 13:43:45Z; a control probe afterward failed only `anchor_missing_or_duplicate` (expected
-for a synthetic message id), not `human_label_present`, confirming `Should Reply?` /
-the anchor's live label check no longer blocks the conversation. The scaffold nodes were fully
-removed immediately after; live graph was re-verified to match the frozen source exactly
-(82 nodes, single `Send Reply` inbound edge, recovery isolated, no-save settings restored).
-New source SHA-256 is `f77279c1c844da3c62f1cc09ef8038f11a71ff510ae059c01c3327dfc551f02a`.
-
-## Owner feedback fixes: classification, live Shopify reference, delivery audit â€” 2026-08-13
-
-Owner-reported functional failures were diagnosed from live evidence (no-send diagnostic
-executions 41316-41317). Findings: (1) all three outgoing replies carry Meta-confirmed
-`delivered` status with real WhatsApp wamid source_ids addressed to the owner's number, so
-transport works; the phone-side report needs the owner to check the business-number chat.
-(2) The bot itself escalated conversation #3 at 13:26:23Z (activity message: human label added)
-after `Ø¨Ù„ØºÙŠ Ø§Ù„Ø·Ù„Ø¨` hit the order path and the n8n Shopify credential failed the customers query
-â€” the same query succeeds with valid scopes, so the n8n Shopify OAuth credential is missing
-read_customers/read_orders (and needs read_products for the new product path); until fixed the
-order and product paths escalate fail-closed by design. The human label also explains the bot's
-silence on later messages. (3) Store location/identity questions (ÙˆÙŠÙ† Ù…Ù‚Ø±ÙƒÙ…ØŒ Ø§Ù†ØªÙ… ÙÙŠ Ù…ØµØ±ØŸ) were
-misrouted out-of-scope and then suppressed; the router now answers them deterministically as
-Saudi-store FAQs, personal questions stay out-of-scope. (4) Product price/color questions now
-route to a live Shopify products query and reply only from returned data (title + SAR price),
-escalating when nothing is found; the memorized 390/190 price facts were removed from both the
-router and the model prompt, and the model is instructed to escalate price/stock questions.
-New source SHA-256 is `2aec6eacb67cb8b343397f2318a0e6112bdd2a2eee959a448b30e6de480a8fb3`.
-
-## First live customer round trip â€” 2026-08-13 13:22 UTC
-
-After the anchor fix was published as live version `50dc7cd0-71ab-4e19-b57a-e6682a998380`
-(commit `991a517`), the owner's real WhatsApp inbound completed the full protected path in
-production for the first time. Independently audited evidence (Codex, live Neon + Chatwoot):
-greeting inbound `793040533` reached state `sent` with `send_attempt_count=1`, outgoing Chatwoot
-message `793040908`, `sent_at` 13:22:07Z; a following out-of-scope inbound `793041254` reached
-state `sent` with one attempt, outgoing `793041537`, 13:22:24Z. Conversation #3 shows both
-replies with WhatsApp delivery ticks. Exactly one reply per inbound; no private note; no Shopify
-write; deterministic routes only (no model call). Execution retention remained disabled during
-these production sends. Diagnostic manual executions `41267`â€“`41272` earlier the same hour ran on
-the pre-fix anchor and terminated fail-closed without any send.
-
-Still outstanding before declaring full operational readiness: live out-of-scope suppression
-(second notice inside 24h must be silent), live sensitive-message escalation (`human` label, no
-customer send), a live model-route reply with budget reservation, and an optional safe order
-lookup; ambiguous-send recovery remains proven synthetically only.
-
-## Real-inbound anchor fix â€” 2026-08-13
-
-The first real inbound after the capability-URL ingress deploy passed ingress, produced a live
-durable claim in Neon (first live proof of the restricted Postgres path), and both authenticated
-Chatwoot rereads returned 200 â€” then every event failed `anchor_mismatch`. Root cause, proven by
-live diagnostic executions 41267â€“41272: the conversation-messages API omits `account_id` from
-message rows (unlike webhook payload rows), so the anchor's `account_id === 179973` comparison
-failed on all genuine messages; the old pinned fixtures had assumed the wrong row shape. The
-anchor now validates `account_id` only when the field is present (the API call itself is pinned
-to account 179973 by URL), and `Prepare Raw Chatwoot Ingress` gained a non-production-only
-base64 diagnostic input used for owner-initiated manual runs. A regression test exercises the
-anchor against real API-shaped rows. New source SHA-256 is
-`3a10cd938146c828ff43c44fe20cf2ce992d4d632836c0b90b9e6c47aa1e1f85`.
-
-## Chatwoot HMAC defect and capability-URL ingress â€” 2026-08-13
-
-The first real owner-phone WhatsApp inbound (Chatwoot message `792970340`, n8n execution `41243`)
-was rejected `signature_mismatch` by the protected ingress gate. Root cause is upstream defect
-chatwoot/chatwoot#13809: Chatwoot signs webhook deliveries with an internal `hmac_token` that is
-exposed through neither the UI nor the REST API, while the signing format itself matches the
-workflow implementation exactly. Because no obtainable secret can verify genuine deliveries,
-decision `0013-adopt-capability-url-ingress-after-chatwoot-hmac-defect` removes delivery-signature
-enforcement and rests ingress authenticity on the capability webhook path, the unchanged
-structural checks (raw body, 1 MiB, JSON-only parse after the gate), pinned account/inbox, the
-authenticated Chatwoot reread anchor, and the atomic claim/lease layer. The frozen source is now
-82 nodes; the `Crypto account 3` credential is unbound but retained. New source SHA-256 is
-`f24ee6f32a2768dae37f783d4bc7c7204f3c6397397ebc2698549eefbdaaaa9f`. Execution retention was
-enabled temporarily for the diagnostic capture and must be returned to no-save with the fix
-deployment. The owner-phone round trip remains the acceptance gate.
-
-## Recovery cadence quota fix â€” 2026-08-13
-
-The protected MVP recovery schedule was reduced from every 1 minute to every 15 minutes inside the
-frozen source `n8n/deployments/calapres-cs-bot-protected-draft.json`. Rationale: the n8n Pro plan
-allows 10,000 executions per month and August usage was already 2,086; a 1-minute cadence alone
-consumes ~43,200 executions per 30 days and would exhaust the plan around 2026-08-19. Fifteen
-minutes matches the 900-second maximum retry delay enforced by migration 0013's
-`atomic_release_customer_reply_recovery` contract, keeps reconciliation SLA within one DB retry
-ceiling, and costs ~2,880 executions per 30 days (~29% of plan), leaving headroom for both
-Chatwoot-triggered workflows. The trigger node was renamed to
-`Recover Ambiguous Sends Every 15 Minutes`; recovery still has no send path. The update manifest
-now records `interval_minutes: 15` and 2,880 estimated monthly executions. New source SHA-256 is
-`30b477d79c988c922fd5a3c7d04febbf4fe9255ed84fbe65e9a840f95a001818` and the regenerated release-lock
-digest is `f55598279f17dd6b03857c9fbeb63815e5c0e0a8d6937bf3ca01049beeb22e93`. Python 92/92,
-Node 249/249, and the release-lock check all passed after the change. The live workflow
-`kAyF0D3ZZHxc0Hwp` is being updated to this exact source; the retained rollback version
-`8c518aeb-22c2-4ab9-bcef-7418029386da` is unchanged. The owner-phone inbound proof remains the
-final outstanding evidence.
-
-## Clean-session checkpoint â€” 2026-08-13 14:56 +03
-
-GitHub and `origin` were rechecked immediately before closing the long implementation session.
-Branch `agent/preserve-calapres-customer-service-checkpoint`, Draft PR #4, and the local checkout
-all pointed to `6889b74a5539b3dc4d1337fe76ff97074d9fade3`; all three GitHub checks were green.
-The protected customer-reply source remains frozen at SHA-256
-`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`, and the release lock
-digest remains `1203cedc5737711a371699a80a5249eb2367dc39d0dde133c80960250c904566`.
-
-The current live n8n truth is that the existing MVP workflow `kAyF0D3ZZHxc0Hwp` is active on the
-protected 83-node version `941205ae-dab2-4684-b897-dee3655a2af7`. Version
-`8c518aeb-22c2-4ab9-bcef-7418029386da` is the retained rollback. Edge v2
-`e442GlRmKP4IO8pm` was preserved and was not replaced or duplicated. No new workflow or Chatwoot
-webhook was created during the protected activation.
-
-The frozen verification result remains Node 249/249, Python 92/92, plus green JSON, syntax, graph,
-release-lock, secret, and PII checks. Neon main remains on migrations 0001â€“0013 with restricted
-runtime roles, direct table access denied, and the database budget control enabled with kill switch
-off, a USD 45 monthly ceiling, a USD 0.05 reservation, and 20 requests per conversation per day.
-No Shopify write, private note, or model request occurred in the final synthetic test batch.
-
-One technical manual message was sent only to the owner's Chatwoot conversation #3. The final
-owner-phone inbound proof is still not recorded: a fresh inbound WhatsApp message must produce
-exactly one protected reply, durable event/send completion must be verified in Neon, and replay
-must not create a second reply. Until that evidence exists, do not call the system fully proven
-end to end for real inbound traffic.
-
-Claude Code has been given the implementation/audit continuation prompt, but no future claim or
-change from that run is authoritative until it is compared with GitHub, the exact live n8n version,
-Neon, and Chatwoot. The next clean session should audit Claude Code's output against this checkpoint,
-preserve the working protected version, and avoid redesign, duplicate workflows, another webhook,
-or a premature merge to `main`.
-
-## Calapres protected customer-reply candidate â€” 2026-08-13
-
-The existing live MVP workflow `kAyF0D3ZZHxc0Hwp` is active on protected version
-`941205ae-dab2-4684-b897-dee3655a2af7`; rollback version
-`8c518aeb-22c2-4ab9-bcef-7418029386da` remains available. No duplicate workflow was created and
-Edge v2 `e442GlRmKP4IO8pm` was not changed. The frozen protected source SHA-256 is
-`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`.
-
-The protected draft verifies Chatwoot HMAC over the raw body, acknowledges eligible events only
-after a durable Neon claim, rereads Chatwoot before decision and send, uses deterministic
-greetings/FAQ/scope replies, reserves the model budget before a restricted model call, reads
-Shopify through GraphQL queries only, and requires an exact PostgreSQL send lease before the sole
-customer-egress node. Sensitive or uncertain cases receive the `human` label and no customer
-reply. Recovery verifies both the Chatwoot marker and reply SHA-256; transient read failures are
-rescheduled and recovery has no path to customer send.
-
-Neon main now has migrations 0001â€“0013. Migration 0013 was first proven on isolated branch
-`br-misty-glade-awba7bxf` and then applied to main. Runtime execute grants remain function-specific,
-direct table reads remain denied, and the live recovery queue had zero due rows. Targeted n8n
-executions `41145`â€“`41160` covered signature mismatch/staleness, wrong inbox, durable duplicate,
-PostgreSQL uncertainty, later human/private/AgentBot activity, an exactly-100-row page, malformed
-anchor, scope suppression, kill switch, model failure, and a fully pinned successful delivery.
-No real customer message, private note, model request, or Shopify write was made by these tests.
-Execution payload retention is restored to disabled.
-
-After the GitHub source guard and Shopify CI both passed on commit `8c4d969`, the exact frozen
-draft was published to the same workflow. Live n8n now reports active version
-`941205ae-dab2-4684-b897-dee3655a2af7`, 83 nodes, two triggers, and success/error/manual/progress
-retention disabled. The prior active version `8c518aeb-22c2-4ab9-bcef-7418029386da` remains the
-rollback. Chatwoot has two pre-existing `message_created` webhooks: Edge observation and the MVP;
-no third webhook was created. A locally signed, non-customer outgoing fixture using the existing
-MVP Chatwoot secret returned HTTP 204 from the published endpoint, proving the live HMAC binding
-without entering PostgreSQL or customer send. A wrong-HMAC request returned 401.
-
-Neon remained at migration 13 with zero customer-reply events and zero unresolved sends after
-publication. The budget control is enabled with kill switch off, a 45 USD monthly ceiling,
-0.05 USD per reservation, and 20 model requests per conversation per day. The isolated validation
-branch was reset from main successfully; migration 13 and restricted execute permissions remained
-present after restore, while direct runtime table reads remained denied.
-
-## Current phase
-
-Shopify-native storefront and catalog readiness, plus verified Calapres customer channels in
-Chatwoot. The Nawadir Dior supplier architecture and all Supabase-based Calapres architecture are
-retired. Decision 0010 closes the customer-service pre-implementation gate and authorizes a
-Calapres-only observation runtime. No production customer-service bot or automatic customer send
-is deployed.
-
-## PostgreSQL provider gate â€” 2026-08-12
-
-Neon is the selected PostgreSQL provider for the inactive Calapres observation runtime. Project
-`shiny-hill-38628371` / database `neondb` has migrations 0001â€“0010 applied, including a deny-first
-model-budget guard with a hard `$45` monthly reservation ceiling, a 20-request daily conversation
-cap, and a default-on kill switch. It has 25 Calapres tables,
-40 routines, SSL-required n8n credentials for the restricted Webhook and Reconciliation login
-roles, and verified callable-boundary ACLs. No customer traffic, customer send, or Shopify write has
-occurred. The existing Edge workflow `e442GlRmKP4IO8pm` remains the only target and is now published
-and active for observation. The v2 source is imported into that same target;
-its 15 PostgreSQL nodes use the project-scoped Webhook and Reconciliation credentials, and the
-read-only Shopify branch is present with the project OAuth2 read credential bound (149 nodes total).
-Node tests are 175/175 and Python tests are 92/92. A real two-session Neon check verified the
-database clock, Webhook execute permission, Reconciliation denial, transaction rollback, and
-single-winner session locking. A temporary Neon branch matched the primary schema with no diff and
-was removed after verification. Provider backup-restore service recovery and live Chatwoot
-observation remain unproven.
-
-Current recheck: Neon reports PostgreSQL 18.4, all ten migration records, four restricted runtime
-roles, and the expected deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20,
-monthly limit 45 USD). The existing n8n target passed synthetic valid-signature, modified-body, and
-invalid-signature webhook runs (executions 40786, 40787, and 40785); these were internal tests only and
-no customer message was sent. Targeted Node coverage passed 83/83. The workflow is now active with
-published version `8d4d3e38-1ecd-47ee-beeb-fd2189e60f26`.
-
-## Preserved customer-service source release â€” 2026-08-12
-
-The Calapres Edge v2, transactional-state, reconciliation, context/LLM boundary, schemas, fixtures,
-and tests are preserved on branch `agent/preserve-calapres-customer-service-checkpoint` as a
-frozen candidate, now imported into the existing inactive target. Edge v2 contains the bounded four-inbox Chatwoot reconciliation
-scan/cursor graph inside the existing Edge, with the schedule disabled and all live authority closed.
-The current source hash is `c3f2e3f00c6cfeeeba42966639303056fd178e7b67ed512a6d39c6da6e22d991`; the deployment
-manifest matches it, and
-[`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
-records the source-only boundary.
-`support/brands/calapres/customer-service-release-lock.json` verifies the frozen source set. GitHub
-`main` remains the approved runtime baseline until this candidate is reviewed and merged.
-
-The release lock was refreshed in commit `86d59eb` after the read-only Shopify customer branch was
-bound to the strict Core input envelope;
-the lock check and targeted PostgreSQL tests pass. The final Edge URL is verified as
-`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
-exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
-stored in the project-scoped n8n Crypto credential. The Edge workflow is published and active for
-observation; no customer message has been sent. Shopify read access is available through the
-connected read-only MCP and the active Edge target has the read-only Shopify branch bound to
-the project OAuth2 credential. The model credential is present, but the model call remains
-structurally closed and the budget guard remains deny-first.
-
-Live signature recheck found that the existing n8n Chatwoot HMAC credential did not match the secret
-shown by the existing Chatwoot webhook edit form. The existing credential was corrected in place
-without creating a new credential; the same synthetic raw-body POST then returned `200`, and Chatwoot
-shows exactly one enabled webhook. A permitted synthetic event for test conversation `3` returned
-HTTP 200 but exposed a PostgreSQL defect: `_edge_key_bundle_valid` joined all namespaces in its
-FULL OUTER JOIN, so unrelated key rows caused `key_coverage_incomplete` and prevented durable
-writes. Migration 0009 corrected the join and migration 0010 grants the exact callable surface to the n8n LOGIN roles; Neon now returns `committed / processing_claimed` for
-the atomic function. The existing Edge target was updated and published at version
-`55ff93fc-8400-4a55-8338-3cc5301f7f71`; it remains observation/no-send. No customer message,
-private note, model call, or Shopify write occurred.
-
-## Approved architecture
-
-    owner approval -> Shopify draft -> product review -> Shopify publication
-
-Shopify is the operational source of truth. GitHub `main` is the technical source of truth for the
-theme, decisions, and sanitized handoffs. There is no external product database, authentication
-service, storage service, catalog queue, or mandatory orchestration layer.
-
-## Verified repository state â€” 2026-07-29
-
-### GitHub
-
-- Canonical repository: `A-awd/calapres`.
-- Canonical branch: `main`.
-- Verified clean baseline before the retirement change:
-  `b225b9643f8dc9a765ec99a305d969d7a558cf6d`.
-- The legacy React and Vite application was not part of the Shopify theme deployment path and has
-  been removed from the current tree.
-- Supabase configuration, migrations, functions, generated types, client SDK dependency, and lock
-  files have been removed.
-- The retired supplier, n8n, and Supabase synchronization source and its CI workflow have been
-  removed.
-- A Shopify-only CI workflow checks the theme and blocks runtime Supabase reintroduction.
-- Historical code remains recoverable from Git and must not be restored into the active tree.
-
-### Shopify theme
-
-- The active repository surface is the Shopify theme under `assets`, `config`, `layout`, `locales`,
-  `sections`, `snippets`, and `templates`.
-- The isolated `owner-site/` surface and its GitHub Pages workflow publish only the Calapres
-  legal-ownership evidence page; they are not part of the Shopify theme or its deployment path.
-- Those theme directories contain no Supabase dependency.
-- The existing deployment workflow does not depend on Supabase.
-- The live theme is still ahead of `main`; theme-source reconciliation remains a separate task.
-
-### Live Shopify
-
-- Four products were last verified as drafts with inventory 0.
-- The three burner drafts have media; the customizable stand draft does not.
-- No product was published as part of the Supabase retirement work.
-- Agentic catalog access, policies, Knowledge Base, FAQs, collections, and storefront settings are
-  unaffected by this repository cleanup.
-- Shopify product drafts may now proceed through direct Shopify review. No external database record
-  or queue is required.
-
-### Retired external systems
-
-- Supabase is not an approved Calapres dependency and must not be queried during normal work.
-- No external Supabase project or historical data was deleted. Permanent data deletion is a
-  separate irreversible action requiring exact owner authorization.
-- Live n8n was audited read-only. The saved Calapres Supabase credential has eight dependent
-  workflows, and all eight are archived and inactive.
-- No active workflow uses the Calapres Supabase credential. The credential itself remains saved;
-  deleting it is a separate irreversible credential action requiring confirmation at deletion
-  time.
-- The repository no longer carries a Supabase or supplier n8n implementation.
-
-## Remaining blockers
-
-1. The four Shopify drafts still need owner-approved inventory, final product data, and publication
-   decisions; the stand also needs approved media.
-2. The Calapres ownership page now identifies `Ù…Ø¤Ø³Ø³Ø© Ø¹Ø¨Ù‚ Ø§Ù„Ø®ÙŠÙ„ Ù„Ù„ØªØ¬Ø§Ø±Ø©` as the legal owner. Saudi
-   compliance still needs the commercial-register number, VAT number if applicable, verified
-   phone, and complaint-response commitments.
-3. The live theme must be reconciled into `main` before theme-code changes are deployed safely.
-4. The public free-shipping announcement still needs a fresh render check for the saved SAR 320
-   threshold.
-5. Opening a new market remains a commercial decision.
-6. The dormant Calapres Supabase credential in n8n may be deleted after explicit confirmation;
-   all workflows that reference it are already archived.
-7. The approved observation runtime now exists but remains inactive, unpublished, and disconnected
-   from live customer events until the persistent-access gate is approved.
-8. A project-scoped Chatwoot Header Auth read credential now exists in n8n and is bound only to
-   the existing Edge v2 Chatwoot GET nodes. Exactly one observation webhook exists and is subscribed
-   only to `message_created`; the workflow is now published and active for observation.
-   The recorded Shopify credential scopes still do not include `read_customers`; that access change
-   remains a deliberate implementation gate.
-9. Two project-scoped internal Crypto credentials are now bound to the existing Edge HMAC nodes:
-   event/route fingerprints and baseline/reread fingerprints. The Chatwoot webhook HMAC credential
-   is now populated from the single observation webhook; the workflow is active for observation and
-   no customer message has been sent.
-
-## Next safe action
-
-Next, verify the existing Chatwoot read binding with a synthetic/private read fixture. A project-scoped
-OpenAI credential now exists and passed n8n's connection test; the OpenAI project allowlist contains
-only `gpt-5.4-nano-2026-03-17`, selected for the lowest-cost Arabic draft phase. It is not bound to
-any model node and no model call is enabled. Create the remaining dedicated Calapres-scoped HMAC
-and read-only Shopify bindings. Add the signed
-ingress only after those checks and prove real four-channel observation. Keep the customer-egress
-branch absent.
-
-## Constraints
-
-Never restore Supabase, the retired React application, a supplier crawler, or the retired
-synchronization code. Never invent legal identity, inventory, pricing, media, or commercial terms.
-Never overwrite the live theme until its newer source is reconciled into `main`.
-
-## Theme delivery â€” 2026-07-31
-
-- The Kimi-approved Calabriz static design (7 pages) is fully ported to a Shopify Liquid theme on `shopify-theme` (merge `65a5388`): dynamic products/variants, AJAX cart, engraving line item property Â«Ù†Øµ Ø§Ù„Ø­ÙØ±Â», and an editor-managed hero video.
-- CI deploys `shopify-theme` only to the unpublished staging theme; the live theme stays untouched until the owner reviews the staging preview and publishes manually from Shopify Admin.
-
-## WhatsApp display-name ownership proof â€” 2026-08-11
-
-- Verified the canonical `main` branch at
-  `2ab93ac3a7886c38d39b09d8353c56577a843f5e` before preparing this work.
-- Published an isolated ownership page under `owner-site/` in commit
-  `daf25f564c063a6f9066a56bf02293a68242bebc`. It states in Arabic and English that Calapres is
-  owned and operated by `Ù…Ø¤Ø³Ø³Ø© Ø¹Ø¨Ù‚ Ø§Ù„Ø®ÙŠÙ„ Ù„Ù„ØªØ¬Ø§Ø±Ø©`, includes the literal relationship
-  `Calapres by Ù…Ø¤Ø³Ø³Ø© Ø¹Ø¨Ù‚ Ø§Ù„Ø®ÙŠÙ„ Ù„Ù„ØªØ¬Ø§Ø±Ø©`, links to `https://calapres.com/`, and exposes crawlable
-  Organization, Brand, and WebPage structured data.
-- The page is intentionally separate from the Shopify theme and contains no other brand, Meta
-  asset ID, phone number, secret, commercial-register number, or tax number.
-- GitHub Pages deployment run `31469442562` completed successfully from `main`; the workflow
-  publishes only `owner-site/` and cannot publish the Shopify theme.
-- GitHub verified ownership of `awd-businesses.com`, and the repository Pages configuration now
-  uses that custom domain.
-- The authoritative and public DNS records now point the apex to GitHub Pages and `www` to
-  `a-awd.github.io`. Google Workspace MX, SPF, DKIM, Facebook verification, Domain Connect, and the
-  GitHub ownership-verification record were preserved.
-- GitHub completed the DNS check, issued the custom-domain certificate, and HTTPS enforcement is
-  enabled. `https://awd-businesses.com/` returns the ownership page from GitHub with status `200`;
-  `https://www.awd-businesses.com/` redirects to the apex.
-- The live HTTPS response has the expected title, statement, canonical URL, and `index,follow`
-  directive. Its SHA-256 matches `owner-site/index.html` exactly.
-- Public DNS resolvers point to GitHub. Some local resolvers may temporarily continue serving the
-  former Squarespace page until their old cache expires.
-- Live Meta verification on 2026-08-11 confirmed the selected Calapres WABA
-  `1835160094133742` under Optix portfolio `3498131087080400`, phone-number ID
-  `1202498582954919`, and display name `Calapres | ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²`.
-- Meta approved that display name. The number is registered on Cloud API with status `CONNECTED`,
-  platform type `CLOUD_API`, code verification `VERIFIED`, throughput `STANDARD`, and two-step
-  verification enabled. The actual phone number remains intentionally masked in project records.
-- The current two-step PIN is stored only in the local macOS Keychain under
-  `Meta WhatsApp 2FA PIN - Phone ID 1202498582954919`; it is not stored in GitHub, documentation,
-  workflow data, or chat.
-- Chatwoot Cloud account `179973`, existing WhatsApp inbox `128058`, uses the same WABA and phone
-  identifiers. Account Health reports the display name approved, phone connected, the 2K customer
-  messaging tier, and the webhook configured successfully.
-- A real bidirectional test passed: multiple messages sent from the owner's phone arrived in the
-  Chatwoot conversation, a reply sent from Chatwoot reached the phone, and the owner's delivery
-  acknowledgement returned to Chatwoot.
-- Chatwoot accepted a manual WhatsApp-template synchronization request after the connection test.
-- No duplicate WABA, phone number, Meta app, Chatwoot account, or Chatwoot inbox was created.
-- No n8n customer-service workflow or automatic customer reply is active yet. Neither
-  `calapres.com` nor the live Shopify store was changed.
-
-## Calapres customer-service observation runtime â€” 2026-08-11
-
-- The live Chatwoot audit covers account `179973` and the native Instagram `128031`, TikTok
-  `128033`, WhatsApp `128058`, and Email `128326` inboxes. Website inbox `128028` is outside the
-  pilot allowlist.
-- Captain is not connected to an inbox, AgentBot is not connected, automation rules are empty, and
-  no independent responder is active. The only Chatwoot agent is `Ø®Ø¯Ù…Ø© Ø¹Ù…Ù„Ø§Ø¡ ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²`; the four
-  pilot inboxes use automatic assignment and have business availability disabled.
-- The isolated n8n team project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) now contains eight
-  empty operational Data Tables for deduplication, conversation jobs, verified identity links,
-  the rebuildable order index, verification challenges, incidents, owner decisions, and audit.
-  The paused catalog table was not reused or changed.
-- Private Core workflow `uCBXuRjlv8NyeikO`, Calapres Edge workflow `e442GlRmKP4IO8pm`, Shopify
-  Order Index workflow `cLHCuJ21r4RAuDTE`, and private Owner Review Desk
-  `hU7sAMAQSg9Obgky` exist in that project. All four are inactive and
-  unpublished, have no assigned credential or public webhook, contain no customer-egress or
-  Shopify-write node, and have execution-payload retention disabled.
-- The empty approvals, incidents, and audit tables now match the lossless owner-review contracts
-  exactly: 34, 18, and 17 columns respectively. No row was inserted. The Owner Review Desk has no
-  Data Table node, no public trigger, and caller policy `none`; it validates `reply_only`,
-  `approve`, `approve_until`, and `correct` as no-write previews only. Sanitized execution `40631`
-  passed with persistence, knowledge publication, and customer egress all false.
-- The delay and post-delay cancellation stage is merged into the existing Edge. Its Wait carries
-  identifiers, a canonical SHA-256 carrier fingerprint, the pinned baseline-HMAC key version, and
-  opaque baseline status/assignee fingerprints only; it carries no raw status, assignee, message,
-  or customer data. A fresh Chatwoot re-read must use the same pinned key version. The
-  compiled channel policy is 30â€“75 seconds for Instagram, TikTok, and WhatsApp and 120â€“300 seconds
-  for Email; the one-second path is synthetic-test-only. Live-shaped input keeps the brand kill
-  switch on, and the current no-credential path fails closed before Wait because a trusted live
-  baseline cannot yet be captured; the re-read slot also fails closed outside the synthetic fixture.
-- Strict source-only contracts now define the future signed Chatwoot ingress, transient live
-  re-read evidence, and post-delay cancellation decision. They cap the raw body at 1 MiB before
-  parsing/HMAC, bind request replay identity to the signed request rather than the unsigned Delivery
-  header, and separately derive stable business-event identity from an HMAC over the allowlisted
-  account/inbox/event/conversation/message tuple. Their post-delay rule performs two independent,
-  non-paginated reads from `anchor_message_id-1`; each raw response must contain 1â€“99 valid rows,
-  include the exact incoming/public anchor, and yield the same canonical set. Any newer
-  non-activity messageâ€”including another bot's outputâ€”cancels. They also compare
-  generation/status/assignee and forbid
-  the full evidence objects from Wait, Data Tables, or audit persistence. No live webhook or
-  Chatwoot credential was created.
-- The Edge now previews exact 10-column dedup, 10-column job, 18-column incident, and 17-column
-  audit rows. These projections are explicitly synthetic and non-persistable:
-  `write_executed=false`, `atomicity_guaranteed=false`, `persistence_ready=false`, and
-  `persistable=false`. A future live dedup `event_key` must use the stable business-event HMAC,
-  while the request replay fingerprint remains a separate short-lived transport check. Prior HMAC
-  key versions must be dual-read through the dedup TTL; the unsigned Delivery header never defines
-  event identity.
-- The order-index preview maps a validated Calapres contract to the table's exact 12 columns. A
-  live n8n run caught an embedded Shopify-GID regex error before activation; it was fixed, a
-  permanent embedded-Code syntax test was added, and sanitized post-fix execution `40619` passed
-  with both Data Table and Shopify writes false.
-- Sanitized manual executions proved the Core/Edge happy path, all four allowlisted channel
-  mappings, and fail-closed behavior for unknown account/inbox, outgoing/private/bot events,
-  invalid signature evidence, duplicate delivery, stale generation, returns, uncertain intent,
-  and non-low risk. Post-sync execution `40651` proved that the source-synchronized synthetic
-  WhatsApp path used the configured Wait expression and exact no-write projections; the four-channel
-  delay ranges are covered by local runtime tests. It also proved the stable event-identity key,
-  exact Wait fingerprint, baseline key-version carry-through, null-reserved 10-column dedup
-  preview, and post-Wait integrity check. Every tested result kept
-  customer egress and persistence false. The Edge
-  remains inactive and unpublished; the imported graph is source-identical to the frozen Edge v2
-  source and carries only the two project-scoped PostgreSQL runtime credentials.
-- GitHub now contains the brand registry, three append-only dated knowledge releases sourced from the live
-  Calapres policy/FAQ pages, the approved response-style release, a proposed inactive model policy,
-  generic Core contracts, stricter Calapres edge contracts, synthetic fixtures, and
-  standard-library contract/runtime guard tests. Seventy-two local tests pass, including hostile
-  request replay vs. event-idempotency, key rotation, body-binding, bounded re-read, same-second,
-  PII-poisoning, static-fingerprint, and cancellation-matrix cases.
-- Core grounding now verifies every cited knowledge ID and its authority against the selected
-  context and verifies live-fact IDs exactly. It ignores the model's free-text draft and renders an
-  `observe_draft` result only from versioned `customer_response_ar` or a verified live-source
-  response fragment. The Edge rejects or strips malformed/extra Core output. Event-payload
-  transport claims are ignored; only a topology-created trusted wrapper can reach normalization.
-- The live observation connection is intentionally not granted yet. A project-scoped Chatwoot read
-  credential is bound to the existing Edge GET nodes, and one observation webhook exists, but no
-  live fixture has been processed because Edge remains inactive.
-  Model-node binding and identity-HMAC material remain deliberate persistent-access gates. A new
-  Shopify Dev Dashboard app `Calapres Customer Service Read` is installed on `calapres.com` with
-  only `read_customers`, `read_orders`, `read_products`, `read_inventory`, and `read_locations`. The n8n Shopify
-  OAuth2 credential was rejected and removed because the built-in type requested write scopes;
-  the generic n8n OAuth2 credential is saved with Client Credentials and the same read-only scopes.
-  Direct live evidence proved token issuance (`200`, `expires_in=86399`, read-only scope set) and
-  a read-only Admin GraphQL query (`200`, no errors, shop name returned). It is bound only to the
-  inactive Edge target. The Edge v2 source and target contain a read-only Shopify customer lookup
-  branch using generic OAuth2, fail-closed exact-phone matching, and a strict Core-envelope adapter;
-  no Shopify write has occurred. After the owner-approved scope update, a direct
-  customer-ID-only GraphQL read returned `200` without errors; no customer fields were logged.
-- The model budget guard was applied to real Neon and tested with a temporary `$0.05` ceiling: the
-  first reservation committed, the next reservation was rejected as `monthly_budget_exhausted`,
-  and the control was restored to `enabled=false`, `kill_switch=true`, `$45` ceiling. Test rows were
-  removed. No model request was made.
-
-### Next safe action
-
-After an action-time owner confirmation for those persistent-access gates, implement the already
-specified signed Chatwoot ingress and live re-read inside the existing Edge, bind only
-Calapres-scoped credentials, capture the pre-Wait baseline with the pinned identity-HMAC key,
-replace synthetic fingerprints with keyed live values, and test real
-events as private internal observations. Keep automatic customer-facing replies structurally
-absent until the separate activation decision and every safety gate pass.
-
-## Multi-brand ownership-evidence standard â€” 2026-08-11
-
-- Meta approved `Calapres | ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²` shortly after the permanent ownership page became available.
-- The owner has accepted that result as the operating basis for reusing the evidence-page pattern
-  for future brands.
-- Decision 0009 requires a neutral ownership registry with a separate permanent page for every
-  future verified brand. It does not authorize connecting or modifying another brand now.
+ıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ìÈ›Ú™Xİİ]B‚ˆÈÈØ\Z[ˆŒKŒHÛ›İÛYÙHİYÙH›ØÚÙY™Y›Ü™H^Xİ][Ûˆ8 %Œ‹LL‚‚–Õ™\šYšYY™XY[Û›H]NŒ\ÚXKÔš^XYHÚ]XˆÜšYÚ[‹ÛXZ[˜\Èİ[˜YY™ÙYYXÍÍÙL™MYLŒM˜YNMLXXXXØˆÚÜYH\ÈH^XİYØ[\™\ÈİÜ™H[ˆØ]YB\˜XšXH\Ú[™ÈĞT‹ˆ]ÈXİ]™HØ][ÙÈİ[ÛÛZ[œÈ^XİHHÚ]K™ZYÙK[™Ü˜^HØ[\™\Â˜\›™\œËXXÚšXÙY]ĞTˆÎLÈÚÜYH™\ÜÈİ[[™[ÜH›ÜˆXXÚˆ\È[™[ÜH™XY™Ù\È›İİ\\œÙYHHÙ\\˜]HİÛ™\‹\İ\YY]˜Z[Xš[]HÛXŞH[™]\İ›İ™H™\Ù[Y\ÂœİØÚÈ]˜Z[Xš[]K‚‚–Õ™\šYšYY™XY[Û›WHˆÛÜšÙ›İÈĞ^QŒÖ–’ÌÜ™[XZ[œÈ[œX›\ÚYÚ]Xİ]™OY˜[ÙX˜Xİ]™U™\œÚ[Û’Y[[[™™\Ù\™Y˜Y™\œÚ[Û‚˜ØYLYLËNN‹MKNX™YKLMÍMX™XY™ˆ]Ø\È›İ^Xİ]YÜˆÚ[™ÙY‚‚–Ğ›ØÚÙY[™›İ^Xİ]YHH™\]Z\™Y]™HÚ]ÛÛİ™\™XYÛİ[›İ™HÛÛ\]Y™XØ]\ÙHB˜œ›İÜÙ\ˆÙXİ\š]HÛXŞHÚXÚÈØ\È[\Ü˜\š[H[˜]˜Z[X›H›Üˆ\˜Ú]ÛÛİ˜ÛÛX[ˆ›İBš[‹X\œ›İÜÙ\ˆ[™HÛÛ›™XİYÚ›ÛYHÙ\ÜÚ[Û‹ˆ›È\\ÜÈÜˆ[\›˜]H[˜]][XØ]Y™\]Y\İØ\È][\Yˆ\™Y›Ü™H\ÜÚ\İ[ŒNØ]È[˜›ŞÛÛ›™Xİ[ÛœË]YY[˜ÙKØÚY[K\ÜÚYÛ›Y[˜]]ÛX][Û‹İ\œ™[Û›İÛYÙH[™[ÜK[™^YÜ›İ[™™Z]š[ÜˆÙ\™H›İœ™\ÚH™\šYšYY[™›Â˜ŒKŒXÛ›İÛYÙHØ\ÈYYˆH›İXİYŒKŒ˜\Ù[[™H™[XZ[œÈH]\İ^Xİ]Yİ]K‚‚•H^Xİ™^ØY™HXİ[Ûˆ\ÈÈ™]HH]][XØ]YÚ]ÛÛİ™XYÚ[ˆHœ›İÜÙ\ˆÙXİ\š]B˜ÚXÚÈ\È]˜Z[X›KˆÛ›HY\ˆ[›İXİYÙ][™ÜÈ™XY˜XÚÈ[˜Ú[™ÙYX^HÛ™HY]]™Kœ™XÛÜ™YİÛ™\‹X\›İ™YÛ›İÛYÙHÜ›İ\™HYY[™\İY[ˆ^YÜ›İ[™‚‚ˆÈÈØ[\™\ÈØ\Z[ˆŒKŒİX›HÛÜÙ[İ]8 %Œ‹LL‚‚–Õ™\šYšYYİÛ™\‹[ØœÙ\™YHHİÛ™\ˆXØÙ\YHİ\œ™[Ø\Z[ˆ™Z]š[Üˆ\ÈH™\İÛÛ™šYİ\˜][Û‚œ™XXÚYÛÈ˜\ˆ[ˆ\È›Ú™XİˆH\ÚXØ[Hš\ÚX›HÚ]Ğ\™\HØ\È\™Xİ˜]\˜[]Ø\™HÙ‚HİÜ™IÜÈ\›™\ˆØÛÜH[™Û›İÛˆÚ\[™È›İ[™\K[™Ù\[˜Ù\Z[H[œÚYHHØ[YHÚ]š[œİXYÙˆ™Y™\œš[™ÈHİ\İÛY\ˆÈ[XZ[ˆ\ÈXØÙ\[˜ÙH\ÈH™X\ÛÛˆHÛÛ™šYİ\˜][Ûˆ\ÈBœ›İXİY˜\Ù[[™NÈ]\È›İHÛZ[H]]™\H]\™H˜XİÜˆÚ[›™[]\È[™XYHÛÛ\]K‚‚–Õ™\šYšYYHH]™H\ÜÚ\İ[Ø\È›İ™[˜[YYÜˆÚ[™ÙY›Üˆ™\œÚ[Ûš[™Ëˆ\ÜÚ\İ[ŒNØ™[XZ[œÂ˜ÛÛ›™XİYÈÚ]Ğ\LN[œİYÜ˜[HLÌX[™ZÕÚÈLÌØÚ]]YY[˜ÙH]™\[Û™X”ØÚY[H[][YX[™H^\İ[™È\ÜÚYÛ›Y[]]ÛX][Û‹ˆHˆ™\ÜÛ™\‚˜Ğ^QŒÖ–’ÌÜ™[XZ[œÈ[œX›\ÚY[™]\İ›İ[ˆ[Û™ÜÚYHØ\Z[‹‚‚–Ñ]šY[˜ÙH›İ[™\WHHXØÙ\Yš\ÚX›H™\H›İ™\ÈHš[˜[˜\Ù[[™H™Z]š[Üˆ[™[]™\HÛ‚•Ú]Ğ\Û›Kˆ\ÈÛÜÙ[İ]Ù\È›İ™]ÛH›İ™HHØ[YHš[˜[™Z]š[ÜˆÛˆ[œİYÜ˜[HÜˆZÕÚË˜[™Ø\Z[ˆİ[\È›È]™HÚÜYHÜ™\ˆÛÛ‚‚Ø[›ÛšXØ[˜\Ù[[™N‚–ĞØ[\™\ÈØ\Z[ˆŒKŒ8 %İX›WJØÜËØ˜\Ù[[™\ËÌŒ‹LL‹XØ[\™\ËXØ\Z[‹]ŒKŒ\İX›K›Y
+K‚‘Ú]Xˆ›Û˜XÚÈœ˜[˜ÚˆØ\Z[‹]ŒKŒ\İX›X‚‘]Z[YÛÜÙ[İ]‚–ĞØ\Z[ˆ™[][˜Úİ\İÛY\‹\Ù\šXÙH[™Ù™—JØÜËÚ[™Ù™œËÌŒ‹LLKXØ\Z[‹\™[][˜Ú\[İ›Y
+K‚‚•H[[YYX]H™^Xİ[Ûˆ\ÈŒKŒXˆYÛ›HÛ™H™XÛÜ™YÜ›İ\ÙˆİÛ™\‹X\›İ™YÛ›İÛYÙKœİ\[™Èœ›ÛHH[™[™È˜XİÈ[ˆH˜\Ù[[™K^Z[ˆHÛÛ\]YÜ›İ\[™İÜ›ÜˆİÛ™\‚œ™]šY]È™Y›Ü™HH™^Ü›İ\ˆÈ›İ[]H˜\Ù[[™HÛ›İÛYÙKÚ[™ÙHH\˜Ú]Xİ\™KYHZYœÙ\šXÙKÜˆX›\ÚHˆ™\ÜÛ™\‹‚‚ˆÈÈØ\Z[ˆÛÛ™\œØ][Û‹Y[H[™\ÜÚYÛ›Y[ÛÜœ™Xİ[Ûˆ8 %Œ‹LLB‚•Hš\œİ™X[XÚ[›™[][\Y\ˆØ\Z[ˆÛÛ›™Xİ[Ûˆ›ÙXÙY›È™\H™XØ]\ÙHHİÛ™\‰ÜÂ›Y\ÜØYÙ\ÈÙ\™HYYÈ[™XYK[Ü[ˆ\İÜšXØ[ÛÛ™\œØ][ÛœËˆÚ]ÛÛİ]˜[X]\ÈØ\Z[ˆ]YY[˜ÙB˜[™ØÚY[HÚ[ˆHÛÛ™\œØ][Ûˆ\ÈÜ™X]YÜˆÚ[ˆH™\ÛÛ™YÛÛ™\œØ][Ûˆ™[Ü[œË›İ›Üˆ]™\B›™]ÈY\ÜØYÙH[œÚYH[ˆ^\İ[™ÈÜ[ˆÛÛ™\œØ][Û‹ˆ\ÈØ\ÈHÛÛ™\œØ][Û‹\İ]HY™Xİ›İ[‚š[˜›ŞZ[™Ü™\ÜÈ˜Z[\™NˆH™]ÈÚ]Ğ\[™ZÕÚÈY\ÜØYÙ\ÈÙ\™Hš\ÚX›H[ˆÚ]ÛÛİZ\‚˜ÛÛ™\œØ][ÛœÈÙ\™H\ÜÚYÛ™YÈ6+¶+öav*H6.vava6)ö(H6`ö)öa6)ö*6,vb¶,˜[™Ø\Z[ˆ™[XZ[™YÛÛ›™XİY‚‚[Ù]™[ˆ^\İ[™ÈÛÛ™\œØ][ÛœÈÙ\™H\ÜÚYÛ™YÈ6+¶+öav*H6.vava6)ö(H6`ö)öa6)ö*6,vb¶,˜[™X\šÙY™\ÛÛ™YÛÂH™^[˜›İ[™Y\ÜØYÙH™[Ü[œÈHØ\Z[‹Y[YÚX›HÛÛ™\œØ][Û‹ˆÚ]ÛÛİ[ˆÚİÙY™\›Â[˜\ÜÚYÛ™YÛÛ™\œØ][ÛœËˆÛ™HXİ]™HXØÛİ[]]ÛX][Ûˆ[H›İÈ\ÜÚYÛœÈ]™\H™]ÛHÜ™X]Y˜ÛÛ™\œØ][Ûˆœ›ÛHH›İ\ˆ^\İ[™È[˜›Ş\È
+Ø[\™\Ø[œİYÜ˜[KZÕÚË[™Ú]Ğ\
+HÂ˜6+¶+öav*H6.vava6)ö(H6`ö)öa6)ö*6,vb¶,˜È\È™[[İ™\È™[X[˜ÙHÛˆ]˜Z[Xš[]KX˜\ÙYY˜][]]ËX\ÜÚYÛ›Y[‚‚‘œ™\Ú™XY˜XÚÈÛÛ™š\›YYØ\Z[ˆİ[ÛÛ›™XİYÛ›HÈÚ]Ğ\LN[œİYÜ˜[HLÌX˜[™ZÕÚÈLÌØÚ]]YY[˜ÙH]™\[Û™X[™ØÚY[H[][YXˆH™\Ù\™Yˆ™\ÜÛ™\‚˜Ğ^QŒÖ–’ÌÜ™[XZ[œÈ[œX›\ÚY
+Xİ]™OY˜[ÙXXİ]™U™\œÚ[Û’Y[[
+KÛÈ›ÈÙXÛÛ™˜]]ÛX]XÈ™\ÜÛ™\ˆ\ÈÛÛ\][™Ëˆ›ÈY\ÜØYÙHØ\ÈÙ[HHÜ\˜]Ü‹ˆHÛÜœ™Xİ[Ûˆ\Â˜ÛÛ™šYİ\˜][Û‹]™\šYšYY]›İY][™]ËY[™›İ™[ˆH™^İÛ™\‹[ÜšYÚ[˜]YY\ÜØYÙHÛˆXXÚœÛØÚX[Ú[›™[]\İš\ÚX›H™XÙZ]™HHØ\Z[ˆ™\H™Y›Ü™HİXØÙ\ÜÈ\ÈÛZ[YY‚‚ˆÈÈÚ]ÛÛİØ\Z[ˆ]™H›ÜˆİÛ™\ˆ™[][˜Ú]˜[X][Ûˆ8 %Œ‹LLB‚‘XÚ\Ú[ÛˆNİ\\œÙY\ÈHˆ™\ÜÛ™\ˆ\ÈHXİ]™HÛÛ™\œØ][Û˜[\˜Ú]Xİ\™Kˆ™X[İÛ™\‚™]šY[˜ÙHÚİÙYHLË[›ÙHÛÜšÙ›İÈ™\X]YH™]\›š[™ÈH^Xİš^YÛ\šYšXØ][Ûˆ\Ü]Bœ™XXÚ[™È]È[Ù[›İ]KˆÛÜšÙ›İÈĞ^QŒÖ–’ÌÜ\È›İÈ[œX›\ÚYÈœ™\Úˆ™XY˜XÚÈÚİÜÂ˜Xİ]™OY˜[ÙX[™Xİ]™U™\œÚ[Û’Y[[ˆ]È˜Y™\œÚ[Û‚˜ØYLYLËNN‹MKNX™YKLMÍMX™XY™™[XZ[œÈ[Xİ›Üˆ›Û˜XÚÈÛ›K‚‘]™\HİÙ\ˆÙXİ[Ûˆ]\ØÜšX™\È\ÈÛÜšÙ›İÈ\ÈXİ]™H\ÈH\İÜšXØ[Û˜\Úİİ\\œÙYYB\ÈÙXİ[ÛÈÈ›İ[™™\ˆİ\œ™[Xİ]˜][Ûˆœ›ÛH]‚•H™\Ù\™Y˜Y\È›İH›ÙXİ[Û‹\™XYH˜[˜XÚÈH]Ù[‹ˆ™Y›Ü™H[HÙ\\˜][H\›İ™Yœ™XXİ]˜][Û‹™KX]Y]]È^\™Y\›ØÙ\ÜÚ[™È™XÛİ™\K›İ][™ËÛ›İÛYÙHÜ›İ[™[™Ë[™\ÚXØ[˜Ú[›™[[]™\NÈH™K\İÚ]ÚŞ\İ[HYÛÛ™š\›YYØ\È[ˆ[›İ\ˆ\™X\Ë‚‚‘^\İ[™ÈÚ]ÛÛİØ\Z[ˆ\ÜÚ\İ[Ø[\™\È\ÜÚ\İ[
+ŒNØ
+H\ÈÛÛ›™XİYÈÚ]Ğ\˜LN[œİYÜ˜[HLÌX[™ZÕÚÈLÌØˆ[XZ[[™ÙXœÚ]H\™H›İÛÛ›™XİYˆB˜\ÜÚ\İ[\ÈHØ[\™\Ë[Û›HİX\™˜Z[H˜]\˜[Ø]YKP\˜XšXÈ™\ÜÛœÙHİZY[[™H]›Ü˜šYÈBœ™Z™XİYš^Y˜\ÙK[™HÛÜœ™XİY\›™\‹\İÜ™HY[]HÜ›İ[™Y[ˆH™YH]™HÚÜYBœ›ÙXİËˆ›È[ˆ\Ü˜YK™]ÈÙ\šXÙKÛÜšÙ›İË[˜›ŞÜ™Y[X[ÜˆÚÜYHÜš]HØØİ\œ™Y‚‚•Hİ\œ™[Ú]ÛÛİ[ˆÙ\È›İ\›Z]Ø\Z[ˆİ\İÛHÛÛËˆØ\Z[ˆØ[ˆ[œİÙ\ˆœ›ÛH]ÈİÜ™YØ[\™\ÈØİ[Y[ËT\ËÛÛ™\œØ][ÛˆÛÛ^[™X›XÈ›ÙXİYÙ\Ë]]Ø[››İ\™›Ü›HB›]™HÚÜYHÜ™\ˆÛÚİ\ÈÜ™\‹\İ]\È™\]Y\İÈ]\İ[™Ù™ˆÈH[X[‹ˆÛ™Ë]\›HØ\Z[‚›Y[[ÜšY\ËÛÛXİXØÙ\ÜËÛİ\˜ÙHÚ]][ÛœË[™]]ÛX]XÈTHÙ[™\˜][Ûˆ™[XZ[ˆ\ØX›Y‚‚•HØ\Z[ˆÛ›İÛYÙHİ\™˜XÙHİ\œ™[HÛÛZ[œÈŒˆØİ[Y[È[™Ìˆ\›İ™YT\Ëˆ™XY[Û›Bš[œÜXİ[Ûˆ›İ[™\ÙY[Ø[\™\ÈYÙ\ÈZ^YÚ]œ›ØYÜˆ[œ™[]YYÙ[XËÜš]˜XŞKÕPÔX]\šX[‚“›ÈØİ[Y[ÜˆTHØ\È[]Y™XØ]\ÙHÛX[\\È\İXİ]™H[™Ø\È›İ\›İ™YˆH^XÚ]Ø[\™\Ë[Û›HİX\™˜Z[Z]YØ]\È\È\š[™ÈH[İ]HÛ›İÛYÙHÙ]™[XZ[œÈH]X[]Bœš\ÚÈ]]\İ™H™]šY]ÙYÙ\\˜][HYˆ™X[XÚ[›™[™\Y\ÈÚ]HÜˆ™Y›Xİ[œ™[]YÛÛ[‚‚•HÚÜYHÛ˜\Úİ\ÙY›ÜˆH\ÜÚ\İ[Y[]HÚİÙY^XİH™YHXİ]™H\›™\ˆ›ÙXİÂŠÚ]K™ZYÙK[™Ü˜^JH]ĞTˆÎLXXÚÚ]™\›È™\ÜY[™[ÜKˆ\È\ÈšY\›Û™H[™›]\İ™H™Yœ™\ÚY™XY[Û›H™Y›Ü™H[H]\ˆ˜XİX[Ú[™ÙKˆ™]™\ˆÛZ[HİØÚÈ]˜Z[Xš[]KˆB˜ÛÛ\\™KX]šXÙHÙˆĞTˆL\X\™Y[ˆØ\Z[ˆÛ›İÛYÙH]Ø\È›İ[™\[™[H™\šYšYYœ›ÛBHÚÜYH™XY[™]\İ›İ™H\ÜÙ\Y\ÈHÛÛ™š\›YY\ØÛİ[‚‚”^YÜ›İ[™ÚXÚÜÈ\ÜÙY›ÜˆHØ\‹^ZÛÛ›ÜÈXÚÙ]Z\ÜÚ[™ÈÜ™Y[‹ÛÜ˜[™ÙH\›™\‹[™Ü™\‹\İ]\Â˜Ø\Ù\Ëˆ\È\È›İÚ[›™[[]™\H›ÛÙ‹ˆH^Xİ™^Xİ[Ûˆ\ÈİÛ™\ˆ\İ[™È›İYÚH™YB˜ÛÛ›™XİYÚ[›™[Ë›ÛİÙYH[œÜXİ[ÛˆÙˆ[H˜Z[YÚ[›™[ˆ™]™\ˆX›\ÚH™\Ù\™Y‚œ™\ÜÛ™\ˆÚ[HØ\Z[ˆ\ÈÛÛ›™XİY‚‚ˆÈÈÜ›İ[™Y˜]\˜[ÛÛ™\œØ][Ûˆ]™H8 %Œ‹LLB‚•HİÛ™\‰ÜÈ™Z™Xİ[ÛˆÙˆ™\]]]™HÚ]Ğ\[™[œİYÜ˜[H™\Y\ÈØ\ÈÛÜœ™XİˆHÛ\ÜÚYšY\‹[Û›B™\ÚYÛˆİ[™[™\™Yš[˜[›ÜÙHœ›ÛHš^Y[\]\Ë[™HšY[[˜[YHZ\ÛX]Ú\ØØ\™YB™\šYšYYÚ]ÛÛİ˜[œØÜš\™Y›Ü™H]™XXÚYH[Ù[ˆZÕÚÈ[ÛÈYHÙ\\˜]H[™Ü™\ÜÈØ\‚Hİ]\ˆØ]HXØÙ\YÛ›HHİš[™È[˜ÛÛZ[™ØÚ[HÚ]ÛÛİØ[ˆ[Z][Y\šXÈ‚‚•HØ[YH™\ÜÛ™\ˆĞ^QŒÖ–’ÌÜ\È›İÈXİ]™H]™\œÚ[Û‚˜ØYLYLËNN‹MKNX™YKLMÍMX™XY™LÈ›Ù\Ëˆ›È\˜[[ÛÜšÙ›İËÙXšÛÚË[˜›ŞØ\Z[‹YÙ[›İÜ™Y[X[ÜˆÙ[™]Ø\ÈÜ™X]YˆH[˜›İ[™Ø]HXØÙ\È›İ˜[Y\™Xİ[Ûˆ›Ü›\ÎÂœ™XÙ[ÛÛ™\œØ][Ûˆ\ÈØ[›ÛšXØ[[˜ÛÛZ[™ËÛİ]ÛÚ[™È
+ÈÛÛ[ÈHÛ\ÜÚYšY\ˆ\È]ÈİÛˆİšXİœ\œÙ\È[™]™\Hİ\İÛY\‹]š\ÚX›HÜ›İ[™Y˜Y›İÈ\ÜÙ\È›İYÚÛ™HÛÛ^X]Ø\™H˜]\˜[”Ø]YKP\˜XšXÈÛÛ\ÜÙ\ˆ™Y›Ü™HH[˜Ú[™ÙY™K\Ù[™ÛÛ›ÛË‚‚•HÛÛ\ÜÙ\ˆ\È›È^\›˜[ÛÛÈ[™Ø[››İXÚYH˜XİËˆH]\›Z[š\İXÈ˜[Y]Üˆ™Z™XİÂ›X[›Ü›YYİËXÛÛ™šY[˜ÙK[™Ü›İ[™Yİ™\›Û™Ë[™[Y[[X™\‹[™[\İYXXİ[Ûˆİ]][‚\Ù\ÈHÜšYÚ[˜[Ü›İ[™Y˜Yˆœ™\Úˆ™XY˜XÚÈÛÛ™š\›YYHX›\ÚYLË[›ÙH™\œÚ[Û‹B›™]È[Ù[Ü\œÙ\ˆÛÛ›™Xİ[ÛœËH^\İ[™ÈÜ[RHÜ™Y[X[[™H[˜Ú[™ÙYÚ[™ÛB˜İ\İÛY\ˆYÜ™\ÜÈ]]Üš^™YÈOˆÙ[™™\XYÙKˆH\]H›ÙXÙYÛ›HÛÈ™KY^\İ[™Â™\ØÛÛ›™XİY[›ÙHØ\›š[™ÜËˆ™\ÜÚ]ÜH™\šYšXØ][Ûˆ\ÜÙ\ÈÍËÌÍÈ›ÙH\İËL‹ÎLˆ]Ûˆ\İË˜[™H™Yœ™\ÚYİ\İÛY\‹\Ù\šXÙH™[X\ÙHØÚËˆ›ÈŞ[]XÈÚ[›™[Y\ÜØYÙHØ\ÈÙ[ÛÈİÛ™\‹]š\ÚX›HÚ]Ğ\’[œİYÜ˜[K[™ZÕÚÈ™Z]š[Üˆ™[XZ[œÈHš[˜[[™]ËY[™ØœÙ\˜][Ûˆ˜]\ˆ[ˆHX›XØ][Û‚˜ÛZ[Kˆ›Û˜XÚÈ\™Ù]ˆXÙØX‹LNMKMYXLŒKNMNŒMMÙ˜‚‚ˆÈÈÜ›İ[™Yİ\ÜYÙ[]™H›ÜˆİÛ™\ˆ\İ[™È8 %Œ‹LLB‚•Hš^YÙ^]ÛÜ™Ü˜[[X\ˆ˜Z[YHİÛ™\‰ÜÈXØÙ\[˜ÙH\İ[™\È›ÈÛ™Ù\ˆHš[X\B[™\œİ[™[™È^Y\‹ˆHØ[YH™\ÜÛ™\ˆĞ^QŒÖ–’ÌÜ›İÈ\Ù\È]È^\İ[™È™\İšXİY[Ù[›Û›HÈÛ\ÜÚYHYX[š[™È[È[ˆ^XİØÚ[XKˆH]\›Z[š\İXÈ[™Ú[™H˜[Y]\ÈHœ˜[™[[˜ÛÛ™šY[˜ÙKØ\Xš[]K[™šY[È™Y›Ü™H[H›İ]H\È[İÙYˆH[Ù[Ø[››İÜš]HHİ\İÛY\‚œ™\KÙX\˜ÚHÙX‹ÚÛÜÙH[ˆ[™Ú[ÜˆÜ˜[H™]ÈØ\Xš[]K‚‚•HØ[\™\Èœ˜[™XÚÈ\È\ÛÛ]Y[™™XÛÜ™ÈY[]KH\›™\ˆØ]YÛÜK\›İ™Yİ]XÂ™˜XİË[İÙY[[Ë[™[İÙY™XYØ\Xš[]Y\Ëˆ›ÙXİ]Y\İ[ÛœÈ\ÙHHØ\YÚÜYB‘Ü˜\S]Y\Hš[\™YÈXİ]™HØ[\™\È\›™\œÎÈ]\È[™šXÙ\È\™H™XY]™\H[YKˆ›Âš[™[ÜH]˜Z[Xš[]H\È[™™\œ™Y[™ÚÜYH]]][ÛœÈ™[XZ[ˆ›ÚXš]Yˆ^\›˜[™\]Y\İÂœİXÚ\ÈØ\œÈÜˆÛ™ÛˆÙX]\ˆ™XÙZ]™HHİXš™XİX]Ø\™HİÜ™H™Y\™XİÚ]İ][ˆ^\›˜[ÛÚİ\‚‚•H^\İ[™ÈL[›ÙHÛÜšÙ›İÈ\ÈXİ]™H]™\œÚ[Û‚˜XÙØX‹LNMKMYXLŒKNMNŒMMÙ˜ˆœ™\Úˆ™\™XYÛÛ™š\›YYXİ]™KÙ˜Y\š]K›È^Xİ][Û‚œ™][[Û‹[X[š^™H^Oˆ›İ]Hİ\İÛY\ˆÙ\šXÙHXÚ\Ú[Û˜[X[ˆXÚÛ›İÛYÙ[Y[™]\›š[™ÈÂH^\İ[™È™K\Ù[™ÚXÚÜË[™H[˜Ú[™ÙYÚ[™ÛB˜İ\İÛY\ˆYÜ™\ÜÈ]]Üš^™YÈOˆÙ[™™\XYÙKˆH\İ]\›Z[š\İXÈÛİ™\›™Y™\œÚ[Û‚˜ÙÌŒ‹MŒØ™KMLÍXŒÌÌËXMMX™ŒX\ÈH™Z]š[Ü˜[›Û˜XÚÈ\™Ù]‚‚”™\ÜÚ]ÜH™\šYšXØ][Ûˆ\ÜÙ\ÈÌŒ‹ÌÌŒˆ›ÙH\İÈ[™L‹ÎLˆ]Ûˆ\İËˆİšXİ[Ù[[›ÙB˜ÛÛ™šYİ\˜][Ûˆ˜[Y][Ûˆ\ÜÙ\Ëˆ\È›İ™\ÈÛİ\˜ÙH[™Ü˜\ÛÛ˜XİÈÛ›KˆİÛ™\‹]š\ÚX›B•Ú]Ğ\[œİYÜ˜[K[™ZÕÚÈ[]™\H\Èİ[[œ›İ™[ÈÈ›İÛZ[H[™]ËY[™İXØÙ\ÜÈ[[H^XİØ\‹ÙX]\‹[™[›X]ÚYÜ™Y[‹ÛÜ˜[™ÙH\›™\ˆY\ÜØYÙ\È\™H\ÚXØ[HØœÙ\™Y[™B›X]Ú[™È^Xİ][ÛœÈ\™H[œÜXİY‚‚ˆÈÈİÛ™\‹]\İÛÜœ™Xİ[Ûˆ\›™\ˆÛÛÜˆ\ØÜš\[ÛœÈ8 %Œ‹LLB‚•Hš\œİÛİ™\›™Y]™H™\œÚ[ÛˆØ\È›İXØÙ\X›KˆİÛ™\ˆÚ]Ğ\]šY[˜ÙHÚİÙY6*6`öaH6)öa6av*6+¶,vaÂ¶)öa6+¶-¶,v)ö(X[™6*6`öaH6)öa6av*6+¶,vaÈ6)öa6+¶-¶,v)ö(H6)öa6av+¶-ö-öaÈ6*6)öa6*6,v*¶`¶)öa6b˜™XÙZ]š[™ÈHÙ[™\šXÈİÜ™HÛ\šYšXØ][Û‚š[œİXYÙˆHÚÜYHšXÙH™XYˆ›ÛİØ]\ÙHØ\È[ˆİ™\‹Xœ›ØY^\›˜[[Y\˜Ú[[H]™X]YHš\œİÛÛÜˆÛÜ™Y\ˆ6)öa6av*6+¶,vaØ\ÈYˆ]Ù\™HHY\˜Ú[˜[YKˆ\È\Ü›İ™YHX\›Y\‚˜Xİ]˜][ÛˆÛZ[H\È[ˆ[™]ËY[™İXØÙ\ÜË‚‚•H[H›İÈXØÙ\ÈHÛÜÙY\İÙˆ\›™\ˆÛÛÜ‹Ü]\›ˆ\ØÜš\ÜœÈÛ›H[œÚYH[ˆ^XÚ]˜\›™\ˆšXÙH™\]Y\İˆ6*6`öaH6)öa6+v)ö-6b˜6*6`öaH6)öa6,öb¶)ö,vaØ˜\™H^\›˜[Y\˜Ú[Ë[™›ÙXİ™\]Y\İÂ™œ›ÛH[ˆ^\›˜[Y\˜Ú[™[XZ[ˆ[˜X›HÈ]]Üš^™HÚÜYHÜˆH[Ù[ˆ\™Ù]Y\İÈ\ÜÂLKÍLK[˜ÛY[™ÈHÛÈ^XİİÛ™\ˆY\ÜØYÙ\È[™^\›˜[ÛÛ›ÛËˆHØ[YHL[›ÙHÛÜšÙ›İÈ\Â˜Xİ]™HÛˆÛÜœ™XİY™\œÚ[ÛˆÙÌŒ‹MŒØ™KMLÍXŒÌÌËXMMX™ŒXÈ]™H™\™XYÛÛ™š\›YY˜Xİ]™KÙ˜Y\š]H[™HÛÜœ™XİY[X™YY\ØÜš\Üˆ[\Ëˆ™\œÚ[Û‚˜XY˜Œ™KLXËMNËNMLKLØLLL™™˜\ÈH[[YYX]H›Û˜XÚÈ\™Ù]ˆH™]ÈİÛ™\‹]š\ÚX›H™\Bš\Èİ[™\]Z\™Y™Y›Ü™HÛZ[Z[™ÈHÛÜœ™Xİ[ÛˆÛÜšÜÈ[™È[™‚‚ˆÈÈÛİ™\›™YØ[\™\È™\ÜÛ™\ˆ]™H8 %Œ‹LLB‚•HİÛ™\ˆ^XÚ]H\›İ™Y]™HXİ]˜][Ûˆ›ÜˆÚ[›™[\İ[™ËˆH^\İ[™È™\ÜÛ™\‚˜Ğ^QŒÖ–’ÌÜØ\È\]Y[ˆXÙH[™X›\ÚY\ÈXİ]™H™\œÚ[Û‚˜XY˜Œ™KLXËMNËNMLKLØLLL™™˜L›Ù\ËˆÛ™H]\›Z[š\İXÈÛİ™\›™Yİ\İÛY\ˆØÛÜB”›İ]\˜›İÈÚ]È™]ÙY[ˆH]][XØ]YÚ]ÛÛİ[˜ÚÜˆÚXÚÈ[™H^\İ[™ÈXÚ\Ú[ÛˆİÚ]Ú‚“›ÈÛÜšÙ›İËÙXšÛÚËÚ]ÛÛİ[˜›ŞØ\Z[‹YÙ[›İÜ™Y[X[Üˆİ\İÛY\‹\Ù[™]Ø\Â˜Ü™X]YÈÙ[™™\Xİ[\È^XİHÛ™H[˜›İ[™]]Üš^˜][ÛˆYÙK‚‚•H]™H›İ]\ˆ\Ù\ÈØ[™Y]HÛ›İÛYÙH™\œÚ[ÛˆŒ‹LLK]XØ[™Y]Xˆ^\›˜[]Y\İ[ÛœÂœ™XÙZ]™HH[›™YØ[\™\È™Y\™Xİ[™Ø[››İ]]Üš^™HH[Ù[ÜˆÛÛˆÛ›H^XİİÜ™H[[Â˜Ø[ˆÙ[Xİ\›İ™Yİ]XÈ™\Y\ÈÜˆÚÜYH™XY[Û›H›ÙXİÛÜ™\ˆ™XYÎÈHÛİ™\›™Y›İ]\‚›™]™\ˆ[Z]ÈH[Ù[İ]]ˆHÜ›X[[Ù[›Û\Ø\È[ÛÈYÚ[™YÈ›Ü˜šY^\›˜[˜XİË‚”›ÙXİ™\İ[È›İÈØ^H6a6`¶b¶*ˆ6`vbˆ6)öa6av*¶+6,H6)öa6(¶a˜[™È›İÛZ[H[™[ÜH]˜Z[Xš[]K‚‚“ØØ[\™Ù]Y™\šYšXØ][Ûˆ\ÜÙYLÍL™Y›Ü™HX›\ÚˆHœ™\Úˆ™XYY\ˆX›\ÚÛÛ™š\›YYHXİ]™KÙ˜Y™\œÚ[ÛˆX]ÚHL[›ÙHÜ˜\HÛİ™\›™Y\›İ]\ˆYÙ\Ë[™HÚ[™ÛB˜İ\İÛY\ˆYÜ™\ÜÈ]]Üš^™YÈOˆÙ[™™\XYÙKˆ™]š[İ\ÈXİ]™H™\œÚ[Û‚˜XMMËLX‹MLÌ‹NMÎYKLNNMML˜™[XZ[œÈH^Xİ›Û˜XÚÈ\™Ù]ˆ[™]ËY[™[]™\Hœ›ÛB•ZÕÚË[œİYÜ˜[K[™Ú]Ğ\\È›İÈ]ØZ][™ÈHİÛ™\‰ÜÈ™X[Ú[›™[\İÈ[™]\İ›İ™B˜ÛZ[YYœ›ÛHÛÜšÙ›İÈX›XØ][Ûˆ[Û™K‚‚ˆÈÈÚXÚÜÚ[™\šYšXØ][Ûˆ[™™[X\ÙK[ØÚÈ™\Z\ˆ8 %Œ‹LLM‚•\ÈÙXİ[Ûˆİ\\œÙY\ÈÛ\ˆ]™K\İ]\ÈÛZ[\È™[İÈÚ\™H^HÛÛ™›XİˆÚ]XˆÛÛ™š\›YY˜Y”ˆÍ\ÈÜ[ˆÛˆYÙ[Ü™\Ù\™KXØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[]˜LXØØŒÎMM™ŒXŒÙMMŒŒMÍÙŒØÌXŒØÚ]Hœ›Ş™[ˆÛİ\˜ÙHÒKLM‚˜ÎMLÌÍ˜ŒYŒ™YØØÌŒ™™Y˜˜Í™YMÙLXÌML˜˜™ŒÍX˜XÙX˜ØÍXXˆHˆ™XYÛÛ™š\›YYBœØ[YH]™H™\ÜÛ™\ˆĞ^QŒÖ–’ÌÜXİ]™H™\œÚ[ÛˆXMMËLX‹MLÌ‹NMÎYKLNNMML˜NB››Ù\Ë[™XYÛ›ÜİXÈ^Xİ][Ûˆ™][[Ûˆ\ØX›Yˆ›ÈÛÜšÙ›İËÙXšÛÚËÜ™Y[X[ÚÜYBÜš]KÜˆ^\›˜[Ş[]XÈY\ÜØYÙHØ\ÈÜ™X]YÜˆÙ[\š[™È\È™\šYšXØ][Û‹‚‚‘Ú]XˆÒHYÛ™HÙ[Z[™HİX\™˜Z[\™H™XØ]\ÙHÛÛ[Z]Í˜ÌY˜Ú[™ÙYHœ›Ş™[ˆÛİ\˜ÙH[™›X[šY™\İ[™YYZYÜ˜][ÛˆMHÚ]İ]™Yœ™\Ú[™ÈH[[]]X›H™[X\ÙHØÚËˆHØÚÈØ\Âœ™YÙ[™\˜]Yœ›ÛHHİ\œ™[™\ÜÚ]ÜHš[\ÎÈ]›İÈ™\šYšY\ÈØØ[HÚ]YÙ\İ˜LMMXØÌÍLØÌÙŒØX™™XLLNXÙXÎM™Œ˜MNXMŒ™LLÌ˜˜ÍÍÙMÌ˜[™^XÚ]HÛİ™\œÂ˜MWØØ[\™\×ØÜ×Øİ\İÛY\—Ü™\WÛÛ[šXÚ[›™[œÜ[‚‚“™[Ûˆ]™H™\šYšXØ][ÛˆÛÛ™š\›YYØÚ[XHZYÜ˜][ÛœÈM[™MH\™H\YYÈ›Ú™Xİ˜Ú[KZ[LÎŒÍÌX]X˜\ÙH™[Û™˜[™H^XİYİ\İÛY\—Ü™\WÜÛWØØ\Ù\ØX›H^\İË‚•\È\ÈÛÛ™š\›YY]™Kˆ]Ù\È›İ›İ™Hİ\İÛY\ˆ[]™\KˆH]\İ\˜X›H›İÜÈ[˜ÛYB•Ú]Ğ\[™[œİYÜ˜[H]™[Èİ[[ˆ›ØÙ\ÜÚ[™ØÚ]›ÈXÚ\Ú[ÛˆÜˆÚ]ÛÛİY\ÜØYÙHYÈ\Âš\È]šY[˜ÙHÙˆ[ˆ[œ™\ÛÛ™YÜ\˜][Û˜[Ş[\ÛK›İ›ÛÙˆÙˆH›İ]HÜˆ[]™\H˜Z[\™HØ]\ÙK‚•HÙ[XİYÛİ\˜ÙH\İÈ\ÜÈÍ
+Hš[ÜˆÚXÚÜÚ[	ÜÈ\™Ù]YÛİ[Ø\ÈÌ‹ÌÌŠK‚‚•H[œ™\ÛÛ™YØ]\È™[XZ[ˆœ™\ÚÚ]Ğ\Ø][ÙÈ]Y\İ[Ûˆ›İYÚÚÜYHÈH\ÚXØ[Bœ™XÙZ]™Y[œİÙ\Èœ™\Ú[œİYÜ˜[H[™ZÕÚÈ]›Ü›H[]™\H˜XÙNÈ[™Ø[›ÛšXØ[™\ÜÛ™\ˆÂÙXšÛÚÈXÚ\Ú[ÛˆÚ]›Û˜XÚËˆÈ›İÛZ[H[HÙˆ\ÙHœ›ÛH‹Ú]ÛÛİÜˆ™[Ûˆ[Û™K‚‚ˆÈÈÛX[‹\Ù\ÜÚ[Ûˆ[™Ù™ˆ8 %Œ‹LLM‚•\ÈÙXİ[Ûˆİ\\œÙY\ÈÛ\ˆ]™K\İ]\ÈÛZ[\È™[İÈÚ\™H^HÛÛ™›XİˆHİ\œ™[›İXİY˜œ˜[˜Ú\ÈYÙ[Ü™\Ù\™KXØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[]ÛÛ[Z]Í˜ÌY˜ŒXM™LŒÌY™XN™ŒÙLYØ‚•Hœ›Ş™[ˆNK[›ÙH™\ÜÛ™\ˆÛİ\˜ÙH\È‹Ù\Ş[Y[ËØØ[\™\ËXÜËX›İ\›İXİYY˜YšœÛÛ˜ÒKLM‚˜ÎMLÌÍ˜ŒYŒ™YØØÌŒ™™Y˜˜Í™YMÙLXÌML˜˜™ŒÍX˜XÙX˜ØÍXX‚‚İ\œ™[]™H™\ÜÛ™\ˆÛÜšÙ›İÈĞ^QŒÖ–’ÌÜXİ]™H™\œÚ[Û‚˜XMMËLX‹MLÌ‹NMÎYKLNNMML˜NH›Ù\ËˆXYÛ›ÜİXÈ™][[ÛˆØ\ÈÛÜÙYY\ˆ[œÜXİ[Û‚œİXØÙ\ÜËÙ\œ›Üˆ]H›Û™X^Xİ][Ûˆ›ÙÜ™\ÜÈ˜[ÙXX[X[^Xİ][ÛœÈ˜[ÙXˆYÙHÛÜšÙ›İÂ˜M‘Û›RÔSÎX[™ÛÈ^\İ[™ÈÚ]ÛÛİÙXšÛÚÜÈİ[^\İÈ›È\™ÛÜšÙ›İÈÜˆÙXšÛÚÈØ\Â˜Ü™X]YˆØ[›ÛšXØ[™\ÜÛ™\ˆÛÛœÛÛY][Ûˆ™[XZ[œÈ[œ™\ÛÛ™Y[™]\İ›İ™HİY\ÜÙY‚‚“]™H™[Ûˆ›Ú™XİÚ[KZ[LÎŒÍÌX]X˜\ÙH™[Û™˜›İÈ\ÈZYÜ˜][ÛœÈM[™MK‚“ZYÜ˜][ÛˆMH^[™YH^Xİİ\İÛY\‹\™\Hİ]›ŞÙ[˜İ[Ûˆ[İÛ\İÈ[œİYÜ˜[HLÌX•ZÕÚÈLÌØ[™Ú]Ğ\LNÈÙXœÚ]HL™[XZ[œÈ^ÛYYˆ™Y›Ü™HMK™X[ÛØÚX[™^Xİ][ÛœÈMLØØMMX™XXÚYˆ]ÜİÜ™\È™]\›™Y›İ]WÚ[˜[YˆY\ˆMK™\^B˜ÛÛ\]Y[™Ú]ÛÛİÜ™X]YZÕÚÈY\ÜØYÙHÎMLNM[™[œİYÜ˜[HY\ÜØYÙHÎMLNM‚™XØ]\ÙHHİÛ™\ˆİXœÙ\]Y[H™\ÜY›Èš\ÚX›H]›Ü›H[]™\K[œİYÜ˜[KÕZÕÚÈ[™]ËY[™™[]™\H\È
+Š››İ›İ™[ŠŠˆ[™™[XZ[œÈ[ˆXİ]™H›ØÚÙ\ˆ\Ü]HİXØÙ\ÜÙ[‹ĞÚ]ÛÛİ]šY[˜ÙK‚‚•Hİ\œ™[™\ÜÛ™\ˆ›İ]\Èœ›ØYØ][ÙËÜšXÙH]Y\İ[ÛœÈ
+6*6`öaX6b6-6)öa6(öa¶b6)ö.X6.v-öb¶a¶bˆ6(ö,ö.v)ö,vaö)Ø
+BÈÚÜYH™XY[Û›H›ÙXİØØ][ÙØ[œİXYÙˆ[İÚ[™È[ˆ[™Ü›İ[™Y[Ù[[œİÙ\‹ˆÚÜYHØ\Âš[™\[™[HÛÛ™š\›YYÈÛÛZ[ˆ™YHXİ]™H\›™\œÈ
+Ú]K™ZYÙKÜ˜^JKXXÚÎLĞT‹ˆ\ÂœÛİ\˜ÙKÛ]™HÛÛ™šYİ\˜][Ûˆ\ÈÛÛ™š\›YY]›Èœ™\Ú[˜›İ[™Ú]Ğ\^Xİ][ÛˆY\ˆXİ]™H™\œÚ[Û‚˜XMMËLX‹MLÌ‹NMÎYKLNNMML˜\È›İ™[ˆH[ÚÜYHØ][ÙÈ™\H]ˆÈ›İÛZ[B˜Ø][ÙÈL‘HİXØÙ\ÜÈ[[]]šY[˜ÙH^\İËˆÚÜYH[™[ÜH™]\›™Y™\›ËÛÈÈ›İÛZ[B˜]˜Z[Xš[]HÚ]İ][ˆ\›İ™Y[™[ÜHÛXŞK‚‚•Hš\œİØ][ÙËÜÛØÚX[X›\Ú˜Z[YÜ\˜][Û˜[H[™Ø\È›ÛY˜XÚÈ
+ŒM˜
+HÚ[ˆ[˜Ú[›™[È\X\™YİÜYˆ]\ˆ]šY[˜ÙHY[YšYYH›ÛİØ]\ÙH\ÈZ\ÜÚ[™È]™HZYÜ˜][ÛˆMœ\ÈÚ]Ğ\[Û›H]X˜\ÙHÛÛœİ˜Z[Ë›İHØ][ÙÈ›İ][™È]ÚˆZYÜ˜][ÛœÈMÌMHÙ\™B[ˆ\YY[™H]ÚØ\È™KX\YY[ˆÍ˜ÌY˜ˆ]\İ\™Ù]Y\İÈ\ÜÙYÌ‹ÌÌˆ
+Bœ›İXİYY˜Y\ÈÈÛ[šXÚ[›™[[ZYÜ˜][ÛŠKˆ[\İZ]H[™İ\œ™[Ú]XˆÒHİ]\ÈÙ\™H›İœ™XÚXÚÙY]\ÈÚXÚÜÚ[‚‚“™^ØY™HÛÜšÈ\È]šY[˜ÙKYš]™[ˆÛ›Nˆ
+JH›İ™HHœ™\ÚÚ]Ğ\Ø][ÙÈ]Y\İ[ÛˆXİX[H™XXÚ\Â”ÚÜYH[™™]\›œÈÜ›İ[™Y]\ËÜšXÙ\ÎÈ
+ŠH˜XÙHœ™\Ú[œİYÜ˜[H[™ZÕÚÈ[˜›İ[™Y\ÜØYÙ\Â›İYÚ]›Ü›HOˆÚ]ÛÛİOˆˆOˆÚ]ÛÛİOˆ]›Ü›H[]™\NÈ
+ÊHÛ›HY\ˆ]šY[˜ÙKXÚYBÚXÚ^\İ[™È™\ÜÛ™\‹İÙXšÛÚÈ\ÈØ[›ÛšXØ[[™™]\™H\XØ]\È›İYÚ[ˆ^XÚ]™]šY]ÙY˜Ú[™ÙKˆ™]™\ˆ^ÜÙHÙXÜ™]ËÔRKYÚÜYHÜš]\ËÜˆ[™™\ˆİXØÙ\ÜÈœ›ÛH[ˆˆ^Xİ][Ûˆ[Û™K‚‚ˆÈÈ™\šYšYYØ[\™\ÈÛØÚX[[˜›Ş[İÛ\İ]™H8 %Œ‹LLLÈ
+Ù\ÜÚ[ÛˆŠB‚•H^\İ[™ÈÛÜšÙ›İÈØ\È[[[Û˜[H\™XÛÙYÈÚ]Ğ\[˜›ŞLNÛÈ[œİYÜ˜[H[™•ZÕÚÈY\ÜØYÙ\ÈÙ\™H™Z™XİY™Y›Ü™HH[Ù[ˆÛÛ™š\›YYH]™HÚ]ÛÛİ[˜›Ş\È\È[œİYÜ˜[B˜LÌXZÕÚÈLÌØÚ]Ğ\LN[™ÙXœÚ]HLˆ^[™YHØ[YHNK[›ÙBÛÜšÙ›İÈÈ[ˆ^Xİ[İÛ\İÙˆHš\œİ™YNÈHÙXœÚ]H™[XZ[œÈ^ÛYYˆ[˜›ŞY[]H\Â˜Ø\œšYY[™™XÚXÚÙY›İYÚ[™Ü™\ÜËÚ]ÛÛİ[˜ÚÜˆ™\™XYš[˜[™\™XYÙ[™›ÛÙ‹[™™XÛİ™\K‚”ÛØÚX[ÛÛXİÈÚ]İ]H\İYÛ™HØ[››İ[™™\ˆHÚÜYHY[]H[™\™H\ÚÙY›Üˆ[ˆÜ™\‚›[X™\ˆÚ]İ]\ØÛÜÚ[™Èİ\İÛY\‹ÛÜ™\ˆ]KˆX›\ÚYXİ]™H™\œÚ[Û‚˜LŒØLX˜ÌYYXKMKNMYLNLL™MŒÌMXˆœ›Ş™[ˆÛİ\˜ÙHÒKLM‚˜˜MNÌÌMÙMÙŒMNLÙMØÍMLNX™ŒLMMLŒØLLØ™YXŒŒMX˜ÍY™˜YØÈ[\[Y[][ÛˆÛÛ[Z]˜XÍÌÌ™LÍÌ˜YMÙMÙM˜YŒYŒY™ŒØˆ\™Ù]Y\İÈ\ÜÙYËÌÈ[™›İÚ]XˆÒBÛÜšÙ›İÜÈ\ÜÙYˆ›È\XØ]HÛÜšÙ›İËÙXšÛÚË›ÙKÜˆÜ™Y[X[Ø\ÈÜ™X]YˆH™X[[˜›İ[™œ™\HÛˆ[œİYÜ˜[H[™ZÕÚÈ\Èİ[™\]Z\™YÈ›İ™HXXÚ]›Ü›IÜÈ[™]ËY[™[]™\K‚‚ˆÈÈÛÛ^X[›İ[™Y™\Y\È]™H8 %Œ‹LLLÈ
+Ù\ÜÚ[ÛˆJB‚•H™\]]]™HÙ™‹]ÜXÈ™\ÜÛœÙHØ\È›İHÙXZË[[Ù[˜Z[\™Nˆ™\šYHÚ]ÛÛİ[˜ÚÜˆ[™”›İ]X\\ÜÙYH[Ù[›Üˆ]™\H[˜Û\ÜÚYšYYY\ÜØYÙH[™[Z]YÛ™H\™XÛÙYÙ[[˜ÙKÚ[HH[Ù[›Û\™\X]Y]Ø[YHÙ[[˜ÙH\ÈHX[™]ÜH[œİÙ\‹ˆ™[[İ™Y]İ]XÂœ›İ]Kˆ[˜Û\ÜÚYšYYY\ÜØYÙ\È›İÈ™XXÚH^\İ[™È™\İšXİYÔMK]Ú]H^Xİ˜İ\İÛY\ˆY\ÜØYÙH[™™XÙ[ÛÛ™\œØ][ÛˆÛÛ^ÈH›Û\˜\šY\È˜]\˜[Ø]YKP\˜XšXÈ™\Y\Ëš[™\ÈœšYYˆÛØÚX[ÛÛ™\œØ][Û‹Ú]™\ÈÛ›H™\HÚÜØY™HÙ[™\˜[[œİÙ\œË™Y\™XİÈ[œ™[]Y\ÚÜÈÚ]HÜXË\ÜXÚYšXÈ›İ[™\K[™™]™\ˆ[™[ÈØ[\™\ËÚÜYKÜ™\‹Üˆ›ÙXİ˜XİË‚\Ú[™\ÜË][˜ÛX\ˆY\ÜØYÙ\È\ÚÈÛ™H\ÙY[Û\šYšXØ][Û‹ˆ[X[š^™H^›İÈ\›Z]È\È™YBœÚÜÙ[[˜Ù\È[™™Z™XİÈÛÛ™šY[˜ÙHİ]ÚYH‹ŒNÈ[Ù[[\\˜]\™H\È‚‚”X›\ÚYÛˆHØ[YH]™HÛÜšÙ›İÈĞ^QŒÖ–’ÌÜÚ]›ÈYYÜ™[[İ™Y›Ù\ÈÜˆ\XØ]BÛÜšÙ›İÎˆXİ]™H™\œÚ[ÛˆL™LÌÍL™‹LÍ™MYL‹XNKLÌNMÙXLÙLÌŒ˜NH›Ù\ËˆÛİ\˜ÙHÒKLM‚˜MŒ˜LY˜ÌŒÎMLØŒY™YŒLÙÌŒYXYLÎMXMM™™™™X˜ÍŒMNLŒMLÌÍØÈ[\[Y[][ÛˆÛÛ[Z]˜Œ˜ÌŒÍŒÌMÍÎŒÌÎLMÙ˜M˜ŒÌNXMNMˆÛİ\˜ÙKÛ]™H›ÙH\š]H[™Ù][™ÜÈÙ\™H™\šYšYYÂHÛ›HÙ\šX[^˜][ÛˆY™™\™[˜ÙH\È[ˆÛZ]Y[\H˜[ÙK[İ]]\œ˜^HÛˆÓHØ\ÙHÛZ[YYØ˜[™\È›È™Z]š[Ü‹ˆ›İÒHÛÜšÙ›İÜÈ\ÜÙYÛˆH[\[Y[][ÛˆÛÛ[Z]
+ÍH›ÙH\İÈ[™Lˆ]Ûˆ\İÊKˆ^\İ[™È[Ù[YÙ]\‹XÛÛ™\œØ][Ûˆ[Z]Ú[İÚ]Úš[˜[Ú]ÛÛİœ™\™XYÙ[™X\ÙKÚÜYH™XY[Û›H›İ[™\K[™›ËY^Xİ][Û‹Y]K\™][[ÛˆÙ][™ÜÈ™[XZ[‚[˜Ú[™ÙY‚‚ˆÈÈZYÜ˜][ÛˆMŞ[^Ó•SX\\ÜÈš^ÚÜYHÜ™Y[X[İØ\
+™\\™Y
+H8 %Œ‹LLLÈ
+Ù\ÜÚ[Ûˆ
+B‚•™YH[™\[™[š[™[™ÜÈ\ÈÙ\ÜÚ[Û‹XXÚš^Y]H›ÛİØ]\ÙK›İÛÜšÙY\›İ[™‚‚ŠŠŒKˆZYÜ˜][ÛˆMŞ[^\œ›Ü‹›İÈš^Y[™™\^K]™\šYšYYŠŠˆHİÛ™\ˆ˜[ˆZYÜ˜][Û‚˜MØØ[\™\×ØÜ×Øİ\İÛY\—Ü™\WÜÛWÙ\ØØ[][Û‹œÜ[›İYÚ™[Û‰ÜÈØY™H[\Ü˜\KXœ˜[˜Ú›ZYÜ˜][Ûˆ›İÈ
+]™H™[Ûˆ\Èİ[ØÚ[XH™\œÚ[ÛˆLÊNÈÜİÜ™\È™Z™XİY]Ú]Ş[^\œ›Ü‚˜]Üˆ™X\ˆ››È˜ˆ›ÛİØ]\ÙNˆÙ]™\˜[KX[™HÛÛ[Y[ÈÛÛZ[™Y[ˆ[X™YYÙ[ZXÛÛÛˆ
+K™Ë‚˜KH‹‹[Y\İ[\ÈÛ›NÈ›Èİ\İÛY\ˆ^˜
+NÈHİ][Y[Ü]\ˆ]\Û‰İ]Ø\™HØØ[ˆ\X\‚š[œÚYHHÔSÛÛ[Y[™X]È]\ÈHİ][Y[›İ[™\KÛÈ›Èİ\İÛY\ˆ^˜Ù]È\œÙY\È˜]Â”ÔSˆ™[[İ™YHÙ[ZXÛÛÛˆœ›ÛH[Ù]™[ˆY™™XİYÛÛ[Y[È
+ÛÜ™[™ÈÛ›K›ÈÙÚXÈÚ[™ÙJH[™˜YYH™YÜ™\ÜÚ[Ûˆ\İ]˜Z[ÈYˆÛ™H™X\X\œËˆ™\šYšYYH[š]X[^š[™ÈH\ÜÜØX›HØØ[”ÜİÜ™TÔSMˆ[œİ[˜ÙH
+™]™\ˆİXÚY™[ÛŠH[™™\^Z[™ÈZYÜ˜][ÛœÈX›İYÚM[‚›Ü™\ˆYØZ[œİ]8 %[M\HÛX[›KØÚ[XH[™È]™\œÚ[ÛˆM‚‚•]Ø[YHØØ[™\^H[ÛÈİ\™˜XÙYHÙXÛÛ™[™\[™[Y™XİÚ[H›Øš[™ÈH™]Â™[˜İ[ÛœÈÚ][ˆ[\HßXÛÛ[X[™ˆZ\ˆ˜[Y][ÛˆİX\™Û]\Ù\È\ÙY˜\™B˜ˆ	ØØ[\™\ÉØÈ_ˆ]\›˜ÚXÚÜËÚXÚ]˜[X]HÈ•S
+›İ•QX
+HÚ[ˆHœÛÛ˜‚šÙ^H\ÈXœÙ[8 %[™Qˆ•SS˜Ú[[HÚÚ\ÈH™Z™Xİ[Ûˆ[ˆÜÜ[ˆ›ÜˆHÛZ[KÙš[˜[^™B™[˜İ[ÛœÈ\ÈÛ›HYÜ˜YYÈHÙ[™\šXÈœ]Y]YH[\H‹È›X\ÙH[˜[Yˆ™\ÜÛœÙH
+XØÚY[[BœØY™JK]›Üˆ]ÛZX×İ\Ù\Øİ\İÛY\—Ü™\WÜÛWØØ\ÙX	ÜÈİXÚ]H[H[\HÛÛ[X[™œ™XXÚYHS”ÑT•[™˜Z\ÙYH˜]È“Õ•SÛÛœİ˜Z[š[Û][Ûˆ[œİXYÙˆH[[™Y˜ØÚ[XWÚ[˜[Y™Z™Xİ[Ûˆ8 %H™X[Ø\[ˆH˜Z[XÛÜÙYÛÛ˜Xİ]™\Hİ\ˆ[˜İ[Ûˆ[ˆ\ÂœØÚ[XH[™XYHÙY\ËˆÜ˜\Y]™\HİXÚÛÛ\\š\ÛÛˆ[ˆÓĞSTĞÑJ	ÉÊXXÜ›ÜÜÈ[™YH™]Â™[˜İ[ÛœÎÈ™K]™\šYšYYØØ[H]ßX\È›İÈÛX[›H™Z™XİY[™HÙ[Y›Ü›YYÛÛ[X[™İ[œİXØÙYYËˆ›ÈX›K[˜İ[ÛˆÚYÛ˜]\™KÜ˜[Üˆ\Ú[™\ÜÈÙÚXÈÚ[™ÙY‚‚ŠŠ”İ[›İ\YYÈ]™H™[ÛŠŠˆ
+İ[™\œÚ[ÛˆLÊH8 %\ÈÙ\ÜÚ[ÛˆYØZ[ˆ\È›È™[ÛˆPÔXØÙ\ÜÎÂ˜\Z[™ÈH›İËYš^YZYÜ˜][Ûˆ™[XZ[œÈHİÛ™\‰ÜÈÜˆH™[Û‹SPÔY\]Z\YÙ\ÜÚ[Û‰ÜÈXİ[Û‹‚‚ŠŠŒ‹ˆÚÜYHÜ™Y[X[š^ˆÓÓ‘’T“QQU‘H[™ÓÓ‘’T“QQTÕQÚ]H™X[]][XØ]Y™XYŠŠ‚˜ÑUÚÜYHÜ™\œÈ™XYÛ›X\ÙYÙ[™\šXÈÜ™Y[X[Ğ]]\N”RÙÓ“UÔ]Í‘Í“X
+•[›˜[YY˜Ü™Y[X[ŠKÚÜÙHÚÙ[ˆÚÜYH™\ÜÈ[˜[YÙ^\™YˆİÚ]ÚY]ÈH^\İ[™Â˜ÚÜYKPØ[\™\ØÜ™Y[X[
+ÚÜYSĞ]]\N”SİÓÍÌÑÑœÔYLØ
+H8 %›È™]È\ÜˆÜ™Y[X[˜Ü™X]Yˆš\œİ]™KX\H][\˜Z[Y
+Ü™Y[X[	ÔSİÓÍÌÑÑœÔYLÉÈ\È›İ\ØX›H[ˆ\ÂÛÜšÙ›İÉÜÈ›Ú™Xİ8 %HÜ™Y[X[]™Y[ˆHİÛ™\‰ÜÈ\œÛÛ˜[ˆ›Ú™XİHÛÜšÙ›İÈ[‚HØ[\™\Èİ\İÛY\ˆÙ\šXÙHˆX[H›Ú™Xİ
+Kˆ
+Š•HİÛ™\ˆ™\ÛÛ™Y\ÈšXH‰ÜÈİÛˆÚ\š[™ÂXŠŠˆ
+Ú\™Y›İ[İ™Y™\Ù\š[™È[Nİ\ˆ\œÛÛ˜[]ÛÜšÙ›İÈ™Y™\™[˜Ù\ÈÈHØ[YB˜Ü™Y[X[
+KˆH™]šYY\]H\YYˆ‰ÜÈİÛˆ˜[Y]Üˆ[ˆ™Y\ÙYÈ]H\]HTB˜ÛX\ˆH›ÙIÜÈ›İËYXYĞ]]\XÜ™Y[X[[X\[H
+›ÙH\H‹‹ˆÙ\È›İXØÙ\˜Ü™Y[X[	ÛĞ]]\IØÛ˜ÙH]][XØ][Û˜\È™YYš[™YÜ™Y[X[\X
+H8 %\È[H\È›Â™Y™™XİÛˆ™\]Y\İ™Z]š[Üˆ
+H›ÙHÛ›H™XYÈHÚÜYSĞ]]\XÛİÚ]™[ˆHİ\œ™[˜]][XØ][Û˜˜[YJKÛÈHœ›Ş™[ˆÛİ\˜ÙHZ\œ›ÜœÈ]™\˜˜][H›ÜˆÛ™\İ\š]K[™H\İ˜\ÜÙ\È]Ø[ˆ™]™\ˆ™XÛÛYH™XXÚX›HÚ]İ]]][XØ][Û˜™YÜ™\ÜÚ[™Èš\œİ‚‚™Y›Ü™HX›\Ú[™Ë™\šYšYYÚ]H™X[\ÛÛ]Y™XY[Û›H›Ø™NˆH[\Ü˜\HX[X[]šYÙÙ\‚˜œ˜[˜Ú
+™\›ÈÛÛ›™Xİ[ÛœÈÈ[H›ÙXİ[Ûˆ›ÙKÜİÜ™\ÈØ[ÜˆÙ[™™\X
+H\ÜİYY˜ÈÚÜÈ˜[YH^\ÚÜYQÛXZ[ˆHX›İYÚH™]ÈÜ™Y[X[[™ÛİHÙ[Z[™HŒ‚˜ÈœÚÜÈ›˜[YHˆØ[\™\È‹›^\ÚÜYQÛXZ[ˆˆ[]Ø™K]X‹›^\ÚÜYK˜ÛÛHŸ_XˆÛÛ™š\›YY›Â˜]]][Û˜Ù^]ÛÜ™[]Ú\™H[ˆH›ÙIÜÈ\˜[Y]\œËˆ™[[İ™YH›Ø™Hœ˜[˜Ú[™]È[\Ü˜\B™^Xİ][Û‹\™][[Ûˆİ™\œšYH[[YYX][HY\‹™K]™\šYšYY[]™KÜÛİ\˜ÙH\š]H
+›Ù\Ëœ\˜[\ËÜ™Y[X[ËÛÛ›™Xİ[ÛœË\ØX›Y\İ]KÙ][™ÜÈ]KZY[XØ[
+H[™›İÜ˜\š[˜\šX[È
+Ú[™ÛHÙ[™™\X[˜›İ[™YÙNÈÚ[™ÛHZ[[X[ˆ\ØØ[][Û˜[˜›İ[™YÙNÂŒMK[Z[]HØÚY[HšYÙÙ\ˆØ[››İ™XXÚÙ[™™\X
+K[ˆX›\ÚY\ÈXİ]™H™\œÚ[Û‚˜ÙMŒXÙMMËMËNNLËLÙYÌN˜‚‚ˆÈÈ™[[İ™H[[[Û˜[™K\Ù[™[^H8 %Œ‹LLLÈ
+Ù\ÜÚ[ÛˆÊB‚•HİÛ™\ˆ™[[İ™YH™\]Z\™[Y[›ÜˆH[X[‹[ZÙH]\ÙH™Y›Ü™H™\Z[™ËˆH‹[›Ù\ËX˜\ÙKØZ]››ÙH]™]š[İ\ÛH[]™\H™\H›ÜˆHš^YHÙXÛÛ™ÈØ\È™[˜[YYœ›ÛH[X[ˆ[^XÂ˜™KTÙ[™ÛÛ[X][Û˜[™]ÈØZ]Ù]ÈÙXÛÛ™È
+œ›Ş™[ˆÛİ\˜ÙHÒKLM‚˜ŒÙMNYÌÍŒÍÙNÌNMX˜MLÌ˜ÍNM˜ÎXÙYNMØÙLÎ™™ŒŒX˜İ[NH›Ù\È8 %\È\ÈBœ\˜[Y]\‹Ü™[˜[YHÚ[™ÙHÛ›K›È›Ù\ÈYYÜˆ™[[İ™Y
+KˆH™[˜[YHØ\È›ÜYØ]YÈ]ÈÛÂ™İÛœİ™X[H™Y™\™[˜Ù\È
+ÑUš[˜[Ú]ÛÛİY\ÜØYÙ\ØT“™\šYHš[˜[Ú]ÛÛİ™\™XYœĞÛÙJK‚“›Èİ\ˆØ]HÚ[™ÙYˆ˜]ËX›ÙH[™Ü™\ÜÈÚXÚÜËHÚ]ÛÛİØ\Xš[]KUT“
+È[˜ÚÜ‹\™\™XY[Ù[ŠPPÈ™\šYšXØ][ÛˆØ\È[™XYH™[[İ™Y›Üˆ[ˆ[œ™[]Y\İ™X[HÚ]ÛÛİY™Xİ8 %ÙYHXÚ\Ú[Û‚ŒLÊK™\^KÚY[\İ[˜ŞK™[Ûˆ\˜Xš[]Kœ˜[™Ú[˜›Ş\ÛÛ][Û‹Y[]HÚXÚÜËÚÜYH™XY™\šYšXØ][Û‹[Ù[YÙ]ÚÚ[İÚ]ÚHš[˜[™\™XYØ[˜ÚÜˆØ[˜Ù[][Û‹HÙ[™X\ÙKBŒMK[Z[]H™XÛİ™\KÔÓHØÚY[Hœ˜[˜Ú[™HÚ[™ÛHÙ[™™\X›ÙH\™H[[˜Ú[™ÙY[™œ™K]™\šYšYY]KZY[XØ[YØZ[œİH]™HÛÜšÙ›İÈY\ˆX›\Ú
+›ÙH\˜[\ËÜ™Y[X[Ë[™H[ÛÛ›™Xİ[ÛˆYÙK\Ù]Y™ˆØ[YH˜XÚÈ[\NÈÙ[™™\Xİ[\È^XİHÛ™H[˜›İ[™YÙB™œ›ÛHİ\İÛY\ˆYÜ™\ÜÈ]]Üš^™YØZ[[X[ˆ\ØØ[][Û˜İ[\È^XİHÛ™H[˜›İ[™YÙB™œ›ÛH›İ]Hİ\İÛY\ˆÙ\šXÙHXÚ\Ú[Û˜İ]]K[™HMK[Z[]HØÚY[HšYÙÙ\ˆİ[Ø[››İœ™XXÚÙ[™™\X
+Kˆ]™HÛÜšÙ›İÈĞ^QŒÖ–’ÌÜX›\ÚY\ÈXİ]™H™\œÚ[Û‚˜ÌÙLÙLÙŒ‹XÍLËM˜KX™Ø‹YLLÌ™ÍXÈ\È\]H[ÛÈ™\İÜ™YH^Xİ][Û‹\™][[ÛˆÙ][™ÜÂÈØ]™SX[X[^Xİ][ÛœÎ™˜[ÙKØ]™Q]Q\œ›Ü‘^Xİ][Û‰Û›Û™IËØ]™Q]TİXØÙ\ÜÑ^Xİ][Û‰Û›Û™IØÚXÚY™Y[ˆYÛˆYXØ[Ø[œ›ÛHX\›Y\ˆXYÛ›ÜİXÈÙ\ÜÚ[ÛœËˆ›Û˜XÚÈÚ[Âœ™\Ù\™YˆÍLNYX‹LŒ˜Ì‹MXKX˜ÙY‹MÍNLÎ™X
+ÜšYÚ[˜[™K\Ù\ÜÚ[Ûˆ˜\Ù[[™JH[™˜ØØØNYNX‹MŒL‹M‹NØMÍÌÍXÌÎXNXY˜
+\İ[NK[›ÙHÓKÙ\ØØ[][ÛˆÜ˜\Ú]HÛ\ÂØZ]
+K›İİ[™\İÜ˜X›HšXHXÜ×Û—×Ü™\İÜ™WİÛÜšÙ›İ×İ™\œÚ[Û˜‚‚ŠŠ“YX\İ\™Y][˜ŞJŠˆ›È™]È™X[[˜›İ[™Y\ÜØYÙH\È\œš]™YÚ[˜ÙHX›\ÚÛÈH™\›ËY[^B˜ÛÙH]]Ù[ˆ\È›İY]›ÙXÙYH\™XİHØœÙ\™Y›İ[™š\8 %Ş[\Ú^š[™ÈH˜ZÙH[˜›İ[™˜İ\İÛY\ˆ]™[ÈX[Y˜Xİ\™H][X™\ˆ\È^XİHÚ]\È›Ú™Xİ	ÜÈ]šY[˜ÙH[\È›Ü˜šY‚’[œİXY\È\ÈÛÛ\]Yœ›ÛHH™X[[™XYK\™XÛÜ™Y›ÙXİ[Ûˆ›İ[™š\ˆ^Xİ][ÛˆLÍ˜ŠÙXšÛÚË]šYÙÙ\™Y™X[İÛ™\ˆÚ]Ğ\Y\ÜØYÙH¶avb¶aˆ6)öa¶*ˆˆÛˆÛÛ™\œØ][ÛˆÌÈ]ŒŒ‹LLLÕMŒN‹[™\ˆH™K^™\›ËY[^HÛÙJHÚİÜÈHÚ]ÛÛİ[˜ÙXšÛÚÈ™XÙZ]™Y]˜MŒNKŒÍ˜[™Ù[™™\XÛÛ\][™È
+ŒÈÚ]ÛÛİ
+H]MŒNLKŒLÖ˜8 %Hİ[š[˜›İ[™]Ë\™\K\Ù[][˜ŞHÙˆKÍ\ËÙˆÚXÚH[X[ˆ[^X›ÙH[Û™HÛÛœİ[YY^XİBKŒÈ
+™\šYšYYœ›ÛH]ÈİÛˆ^Xİ][Û•[YX[ˆH^Xİ][Ûˆ™XÛÜ™
+KˆİX˜Xİ[™È]š^Y››İË\™[[İ™YØZ]›Ú™XİÈHØ[YK\Ú\H›İ[™š\]
+Š¸¢bÍ\ÊŠ‹[Ùˆ][˜]›ÚYX›HÚ]ÛÛİ˜[˜ÚÜ‹\™\™XYÜİÜ™\ÈÛZ[KÛX\ÙK[™š[˜[Ú]ÛÛİÙ[™TH[YKˆ\È\ÈHÛÛ\]Yœ›Ú™Xİ[Ûˆœ›ÛH™X[\İÜšXØ[]H
+ÓÓ‘’T“QQTÕQ›ÜˆHKŒÈ™[[İ™YÛÛ\Û™[ÈĞÕSQS•Qœ›Ú™Xİ[Ûˆ›ÜˆH8¢bÍ\È™[XZ[™\ŠK›İHÓÓ‘’T“QQU‘HYX\İ\™[Y[ÙˆH™]È™\›ËY[^H]8 %]™\]Z\™\ÈÛ™H™X[™]È[˜›İ[™Y\ÜØYÙKÚXÚ\È[ÛÈHÛ™H[˜]›ÚYX›Hİ\Y›Ü‚“İ]ÛÛYHÈ™[İË‚‚ˆÈÈÙ[‹\Ù\šXÙKYš\œİ\ØØ[][ÛˆÚ]\˜X›HÓH
+XÚ\Ú[ÛˆM
+H8 %Œ‹LLLÈ
+Ù\ÜÚ[ÛˆŠB‚•HİÛ™\ˆ™Z™XİYHš[Üˆ[\œ™]][Ûˆ]Ø[˜Ù[][Û‹Ü™Y[™ØÛÛ\Z[[™İXYÙHÜˆ[B”ÚÜYKÛ[Ù[˜Z[\™HÚİ[[[YYX][HYH[X[˜X™[ˆÛÜœ™XİY[™[\[Y[Y[ˆBœØ[YHÛÜšÙ›İÎˆZ[[X[ˆ\ØØ[][Û˜›İÈ\È^XİHÛ™H[˜›İ[™YÙH
+^XÚ]˜İ\İÛY\—Ü™\]Y\İYÚ[X[˜™\šYšYYHHÜ˜\\İ
+Kˆ]™\Hİ\ˆ™]š[İ\ÛKY\ØØ[][™ÈØ\ÙBœÙ[‹\Ù\™\ÈÚ]H›İ[™Y›Û‹Z[™[Y™\H
+Ü™\‹\İ]\È\ØÛZ[Y\ˆ›Ü‚˜Ø[˜Ù[][Û‹Ü™Y[™ØÛÛ\Z[Z[š[][KZY[YšY\ˆÛ\šYšXØ][Ûˆ›ÜˆÚÜYH˜Z[\™\ËÛZ\ÜÚ[™Â™]KØ[XšYİZ]KHš^Y˜[˜XÚÈÙ[[˜ÙH›Üˆ[Ù[YÙ][šX[Üˆ[\İYİ]]
+KˆH\˜X›BŒZİ\ˆ[œ™\ÛÛ™YXØ\ÙHÓH
+ZYÜ˜][ÛˆMØØ[\™\×ØÜ×Øİ\İÛY\—Ü™\WÜÛWÙ\ØØ[][Û‹œÜ[œØÚ[XH™\œÚ[ÛˆM
+H›İÈ˜XÚÜİÜÈ[Ùˆ\ÎˆÛ™HÜ[ˆØ\ÙH\ˆÛÛ™\œØ][Û‚ŠØ[\™\×ØÜË˜İ\İÛY\—Ü™\WÜÛWØØ\Ù\Ø
+K]ÛZX×İ\Ù\Øİ\İÛY\—Ü™\WÜÛWØØ\ÙX
+İXÚÜ™\ÛÛ™K›™]™\ˆ™\Ù]ÈHÛØÚÈÛˆH™\X]YY\ÜØYÙJK]ÛZX×ØÛZ[WÙYWØİ\İÛY\—Ü™\WÜÛWÙ\ØØ[][Û˜ŠŒÚMÛZ[HÚ[™İË“ÔˆTUHÒÒTĞÒÑQX\ÙKØ[YH]\›ˆ\ÈÙ[™\™XÛİ™\JK˜]ÛZX×Ùš[˜[^™WØİ\İÛY\—Ü™\WÜÛWÙ\ØØ[][Û˜
+\ØØ[]YÈ™\ÛÛ™YX\ËZ[™[YÚX›HÈ™[X\ÙY›Ü‚œ™]JKˆH^\İ[™È™XÛİ™\ˆ[XšYİ[İ\ÈÙ[™È]™\HMHZ[]\ØšYÙÙ\ˆØZ[™YÛ™H\ÛÛ]Y™˜[‹[İ]œ˜[˜Ú›Üˆ\È8 %›È™]ÈšYÙÙ\‹ÛÜšÙ›İËÙXšÛÚËÜˆÜ™Y[X[ˆÜ˜\\İÈ›İ™B›™Z]\ˆ\Èœ˜[˜Ú›ÜˆHšYÙÙ\ˆØ[ˆ™XXÚÙ[™™\Xˆœ›Ş™[ˆÛİ\˜ÙHÒKLMˆ\Â˜LL™ÌÌLXŒÌÙŒÍŒ™LØØŒÙMLÙ˜ØLÌ™ŒNM˜NŒÙMNÌÎØNÌMÍ™X
+ˆOˆNH›Ù\ÊKˆ[”]Ûˆ
+LŠH[™›ÙH
+JÊHİZ]\È\ÜË‚‚ŠŠ“›İY]™[Û‹]™\šYšYY
+Šˆ\ÈÙ\ÜÚ[Ûˆ\È›È™[ÛˆPÔXØÙ\ÜËˆZYÜ˜][ÛˆM\ÈÜš][‹]Âœİ]XÈÛÛ˜Xİ\İÈ\ÜË]]\È›İ™Y[ˆ\YYÈH]™H]X˜\ÙKˆ[[]\È\YYŠHHÙ\ÜÚ[ÛˆÚ]™[ÛˆPÔXØÙ\ÜËÜˆHHİÛ™\ˆšXHH™[ÛˆÛÛœÛÛJKH™]Â˜ÜİÜ™\Èİ\İÛY\ˆ™\HM\]HÓHØ\ÙX[™HÓKY\ØØ[][ÛˆİX‹Xœ˜[˜Ú	ÜÈÜİÜ™\ÈØ[ÂÚ[\œ›ÜˆÛˆ]™\H^Xİ][ÛˆÛ˜ÙHX›\ÚY]™H8 %\È\È˜Z[[İY›İ˜Z[\Ú[[[™Ù\Â››İ›ØÚÈÜˆ[^HÙ[™™\X
+^H\™H\˜[[›İÙ\]Y[X[ÛÛ™š\›YYHÜ˜\™XXÚXš[]B\İÊK]HZİ\ˆ\ØØ[][Ûˆ™X]\™H]Ù[ˆ\È›İ[˜İ[Û˜[H]™H[[HZYÜ˜][Ûˆ[œË‚‚ŠŠ”Ù\\˜][Kİ[[œ™\ÛÛ™Y
+ŠˆHÚÜYHÜ™Y[X[RÙÓ“UÔ]Í‘Í“X
+•[›˜[YYÜ™Y[X[‹™Ù[™\šXÈĞ]]\X\JH™]\›œÈÚÜYIÜÈİÛˆH’[˜[YTHÙ^HÜˆXØÙ\ÜÈÚÙ[ˆ˜Ú[‚˜Ø[Y›İYÚH^Xİ]™H›ÙKØÜ™Y[X[8 %\È\È[ˆ[˜[YÙ^\™YXØÙ\ÜÈÚÙ[‹›İBœØÛÜKY[šX[\œ›Üˆ
+ÚXÚÛİ[™HHŒÚ]HÜ˜\SPĞÑTÔ×ÑS’QQ\œ›Üˆ[œİXY
+Kˆš^[™Â\È™\]Z\™\È[ˆĞ]]™X]]Üš^˜][ÛˆÛ›HHXØÛİ[İÛ™\ˆØ[ˆÛÛ\]H[ˆHœ›İÜÙ\È›ÈØÛÜB˜Ú[™ÙKÜ™Y[X[™\XÙ[Y[ÜˆÛÜšØ\›İ[™Ø[ˆİXœİ]]H›Üˆ]‚‚ˆÈÈİÛ™\‹Y\™XİY\ØØ[][ÛˆÛXŞHÛÜœ™Xİ[Ûˆ8 %Œ‹LLLÂ‚•HİÛ™\ˆÛÜœ™XİYH\ÚYÛˆY™XİˆH›İØ\È™X][™È[HÚÜYKØÜ™Y[X[Ù]KYØ\™˜Z[\™H\È[ˆ[[YYX]HÚ[[[X[ˆ[™Ù™ˆ
+Y[™ÈH[X[˜X™[[™ÛÚ[™È]ZY]
+Kš[˜ÛY[™ÈÛˆÛÛ™\œØ][ÛˆÌÈY\ˆHˆÚÜYHÜ™Y[X[˜Z[Y[ˆÜ™\ˆÛÚİ\ˆB˜ÛÜœ™XİYš[™[™ÈÛXŞNˆ\ØØ[]HÈHİÛ™\ˆÛ›HÚ[ˆHİ\İÛY\ˆ^XÚ]H\ÚÜÈ›ÜˆBš[X[‹ØYÙ[ÜˆHØ\ÙHİ^\È[œ™\ÛÛ™Yİ\œÎÈ]™\Hİ\ˆÚÜYH˜Z[\™HÜˆZ\ÜÚ[™ËY]B˜Ø\ÙH]\İ][\Ù[‹\Ù\šXÙHÜˆ\ÚÈ›ÜˆHÚ[™ÛHZ\ÜÚ[™ÈY[YšY\‹™]™\ˆYB˜[X[˜X™[ÜˆÛÈÚ[[ˆš^Y[œÚYHHØ[YHÛÜšÙ›İÈÛ›KØ[YHÜ™Y[X[›È™]Âœ™\Ûİ\˜Ù\Îˆ™\\™HÚÜYHÜ™\ˆ™XY[™Z[™\šYšYYÚÜYHÜ™\ˆ™\X›İÈ\›‚›Z\ÜÚ[™Ë\Û™KZ\ÜÚ[™Ë\›ÙXİ]ÜXËÚÜYHTKØÜ™Y[X[˜Z[\™KÜ™\‹Øİ\İÛY\ˆ[XšYİZ]KšY[]HZ\ÛX]Ú
+™]™\ˆ™]™X[[™ÈHÜ™\ˆ™[Û™ÜÈÈHY™™\™[Û™JK›ÙXİ[›İY›İ[™˜[™[˜Ù\Z[‹Ü\X[[š[Y[İ]\È[ÈH\™XİÛ\šYšXØ][Ûˆ™\H[œİXYÙ‚˜Z[[X[ˆ\ØØ[][Û˜ÈHÚÜYHÜ™\ˆ™XY™XYOØ˜[ÙHœ˜[˜Ú›İÈÚ[ÈÂ˜[X[ˆ[^X
+HÙ[™]
+H[œİXYÙˆ\ØØ[][Û‹ˆØ[˜Ù[YÜ™Y[™YÜ™\œÈİ[\ØØ[]BŠH™\ÛÛ™YÙ[œÚ]]™H[Û™^Hİ]HX]Ú[™ÈHÜšYÚ[˜[X[™]ÜH™Y[™ØØ[˜Ù[][Ûˆ[JK˜\ÈÙ\È[ˆ^XÚ]İ\İÛY\ˆ™\]Y\İ›ÜˆH[X[ˆYÙ[
+™]È›İ]\ˆ]Xİ[Û‹˜\œ›Ü—ØÛÙNˆİ\İÛY\—Ü™\]Y\İYÚ[X[˜
+H[™^\İ[™È[Ù[ØYÙ]ÚÚ[\İÚ]Ú[˜Ù\Z[Bœ]ËˆHZİ\ˆ[œ™\ÛÛ™YXØ\ÙH\ØØ[][ÛˆØ\È›İ[\[Y[Y[ˆ\È\ÜÈ8 %]™\]Z\™\È™]Â™\˜X›HÓK]˜XÚÚ[™Èİ]H[™\Èİ]ÙˆØÛÜH›Üˆ\Èš^È›YÙÙY\ÈH›ÛİË]\‚‚ÛÛ™\œØ][ÛˆÌÉÜÈ[X[˜X™[YY[™\ˆHš[Üˆ[˜ÛÜœ™XİÛXŞKØ\È™[[İ™Y]™HšXB˜H[\Ü˜\K\ÛÛ]YÙ[[™[YØ]Yœ˜[˜Ú™]\Ú[™ÈH^\İ[™ÈXY\ˆ]]XØÛİ[Ø˜Ü™Y[X[[™H^\İ[™ÈÔÕÚ]ÛÛİ[X[ˆX™[›ÙIÜÈ[™Ú[]\›ˆ
+XYY[™™\›È[\˜Xİ[ÛˆÚ]›ÙXİ[ÛˆÜİÜ™\ËÜÙ[™ÙÚXË˜[›™Yİ]œ›ÛH[ˆ^\İ[™ÈÛÛ›™Xİ[Û‚Ú]İ]™[[İš[™È]
+KˆÚ]ÛÛİ	ÜÈİÛˆXİ]š]HÙÈ™XÛÜ™Y6+¶+öav*H6.vava6)ö(H6`ö)öa6)ö*6,vb¶,ˆ6(ö,¶)öa[X[˜˜]LÎÎVÈHÛÛ›Û›Ø™HY\Ø\™˜Z[YÛ›H[˜ÚÜ—ÛZ\ÜÚ[™×ÛÜ—Ù\XØ]X
+^XİY™›ÜˆHŞ[]XÈY\ÜØYÙHY
+K›İ[X[—ÛX™[Ü™\Ù[ÛÛ™š\›Z[™ÈÚİ[™\OØÂH[˜ÚÜ‰ÜÈ]™HX™[ÚXÚÈ›ÈÛ™Ù\ˆ›ØÚÜÈHÛÛ™\œØ][Û‹ˆHØØY™›Û›Ù\ÈÙ\™H[Bœ™[[İ™Y[[YYX][HY\È]™HÜ˜\Ø\È™K]™\šYšYYÈX]ÚHœ›Ş™[ˆÛİ\˜ÙH^XİBŠˆ›Ù\ËÚ[™ÛHÙ[™™\X[˜›İ[™YÙK™XÛİ™\H\ÛÛ]Y›Ë\Ø]™HÙ][™ÜÈ™\İÜ™Y
+K‚“™]ÈÛİ\˜ÙHÒKLMˆ\ÈÍÌÎXÌXÎLØÍŒ™ŒXØÌYYÎŒLXMÌY™LLYLNXÌXÌÌÌÙ˜ÍMLYŒ˜X‚‚ˆÈÈİÛ™\ˆ™YY˜XÚÈš^\ÎˆÛ\ÜÚYšXØ][Û‹]™HÚÜYH™Y™\™[˜ÙK[]™\H]Y]8 %Œ‹LLLÂ‚“İÛ™\‹\™\ÜY[˜İ[Û˜[˜Z[\™\ÈÙ\™HXYÛ›ÜÙYœ›ÛH]™H]šY[˜ÙH
+›Ë\Ù[™XYÛ›ÜİXÂ™^Xİ][ÛœÈLÌM‹MLÌMÊKˆš[™[™ÜÎˆ
+JH[™YHİ]ÛÚ[™È™\Y\ÈØ\œHY]KXÛÛ™š\›YY˜[]™\™Yİ]\ÈÚ]™X[Ú]Ğ\Ø[ZYÛİ\˜ÙWÚYÈY™\ÜÙYÈHİÛ™\‰ÜÈ[X™\‹ÛÂ˜[œÜÜÛÜšÜÎÈHÛ™K\ÚYH™\Ü™YYÈHİÛ™\ˆÈÚXÚÈH\Ú[™\ÜË[[X™\ˆÚ]‚ŠŠHH›İ]Ù[ˆ\ØØ[]YÛÛ™\œØ][ÛˆÌÈ]LÎŒŒŒÖˆ
+Xİ]š]HY\ÜØYÙNˆ[X[ˆX™[YY
+B˜Y\ˆ6*6a6.¶bˆ6)öa6-öa6*]HÜ™\ˆ][™HˆÚÜYHÜ™Y[X[˜Z[YHİ\İÛY\œÈ]Y\B¸ %HØ[YH]Y\HİXØÙYYÈÚ]˜[YØÛÜ\ËÛÈHˆÚÜYHĞ]]Ü™Y[X[\ÈZ\ÜÚ[™Âœ™XYØİ\İÛY\œËÜ™XYÛÜ™\œÈ
+[™™YYÈ™XYÜ›ÙXİÈ›ÜˆH™]È›ÙXİ]
+NÈ[[š^YB›Ü™\ˆ[™›ÙXİ]È\ØØ[]H˜Z[XÛÜÙYH\ÚYÛ‹ˆH[X[ˆX™[[ÛÈ^Z[œÈH›İ	ÜÂœÚ[[˜ÙHÛˆ]\ˆY\ÜØYÙ\Ëˆ
+ÊHİÜ™HØØ][Û‹ÚY[]H]Y\İ[ÛœÈ
+6b6b¶aˆ6av`¶,v`öav#6)öa¶*¶aH6`vbˆ6av-v,v'ÊHÙ\™B›Z\Ü›İ]Yİ][Ù‹\ØÛÜH[™[ˆİ\™\ÜÙYÈH›İ]\ˆ›İÈ[œİÙ\œÈ[H]\›Z[š\İXØ[H\Â”Ø]YK\İÜ™HT\Ë\œÛÛ˜[]Y\İ[ÛœÈİ^Hİ][Ù‹\ØÛÜKˆ
+
+H›ÙXİšXÙKØÛÛÜˆ]Y\İ[ÛœÈ›İÂœ›İ]HÈH]™HÚÜYH›ÙXİÈ]Y\H[™™\HÛ›Hœ›ÛH™]\›™Y]H
+]H
+ÈĞTˆšXÙJK™\ØØ[][™ÈÚ[ˆ›İ[™È\È›İ[™ÈHY[[Üš^™YÎLÌNLšXÙH˜XİÈÙ\™H™[[İ™Yœ›ÛH›İBœ›İ]\ˆ[™H[Ù[›Û\[™H[Ù[\È[œİXİYÈ\ØØ[]HšXÙKÜİØÚÈ]Y\İ[ÛœË‚“™]ÈÛİ\˜ÙHÒKLMˆ\È˜YXÍ™XXØØØŒÍÌÎMÙŒŒÌNLMŒLL˜™˜L™YYNMNXMŒÌM™MN˜ŒØ‚‚ˆÈÈš\œİ]™Hİ\İÛY\ˆ›İ[™š\8 %Œ‹LLLÈLÎŒŒˆUÂ‚Y\ˆH[˜ÚÜˆš^Ø\ÈX›\ÚY\È]™H™\œÚ[ÛˆLÍØÙMÌXX‹MLNKXMØKYM˜NNNÎŠÛÛ[Z]NLXMLMØ
+KHİÛ™\‰ÜÈ™X[Ú]Ğ\[˜›İ[™ÛÛ\]YH[›İXİY][‚œ›ÙXİ[Ûˆ›ÜˆHš\œİ[YKˆ[™\[™[H]Y]Y]šY[˜ÙH
+ÛÙ^]™H™[Ûˆ
+ÈÚ]ÛÛİ
+N‚™Ü™Y][™È[˜›İ[™ÎLÌLÌØ™XXÚYİ]HÙ[Ú]Ù[™Ø][\ØÛİ[LXİ]ÛÚ[™ÈÚ]ÛÛİ›Y\ÜØYÙHÎLÌLÙ[Ø]LÎŒŒŒÖÈH›ÛİÚ[™Èİ][Ù‹\ØÛÜH[˜›İ[™ÎLÌLM™XXÚYœİ]HÙ[Ú]Û™H][\İ]ÛÚ[™ÈÎLÌMLÍØLÎŒŒŒ‹ˆÛÛ™\œØ][ÛˆÌÈÚİÜÈ›İœ™\Y\ÈÚ]Ú]Ğ\[]™\HXÚÜËˆ^XİHÛ™H™\H\ˆ[˜›İ[™È›Èš]˜]H›İNÈ›ÈÚÜYBÜš]NÈ]\›Z[š\İXÈ›İ]\ÈÛ›H
+›È[Ù[Ø[
+Kˆ^Xİ][Ûˆ™][[Ûˆ™[XZ[™Y\ØX›Y\š[™Â\ÙH›ÙXİ[ÛˆÙ[™ËˆXYÛ›ÜİXÈX[X[^Xİ][ÛœÈLØ8 $ØLÌ˜X\›Y\ˆHØ[YHİ\ˆ˜[ˆÛ‚H™KYš^[˜ÚÜˆ[™\›Z[˜]Y˜Z[XÛÜÙYÚ]İ][HÙ[™‚‚”İ[İ]İ[™[™È™Y›Ü™HXÛ\š[™È[Ü\˜][Û˜[™XY[™\ÜÎˆ]™Hİ][Ù‹\ØÛÜHİ\™\ÜÚ[Û‚ŠÙXÛÛ™›İXÙH[œÚYH]\İ™HÚ[[
+K]™HÙ[œÚ]]™K[Y\ÜØYÙH\ØØ[][Ûˆ
+[X[˜X™[›Â˜İ\İÛY\ˆÙ[™
+KH]™H[Ù[\›İ]H™\HÚ]YÙ]™\Ù\˜][Û‹[™[ˆÜ[Û˜[ØY™HÜ™\‚›ÛÚİ\È[XšYİ[İ\Ë\Ù[™™XÛİ™\H™[XZ[œÈ›İ™[ˆŞ[]XØ[HÛ›K‚‚ˆÈÈ™X[Z[˜›İ[™[˜ÚÜˆš^8 %Œ‹LLLÂ‚•Hš\œİ™X[[˜›İ[™Y\ˆHØ\Xš[]KUT“[™Ü™\ÜÈ\ŞH\ÜÙY[™Ü™\ÜË›ÙXÙYH]™B™\˜X›HÛZ[H[ˆ™[Ûˆ
+š\œİ]™H›ÛÙˆÙˆH™\İšXİYÜİÜ™\È]
+K[™›İ]][XØ]YÚ]ÛÛİ™\™XYÈ™]\›™YŒ8 %[ˆ]™\H]™[˜Z[Y[˜ÚÜ—ÛZ\ÛX]Úˆ›ÛİØ]\ÙK›İ™[ˆB›]™HXYÛ›ÜİXÈ^Xİ][ÛœÈLø $ÍLÌˆHÛÛ™\œØ][Û‹[Y\ÜØYÙ\ÈTHÛZ]ÈXØÛİ[ÚYœ›ÛB›Y\ÜØYÙH›İÜÈ
+[›ZÙHÙXšÛÚÈ^[ØY›İÜÊKÛÈH[˜ÚÜ‰ÜÈXØÛİ[ÚYOOHMÎNMÌØÛÛ\\š\ÛÛ‚™˜Z[YÛˆ[Ù[Z[™HY\ÜØYÙ\ÎÈHÛ[›™Yš^\™\ÈY\Üİ[YYHÜ›Û™È›İÈÚ\KˆB˜[˜ÚÜˆ›İÈ˜[Y]\ÈXØÛİ[ÚYÛ›HÚ[ˆHšY[\È™\Ù[
+HTHØ[]Ù[ˆ\È[›™YÈXØÛİ[MÎNMÌÈHT“
+K[™™\\™H˜]ÈÚ]ÛÛİ[™Ü™\ÜØØZ[™YH›Û‹\›ÙXİ[Û‹[Û›B˜˜\ÙMXYÛ›ÜİXÈ[œ]\ÙY›ÜˆİÛ™\‹Z[š]X]YX[X[[œËˆH™YÜ™\ÜÚ[Ûˆ\İ^\˜Ú\Ù\ÈB˜[˜ÚÜˆYØZ[œİ™X[TK\Ú\Y›İÜËˆ™]ÈÛİ\˜ÙHÒKLMˆ\Â˜ØLLÙLÎM˜Î™ØÍ™LŒÙŒ˜ÙNNL™ŒÌÍ˜ÌLYM˜ÍØXLYLYX‚‚ˆÈÈÚ]ÛÛİPPÈY™Xİ[™Ø\Xš[]KUT“[™Ü™\ÜÈ8 %Œ‹LLLÂ‚•Hš\œİ™X[İÛ™\‹\Û™HÚ]Ğ\[˜›İ[™
+Ú]ÛÛİY\ÜØYÙHÎLMÌÍˆ^Xİ][ÛˆLØ
+BØ\È™Z™XİYÚYÛ˜]\™WÛZ\ÛX]ÚHH›İXİY[™Ü™\ÜÈØ]Kˆ›ÛİØ]\ÙH\È\İ™X[HY™Xİ˜Ú]ÛÛİØÚ]ÛÛİÌLÎNˆÚ]ÛÛİÚYÛœÈÙXšÛÚÈ[]™\šY\ÈÚ][ˆ[\›˜[XX×İÚÙ[˜]\Â™^ÜÙY›İYÚ™Z]\ˆHRH›ÜˆH‘TÕTKÚ[HHÚYÛš[™È›Ü›X]]Ù[ˆX]Ú\ÈBÛÜšÙ›İÈ[\[Y[][Ûˆ^XİKˆ™XØ]\ÙH›ÈØZ[˜X›HÙXÜ™]Ø[ˆ™\šYHÙ[Z[™H[]™\šY\Ë™XÚ\Ú[ÛˆLËXYÜXØ\Xš[]K]\›Z[™Ü™\ÜËXY\‹XÚ]ÛÛİZXXËYY™Xİ™[[İ™\È[]™\K\ÚYÛ˜]\™B™[™›Ü˜Ù[Y[[™™\İÈ[™Ü™\ÜÈ]][XÚ]HÛˆHØ\Xš[]HÙXšÛÚÈ]H[˜Ú[™ÙYœİXİ\˜[ÚXÚÜÈ
+˜]È›ÙKHZP‹”ÓÓ‹[Û›H\œÙHY\ˆHØ]JK[›™YXØÛİ[Ú[˜›ŞB˜]][XØ]YÚ]ÛÛİ™\™XY[˜ÚÜ‹[™H]ÛZXÈÛZ[KÛX\ÙH^Y\‹ˆHœ›Ş™[ˆÛİ\˜ÙH\È›İÂˆ›Ù\ÎÈHÜ\ÈXØÛİ[ØÜ™Y[X[\È[˜›İ[™]™]Z[™Yˆ™]ÈÛİ\˜ÙHÒKLMˆ\Â˜ŒYM™ŒÌ˜LÍYLÍÙÎÙ˜ÍØÍÌŒŒØÍŒÎMÌÎMÙX˜ÌNMYYY˜™XXXNY˜ˆ^Xİ][Ûˆ™][[ÛˆØ\Â™[˜X›Y[\Ü˜\š[H›ÜˆHXYÛ›ÜİXÈØ\\™H[™]\İ™H™]\›™YÈ›Ë\Ø]™HÚ]Hš^™\Ş[Y[ˆHİÛ™\‹\Û™H›İ[™š\™[XZ[œÈHXØÙ\[˜ÙHØ]K‚‚ˆÈÈ™XÛİ™\HØY[˜ÙH][İHš^8 %Œ‹LLLÂ‚•H›İXİYU”™XÛİ™\HØÚY[HØ\È™YXÙYœ›ÛH]™\HHZ[]HÈ]™\HMHZ[]\È[œÚYHB™œ›Ş™[ˆÛİ\˜ÙH‹Ù\Ş[Y[ËØØ[\™\ËXÜËX›İ\›İXİYY˜YšœÛÛ˜ˆ˜][Û˜[NˆHˆ›È[‚˜[İÜÈL^Xİ][ÛœÈ\ˆ[Û[™]Yİ\İ\ØYÙHØ\È[™XYH‹ÈHK[Z[]HØY[˜ÙH[Û™B˜ÛÛœİ[Y\ÈËŒ^Xİ][ÛœÈ\ˆÌ^\È[™Ûİ[^]\İH[ˆ\›İ[™Œ‹LLNKˆšYY[‚›Z[]\ÈX]Ú\ÈHL\ÙXÛÛ™X^[][H™]H[^H[™›Ü˜ÙYHZYÜ˜][ÛˆLÉÜÂ˜]ÛZX×Ü™[X\ÙWØİ\İÛY\—Ü™\WÜ™XÛİ™\XÛÛ˜XİÙY\È™XÛÛ˜Ú[X][ÛˆÓHÚ][ˆÛ™Hˆ™]B˜ÙZ[[™Ë[™ÛÜİÈŒ‹^Xİ][ÛœÈ\ˆÌ^\È
+ŒIHÙˆ[ŠKX]š[™ÈXY›ÛÛH›Üˆ›İÚ]ÛÛİ]šYÙÙ\™YÛÜšÙ›İÜËˆHšYÙÙ\ˆ›ÙHØ\È™[˜[YYÂ˜™XÛİ™\ˆ[XšYİ[İ\ÈÙ[™È]™\HMHZ[]\ØÈ™XÛİ™\Hİ[\È›ÈÙ[™]ˆH\]HX[šY™\İ››İÈ™XÛÜ™È[\˜[ÛZ[]\ÎˆMX[™‹\İ[X]Y[ÛH^Xİ][ÛœËˆ™]ÈÛİ\˜ÙHÒKLMˆ\Â˜ÌÍÙÎXÎNÎLŒ™™XLØÍÙ™X˜™™NLMYY˜™MYNXNMXLNN[™H™YÙ[™\˜]Y™[X\ÙK[ØÚÂ™YÙ\İ\ÈMMNNÎYŒMÙ˜ŒÎMØÎY˜™XŒÎMYMXÌLNLÍØ™ŒØØLLX™YXŒŒ™NLØˆ]ÛˆL‹ÎL‹“›ÙHKÌK[™H™[X\ÙK[ØÚÈÚXÚÈ[\ÜÙYY\ˆHÚ[™ÙKˆH]™HÛÜšÙ›İÂ˜Ğ^QŒÖ–’ÌÜ\È™Z[™È\]YÈ\È^XİÛİ\˜ÙNÈH™]Z[™Y›Û˜XÚÈ™\œÚ[Û‚˜ÍLNYX‹LŒ˜Ì‹MXKX˜ÙY‹MÍNLÎ™X\È[˜Ú[™ÙYˆHİÛ™\‹\Û™H[˜›İ[™›ÛÙˆ™[XZ[œÈB™š[˜[İ]İ[™[™È]šY[˜ÙK‚‚ˆÈÈÛX[‹\Ù\ÜÚ[ÛˆÚXÚÜÚ[8 %Œ‹LLLÈMMˆ
+ÌÂ‚‘Ú]Xˆ[™ÜšYÚ[˜Ù\™H™XÚXÚÙY[[YYX][H™Y›Ü™HÛÜÚ[™ÈHÛ™È[\[Y[][ÛˆÙ\ÜÚ[Û‹‚œ˜[˜ÚYÙ[Ü™\Ù\™KXØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[˜YˆÍ[™HØØ[ÚXÚÛİ]˜[Ú[YÈXÍMMLÎXŒÙÍLÌÍÙ™MÍ™™MÌÍY˜YLØÈ[™YHÚ]XˆÚXÚÜÈÙ\™HÜ™Y[‹‚•H›İXİYİ\İÛY\‹\™\HÛİ\˜ÙH™[XZ[œÈœ›Ş™[ˆ]ÒKLM‚˜˜YM™M˜™MÙYYŒÍXÙŒÍØÍÍXÍM˜ÌÙÌNŒMŒLÌÍ™MYLMŒNX[™H™[X\ÙHØÚÂ™YÙ\İ™[XZ[œÈLŒØÙYÍMÌÍÍÌLXLÍÌMNXNMLYXŒŒÍÙÌÎYLLÌØÎMŒLÎLM˜‚‚•Hİ\œ™[]™Hˆ]\È]H^\İ[™ÈU”ÛÜšÙ›İÈĞ^QŒÖ–’ÌÜ\ÈXİ]™HÛˆBœ›İXİYË[›ÙH™\œÚ[ÛˆMLŒXYKYXŒ‹MXMËYYLÍMXL˜YØˆ™\œÚ[Û‚˜ÍLNYX‹LŒ˜Ì‹MXKX˜ÙY‹MÍNLÎ™X\ÈH™]Z[™Y›Û˜XÚËˆYÙHŒ‚˜M‘Û›RÔSÎXØ\È™\Ù\™Y[™Ø\È›İ™\XÙYÜˆ\XØ]Yˆ›È™]ÈÛÜšÙ›İÈÜˆÚ]ÛÛİÙXšÛÚÈØ\ÈÜ™X]Y\š[™ÈH›İXİYXİ]˜][Û‹‚‚•Hœ›Ş™[ˆ™\šYšXØ][Ûˆ™\İ[™[XZ[œÈ›ÙHKÌK]ÛˆL‹ÎL‹\ÈÜ™Y[ˆ”ÓÓ‹Ş[^Ü˜\œ™[X\ÙK[ØÚËÙXÜ™][™RHÚXÚÜËˆ™[ÛˆXZ[ˆ™[XZ[œÈÛˆZYÜ˜][ÛœÈx $ÌLÈÚ]™\İšXİYœ[[YH›Û\Ë\™XİX›HXØÙ\ÜÈ[šYY[™H]X˜\ÙHYÙ]ÛÛ›Û[˜X›YÚ]Ú[İÚ]Ú›Ù™‹HTÑH[ÛHÙZ[[™ËHTÑŒH™\Ù\˜][Û‹[™Œ™\]Y\İÈ\ˆÛÛ™\œØ][Ûˆ\ˆ^K‚“›ÈÚÜYHÜš]Kš]˜]H›İKÜˆ[Ù[™\]Y\İØØİ\œ™Y[ˆHš[˜[Ş[]XÈ\İ˜]Ú‚‚“Û™HXÚšXØ[X[X[Y\ÜØYÙHØ\ÈÙ[Û›HÈHİÛ™\‰ÜÈÚ]ÛÛİÛÛ™\œØ][ÛˆÌËˆHš[˜[›İÛ™\‹\Û™H[˜›İ[™›ÛÙˆ\Èİ[›İ™XÛÜ™YˆHœ™\Ú[˜›İ[™Ú]Ğ\Y\ÜØYÙH]\İ›ÙXÙB™^XİHÛ™H›İXİY™\K\˜X›H]™[ÜÙ[™ÛÛ\][Ûˆ]\İ™H™\šYšYY[ˆ™[Û‹[™™\^B›]\İ›İÜ™X]HHÙXÛÛ™™\Kˆ[[]]šY[˜ÙH^\İËÈ›İØ[HŞ\İ[H[H›İ™[‚™[™È[™›Üˆ™X[[˜›İ[™˜Y™šXË‚‚Û]YHÛÙH\È™Y[ˆÚ]™[ˆH[\[Y[][Û‹Ø]Y]ÛÛ[X][Ûˆ›Û\]›È]\™HÛZ[HÜ‚˜Ú[™ÙHœ›ÛH][ˆ\È]]Üš]]]™H[[]\ÈÛÛ\\™YÚ]Ú]X‹H^Xİ]™Hˆ™\œÚ[Û‹“™[Û‹[™Ú]ÛÛİˆH™^ÛX[ˆÙ\ÜÚ[ÛˆÚİ[]Y]Û]YHÛÙIÜÈİ]]YØZ[œİ\ÈÚXÚÜÚ[œ™\Ù\™HHÛÜšÚ[™È›İXİY™\œÚ[Û‹[™]›ÚY™Y\ÚYÛ‹\XØ]HÛÜšÙ›İÜË[›İ\ˆÙXšÛÚË›ÜˆH™[X]\™HY\™ÙHÈXZ[˜‚‚ˆÈÈØ[\™\È›İXİYİ\İÛY\‹\™\HØ[™Y]H8 %Œ‹LLLÂ‚•H^\İ[™È]™HU”ÛÜšÙ›İÈĞ^QŒÖ–’ÌÜ\ÈXİ]™HÛˆ›İXİY™\œÚ[Û‚˜MLŒXYKYXŒ‹MXMËYYLÍMXL˜YØÈ›Û˜XÚÈ™\œÚ[Û‚˜ÍLNYX‹LŒ˜Ì‹MXKX˜ÙY‹MÍNLÎ™X™[XZ[œÈ]˜Z[X›Kˆ›È\XØ]HÛÜšÙ›İÈØ\ÈÜ™X]Y[™‘YÙHŒˆM‘Û›RÔSÎXØ\È›İÚ[™ÙYˆHœ›Ş™[ˆ›İXİYÛİ\˜ÙHÒKLMˆ\Â˜˜YM™M˜™MÙYYŒÍXÙŒÍØÍÍXÍM˜ÌÙÌNŒMŒLÌÍ™MYLMŒNX‚‚•H›İXİY˜Y™\šYšY\ÈÚ]ÛÛİPPÈİ™\ˆH˜]È›ÙKXÚÛ›İÛYÙ\È[YÚX›H]™[ÈÛ›B˜Y\ˆH\˜X›H™[ÛˆÛZ[K™\™XYÈÚ]ÛÛİ™Y›Ü™HXÚ\Ú[Ûˆ[™Ù[™\Ù\È]\›Z[š\İXÂ™Ü™Y][™ÜËÑTKÜØÛÜH™\Y\Ë™\Ù\™\ÈH[Ù[YÙ]™Y›Ü™HH™\İšXİY[Ù[Ø[™XYÂ”ÚÜYH›İYÚÜ˜\S]Y\šY\ÈÛ›K[™™\]Z\™\È[ˆ^XİÜİÜ™TÔSÙ[™X\ÙH™Y›Ü™HHÛÛB˜İ\İÛY\‹YYÜ™\ÜÈ›ÙKˆÙ[œÚ]]™HÜˆ[˜Ù\Z[ˆØ\Ù\È™XÙZ]™HH[X[˜X™[[™›Èİ\İÛY\‚œ™\Kˆ™XÛİ™\H™\šYšY\È›İHÚ]ÛÛİX\šÙ\ˆ[™™\HÒKLMÈ˜[œÚY[™XY˜Z[\™\È\™Bœ™\ØÚY[Y[™™XÛİ™\H\È›È]Èİ\İÛY\ˆÙ[™‚‚“™[ÛˆXZ[ˆ›İÈ\ÈZYÜ˜][ÛœÈx $ÌLËˆZYÜ˜][ÛˆLÈØ\Èš\œİ›İ™[ˆÛˆ\ÛÛ]Yœ˜[˜Ú˜œ‹[Z\İKYÛYKX]Ø˜MØ˜[™[ˆ\YYÈXZ[‹ˆ[[YH^Xİ]HÜ˜[È™[XZ[ˆ[˜İ[Û‹\ÜXÚYšXË™\™XİX›H™XYÈ™[XZ[ˆ[šYY[™H]™H™XÛİ™\H]Y]YHY™\›ÈYH›İÜËˆ\™Ù]Y‚™^Xİ][ÛœÈLMX8 $ØLMŒÛİ™\™YÚYÛ˜]\™HZ\ÛX]ÚÜİ[[™\ÜËÜ›Û™È[˜›Ş\˜X›H\XØ]K”ÜİÜ™TÔS[˜Ù\Z[K]\ˆ[X[‹Üš]˜]KĞYÙ[›İXİ]š]K[ˆ^XİKLL\›İÈYÙKX[›Ü›YY˜[˜ÚÜ‹ØÛÜHİ\™\ÜÚ[Û‹Ú[İÚ]Ú[Ù[˜Z[\™K[™H[H[›™YİXØÙ\ÜÙ[[]™\K‚“›È™X[İ\İÛY\ˆY\ÜØYÙKš]˜]H›İK[Ù[™\]Y\İÜˆÚÜYHÜš]HØ\ÈXYHH\ÙH\İË‚‘^Xİ][Ûˆ^[ØY™][[Ûˆ\È™\İÜ™YÈ\ØX›Y‚‚Y\ˆHÚ]XˆÛİ\˜ÙHİX\™[™ÚÜYHÒH›İ\ÜÙYÛˆÛÛ[Z]ÍMXH^Xİœ›Ş™[‚™˜YØ\ÈX›\ÚYÈHØ[YHÛÜšÙ›İËˆ]™Hˆ›İÈ™\ÜÈXİ]™H™\œÚ[Û‚˜MLŒXYKYXŒ‹MXMËYYLÍMXL˜YØÈ›Ù\ËÛÈšYÙÙ\œË[™İXØÙ\ÜËÙ\œ›Ü‹ÛX[X[Ü›ÙÜ™\ÜÂœ™][[Ûˆ\ØX›YˆHš[ÜˆXİ]™H™\œÚ[ÛˆÍLNYX‹LŒ˜Ì‹MXKX˜ÙY‹MÍNLÎ™X™[XZ[œÈBœ›Û˜XÚËˆÚ]ÛÛİ\ÈÛÈ™KY^\İ[™ÈY\ÜØYÙWØÜ™X]YÙXšÛÚÜÎˆYÙHØœÙ\˜][Ûˆ[™HU”Â››È\™ÙXšÛÚÈØ\ÈÜ™X]YˆHØØ[HÚYÛ™Y›Û‹Xİ\İÛY\ˆİ]ÛÚ[™Èš^\™H\Ú[™ÈH^\İ[™Â“U”Ú]ÛÛİÙXÜ™]™]\›™YŒœ›ÛHHX›\ÚY[™Ú[›İš[™ÈH]™HPPÈš[™[™ÂÚ]İ][\š[™ÈÜİÜ™TÔSÜˆİ\İÛY\ˆÙ[™ˆHÜ›Û™ËRPPÈ™\]Y\İ™]\›™YK‚‚“™[Ûˆ™[XZ[™Y]ZYÜ˜][ÛˆLÈÚ]™\›Èİ\İÛY\‹\™\H]™[È[™™\›È[œ™\ÛÛ™YÙ[™ÈY\‚œX›XØ][Û‹ˆHYÙ]ÛÛ›Û\È[˜X›YÚ]Ú[İÚ]ÚÙ™‹HHTÑ[ÛHÙZ[[™ËŒŒHTÑ\ˆ™\Ù\˜][Û‹[™Œ[Ù[™\]Y\İÈ\ˆÛÛ™\œØ][Ûˆ\ˆ^KˆH\ÛÛ]Y˜[Y][Û‚˜œ˜[˜ÚØ\È™\Ù]œ›ÛHXZ[ˆİXØÙ\ÜÙ[NÈZYÜ˜][ÛˆLÈ[™™\İšXİY^Xİ]H\›Z\ÜÚ[ÛœÈ™[XZ[™Yœ™\Ù[Y\ˆ™\İÜ™KÚ[H\™Xİ[[YHX›H™XYÈ™[XZ[™Y[šYY‚‚ˆÈÈİ\œ™[\ÙB‚”ÚÜYK[˜]]™HİÜ™Yœ›Û[™Ø][ÙÈ™XY[™\ÜË\È™\šYšYYØ[\™\Èİ\İÛY\ˆÚ[›™[È[‚Ú]ÛÛİˆH˜]ØY\ˆ[Üˆİ\Y\ˆ\˜Ú]Xİ\™H[™[İ\X˜\ÙKX˜\ÙYØ[\™\È\˜Ú]Xİ\™H\™Bœ™]\™YˆXÚ\Ú[ÛˆLÛÜÙ\ÈHİ\İÛY\‹\Ù\šXÙH™KZ[\[Y[][ÛˆØ]H[™]]Üš^™\ÈBØ[\™\Ë[Û›HØœÙ\˜][Ûˆ[[YKˆ›È›ÙXİ[Ûˆİ\İÛY\‹\Ù\šXÙH›İÜˆ]]ÛX]XÈİ\İÛY\ˆÙ[™š\È\ŞYY‚‚ˆÈÈÜİÜ™TÔS›İšY\ˆØ]H8 %Œ‹LLL‚‚“™[Ûˆ\ÈHÙ[XİYÜİÜ™TÔS›İšY\ˆ›ÜˆH[˜Xİ]™HØ[\™\ÈØœÙ\˜][Ûˆ[[YKˆ›Ú™Xİ˜Ú[KZ[LÎŒÍÌXÈ]X˜\ÙH™[Û™˜\ÈZYÜ˜][ÛœÈx $ÌL\YY[˜ÛY[™ÈH[KYš\œİ›[Ù[XYÙ]İX\™Ú]H\™	X[ÛH™\Ù\˜][ÛˆÙZ[[™ËHŒ\™\]Y\İZ[HÛÛ™\œØ][Û‚˜Ø\[™HY˜][[ÛˆÚ[İÚ]Úˆ]\ÈHØ[\™\ÈX›\Ë›İ][™\ËÔÓ\™\]Z\™YˆÜ™Y[X[È›ÜˆH™\İšXİYÙXšÛÚÈ[™™XÛÛ˜Ú[X][ÛˆÙÚ[‚œ›Û\Ë[™™\šYšYYØ[X›KX›İ[™\HPÓËˆ›Èİ\İÛY\ˆ˜Y™šXËİ\İÛY\ˆÙ[™ÜˆÚÜYHÜš]H\Â›ØØİ\œ™YˆH^\İ[™ÈYÙHÛÜšÙ›İÈM‘Û›RÔSÎX™[XZ[œÈHÛ›H\™Ù][™\È›İÈX›\ÚY˜[™Xİ]™H›ÜˆØœÙ\˜][Û‹ˆHŒˆÛİ\˜ÙH\È[\ÜY[È]Ø[YH\™Ù]Âš]ÈMHÜİÜ™TÔS›Ù\È\ÙHH›Ú™Xİ\ØÛÜYÙXšÛÚÈ[™™XÛÛ˜Ú[X][ÛˆÜ™Y[X[Ë[™Bœ™XY[Û›HÚÜYHœ˜[˜Ú\È™\Ù[Ú]H›Ú™XİĞ]]ˆ™XYÜ™Y[X[›İ[™
+MH›Ù\Èİ[
+K‚“›ÙH\İÈ\™HMÍKÌMÍH[™]Ûˆ\İÈ\™HL‹ÎL‹ˆH™X[ÛË\Ù\ÜÚ[Ûˆ™[ÛˆÚXÚÈ™\šYšYYB™]X˜\ÙHÛØÚËÙXšÛÚÈ^Xİ]H\›Z\ÜÚ[Û‹™XÛÛ˜Ú[X][Ûˆ[šX[˜[œØXİ[Ûˆ›Û˜XÚË[™œÚ[™ÛK]Ú[›™\ˆÙ\ÜÚ[ÛˆØÚÚ[™ËˆH[\Ü˜\H™[Ûˆœ˜[˜ÚX]ÚYHš[X\HØÚ[XHÚ]›ÈY™ˆ[™Ø\È™[[İ™YY\ˆ™\šYšXØ][Û‹ˆ›İšY\ˆ˜XÚİ\\™\İÜ™HÙ\šXÙH™XÛİ™\H[™]™HÚ]ÛÛİ›ØœÙ\˜][Ûˆ™[XZ[ˆ[œ›İ™[‹‚‚İ\œ™[™XÚXÚÎˆ™[Ûˆ™\ÜÈÜİÜ™TÔSN[[ˆZYÜ˜][Ûˆ™XÛÜ™Ë›İ\ˆ™\İšXİY[[YBœ›Û\Ë[™H^XİY[KYš\œİYÙ]Y˜][È
+[˜X›YY˜[ÙXÚ[ÜİÚ]Ú]YXZ[H[Z]Œ›[ÛH[Z]HTÑ
+KˆH^\İ[™Èˆ\™Ù]\ÜÙYŞ[]XÈ˜[Y\ÚYÛ˜]\™K[ÙYšYYX›ÙK[™š[˜[Y\ÚYÛ˜]\™HÙXšÛÚÈ[œÈ
+^Xİ][ÛœÈÎ‹ÎË[™ÎJNÈ\ÙHÙ\™H[\›˜[\İÈÛ›H[™››Èİ\İÛY\ˆY\ÜØYÙHØ\ÈÙ[ˆ\™Ù]Y›ÙHÛİ™\˜YÙH\ÜÙYËÎËˆHÛÜšÙ›İÈ\È›İÈXİ]™HÚ]œX›\ÚY™\œÚ[ÛˆÙLÎLYXÙMÙYKX™YX‹Y™ŒNYMŒŒ˜‚‚ˆÈÈ™\Ù\™Yİ\İÛY\‹\Ù\šXÙHÛİ\˜ÙH™[X\ÙH8 %Œ‹LLL‚‚•HØ[\™\ÈYÙHŒ‹˜[œØXİ[Û˜[\İ]K™XÛÛ˜Ú[X][Û‹ÛÛ^ÓH›İ[™\KØÚ[X\Ëš^\™\Ë˜[™\İÈ\™H™\Ù\™YÛˆœ˜[˜ÚYÙ[Ü™\Ù\™KXØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[\ÈB™œ›Ş™[ˆØ[™Y]K›İÈ[\ÜY[ÈH^\İ[™È[˜Xİ]™H\™Ù]ˆYÙHŒˆÛÛZ[œÈH›İ[™Y›İ\‹Z[˜›ŞÚ]ÛÛİ™XÛÛ˜Ú[X][Û‚œØØ[‹Øİ\œÛÜˆÜ˜\[œÚYHH^\İ[™ÈYÙKÚ]HØÚY[H\ØX›Y[™[]™H]]Üš]HÛÜÙY‚•Hİ\œ™[Ûİ\˜ÙH\Ú\ÈÌÙŒ™LÙŒÍ˜Ù™YYX˜MMŒÎLÌÌM™™MÎMØÙYLL˜M™ÎXÍ™M™LŒ™NLXÈH\Ş[Y[›X[šY™\İX]Ú\È][™–ØØÜËØØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[LŒ‹LLL‹›YJØÜËØØ[\™\ËXİ\İÛY\‹\Ù\šXÙKXÚXÚÜÚ[LŒ‹LLL‹›Y
+Bœ™XÛÜ™ÈHÛİ\˜ÙK[Û›H›İ[™\K‚˜İ\ÜØœ˜[™ËØØ[\™\ËØİ\İÛY\‹\Ù\šXÙK\™[X\ÙK[ØÚËšœÛÛ˜™\šYšY\ÈHœ›Ş™[ˆÛİ\˜ÙHÙ]ˆÚ]X‚˜XZ[˜™[XZ[œÈH\›İ™Y[[YH˜\Ù[[™H[[\ÈØ[™Y]H\È™]šY]ÙY[™Y\™ÙY‚‚•H™[X\ÙHØÚÈØ\È™Yœ™\ÚY[ˆÛÛ[Z]™NYX˜Y\ˆH™XY[Û›HÚÜYHİ\İÛY\ˆœ˜[˜ÚØ\Â˜›İ[™ÈHİšXİÛÜ™H[œ][™[ÜNÂHØÚÈÚXÚÈ[™\™Ù]YÜİÜ™TÔS\İÈ\ÜËˆHš[˜[YÙHT“\È™\šYšYY\Â˜Î‹ËÚİ[˜YÎL˜\›‹˜ÛİYİÙXšÛÚËØØ[\™\ËØİ\İÛY\‹\Ù\šXÙKØÚ]ÛÛİİŒ˜ˆÚ]ÛÛİ›İÈ\Â™^XİHÛ™HØ]™YØœÙ\˜][ÛˆÙXšÛÚËİXœØÜšX™YÛ›HÈY\ÜØYÙWØÜ™X]YÈ]ÈÚYÛš[™ÈÙXÜ™]\ÂœİÜ™Y[ˆH›Ú™Xİ\ØÛÜYˆÜ\ÈÜ™Y[X[ˆHYÙHÛÜšÙ›İÈ\ÈX›\ÚY[™Xİ]™H›Ü‚›ØœÙ\˜][ÛÈ›Èİ\İÛY\ˆY\ÜØYÙH\È™Y[ˆÙ[ˆÚÜYH™XYXØÙ\ÜÈ\È]˜Z[X›H›İYÚB˜ÛÛ›™XİY™XY[Û›HPÔ[™HXİ]™HYÙH\™Ù]\ÈH™XY[Û›HÚÜYHœ˜[˜Ú›İ[™ÂH›Ú™XİĞ]]ˆÜ™Y[X[ˆH[Ù[Ü™Y[X[\È™\Ù[]H[Ù[Ø[™[XZ[œÂœİXİ\˜[HÛÜÙY[™HYÙ]İX\™™[XZ[œÈ[KYš\œİ‚‚“]™HÚYÛ˜]\™H™XÚXÚÈ›İ[™]H^\İ[™ÈˆÚ]ÛÛİPPÈÜ™Y[X[Y›İX]ÚHÙXÜ™]œÚİÛˆHH^\İ[™ÈÚ]ÛÛİÙXšÛÚÈY]›Ü›KˆH^\İ[™ÈÜ™Y[X[Ø\ÈÛÜœ™XİY[ˆXÙBÚ]İ]Ü™X][™ÈH™]ÈÜ™Y[X[ÈHØ[YHŞ[]XÈ˜]ËX›ÙHÔÕ[ˆ™]\›™YŒ[™Ú]ÛÛİœÚİÜÈ^XİHÛ™H[˜X›YÙXšÛÚËˆH\›Z]YŞ[]XÈ]™[›Üˆ\İÛÛ™\œØ][ÛˆØ™]\›™Y’Œ]^ÜÙYHÜİÜ™TÔSY™XİˆÙYÙWÚÙ^WØ[™Wİ˜[Y›Ú[™Y[˜[Y\ÜXÙ\È[ˆ]Â‘•SÕUTˆ“ÒS‹ÛÈ[œ™[]YÙ^H›İÜÈØ]\ÙYÙ^WØÛİ™\˜YÙWÚ[˜ÛÛ\]X[™™]™[Y\˜X›BÜš]\ËˆZYÜ˜][ÛˆHÛÜœ™XİYH›Ú[ˆ[™ZYÜ˜][ÛˆLÜ˜[ÈH^XİØ[X›Hİ\™˜XÙHÈHˆÑÒSˆ›Û\ÎÈ™[Ûˆ›İÈ™]\›œÈÛÛ[Z]YÈ›ØÙ\ÜÚ[™×ØÛZ[YY›Ü‚H]ÛZXÈ[˜İ[Û‹ˆH^\İ[™ÈYÙH\™Ù]Ø\È\]Y[™X›\ÚY]™\œÚ[Û‚˜MY™LÙ˜ËNMMMKNÌÎLØØÍLÌYÙÌXÈ]™[XZ[œÈØœÙ\˜][Û‹Û›Ë\Ù[™ˆ›Èİ\İÛY\ˆY\ÜØYÙKœš]˜]H›İK[Ù[Ø[ÜˆÚÜYHÜš]HØØİ\œ™Y‚‚ˆÈÈ\›İ™Y\˜Ú]Xİ\™B‚ˆİÛ™\ˆ\›İ˜[OˆÚÜYH˜YOˆ›ÙXİ™]šY]ÈOˆÚÜYHX›XØ][Û‚‚”ÚÜYH\ÈHÜ\˜][Û˜[Ûİ\˜ÙHÙˆ]ˆÚ]XˆXZ[˜\ÈHXÚšXØ[Ûİ\˜ÙHÙˆ]›ÜˆB[YKXÚ\Ú[ÛœË[™Ø[š]^™Y[™Ù™œËˆ\™H\È›È^\›˜[›ÙXİ]X˜\ÙK]][XØ][Û‚œÙ\šXÙKİÜ˜YÙHÙ\šXÙKØ][ÙÈ]Y]YKÜˆX[™]ÜHÜ˜Ú\İ˜][Ûˆ^Y\‹‚‚ˆÈÈ™\šYšYY™\ÜÚ]ÜHİ]H8 %Œ‹LËLB‚ˆÈÈÈÚ]X‚‚‹HØ[›ÛšXØ[™\ÜÚ]ÜNˆKX]ÙØØ[\™\Ø‚‹HØ[›ÛšXØ[œ˜[˜ÚˆXZ[˜‚‹H™\šYšYYÛX[ˆ˜\Ù[[™H™Y›Ü™HH™]\™[Y[Ú[™ÙN‚ˆŒŒXMÙÎXMÍYXÎNXLÌYMYØMMNÙ™‚‹HHYØXŞH™XXİ[™š]H\XØ][ÛˆØ\È›İ\ÙˆHÚÜYH[YH\Ş[Y[][™\Âˆ™Y[ˆ™[[İ™Yœ›ÛHHİ\œ™[™YK‚‹Hİ\X˜\ÙHÛÛ™šYİ\˜][Û‹ZYÜ˜][ÛœË[˜İ[ÛœËÙ[™\˜]Y\\ËÛY[ÑÈ\[™[˜ŞK[™ØÚÂˆš[\È]™H™Y[ˆ™[[İ™Y‚‹HH™]\™Yİ\Y\‹‹[™İ\X˜\ÙHŞ[˜Ú›Ûš^˜][ÛˆÛİ\˜ÙH[™]ÈÒHÛÜšÙ›İÈ]™H™Y[‚ˆ™[[İ™Y‚‹HHÚÜYK[Û›HÒHÛÜšÙ›İÈÚXÚÜÈH[YH[™›ØÚÜÈ[[YHİ\X˜\ÙH™Z[›ÙXİ[Û‹‚‹H\İÜšXØ[ÛÙH™[XZ[œÈ™XÛİ™\˜X›Hœ›ÛHÚ][™]\İ›İ™H™\İÜ™Y[ÈHXİ]™H™YK‚‚ˆÈÈÈÚÜYH[YB‚‹HHXİ]™H™\ÜÚ]ÜHİ\™˜XÙH\ÈHÚÜYH[YH[™\ˆ\ÜÙ]ØÛÛ™šYØ^[İ]ØØ[\ØˆÙXİ[ÛœØÛš\]Ø[™[\]\Ø‚‹HH\ÛÛ]YİÛ™\‹\Ú]KØİ\™˜XÙH[™]ÈÚ]XˆYÙ\ÈÛÜšÙ›İÈX›\ÚÛ›HHØ[\™\ÂˆYØ[[İÛ™\œÚ\]šY[˜ÙHYÙNÈ^H\™H›İ\ÙˆHÚÜYH[YHÜˆ]È\Ş[Y[]‚‹HÜÙH[YH\™XİÜšY\ÈÛÛZ[ˆ›Èİ\X˜\ÙH\[™[˜ŞK‚‹HH^\İ[™È\Ş[Y[ÛÜšÙ›İÈÙ\È›İ\[™Ûˆİ\X˜\ÙK‚‹HH]™H[YH\Èİ[ZXYÙˆXZ[˜È[YK\Ûİ\˜ÙH™XÛÛ˜Ú[X][Ûˆ™[XZ[œÈHÙ\\˜]H\ÚË‚‚ˆÈÈÈ]™HÚÜYB‚‹H›İ\ˆ›ÙXİÈÙ\™H\İ™\šYšYY\È˜YÈÚ][™[ÜH‚‹HH™YH\›™\ˆ˜YÈ]™HYYXNÈHİ\İÛZ^˜X›Hİ[™˜YÙ\È›İ‚‹H›È›ÙXİØ\ÈX›\ÚY\È\ÙˆHİ\X˜\ÙH™]\™[Y[ÛÜšË‚‹HYÙ[XÈØ][ÙÈXØÙ\ÜËÛXÚY\ËÛ›İÛYÙH˜\ÙKT\ËÛÛXİ[ÛœË[™İÜ™Yœ›ÛÙ][™ÜÈ\™Bˆ[˜Y™™XİYH\È™\ÜÚ]ÜHÛX[\‚‹HÚÜYH›ÙXİ˜YÈX^H›İÈ›ØÙYY›İYÚ\™XİÚÜYH™]šY]Ëˆ›È^\›˜[]X˜\ÙH™XÛÜ™ˆÜˆ]Y]YH\È™\]Z\™Y‚‚ˆÈÈÈ™]\™Y^\›˜[Ş\İ[\Â‚‹Hİ\X˜\ÙH\È›İ[ˆ\›İ™YØ[\™\È\[™[˜ŞH[™]\İ›İ™H]Y\šYY\š[™È›Ü›X[ÛÜšË‚‹H›È^\›˜[İ\X˜\ÙH›Ú™XİÜˆ\İÜšXØ[]HØ\È[]Yˆ\›X[™[]H[][Ûˆ\ÈBˆÙ\\˜]H\œ™]™\œÚX›HXİ[Ûˆ™\]Z\š[™È^XİİÛ™\ˆ]]Üš^˜][Û‹‚‹H]™HˆØ\È]Y]Y™XY[Û›KˆHØ]™YØ[\™\Èİ\X˜\ÙHÜ™Y[X[\ÈZYÚ\[™[ˆÛÜšÙ›İÜË[™[ZYÚ\™H\˜Ú]™Y[™[˜Xİ]™K‚‹H›ÈXİ]™HÛÜšÙ›İÈ\Ù\ÈHØ[\™\Èİ\X˜\ÙHÜ™Y[X[ˆHÜ™Y[X[]Ù[ˆ™[XZ[œÈØ]™YÂˆ[][™È]\ÈHÙ\\˜]H\œ™]™\œÚX›HÜ™Y[X[Xİ[Ûˆ™\]Z\š[™ÈÛÛ™š\›X][Ûˆ][][Û‚ˆ[YK‚‹HH™\ÜÚ]ÜH›ÈÛ™Ù\ˆØ\œšY\ÈHİ\X˜\ÙHÜˆİ\Y\ˆˆ[\[Y[][Û‹‚‚ˆÈÈ™[XZ[š[™È›ØÚÙ\œÂ‚ŒKˆH›İ\ˆÚÜYH˜YÈİ[™YYİÛ™\‹X\›İ™Y[™[ÜKš[˜[›ÙXİ]K[™X›XØ][Û‚ˆXÚ\Ú[ÛœÎÈHİ[™[ÛÈ™YYÈ\›İ™YYYXK‚Œ‹ˆHØ[\™\ÈİÛ™\œÚ\YÙH›İÈY[YšY\È6av)6,ö,ö*H6.v*6`ˆ6)öa6+¶b¶a6a6a6*¶+6)ö,v*X\ÈHYØ[İÛ™\‹ˆØ]YBˆÛÛ\X[˜ÙHİ[™YYÈHÛÛ[Y\˜ÚX[\™YÚ\İ\ˆ[X™\‹U[X™\ˆYˆ\XØX›K™\šYšYYˆÛ™K[™ÛÛ\Z[\™\ÜÛœÙHÛÛ[Z]Y[Ë‚ŒËˆH]™H[YH]\İ™H™XÛÛ˜Ú[Y[ÈXZ[˜™Y›Ü™H[YKXÛÙHÚ[™Ù\È\™H\ŞYYØY™[K‚ˆHX›XÈœ™YK\Ú\[™È[››İ[˜Ù[Y[İ[™YYÈHœ™\Ú™[™\ˆÚXÚÈ›ÜˆHØ]™YĞTˆÌŒˆ™\ÚÛ‚KˆÜ[š[™ÈH™]ÈX\šÙ]™[XZ[œÈHÛÛ[Y\˜ÚX[XÚ\Ú[Û‹‚‹ˆHÜ›X[Ø[\™\Èİ\X˜\ÙHÜ™Y[X[[ˆˆX^H™H[]YY\ˆ^XÚ]ÛÛ™š\›X][ÛÂˆ[ÛÜšÙ›İÜÈ]™Y™\™[˜ÙH]\™H[™XYH\˜Ú]™Y‚ËˆH\›İ™YØœÙ\˜][Ûˆ[[YH›İÈ^\İÈ]™[XZ[œÈ[˜Xİ]™K[œX›\ÚY[™\ØÛÛ›™XİYˆœ›ÛH]™Hİ\İÛY\ˆ]™[È[[H\œÚ\İ[XXØÙ\ÜÈØ]H\È\›İ™Y‚ˆH›Ú™Xİ\ØÛÜYÚ]ÛÛİXY\ˆ]]™XYÜ™Y[X[›İÈ^\İÈ[ˆˆ[™\È›İ[™Û›HÂˆH^\İ[™ÈYÙHŒˆÚ]ÛÛİÑU›Ù\Ëˆ^XİHÛ™HØœÙ\˜][ÛˆÙXšÛÚÈ^\İÈ[™\ÈİXœØÜšX™YˆÛ›HÈY\ÜØYÙWØÜ™X]YÈHÛÜšÙ›İÈ\È›İÈX›\ÚY[™Xİ]™H›ÜˆØœÙ\˜][Û‹‚ˆH™XÛÜ™YÚÜYHÜ™Y[X[ØÛÜ\Èİ[È›İ[˜ÛYH™XYØİ\İÛY\œØÈ]XØÙ\ÜÈÚ[™ÙBˆ™[XZ[œÈH[X™\˜]H[\[Y[][ÛˆØ]K‚KˆÛÈ›Ú™Xİ\ØÛÜY[\›˜[Ü\ÈÜ™Y[X[È\™H›İÈ›İ[™ÈH^\İ[™ÈYÙHPPÈ›Ù\Î‚ˆ]™[Ü›İ]Hš[™Ù\œš[È[™˜\Ù[[™KÜ™\™XYš[™Ù\œš[ËˆHÚ]ÛÛİÙXšÛÚÈPPÈÜ™Y[X[ˆ\È›İÈÜ[]Yœ›ÛHHÚ[™ÛHØœÙ\˜][ÛˆÙXšÛÚÎÈHÛÜšÙ›İÈ\ÈXİ]™H›ÜˆØœÙ\˜][Ûˆ[™ˆ›Èİ\İÛY\ˆY\ÜØYÙH\È™Y[ˆÙ[‚‚ˆÈÈ™^ØY™HXİ[Û‚‚“™^™\šYHH^\İ[™ÈÚ]ÛÛİ™XYš[™[™ÈÚ]HŞ[]XËÜš]˜]H™XYš^\™KˆH›Ú™Xİ\ØÛÜY“Ü[RHÜ™Y[X[›İÈ^\İÈ[™\ÜÙY‰ÜÈÛÛ›™Xİ[Ûˆ\İÈHÜ[RH›Ú™Xİ[İÛ\İÛÛZ[œÂ›Û›HÜMK[˜[›ËLŒ‹LËLMØÙ[XİY›ÜˆHİÙ\İXÛÜİ\˜XšXÈ˜Y\ÙKˆ]\È›İ›İ[™Â˜[H[Ù[›ÙH[™›È[Ù[Ø[\È[˜X›YˆÜ™X]HH™[XZ[š[™ÈYXØ]YØ[\™\Ë\ØÛÜYPPÂ˜[™™XY[Û›HÚÜYHš[™[™ÜËˆYHÚYÛ™Yš[™Ü™\ÜÈÛ›HY\ˆÜÙHÚXÚÜÈ[™›İ™H™X[›İ\‹XÚ[›™[ØœÙ\˜][Û‹ˆÙY\Hİ\İÛY\‹YYÜ™\ÜÂ˜œ˜[˜ÚXœÙ[‚‚ˆÈÈÛÛœİ˜Z[Â‚“™]™\ˆ™\İÜ™Hİ\X˜\ÙKH™]\™Y™XXİ\XØ][Û‹Hİ\Y\ˆÜ˜]Û\‹ÜˆH™]\™YœŞ[˜Ú›Ûš^˜][ÛˆÛÙKˆ™]™\ˆ[™[YØ[Y[]K[™[ÜKšXÚ[™ËYYXKÜˆÛÛ[Y\˜ÚX[\›\Ë‚“™]™\ˆİ™\Üš]HH]™H[YH[[]È™]Ù\ˆÛİ\˜ÙH\È™XÛÛ˜Ú[Y[ÈXZ[˜‚‚ˆÈÈ[YH[]™\H8 %Œ‹LËLÌB‚‹HHÚ[ZKX\›İ™YØ[Xœš^ˆİ]XÈ\ÚYÛˆ
+ÈYÙ\ÊH\È[HÜYÈHÚÜYH\]ZY[YHÛˆÚÜYK][YX
+Y\™ÙHXMLÎ
+Nˆ[˜[ZXÈ›ÙXİËİ˜\šX[ËRVØ\[™Ü˜]š[™È[™H][H›Ü\H0ªöa¶-H6)öa6+v`v,p®Ë[™[ˆY]Ü‹[X[˜YÙY\›ÈšY[Ë‚‹HÒH\Ş\ÈÚÜYK][YXÛ›HÈH[œX›\ÚYİYÚ[™È[YNÈH]™H[YHİ^\È[İXÚY[[HİÛ™\ˆ™]šY]ÜÈHİYÚ[™È™]šY]È[™X›\Ú\ÈX[X[Hœ›ÛHÚÜYHYZ[‹‚‚ˆÈÈÚ]Ğ\\Ü^K[˜[YHİÛ™\œÚ\›ÛÙˆ8 %Œ‹LLLB‚‹H™\šYšYYHØ[›ÛšXØ[XZ[˜œ˜[˜Ú]ˆ˜XLØXÌØMÎ˜ÌÎÎXŒYÍLØÍMMÍØNÙYX™Y›Ü™H™\\š[™È\ÈÛÜšË‚‹HX›\ÚY[ˆ\ÛÛ]YİÛ™\œÚ\YÙH[™\ˆİÛ™\‹\Ú]KØ[ˆÛÛ[Z]ˆYŒYMÌŒØM™L˜MM˜™ŒŒLØM˜™X˜Øˆ]İ]\È[ˆ\˜XšXÈ[™[™Û\Ú]Ø[\™\È\ÂˆİÛ™Y[™Ü\˜]YH6av)6,ö,ö*H6.v*6`ˆ6)öa6+¶b¶a6a6a6*¶+6)ö,v*X[˜ÛY\ÈH]\˜[™[][ÛœÚ\ˆØ[\™\ÈH6av)6,ö,ö*H6.v*6`ˆ6)öa6+¶b¶a6a6a6*¶+6)ö,v*X[šÜÈÈÎ‹ËØØ[\™\Ë˜ÛÛKØ[™^ÜÙ\ÈÜ˜]ÛX›BˆÜ™Ø[š^˜][Û‹œ˜[™[™ÙX”YÙHİXİ\™Y]K‚‹HHYÙH\È[[[Û˜[HÙ\\˜]Hœ›ÛHHÚÜYH[YH[™ÛÛZ[œÈ›Èİ\ˆœ˜[™Y]Bˆ\ÜÙ]QÛ™H[X™\‹ÙXÜ™]ÛÛ[Y\˜ÚX[\™YÚ\İ\ˆ[X™\‹Üˆ^[X™\‹‚‹HÚ]XˆYÙ\È\Ş[Y[[ˆÌMMMŒ˜ÛÛ\]YİXØÙ\ÜÙ[Hœ›ÛHXZ[˜ÈHÛÜšÙ›İÂˆX›\Ú\ÈÛ›HİÛ™\‹\Ú]KØ[™Ø[››İX›\ÚHÚÜYH[YK‚‹HÚ]Xˆ™\šYšYYİÛ™\œÚ\Ùˆ]ÙX\Ú[™\ÜÙ\Ë˜ÛÛX[™H™\ÜÚ]ÜHYÙ\ÈÛÛ™šYİ\˜][Ûˆ›İÂˆ\Ù\È]İ\İÛHÛXZ[‹‚‹HH]]Üš]]]™H[™X›XÈ”È™XÛÜ™È›İÈÚ[H\^ÈÚ]XˆYÙ\È[™İİØÂˆKX]Ù™Ú]X‹š[ØˆÛÛÙÛHÛÜšÜÜXÙHVÔ‹ÒSK˜XÙX›ÛÚÈ™\šYšXØ][Û‹ÛXZ[ˆÛÛ›™Xİ[™BˆÚ]XˆİÛ™\œÚ\]™\šYšXØ][Ûˆ™XÛÜ™Ù\™H™\Ù\™Y‚‹HÚ]XˆÛÛ\]YH”ÈÚXÚË\ÜİYYHİ\İÛKYÛXZ[ˆÙ\YšXØ]K[™È[™›Ü˜Ù[Y[\Âˆ[˜X›YˆÎ‹ËØ]ÙX\Ú[™\ÜÙ\Ë˜ÛÛKØ™]\›œÈHİÛ™\œÚ\YÙHœ›ÛHÚ]XˆÚ]İ]\ÈŒÂˆÎ‹ËİİİË˜]ÙX\Ú[™\ÜÙ\Ë˜ÛÛKØ™Y\™XİÈÈH\^‚‹HH]™HÈ™\ÜÛœÙH\ÈH^XİY]Kİ][Y[Ø[›ÛšXØ[T“[™[™^›ÛİØˆ\™Xİ]™Kˆ]ÈÒKLMˆX]Ú\ÈİÛ™\‹\Ú]KÚ[™^š[^XİK‚‹HX›XÈ”È™\ÛÛ™\œÈÚ[ÈÚ]X‹ˆÛÛYHØØ[™\ÛÛ™\œÈX^H[\Ü˜\š[HÛÛ[YHÙ\š[™ÈBˆ›Ü›Y\ˆÜ]X\™\ÜXÙHYÙH[[Z\ˆÛØXÚH^\™\Ë‚‹H]™HY]H™\šYšXØ][ÛˆÛˆŒ‹LLLHÛÛ™š\›YYHÙ[XİYØ[\™\ÈĞPBˆNÍLMŒMLÌÍÍ˜[™\ˆÜ^Ü›Û[ÈÍNLÌLÌÛ™K[[X™\ˆQˆLŒNNMMLNX[™\Ü^H˜[YHØ[\™\È6`ö)öa6)ö*6,vb¶,˜‚‹HY]H\›İ™Y]\Ü^H˜[YKˆH[X™\ˆ\È™YÚ\İ\™YÛˆÛİYTHÚ]İ]\ÈÓÓ“‘PÕQˆ]›Ü›H\HÓÕQĞTXÛÙH™\šYšXØ][Ûˆ‘T’Q’QQ›İYÚ]ÕS‘T‘[™ÛË\İ\ˆ™\šYšXØ][Ûˆ[˜X›YˆHXİX[Û™H[X™\ˆ™[XZ[œÈ[[[Û˜[HX\ÚÙY[ˆ›Ú™Xİ™XÛÜ™Ë‚‹HHİ\œ™[ÛË\İ\Sˆ\ÈİÜ™YÛ›H[ˆHØØ[XXÓÔÈÙ^XÚZ[ˆ[™\‚ˆY]HÚ]Ğ\‘HSˆHÛ™HQLŒNNMMLNXÈ]\È›İİÜ™Y[ˆÚ]X‹Øİ[Y[][Û‹ˆÛÜšÙ›İÈ]KÜˆÚ]‚‹HÚ]ÛÛİÛİYXØÛİ[MÎNMÌØ^\İ[™ÈÚ]Ğ\[˜›ŞLN\Ù\ÈHØ[YHĞPH[™Û™BˆY[YšY\œËˆXØÛİ[X[™\ÜÈH\Ü^H˜[YH\›İ™YÛ™HÛÛ›™XİYH’Èİ\İÛY\‚ˆY\ÜØYÚ[™ÈY\‹[™HÙXšÛÚÈÛÛ™šYİ\™YİXØÙ\ÜÙ[K‚‹HH™X[šY\™Xİ[Û˜[\İ\ÜÙYˆ][\HY\ÜØYÙ\ÈÙ[œ›ÛHHİÛ™\‰ÜÈÛ™H\œš]™Y[ˆBˆÚ]ÛÛİÛÛ™\œØ][Û‹H™\HÙ[œ›ÛHÚ]ÛÛİ™XXÚYHÛ™K[™HİÛ™\‰ÜÈ[]™\BˆXÚÛ›İÛYÙ[Y[™]\›™YÈÚ]ÛÛİ‚‹HÚ]ÛÛİXØÙ\YHX[X[Ú]Ğ\][\]HŞ[˜Ú›Ûš^˜][Ûˆ™\]Y\İY\ˆHÛÛ›™Xİ[Ûˆ\İ‚‹H›È\XØ]HĞPKÛ™H[X™\‹Y]H\Ú]ÛÛİXØÛİ[ÜˆÚ]ÛÛİ[˜›ŞØ\ÈÜ™X]Y‚‹H›Èˆİ\İÛY\‹\Ù\šXÙHÛÜšÙ›İÈÜˆ]]ÛX]XÈİ\İÛY\ˆ™\H\ÈXİ]™HY]ˆ™Z]\‚ˆØ[\™\Ë˜ÛÛX›ÜˆH]™HÚÜYHİÜ™HØ\ÈÚ[™ÙY‚‚ˆÈÈØ[\™\Èİ\İÛY\‹\Ù\šXÙHØœÙ\˜][Ûˆ[[YH8 %Œ‹LLLB‚‹HH]™HÚ]ÛÛİ]Y]Ûİ™\œÈXØÛİ[MÎNMÌØ[™H˜]]™H[œİYÜ˜[HLÌXZÕÚÂˆLÌØÚ]Ğ\LN[™[XZ[LÌ˜[˜›Ş\ËˆÙXœÚ]H[˜›ŞL\Èİ]ÚYHBˆ[İ[İÛ\İ‚‹HØ\Z[ˆ\È›İÛÛ›™XİYÈ[ˆ[˜›ŞYÙ[›İ\È›İÛÛ›™XİY]]ÛX][Ûˆ[\È\™H[\K[™ˆ›È[™\[™[™\ÜÛ™\ˆ\ÈXİ]™KˆHÛ›HÚ]ÛÛİYÙ[\È6+¶+öav*H6.vava6)ö(H6`ö)öa6)ö*6,vb¶,˜ÈH›İ\‚ˆ[İ[˜›Ş\È\ÙH]]ÛX]XÈ\ÜÚYÛ›Y[[™]™H\Ú[™\ÜÈ]˜Z[Xš[]H\ØX›Y‚‹HH\ÛÛ]YˆX[H›Ú™XİØ[\™\Èİ\İÛY\ˆÙ\šXÙX
+Õ˜[ZL‘ÑĞ˜•ĞŞX
+H›İÈÛÛZ[œÈZYÚˆ[\HÜ\˜][Û˜[]HX›\È›ÜˆY\XØ][Û‹ÛÛ™\œØ][Ûˆ›ØœË™\šYšYYY[]H[šÜËˆH™XZ[X›HÜ™\ˆ[™^™\šYšXØ][ÛˆÚ[[™Ù\Ë[˜ÚY[ËİÛ™\ˆXÚ\Ú[ÛœË[™]Y]‚ˆH]\ÙYØ][ÙÈX›HØ\È›İ™]\ÙYÜˆÚ[™ÙY‚‹Hš]˜]HÛÜ™HÛÜšÙ›İÈPĞ–Tš›YZZÓØØ[\™\ÈYÙHÛÜšÙ›İÈM‘Û›RÔSÎXÚÜYBˆÜ™\ˆ[™^ÛÜšÙ›İÈÓİRŒŒ\]QX[™š]˜]HİÛ™\ˆ™]šY]È\ÚÂˆMÜĞSPTTÙÎSØ™ÚŞX^\İ[ˆ]›Ú™Xİˆ[›İ\ˆ\™H[˜Xİ]™H[™ˆ[œX›\ÚY]™H›È\ÜÚYÛ™YÜ™Y[X[ÜˆX›XÈÙXšÛÚËÛÛZ[ˆ›Èİ\İÛY\‹YYÜ™\ÜÈÜ‚ˆÚÜYK]Üš]H›ÙK[™]™H^Xİ][Û‹\^[ØY™][[Ûˆ\ØX›Y‚‹HH[\H\›İ˜[Ë[˜ÚY[Ë[™]Y]X›\È›İÈX]ÚHÜÜÛ\ÜÈİÛ™\‹\™]šY]ÈÛÛ˜XİÂˆ^XİNˆÍN[™MÈÛÛ[[œÈ™\ÜXİ]™[Kˆ›È›İÈØ\È[œÙ\YˆHİÛ™\ˆ™]šY]È\ÚÈ\È›Âˆ]HX›H›ÙK›ÈX›XÈšYÙÙ\‹[™Ø[\ˆÛXŞH›Û™XÈ]˜[Y]\È™\WÛÛ›Xˆ\›İ™X\›İ™Wİ[[[™ÛÜœ™Xİ\È›Ë]Üš]H™]šY]ÜÈÛ›KˆØ[š]^™Y^Xİ][ÛˆŒÌXˆ\ÜÙYÚ]\œÚ\İ[˜ÙKÛ›İÛYÙHX›XØ][Û‹[™İ\İÛY\ˆYÜ™\ÜÈ[˜[ÙK‚‹HH[^H[™ÜİY[^HØ[˜Ù[][ÛˆİYÙH\ÈY\™ÙY[ÈH^\İ[™ÈYÙKˆ]ÈØZ]Ø\œšY\ÂˆY[YšY\œËHØ[›ÛšXØ[ÒKLMˆØ\œšY\ˆš[™Ù\œš[H[›™Y˜\Ù[[™KRPPÈÙ^H™\œÚ[Û‹[™ˆÜ\]YH˜\Ù[[™Hİ]\ËØ\ÜÚYÛ™YHš[™Ù\œš[ÈÛ›NÈ]Ø\œšY\È›È˜]Èİ]\Ë\ÜÚYÛ™YKY\ÜØYÙKˆÜˆİ\İÛY\ˆ]KˆHœ™\ÚÚ]ÛÛİ™K\™XY]\İ\ÙHHØ[YH[›™YÙ^H™\œÚ[Û‹ˆBˆÛÛ\[YÚ[›™[ÛXŞH\ÈÌ8 $ÍÍHÙXÛÛ™È›Üˆ[œİYÜ˜[KZÕÚË[™Ú]Ğ\[™LŒ8 $ÌÌÙXÛÛ™Âˆ›Üˆ[XZ[ÈHÛ™K\ÙXÛÛ™]\ÈŞ[]XË]\İ[Û›Kˆ]™K\Ú\Y[œ]ÙY\ÈHœ˜[™Ú[ˆİÚ]ÚÛ‹[™Hİ\œ™[›ËXÜ™Y[X[]˜Z[ÈÛÜÙY™Y›Ü™HØZ]™XØ]\ÙHH\İY]™Bˆ˜\Ù[[™HØ[››İY]™HØ\\™YÈH™K\™XYÛİ[ÛÈ˜Z[ÈÛÜÙYİ]ÚYHHŞ[]XÈš^\™K‚‹HİšXİÛİ\˜ÙK[Û›HÛÛ˜XİÈ›İÈYš[™HH]\™HÚYÛ™YÚ]ÛÛİ[™Ü™\ÜË˜[œÚY[]™Bˆ™K\™XY]šY[˜ÙK[™ÜİY[^HØ[˜Ù[][ÛˆXÚ\Ú[Û‹ˆ^HØ\H˜]È›ÙH]HZPˆ™Y›Ü™Bˆ\œÚ[™ËÒPPËš[™™\]Y\İ™\^HY[]HÈHÚYÛ™Y™\]Y\İ˜]\ˆ[ˆH[œÚYÛ™Y[]™\BˆXY\‹[™Ù\\˜][H\š]™HİX›H\Ú[™\ÜËY]™[Y[]Hœ›ÛH[ˆPPÈİ™\ˆH[İÛ\İYˆXØÛİ[Ú[˜›ŞÙ]™[ØÛÛ™\œØ][Û‹ÛY\ÜØYÙH\KˆZ\ˆÜİY[^H[H\™›Ü›\ÈÛÈ[™\[™[ˆ›Û‹\YÚ[˜]Y™XYÈœ›ÛH[˜ÚÜ—ÛY\ÜØYÙWÚYLXÈXXÚ˜]È™\ÜÛœÙH]\İÛÛZ[ˆx $ÎNH˜[Y›İÜËˆ[˜ÛYHH^Xİ[˜ÛÛZ[™ËÜX›XÈ[˜ÚÜ‹[™ZY[HØ[YHØ[›ÛšXØ[Ù]ˆ[H™]Ù\‚ˆ›Û‹XXİ]š]HY\ÜØYÙx %[˜ÛY[™È[›İ\ˆ›İ	ÜÈİ]]8 %Ø[˜Ù[Ëˆ^H[ÛÈÛÛ\\™BˆÙ[™\˜][Û‹Üİ]\ËØ\ÜÚYÛ™YH[™›Ü˜šYˆH[]šY[˜ÙHØš™XİÈœ›ÛHØZ]]HX›\ËÜˆ]Y]\œÚ\İ[˜ÙKˆ›È]™HÙXšÛÚÈÜ‚ˆÚ]ÛÛİÜ™Y[X[Ø\ÈÜ™X]Y‚‹HHYÙH›İÈ™]šY]ÜÈ^XİLXÛÛ[[ˆY\LXÛÛ[[ˆ›Ø‹NXÛÛ[[ˆ[˜ÚY[[™MËXÛÛ[[‚ˆ]Y]›İÜËˆ\ÙH›Ú™Xİ[ÛœÈ\™H^XÚ]HŞ[]XÈ[™›Û‹\\œÚ\İX›N‚ˆÜš]WÙ^Xİ]YY˜[ÙX]ÛZXÚ]WÙİX\˜[YYY˜[ÙX\œÚ\İ[˜ÙWÜ™XYOY˜[ÙX[™ˆ\œÚ\İX›OY˜[ÙXˆH]\™H]™HY\]™[ÚÙ^X]\İ\ÙHHİX›H\Ú[™\ÜËY]™[PPËˆÚ[HH™\]Y\İ™\^Hš[™Ù\œš[™[XZ[œÈHÙ\\˜]HÚÜ[]™Y˜[œÜÜÚXÚËˆš[ÜˆPPÂˆÙ^H™\œÚ[ÛœÈ]\İ™HX[\™XY›İYÚHY\ÈH[œÚYÛ™Y[]™\HXY\ˆ™]™\ˆYš[™\Âˆ]™[Y[]K‚‹HHÜ™\‹Z[™^™]šY]ÈX\ÈH˜[Y]YØ[\™\ÈÛÛ˜XİÈHX›IÜÈ^XİLˆÛÛ[[œËˆBˆ]™Hˆ[ˆØ]YÚ[ˆ[X™YYÚÜYKQÒQ™YÙ^\œ›Üˆ™Y›Ü™HXİ]˜][ÛÈ]Ø\Èš^YBˆ\›X[™[[X™YYPÛÙHŞ[^\İØ\ÈYY[™Ø[š]^™YÜİYš^^Xİ][ÛˆŒNX\ÜÙYˆÚ]›İ]HX›H[™ÚÜYHÜš]\È˜[ÙK‚‹HØ[š]^™YX[X[^Xİ][ÛœÈ›İ™YHÛÜ™KÑYÙH\H][›İ\ˆ[İÛ\İYÚ[›™[ˆX\[™ÜË[™˜Z[XÛÜÙY™Z]š[Üˆ›Üˆ[šÛ›İÛˆXØÛİ[Ú[˜›Şİ]ÛÚ[™ËÜš]˜]KØ›İ]™[Ëˆ[˜[YÚYÛ˜]\™H]šY[˜ÙK\XØ]H[]™\Kİ[HÙ[™\˜][Û‹™]\›œË[˜Ù\Z[ˆ[[ˆ[™›Û‹[İÈš\ÚËˆÜİ\Ş[˜È^Xİ][ÛˆLX›İ™Y]HÛİ\˜ÙK\Ş[˜Ú›Ûš^™YŞ[]XÂˆÚ]Ğ\]\ÙYHÛÛ™šYİ\™YØZ]^™\ÜÚ[Ûˆ[™^Xİ›Ë]Üš]H›Ú™Xİ[ÛœÎÈH›İ\‹XÚ[›™[ˆ[^H˜[™Ù\È\™HÛİ™\™YHØØ[[[YH\İËˆ][ÛÈ›İ™YHİX›H]™[ZY[]HÙ^Kˆ^XİØZ]š[™Ù\œš[˜\Ù[[™HÙ^K]™\œÚ[ÛˆØ\œK]›İYÚ[\™\Ù\™YLXÛÛ[[ˆY\ˆ™]šY]Ë[™ÜİUØZ][YÜš]HÚXÚËˆ]™\H\İY™\İ[Ù\ˆİ\İÛY\ˆYÜ™\ÜÈ[™\œÚ\İ[˜ÙH˜[ÙKˆHYÙBˆ™[XZ[œÈ[˜Xİ]™H[™[œX›\ÚYÈH[\ÜYÜ˜\\ÈÛİ\˜ÙKZY[XØ[ÈHœ›Ş™[ˆYÙHŒ‚ˆÛİ\˜ÙH[™Ø\œšY\ÈÛ›HHÛÈ›Ú™Xİ\ØÛÜYÜİÜ™TÔS[[YHÜ™Y[X[Ë‚‹HÚ]Xˆ›İÈÛÛZ[œÈHœ˜[™™YÚ\İK™YH\[™[Û›H]YÛ›İÛYÙH™[X\Ù\ÈÛİ\˜ÙYœ›ÛHH]™BˆØ[\™\ÈÛXŞKÑTHYÙ\ËH\›İ™Y™\ÜÛœÙK\İ[H™[X\ÙKH›ÜÜÙY[˜Xİ]™H[Ù[ÛXŞKˆÙ[™\šXÈÛÜ™HÛÛ˜XİËİšXİ\ˆØ[\™\ÈYÙHÛÛ˜XİËŞ[]XÈš^\™\Ë[™ˆİ[™\™[Xœ˜\HÛÛ˜XİÜ[[YHİX\™\İËˆÙ]™[K]ÛÈØØ[\İÈ\ÜË[˜ÛY[™ÈÜİ[Bˆ™\]Y\İ™\^HœËˆ]™[ZY[\İ[˜ŞKÙ^H›İ][Û‹›ÙKXš[™[™Ë›İ[™Y™K\™XYØ[YK\ÙXÛÛ™ˆRK\Ú\ÛÛš[™Ëİ]XËYš[™Ù\œš[[™Ø[˜Ù[][Û‹[X]š^Ø\Ù\Ë‚‹HÛÜ™HÜ›İ[™[™È›İÈ™\šYšY\È]™\HÚ]YÛ›İÛYÙHQ[™]È]]Üš]HYØZ[œİHÙ[XİYˆÛÛ^[™™\šYšY\È]™KY˜XİQÈ^XİKˆ]YÛ›Ü™\ÈH[Ù[	ÜÈœ™YK]^˜Y[™™[™\œÈ[‚ˆØœÙ\™WÙ˜Y™\İ[Û›Hœ›ÛH™\œÚ[Û™Yİ\İÛY\—Ü™\ÜÛœÙWØ\˜ÜˆH™\šYšYY]™K\Ûİ\˜ÙBˆ™\ÜÛœÙHœ˜YÛY[ˆHYÙH™Z™XİÈÜˆİš\ÈX[›Ü›YYÙ^˜HÛÜ™Hİ]]ˆ]™[\^[ØYˆ˜[œÜÜÛZ[\È\™HYÛ›Ü™YÈÛ›HHÜÛÙŞKXÜ™X]Y\İYÜ˜\\ˆØ[ˆ™XXÚ›Ü›X[^˜][Û‹‚‹HH]™HØœÙ\˜][ÛˆÛÛ›™Xİ[Ûˆ\È[[[Û˜[H›İÜ˜[YY]ˆH›Ú™Xİ\ØÛÜYÚ]ÛÛİ™XYˆÜ™Y[X[\È›İ[™ÈH^\İ[™ÈYÙHÑU›Ù\Ë[™Û™HØœÙ\˜][ÛˆÙXšÛÚÈ^\İË]›Âˆ]™Hš^\™H\È™Y[ˆ›ØÙ\ÜÙY™XØ]\ÙHYÙH™[XZ[œÈ[˜Xİ]™K‚ˆ[Ù[[›ÙHš[™[™È[™Y[]KRPPÈX]\šX[™[XZ[ˆ[X™\˜]H\œÚ\İ[XXØÙ\ÜÈØ]\ËˆH™]ÂˆÚÜYH]ˆ\Ú›Ø\™\Ø[\™\Èİ\İÛY\ˆÙ\šXÙH™XY\È[œİ[YÛˆØ[\™\Ë˜ÛÛXÚ]ˆÛ›H™XYØİ\İÛY\œØ™XYÛÜ™\œØ™XYÜ›ÙXİØ™XYÚ[™[ÜX[™™XYÛØØ][ÛœØˆHˆÚÜYBˆĞ]]ˆÜ™Y[X[Ø\È™Z™XİY[™™[[İ™Y™XØ]\ÙHHZ[Z[ˆ\H™\]Y\İYÜš]HØÛÜ\ÎÂˆHÙ[™\šXÈˆĞ]]ˆÜ™Y[X[\ÈØ]™YÚ]ÛY[Ü™Y[X[È[™HØ[YH™XY[Û›HØÛÜ\Ë‚ˆ\™Xİ]™H]šY[˜ÙH›İ™YÚÙ[ˆ\ÜİX[˜ÙH
+Œ^\™\×Ú[NŒÎNX™XY[Û›HØÛÜHÙ]
+H[™ˆH™XY[Û›HYZ[ˆÜ˜\S]Y\H
+Œ›È\œ›ÜœËÚÜ˜[YH™]\›™Y
+Kˆ]\È›İ[™Û›HÈBˆ[˜Xİ]™HYÙH\™Ù]ˆHYÙHŒˆÛİ\˜ÙH[™\™Ù]ÛÛZ[ˆH™XY[Û›HÚÜYHİ\İÛY\ˆÛÚİ\ˆœ˜[˜Ú\Ú[™ÈÙ[™\šXÈĞ]]‹˜Z[XÛÜÙY^Xİ\Û™HX]Ú[™Ë[™HİšXİÛÜ™KY[™[ÜHY\\Âˆ›ÈÚÜYHÜš]H\ÈØØİ\œ™YˆY\ˆHİÛ™\‹X\›İ™YØÛÜH\]KH\™Xİˆİ\İÛY\‹RQ[Û›HÜ˜\S™XY™]\›™YŒÚ]İ]\œ›ÜœÎÈ›Èİ\İÛY\ˆšY[ÈÙ\™HÙÙÙY‚‹HH[Ù[YÙ]İX\™Ø\È\YYÈ™X[™[Ûˆ[™\İYÚ]H[\Ü˜\H	ŒXÙZ[[™ÎˆBˆš\œİ™\Ù\˜][ÛˆÛÛ[Z]YH™^™\Ù\˜][ÛˆØ\È™Z™XİY\È[ÛWØYÙ]Ù^]\İYˆ[™HÛÛ›ÛØ\È™\İÜ™YÈ[˜X›YY˜[ÙXÚ[ÜİÚ]Ú]YX	XÙZ[[™Ëˆ\İ›İÜÈÙ\™Bˆ™[[İ™Yˆ›È[Ù[™\]Y\İØ\ÈXYK‚‚ˆÈÈÈ™^ØY™HXİ[Û‚‚Y\ˆ[ˆXİ[Û‹][YHİÛ™\ˆÛÛ™š\›X][Ûˆ›ÜˆÜÙH\œÚ\İ[XXØÙ\ÜÈØ]\Ë[\[Y[H[™XYBœÜXÚYšYYÚYÛ™YÚ]ÛÛİ[™Ü™\ÜÈ[™]™H™K\™XY[œÚYHH^\İ[™ÈYÙKš[™Û›BØ[\™\Ë\ØÛÜYÜ™Y[X[ËØ\\™HH™KUØZ]˜\Ù[[™HÚ]H[›™YY[]KRPPÈÙ^Kœ™\XÙHŞ[]XÈš[™Ù\œš[ÈÚ]Ù^YY]™H˜[Y\Ë[™\İ™X[™]™[È\Èš]˜]H[\›˜[ØœÙ\˜][ÛœËˆÙY\]]ÛX]XÈİ\İÛY\‹Y˜XÚ[™È™\Y\ÈİXİ\˜[B˜XœÙ[[[HÙ\\˜]HXİ]˜][ÛˆXÚ\Ú[Ûˆ[™]™\HØY™]HØ]H\ÜË‚‚ˆÈÈ][KXœ˜[™İÛ™\œÚ\Y]šY[˜ÙHİ[™\™8 %Œ‹LLLB‚‹HY]H\›İ™YØ[\™\È6`ö)öa6)ö*6,vb¶,˜ÚÜHY\ˆH\›X[™[İÛ™\œÚ\YÙH™XØ[YH]˜Z[X›K‚‹HHİÛ™\ˆ\ÈXØÙ\Y]™\İ[\ÈHÜ\˜][™È˜\Ú\È›Üˆ™]\Ú[™ÈH]šY[˜ÙK\YÙH]\›‚ˆ›Üˆ]\™Hœ˜[™Ë‚‹HXÚ\Ú[ÛˆH™\]Z\™\ÈH™]]˜[İÛ™\œÚ\™YÚ\İHÚ]HÙ\\˜]H\›X[™[YÙH›Üˆ]™\Bˆ]\™H™\šYšYYœ˜[™ˆ]Ù\È›İ]]Üš^™HÛÛ›™Xİ[™ÈÜˆ[ÙYZ[™È[›İ\ˆœ˜[™›İË‚
