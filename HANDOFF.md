@@ -1,4 +1,39 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Handoff
+
+## Calapres Captain v1.0 stable baseline — 2026-08-26
+
+The owner accepted the current behavior and required a named rollback point before further
+experiments. Resume from
+[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
+Do not rename or replace live assistant `2187`, delete baseline knowledge, change its three social
+inbox connections, or publish the n8n responder. Record the next knowledge addition as `v1.1`,
+verify it in Playground, and roll back only that recorded delta if behavior worsens.
+
+The baseline is a durable written snapshot plus repository tag, not a native Chatwoot version. Its
+safety depends on additive experiments and exact delta records. Owner-supplied product, engraving,
+shipping, payment, and returns facts are listed as pending input for the next version and have not
+been treated as part of `v1.0`.
+
+## Captain routing correction — 2026-08-25
+
+The initial post-connection silence was traced to historical conversations that were still Open.
+Captain does not re-evaluate audience and schedule for each new message in an existing open
+conversation; it enters when a conversation is new or a resolved conversation reopens. The owner
+messages had reached Chatwoot, but they remained on the old human/open path.
+
+All seven existing conversations are now assigned to `خدمة عملاء كالابريز` and resolved. The
+Chatwoot dashboard readback showed `غير معيّن: 0`. A single enabled automation rule named
+`إسناد كل محادثة جديدة إلى خدمة عملاء كالابريز` triggers on conversation creation, covers the
+four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp), and assigns the human agent
+`خدمة عملاء كالابريز`. Captain remains connected only to WhatsApp, Instagram, and TikTok; its
+Audience is `Everyone` and Schedule is `Anytime`.
+
+The n8n responder remains unpublished with no active version. No synthetic or operator-authored
+customer message was sent. The exact next action is one new owner message on each of WhatsApp,
+Instagram, and TikTok. A visible reply is still required before claiming end-to-end success. If a
+channel is silent, inspect the reopened conversation status and Captain activity before changing
+knowledge, guardrails, or architecture.
 
 ## Captain prelaunch pilot — 2026-08-25
 

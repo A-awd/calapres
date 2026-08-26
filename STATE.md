@@ -1,4 +1,40 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Project State
+
+## Named stable Captain baseline — 2026-08-26
+
+The owner named the first acceptable configuration `Calapres Captain v1.0 — Stable` before any
+further knowledge experiments. The live assistant was not renamed or modified for versioning.
+The durable baseline records assistant `2187`, its three connected social inboxes, Audience
+`Everyone`, Schedule `Anytime`, the assignment automation, the active behavioral rules, the known
+knowledge risks, and the unpublished n8n boundary.
+
+Baseline: [Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
+Future changes must be additive, one recorded group at a time, beginning with `v1.1`; do not delete
+baseline knowledge or publish the n8n responder in parallel. The checkpoint is a documented and
+tagged repository baseline, not a native Chatwoot cloud snapshot.
+
+## Captain conversation-entry and assignment correction — 2026-08-25
+
+The first real-channel attempt after Captain connection produced no reply because the owner's
+messages were added to already-open historical conversations. Chatwoot evaluates Captain audience
+and schedule when a conversation is created or when a resolved conversation reopens, not for every
+new message inside an existing open conversation. This was a conversation-state defect, not an
+inbox-ingress failure: the new WhatsApp and TikTok messages were visible in Chatwoot, their
+conversations were assigned to `خدمة عملاء كالابريز`, and Captain remained connected.
+
+All seven existing conversations were assigned to `خدمة عملاء كالابريز` and marked resolved so
+the next inbound message reopens a Captain-eligible conversation. Chatwoot then showed zero
+unassigned conversations. One active account automation rule now assigns every newly created
+conversation from the four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp) to
+`خدمة عملاء كالابريز`; this removes reliance on availability-based default auto-assignment.
+
+Fresh readback confirmed Captain still connected only to WhatsApp `128058`, Instagram `128031`,
+and TikTok `128033`, with Audience `Everyone` and Schedule `Anytime`. The preserved n8n responder
+`kAyF0D3ZZHxc0Hwp` remains unpublished (`active=false`, `activeVersionId=null`), so no second
+automatic responder is competing. No message was sent by the operator. The correction is
+configuration-verified but not yet end-to-end proven: the next owner-originated message on each
+social channel must visibly receive a Captain reply before success is claimed.
 
 ## Chatwoot Captain live for owner prelaunch evaluation — 2026-08-25
 

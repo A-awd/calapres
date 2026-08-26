@@ -1,8 +1,9 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Captain prelaunch customer-service handoff
 
 Date: 2026-08-25
 
-Last verified: 2026-08-25 15:28 Asia/Riyadh (UTC+03:00)
+Last verified: 2026-08-25 20:03 Asia/Riyadh (UTC+03:00)
 
 Pre-publication baseline: `35f9e9437ebf61e73856e064e2089b3a14f176fc`
 
@@ -32,6 +33,15 @@ Captain.
 the three connected channels after this switch. Playground behavior is configuration evidence,
 not channel-delivery evidence.
 
+[Verified] The first silent owner test used already-open historical conversations. Captain checks
+eligibility when a conversation is created or a resolved conversation reopens, not on every new
+message in an existing Open conversation. All seven historical conversations are now assigned to
+`خدمة عملاء كالابريز` and resolved; the dashboard shows zero unassigned conversations.
+
+[Verified] One enabled Chatwoot automation rule assigns every newly created conversation from the
+four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp) to
+`خدمة عملاء كالابريز`. Captain remains connected only to the three social inboxes.
+
 ## Work performed and verification
 
 - [Observed] Owner screenshots showed the preceding system repeatedly returning the same generic
@@ -41,6 +51,10 @@ not channel-delivery evidence.
   automatic responders from operating on the same inbox.
 - [Verified] Captain was connected individually to the existing WhatsApp, Instagram, and TikTok
   inboxes; Chatwoot showed a successful connection for each.
+- [Verified] Audience is `Everyone` and Schedule is `Anytime`. The seven retained conversations
+  were resolved after assignment so the next inbound message is eligible for Captain re-entry.
+- [Verified] A single active conversation-created automation covers all four existing inboxes and
+  assigns new conversations to `خدمة عملاء كالابريز`; the unassigned count read back as zero.
 - [Verified] Captain received a Calapres-only scope guardrail: it must not answer cars, travel,
   weather, food, or other external topics, and must redirect once without repeating a generic menu.
 - [Verified] Its response guidance now requires recent-conversation context, a direct answer, at
@@ -109,8 +123,9 @@ approval, not a simple republish.
 
 ## Immediate next action
 
-The owner should send normal messages through WhatsApp, Instagram, and TikTok and record the
-physically visible replies. Do not change the architecture before seeing this evidence.
+The owner should now send one normal new message through WhatsApp, Instagram, and TikTok. Each
+message will reopen its resolved conversation and provide the first valid Captain channel test.
+Record the physically visible replies. Do not change the architecture before seeing this evidence.
 
 If a channel fails, inspect that exact channel path first: Captain-to-inbox connection, incoming
 conversation, and outgoing delivery. If the reply is repetitive or factually wrong, inspect the
