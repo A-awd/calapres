@@ -1,4 +1,64 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Project State
+
+## Captain isolated Shopify order bridge live — 2026-08-26
+
+[Verified live in authenticated Chatwoot] The protected Captain configuration remains in place:
+`Calapres Assistant` (`2187`) is the only automatic customer-facing responder on WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`; Audience is `Everyone`; Schedule is `Anytime`;
+and the existing new-conversation automation assigns the four Calapres inboxes to
+`خدمة عملاء كالابريز`. Captain still contains 74 approved FAQs and 22 documents. The protected
+`v1.0` baseline and additive `v1.1` engraving delta were not changed.
+
+[Owner-reported plan state; capability verified live] The owner upgraded Chatwoot to Business. The
+exact billing record was not independently read in this closeout, but the newly available custom
+tool capability was verified. Captain has exactly one tool, `Calapres Shopify Order Lookup`.
+
+[Verified live in authenticated n8n] The tool calls active workflow
+`Calapres | Captain Shopify Order Bridge v1` (`lLJpvjtcxTaoQeGj`). It has five linear nodes and is a
+deterministic, read-only Shopify fact bridge: authenticated ingress, request and Saudi-phone
+validation, bounded Shopify GraphQL query, safe result shaping, and return to Captain. It contains
+no conversational AI, sends no Chatwoot message, and performs no Shopify mutation. Captain remains
+the only component that speaks to the customer. The rejected 107-node responder
+`kAyF0D3ZZHxc0Hwp` remains unpublished and must not run while Captain is connected.
+
+[Verified evidence] Execution history proves authenticated bridge-to-Shopify connectivity,
+rejection of a retired authorization value, and the corrected safe no-match path for missing or
+unusable phones. The successful results inspected all had no matching customer. No real matched
+customer/order, name greeting, fulfillment answer, tracking answer, or external-channel delivery
+was proven.
+
+[Current limits] Lookup is by the current Chatwoot contact phone only. Although Captain asks for a
+full order number after no match, the current tool cannot search that number; it supports human
+continuation only. No shipping-company or aggregator API is connected, so Captain can return only
+tracking already present in Shopify. Payment-gateway test mode and a controlled end-to-end order
+test remain unverified.
+
+[Accepted operating pattern] Decision 0019 supersedes decision 0018 only for the old plan/tool
+restriction. Keep one accepted Captain assistant; use one small, independently removable n8n
+bridge per external feature; and keep changing products, prices, orders, fulfillment, and tracking
+in Shopify rather than duplicated static knowledge. Respond.io is closed unless the owner explicitly
+reopens it. No shipping provider or outbound WhatsApp capability was selected or implemented.
+
+[Owner-observed voice behavior] Account-level transcription is enabled. After an earlier poor
+voice-note response, the owner confirmed that a later voice question was understood correctly.
+This is not equivalent to proof across every channel or recording condition.
+
+[Security boundary and next action] Authenticated editor inspection rendered credential values;
+none is stored in GitHub. The next safe stage requires separate approval: rotate only the order
+bridge authorization in Chatwoot and n8n together, prove the retired value fails and the new value
+returns the safe no-match result, then stop. Only after owner review should one controlled matched-
+order test be considered; do not add order-number search, shipping, another tool, or more knowledge
+during that proof.
+
+Canonical decision:
+[0019 — Adopt isolated Captain external-tool bridges](decisions/0019-adopt-isolated-captain-external-tool-bridges.md).
+Detailed closeout and deferred roadmap:
+[Captain order bridge and deferred roadmap handoff](docs/handoffs/2026-08-26-captain-order-bridge-and-deferred-roadmap.md).
+
+Every lower statement that says the current plan has no Captain custom tools or no live Shopify
+order tool is a correct historical snapshot superseded by this section and decision 0019. It does
+not become evidence for any unverified matched-order or carrier behavior.
 
 ## Captain v1.1 engraving knowledge live — 2026-08-26
 

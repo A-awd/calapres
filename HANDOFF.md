@@ -1,5 +1,44 @@
 # Handoff
 
+## Resume here — isolated Captain order bridge live — 2026-08-26
+
+Start with
+[decision 0019](decisions/0019-adopt-isolated-captain-external-tool-bridges.md) and the
+[detailed closeout](docs/handoffs/2026-08-26-captain-order-bridge-and-deferred-roadmap.md).
+They supersede lower historical statements that the current Chatwoot plan has no Captain tools.
+
+The protected conversational state remains unchanged. `Calapres Assistant` (`2187`) is the only
+automatic responder on WhatsApp `128058`, Instagram `128031`, and TikTok `128033`, with Audience
+`Everyone`, Schedule `Anytime`, and the existing assignment automation. Captain contains 74
+approved FAQs and 22 documents. The old responder `kAyF0D3ZZHxc0Hwp` remains unpublished and must
+never run alongside Captain.
+
+[Verified live] Captain now has one custom tool, `Calapres Shopify Order Lookup`, connected to the
+active five-node n8n workflow `Calapres | Captain Shopify Order Bridge v1`
+(`lLJpvjtcxTaoQeGj`). This is not the old architecture. Captain still understands and answers the
+customer; n8n only validates the authenticated request, reads bounded order facts from Shopify by
+the current contact phone, and returns a structured safe result. It contains no AI composer, sends
+no Chatwoot message, and performs no Shopify write.
+
+Successful history proves authorization, Shopify read connectivity, and the safe no-match path.
+It does not prove a real matched order, greeting by name, fulfillment or tracking answer, or
+customer-channel delivery. The current tool cannot search the full order number it asks for after
+no match. No carrier API is connected; only tracking already in Shopify can be returned.
+
+The owner-approved reusable pattern is one accepted Captain assistant plus one small, independent
+n8n bridge for each separately approved external feature. Shopify owns dynamic prices, products,
+orders, fulfillment, and tracking; do not copy changing facts into Captain knowledge. Respond.io is
+closed. Shipping selection and outbound WhatsApp remain deferred. Do not publish the unsolicited
+local shipping PDF.
+
+The exact next safe stage is one separately approved security change: rotate only the bridge
+authorization in Chatwoot and n8n together, verify that the retired value fails and the new value
+reaches the safe no-match result, record the result, and stop. Do not change Captain, its inboxes,
+knowledge, assignment, workflow shape, Shopify data, or customer conversations during that stage.
+After owner review, the next functional stage is one controlled matched-order test without parcel
+dispatch. Do not add order-number search, shipping, outbound messages, another bridge, or another
+knowledge group at the same time.
+
 ## Resume here — Captain v1.1 engraving knowledge live — 2026-08-26
 
 Continue from the protected `v1.0` architecture with one additive `v1.1` engraving delta. Live
@@ -80,7 +119,8 @@ four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp), and assigns
 `خدمة عملاء كالابريز`. Captain remains connected only to WhatsApp, Instagram, and TikTok; its
 Audience is `Everyone` and Schedule is `Anytime`.
 
-The n8n responder remains unpublished with no active version. No synthetic or operator-authored
+The n8n responder remains unpublished with no acti/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
+ve version. No synthetic or operator-authored
 customer message was sent during this routing correction. This evidence boundary was later
 superseded for WhatsApp only by the owner's physically visible, accepted Captain reply recorded in
 the 2026-08-26 stable closeout above. Final Instagram and TikTok behavior remains unverified in

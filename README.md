@@ -29,7 +29,10 @@ it is not a product database, does not reintroduce Supabase, and remains source-
 approved managed PostgreSQL provider passes live validation.
 Decision 0018 makes the existing Chatwoot Captain assistant the active prelaunch responder on the
 three social inboxes and keeps the failed n8n responder unpublished. It adds no paid service and
-does not change Shopify's authority.
+does not change Shopify's authority. Decision 0019 records the later Chatwoot upgrade and permits
+one small, independently removable n8n bridge per Captain external feature. The first bridge reads
+bounded order facts from Shopify; Captain remains the only customer-facing responder, and the old
+all-purpose n8n responder remains unpublished.
 
 ## Product workflow
 
@@ -83,3 +86,4 @@ Never commit credentials, customer data, order data, production exports, or plat
 Do not query, modify, or delete any retired external database merely because historical code once
 referenced it. External data disposal is a separate irreversible action requiring exact owner
 authorization.
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew

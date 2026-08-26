@@ -1,3 +1,4 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Decision Index
 
 Durable Calapres decisions live in the `decisions` directory. GitHub `main` is the authoritative
@@ -46,8 +47,12 @@ decision record.
   context-aware natural composer with strict output parsing and deterministic hallucination checks.
 - [0018 — Adopt Chatwoot Captain for the prelaunch customer-service pilot](decisions/0018-adopt-chatwoot-captain-prelaunch-pilot.md)
   — make the existing Captain assistant the only automatic responder on WhatsApp, Instagram, and
-  TikTok; keep the failed n8n responder unpublished, add no paid service, and hand live order-status
-  cases to a human because Captain custom tools are unavailable on the current plan.
+  TikTok and keep the failed n8n responder unpublished. Its former plan/tool restriction is
+  superseded by decision 0019.
+- [0019 — Adopt isolated Captain external-tool bridges](decisions/0019-adopt-isolated-captain-external-tool-bridges.md)
+  — keep Captain as the only responder, permit one small independently removable n8n bridge per
+  external feature, and adopt the first read-only Shopify order bridge without claiming a carrier
+  connection, order-number lookup, Shopify write, or proven real matched-order response.
 
 ## Superseded decisions
 
