@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Calapres Captain order bridge and deferred roadmap handoff
 
 Date: 2026-08-26

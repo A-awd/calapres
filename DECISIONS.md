@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # Decision Index
 
 Durable Calapres decisions live in the `decisions` directory. GitHub `main` is the authoritative

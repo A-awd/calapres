@@ -86,4 +86,3 @@ Never commit credentials, customer data, order data, production exports, or plat
 Do not query, modify, or delete any retired external database merely because historical code once
 referenced it. External data disposal is a separate irreversible action requiring exact owner
 authorization.
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew

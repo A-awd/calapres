@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # 0019 — Adopt isolated Captain external-tool bridges
 
 Date: 2026-08-26

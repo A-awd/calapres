@@ -119,8 +119,7 @@ four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp), and assigns
 `خدمة عملاء كالابريز`. Captain remains connected only to WhatsApp, Instagram, and TikTok; its
 Audience is `Everyone` and Schedule is `Anytime`.
 
-The n8n responder remains unpublished with no acti/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
-ve version. No synthetic or operator-authored
+The n8n responder remains unpublished with no active version. No synthetic or operator-authored
 customer message was sent during this routing correction. This evidence boundary was later
 superseded for WhatsApp only by the owner's physically visible, accepted Captain reply recorded in
 the 2026-08-26 stable closeout above. Final Instagram and TikTok behavior remains unverified in
