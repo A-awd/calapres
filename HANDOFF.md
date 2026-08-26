@@ -1,5 +1,28 @@
 # Handoff
 
+## Resume here — Captain v1.1 engraving knowledge live — 2026-08-26
+
+Continue from the protected `v1.0` architecture with one additive `v1.1` engraving delta. Live
+Chatwoot reread confirmed assistant `2187`, WhatsApp, Instagram, and TikTok connections, Audience
+`Everyone`, Schedule `Anytime`, and the single enabled new-conversation assignment automation are
+unchanged. Account-level audio transcription is enabled. Captain now shows 74 approved FAQs and 22
+documents.
+
+The complete executed delta is two engraving FAQs plus one narrow engraving guardrail. Captain may
+confirm only two letters, or two letters plus a date. It must not claim that engraving is free,
+must not invent a price, and must not promise a full name or logo. Exact text, tests, and rollback
+instructions are in
+[Calapres Captain v1.1 — Engraving](docs/baselines/2026-08-26-calapres-captain-v1.1-engraving.md).
+
+Playground verification passed for the price boundary, rejection of a full-name-and-logo request,
+and confirmation of the approved two-letters-plus-date format. This is Playground evidence only,
+not new WhatsApp, Instagram, or TikTok delivery evidence. Older crawled FAQs still conflict with
+the owner facts; they were left intact, and the new guardrail is required for the verified result.
+
+Do not configure n8n, Shopify, Captain tools, or another knowledge group from this handoff. Stop
+for owner review. If rollback is required, remove only the two exact FAQs and the one exact
+guardrail recorded in the v1.1 delta document.
+
 ## Resume here — v1.1 blocked before knowledge execution — 2026-08-26
 
 At 09:08 Asia/Riyadh, a clean worktree based on GitHub `origin/main`

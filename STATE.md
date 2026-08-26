@@ -1,5 +1,40 @@
 # Project State
 
+## Captain v1.1 engraving knowledge live — 2026-08-26
+
+[Verified live in authenticated Chatwoot] The previously blocked read succeeded. Assistant
+`Calapres Assistant` (`2187`) is still connected to WhatsApp, Instagram, and TikTok only. Audience
+remains `Everyone`, Schedule remains `Anytime`, and the single enabled automation still assigns
+every new Calapres-inbox conversation to `خدمة عملاء كالابريز`. The assistant name, description,
+inbox connections, and baseline response settings were not changed. Automatic FAQ generation,
+long-term memory capture, source citations, and contact-information access remain disabled. Audio
+message transcription was observed enabled at the account level and was not changed.
+
+[Executed additive delta] Captain knowledge now contains 74 approved FAQs and 22 documents. Two
+owner-approved engraving FAQs and one engraving guardrail were added as the complete `v1.1`
+delta. They establish that the only confirmed engraving formats are two letters, or two letters
+plus a date; the engraving price is unknown; and Captain must not promise that engraving is free
+or that a full name or logo is supported. No pre-existing FAQ or document was edited or deleted.
+The exact delta and rollback text are recorded in
+[Calapres Captain v1.1 — Engraving](docs/baselines/2026-08-26-calapres-captain-v1.1-engraving.md).
+
+[Verified in Playground only] A direct price question did not invent a price. A full-name-and-logo
+request was rejected as unconfirmed and redirected to the two approved formats. A fresh isolated
+question about two letters plus a date received a direct confirmation while preserving the unknown
+price boundary. An intermediate test after the two FAQs but before the guardrail still began by
+claiming that names or logos could be engraved; this proved that additive FAQs alone did not
+reliably override older crawled conflicts and is why the narrow guardrail is part of the same
+delta. These checks do not prove delivery or identical behavior on WhatsApp, Instagram, or TikTok.
+
+[Known residual risk] Older crawled FAQs still contain conflicting claims that engraving is free
+and that names or logos are available. They were not removed because this stage was additive and
+non-destructive. The new guardrail controlled the tested paths, but the old records remain a future
+cleanup candidate requiring separate owner approval.
+
+[Scope boundary] No Shopify setting or record, Captain tool, scenario, inbox, paid service, n8n
+workflow, customer conversation, or external channel was changed. Stop after this engraving group
+for owner review; do not add the next knowledge group without a new instruction.
+
 ## Captain v1.1 knowledge stage blocked before execution — 2026-08-26
 
 [Verified read-only at 09:08 Asia/Riyadh] GitHub `origin/main` is still
