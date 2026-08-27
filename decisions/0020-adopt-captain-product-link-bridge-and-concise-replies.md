@@ -1,9 +1,9 @@
+
 # 0020 — Adopt the Captain product-link bridge and concise-reply policy
 
 Date: 2026-08-27
 
-Status: accepted; bridge invocation is live, the matcher correction is published, and the final
-product-link reply remains unverified pending authorization rotation and one Playground retest
+Status: accepted and verified in Captain Playground; awaiting owner review
 
 ## Context
 
@@ -74,10 +74,12 @@ decision does not explicitly change.
 ## Live record
 
 [Verified live in authenticated n8n] Workflow `8jtjLu261ZzcipGq` is published under the Arabic
-name recorded above and contains exactly five linear nodes. Its dedicated inbound authorization was
-rotated before testing because the initial value appeared during local authenticated UI inspection.
-Both values remain outside GitHub. No separate runtime test proved rejection of the retired value,
-so that rejection is not claimed.
+name recorded above and contains exactly five linear nodes. Its safe-URL helper was corrected for
+the Code-node sandbox without changing its graph or bounded Shopify fields. The dedicated inbound
+authorization exposed during diagnosis was replaced in both platform settings through owner
+handoff. Values remain outside GitHub. Executions `44662` and `44664` stopped with `Unauthorized
+request`, proving the retired value is rejected; execution `44663` returned a matched safe result
+with the replacement value.
 
 [Verified live in authenticated Chatwoot] Captain has exactly two tools: the unchanged
 `Calapres Shopify Order Lookup` and the new Arabic-named product-link tool. The two guidelines are
@@ -85,15 +87,14 @@ separate entries, inactivity is set to `Wait for the customer`, and the burner-s
 required no edit. The protected channels, audience, schedule, assignment automation, and knowledge
 were not changed. No Meta setting was edited.
 
-[Verified in one Playground scenario] The only prompt was
-`أبي أطلب المبخرة البيضاء، عطيني الرابط.` Captain replied
-`أكيد، تقصد طقم مبخرة كالابريز بالأبيض؟` The length and one-question limits passed, but the required
-direct answer and link outcome failed. n8n execution `44652` completed successfully in 2.177 seconds
-through five nodes with one item. Its final safe envelope was `not_found`, with empty `title` and
-`url`, and clarification `ما لقيت رابطًا مؤكدًا لهذا اللون، تبغين لونًا ثانيًا؟` Captain did not
-reuse that clarification and introduced `طقم`, which was absent from the safe result. End-to-end
-product-link acceptance therefore failed at product resolution and safe-result adherence. This
-evidence does not prove a matched product or external-channel delivery.
+[Verified final Playground acceptance] The original failed scenario and two bounded diagnostic
+retries isolated separate bridge and composition defects. After correction, a fresh final prompt
+`أبغى أطلب المبخرة البيضاء` returned exactly two short lines: the live title
+`مبخرة كالابريز الفاخرة — الأبيض` and the
+[canonical product URL](https://calapres.com/products/مبخرة-كالابريز-الفاخرة-الأبيض). n8n
+execution `44668` completed all five nodes in 2.182 seconds and returned `matched` with the same URL.
+This is Playground evidence only and does not prove availability, price, inventory, bundle
+contents, a real customer reply, or external-channel delivery.
 
 [Verified diagnosis] The execution resolved the request to `white` and Shopify returned the active
 title `مبخرة كالابريز الفاخرة — الأبيض` with its canonical URL. The failing boundary was the
@@ -102,29 +103,28 @@ does not provide that constructor, so the caught error returned `false` silently
 is the same failure mode recorded in
 [n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
 
-[Executed, not accepted yet] Only the safe-URL helper in `Shape Safe Product Link Result` was
-replaced with an anchored validator for exact HTTPS product URLs on the Calapres domain. Offline
-red-green checks reproduced the old rejection, passed eight allowed/rejected URL cases, and matched
-the observed white title to one exact Shopify URL. The five-node workflow was published under
-version name `تصحيح فحص رابط المنتج في بيئة عقدة الكود`. No second Playground message or workflow
-execution was produced, so the correction is not end-to-end accepted.
+[Executed and accepted] Only the safe-URL helper in `Shape Safe Product Link Result` was replaced
+with an anchored validator for exact HTTPS product URLs on the Calapres domain. Offline red-green
+checks reproduced the old rejection and passed eight allowed/rejected URL cases. The five-node
+workflow was published under version name `تصحيح فحص رابط المنتج في بيئة عقدة الكود`.
+
+Captain still required two tool-only corrections: its description now mandates tool use for
+explicit Arabic purchase/link requests and forbids inventing `طقم` or another color, and its
+response template now accesses parsed JSON through `response.status`, `response.title`,
+`response.url`, and `response.clarification`. These changes do not broaden the bridge's authority.
 
 ## Security boundary
 
 Never store either bridge authorization, Shopify credentials, customer data, raw conversations, or
 raw execution payloads in GitHub. The separately planned authorization rotation for the existing
-order bridge remains pending; the product-link bridge's pre-test rotation does not complete or
-replace that security stage. The later matcher inspection rendered the current product-link
-authorization in local diagnostic output. It is not in GitHub, but it must be retired in both n8n
-and Chatwoot before another test.
+order bridge remains pending; the completed product-link rotation does not complete or replace that
+security stage.
 
 ## Next stage
 
-Stop at the credential handoff. The next action is to rotate only the product-link authorization in
-n8n and Chatwoot together, prove the retired value fails, then run exactly one newly approved
-Playground prompt for the explicit white product. If the execution returns a matched URL but Captain
-still omits it, composition requires a separate stage. Do not combine that work with the existing
-order-bridge authorization rotation or another bridge.
+The product-link stage is complete. Stop for owner review. The next possible security stage is the
+separately approved order-bridge authorization rotation under decision 0019; do not treat this
+product-link result as completing it or combine it with another capability.
 
 ## Rollback
 
