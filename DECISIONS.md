@@ -1,3 +1,4 @@
+
 # Decision Index
 
 Durable Calapres decisions live in the `decisions` directory. GitHub `main` is the authoritative
@@ -55,10 +56,11 @@ decision record.
 - [0020 — Adopt a Captain product-link bridge and concise-response policy](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md)
   — add a second independently removable, title-and-canonical-link-only Shopify bridge; keep reply
   length and live-product-fact boundaries as two separate Captain guidelines; wait for the customer
-  after silence; and record that the first Playground acceptance failed because the bridge returned
-  `not_found` with no URL while Captain separately did not follow its returned safe clarification.
-  The deterministic URL-sandbox correction is now published but remains untested until the exposed
-  product-link authorization is rotated in both systems.
+  after silence; preserve the first failed Playground acceptance as diagnostic history; correct the
+  n8n URL-sandbox validator and Chatwoot `response.*` template paths; require the tool for explicit
+  Arabic purchase/link intent; verify the exposed authorization's replacement and retired-value
+  rejection; and accept the final two-line title-plus-canonical-link Playground reply.
+  External-channel delivery remains unverified.
 
 ## Superseded decisions
 
