@@ -2,8 +2,8 @@
 
 Date: 2026-08-27
 
-Status: executed; bridge invocation verified in one Playground scenario, but end-to-end product-link
-acceptance failed and owner review is required
+Status: executed; bridge invocation was verified, the matcher correction is published but untested,
+and authorization rotation plus one Playground retest are required before acceptance
 
 ## Scope
 
@@ -113,6 +113,31 @@ nodes with one item.
 The end-to-end product-link acceptance is therefore **failed**, not partially passed. No additional
 Playground retry was run.
 
+## Published matcher correction — not yet end-to-end verified
+
+[Verified inputs] Execution `44652` resolved the request as `white`, and the bounded Shopify output
+contained the active title `مبخرة كالابريز الفاخرة — الأبيض` with a non-empty canonical Calapres
+product URL. The color matcher therefore received both the requested color and the matching title.
+
+[Diagnosed cause] The safe-URL helper called `new URL(...)` inside `try/catch`. In the affected n8n
+Code node runtime that constructor is unavailable, and the caught error silently returned `false`
+for every otherwise valid URL. This exact failure mode is recorded in
+[n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
+
+[Executed, not verified in Playground] Only that helper in `Shape Safe Product Link Result` was
+replaced with an anchored string validator. It accepts only HTTPS product URLs on `calapres.com` or
+`www.calapres.com`, requires a non-empty safe or percent-encoded handle, and rejects another
+protocol, host, path, query, fragment, or malformed percent escape. Offline red-green checks
+reproduced the old rejection, passed eight URL boundary cases, and matched the observed white title
+to one exact returned URL. The workflow was published as
+`تصحيح فحص رابط المنتج في بيئة عقدة الكود`; all five nodes, fields, permissions, and tool inputs
+remain unchanged. No new Playground message or workflow execution was produced, so neither a
+matched safe envelope nor Captain link delivery is proven.
+
+[Security stop] The current product-link authorization appeared in local diagnostic output during
+the matcher inspection. It is not stored in GitHub, but it must be retired in both n8n and Chatwoot
+before the single retest. Credential entry requires owner handoff.
+
 ## Evidence limits
 
 This test proves only the observed Playground reply, bridge invocation, workflow completion, and
@@ -127,12 +152,11 @@ pending.
 
 ## Next proposed stage and stop condition
 
-Stop for owner review. If the owner approves another bounded test, first tighten only the product
-resolution for the explicit white-product request after inspecting the bounded active-title and URL
-read plus the deterministic color matcher, then run exactly one newly approved Playground scenario.
-If that execution returns a matched URL but Captain still omits it, treat composition as a separate
-later stage. Do not add price, inventory, catalog, shipping, order-number, outbound-message, or
-another bridge capability during that work.
+Stop at the credential handoff. Rotate only the product-link authorization in n8n and Chatwoot,
+verify the retired value is rejected, then run exactly one newly approved Playground scenario with
+the same explicit white-product prompt. If that execution returns a matched URL but Captain still
+omits it, treat composition as a separate later stage. Do not add price, inventory, catalog,
+shipping, order-number, outbound-message, or another bridge capability during that work.
 
 Each separately owner-approved capability may use the modular pattern and Arabic display-name
 convention. Naming or specifying a capability does not approve implementation.

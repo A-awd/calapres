@@ -1,6 +1,6 @@
 # Project State
 
-## Captain product-link bridge and concise-response delta live; end-to-end acceptance failed — 2026-08-27
+## Captain product-link matcher correction published; verification paused for authorization rotation — 2026-08-27
 
 [Owner-approved and executed] Captain now has exactly two independently removable custom tools.
 The existing `Calapres Shopify Order Lookup` and its workflow were not changed. The added tool is
@@ -46,13 +46,34 @@ clarification and introduced `طقم`, which was absent from the safe result. En
 therefore failed at both product resolution and safe-result adherence. This does not prove a matched
 product, a customer-channel reply, or delivery on WhatsApp, Instagram, or TikTok.
 
-[Stop and next review] Do not send another test or change the live configuration from this state.
-After owner review, the smallest proposed correction is to inspect the current active Shopify title
-and URL read plus the deterministic color matcher, fix only why the explicit white-product request
-returned `not_found`, then run one newly approved Playground test and stop. If that later execution
-returns a matched URL but Captain still omits it, reply composition becomes a separate correction
-stage. The previously required rotation of the separate order-bridge authorization remains pending
-as its own security stage and must not be combined with this correction.
+[Verified inputs and deterministic diagnosis] Execution `44652` resolved the request as `valid`
+with `requestedColor: white`. The bounded Shopify read returned three active products, including
+`مبخرة كالابريز الفاخرة — الأبيض` with a non-empty canonical Calapres product URL. The color alias
+and title token were therefore not the failing boundary. The remaining rejection gate was the
+safe-URL helper: it called `new URL(...)` inside `try/catch`, while the n8n Code node environment
+does not provide that constructor in the affected runtime. The caught error made every otherwise
+valid URL return `false` silently. This exact environment behavior is independently described in
+[n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
+
+[Executed; not yet end-to-end verified] Only `Shape Safe Product Link Result` was changed. The
+unsupported constructor was replaced with an anchored string validator that accepts only HTTPS
+product URLs on `calapres.com` or `www.calapres.com`, requires one non-empty encoded or safe handle,
+and rejects another protocol, host, path, query, fragment, or malformed percent escape. Offline
+red-green checks reproduced the old silent rejection, passed eight safe/unsafe URL cases, and
+resolved the observed white title to exactly one returned Shopify URL. The workflow was published
+under version name `تصحيح فحص رابط المنتج في بيئة عقدة الكود`. Its five-node shape, Shopify fields,
+tool contract, and every protected Captain setting were left unchanged. No second Playground
+message or new workflow execution was produced, so a matched result and Captain link reply remain
+unverified.
+
+[Security stop] During exact validation-code inspection, the currently configured product-link
+authorization appeared in local diagnostic output. It was not written to GitHub, a customer
+conversation, or a Shopify record, but it must now be treated as pending retirement rather than a
+durable safe value. Before the one approved Playground retest, rotate only this product-link
+authorization in n8n and Chatwoot together, verify the retired value is rejected, then send the
+same single Playground prompt. Credential entry requires owner handoff. If the bridge returns a
+matched URL but Captain still omits it, reply composition becomes a separate stage. The independent
+order-bridge authorization rotation remains pending and must not be combined with this correction.
 
 Canonical decision:
 [0020 — Adopt a Captain product-link bridge and concise-response policy](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md).

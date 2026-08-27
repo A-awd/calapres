@@ -1,6 +1,6 @@
 # Handoff
 
-## Resume here — product-link bridge live, reply acceptance failed — 2026-08-27
+## Resume here — product-link matcher corrected; rotate authorization before one retest — 2026-08-27
 
 Read
 [decision 0020](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md), the
@@ -46,15 +46,32 @@ send a second test from this handoff.
 The product bridge has its own authorization. An initial value was retired and replaced in both
 systems before the test after it appeared in local authenticated UI inspection. Keep all values
 outside GitHub. Current configuration readback proved replacement, but no separate runtime request
-with the retired value was made.
+with the retired value was made. During the later matcher diagnosis, the replacement value appeared
+in local diagnostic output. It is not in GitHub, but it must now be treated as pending retirement;
+do not test with it or record it.
 
-Stop for owner review. If approved, inspect the bounded active-title and URL read plus the current
-color matcher, correct only why the explicit white-product request returned `not_found`, then run
-one newly approved Playground test, document it, and stop. If that run returns a matched URL but
-Captain still omits it, handle composition in a later separate stage. The order-bridge authorization
-rotation from decision 0019 is also still pending. Do not combine either stage with price lookup,
-inventory, discounts, product writes, order-number search, shipping, outbound WhatsApp, another
-knowledge group, or another bridge.
+[Verified diagnosis] The failed execution had `requestStatus: valid`, `requestedColor: white`, and
+a live active Shopify product titled `مبخرة كالابريز الفاخرة — الأبيض` with a non-empty canonical
+Calapres URL. The color matcher therefore had the inputs it needed. The URL safety helper instead
+used `new URL(...)` inside `try/catch`; the affected n8n Code node runtime does not expose that
+constructor, so the caught error silently rejected every URL. This matches
+[n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
+
+[Executed, unverified correction] Only the URL helper inside `Shape Safe Product Link Result` was
+replaced with an anchored validator for exact HTTPS Calapres product URLs. Offline red-green checks
+reproduced the old failure, passed eight allowed/rejected URL cases, and matched the observed white
+product to one exact Shopify URL. The correction was published as
+`تصحيح فحص رابط المنتج في بيئة عقدة الكود`. The workflow still has the same five linear nodes and
+the same bounded fields. No new Playground message or workflow execution was produced, so do not
+claim a matched product or link reply yet.
+
+Stop at the credential handoff. The owner must enter one new product-link authorization in n8n and
+Chatwoot, after which verify that the retired value fails and run exactly one Playground prompt:
+`أبي أطلب المبخرة البيضاء، عطيني الرابط.` If the bridge returns a matched URL but Captain still
+omits it, handle composition in a later separate stage. The order-bridge authorization rotation
+from decision 0019 is also still pending. Do not combine either stage with price lookup, inventory,
+discounts, product writes, order-number search, shipping, outbound WhatsApp, another knowledge
+group, or another bridge.
 
 Each separately owner-approved capability may use the modular pattern. Naming or specifying a
 capability does not approve implementation. An approved bridge still needs an Arabic display name,

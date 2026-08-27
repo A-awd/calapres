@@ -2,8 +2,8 @@
 
 Date: 2026-08-27
 
-Status: accepted; bridge invocation is live and verified, but the final product-link reply has not
-passed Playground acceptance
+Status: accepted; bridge invocation is live, the matcher correction is published, and the final
+product-link reply remains unverified pending authorization rotation and one Playground retest
 
 ## Context
 
@@ -95,20 +95,36 @@ reuse that clarification and introduced `طقم`, which was absent from the safe
 product-link acceptance therefore failed at product resolution and safe-result adherence. This
 evidence does not prove a matched product or external-channel delivery.
 
+[Verified diagnosis] The execution resolved the request to `white` and Shopify returned the active
+title `مبخرة كالابريز الفاخرة — الأبيض` with its canonical URL. The failing boundary was the
+safe-URL helper, which called `new URL(...)` inside `try/catch`. The affected n8n Code node runtime
+does not provide that constructor, so the caught error returned `false` silently for each URL. This
+is the same failure mode recorded in
+[n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
+
+[Executed, not accepted yet] Only the safe-URL helper in `Shape Safe Product Link Result` was
+replaced with an anchored validator for exact HTTPS product URLs on the Calapres domain. Offline
+red-green checks reproduced the old rejection, passed eight allowed/rejected URL cases, and matched
+the observed white title to one exact Shopify URL. The five-node workflow was published under
+version name `تصحيح فحص رابط المنتج في بيئة عقدة الكود`. No second Playground message or workflow
+execution was produced, so the correction is not end-to-end accepted.
+
 ## Security boundary
 
 Never store either bridge authorization, Shopify credentials, customer data, raw conversations, or
 raw execution payloads in GitHub. The separately planned authorization rotation for the existing
 order bridge remains pending; the product-link bridge's pre-test rotation does not complete or
-replace that security stage.
+replace that security stage. The later matcher inspection rendered the current product-link
+authorization in local diagnostic output. It is not in GitHub, but it must be retired in both n8n
+and Chatwoot before another test.
 
 ## Next stage
 
-Stop for owner review. The next proposed functional stage is to tighten only the product-tool
-resolution for the explicit white-product request after inspecting the bounded active-title and URL
-read plus the current color matcher, then request approval for one new Playground test. If a later
-execution returns a matched URL but Captain still omits it, composition requires a separate stage.
-Do not combine that work with the existing order-bridge authorization rotation or another bridge.
+Stop at the credential handoff. The next action is to rotate only the product-link authorization in
+n8n and Chatwoot together, prove the retired value fails, then run exactly one newly approved
+Playground prompt for the explicit white product. If the execution returns a matched URL but Captain
+still omits it, composition requires a separate stage. Do not combine that work with the existing
+order-bridge authorization rotation or another bridge.
 
 ## Rollback
 

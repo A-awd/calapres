@@ -57,6 +57,8 @@ decision record.
   length and live-product-fact boundaries as two separate Captain guidelines; wait for the customer
   after silence; and record that the first Playground acceptance failed because the bridge returned
   `not_found` with no URL while Captain separately did not follow its returned safe clarification.
+  The deterministic URL-sandbox correction is now published but remains untested until the exposed
+  product-link authorization is rotated in both systems.
 
 ## Superseded decisions
 

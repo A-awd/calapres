@@ -5,7 +5,8 @@ Date: 2026-08-27
 ## Purpose
 
 This handoff records the second independent Captain bridge, the exact response-quality changes, the
-single failed end-to-end Playground acceptance, and the next bounded review point. It does not
+single failed end-to-end Playground acceptance, the published but untested matcher correction, and
+the next bounded credential handoff. It does not
 replace the protected `v1.0` baseline, the additive `v1.1` engraving delta, or the existing order
 bridge.
 
@@ -100,6 +101,30 @@ Playground test was run.
 [Not verified] This stage provides no WhatsApp, Instagram, or TikTok delivery evidence and did not
 change any real customer conversation or Shopify record.
 
+## Matcher diagnosis and published correction
+
+[Verified inputs] The failed execution resolved the request to `white`. Its bounded Shopify output
+contained `مبخرة كالابريز الفاخرة — الأبيض`, marked active and carrying a non-empty canonical
+Calapres product URL. The Arabic color form and title-token matcher were therefore not the failing
+boundary.
+
+[Diagnosed cause] `Shape Safe Product Link Result` checked URLs with `new URL(...)` inside
+`try/catch`. The affected n8n Code node runtime does not expose that constructor, so the caught
+error silently made every URL unsafe. This is the exact failure mode documented in
+[n8n issue 19434](https://github.com/n8n-io/n8n/issues/19434).
+
+[Executed, not end-to-end verified] Only that helper was replaced with an anchored validator for
+exact HTTPS Calapres product URLs. Offline red-green checks reproduced the old rejection, passed
+eight allowed/rejected URL cases, and matched the observed white product to one exact Shopify URL.
+The workflow was published as `تصحيح فحص رابط المنتج في بيئة عقدة الكود`; its five nodes, bounded
+Shopify fields, request contract, and safe envelope are unchanged. No second Playground message or
+new workflow execution was produced.
+
+[Security stop] During exact validation-code inspection, the current dedicated product-link
+authorization appeared in local diagnostic output. It is absent from GitHub and no customer or
+Shopify record was changed, but the value must be retired in both n8n and Chatwoot before another
+test. Credential entry requires owner handoff.
+
 ## Future bridge boundary
 
 Each separately owner-approved capability may use the modular pattern and should have Arabic bridge
@@ -109,12 +134,12 @@ test, and rollback.
 
 ## Exact next proposed stage
 
-Stop for owner review. If approved, inspect the bounded active-title and URL read plus the current
-color matcher, correct only why the explicit white-product request returned `not_found`, then run
-one newly approved Playground test. If that run returns a matched URL but Captain still omits it,
-handle composition in a later separate stage. Do not combine that test with a product-price or
-inventory read, WhatsApp catalog work, shipping, order-number lookup, outbound messaging, another
-knowledge group, or another bridge.
+Stop at the credential handoff. Rotate only the product-link authorization in n8n and Chatwoot,
+verify the retired value is rejected, then run one Playground test with the same explicit white-
+product prompt. If that run returns a matched URL but Captain still omits it, handle composition in
+a later separate stage. Do not combine that test with a product-price or inventory read, WhatsApp
+catalog work, shipping, order-number lookup, outbound messaging, another knowledge group, or
+another bridge.
 
 The existing order-bridge authorization rotation remains a separate pending security stage. The
 product-link bridge's pre-test rotation did not perform it and must not be documented as completing
