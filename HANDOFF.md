@@ -1,6 +1,26 @@
 
 # Handoff
 
+## Resume here — WhatsApp handoff-routing recovery awaiting one fresh message — 2026-08-27
+
+The latest owner test message was visible in Chatwoot, but its existing conversation had already
+been handed off by Captain and marked `Open`. The message therefore remained on the human path;
+the product-link bridge was not invoked, and its execution history contained no call matching the
+message. This proves ingress and isolates the silence to conversation routing. It does not prove a
+failure of WhatsApp, Captain, or either Shopify bridge.
+
+Live reread preserved assistant `2187`, its three connected social inboxes, Audience `Everyone`,
+Schedule `Anytime`, `Wait for the customer`, and the unpublished old responder. Only the affected
+owner test conversation was returned from `Open` to `Pending`. The older inbound message was not
+replayed during observation, so no reply success is claimed.
+
+Ask for no configuration work. The exact next action is one fresh owner-originated WhatsApp
+message in that same conversation. Observe the physical WhatsApp reply. If the request is for a
+product link, also confirm one new execution of `8jtjLu261ZzcipGq` and compare only the returned
+title and canonical URL. Then document the evidence and stop. Do not manually reply from Chatwoot,
+resolve the conversation, change assistant settings or automation, publish the old responder, or
+modify either bridge while performing this proof.
+
 ## Resume here — product-link bridge accepted in Playground; stop for owner review — 2026-08-27
 
 Read

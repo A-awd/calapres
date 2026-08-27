@@ -1,6 +1,32 @@
 
 # Project State
 
+## Captain WhatsApp handoff-routing incident isolated; fresh-message proof pending — 2026-08-27
+
+[Verified live] The owner's latest WhatsApp test message reached the existing Chatwoot
+conversation, so channel ingress was working. The conversation had previously been handed off by
+Captain and marked `Open`, leaving the new inbound message on the human path. Captain did not
+invoke the product-link tool, and n8n showed no product-link execution at or after that message.
+This was a conversation-state routing condition, not evidence that WhatsApp, Captain, or either
+Shopify bridge was destroyed.
+
+[Verified protected state] `Calapres Assistant` (`2187`) remained connected to WhatsApp `128058`,
+Instagram `128031`, and TikTok `128033`; Audience remained `Everyone`; Schedule remained
+`Anytime`; the inactivity action remained `Wait for the customer`; and the old responder
+`kAyF0D3ZZHxc0Hwp` remained unpublished. No assistant, inbox, automation, guideline, knowledge,
+tool, workflow, Shopify record, or Meta setting was changed during diagnosis.
+
+[Executed bounded recovery] Only the affected owner test conversation was changed from `Open` to
+`Pending`, returning it to the bot queue. Chatwoot confirmed the new pending state. Captain did not
+retroactively answer the inbound message that had arrived before this state change during the
+subsequent observation window.
+
+[Pending evidence] One fresh owner-originated WhatsApp message is required after the pending-state
+recovery. Success means a physically visible Captain reply in WhatsApp and, for a product-link
+request, a matching new execution of workflow `8jtjLu261ZzcipGq`. Until both relevant observations
+exist, external-channel product-link delivery remains unverified. Do not send a manual Chatwoot
+reply, alter global routing, or reopen either bridge while collecting this proof.
+
 ## Captain product-link bridge accepted in Playground; owner-review stop — 2026-08-27
 
 [Owner-approved and executed] Captain has exactly two independently removable custom tools. The
