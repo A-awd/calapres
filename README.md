@@ -31,7 +31,11 @@ Decision 0018 makes the existing Chatwoot Captain assistant the active prelaunch
 three social inboxes and keeps the failed n8n responder unpublished. It adds no paid service and
 does not change Shopify's authority. Decision 0019 records the later Chatwoot upgrade and permits
 one small, independently removable n8n bridge per Captain external feature. The first bridge reads
-bounded order facts from Shopify; Captain remains the only customer-facing responder, and the old
+bounded order facts from Shopify. Decision 0020 adds a second isolated bridge whose output contract
+is limited to an active product title, its canonical Shopify online-store URL, status, and a safe
+clarification. Its first Playground acceptance returned no link. It adds no price, stock, discount,
+bundle, customer, order, send, or write capability. Captain remains the only customer-facing
+responder, every future capability requires its own named and bounded owner approval, and the old
 all-purpose n8n responder remains unpublished.
 
 ## Product workflow

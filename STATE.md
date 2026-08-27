@@ -1,5 +1,66 @@
 # Project State
 
+## Captain product-link bridge and concise-response delta live; end-to-end acceptance failed — 2026-08-27
+
+[Owner-approved and executed] Captain now has exactly two independently removable custom tools.
+The existing `Calapres Shopify Order Lookup` and its workflow were not changed. The added tool is
+`كالابريز | البحث عن رابط منتج شوبيفاي`, connected to the published five-node n8n workflow
+`كالابريز | جسر روابط منتجات شوبيفاي للكابتن | الإصدار 1` (`8jtjLu261ZzcipGq`). The new bridge
+accepts one bounded product query, performs a read-only Shopify GraphQL lookup, and returns only
+`status`, `title`, `url`, and `clarification`. It has no conversational AI, customer-send path,
+price, inventory, discount, bundle-content, order, customer, or Shopify-write capability.
+
+[Verified live readback] `Calapres Assistant` (`2187`) remains connected only to WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`; Audience remains `Everyone`; Schedule remains
+`Anytime`; and knowledge remains 74 FAQs and 22 documents. Its existing internal description
+already identified Calapres as a luxury burner store, so the assistant identity, name, and internal
+description were not edited. The inboxes, assignment automation, knowledge, Shopify records,
+customer conversations, and Meta WhatsApp profile, display name, and catalog were not changed. The old responder
+`kAyF0D3ZZHxc0Hwp` remains outside this architecture and must stay unpublished while Captain is
+connected.
+
+[Executed response policy] Two separate Captain guidelines were added, one per behavioral purpose:
+one enforces a single message of at most two short sentences with a direct answer followed by at
+most one question or one link; the other forbids unsupported product availability, discount,
+previous-price, or bundle-content claims and limits the link tool to its live Shopify title and
+URL. Splitting every clause into its own guideline is not the accepted design because it adds
+retrieval and conflict overhead without making the assistant faster. The inactivity action changed
+from Captain review after one hour to `Wait for the customer`. The exact `سعدنا بخدمتك...` text
+was configured under the former one-hour review-and-resolution route, and no daily campaign was
+identified; this is the likely source of the recurring message.
+
+[Credential boundary] The product bridge uses its own authorization. The first value became visible
+during local authenticated editor inspection, so it was retired and replaced in both n8n and
+Chatwoot before the only test. Exact values are not stored in GitHub. Configuration readback showed
+the retired value absent and the replacement present, but a separate runtime retired-value
+rejection was not executed during this one-test stage.
+
+[Single Playground evidence] Exactly one synthetic message was sent in Captain Playground:
+`أبي أطلب المبخرة البيضاء، عطيني الرابط.` Captain replied:
+`أكيد، تقصد طقم مبخرة كالابريز بالأبيض؟` The reply passed only the length and one-question limits;
+it failed the required direct-answer behavior and returned no link. The corresponding n8n execution
+`44652` succeeded in 2.177 seconds and all five nodes processed one item, proving tool invocation
+and bridge execution. Its final safe envelope was `not_found`, with empty `title` and `url`, and
+clarification `ما لقيت رابطًا مؤكدًا لهذا اللون، تبغين لونًا ثانيًا؟` Captain did not reuse that
+clarification and introduced `طقم`, which was absent from the safe result. End-to-end acceptance
+therefore failed at both product resolution and safe-result adherence. This does not prove a matched
+product, a customer-channel reply, or delivery on WhatsApp, Instagram, or TikTok.
+
+[Stop and next review] Do not send another test or change the live configuration from this state.
+After owner review, the smallest proposed correction is to inspect the current active Shopify title
+and URL read plus the deterministic color matcher, fix only why the explicit white-product request
+returned `not_found`, then run one newly approved Playground test and stop. If that later execution
+returns a matched URL but Captain still omits it, reply composition becomes a separate correction
+stage. The previously required rotation of the separate order-bridge authorization remains pending
+as its own security stage and must not be combined with this correction.
+
+Canonical decision:
+[0020 — Adopt a Captain product-link bridge and concise-response policy](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md).
+Exact baseline:
+[Calapres Captain v1.2 — Product links and concise replies](docs/baselines/2026-08-27-calapres-captain-v1.2-product-links-and-concise-replies.md).
+Detailed continuation:
+[Captain product-link and response-quality handoff](docs/handoffs/2026-08-27-captain-product-link-and-response-quality.md).
+
 ## Captain isolated Shopify order bridge live — 2026-08-26
 
 [Verified live in authenticated Chatwoot] The protected Captain configuration remains in place:

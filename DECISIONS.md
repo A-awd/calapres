@@ -52,6 +52,11 @@ decision record.
   — keep Captain as the only responder, permit one small independently removable n8n bridge per
   external feature, and adopt the first read-only Shopify order bridge without claiming a carrier
   connection, order-number lookup, Shopify write, or proven real matched-order response.
+- [0020 — Adopt a Captain product-link bridge and concise-response policy](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md)
+  — add a second independently removable, title-and-canonical-link-only Shopify bridge; keep reply
+  length and live-product-fact boundaries as two separate Captain guidelines; wait for the customer
+  after silence; and record that the first Playground acceptance failed because the bridge returned
+  `not_found` with no URL while Captain separately did not follow its returned safe clarification.
 
 ## Superseded decisions
 

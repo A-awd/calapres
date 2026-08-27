@@ -1,5 +1,69 @@
 # Handoff
 
+## Resume here — product-link bridge live, reply acceptance failed — 2026-08-27
+
+Read
+[decision 0020](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md), the
+[v1.2 product-link baseline](docs/baselines/2026-08-27-calapres-captain-v1.2-product-links-and-concise-replies.md),
+and the
+[detailed product-link handoff](docs/handoffs/2026-08-27-captain-product-link-and-response-quality.md).
+They supersede the earlier sequencing instruction that prohibited a second bridge before the order-
+bridge credential stage: the owner explicitly reopened and approved this bounded product-link and
+response-quality stage. The order-bridge credential rotation itself remains pending.
+
+Captain still has one assistant, `Calapres Assistant` (`2187`), connected only to WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`, with Audience `Everyone`, Schedule `Anytime`,
+74 FAQs, and 22 documents. The existing assignment automation was not changed. The internal
+description already identified a luxury burner store, so it was left alone. Meta WhatsApp profile,
+display name, catalog, Shopify records, customer conversations, and the old unpublished responder
+were not changed.
+
+Captain now has two tools. Preserve the unchanged order tool and its bridge. The new tool is
+`كالابريز | البحث عن رابط منتج شوبيفاي`; it calls published workflow
+`كالابريز | جسر روابط منتجات شوبيفاي للكابتن | الإصدار 1` (`8jtjLu261ZzcipGq`). The workflow has
+five linear nodes and only reads a bounded set of active Shopify product titles and canonical
+online-store URLs. Its safe envelope is `status`, `title`, `url`, and `clarification`; it does not
+return price, availability, discounts, bundle contents, customer or order data, and it cannot send
+a reply or mutate Shopify.
+
+Two independent response guidelines are live: one owns reply length and shape; the other owns the
+live-product-fact boundary. Keep them separate by purpose. Do not fragment every sentence into a
+new guideline. The inactivity behavior is now `Wait for the customer`. Previously, one hour of
+silence allowed Captain to review and resolve the conversation. The exact `سعدنا بخدمتك...` text
+was configured for that route and no once-per-day campaign was identified, so this is its likely
+source.
+
+Exactly one Playground test was run with `أبي أطلب المبخرة البيضاء، عطيني الرابط.` The product
+bridge was invoked: n8n execution `44652` succeeded in 2.177 seconds, and all five nodes processed
+one item. Captain nevertheless replied `أكيد، تقصد طقم مبخرة كالابريز بالأبيض؟` and did not return
+a link. The final safe envelope was `not_found`, with empty `title` and `url`, and clarification
+`ما لقيت رابطًا مؤكدًا لهذا اللون، تبغين لونًا ثانيًا؟` Captain did not reuse that clarification
+and introduced `طقم`. Therefore the bridge connection, reply-length limit, and one-question limit
+are verified. Product resolution, direct-answer behavior, link delivery, and adherence to the
+returned safe envelope failed. No matched product or external-channel delivery is proven. Do not
+send a second test from this handoff.
+
+The product bridge has its own authorization. An initial value was retired and replaced in both
+systems before the test after it appeared in local authenticated UI inspection. Keep all values
+outside GitHub. Current configuration readback proved replacement, but no separate runtime request
+with the retired value was made.
+
+Stop for owner review. If approved, inspect the bounded active-title and URL read plus the current
+color matcher, correct only why the explicit white-product request returned `not_found`, then run
+one newly approved Playground test, document it, and stop. If that run returns a matched URL but
+Captain still omits it, handle composition in a later separate stage. The order-bridge authorization
+rotation from decision 0019 is also still pending. Do not combine either stage with price lookup,
+inventory, discounts, product writes, order-number search, shipping, outbound WhatsApp, another
+knowledge group, or another bridge.
+
+Each separately owner-approved capability may use the modular pattern. Naming or specifying a
+capability does not approve implementation. An approved bridge still needs an Arabic display name,
+bounded inputs and outputs, a declared source of truth, one acceptance test, and an independent
+rollback. To roll back only this stage, remove or disable the new Captain tool, deactivate only
+workflow `8jtjLu261ZzcipGq`, remove only the two recorded guidelines, and restore the former
+inactivity choice only if the owner explicitly requests that behavior. Do not touch the order
+bridge or protected Captain state.
+
 ## Resume here — isolated Captain order bridge live — 2026-08-26
 
 Start with
