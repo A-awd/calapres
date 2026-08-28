@@ -1,6 +1,27 @@
 
 # Handoff
 
+## Resume here — Captain replied in Chatwoot; verify physical WhatsApp visibility — 2026-08-28
+
+The fresh-message gate after the conversation's `Open` to `Pending` recovery has now been crossed.
+In the real WhatsApp conversation, Captain answered an external car-link request with a concise
+store-scope redirect in the same minute. The owner's beige follow-up then produced the exact beige
+product title and canonical Calapres URL. Captain's generation trace explicitly showed a tool call
+with product query `البيج`, and the outbound message tooltip read `تم الإرسال بنجاح`.
+
+This verifies inbound eligibility, Captain response generation, product-link tool selection, and
+the Chatwoot-side status label. It does not yet verify physical display on the owner's WhatsApp
+screen: the owner reported that no reply was visible when checked. n8n execution evidence was also
+not refreshed because workflow `8jtjLu261ZzcipGq` is not exposed through the current n8n MCP
+access. Do not infer either a bridge failure or physical delivery from those observability limits.
+
+No live configuration changed during this read-only check. Preserve the current conversation state,
+Captain, both tools, both workflows, channels, Audience, Schedule, assignment automation,
+knowledge, Shopify, and Meta state. The next bounded action is observation only: confirm the same
+two replies on the owner's WhatsApp client. If they remain absent, inspect the outbound
+Chatwoot-to-WhatsApp delivery layer without changing global routing or either bridge, document the
+evidence, and stop.
+
 ## Resume here — WhatsApp handoff-routing recovery awaiting one fresh message — 2026-08-27
 
 The latest owner test message was visible in Chatwoot, but its existing conversation had already
