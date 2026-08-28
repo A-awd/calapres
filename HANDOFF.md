@@ -1,6 +1,57 @@
 
 # Handoff
 
+## Resume here — native short links accepted in Playground; stop for review — 2026-08-28
+
+Read
+[decision 0021](decisions/0021-adopt-shopify-native-short-product-links.md), the
+[v1.3 short-link baseline](docs/baselines/2026-08-28-calapres-captain-v1.3-shopify-native-short-links.md),
+and the
+[focused short-link and reporting handoff](docs/handoffs/2026-08-28-captain-native-short-links-and-chatwoot-reporting.md).
+This stage started from clean GitHub `origin/main`
+`e1188212d6361c852778c88e1eff54dbf37d3226`; the owner's dirty, diverged checkout was not touched.
+
+Shopify now owns exactly three first-party redirects: `/p/white`, `/p/beige`, and `/p/gray`, each
+pointing to its existing canonical white, beige, or gray product path. Direct checks returned HTTP
+`301` to each exact target and final HTTP `200` product pages. No product handle or other product
+record changed, and no third-party shortener was introduced.
+
+Workflow `8jtjLu261ZzcipGq` still has the same five linear nodes, tool, endpoint, credentials,
+request contract, Shopify read, and response envelope. Only `Shape Safe Product Link Result`
+changed. It now maps a safe exact canonical product URL to one of three exact allow-listed short
+URLs; seven local test cases passed. The published n8n version is
+`روابط شوبيفاي المختصرة الأصلية`, with description
+`إرجاع روابط شوبيفاي المختصرة الأصلية`.
+
+The first fresh Captain Playground prompt,
+`أبغى أطلب المبخرة البيضاء`, returned the safe technical-unavailable wording while the n8n host
+and the production webhook independently returned HTTP `503`; the n8n Cloud page showed the
+instance as `In progress`. This was a transient infrastructure-availability observation, not
+evidence that the deterministic mapping was wrong. The host and webhook then recovered to HTTP
+`200`.
+
+One retry used the same prompt. Captain returned exactly the public title
+`مبخرة كالابريز الفاخرة — الأبيض` plus `https://calapres.com/p/white`, with no price,
+availability, inventory, discount, previous-price, or bundle-content claim. This accepts the
+bounded Playground path after recovery. It does not prove the short link was physically delivered
+in WhatsApp or delivered on Instagram or TikTok.
+
+The exact next action is owner review. Do not send a WhatsApp test, edit a customer conversation,
+create another redirect, change any other workflow node, or combine a later external-channel proof
+with the pending order-bridge authorization rotation.
+
+Preserve Captain, its three inboxes, Audience, Schedule, assignment automation, knowledge,
+guidelines, inactivity choice, and two tools. Preserve all Meta WhatsApp settings, the order
+bridge, and the unpublished old responder. Roll back only by restoring the prior Shape-node code
+and deleting the three exact Shopify redirects; remember that HTTP `301` responses can be cached.
+
+The Chatwoot reporting review was read-only. The live account has zero labels, zero custom
+attributes, and exactly one unchanged conversation-created assignment automation. No report or
+classification setup is live. A later owner-approved stage may separate contact purchase status,
+conversation result, labels, and saved filters. `شكراً لطلبك` may set only `يحتاج تحقق`; it must
+never establish `طلب موثق` without a uniquely matched Shopify order. The proposed independent
+bridge `كالابريز | تصنيف العملاء حسب طلبات شوبيفاي` is not approved or executed.
+
 ## Resume here — Captain replied in Chatwoot; verify physical WhatsApp visibility — 2026-08-28
 
 The fresh-message gate after the conversation's `Open` to `Pending` recovery has now been crossed.

@@ -1,6 +1,59 @@
 
 # Project State
 
+## Shopify-native short product links accepted in Playground — 2026-08-28
+
+[Canonical base] This bounded stage started from clean GitHub `origin/main` commit
+`e1188212d6361c852778c88e1eff54dbf37d3226`. The owner's dirty, diverged checkout and its unrelated
+untracked files were not modified or staged.
+
+[Owner-approved and executed in Shopify] Exactly three first-party URL redirects now exist:
+`/p/white`, `/p/beige`, and `/p/gray`. They point respectively to the canonical white, beige, and
+gray Calapres burner product paths. Each short URL returned HTTP `301` to its exact canonical
+target, and following each redirect reached an HTTP `200` product page. No third-party shortener,
+product-handle change, price, inventory, order, customer, or other Shopify write was introduced.
+
+[Owner-approved and executed in n8n] Product-link workflow `8jtjLu261ZzcipGq` still contains five
+linear nodes with the same tool, endpoint, request validation, Shopify read, credentials, and safe
+response envelope. Only `Shape Safe Product Link Result` changed: an exact safe canonical product
+URL now maps to one of the three exact allow-listed URLs on `calapres.com`. Seven local test cases
+passed. The workflow was published with version name `روابط شوبيفاي المختصرة الأصلية` and
+description `إرجاع روابط شوبيفاي المختصرة الأصلية`.
+
+[Verified acceptance after transient interruption] The first fresh Playground prompt,
+`أبغى أطلب المبخرة البيضاء`, returned safe technical-unavailable wording while both the n8n host
+and production webhook independently returned HTTP `503`; n8n Cloud displayed the instance state
+`In progress`. The host and webhook later recovered to HTTP `200`. One retry with the same prompt
+returned the exact public title `مبخرة كالابريز الفاخرة — الأبيض` followed by exactly
+`https://calapres.com/p/white`, with no price, availability, inventory, discount, previous-price,
+or bundle-content claim. This accepts the bounded Playground path. Physical WhatsApp visibility
+and delivery on every external channel remain unverified.
+
+[Verified protected state] Captain remains the only customer-facing responder. Its assistant,
+inboxes, Audience, Schedule, knowledge, two response guidelines, inactivity behavior, two tools,
+assignment automation, and customer conversations were not changed. Meta WhatsApp settings were
+not touched. The order bridge remains unchanged and its separate authorization-rotation stage is
+still pending. Responder `kAyF0D3ZZHxc0Hwp` remains unpublished.
+
+[Read-only Chatwoot finding; proposal only] The account currently has zero labels, zero custom
+attributes, and exactly one unchanged conversation-created assignment automation. No
+classification or report configuration was created. A future design should separate contact
+purchase status, conversation result, operational labels, and saved filters. Text such as
+`شكراً لطلبك` may indicate only `يحتاج تحقق`; a real Shopify order match is required for
+`طلب موثق`. The independently removable bridge
+`كالابريز | تصنيف العملاء حسب طلبات شوبيفاي` is proposed only and is not approved or executed.
+
+[Stop] The native short-link stage is complete and stopped for owner review. Do not send a
+customer-channel proof, implement the reporting proposal, or combine either with the pending
+order-bridge authorization rotation without a separately bounded instruction.
+
+Canonical decision:
+[0021 — Adopt Shopify-native short product links for Captain](decisions/0021-adopt-shopify-native-short-product-links.md).
+Exact baseline:
+[Calapres Captain v1.3 — Shopify-native short product links](docs/baselines/2026-08-28-calapres-captain-v1.3-shopify-native-short-links.md).
+Detailed continuation:
+[Captain native short links and Chatwoot reporting handoff](docs/handoffs/2026-08-28-captain-native-short-links-and-chatwoot-reporting.md).
+
 ## Captain generated replies in Chatwoot; WhatsApp-client visibility unconfirmed — 2026-08-28
 
 [Verified live in authenticated Chatwoot] A fresh owner-originated WhatsApp message reached the

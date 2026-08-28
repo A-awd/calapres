@@ -61,6 +61,13 @@ decision record.
   Arabic purchase/link intent; verify the exposed authorization's replacement and retired-value
   rejection; and accept the final two-line title-plus-canonical-link Playground reply.
   External-channel delivery remains unverified.
+- [0021 — Adopt Shopify-native short product links for Captain](decisions/0021-adopt-shopify-native-short-product-links.md)
+  — add exactly three first-party Shopify redirects for the white, beige, and gray burners and map
+  only their exact canonical URLs to an exact short-URL allow-list in the existing five-node
+  product-link bridge. Shopify redirect and local mapping checks passed; after a transient n8n
+  HTTP `503`, the recovered host returned a successful exact title-plus-short-link Playground
+  reply. Physical external-channel delivery remains unverified, and Chatwoot classification
+  remains a documented proposal only.
 
 ## Superseded decisions
 

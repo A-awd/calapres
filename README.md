@@ -36,7 +36,12 @@ is limited to an active product title, its canonical Shopify online-store URL, s
 clarification. Its first Playground acceptance returned no link. It adds no price, stock, discount,
 bundle, customer, order, send, or write capability. Captain remains the only customer-facing
 responder, every future capability requires its own named and bounded owner approval, and the old
-all-purpose n8n responder remains unpublished.
+all-purpose n8n responder remains unpublished. Decision 0021 adds exactly three Shopify-native,
+first-party short product redirects and an exact allow-list mapping in the existing product-link
+bridge. It preserves the canonical product pages and all Captain, Chatwoot, Meta, order-bridge, and
+customer-conversation state. Redirect and local mapping checks passed. After a transient n8n HTTP
+`503`, one recovered-host Playground retry returned the exact live title and approved white short
+URL; physical external-channel delivery remains unverified.
 
 ## Product workflow
 
