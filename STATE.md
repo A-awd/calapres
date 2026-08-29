@@ -1,6 +1,50 @@
 
 # Project State
 
+## Storefront prototype local; Shopify privacy diagnosis complete — 2026-08-29
+
+[Canonical base] This documentation-only closeout started from clean GitHub `origin/main` commit
+`922e22263ca0a18d176b0f2a4abc26cd9d67cd87`. The dirty, diverged owner checkout and its unrelated
+duplicate files were not modified or staged.
+
+[Prepared only] A mobile-first Calapres storefront prototype based on the owner's preferred FRAMA
+reference exists in local worktree
+`/Users/awd/Documents/calapres/worktrees/storefront-hero-prototype-20260829`, branch
+`codex/storefront-hero-prototype-20260829`. Its visual comparisons, mobile-menu interaction,
+production build, and four worker tests passed. The prototype remains untracked, uncommitted, not
+approved for production, not translated into the Shopify Liquid theme, and not deployed. No live
+theme or Shopify storefront setting changed.
+
+[Verified live, read-only] `calapres.com` currently loads Shopify's native
+`/cdn/shopifycloud/privacy-banner/storefront-banner.js`. Storefront consent data reports the banner
+enabled in the full-width bottom position and explicitly includes Saudi Arabia in its region list.
+The canonical theme directories contain no banner implementation. The live privacy policy is
+predominantly English while the storefront and banner are Arabic.
+
+[Verified MCP boundary] The connected Shopify MCP lacked the privacy-read scope during this
+conversation. Schema inspection showed a global cookie-banner disable capability but no safe
+region-specific mutation. Therefore the current MCP cannot execute the desired Saudi-only change.
+Theme CSS is also the wrong layer because hiding the visible banner does not change Shopify's
+consent state.
+
+[Owner preference, not executed] The owner prefers the banner not to appear to Saudi customers and
+prioritizes Saudi marketing measurement. The narrow discussed path is a future Shopify Admin stage
+that removes only Saudi Arabia from the banner regions while preserving the configured EEA and UK
+regions. No legal review was completed, no consent or pixel behavior was changed, and no claim is
+made that a future save succeeded.
+
+[No live change in this phase] Captain, Chatwoot, n8n, Meta, Shopify products, Customer Privacy
+settings, analytics pixels, the live theme, customer conversations, and the three native product
+redirects were all untouched during the storefront-and-privacy work recorded here.
+
+[Immediate next action] Stop for owner review. If explicitly reopened, execute only the bounded
+Saudi-region Customer Privacy change through Shopify Admin, verify Saudi absence and EEA/UK
+presence, document the exact result, and stop. Keep the separate storefront-design continuation to
+mobile visual review; do not combine it with privacy execution.
+
+Detailed continuation:
+[Storefront prototype and Shopify privacy handoff](docs/handoffs/2026-08-29-storefront-prototype-and-shopify-privacy.md).
+
 ## Shopify-native short product links accepted in Playground — 2026-08-28
 
 [Canonical base] This bounded stage started from clean GitHub `origin/main` commit

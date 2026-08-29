@@ -1,6 +1,42 @@
 
 # Handoff
 
+## Resume here — local mobile prototype prepared; Shopify privacy not changed — 2026-08-29
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-29 10:52 Asia/Riyadh.
+
+Read the
+[focused storefront and privacy handoff](docs/handoffs/2026-08-29-storefront-prototype-and-shopify-privacy.md),
+then preserve the current Captain state from
+[decision 0021](decisions/0021-adopt-shopify-native-short-product-links.md) and the
+[2026-08-28 Captain handoff](docs/handoffs/2026-08-28-captain-native-short-links-and-chatwoot-reporting.md).
+This closeout started from clean GitHub `origin/main`
+`922e22263ca0a18d176b0f2a4abc26cd9d67cd87`; the dirty owner checkout was not touched.
+
+A verified local-only mobile-first prototype exists in
+`/Users/awd/Documents/calapres/worktrees/storefront-hero-prototype-20260829`, branch
+`codex/storefront-hero-prototype-20260829`. It follows the owner's preferred FRAMA editorial
+direction and uses Calapres assets. Its comparison, interaction, build, and worker checks passed,
+but it is untracked, uncommitted, not production-approved, not implemented as Shopify Liquid, and
+not deployed. Preserve that worktree until the owner accepts or rejects the prototype.
+
+The live cookie banner is Shopify Customer Privacy, not theme code. Read-only evidence showed it
+enabled in the full-width bottom position with Saudi Arabia explicitly included. The connected
+Shopify MCP lacked the privacy-read scope, and no safe region-edit mutation was found; it cannot
+perform the requested Saudi-only change in its current state. Do not hide the banner with theme
+CSS and do not use the broader global-disable operation as a substitute.
+
+No live system changed during this storefront-and-privacy phase. Preserve Captain, its two tools
+and two bridges, the native short links, Chatwoot, n8n, Meta, Shopify products and pixels, Customer
+Privacy settings, the live theme, and customer conversations.
+
+The immediate next action is owner review. If the owner explicitly reopens privacy execution,
+make one bounded Shopify Admin change only: remove Saudi Arabia from the cookie-banner regions,
+verify the banner is absent in a Saudi context and remains present in a configured EEA or UK
+context, record the exact result, and stop. Keep mobile design review and any later Liquid-theme
+implementation as a separate stage.
+
 ## Resume here — native short links accepted in Playground; stop for review — 2026-08-28
 
 Read
