@@ -1,6 +1,37 @@
 
 # Handoff
 
+## Resume here — Saudi Arabia removed from Shopify cookie-banner regions — 2026-08-29
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-29 18:50 Asia/Riyadh. Read the
+[focused execution handoff](docs/handoffs/2026-08-29-shopify-cookie-banner-saudi-region-removal.md)
+before any further privacy or storefront work.
+
+The owner explicitly approved one bounded Shopify Admin change. The manual cookie-banner region
+set started at 32 of 299: Saudi Arabia was the only selected Asian region and 31 European
+recommended regions were selected. Only Saudi Arabia was unchecked, then `Done` and `Save` were
+submitted. After a full Admin reload, Shopify showed 31 of 299 selected, Europe 31 of 31 on the
+Recommended tab, and the United Kingdom still checked. No Asian region remained selected.
+
+A newly opened public storefront page identified its Shopify country as `SA`, remained Arabic and
+SAR, loaded Shopify's native privacy-banner and consent-tracking scripts, and showed no visible
+banner or consent controls. This observation is consistent with the saved Saudi exclusion but is
+not an independent clean-visitor proof because the browser profile's prior consent state was not
+inspected or reset. A `?country=GB` attempt remained in the Saudi context, so no live UK network
+simulation is claimed; UK retention is proved only by the post-save Admin configuration reread.
+
+No banner content, appearance, position, checkout setting, automation choice, privacy policy,
+theme file, pixel, product, Captain, Chatwoot, n8n, Meta, redirect, or customer conversation was
+changed. Do not reopen privacy policy translation or pixel work from this handoff.
+
+The owner-approved Admin mutation and its post-reload persistence verification are complete. A
+clean-visitor Saudi presentation and a live UK presentation were not independently verified in
+this session. Stop without expanding the privacy scope. The next separate design action is owner
+visual review of the preserved mobile prototype; only after approval should a clean stage
+reconcile the live theme, translate the accepted design to Liquid, deploy to an unpublished
+preview theme, verify mobile behavior, and stop before live publication.
+
 ## Resume here — local mobile prototype prepared; Shopify privacy not changed — 2026-08-29
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:

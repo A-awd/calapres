@@ -1,6 +1,50 @@
 
 # Project State
 
+## Saudi Arabia removed from Shopify cookie-banner regions — 2026-08-29
+
+[Canonical base] This bounded live-settings stage started from clean GitHub `origin/main` commit
+`38a28429f749eda9d66142d0e7d568ddcc685408`. The owner's dirty, diverged checkout and the local
+storefront prototype worktree were not modified or staged.
+
+[Owner-approved and executed live] In authenticated Shopify Admin, Customer Privacy was using
+manual regions with automated settings off. The cookie-banner region editor showed 32 of 299
+regions selected: Saudi Arabia as the only selected Asian region and 31 selected European
+recommended regions. Only Saudi Arabia was unchecked. `Done` was selected and the enabled `Save`
+action was submitted; the save action then disappeared.
+
+[Verified persisted in Shopify] After a full admin reload, the region summary read Austria,
+Belgium, and 29 other regions. Reopening the editor showed 31 of 299 selected and Europe 31 of 31
+on the Recommended tab, including the United Kingdom. No Asian region remained selected. This is
+server-reread evidence that the Saudi-only delta persisted while the configured European and UK
+regions remained intact.
+
+[Observed post-save Saudi storefront context] A newly opened public `calapres.com` page rendered
+Arabic, SAR, and an inline Shopify country value of `SA`. Shopify's native privacy-banner and
+consent-tracking scripts still loaded, but no visible cookie-banner heading, consent buttons, or
+preference control was present. This is consistent with the saved Saudi exclusion, but it is not
+an independent clean-visitor proof because the browser profile's prior consent state was not
+inspected or reset.
+
+[UK verification boundary] A direct storefront attempt with `?country=GB` remained in the Saudi
+context (`SA` and SAR), so it is not claimed as a live UK geolocation test. UK retention is
+verified only from the post-save authenticated Admin configuration reread, not from the banner
+preview or a simulated UK network location.
+
+[No other live change] Banner content, color, position, checkout display, automated-settings
+choice, privacy policy, theme code, pixels, Customer Events, Shopify products, Captain, Chatwoot,
+n8n, Meta, redirects, and customer conversations were not changed. No per-pixel consent behavior
+was measured and no legal conclusion was made.
+
+[Stop] The owner-approved Admin mutation and its post-reload persistence verification are
+complete. A clean-visitor Saudi presentation and a live UK presentation were not independently
+verified in this session. Stop without expanding the privacy scope. The next separate design
+action remains owner visual review of the preserved mobile prototype. Do not translate or deploy
+it until that review.
+
+Detailed continuation:
+[Shopify cookie-banner Saudi-region removal](docs/handoffs/2026-08-29-shopify-cookie-banner-saudi-region-removal.md).
+
 ## Storefront prototype local; Shopify privacy diagnosis complete — 2026-08-29
 
 [Canonical base] This documentation-only closeout started from clean GitHub `origin/main` commit
