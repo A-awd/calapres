@@ -2,7 +2,7 @@
 
 Date: 2026-08-30
 
-Last verified: 2026-08-30 13:42 Asia/Riyadh
+Last verified: 2026-08-30 17:15 Asia/Riyadh
 
 ## Identity and bounded scope
 
@@ -12,11 +12,12 @@ Last verified: 2026-08-30 13:42 Asia/Riyadh
 - GitHub baseline: `d4abddd4fb907d423b7f46aeb52b1a4349a48015`.
 - Included: discount test setup, checkout form friction, Arabic labels, live-brand checkout styling,
   the owner-selected checkout logo and favicon, responsive editor verification, customer-facing
-  shipping-rate labels, and read-only payment-provider and carrier readiness.
+  shipping-rate labels, the bounded branded-footer-icon refinement, and read-only payment-provider
+  and carrier readiness.
 - Excluded: real card entry, OTP, live payment activation, orders, refunds, payouts, customer data,
   shipping prices or thresholds, shipping-provider connection, policies, pixels, Customer Privacy,
-  theme-code deployment, products, Captain, Chatwoot, n8n, Meta, and the preserved storefront
-  prototype.
+  theme code outside the two named footer files, products, Captain, Chatwoot, n8n, Meta, and the
+  preserved storefront prototype.
 
 This is a sanitized operational record. It contains no credentials, customer information, payment
 identifiers, raw browser payloads, or card data.
@@ -29,6 +30,8 @@ identifiers, raw browser payloads, or card data.
   freshly fetched and verified at `3a66851a2a6225481207f506be0868d2c2bda6e3`.
 - Before the later address-guidance and read-only shipping/Safari follow-up, `origin/main` was
   freshly fetched and verified at `76788b86ff464efd1b883112cc99e1adb449eac0`.
+- Before the later footer-icon and checkout-friction follow-up, `origin/main` was freshly fetched
+  and verified at `c008947e21d927329dff1bb4b41ab3f0604fc183`.
 - The live storefront identity was verified against the exact live-theme source: Cairo, white,
   `#333330` body text, `#1B262D` dark CTA, `#A18E63` gold accent, and a text-only
   `كالابريز` wordmark.
@@ -48,7 +51,7 @@ identifiers, raw browser payloads, or card data.
    saved in the original stage; the address string was superseded and independently reread in the
    later follow-up documented below:
 
-   - `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`
+   - `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`
    - `ادفع الآن`
    - `جميع عمليات الدفع آمنة ومشفّرة.`
 
@@ -64,6 +67,10 @@ identifiers, raw browser payloads, or card data.
 7. The same exact seal asset was saved in the active theme's favicon setting. After Save became
    disabled, a fresh public `calapres.com` document returned an `image/png` icon from Shopify CDN
    instead of the prior temporary inline SVG fallback.
+8. In the later bounded theme follow-up, only `sections/footer.liquid` and `assets/calabriz.css`
+   changed. Square frames and backgrounds were removed, the icons were enlarged, and Instagram,
+   Snapchat, and TikTok received their natural brand color treatments. A public desktop visual
+   check passed and the rendered DOM contained one of each new branded icon.
 
 Shopify displayed `Changes saved`. After the toast cleared, the saved editor state still showed
 Almarai, `#1B262D`, one-page mode, address autocompletion, and a disabled Save action. Mobile and
@@ -124,14 +131,16 @@ tracking configuration changed.
 - Dark `#1B262D` on white has strong contrast. Gold `#A18E63` on white is not suitable for small
   text and was not used as the primary action or sole signal.
 
-## Address-guidance follow-up
+## Address-guidance follow-ups
 
 [Owner-approved and verified live]
 
-- Address line 1 was updated from `ابحث عن عنوانك` to
+- Address line 1 was first updated from `ابحث عن عنوانك` to
   `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`.
-- Save became enabled after the edit. After Save and a full Shopify Admin reload, the language
-  editor reread the same exact value.
+- That historical value was later superseded by the exact current string
+  `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, including one space inside each
+  parenthesis. The current wording was verified after a full Admin reload and in the existing public
+  checkout.
 - The sentence is guidance for Shopify address autocompletion. It is not evidence of a direct
   Saudi National Address integration.
 - No other checkout language, account, layout, branding, payment, or address preference changed.
@@ -160,6 +169,8 @@ tracking configuration changed.
 
 - Apple Pay is a branded accelerated-checkout button. Shopify does not permit its brand color to
   be customized, so it cannot be changed to Calapres brown.
+- Shopify also does not provide a merchant control to reorder Apple Pay ahead of the card method.
+  Accelerated-wallet visibility and presentation vary by device and eligibility.
 - A fresh public storefront document returned the owner-selected PNG favicon through Shopify CDN.
   The current document has no `apple-touch-icon` and no web-app manifest.
 - The owner's existing Safari profile reportedly still shows an older Calapres icon. Safari may
@@ -167,6 +178,34 @@ tracking configuration changed.
   Home Screen icon is a separate asset path. Server markup alone does not prove visual refresh in
   that existing Safari profile.
 - No theme setting or theme code changed in this follow-up.
+
+## Branded footer and checkout-friction follow-up
+
+[Owner-approved and verified live]
+
+- The live plan remains Basic and the active MAIN theme is `Calabris Shopify Theme`
+  (`163004449024`).
+- Before changing the footer, unpublished backup theme `Backup before social icons 2026-08-30`
+  (`165747851520`) was created. Its `sections/footer.liquid` checksum was
+  `0ddff0f3df2da32eb52dfb3a26591e9b`, and its `assets/calabriz.css` checksum was
+  `01908b01ff2616099da2d1656f2147c7`.
+- Only those two files changed. The current checksums are
+  `fcbf12d5636339dbc91e67fd64d249b4` for `sections/footer.liquid`, updated
+  `2026-08-30T14:03:49Z`, and `de2d9c3dab282a01c09175bc2d8e2fa3` for
+  `assets/calabriz.css`, updated `2026-08-30T14:04:21Z`.
+- The icons are not account links yet. `instagram_url`, `snapchat_url`, and `tiktok_url` remain
+  blank, so Shopify renders decorative disabled spans. No URL was invented.
+- Shipping was not changed. The observed checkout already held a valid restored address, so
+  Shopify immediately showed the applicable rate; it did not expose every carrier before knowing
+  the destination.
+- The marketing opt-in checkbox was deliberately left unchanged. Hiding it would not auto-subscribe
+  an entered email, and a customer record alone is not marketing consent.
+- Paymob remains test-only. No payment method, wallet, card ordering, shipping configuration,
+  marketing setting, customer, order, or product changed.
+
+For rollback, restore only `sections/footer.liquid` and `assets/calabriz.css` from backup
+`165747851520`. Do not publish the whole backup because the current address wording was saved after
+the theme duplication.
 
 ## Additional current-plan opportunities, not executed
 
@@ -191,9 +230,9 @@ app merely to simulate those placements.
 - Shipping prices, thresholds, carriers, fulfillment, and tracking. Only the two manual-rate names
   changed.
 - Policies, marketing consent, pixels, Customer Events, and Customer Privacy.
-- Live theme code, products, collections, inventory, prices, redirects, Captain, Chatwoot, n8n,
-  Meta, and customer conversations. Only the active theme favicon setting changed; no theme code
-  was edited or deployed.
+- Products, collections, inventory, prices, redirects, Captain, Chatwoot, n8n, Meta, and customer
+  conversations. Theme code changed only in `sections/footer.liquid` and `assets/calabriz.css`; no
+  other theme file was edited.
 - The preserved local storefront prototype.
 
 ## Exact next action
