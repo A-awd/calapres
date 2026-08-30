@@ -71,12 +71,13 @@ decision record.
 - [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md)
   — preserve guest checkout, require first and last name, keep one-page checkout and address
   autocompletion, save the bounded Arabic labels including
-  `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`, and match the live storefront with Almarai
-  and the dark `#1B262D` action color. The owner-approved implementation amendment uses the selected
-  Calapres seal for the centered 100 px checkout logo and active-theme favicon, and names both
-  domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds.
-  Apple Pay's branded button remains native and no Gulf shipping zone exists. Paymob remains in
-  test mode, so real payment settlement is still unverified.
+  `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, and match the live storefront
+  with Almarai and the dark `#1B262D` action color. The owner-approved implementation amendment uses
+  the selected Calapres seal for the centered 100 px checkout logo and active-theme favicon, names
+  both domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds,
+  and places the compact Saudi Post WhatsApp helper only in the theme-controlled cart before
+  checkout. Apple Pay's branded button remains native, no Gulf shipping zone exists, and Paymob
+  remains in test mode, so real payment settlement is still unverified.
 - [0023 — Set Saudi VAT collection to zero pending obligation review](decisions/0023-set-saudi-vat-collection-zero-pending-review.md)
   — based on the owner's statement that Calapres has no VAT registration, set the Saudi Manual Tax
   country rate from 15% to 0% while preserving tax-inclusive pricing off, tax on shipping off, and
