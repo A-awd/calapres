@@ -44,10 +44,19 @@ No payment, shipping, marketing-consent, customer, order, product, discount, pri
 Chatwoot, n8n, or Meta state changed. Apart from the exact checkout-address string and the two
 named footer files, no checkout or theme surface changed.
 
+Do not run `.github/workflows/theme-deploy.yml` in its current state. Shopify verifies
+`163004449024` as the active MAIN theme, while the workflow labels that ID as staging and labels
+`163072377088` as live. It also deploys the unreconciled `shopify-theme` branch. Reconcile the
+exact live source and verify both destination roles before a separate workflow repair; any design
+translation must go to an unpublished preview theme and stop before live publication.
+
 For footer rollback, restore only `sections/footer.liquid` and `assets/calabriz.css` from draft
 `165747851520`, then verify the live footer. Do not publish that entire backup: the current address
 language was saved after the theme was duplicated and would be lost or made stale by a whole-theme
 publication. Leave the draft unpublished.
+
+Detailed same-conversation record:
+[Shopify checkout polish and payment-readiness handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
 
 ## Resume here — SPL WhatsApp helper live before checkout — 2026-08-30
 
