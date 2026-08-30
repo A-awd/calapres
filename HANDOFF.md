@@ -1,6 +1,54 @@
 
 # Handoff
 
+## Resume here — branded footer icons live; checkout friction bounded — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 17:15 Asia/Riyadh. This bounded live-stage record started from a clean, freshly fetched
+`origin/main` commit `c008947e21d927329dff1bb4b41ab3f0604fc183`. Shopify remains on the Basic
+plan, and the active MAIN theme remains `Calabris Shopify Theme` (`163004449024`).
+
+Before the footer change, Shopify created unpublished draft theme
+`Backup before social icons 2026-08-30` (`165747851520`). Its prechange checksums are
+`0ddff0f3df2da32eb52dfb3a26591e9b` for `sections/footer.liquid` and
+`01908b01ff2616099da2d1656f2147c7` for `assets/calabriz.css`.
+
+Only those two files changed in the active theme. The square frames and backgrounds were removed,
+the icons were enlarged, and natural brand treatments were applied: Instagram gradient, Snapchat
+yellow and black, and TikTok black, cyan, and red. A public desktop visual check passed, and the
+rendered DOM contained one each of the three new branded icons. The current live reread returned:
+
+- `sections/footer.liquid`: `fcbf12d5636339dbc91e67fd64d249b4`, updated
+  `2026-08-30T14:03:49Z`.
+- `assets/calabriz.css`: `de2d9c3dab282a01c09175bc2d8e2fa3`, updated
+  `2026-08-30T14:04:21Z`.
+
+Do not describe the icons as connected social accounts. `instagram_url`, `snapchat_url`, and
+`tiktok_url` are blank, so they are decorative disabled spans and are not clickable. No destination
+was invented. Obtain the owner's exact official URLs in a separate stage before enabling links.
+
+The current exact Address line 1 checkout text is
+`( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`. It includes one space inside each
+parenthesis and was verified after a full Admin reload and in the existing public checkout. It guides Shopify
+address autocompletion; it does not prove a direct National Address integration.
+
+No Apple Pay or card ordering changed. Shopify controls native wallet presentation, cannot place
+Apple Pay first by merchant preference, and varies accelerated-wallet visibility by device and
+eligibility. No shipping setting changed: Shopify reveals applicable rates after it has an address,
+and the observed checkout already held a valid restored address, so its applicable rate appeared
+immediately. The marketing checkbox was deliberately preserved because hiding it would not make an
+entered email valid marketing consent; creating a customer record is not the same as subscribing
+that customer to marketing. Paymob remains test-only.
+
+No payment, shipping, marketing-consent, customer, order, product, discount, privacy, Captain,
+Chatwoot, n8n, or Meta state changed. Apart from the exact checkout-address string and the two
+named footer files, no checkout or theme surface changed.
+
+For footer rollback, restore only `sections/footer.liquid` and `assets/calabriz.css` from draft
+`165747851520`, then verify the live footer. Do not publish that entire backup: the current address
+language was saved after the theme was duplicated and would be lost or made stale by a whole-theme
+publication. Leave the draft unpublished.
+
 ## Resume here — SPL WhatsApp helper live before checkout — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded
@@ -96,7 +144,7 @@ zero-rated, or alter the 390 SAR product price without a separately verified tax
 Paymob test mode, all payment settings, products, shipping rates, checkout branding and language,
 theme code, privacy settings, Captain, Chatwoot, n8n, and Meta were unchanged.
 
-## Resume here — address guidance saved; Gulf shipping inputs still required — 2026-08-30
+## Historical address guidance; current wording is in the newest section — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
 2026-08-30 13:42 Asia/Riyadh. This bounded follow-up started from clean `origin/main`
@@ -105,10 +153,11 @@ Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Las
 [focused checkout handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md)
 before any further checkout, shipping, payment, or Safari-icon work.
 
-The checkout Address line 1 label is now
+At this stage, the checkout Address line 1 label was
 `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. It was saved and reread unchanged after a full
-Shopify Admin reload. Treat this as guidance for Shopify address autocompletion, not proof of a
-direct Saudi National Address integration. The other checkout strings and settings were preserved.
+Shopify Admin reload. The value has since been superseded by the exact current wording in the newest
+handoff section above. Treat both strings as guidance for Shopify address autocompletion, not proof
+of a direct Saudi National Address integration.
 
 Shopify already hides delivery rates until the customer enters a delivery address, then displays
 only rates applicable to that address and order. The live profile still has one Saudi Arabia zone
