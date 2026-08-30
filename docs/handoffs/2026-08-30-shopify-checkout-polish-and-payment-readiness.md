@@ -4,6 +4,10 @@ Date: 2026-08-30
 
 Last verified: 2026-08-30 17:15 Asia/Riyadh
 
+Documentation coverage re-verified: 2026-08-30 18:12 Asia/Riyadh
+
+Source-conversation fingerprint: `sha256-prefix:c1134307c4c602f0`
+
 ## Identity and bounded scope
 
 - Project: Calapres.
@@ -12,12 +16,12 @@ Last verified: 2026-08-30 17:15 Asia/Riyadh
 - GitHub baseline: `d4abddd4fb907d423b7f46aeb52b1a4349a48015`.
 - Included: discount test setup, checkout form friction, Arabic labels, live-brand checkout styling,
   the owner-selected checkout logo and favicon, responsive editor verification, customer-facing
-  shipping-rate labels, the bounded branded-footer-icon refinement, and read-only payment-provider
-  and carrier readiness.
+  shipping-rate labels, the bounded Saudi Post cart-helper and branded-footer refinements,
+  theme-source deployment safety, and read-only payment-provider and carrier readiness.
 - Excluded: real card entry, OTP, live payment activation, orders, refunds, payouts, customer data,
   shipping prices or thresholds, shipping-provider connection, policies, pixels, Customer Privacy,
-  theme code outside the two named footer files, products, Captain, Chatwoot, n8n, Meta, and the
-  preserved storefront prototype.
+  theme code outside the four named cart/footer files, products, Captain, Chatwoot, n8n, Meta, and
+  the preserved storefront prototype.
 
 This is a sanitized operational record. It contains no credentials, customer information, payment
 identifiers, raw browser payloads, or card data.
@@ -32,6 +36,8 @@ identifiers, raw browser payloads, or card data.
   freshly fetched and verified at `76788b86ff464efd1b883112cc99e1adb449eac0`.
 - Before the later footer-icon and checkout-friction follow-up, `origin/main` was freshly fetched
   and verified at `c008947e21d927329dff1bb4b41ab3f0604fc183`.
+- The complete same-conversation coverage was compared again against freshly fetched `origin/main`
+  `d3f868fd63d929cb92410c6a03a883ed23d535d8` before this documentation-only amendment.
 - The live storefront identity was verified against the exact live-theme source: Cairo, white,
   `#333330` body text, `#1B262D` dark CTA, `#A18E63` gold accent, and a text-only
   `كالابريز` wordmark.
@@ -94,6 +100,11 @@ The next real-payment stage must first prove Paymob live onboarding, then disabl
 the provider is ready, complete one bounded low-value purchase, verify the Shopify order and
 provider transaction, and stop before expanding payment scope.
 
+[Superseded payment-test approach] A 100% discount was rejected as a payment-path test because a
+zero payable total cannot exercise the payment method. The final saved code is the 99% `QXMRK`
+configuration above. That correction makes a non-zero checkout possible, but it still cannot prove
+real authorization or settlement while Paymob remains in test mode.
+
 ## Shipping label execution and carrier boundary
 
 - Both domestic manual rate labels were changed from `قياسي` to
@@ -144,6 +155,42 @@ tracking configuration changed.
 - The sentence is guidance for Shopify address autocompletion. It is not evidence of a direct
   Saudi National Address integration.
 - No other checkout language, account, layout, branding, payment, or address preference changed.
+
+## Saudi Post helper before checkout
+
+[Owner-approved and verified live]
+
+- The helper is outside checkout. It appears in the theme-controlled `/cart` page and cart drawer
+  immediately before the customer continues to checkout.
+- Its exact current visual lines are:
+
+  - `لتسهيل شحنتك، أضف عنوانك المختصر في صفحة الدفع.`
+  - `لا تعرف عنوانك المختصر؟ اعرفه عبر واتساب سبل ↗`
+
+- The destination is
+  `https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
+  WhatsApp opens with the draft `العنوان الوطني`; the customer must press Send.
+- Before the first helper edit, unpublished draft theme `Copy of Calabris Shopify Theme`
+  (`165745590528`) was created. It rolls back to no helper and was never published.
+- Only `sections/main-cart.liquid` and `snippets/cart-drawer.liquid` changed in this helper stage.
+  Their final live checksums are `18a9fab56106ebefe4a2479ae12bf5f7` and
+  `842f3966eaec4a2280b5d811774c5cb9`, updated at `2026-08-30T12:52:52Z` and
+  `2026-08-30T12:53:19Z` respectively.
+- Visual checks at 390 by 844 confirmed exactly two lines with no wrapping on both cart surfaces.
+  A 320 by 700 check also avoided wrapping, although the fit is intentionally tight.
+
+[Superseded design lesson] The first enlarged refinement used more text, larger typography, and
+larger spacing. It wrapped into four visual lines on a 390 by 844 mobile viewport and the owner
+rejected it as too large. The compact two-line design above is the current live result.
+
+This helper is a customer-initiated WhatsApp handoff, not a direct Saudi Post API, identity lookup,
+or automatic National Address retrieval. It does not send customer data automatically. Basic,
+Grow, and Advanced cannot place this custom link inside Shopify's protected Information, Shipping,
+or Payment steps; Shopify Plus permits constrained Checkout Blocks or Checkout UI extensions there,
+not arbitrary checkout-DOM or `checkout.liquid` access.
+
+For rollback, restore only the two helper files from draft `165745590528`, verify the helper is
+absent from `/cart` and the drawer, and leave the draft unpublished.
 
 ## Shipping presentation and plan constraints
 
@@ -207,6 +254,30 @@ For rollback, restore only `sections/footer.liquid` and `assets/calabriz.css` fr
 `165747851520`. Do not publish the whole backup because the current address wording was saved after
 the theme duplication.
 
+[Ambiguous editor-timeout lesson] The first footer-editor attempt timed out before a visible save
+confirmation. A connector reread proved the active file checksums were still unchanged. The editor
+was then reloaded cleanly, the bounded edits were reapplied, and only the post-save file rereads and
+public render were accepted as execution evidence. After any future editor timeout, reread the live
+file or checksum before retrying; never infer that a timed-out submission saved.
+
+## Theme-source deployment safety
+
+[Verified repository risk; no workflow change]
+
+- The active Shopify MAIN theme is `163004449024` and contains live changes that are not reconciled
+  into canonical GitHub theme source.
+- `.github/workflows/theme-deploy.yml` currently labels `163004449024` as the staging theme and
+  labels `163072377088` as the live theme. That mapping conflicts with the latest verified Shopify
+  role and is stale or inverted.
+- The workflow also deploys source from the separate `shopify-theme` branch, not the latest live
+  MAIN theme source.
+
+Do not trigger the theme-deploy workflow, push theme files through it, or deploy the local
+prototype. First pull and reconcile the exact current MAIN theme into a clean reviewed branch,
+verify every destination theme ID and role read-only in Shopify, update the workflow through a
+separate reviewed code stage, and deploy only to an unpublished preview theme. Stop before live
+publication.
+
 ## Additional current-plan opportunities, not executed
 
 - Keep the discount field expanded on mobile during code-led campaigns.
@@ -231,9 +302,44 @@ app merely to simulate those placements.
   changed.
 - Policies, marketing consent, pixels, Customer Events, and Customer Privacy.
 - Products, collections, inventory, prices, redirects, Captain, Chatwoot, n8n, Meta, and customer
-  conversations. Theme code changed only in `sections/footer.liquid` and `assets/calabriz.css`; no
-  other theme file was edited.
+  conversations. Across the recorded helper and footer stages, theme code changed only in
+  `sections/main-cart.liquid`, `snippets/cart-drawer.liquid`, `sections/footer.liquid`, and
+  `assets/calabriz.css`; no other theme file was edited.
 - The preserved local storefront prototype.
+
+Captain and its Shopify-native short-link state were outside this stage and unchanged. Preserve
+[decision 0021](../../decisions/0021-adopt-shopify-native-short-product-links.md) and the
+[2026-08-28 focused handoff](2026-08-28-captain-native-short-links-and-chatwoot-reporting.md); do
+not infer physical external-channel delivery from the accepted Playground result. The earlier
+[storefront/privacy handoff](2026-08-29-storefront-prototype-and-shopify-privacy.md) records the
+historical pre-execution privacy diagnosis; the later
+[Saudi-region removal handoff](2026-08-29-shopify-cookie-banner-saudi-region-removal.md) controls
+the current cookie-banner region state.
+
+## Intentional exclusions and known gaps
+
+This record intentionally excludes screenshots, private checkout URLs and preview tokens, raw
+browser or connector payloads, repetitive UI exchanges, credentials, customer or order data,
+payment identifiers, card data, pixel identifiers, and the owner's private account information.
+None of those exclusions is required to continue the project safely.
+
+The following material gaps remain explicit:
+
+- Paymob live onboarding, a real authorization, settlement, payout, and provider-portal readiness
+  have not been proved.
+- The footer icons passed a public desktop visual check, not a separate post-change mobile visual
+  check. They are decorative until the owner provides the exact official account URLs.
+- Whether `QXMRK` was consumed after it was saved is unknown; reread it before deactivation.
+- The existing Safari profile's displayed icon remains visually unresolved; the document has no
+  `apple-touch-icon` or web-app manifest.
+- No real Saudi Post WhatsApp reply, National Address retrieval, or return-to-checkout journey was
+  tested.
+- The live theme is not reconciled into GitHub, and the current deployment workflow mapping is
+  unsafe to use until separately corrected and reviewed.
+- Entity-wide Saudi VAT threshold status, a clean-visitor Saudi cookie-banner presentation, and a
+  live UK banner presentation remain unknown in their focused records.
+- The local storefront prototype remains untracked, uncommitted, unapproved, non-Liquid, and
+  undeployed; preserve its worktree until the owner accepts or rejects it.
 
 ## Exact next action
 
@@ -245,4 +351,5 @@ If shipping is reopened first, obtain the owner's exact Gulf-country list, fees 
 delivery estimates, and manual-versus-calculated choice. Preserve the current Saudi rates until
 those inputs are explicit. If the Safari icon is reopened, first identify whether the old image is
 in a tab/bookmark, a Home Screen shortcut, or the browser's own Page Menu control before changing
-theme code.
+theme code. Do not run the repository theme-deploy workflow until the exact live source and both
+theme-ID roles have been reconciled and reviewed.
