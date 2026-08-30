@@ -1,6 +1,45 @@
 
 # Project State
 
+## Checkout address guidance saved; shipping and Safari boundaries rechecked — 2026-08-30
+
+[Canonical base] This bounded follow-up started from clean GitHub `origin/main` commit
+`76788b86ff464efd1b883112cc99e1adb449eac0`. The preserved storefront prototype and the owner's
+dirty, diverged repository checkout were not modified.
+
+[Owner-approved and executed live] The checkout Address line 1 label is now
+`ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. Shopify enabled Save after the edit; after
+Save and a full Admin reload, the same exact value was reread from the language editor. This is
+customer guidance for Shopify address autocompletion, not evidence of a direct Saudi National
+Address integration. No other checkout text or setting changed.
+
+[Verified live, read-only shipping boundary] Shopify already withholds delivery rates until the
+customer supplies a delivery address, then shows only rates applicable to that address and order.
+The current profile has one Saudi Arabia zone and no Gulf zone. Its two identically named manual
+rates are price tiers, not two shipping companies: 25 SAR from 0 through 319.99 SAR and free from
+320 SAR, so their existing subtotal conditions are mutually exclusive for a single-profile cart.
+The live plan is Basic. Manual country zones and fixed rates can be added on that plan, but
+third-party carrier-calculated rates are unavailable on Basic. No zone, rate, condition, carrier,
+app, location, or fulfillment setting changed in this follow-up.
+
+[Verified platform and browser boundaries] Shopify's branded Apple Pay button cannot be recolored
+to Calapres brown, so it remains native. A fresh public storefront document still returned the
+owner-selected PNG favicon from Shopify CDN. The document has no `apple-touch-icon` or web-app
+manifest, and the owner's existing Safari profile reportedly still displays an older icon. That
+display is not claimed fixed: Safari can retain an older favicon, its Page Menu control is browser
+chrome, and a Home Screen icon is a separate asset path. No live theme code changed.
+
+[Stop] The bounded address-label mutation is complete. A future Gulf-shipping stage requires the
+owner's exact destination countries, fixed fees or free-shipping thresholds, delivery estimates,
+and whether the options are manual labels or real carrier-calculated services. Do not invent those
+commercial inputs or change the existing Saudi rates while deciding them.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
+
+Detailed continuation:
+[Shopify checkout polish and payment-readiness handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
+
 ## Checkout branded; shipping labels clarified; Paymob still test-only — 2026-08-30
 
 [Canonical base] This bounded live checkout stage started from clean GitHub `origin/main` commit

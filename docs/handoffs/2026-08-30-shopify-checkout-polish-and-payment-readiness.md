@@ -2,7 +2,7 @@
 
 Date: 2026-08-30
 
-Last verified: 2026-08-30 13:27 Asia/Riyadh
+Last verified: 2026-08-30 13:42 Asia/Riyadh
 
 ## Identity and bounded scope
 
@@ -27,6 +27,8 @@ identifiers, raw browser payloads, or card data.
   `d4abddd4fb907d423b7f46aeb52b1a4349a48015` before this stage.
 - Before documenting the later logo, favicon, and shipping-label follow-up, `origin/main` was
   freshly fetched and verified at `3a66851a2a6225481207f506be0868d2c2bda6e3`.
+- Before the later address-guidance and read-only shipping/Safari follow-up, `origin/main` was
+  freshly fetched and verified at `76788b86ff464efd1b883112cc99e1adb449eac0`.
 - The live storefront identity was verified against the exact live-theme source: Cairo, white,
   `#333330` body text, `#1B262D` dark CTA, `#A18E63` gold accent, and a text-only
   `كالابريز` wordmark.
@@ -42,9 +44,11 @@ identifiers, raw browser payloads, or card data.
 1. The temporary discount code `QXMRK` was saved as 99% off the order, limited to one use in total
    and one use per customer, with no minimum purchase and no combinations.
 2. Checkout requires both first and last name. Forced customer sign-in remains off.
-3. These Arabic theme-content overrides were saved one at a time and reread after each save:
+3. These are the current Arabic theme-content overrides. The payment and security strings were
+   saved in the original stage; the address string was superseded and independently reread in the
+   later follow-up documented below:
 
-   - `ابحث عن عنوانك`
+   - `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`
    - `ادفع الآن`
    - `جميع عمليات الدفع آمنة ومشفّرة.`
 
@@ -120,6 +124,50 @@ tracking configuration changed.
 - Dark `#1B262D` on white has strong contrast. Gold `#A18E63` on white is not suitable for small
   text and was not used as the primary action or sole signal.
 
+## Address-guidance follow-up
+
+[Owner-approved and verified live]
+
+- Address line 1 was updated from `ابحث عن عنوانك` to
+  `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`.
+- Save became enabled after the edit. After Save and a full Shopify Admin reload, the language
+  editor reread the same exact value.
+- The sentence is guidance for Shopify address autocompletion. It is not evidence of a direct
+  Saudi National Address integration.
+- No other checkout language, account, layout, branding, payment, or address preference changed.
+
+## Shipping presentation and plan constraints
+
+[Verified live and against current Shopify behavior, read-only]
+
+- Shopify withholds delivery rates until the customer supplies a delivery address, then displays
+  only rates applicable to that address and order.
+- The live profile has one Saudi Arabia zone and no Gulf zone. The two manual rows named
+  `التوصيل داخل السعودية` are subtotal tiers, not two shipping companies: 25 SAR from 0 through
+  319.99 SAR and free from 320 SAR. Their existing conditions are mutually exclusive for a
+  single-profile cart.
+- The live Shopify plan is Basic. Manual zones and fixed rates can be configured, but Shopify's
+  third-party carrier-calculated shipping is unavailable on Basic.
+- A later Gulf stage requires exact destination countries, fees or free-shipping thresholds,
+  delivery estimates, and a choice between manual customer-facing labels and real calculated
+  carrier services. None of those commercial inputs was inferred.
+- No shipping zone, rate, name, price, threshold, carrier, app, location, fulfillment service, or
+  tracking setting changed in this follow-up.
+
+## Apple Pay and Safari-icon constraints
+
+[Verified read-only]
+
+- Apple Pay is a branded accelerated-checkout button. Shopify does not permit its brand color to
+  be customized, so it cannot be changed to Calapres brown.
+- A fresh public storefront document returned the owner-selected PNG favicon through Shopify CDN.
+  The current document has no `apple-touch-icon` and no web-app manifest.
+- The owner's existing Safari profile reportedly still shows an older Calapres icon. Safari may
+  retain a cached favicon; the Page Menu control beside the address bar is browser chrome, and a
+  Home Screen icon is a separate asset path. Server markup alone does not prove visual refresh in
+  that existing Safari profile.
+- No theme setting or theme code changed in this follow-up.
+
 ## Additional current-plan opportunities, not executed
 
 - Keep the discount field expanded on mobile during code-led campaigns.
@@ -153,3 +201,9 @@ app merely to simulate those placements.
 Treat real-payment activation as the next blocker. Verify Paymob live onboarding and settlement
 readiness before turning off test mode or entering a real card. After that separate bounded proof,
 deactivate the one-use `QXMRK` test code if it was consumed or is no longer needed.
+
+If shipping is reopened first, obtain the owner's exact Gulf-country list, fees or thresholds,
+delivery estimates, and manual-versus-calculated choice. Preserve the current Saudi rates until
+those inputs are explicit. If the Safari icon is reopened, first identify whether the old image is
+in a tab/bookmark, a Home Screen shortcut, or the browser's own Page Menu control before changing
+theme code.

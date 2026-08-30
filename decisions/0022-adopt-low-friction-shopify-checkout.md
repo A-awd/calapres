@@ -25,7 +25,7 @@ Arabic-friendly Almarai font.
    autocompletion enabled.
 3. Use these Arabic checkout strings:
 
-   - Address line 1: `ابحث عن عنوانك`
+   - Address line 1: `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`
    - Primary payment action: `ادفع الآن`
    - Card security notice: `جميع عمليات الدفع آمنة ومشفّرة.`
 
@@ -50,7 +50,8 @@ Arabic-friendly Almarai font.
 
 - `QXMRK` was saved at 99% with the limits above.
 - First and last name are both required; forced sign-in remains off.
-- The three Arabic strings above were saved separately and reread with the Save action disabled.
+- The original three Arabic strings were saved separately and reread with the Save action disabled;
+  the address string was later superseded by the dated amendment below.
 - Almarai was saved for headings and body. The primary accent and button were saved as `#1B262D`.
 - One-page checkout, address autocompletion, buy-again, white backgrounds, native payment logos,
   and Shopify's native security structure remain enabled or visible.
@@ -87,6 +88,28 @@ carrier integration.
   reread showed both new rate names with the original prices and thresholds.
 - No checkout account rule, payment-provider setting, shipping price, threshold, carrier,
   fulfillment service, tracking setting, or theme code changed in this amendment.
+
+## 2026-08-30 address-guidance and platform-constraint amendment
+
+The owner approved replacing only the Address line 1 label with
+`ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. The value persisted after Save and a full
+Shopify Admin reload. This supersedes the shorter address label in the original execution record,
+but it does not claim a direct Saudi National Address integration; the underlying feature remains
+Shopify address autocompletion.
+
+Shopify already withholds delivery rates until a customer supplies a delivery address and then
+shows only the applicable rates. The live profile still has one Saudi Arabia zone and no Gulf
+zone. The two domestic rate rows are mutually exclusive subtotal tiers, not two carriers. A Gulf
+zone can be considered only in a separate shipping stage after the owner chooses the exact
+countries, fees or thresholds, delivery estimates, and whether the rates are manual or calculated
+by a real carrier. The live Basic plan supports manual zones and fixed rates but not third-party
+carrier-calculated rates. No shipping setting changed in this amendment.
+
+Keep the branded Apple Pay button native; Shopify does not permit recoloring it to the Calapres
+palette. The public storefront server currently returns the selected PNG favicon, but that does
+not prove every existing Safari profile refreshed its cached icon. Safari's Page Menu control is
+browser chrome, and a Home Screen icon is a separate path; the current public document exposes no
+`apple-touch-icon` or web-app manifest. No theme code changed in this amendment.
 
 ## Plan boundary
 

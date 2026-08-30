@@ -1,6 +1,41 @@
 
 # Handoff
 
+## Resume here — address guidance saved; Gulf shipping inputs still required — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 13:42 Asia/Riyadh. This bounded follow-up started from clean `origin/main`
+`76788b86ff464efd1b883112cc99e1adb449eac0`. Read
+[decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) and the
+[focused checkout handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md)
+before any further checkout, shipping, payment, or Safari-icon work.
+
+The checkout Address line 1 label is now
+`ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. It was saved and reread unchanged after a full
+Shopify Admin reload. Treat this as guidance for Shopify address autocompletion, not proof of a
+direct Saudi National Address integration. The other checkout strings and settings were preserved.
+
+Shopify already hides delivery rates until the customer enters a delivery address, then displays
+only rates applicable to that address and order. The live profile still has one Saudi Arabia zone
+and no Gulf zone. Its two rates named `التوصيل داخل السعودية` are subtotal tiers, not two carriers:
+25 SAR from 0 through 319.99 SAR and free from 320 SAR. No shipping configuration changed. A future
+Gulf stage must first receive the exact countries, fees or thresholds, delivery estimates, and
+whether the owner wants manual rate labels or real carrier-calculated services. The live plan is
+Basic: manual zones and rates remain possible, but third-party carrier-calculated rates are not
+available on this plan.
+
+Do not recolor the branded Apple Pay button; Shopify does not allow that button's brand treatment
+to be customized. The public storefront currently emits the owner-selected PNG favicon from
+Shopify CDN, but the owner's existing Safari profile reportedly shows an older icon. Safari may
+cache favicons; its Page Menu control is browser UI, and Home Screen icons use a separate path. The
+current document exposes no `apple-touch-icon` or web-app manifest. No theme code was changed, and
+no visual Safari success is claimed from the server reread alone.
+
+No order, customer, payment setting, payment transaction, shipping zone, rate, condition, carrier,
+app, fulfillment service, theme file, product, privacy setting, Captain, Chatwoot, n8n, Meta
+setting, or customer conversation changed in this follow-up. The only live mutation was the exact
+Address line 1 wording above.
+
 ## Resume here — checkout branded; shipping labels clarified; Paymob still test-only — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:

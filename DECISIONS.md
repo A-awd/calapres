@@ -70,12 +70,13 @@ decision record.
   remains a documented proposal only.
 - [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md)
   — preserve guest checkout, require first and last name, keep one-page checkout and address
-  autocompletion, save the bounded Arabic labels and accurate security wording, and match the live
-  storefront with Almarai and the dark `#1B262D` action color. The owner-approved implementation
-  amendment uses the selected Calapres seal for the centered 100 px checkout logo and active-theme
-  favicon, and names both domestic manual rates `التوصيل داخل السعودية` without changing their
-  prices or thresholds. Paymob remains in test mode, so real payment settlement is still
-  unverified.
+  autocompletion, save the bounded Arabic labels including
+  `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`, and match the live storefront with Almarai
+  and the dark `#1B262D` action color. The owner-approved implementation amendment uses the selected
+  Calapres seal for the centered 100 px checkout logo and active-theme favicon, and names both
+  domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds.
+  Apple Pay's branded button remains native and no Gulf shipping zone exists. Paymob remains in
+  test mode, so real payment settlement is still unverified.
 
 ## Superseded decisions
 
