@@ -105,4 +105,3 @@ rate names to `قياسي` only if the owner explicitly requests those specific 
 their prices or thresholds. Deactivate only `QXMRK` when the bounded test is complete. Do not
 disable Paymob, alter another discount, force sign-in, change customer records, or modify theme
 code during rollback.
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew

@@ -153,4 +153,3 @@ app merely to simulate those placements.
 Treat real-payment activation as the next blocker. Verify Paymob live onboarding and settlement
 readiness before turning off test mode or entering a real card. After that separate bounded proof,
 deactivate the one-use `QXMRK` test code if it was consumed or is no longer needed.
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
