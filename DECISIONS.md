@@ -77,6 +77,13 @@ decision record.
   domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds.
   Apple Pay's branded button remains native and no Gulf shipping zone exists. Paymob remains in
   test mode, so real payment settlement is still unverified.
+- [0023 — Set Saudi VAT collection to zero pending obligation review](decisions/0023-set-saudi-vat-collection-zero-pending-review.md)
+  — based on the owner's statement that Calapres has no VAT registration, set the Saudi Manual Tax
+  country rate from 15% to 0% while preserving tax-inclusive pricing off, tax on shipping off, and
+  no overrides or import-duty collection. A fresh 390 SAR checkout showed no tax line and a 390 SAR
+  total with the currently applicable free shipping. Zero is a no-collection configuration, not a
+  legal zero-rating claim. The connected Shopify store has zero sales in the prior 12 months, but
+  entity-wide and forecast supplies remain unknown and require prompt confirmation.
 
 ## Superseded decisions
 

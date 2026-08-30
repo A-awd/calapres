@@ -1,6 +1,47 @@
 
 # Handoff
 
+## Resume here — Saudi customer VAT collection set to zero — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 13:57 Asia/Riyadh. This bounded tax stage started from clean `origin/main`
+`cad21a8f16b644d2bb98a6df20d4626200d00604`. Read
+[decision 0023](decisions/0023-set-saudi-vat-collection-zero-pending-review.md) and the
+[focused tax handoff](docs/handoffs/2026-08-30-shopify-saudi-vat-zero-collection.md) before any
+further tax, pricing, shipping-total, or invoice work.
+
+The owner stated that Calapres has no Saudi VAT registration and instructed that checkout must not
+add VAT. Before the change, Saudi Arabia used active Manual Tax with a 15% country base rate while
+tax-inclusive pricing and tax on shipping were off, the Saudi override list was empty, and duties
+and import taxes were not set up. Only the Saudi country rate changed: 15% to 0%. Shopify confirmed
+the save, and a full Admin reload reread 0%.
+
+A read-only Shopify analytics query for 2025-08-30 through 2026-08-30 returned zero orders, gross
+sales, net sales, taxes, and total sales. This establishes only the connected store's Shopify
+history. It does not include taxable supplies outside Shopify or the expected next 12 months, so
+the entity-wide ZATCA threshold position remains unknown and needs prompt confirmation.
+
+A fresh guest checkout with one live 390 SAR burner and synthetic, non-personal Saudi test data
+showed free `التوصيل داخل السعودية`, no estimated-tax or tax line, and a 390 SAR total. No card
+data, real customer data, order, or payment was submitted. The owner's earlier open checkout had
+reported 10 SAR shipping, but that amount was not reproduced in the fresh checkout and no shipping
+setting changed during this tax stage.
+
+Treat 0% here as a Shopify no-collection configuration, not a claim that Calapres products are
+legally zero-rated. The owner's registration and taxable-supplies position was not independently
+audited. ZATCA currently describes mandatory registration above 375,000 SAR in taxable supplies
+under the applicable 12-month test and voluntary eligibility above 187,500 SAR in taxable supplies
+or expenses, with forecast and special-case rules. Promptly establish the prior- and next-12-month
+position across the entity, not only this Shopify store. Reopen immediately if collection is
+already required, becomes required, or a VAT registration takes effect, and follow ZATCA or
+licensed Saudi tax advice for the effective date, invoices, price display, and shipping treatment.
+
+Do not add a Tax ID under Shopify Billing as a substitute; that setting concerns VAT on Shopify's
+own bill, not customer checkout collection. Do not restore 15%, issue VAT invoices, label supplies
+zero-rated, or alter the 390 SAR product price without a separately verified tax and pricing stage.
+Paymob test mode, all payment settings, products, shipping rates, checkout branding and language,
+theme code, privacy settings, Captain, Chatwoot, n8n, and Meta were unchanged.
+
 ## Resume here — address guidance saved; Gulf shipping inputs still required — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
