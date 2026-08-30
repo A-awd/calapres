@@ -1,5 +1,57 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Project State
+
+## SPL WhatsApp address helper live in cart and cart drawer — 2026-08-30
+
+[Canonical base] This bounded live-theme stage started from a clean worktree at freshly fetched
+GitHub `origin/main` commit `a5ca00aaad4293039870fa642d86d8a13b63d364`. The owner's dirty,
+diverged repository checkout and the preserved storefront prototype were not modified.
+
+[Placement boundary] The helper is outside Shopify checkout. It appears in the storefront cart
+page and cart drawer immediately before the customer continues to checkout. It does not add a
+block, field, or link inside Shopify's information, shipping, or payment steps and therefore does
+not claim non-Plus checkout extensibility.
+
+[Verified rollback snapshot] Before changing the active theme files, Shopify created draft theme
+`Copy of Calabris Shopify Theme` (`165745590528`). It remains a draft rollback snapshot and was not
+published.
+
+[Owner-approved and executed live] Active MAIN theme `Calabris Shopify Theme` (`163004449024`)
+was updated in exactly two files: `sections/main-cart.liquid` and
+`snippets/cart-drawer.liquid`. Both now expose the same helper text and destination:
+
+- `لا تعرف عنوانك الوطني؟ اعرفه عبر واتساب سبل ↗`
+- `https://wa.me/966112898888`
+
+Both saves returned no Shopify `userErrors`. A live reread returned checksum
+`25e3b71a777a7c7ce6a485d4e9de3ef3` for `sections/main-cart.liquid`, updated
+`2026-08-30T12:18:00Z`, and checksum `9359f95fc0280449d108ae8d77db6866` for
+`snippets/cart-drawer.liquid`, updated `2026-08-30T12:19:40Z`. The reread also confirmed that the
+edited theme still has role `MAIN`.
+
+[Verified public result] Fresh public checks found the exact visible Arabic text and exact
+`https://wa.me/966112898888` destination in both the opened cart drawer and `/cart`. This proves
+the pre-checkout helper is live on both cart surfaces. It does not prove a WhatsApp conversation,
+identity lookup, National Address retrieval, or the customer's return to checkout.
+
+[Unchanged live scope] No checkout setting, payment provider, shipping setting, or product changed.
+No other system was included in this bounded mutation. The link opens WhatsApp; it is not a direct
+SPL API integration and does not automatically disclose or retrieve a National Address.
+
+[Unreconciled source] The exact live theme source is still ahead of and different from canonical
+GitHub theme files. This documentation records the verified Shopify mutation but does not pretend
+that `main` now contains the two live Liquid files. The next separate theme-code stage must pull
+and reconcile the exact MAIN theme into a clean reviewed branch before any repository-led theme
+deployment. Do not overwrite the active theme from the stale local theme surface.
+
+[Stop and rollback] The bounded helper-link stage is complete. If rollback is explicitly
+requested, restore only the two changed files from draft theme `165745590528` to the active MAIN
+theme and verify the helper is absent from both public cart surfaces. Do not publish the backup
+theme or alter checkout, payment, shipping, or products during rollback.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
 
 ## Saudi customer VAT collection set to zero pending obligation review — 2026-08-30
 
