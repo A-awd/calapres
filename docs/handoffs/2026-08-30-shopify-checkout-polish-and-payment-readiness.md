@@ -2,7 +2,7 @@
 
 Date: 2026-08-30
 
-Last verified: 2026-08-30 12:40 Asia/Riyadh
+Last verified: 2026-08-30 13:27 Asia/Riyadh
 
 ## Identity and bounded scope
 
@@ -11,10 +11,12 @@ Last verified: 2026-08-30 12:40 Asia/Riyadh
 - Canonical branch: `main`.
 - GitHub baseline: `d4abddd4fb907d423b7f46aeb52b1a4349a48015`.
 - Included: discount test setup, checkout form friction, Arabic labels, live-brand checkout styling,
-  responsive editor verification, and read-only payment-provider readiness.
+  the owner-selected checkout logo and favicon, responsive editor verification, customer-facing
+  shipping-rate labels, and read-only payment-provider and carrier readiness.
 - Excluded: real card entry, OTP, live payment activation, orders, refunds, payouts, customer data,
-  shipping-provider changes, policies, pixels, Customer Privacy, theme deployment, products,
-  Captain, Chatwoot, n8n, Meta, and the preserved storefront prototype.
+  shipping prices or thresholds, shipping-provider connection, policies, pixels, Customer Privacy,
+  theme-code deployment, products, Captain, Chatwoot, n8n, Meta, and the preserved storefront
+  prototype.
 
 This is a sanitized operational record. It contains no credentials, customer information, payment
 identifiers, raw browser payloads, or card data.
@@ -23,11 +25,15 @@ identifiers, raw browser payloads, or card data.
 
 - Clean `origin/main` and local HEAD both resolved to
   `d4abddd4fb907d423b7f46aeb52b1a4349a48015` before this stage.
+- Before documenting the later logo, favicon, and shipping-label follow-up, `origin/main` was
+  freshly fetched and verified at `3a66851a2a6225481207f506be0868d2c2bda6e3`.
 - The live storefront identity was verified against the exact live-theme source: Cairo, white,
   `#333330` body text, `#1B262D` dark CTA, `#A18E63` gold accent, and a text-only
   `كالابريز` wordmark.
-- No approved PNG or SVG logo exists in canonical `main` or the exact live-theme branch. The
-  unapproved local prototype was not used as a live source.
+- At the beginning of the stage, no approved PNG or SVG logo existed in canonical `main` or the
+  exact live-theme branch, so no image was invented. In the later bounded follow-up, the owner
+  visually selected the existing `Artboard_4_2x-100-removebg-preview.png` Calapres seal asset for
+  the checkout and favicon. This did not approve or deploy the separate local prototype.
 
 ## Executed live changes
 
@@ -44,13 +50,22 @@ identifiers, raw browser payloads, or card data.
 
 4. The active checkout configuration was saved with Almarai for headings and body, a white
    background, and `#1B262D` for the primary accent and button. `#A18E63` remains a secondary
-   palette color only. No image logo was uploaded.
+   palette color only.
 5. One-page checkout, address autocompletion, buy-again, native card logos, and the native payment
    security structure remain enabled or visible.
+6. In the later owner-approved follow-up, the selected Calapres seal was persisted as the checkout
+   logo, centered at 100 px. After a full checkout-editor reload, the filename, 100 px width, and
+   center alignment remained selected. The checkout preview rendered the same Shopify CDN image
+   with `Calapres` alternative text at 100 px.
+7. The same exact seal asset was saved in the active theme's favicon setting. After Save became
+   disabled, a fresh public `calapres.com` document returned an `image/png` icon from Shopify CDN
+   instead of the prior temporary inline SVG fallback.
 
 Shopify displayed `Changes saved`. After the toast cleared, the saved editor state still showed
 Almarai, `#1B262D`, one-page mode, address autocompletion, and a disabled Save action. Mobile and
-desktop previews both showed the dark primary button and responsive payment layout.
+desktop previews both showed the dark primary button and responsive payment layout. The logo and
+favicon were additionally verified through post-save reload or fresh public-document rereads as
+described above.
 
 ## Payment-provider evidence
 
@@ -68,12 +83,19 @@ The next real-payment stage must first prove Paymob live onboarding, then disabl
 the provider is ready, complete one bounded low-value purchase, verify the Shopify order and
 provider transaction, and stop before expanding payment scope.
 
-## Shipping evidence, read-only
+## Shipping label execution and carrier boundary
 
-- The only shipping profile covers all products from one active location named
-  `SMSA Retail Shop` and one domestic Saudi Arabia zone. Shopify identifies that location as a
-  normal location, not a fulfillment service.
-- The live manual rates are `25 SAR` below `320 SAR` and free at `320 SAR` or more.
+- Both domestic manual rate labels were changed from `قياسي` to
+  `التوصيل داخل السعودية`.
+- The paid rate remained `25 SAR` for orders from `0 SAR` through `319.99 SAR`; the free rate
+  remained available from `320 SAR`.
+- The free-rate edit and final profile save produced `Profile updated`. Before changing the paid
+  rate, its stale draft was discarded and the profile was reloaded so it could not overwrite the
+  first save. The paid-rate edit and final profile save then produced `Profile updated` again.
+- A final profile reread showed both new names and the unchanged prices and thresholds.
+- The profile still covers all products from one active location named `SMSA Retail Shop` and one
+  domestic Saudi Arabia zone. Shopify identifies that location as a normal location, not a
+  fulfillment service.
 - `Carrier accounts` shows `None`; custom order fulfillment has no listed service, and local
   delivery and pickup in store are off.
 - Shopify's current carrier-service reads returned no configured or available carrier service.
@@ -83,8 +105,9 @@ The location name does not prove an SMSA integration. The preserved owner prefer
 where its coverage is suitable, behind one approved multi-carrier gateway and with one backup
 carrier. That remains a proposal only: no provider has been selected, installed, paid, connected,
 or tested. The first documented commercial check is whether OTO's 59 SAR tier can accept the
-owner's Fastlo contract and correctly write tracking and status back to Shopify. No shipping
-setting was changed in this stage.
+owner's Fastlo contract and correctly write tracking and status back to Shopify. Only the two
+customer-facing manual-rate names changed; no price, threshold, carrier, fulfillment service, or
+tracking configuration changed.
 
 ## Verified UX boundary
 
@@ -117,10 +140,12 @@ app merely to simulate those placements.
 
 - Paymob test mode and all provider credentials.
 - Customer records, orders, payment transactions, refunds, payouts, and settlements.
-- Shipping profiles, rates, carriers, fulfillment, and tracking.
+- Shipping prices, thresholds, carriers, fulfillment, and tracking. Only the two manual-rate names
+  changed.
 - Policies, marketing consent, pixels, Customer Events, and Customer Privacy.
 - Live theme code, products, collections, inventory, prices, redirects, Captain, Chatwoot, n8n,
-  Meta, and customer conversations.
+  Meta, and customer conversations. Only the active theme favicon setting changed; no theme code
+  was edited or deployed.
 - The preserved local storefront prototype.
 
 ## Exact next action
@@ -128,3 +153,4 @@ app merely to simulate those placements.
 Treat real-payment activation as the next blocker. Verify Paymob live onboarding and settlement
 readiness before turning off test mode or entering a real card. After that separate bounded proof,
 deactivate the one-use `QXMRK` test code if it was consumed or is no longer needed.
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew

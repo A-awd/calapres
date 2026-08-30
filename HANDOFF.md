@@ -1,22 +1,29 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Handoff
 
-## Resume here — checkout polished; Paymob still test-only — 2026-08-30
+## Resume here — checkout branded; shipping labels clarified; Paymob still test-only — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
-2026-08-30 12:40 Asia/Riyadh. Read
+2026-08-30 13:27 Asia/Riyadh. Read
 [decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) and the
 [focused checkout handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md)
 before any further checkout or payment work. This stage started from clean `origin/main`
-`d4abddd4fb907d423b7f46aeb52b1a4349a48015`.
+`d4abddd4fb907d423b7f46aeb52b1a4349a48015`; the later logo, favicon, and shipping-label
+follow-up was documented after a fresh `origin/main` verification at
+`3a66851a2a6225481207f506be0868d2c2bda6e3`.
 
 Shopify now requires both first and last name while guest checkout remains available. The saved
 Arabic overrides are `ابحث عن عنوانك`, `ادفع الآن`, and
 `جميع عمليات الدفع آمنة ومشفّرة.`. The active checkout was saved with Almarai for headings and
 body and the live storefront's dark `#1B262D` action color. One-page checkout, address
 autocompletion, buy-again, white backgrounds, native payment logos, and the security structure were
-preserved. No image logo was uploaded because no approved image logo exists in the canonical or
-exact live-theme source.
+preserved. In a later owner-approved follow-up, the owner visually selected the existing Calapres
+seal asset. It is now the checkout logo, centered at 100 px, and the active theme favicon. The
+checkout editor persisted the file, width, and alignment after a full reload and rendered the same
+Shopify CDN asset in its checkout preview. A fresh public storefront document returned the PNG
+favicon from Shopify CDN instead of the former temporary inline icon. The separate icon at the far
+left of Safari's address bar is Safari's own page-control button and cannot be branded by the site.
 
 Temporary code `QXMRK` is active at 99% with one total use and one use per customer, no minimum,
 and no combinations. It is only for the owner's bounded checkout test.
@@ -27,18 +34,23 @@ real purchases. Do not enter a real card or claim settlement. The exact next sta
 Paymob live onboarding and settlement readiness before turning off test mode, then perform one
 bounded low-value proof and stop.
 
-The read-only shipping check found one normal Shopify location named `SMSA Retail Shop`, one
-domestic Saudi zone, and manual rates of 25 SAR below 320 SAR and free at 320 SAR or more. The
-location is not a fulfillment service; `Carrier accounts` shows `None`, no carrier service is
-configured or available, OTO/Torod/SIDEUP are not installed, and no Fastlo application handle is
-present. The carrier the owner previously preferred is Fastlo where covered, behind one approved
-multi-carrier gateway plus a backup. That remains proposed only; no provider has been selected,
-installed, paid, connected, or tested. The first preserved commercial check is whether OTO's
-59 SAR tier accepts the owner's Fastlo contract and writes tracking/status back to Shopify.
+Both domestic manual rate labels were changed from `قياسي` to `التوصيل داخل السعودية`. The paid
+rate remains 25 SAR from 0 through 319.99 SAR and the free rate remains available from 320 SAR.
+Shopify displayed `Profile updated` after each final profile save, and the final profile reread
+showed both new labels with the original prices and thresholds. The profile still uses one normal
+Shopify location named `SMSA Retail Shop`; the name is not proof of a fulfillment service or SMSA
+integration. `Carrier accounts` shows `None`, no carrier service is configured or available,
+OTO/Torod/SIDEUP are not installed, and no Fastlo application handle is present. The carrier the
+owner previously preferred is Fastlo where covered, behind one approved multi-carrier gateway plus
+a backup. That remains proposed only; no provider has been selected, installed, paid, connected,
+or tested. The first preserved commercial check is whether OTO's 59 SAR tier accepts the owner's
+Fastlo contract and writes tracking/status back to Shopify.
 
-No order, customer, real payment, refund, payout, shipping setting, policy, pixel, privacy setting,
-theme code, product, Captain, Chatwoot, n8n, Meta setting, or customer conversation was changed.
-The preserved storefront prototype remains local and undeployed.
+No order, customer, real payment, refund, payout, shipping price or threshold, carrier, fulfillment
+connection, policy, pixel, privacy setting, theme code, product, Captain, Chatwoot, n8n, Meta
+setting, or customer conversation was changed. The bounded live deltas were the checkout logo, the
+active theme favicon setting, and the two manual shipping-rate names. The preserved storefront
+prototype remains local and undeployed.
 
 ## Resume here — Saudi Arabia removed from Shopify cookie-banner regions — 2026-08-29
 

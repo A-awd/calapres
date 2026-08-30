@@ -1,11 +1,14 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Project State
 
-## Shopify checkout polished; Paymob still test-only — 2026-08-30
+## Checkout branded; shipping labels clarified; Paymob still test-only — 2026-08-30
 
 [Canonical base] This bounded live checkout stage started from clean GitHub `origin/main` commit
 `d4abddd4fb907d423b7f46aeb52b1a4349a48015`. The preserved local storefront prototype was not
-modified or deployed.
+modified or deployed. Before documenting the later logo, favicon, and shipping-label follow-up,
+GitHub `origin/main` was freshly fetched and verified at
+`3a66851a2a6225481207f506be0868d2c2bda6e3`.
 
 [Owner-approved and executed live] Temporary code `QXMRK` was saved at 99% with one total use,
 one use per customer, no minimum, and no combinations. Checkout now requires first and last name
@@ -16,22 +19,27 @@ while forced sign-in remains off. Arabic overrides were saved for address search
 [Verified saved presentation] The active checkout configuration was saved with Almarai for
 headings and body and `#1B262D` for the primary accent and button. White backgrounds, one-page
 checkout, address autocompletion, buy-again, native card logos, and native security structure were
-preserved. No logo image was invented because no approved image logo exists in canonical or exact
-live-theme sources. Shopify displayed `Changes saved`; the saved values remained visible with Save
-disabled, and mobile and desktop previews passed visual inspection.
+preserved. In a later owner-approved follow-up, the owner visually selected the existing Calapres
+seal asset as the checkout logo. Shopify persisted it centered at 100 px; a full editor reload and
+the checkout preview reread the same Shopify CDN image, width, and alignment. The same exact asset
+was saved as the active theme favicon. A fresh public storefront document then returned the PNG
+from Shopify CDN instead of the temporary inline fallback icon. Safari's page-control button beside
+the address bar is browser chrome and was not changed.
 
 [Payment boundary] Paymob remains active in test mode. Visa, Mastercard, American Express, and
 Apple Pay are enabled, but Shopify states that all transactions are simulated and customers cannot
 make real purchases in this mode. No real card, OTP, order, charge, capture, refund, payout, or
 settlement was tested or changed.
 
-[Shipping read-only finding] The general shipping profile uses one normal location named
-`SMSA Retail Shop`, one domestic Saudi zone, and manual rates of 25 SAR below 320 SAR and free at
-320 SAR or more. That location is not a fulfillment service. `Carrier accounts` shows `None`, no
-carrier service is configured or available, OTO/Torod/SIDEUP are not installed, and no Fastlo app
-handle is present. The preserved owner preference is Fastlo where covered through one approved
-multi-carrier gateway plus a backup, but no provider has been selected, installed, paid, connected,
-or tested. No shipping setting changed.
+[Shipping label execution and carrier boundary] Both domestic manual rate labels were changed from
+`قياسي` to `التوصيل داخل السعودية`. The paid rate remained 25 SAR for orders from 0 through
+319.99 SAR, and the free rate remained available from 320 SAR. Shopify displayed `Profile updated`
+after each final profile save, and a final reread showed both new labels with the same prices and
+thresholds. The profile still uses one normal location named `SMSA Retail Shop`; that name does not
+prove a fulfillment service or SMSA integration. `Carrier accounts` shows `None`, no carrier
+service is configured or available, OTO/Torod/SIDEUP are not installed, and no Fastlo app handle is
+present. The preserved owner preference is Fastlo where covered through one approved multi-carrier
+gateway plus a backup, but no provider has been selected, installed, paid, connected, or tested.
 
 [Stop] Checkout polish is complete. The next separate stage is Paymob live-onboarding and
 settlement-readiness verification before turning off test mode or entering a real card. Additional

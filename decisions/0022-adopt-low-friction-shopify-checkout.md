@@ -64,6 +64,30 @@ Arabic-friendly Almarai font.
   configuration.
 - No real card, OTP, live charge, capture, refund, payout, or settlement test was performed.
 
+## 2026-08-30 owner-approved implementation amendment
+
+This amendment supersedes only the image-identity sentence in decision item 4. After reviewing the
+actual asset, the owner explicitly selected the existing Calapres seal file
+`Artboard_4_2x-100-removebg-preview.png` for the checkout and the active storefront favicon. Use
+that exact asset as the checkout logo, centered at 100 px, and as the theme favicon. This bounded
+choice does not approve the separate local storefront prototype or authorize a broader redesign.
+
+The owner also approved replacing both customer-facing domestic manual-rate names from `قياسي`
+to `التوصيل داخل السعودية`. Preserve the paid rate at 25 SAR for 0 through 319.99 SAR and the free
+rate from 320 SAR. The shared label must not be represented as proof of an SMSA, Fastlo, or other
+carrier integration.
+
+[Verified live implementation]
+
+- After a full checkout-editor reload, the selected seal filename, 100 px width, and center
+  alignment persisted. The checkout preview rendered the same Shopify CDN asset at 100 px.
+- The active theme favicon setting persisted with Save disabled. A fresh public storefront
+  document returned the PNG through Shopify CDN instead of the former inline fallback icon.
+- Shopify displayed `Profile updated` after each final shipping-profile save. A final profile
+  reread showed both new rate names with the original prices and thresholds.
+- No checkout account rule, payment-provider setting, shipping price, threshold, carrier,
+  fulfillment service, tracking setting, or theme code changed in this amendment.
+
 ## Plan boundary
 
 On the current non-Plus plan, Shopify can additionally keep the discount field visible on mobile,
@@ -76,6 +100,9 @@ additional changes is authorized by this decision.
 
 Restore the checkout font and accent/button controls to their prior defaults, clear only the three
 Arabic overrides above, and return the first-name requirement only if the owner explicitly chooses
-that higher-friction rollback. Deactivate only `QXMRK` when the bounded test is complete. Do not
-disable Paymob, alter another discount, force sign-in, change customer records, or modify the live
-theme during rollback.
+that higher-friction rollback. Remove the checkout seal, clear the theme favicon, or restore the two
+rate names to `قياسي` only if the owner explicitly requests those specific reversals; do not alter
+their prices or thresholds. Deactivate only `QXMRK` when the bounded test is complete. Do not
+disable Paymob, alter another discount, force sign-in, change customer records, or modify theme
+code during rollback.
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
