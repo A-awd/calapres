@@ -7,18 +7,29 @@
 GitHub `origin/main` commit `a5ca00aaad4293039870fa642d86d8a13b63d364`. The owner's dirty,
 diverged repository checkout and the preserved storefront prototype were not modified.
 
+[Refinement documentation base] The later copy, styling, and WhatsApp-prefill refinement was
+documented from freshly fetched `origin/main` commit
+`3a9f2b2f0f6b22cf8820be86ec97932412125704` in a new clean worktree.
+
 [Placement boundary] The helper is outside Shopify checkout. It appears in the storefront cart
 page and cart drawer immediately before the customer continues to checkout. It does not add a
 block, field, or link inside Shopify's information, shipping, or payment steps and therefore does
 not claim non-Plus checkout extensibility.
 
+[Verified official platform boundary] Shopify's current checkout extensibility boundary requires
+Shopify Plus for custom text or links inside the Information, Shipping, or Payment steps. Grow and
+Advanced do not unlock that placement. Even on Plus, customization uses constrained Checkout
+Blocks or Checkout UI extensions; it is not arbitrary `checkout.liquid` or checkout-DOM access.
+The current helper remains in the theme-controlled cart before checkout.
+
 [Verified rollback snapshot] Before changing the active theme files, Shopify created draft theme
 `Copy of Calabris Shopify Theme` (`165745590528`). It remains a draft rollback snapshot and was not
-published.
+published. No new backup was created for the later refinement, so this existing draft rolls the
+store back to no helper; it does not preserve the first helper wording or styling.
 
-[Owner-approved and executed live] Active MAIN theme `Calabris Shopify Theme` (`163004449024`)
-was updated in exactly two files: `sections/main-cart.liquid` and
-`snippets/cart-drawer.liquid`. Both now expose the same helper text and destination:
+[Historical first implementation] Active MAIN theme `Calabris Shopify Theme` (`163004449024`)
+was initially updated in exactly two files: `sections/main-cart.liquid` and
+`snippets/cart-drawer.liquid`. Both initially exposed the same helper text and destination:
 
 - `لا تعرف عنوانك الوطني؟ اعرفه عبر واتساب سبل ↗`
 - `https://wa.me/966112898888`
@@ -27,12 +38,36 @@ Both saves returned no Shopify `userErrors`. A live reread returned checksum
 `25e3b71a777a7c7ce6a485d4e9de3ef3` for `sections/main-cart.liquid`, updated
 `2026-08-30T12:18:00Z`, and checksum `9359f95fc0280449d108ae8d77db6866` for
 `snippets/cart-drawer.liquid`, updated `2026-08-30T12:19:40Z`. The reread also confirmed that the
-edited theme still has role `MAIN`.
+edited theme still has role `MAIN`. These first-stage copy, destination, checksums, and timestamps
+are historical and superseded for the current live state by the refinement below.
 
-[Verified public result] Fresh public checks found the exact visible Arabic text and exact
+[Historical first public result] Fresh public checks found the exact visible Arabic text and exact
 `https://wa.me/966112898888` destination in both the opened cart drawer and `/cart`. This proves
 the pre-checkout helper is live on both cart surfaces. It does not prove a WhatsApp conversation,
-identity lookup, National Address retrieval, or the customer's return to checkout.
+identity lookup, National Address retrieval, or the customer's return to checkout. The first-stage
+copy and bare destination are superseded for the current live presentation by the refinement below.
+
+[Owner-approved and executed live refinement] The same two files in active MAIN theme
+`163004449024` were refined without changing the placement. Both now show exactly two lines:
+
+- `لتسهيل شحنتك، أضف عنوانك الوطني المختصر في صفحة الدفع.`
+- `وإذا لم تعرف عنوانك الوطني المختصر، اعرفه عبر واتساب سبل ↗`
+
+The exact current destination is
+`https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
+It opens WhatsApp with the decoded draft `العنوان الوطني`; the customer must still press Send.
+The helper card is larger, uses a column layout, has a stronger gold-tinted border and background,
+uses larger message and action typography, and remains responsive on mobile.
+
+[Verified refined reread] Both saves returned no Shopify `userErrors`. The active-theme reread
+returned checksum `638f3a262b38a416173ee800b24d78d0` for `sections/main-cart.liquid`, updated
+`2026-08-30T12:37:49Z`, and checksum `54e7676f665af8df44b1c2fc49436d5b` for
+`snippets/cart-drawer.liquid`, updated `2026-08-30T12:39:07Z`. The theme retained role `MAIN`.
+
+[Verified refined public result] At a 390 by 844 mobile viewport, `/cart` and the opened cart
+drawer both displayed the exact two-line copy and exact prefilled WhatsApp destination. The larger
+card and typography remained responsive in both surfaces. This does not prove that the customer
+pressed Send, received an SPL reply, retrieved an address, or returned to checkout.
 
 [Unchanged live scope] No checkout setting, payment provider, shipping setting, or product changed.
 No other system was included in this bounded mutation. The link opens WhatsApp; it is not a direct
@@ -46,8 +81,9 @@ deployment. Do not overwrite the active theme from the stale local theme surface
 
 [Stop and rollback] The bounded helper-link stage is complete. If rollback is explicitly
 requested, restore only the two changed files from draft theme `165745590528` to the active MAIN
-theme and verify the helper is absent from both public cart surfaces. Do not publish the backup
-theme or alter checkout, payment, shipping, or products during rollback.
+theme and verify the helper is absent from both public cart surfaces. That draft removes the helper
+entirely; it does not restore the first helper version. Do not publish the backup theme or alter
+checkout, payment, shipping, or products during rollback.
 
 Canonical decision:
 [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
