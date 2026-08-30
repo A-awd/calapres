@@ -6,7 +6,9 @@
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded
 live-theme stage started from clean, freshly fetched `origin/main`
 `a5ca00aaad4293039870fa642d86d8a13b63d364`; the later refinement was documented from clean,
-freshly fetched `origin/main` `3a9f2b2f0f6b22cf8820be86ec97932412125704`. Read this section and
+freshly fetched `origin/main` `3a9f2b2f0f6b22cf8820be86ec97932412125704`; and the final
+compact-mobile refinement was documented from freshly fetched `origin/main`
+`e8f9392136fb6a08e271b1605f993ec48583fa71`. Read this section and
 [decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) before any further cart,
 theme, address-assistance, or checkout work.
 
@@ -18,8 +20,8 @@ Blocks or Checkout UI extensions rather than arbitrary `checkout.liquid` or chec
 
 The live helper now appears on both the cart drawer and `/cart` with exactly two lines:
 
-- `لتسهيل شحنتك، أضف عنوانك الوطني المختصر في صفحة الدفع.`
-- `وإذا لم تعرف عنوانك الوطني المختصر، اعرفه عبر واتساب سبل ↗`
+- `لتسهيل شحنتك، أضف عنوانك المختصر في صفحة الدفع.`
+- `لا تعرف عنوانك المختصر؟ اعرفه عبر واتساب سبل ↗`
 
 Its exact destination is
 `https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
@@ -29,13 +31,15 @@ Active MAIN theme `Calabris Shopify Theme` is `163004449024`. Before the edit, d
 `Copy of Calabris Shopify Theme` (`165745590528`) was created and left unpublished. No new backup
 was created before the refinement, so this draft rolls back to no helper rather than the first
 helper design. Only `sections/main-cart.liquid` and `snippets/cart-drawer.liquid` were refined.
-Shopify returned no `userErrors`; the final live reread returned checksum
-`638f3a262b38a416173ee800b24d78d0` at `2026-08-30T12:37:49Z` for the cart page and checksum
-`54e7676f665af8df44b1c2fc49436d5b` at `2026-08-30T12:39:07Z` for the drawer, with role `MAIN`.
+The final live reread returned checksum `18a9fab56106ebefe4a2479ae12bf5f7` at
+`2026-08-30T12:52:52Z` for the cart page and checksum `842f3966eaec4a2280b5d811774c5cb9`
+at `2026-08-30T12:53:19Z` for the drawer, with role `MAIN`.
 
-The card is now larger and column-based, with a stronger gold-tinted border and background and
-larger message/action typography. Public mobile verification at 390 by 844 passed on `/cart` and
-in the opened drawer: both showed the exact copy and exact prefilled destination responsively.
+The earlier larger typography and spacing wrapped the two text elements into four visual lines on
+mobile. The owner rejected that presentation; it and its prior checksums are historical and
+superseded. The current styling reduces typography, spacing, and padding. Visual verification at
+390 by 844 passed on `/cart` and in the opened drawer with exactly two lines and no wrapping. A
+320 by 700 check also preserved both single-line sentences, although the fit is very tight.
 
 This is a WhatsApp handoff, not a direct SPL API connection. No WhatsApp exchange or address
 retrieval was performed or observed, and the helper does not automatically send identity data or
@@ -48,7 +52,8 @@ stale repository theme over the active theme. The exact next theme-code action i
 read-only pull and reconciliation of the current MAIN theme into a clean reviewed branch. If the
 owner requests rollback first, restore only the two files from draft theme `165745590528`, verify
 the link disappears from both cart surfaces, and leave the backup unpublished. That rollback
-removes the helper entirely; it does not restore the first helper wording or styling.
+removes the helper entirely; it does not restore the first helper wording or the superseded
+oversized refinement.
 
 ## Resume here — Saudi customer VAT collection set to zero — 2026-08-30
 
