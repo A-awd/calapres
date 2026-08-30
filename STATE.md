@@ -55,12 +55,23 @@ privacy setting, Captain, Chatwoot, n8n, or Meta setting changed. Apart from the
 no checkout configuration changed. Apart from the two named footer files, no active-theme file
 changed.
 
+[Current theme deployment risk] The live MAIN theme is `163004449024`, but
+`.github/workflows/theme-deploy.yml` currently labels that same ID as staging and labels
+`163072377088` as live. The workflow also deploys the separate `shopify-theme` branch while the
+exact live source remains unreconciled. Do not trigger it or deploy the local prototype. First pull
+and reconcile the live MAIN source, verify both theme roles in Shopify, correct the workflow in a
+separate reviewed code stage, deploy only to an unpublished preview theme, and stop before live
+publication.
+
 [Rollback and stop] If the footer change is explicitly rejected, restore only
 `sections/footer.liquid` and `assets/calabriz.css` from draft `165747851520`, then verify the public
 footer. Do not publish the full backup because the checkout-address language changed after the
 draft was duplicated. The bounded footer and address-label stage is complete. The next separate
 input for social links is the owner's exact official account URLs; the next payment blocker remains
 Paymob live-onboarding and settlement-readiness verification.
+
+Detailed same-conversation continuation:
+[Shopify checkout polish and payment-readiness handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
 
 ## SPL WhatsApp address helper live in cart and cart drawer — 2026-08-30
 
