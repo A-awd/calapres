@@ -1,5 +1,39 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Handoff
+
+## Resume here — SPL WhatsApp helper live before checkout — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded
+live-theme stage started from clean, freshly fetched `origin/main`
+`a5ca00aaad4293039870fa642d86d8a13b63d364`. Read this section and
+[decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) before any further cart,
+theme, address-assistance, or checkout work.
+
+The distinction that triggered this stage is now proven in production: a custom link cannot be
+inserted into the protected information, shipping, or payment steps on the current non-Plus plan,
+but it can be placed in the theme-controlled cart immediately before checkout. The live helper is
+present on both the cart drawer and `/cart` with exact text
+`لا تعرف عنوانك الوطني؟ اعرفه عبر واتساب سبل ↗` and exact destination
+`https://wa.me/966112898888`.
+
+Active MAIN theme `Calabris Shopify Theme` is `163004449024`. Before the edit, draft backup
+`Copy of Calabris Shopify Theme` (`165745590528`) was created and left unpublished. Only
+`sections/main-cart.liquid` and `snippets/cart-drawer.liquid` were saved. Shopify returned no
+`userErrors`; the final live reread returned checksums `25e3b71a777a7c7ce6a485d4e9de3ef3` and
+`9359f95fc0280449d108ae8d77db6866`, respectively, and retained role `MAIN`. Fresh public checks
+showed the exact text and URL in both surfaces.
+
+This is a WhatsApp handoff, not a direct SPL API connection. No WhatsApp exchange or address
+retrieval was performed or observed, and the helper does not automatically send identity data.
+No checkout setting, payment provider, shipping setting, or product changed; no other system was
+included in this bounded mutation.
+
+The live Liquid source is still not reconciled into canonical GitHub `main`. Do not deploy the
+stale repository theme over the active theme. The exact next theme-code action is a separate
+read-only pull and reconciliation of the current MAIN theme into a clean reviewed branch. If the
+owner requests rollback first, restore only the two files from draft theme `165745590528`, verify
+the link disappears from both cart surfaces, and leave the backup unpublished.
 
 ## Resume here — Saudi customer VAT collection set to zero — 2026-08-30
 
