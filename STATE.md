@@ -1,6 +1,67 @@
 
 # Project State
 
+## Branded footer icons live; checkout-friction boundaries verified — 2026-08-30
+
+[Canonical and live base] This bounded follow-up started from a clean worktree at freshly fetched
+GitHub `origin/main` commit `c008947e21d927329dff1bb4b41ab3f0604fc183`. Shopify remains on
+the Basic plan. The active MAIN theme is `Calabris Shopify Theme` (`163004449024`). The owner's
+dirty, diverged repository checkout, the preserved storefront prototype, and unrelated worktrees
+were not modified.
+
+[Verified rollback snapshot] Before the footer mutation, Shopify created unpublished draft theme
+`Backup before social icons 2026-08-30` (`165747851520`). In that snapshot,
+`sections/footer.liquid` had checksum `0ddff0f3df2da32eb52dfb3a26591e9b` and
+`assets/calabriz.css` had checksum `01908b01ff2616099da2d1656f2147c7`. Leave the draft
+unpublished. It predates the later checkout-address language save, so it must not be published as a
+whole-store rollback.
+
+[Owner-approved and executed live footer change] Only `sections/footer.liquid` and
+`assets/calabriz.css` changed in the active theme. The square frames and backgrounds were removed,
+the social icons were enlarged, and their natural brand treatments were applied: the Instagram
+gradient, Snapchat yellow and black, and TikTok black, cyan, and red. A fresh public desktop visual
+check passed, and the rendered DOM contained one each of the new Instagram, Snapchat, and TikTok
+icons. The active-theme reread returned:
+
+- `sections/footer.liquid`: checksum `fcbf12d5636339dbc91e67fd64d249b4`, updated
+  `2026-08-30T14:03:49Z`.
+- `assets/calabriz.css`: checksum `de2d9c3dab282a01c09175bc2d8e2fa3`, updated
+  `2026-08-30T14:04:21Z`.
+
+[Social-account boundary] The active settings `instagram_url`, `snapchat_url`, and `tiktok_url`
+are still blank. The three branded icons therefore render as decorative disabled spans, not
+clickable account links. No account URL was guessed or invented. A separate owner-supplied URL
+stage is required before making any icon clickable.
+
+[Owner-approved and executed checkout wording] The Address line 1 checkout text was saved as the
+exact string `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, including one space
+inside each parenthesis. A full Admin reload and the existing public checkout reread showed the same
+value.
+This is guidance for Shopify address autocompletion, not proof of a direct Saudi National Address
+integration.
+
+[Verified checkout-friction boundaries; unchanged] Apple Pay and card ordering was not changed.
+Shopify controls native wallet presentation, does not permit merchants to reorder Apple Pay ahead
+of the card method, and displays accelerated wallets according to device and eligibility. Shipping
+configuration was also left untouched: rates appear only after Shopify has an applicable delivery
+address, and the observed session already held a valid restored address, which is why its applicable
+rate was immediately visible. The marketing opt-in checkbox remains enabled; hiding it would not
+turn an entered email into valid marketing consent, and a Shopify customer record is not the same
+as a marketing subscription. Paymob remains test-only.
+
+[Unchanged scope] No payment setting, provider credential, shipping zone, rate, threshold,
+carrier, fulfillment setting, marketing-consent setting, customer, order, product, discount,
+privacy setting, Captain, Chatwoot, n8n, or Meta setting changed. Apart from the exact address text,
+no checkout configuration changed. Apart from the two named footer files, no active-theme file
+changed.
+
+[Rollback and stop] If the footer change is explicitly rejected, restore only
+`sections/footer.liquid` and `assets/calabriz.css` from draft `165747851520`, then verify the public
+footer. Do not publish the full backup because the checkout-address language changed after the
+draft was duplicated. The bounded footer and address-label stage is complete. The next separate
+input for social links is the owner's exact official account URLs; the next payment blocker remains
+Paymob live-onboarding and settlement-readiness verification.
+
 ## SPL WhatsApp address helper live in cart and cart drawer — 2026-08-30
 
 [Canonical base] This bounded live-theme stage started from a clean worktree at freshly fetched
@@ -164,17 +225,18 @@ Canonical decision:
 Detailed continuation:
 [Shopify Saudi VAT zero-collection handoff](docs/handoffs/2026-08-30-shopify-saudi-vat-zero-collection.md).
 
-## Checkout address guidance saved; shipping and Safari boundaries rechecked — 2026-08-30
+## Historical checkout address guidance; later wording recorded above — 2026-08-30
 
 [Canonical base] This bounded follow-up started from clean GitHub `origin/main` commit
 `76788b86ff464efd1b883112cc99e1adb449eac0`. The preserved storefront prototype and the owner's
 dirty, diverged repository checkout were not modified.
 
-[Owner-approved and executed live] The checkout Address line 1 label is now
+[Historical owner-approved execution] At this stage, the checkout Address line 1 label was
 `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. Shopify enabled Save after the edit; after
-Save and a full Admin reload, the same exact value was reread from the language editor. This is
-customer guidance for Shopify address autocompletion, not evidence of a direct Saudi National
-Address integration. No other checkout text or setting changed.
+Save and a full Admin reload, the same exact value was reread from the language editor. That value
+has since been superseded by the exact current wording recorded in the newest state section above.
+Both strings are customer guidance for Shopify address autocompletion, not evidence of a direct
+Saudi National Address integration.
 
 [Verified live, read-only shipping boundary] Shopify already withholds delivery rates until the
 customer supplies a delivery address, then shows only rates applicable to that address and order.
