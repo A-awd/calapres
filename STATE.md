@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Project State
 
