@@ -111,6 +111,32 @@ not prove every existing Safari profile refreshed its cached icon. Safari's Page
 browser chrome, and a Home Screen icon is a separate path; the current public document exposes no
 `apple-touch-icon` or web-app manifest. No theme code changed in this amendment.
 
+## 2026-08-30 final address wording and pre-checkout helper amendment
+
+The owner later approved the exact current Address line 1 wording
+`( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, including one space inside each
+parenthesis. Shopify persisted that value after a full Admin reload, and the existing public
+checkout rendered it. This wording supersedes the intermediate address label in the preceding
+amendment. It remains guidance for Shopify address autocompletion and does not establish a direct
+Saudi National Address integration.
+
+The owner also approved a compact Saudi Post helper in the theme-controlled cart page and cart
+drawer, immediately before checkout. The two current visual lines are:
+
+- `لتسهيل شحنتك، أضف عنوانك المختصر في صفحة الدفع.`
+- `لا تعرف عنوانك المختصر؟ اعرفه عبر واتساب سبل ↗`
+
+The link opens Saudi Post's WhatsApp destination with the draft `العنوان الوطني`; the customer
+must still press Send. This is a customer-initiated WhatsApp handoff, not a direct Saudi Post API,
+identity lookup, or automatic address retrieval. It does not send customer data automatically.
+
+Keep this helper outside Shopify's protected Information, Shipping, and Payment steps. Basic,
+Grow, and Advanced do not permit custom text or links inside those steps. Shopify Plus would allow
+constrained Checkout Blocks or Checkout UI extensions there, not arbitrary checkout-DOM or
+`checkout.liquid` access. The exact live files, checksums, mobile evidence, rollback snapshot, and
+superseded four-line design are recorded in the
+[checkout and payment-readiness handoff](../docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
+
 ## Plan boundary
 
 On the current non-Plus plan, Shopify can additionally keep the discount field visible on mobile,
@@ -125,6 +151,8 @@ Restore the checkout font and accent/button controls to their prior defaults, cl
 Arabic overrides above, and return the first-name requirement only if the owner explicitly chooses
 that higher-friction rollback. Remove the checkout seal, clear the theme favicon, or restore the two
 rate names to `قياسي` only if the owner explicitly requests those specific reversals; do not alter
-their prices or thresholds. Deactivate only `QXMRK` when the bounded test is complete. Do not
-disable Paymob, alter another discount, force sign-in, change customer records, or modify theme
-code during rollback.
+their prices or thresholds. To remove the Saudi Post helper, restore only
+`sections/main-cart.liquid` and `snippets/cart-drawer.liquid` from draft theme `165745590528` and
+verify both cart surfaces; do not publish the whole draft. Deactivate only `QXMRK` when the bounded
+test is complete. Do not disable Paymob, alter another discount, force sign-in, change customer
+records, or modify unrelated theme code during rollback.
