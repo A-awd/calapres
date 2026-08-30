@@ -1,5 +1,50 @@
+Warning: truncated output (original token count: 25193)
+Total output lines: 1362
+
 
 # Project State
+
+## Shopify checkout polished; Paymob still test-only — 2026-08-30
+
+[Canonical base] This bounded live checkout stage started from clean GitHub `origin/main` commit
+`d4abddd4fb907d423b7f46aeb52b1a4349a48015`. The preserved local storefront prototype was not
+modified or deployed.
+
+[Owner-approved and executed live] Temporary code `QXMRK` was saved at 99% with one total use,
+one use per customer, no minimum, and no combinations. Checkout now requires first and last name
+while forced sign-in remains off. Arabic overrides were saved for address search
+(`ابحث عن عنوانك`), payment action (`ادفع الآن`), and the accurate security notice
+(`جميع عمليات الدفع آمنة ومشفّرة.`).
+
+[Verified saved presentation] The active checkout configuration was saved with Almarai for
+headings and body and `#1B262D` for the primary accent and button. White backgrounds, one-page
+checkout, address autocompletion, buy-again, native card logos, and native security structure were
+preserved. No logo image was invented because no approved image logo exists in canonical or exact
+live-theme sources. Shopify displayed `Changes saved`; the saved values remained visible with Save
+disabled, and mobile and desktop previews passed visual inspection.
+
+[Payment boundary] Paymob remains active in test mode. Visa, Mastercard, American Express, and
+Apple Pay are enabled, but Shopify states that all transactions are simulated and customers cannot
+make real purchases in this mode. No real card, OTP, order, charge, capture, refund, payout, or
+settlement was tested or changed.
+
+[Shipping read-only finding] The general shipping profile uses one normal location named
+`SMSA Retail Shop`, one domestic Saudi zone, and manual rates of 25 SAR below 320 SAR and free at
+320 SAR or more. That location is not a fulfillment service. `Carrier accounts` shows `None`, no
+carrier service is configured or available, OTO/Torod/SIDEUP are not installed, and no Fastlo app
+handle is present. The preserved owner preference is Fastlo where covered through one approved
+multi-carrier gateway plus a backup, but no provider has been selected, installed, paid, connected,
+or tested. No shipping setting changed.
+
+[Stop] Checkout polish is complete. The next separate stage is Paymob live-onboarding and
+settlement-readiness verification before turning off test mode or entering a real card. Additional
+Basic-plan checkout opportunities were documented but not executed.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
+
+Detailed continuation:
+[Shopify checkout polish and payment-readiness handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
 
 ## Saudi Arabia removed from Shopify cookie-banner regions — 2026-08-29
 
@@ -649,16 +694,7 @@ reply on Instagram and TikTok is still required to prove each platform's end-to-
 ## Contextual bounded replies live — 2026-08-13 (session 5)
 
 The repetitive off-topic response was not a weak-model failure: `Verify Chatwoot Anchor and
-Route` bypassed the model for every unclassified message and emitted one hard-coded sentence,
-while the model prompt repeated that same sentence as a mandatory answer. Removed that static
-route. Unclassified messages now reach the existing restricted GPT-5.4 path with the exact
-customer message and recent conversation context; the prompt varies natural Saudi-Arabic replies,
-handles brief social conversation, gives only very short safe general answers, redirects unrelated
-tasks with a topic-specific boundary, and never invents Calapres, Shopify, order, or product facts.
-Business-unclear messages ask one useful clarification. `Humanize Text` now permits up to three
-short sentences and rejects confidence outside 0..1; model temperature is 0.4.
-
-Published on the same live workflow `kAyF0D3ZZHxc0Hwp` with no added/removed nodes or duplicate
+Route` bypassed the model for every unclassified mess…193 tokens truncated…oved nodes or duplicate
 workflow: active version `a2e3352f-36d4-49e2-b585-3197dea3e322`, 99 nodes. Source SHA-256
 `e62a0afc063953b0eff5f613f70601d1af453945a566fd2febc615900b015337`; implementation commit
 `f2c23627177882339143fb4a6b4b07064e9a5814`. Source/live node parity and settings were verified;

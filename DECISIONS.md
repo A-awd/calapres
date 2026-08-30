@@ -68,6 +68,11 @@ decision record.
   HTTP `503`, the recovered host returned a successful exact title-plus-short-link Playground
   reply. Physical external-channel delivery remains unverified, and Chatwoot classification
   remains a documented proposal only.
+- [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md)
+  — preserve guest checkout, require first and last name, keep one-page checkout and address
+  autocompletion, save the bounded Arabic labels and accurate security wording, and match the live
+  storefront with Almarai and the dark `#1B262D` action color. Paymob remains in test mode, so real
+  payment settlement is still unverified.
 
 ## Superseded decisions
 
