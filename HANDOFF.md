@@ -5,26 +5,41 @@
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded
 live-theme stage started from clean, freshly fetched `origin/main`
-`a5ca00aaad4293039870fa642d86d8a13b63d364`. Read this section and
+`a5ca00aaad4293039870fa642d86d8a13b63d364`; the later refinement was documented from clean,
+freshly fetched `origin/main` `3a9f2b2f0f6b22cf8820be86ec97932412125704`. Read this section and
 [decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) before any further cart,
 theme, address-assistance, or checkout work.
 
 The distinction that triggered this stage is now proven in production: a custom link cannot be
-inserted into the protected information, shipping, or payment steps on the current non-Plus plan,
-but it can be placed in the theme-controlled cart immediately before checkout. The live helper is
-present on both the cart drawer and `/cart` with exact text
-`لا تعرف عنوانك الوطني؟ اعرفه عبر واتساب سبل ↗` and exact destination
-`https://wa.me/966112898888`.
+inserted into the protected Information, Shipping, or Payment steps on Basic, Grow, or Advanced,
+but it can be placed in the theme-controlled cart immediately before checkout. Shopify Plus is
+required for custom text or links in those checkout steps, and even Plus uses constrained Checkout
+Blocks or Checkout UI extensions rather than arbitrary `checkout.liquid` or checkout-DOM access.
+
+The live helper now appears on both the cart drawer and `/cart` with exactly two lines:
+
+- `لتسهيل شحنتك، أضف عنوانك الوطني المختصر في صفحة الدفع.`
+- `وإذا لم تعرف عنوانك الوطني المختصر، اعرفه عبر واتساب سبل ↗`
+
+Its exact destination is
+`https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
+WhatsApp opens with decoded draft text `العنوان الوطني`; the customer must press Send.
 
 Active MAIN theme `Calabris Shopify Theme` is `163004449024`. Before the edit, draft backup
-`Copy of Calabris Shopify Theme` (`165745590528`) was created and left unpublished. Only
-`sections/main-cart.liquid` and `snippets/cart-drawer.liquid` were saved. Shopify returned no
-`userErrors`; the final live reread returned checksums `25e3b71a777a7c7ce6a485d4e9de3ef3` and
-`9359f95fc0280449d108ae8d77db6866`, respectively, and retained role `MAIN`. Fresh public checks
-showed the exact text and URL in both surfaces.
+`Copy of Calabris Shopify Theme` (`165745590528`) was created and left unpublished. No new backup
+was created before the refinement, so this draft rolls back to no helper rather than the first
+helper design. Only `sections/main-cart.liquid` and `snippets/cart-drawer.liquid` were refined.
+Shopify returned no `userErrors`; the final live reread returned checksum
+`638f3a262b38a416173ee800b24d78d0` at `2026-08-30T12:37:49Z` for the cart page and checksum
+`54e7676f665af8df44b1c2fc49436d5b` at `2026-08-30T12:39:07Z` for the drawer, with role `MAIN`.
+
+The card is now larger and column-based, with a stronger gold-tinted border and background and
+larger message/action typography. Public mobile verification at 390 by 844 passed on `/cart` and
+in the opened drawer: both showed the exact copy and exact prefilled destination responsively.
 
 This is a WhatsApp handoff, not a direct SPL API connection. No WhatsApp exchange or address
-retrieval was performed or observed, and the helper does not automatically send identity data.
+retrieval was performed or observed, and the helper does not automatically send identity data or
+the prefilled message; the customer must press Send.
 No checkout setting, payment provider, shipping setting, or product changed; no other system was
 included in this bounded mutation.
 
@@ -32,7 +47,8 @@ The live Liquid source is still not reconciled into canonical GitHub `main`. Do 
 stale repository theme over the active theme. The exact next theme-code action is a separate
 read-only pull and reconciliation of the current MAIN theme into a clean reviewed branch. If the
 owner requests rollback first, restore only the two files from draft theme `165745590528`, verify
-the link disappears from both cart surfaces, and leave the backup unpublished.
+the link disappears from both cart surfaces, and leave the backup unpublished. That rollback
+removes the helper entirely; it does not restore the first helper wording or styling.
 
 ## Resume here — Saudi customer VAT collection set to zero — 2026-08-30
 
