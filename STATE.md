@@ -11,6 +11,10 @@ diverged repository checkout and the preserved storefront prototype were not mod
 documented from freshly fetched `origin/main` commit
 `3a9f2b2f0f6b22cf8820be86ec97932412125704` in a new clean worktree.
 
+[Compact-mobile documentation base] The final compact-mobile refinement was documented from
+freshly fetched `origin/main` commit `e8f9392136fb6a08e271b1605f993ec48583fa71` in another new
+clean worktree. The owner's dirty checkout and all unrelated worktrees remained untouched.
+
 [Placement boundary] The helper is outside Shopify checkout. It appears in the storefront cart
 page and cart drawer immediately before the customer continues to checkout. It does not add a
 block, field, or link inside Shopify's information, shipping, or payment steps and therefore does
@@ -47,27 +51,46 @@ the pre-checkout helper is live on both cart surfaces. It does not prove a Whats
 identity lookup, National Address retrieval, or the customer's return to checkout. The first-stage
 copy and bare destination are superseded for the current live presentation by the refinement below.
 
-[Owner-approved and executed live refinement] The same two files in active MAIN theme
-`163004449024` were refined without changing the placement. Both now show exactly two lines:
+[Historical oversized refinement] The same two files in active MAIN theme `Calabris Shopify Theme`
+(`163004449024`) were first refined without changing the placement. They used two text elements:
 
 - `لتسهيل شحنتك، أضف عنوانك الوطني المختصر في صفحة الدفع.`
 - `وإذا لم تعرف عنوانك الوطني المختصر، اعرفه عبر واتساب سبل ↗`
 
-The exact current destination is
+Their destination was
 `https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
-It opens WhatsApp with the decoded draft `العنوان الوطني`; the customer must still press Send.
-The helper card is larger, uses a column layout, has a stronger gold-tinted border and background,
-uses larger message and action typography, and remains responsive on mobile.
+The helper used a larger card and larger message/action typography. At a 390 by 844 mobile viewport,
+the two elements wrapped across four visual lines. The owner rejected that presentation as too large;
+this wording, styling, and visual result are historical and superseded by the compact refinement below.
 
-[Verified refined reread] Both saves returned no Shopify `userErrors`. The active-theme reread
+[Historical oversized reread] Both saves returned no Shopify `userErrors`. The active-theme reread
 returned checksum `638f3a262b38a416173ee800b24d78d0` for `sections/main-cart.liquid`, updated
 `2026-08-30T12:37:49Z`, and checksum `54e7676f665af8df44b1c2fc49436d5b` for
-`snippets/cart-drawer.liquid`, updated `2026-08-30T12:39:07Z`. The theme retained role `MAIN`.
+`snippets/cart-drawer.liquid`, updated `2026-08-30T12:39:07Z`. These checksums are superseded and
+must not be treated as the current live files.
 
-[Verified refined public result] At a 390 by 844 mobile viewport, `/cart` and the opened cart
-drawer both displayed the exact two-line copy and exact prefilled WhatsApp destination. The larger
-card and typography remained responsive in both surfaces. This does not prove that the customer
-pressed Send, received an SPL reply, retrieved an address, or returned to checkout.
+[Owner-approved and executed compact-mobile refinement] Only the same two theme files were refined.
+The current live helper now shows exactly these two visual lines:
+
+- `لتسهيل شحنتك، أضف عنوانك المختصر في صفحة الدفع.`
+- `لا تعرف عنوانك المختصر؟ اعرفه عبر واتساب سبل ↗`
+
+The WhatsApp destination is unchanged:
+`https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
+It opens WhatsApp with the decoded draft `العنوان الوطني`; the customer must still press Send.
+The mobile typography, spacing, and padding are compact enough to preserve one visual line per
+sentence instead of the rejected four-line presentation.
+
+[Verified current live reread] The active MAIN theme reread returned checksum
+`18a9fab56106ebefe4a2479ae12bf5f7` for `sections/main-cart.liquid`, updated
+`2026-08-30T12:52:52Z`, and checksum `842f3966eaec4a2280b5d811774c5cb9` for
+`snippets/cart-drawer.liquid`, updated `2026-08-30T12:53:19Z`. The theme retained role `MAIN`.
+
+[Verified compact public result] Visual checks at a 390 by 844 mobile viewport confirmed exactly
+two lines with no wrapping on both `/cart` and the opened cart drawer. A narrower 320 by 700 check
+also showed both sentences without wrapping, although the fit is intentionally very tight. This
+does not prove that the customer pressed Send, received an SPL reply, retrieved an address, or
+returned to checkout.
 
 [Unchanged live scope] No checkout setting, payment provider, shipping setting, or product changed.
 No other system was included in this bounded mutation. The link opens WhatsApp; it is not a direct
@@ -82,8 +105,8 @@ deployment. Do not overwrite the active theme from the stale local theme surface
 [Stop and rollback] The bounded helper-link stage is complete. If rollback is explicitly
 requested, restore only the two changed files from draft theme `165745590528` to the active MAIN
 theme and verify the helper is absent from both public cart surfaces. That draft removes the helper
-entirely; it does not restore the first helper version. Do not publish the backup theme or alter
-checkout, payment, shipping, or products during rollback.
+entirely; it does not restore the first helper version or the superseded oversized refinement. Do
+not publish the backup theme or alter checkout, payment, shipping, or products during rollback.
 
 Canonical decision:
 [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
