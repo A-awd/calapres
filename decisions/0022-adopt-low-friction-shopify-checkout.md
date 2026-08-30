@@ -25,7 +25,7 @@ Arabic-friendly Almarai font.
    autocompletion enabled.
 3. Use these Arabic checkout strings:
 
-   - Address line 1: `ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`
+   - Address line 1: `ابحث عن عنوانك`
    - Primary payment action: `ادفع الآن`
    - Card security notice: `جميع عمليات الدفع آمنة ومشفّرة.`
 
