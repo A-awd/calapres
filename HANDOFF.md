@@ -1,6 +1,32 @@
 
 # Handoff
 
+## Resume here — combined beige and burnt-brown design is live and verified — 2026-08-31
+
+The owner explicitly approved publication. Shopify theme `165777604864`,
+`Preview — Calapres beige + burnt brown 2026-08-31`, is now `MAIN`; former live theme
+`165774786816`, `Preview — six social icons mobile fix`, is `UNPUBLISHED` and remains the immediate
+rollback. The role change completed at 21:19:02 Riyadh time. Neither theme is processing or failed,
+and no theme was deleted.
+
+Before publication, a full comparison detected corruption in six GitHub files caused by an unrelated
+shell-startup line being included in two earlier base64 upload batches. Publication was stopped, the
+three theme files were recovered from local commit `0836fac`, the three operating documents from
+local commit `6854cd3`, and canonical `main` repair commit
+`34cf93d03a63e9da80200d403d12dbca6fc825ae` restored them without rewriting history. The repaired
+CSS, editorial section, and homepage template match the live Shopify theme by MD5. Theme Check has
+zero errors and six existing remote-font warnings.
+
+Fresh public checks after leaving preview mode confirmed no preview bar, the exact homepage heading
+`حفر شخصي على كل طقم`, zero editorial media, live 62% beige cart glass, 74% beige item surface, and
+zero document, drawer, or item overflow at the normal width, 390 px, and 320 px. The footer correctly
+shows only WhatsApp and email because Instagram, Snapchat, TikTok, and X remain blank. Checkout,
+payments, catalog data, and social settings were not changed.
+
+Continue with the next owner-requested stage. If rollback is requested, publish only former live
+theme `165774786816`, verify the public storefront, and keep both themes. Do not use the obsolete
+repository deployment workflow and do not delete either theme.
+
 ## Resume here — lighter cart and image-free homepage band are staged; social URLs are the next input — 2026-08-31
 
 Canonical GitHub `main` commit `73b2ae3c092e949f152a385cac66b705f6fee5e3` and unpublished

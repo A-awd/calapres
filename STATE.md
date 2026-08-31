@@ -1,6 +1,35 @@
 
 # Project State
 
+## Beige and burnt-brown combined design published and verified live — 2026-08-31
+
+[Owner approval and publication] The owner explicitly approved publishing the reviewed combined
+design. Shopify switched theme `165777604864`, `Preview — Calapres beige + burnt brown 2026-08-31`,
+to `MAIN` at 2026-08-31T18:19:02Z. The former live theme `165774786816`,
+`Preview — six social icons mobile fix`, automatically became `UNPUBLISHED` and is preserved as the
+immediate rollback. Neither theme is processing or reports a processing failure; no theme was
+deleted.
+
+[Prepublication integrity guard] The full-theme comparison caught six corrupted canonical files
+before the role change: the three latest theme files and their three operating-document records had
+been damaged by an upload that included an unrelated shell-startup line in base64 input. Publication
+was paused. The exact theme files were recovered from local commit `0836fac`, the exact documentation
+from local commit `6854cd3`, and GitHub `main` repair commit
+`34cf93d03a63e9da80200d403d12dbca6fc825ae` restored all six without rewriting history. The repaired
+theme files match the published Shopify theme by MD5, and Theme Check again inspected 181 files with
+zero errors and the six existing remote-font warnings.
+
+[Live verification] A public storefront tab was exited from preview mode and contained no preview
+bar. The homepage showed the exact heading `حفر شخصي على كل طقم` directly after the hero with zero
+editorial media nodes. The live cart computed to 62% beige, its item surface to 74% beige, and the
+document, drawer, and item had zero horizontal overflow at the normal width, 390 px, and 320 px.
+The footer exposed only the verified WhatsApp and email destinations, and no browser error-level log
+was produced. Checkout branding, payment configuration, products, cart data, and social URL settings
+were not changed by publication.
+
+[Rollback] If the owner rejects the live result, publish only former live theme `165774786816` and
+recheck the public homepage, cart, footer, favicon, and mobile widths. Do not delete either theme.
+
 ## Lighter cart glass and text-only engraving band staged; social URLs still required — 2026-08-31
 
 [Owner refinement] The owner asked to make the beige visibly lighter inside the cart without

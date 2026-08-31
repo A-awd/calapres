@@ -2,8 +2,7 @@
 
 Date: 2026-08-31
 
-Status: accepted for implementation in an unpublished preview; production publication pending
-owner visual approval
+Status: accepted and published to production after owner visual approval
 
 ## Context
 
@@ -128,9 +127,25 @@ GitHub `main` commit `73b2ae3c092e949f152a385cac66b705f6fee5e3` is staged in unp
 `165777604864`. Fresh 320 px, 390 px, and normal-width checks found no document, drawer, or item
 overflow. The live theme was not changed.
 
+## Owner approval and production publication — 2026-08-31
+
+After reviewing the combined unpublished theme, the owner explicitly directed that this design be
+made live. Theme `165777604864` became `MAIN` at 2026-08-31T18:19:02Z, and former live theme
+`165774786816` became `UNPUBLISHED` and is retained as the immediate rollback. No theme was deleted.
+
+The prepublication full-theme comparison detected and blocked an unrelated six-file canonical-source
+corruption. GitHub repair commit `34cf93d03a63e9da80200d403d12dbca6fc825ae` restored the exact
+validated theme and documentation before the role switch. The published CSS, editorial section, and
+homepage template match canonical source by MD5; Theme Check reports zero errors. Public checks after
+leaving preview mode confirmed the approved palette, image-free homepage engraving band, cart glass,
+verified footer links, and no horizontal overflow at 320 px, 390 px, or the normal browser width.
+
+This publication does not approve or change checkout branding, payments, catalog data, or unverified
+social destinations. Instagram, Snapchat, TikTok, and X remain blank; WhatsApp and email remain the
+only configured footer links.
+
 ## Rollback
 
-No production rollback is needed while theme `165777604864` remains unpublished. If it is later
-approved and published, preserve the then-former main theme as the immediate unpublished rollback and
-verify the live palette, header wordmark, footer links, cart drawer, and mobile layout after the role
-change. Do not delete either theme and do not run the obsolete repository deployment workflow.
+If the owner rejects the live result, publish only former live theme `165774786816`, then verify the
+public palette, header wordmark, footer links, cart drawer, favicon, and mobile layout. Preserve both
+themes, do not delete either one, and do not run the obsolete repository deployment workflow.
