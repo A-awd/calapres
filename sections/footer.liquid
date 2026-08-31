@@ -81,61 +81,39 @@
           2026 WhatsApp Brand Resource Center logo pack. The X glyph is from
           X's official Brand Toolkit. The email glyph is vendored from Shopify
           Polaris at commit af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2.
+          The source SVG files stay unchanged; CSS uses their alpha shapes as masks so every
+          storefront glyph renders in the approved Calapres interface ink.
         {%- endcomment -%}
         <div class="social-links" aria-label="حسابات التواصل الاجتماعي">
           {%- if section.settings.instagram_url != blank -%}
-          <a class="social-link" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="إنستغرام">
-            <img class="social-icon" src="{{ 'icon-instagram.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--instagram" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="إنستغرام"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="إنستغرام">
-            <img class="social-icon" src="{{ 'icon-instagram.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--instagram social-link--disabled" aria-label="إنستغرام"></span>
           {%- endif -%}
           {%- if section.settings.snapchat_url != blank -%}
-          <a class="social-link" href="{{ section.settings.snapchat_url }}" target="_blank" rel="noopener" aria-label="سناب شات">
-            <img class="social-icon" src="{{ 'icon-snapchat.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--snapchat" href="{{ section.settings.snapchat_url }}" target="_blank" rel="noopener" aria-label="سناب شات"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="سناب شات">
-            <img class="social-icon" src="{{ 'icon-snapchat.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--snapchat social-link--disabled" aria-label="سناب شات"></span>
           {%- endif -%}
           {%- if section.settings.tiktok_url != blank -%}
-          <a class="social-link" href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="تيك توك">
-            <img class="social-icon" src="{{ 'icon-tiktok.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--tiktok" href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="تيك توك"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="تيك توك">
-            <img class="social-icon" src="{{ 'icon-tiktok.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--tiktok social-link--disabled" aria-label="تيك توك"></span>
           {%- endif -%}
           {%- if section.settings.whatsapp_url != blank -%}
-          <a class="social-link" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="واتساب">
-            <img class="social-icon social-icon--whatsapp" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--whatsapp" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="واتساب"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="واتساب">
-            <img class="social-icon social-icon--whatsapp" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--whatsapp social-link--disabled" aria-label="واتساب"></span>
           {%- endif -%}
           {%- if section.settings.x_url != blank -%}
-          <a class="social-link" href="{{ section.settings.x_url }}" target="_blank" rel="noopener" aria-label="إكس">
-            <img class="social-icon social-icon--x" src="{{ 'icon-x.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--x" href="{{ section.settings.x_url }}" target="_blank" rel="noopener" aria-label="إكس"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="إكس">
-            <img class="social-icon social-icon--x" src="{{ 'icon-x.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--x social-link--disabled" aria-label="إكس"></span>
           {%- endif -%}
           {%- if footer_email != blank -%}
-          <a class="social-link" href="mailto:{{ footer_email | strip | escape }}" aria-label="البريد الإلكتروني">
-            <img class="social-icon" src="{{ 'icon-email.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </a>
+          <a class="social-link social-link--email" href="mailto:{{ footer_email | strip | escape }}" aria-label="البريد الإلكتروني"></a>
           {%- else -%}
-          <span class="social-link social-link--disabled" aria-label="البريد الإلكتروني">
-            <img class="social-icon" src="{{ 'icon-email.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
-          </span>
+          <span class="social-link social-link--email social-link--disabled" aria-label="البريد الإلكتروني"></span>
           {%- endif -%}
         </div>
       </div>
