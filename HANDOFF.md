@@ -1,6 +1,36 @@
 
 # Handoff
 
+## Resume here — email and shipping phone are separate required fields — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-31 Asia/Riyadh. This bounded live-setting stage started from a clean, freshly fetched
+`origin/main` commit `1d71ecb833c08aedaeb9e5bbd4863cf2b6df9baf`; the owner's dirty, diverged
+checkout and unrelated worktrees were not modified.
+
+Authenticated Shopify Checkout settings now use `Email` as the Customer contact method and
+`Required` for Shipping address phone number. Shopify displayed `Settings saved`, and a full Admin
+reload persisted both values. A fresh checkout with one physical product displayed separate Arabic
+fields for `البريد الإلكتروني` under Contact and `الهاتف` under Delivery; both rendered with
+`required=true` and `aria-required=true`.
+
+This is Shopify's native shipping-address phone field, not a custom field. It is enforced when the
+checkout collects a shipping address; it does not verify that the number is mobile or SMS-capable
+and does not grant marketing consent. Guest checkout and the existing marketing opt-in
+configuration remain unchanged.
+
+No customer data, address data, card data, order, payment, discount, shipping rate,
+payment-provider setting, theme file, or app changed. `Pay now` was not pressed. Paymob remains
+untouched and test-only. This newest section supersedes only the older historical wording that no
+Checkout configuration apart from the address label had changed.
+
+Rollback only on an explicit owner request: restore the combined `Phone number or email` contact
+method and/or reduce or remove the shipping-phone requirement. Do not alter Paymob or any unrelated
+Checkout setting during that rollback.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
+
 ## Resume here — branded footer icons live; checkout friction bounded — 2026-08-30
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:

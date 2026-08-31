@@ -1,6 +1,37 @@
 
 # Project State
 
+## Separate required email and shipping-phone fields live — 2026-08-31
+
+[Canonical base] This bounded checkout-setting stage started from a clean worktree at freshly
+fetched GitHub `origin/main` commit `1d71ecb833c08aedaeb9e5bbd4863cf2b6df9baf`. The owner's
+dirty, diverged repository checkout and unrelated worktrees were not modified.
+
+[Owner-approved and executed live] In authenticated Shopify Checkout settings, Customer contact
+method changed from `Phone number or email` to `Email`, and Shipping address phone number changed
+from `Don't include` to `Required`. Shopify displayed `Settings saved`. A full Admin reload then
+reread `Email` selected and `Required` for the shipping phone, proving that both values persisted.
+
+[Verified customer-facing result] A fresh checkout from the existing cart with one physical
+product displayed two separate Arabic fields: `البريد الإلكتروني` under Contact and `الهاتف`
+under Delivery. The rendered email control was `type=email`, `required=true`, and
+`aria-required=true`; the phone control was `type=tel`, `required=true`, and
+`aria-required=true`. The session retained the browser's existing unpublished preview-theme
+parameter, but these requirements are shop-level Checkout settings rather than theme fields.
+
+[Boundary] The required phone is Shopify's native shipping-address phone field. It applies when a
+checkout collects a shipping address; Shopify does not prove that the entered number is mobile or
+SMS-capable, and requiring it does not create marketing consent. Guest checkout and the existing
+marketing opt-in configuration were preserved.
+
+[Unchanged scope] No contact data, address data, card data, customer, order, payment, discount,
+shipping rate, payment-provider setting, theme file, or app changed. `Pay now` was not pressed;
+Paymob remains untouched and test-only. This section supersedes only the older dated statements
+that no Checkout setting apart from address wording had changed.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
+
 ## Branded footer icons live; checkout-friction boundaries verified — 2026-08-30
 
 [Canonical and live base] This bounded follow-up started from a clean worktree at freshly fetched

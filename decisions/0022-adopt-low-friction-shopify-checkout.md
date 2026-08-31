@@ -137,6 +137,27 @@ constrained Checkout Blocks or Checkout UI extensions there, not arbitrary check
 superseded four-line design are recorded in the
 [checkout and payment-readiness handoff](../docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
 
+## 2026-08-31 required contact fields amendment
+
+The owner requires both an email address and a phone number for a shippable checkout. Use Shopify's
+native `Email` Customer contact method and set Shipping address phone number to `Required`. Do not
+use the combined `Phone number or email` alternative. The resulting fields are independent and
+mandatory, with email under Contact and phone under the shipping address.
+
+[Verified live implementation]
+
+- Authenticated Shopify Admin saved both settings and displayed `Settings saved`.
+- A full Admin reload persisted `Email` and `Required`.
+- A fresh physical-product checkout displayed separate Arabic email and phone fields. Both rendered
+  with `required=true` and `aria-required=true`; the email used `type=email` and the phone used
+  `type=tel`.
+- No customer or address data was entered, `Pay now` was not pressed, and no order, payment,
+  payment-provider setting, shipping rate, theme file, app, or marketing-consent setting changed.
+
+The phone is Shopify's native shipping-address phone field and is required only when checkout
+collects a shipping address. Shopify does not establish that the value is mobile or SMS-capable,
+and the requirement is not SMS or WhatsApp marketing consent.
+
 ## Plan boundary
 
 On the current non-Plus plan, Shopify can additionally keep the discount field visible on mobile,
@@ -149,7 +170,10 @@ additional changes is authorized by this decision.
 
 Restore the checkout font and accent/button controls to their prior defaults, clear only the three
 Arabic overrides above, and return the first-name requirement only if the owner explicitly chooses
-that higher-friction rollback. Remove the checkout seal, clear the theme favicon, or restore the two
+that higher-friction rollback. Restore the combined `Phone number or email` contact method and/or
+reduce or remove the shipping-phone requirement only if the owner explicitly requests that exact
+rollback; do not alter Paymob or another Checkout setting. Remove the checkout seal, clear the
+theme favicon, or restore the two
 rate names to `قياسي` only if the owner explicitly requests those specific reversals; do not alter
 their prices or thresholds. To remove the Saudi Post helper, restore only
 `sections/main-cart.liquid` and `snippets/cart-drawer.liquid` from draft theme `165745590528` and
