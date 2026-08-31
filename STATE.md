@@ -1,7 +1,3 @@
-Warning: truncated output (original token count: 33774)
-Total output lines: 1855
-
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Project State
 
@@ -854,7 +850,217 @@ during that proof.
 Canonical decision:
 [0019 — Adopt isolated Captain external-tool bridges](decisions/0019-adopt-isolated-captain-external-tool-bridges.md).
 Detailed closeout and deferred roadmap:
-…3774 tokens truncated…لمبخره الخضراء المخططه بالبرتقالي` receiving the generic store clarification
+[Captain order bridge and deferred roadmap handoff](docs/handoffs/2026-08-26-captain-order-bridge-and-deferred-roadmap.md).
+
+Every lower statement that says the current plan has no Captain custom tools or no live Shopify
+order tool is a correct historical snapshot superseded by this section and decision 0019. It does
+not become evidence for any unverified matched-order or carrier behavior.
+
+## Captain v1.1 engraving knowledge live — 2026-08-26
+
+[Verified live in authenticated Chatwoot] The previously blocked read succeeded. Assistant
+`Calapres Assistant` (`2187`) is still connected to WhatsApp, Instagram, and TikTok only. Audience
+remains `Everyone`, Schedule remains `Anytime`, and the single enabled automation still assigns
+every new Calapres-inbox conversation to `خدمة عملاء كالابريز`. The assistant name, description,
+inbox connections, and baseline response settings were not changed. Automatic FAQ generation,
+long-term memory capture, source citations, and contact-information access remain disabled. Audio
+message transcription was observed enabled at the account level and was not changed.
+
+[Executed additive delta] Captain knowledge now contains 74 approved FAQs and 22 documents. Two
+owner-approved engraving FAQs and one engraving guardrail were added as the complete `v1.1`
+delta. They establish that the only confirmed engraving formats are two letters, or two letters
+plus a date; the engraving price is unknown; and Captain must not promise that engraving is free
+or that a full name or logo is supported. No pre-existing FAQ or document was edited or deleted.
+The exact delta and rollback text are recorded in
+[Calapres Captain v1.1 — Engraving](docs/baselines/2026-08-26-calapres-captain-v1.1-engraving.md).
+
+[Verified in Playground only] A direct price question did not invent a price. A full-name-and-logo
+request was rejected as unconfirmed and redirected to the two approved formats. A fresh isolated
+question about two letters plus a date received a direct confirmation while preserving the unknown
+price boundary. An intermediate test after the two FAQs but before the guardrail still began by
+claiming that names or logos could be engraved; this proved that additive FAQs alone did not
+reliably override older crawled conflicts and is why the narrow guardrail is part of the same
+delta. These checks do not prove delivery or identical behavior on WhatsApp, Instagram, or TikTok.
+
+[Known residual risk] Older crawled FAQs still contain conflicting claims that engraving is free
+and that names or logos are available. They were not removed because this stage was additive and
+non-destructive. The new guardrail controlled the tested paths, but the old records remain a future
+cleanup candidate requiring separate owner approval.
+
+[Scope boundary] No Shopify setting or record, Captain tool, scenario, inbox, paid service, n8n
+workflow, customer conversation, or external channel was changed. Stop after this engraving group
+for owner review; do not add the next knowledge group without a new instruction.
+
+## Captain v1.1 knowledge stage blocked before execution — 2026-08-26
+
+[Verified read-only at 09:08 Asia/Riyadh] GitHub `origin/main` is still
+`9f9dbd3ed9d8ac4c47e2d695e216ad194505aaac`. Shopify is the expected Calapres store in Saudi
+Arabia using SAR. Its active catalog still contains exactly the white, beige, and gray Calapres
+burners, each priced at SAR 390; Shopify reports total inventory 0 for each. This inventory read
+does not supersede the separate owner-supplied availability policy and must not be presented as
+stock availability.
+
+[Verified read-only] n8n workflow `kAyF0D3ZZHxc0Hwp` remains unpublished with `active=false`,
+`activeVersionId=null`, and preserved draft version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`. It was not executed or changed.
+
+[Blocked and not executed] The required live Chatwoot reread could not be completed because the
+browser security policy check was temporarily unavailable for `app.chatwoot.com` in both the
+in-app browser and the connected Chrome session. No bypass or alternate unauthenticated request
+was attempted. Therefore assistant `2187`, its inbox connections, Audience, Schedule, assignment
+automation, current knowledge inventory, and Playground behavior were not freshly verified, and no
+`v1.1` knowledge was added. The protected `v1.0` baseline remains the latest executed state.
+
+The exact next safe action is to retry the authenticated Chatwoot read when the browser security
+check is available. Only after all protected settings read back unchanged may one additive,
+recorded owner-approved knowledge group be added and tested in Playground.
+
+## Calapres Captain v1.0 stable closeout — 2026-08-26
+
+[Verified, owner-observed] The owner accepted the current Captain behavior as the best configuration
+reached so far in this project. A physically visible WhatsApp reply was direct, natural, aware of
+the store's burner scope and known shipping boundary, and kept uncertainty inside the same chat
+instead of referring the customer to email. This acceptance is the reason the configuration is the
+protected baseline; it is not a claim that every future fact or channel path is already complete.
+
+[Verified] The live assistant was not renamed or changed for versioning. Assistant `2187` remains
+connected to WhatsApp `128058`, Instagram `128031`, and TikTok `128033`, with Audience `Everyone`,
+Schedule `Anytime`, and the existing assignment automation. The n8n responder
+`kAyF0D3ZZHxc0Hwp` remains unpublished and must not run alongside Captain.
+
+[Evidence boundary] The accepted visible reply proves the final baseline behavior and delivery on
+WhatsApp only. This closeout does not newly prove the same final behavior on Instagram or TikTok,
+and Captain still has no live Shopify order tool.
+
+Canonical baseline:
+[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md).
+GitHub rollback branch: `captain-v1.0-stable`.
+Detailed closeout:
+[Captain prelaunch customer-service handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+
+The immediate next action is `v1.1`: add only one recorded group of owner-approved knowledge,
+starting from the pending facts in the baseline, explain the completed group, and stop for owner
+review before the next group. Do not delete baseline knowledge, change the architecture, add a paid
+service, or publish the n8n responder.
+
+## Captain conversation-entry and assignment correction — 2026-08-25
+
+The first real-channel attempt after Captain connection produced no reply because the owner's
+messages were added to already-open historical conversations. Chatwoot evaluates Captain audience
+and schedule when a conversation is created or when a resolved conversation reopens, not for every
+new message inside an existing open conversation. This was a conversation-state defect, not an
+inbox-ingress failure: the new WhatsApp and TikTok messages were visible in Chatwoot, their
+conversations were assigned to `خدمة عملاء كالابريز`, and Captain remained connected.
+
+All seven existing conversations were assigned to `خدمة عملاء كالابريز` and marked resolved so
+the next inbound message reopens a Captain-eligible conversation. Chatwoot then showed zero
+unassigned conversations. One active account automation rule now assigns every newly created
+conversation from the four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp) to
+`خدمة عملاء كالابريز`; this removes reliance on availability-based default auto-assignment.
+
+Fresh readback confirmed Captain still connected only to WhatsApp `128058`, Instagram `128031`,
+and TikTok `128033`, with Audience `Everyone` and Schedule `Anytime`. The preserved n8n responder
+`kAyF0D3ZZHxc0Hwp` remains unpublished (`active=false`, `activeVersionId=null`), so no second
+automatic responder is competing. No message was sent by the operator. The correction is
+configuration-verified but not yet end-to-end proven: the next owner-originated message on each
+social channel must visibly receive a Captain reply before success is claimed.
+
+## Chatwoot Captain live for owner prelaunch evaluation — 2026-08-25
+
+Decision 0018 supersedes the n8n responder as the active conversational architecture. Real owner
+evidence showed the 107-node workflow repeatedly returning the exact fixed clarification despite
+reaching its model route. Workflow `kAyF0D3ZZHxc0Hwp` is now unpublished; fresh n8n readback shows
+`active=false` and `activeVersionId=null`. Its draft version
+`b67ae1e3-98df-4665-9bee-29754d1beafd` remains intact for rollback only.
+Every lower section that describes this workflow as active is a historical snapshot superseded by
+this section; do not infer current activation from it.
+The preserved draft is not a production-ready fallback by itself. Before any separately approved
+reactivation, re-audit its expired-processing recovery, routing, knowledge grounding, and physical
+channel delivery; the pre-switch system had confirmed gaps in all four areas.
+
+Existing Chatwoot Captain assistant `Calapres Assistant` (`2187`) is connected to WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`. Email and website are not connected. The
+assistant has a Calapres-only guardrail, a natural Saudi-Arabic response guideline that forbids the
+rejected fixed phrase, and a corrected burner-store identity grounded in the three live Shopify
+products. No plan upgrade, new service, workflow, inbox, credential, or Shopify write occurred.
+
+The current Chatwoot plan does not permit Captain custom tools. Captain can answer from its stored
+Calapres documents, FAQs, conversation context, and public product pages, but it cannot perform a
+live Shopify order lookup; order-status requests must hand off to a human. Long-term Captain
+memories, contact access, source citations, and automatic FAQ generation remain disabled.
+
+The Captain knowledge surface currently contains 22 documents and 72 approved FAQs. Read-only
+inspection found useful Calapres pages mixed with broad or unrelated agentic/privacy/UCP material.
+No document or FAQ was deleted because cleanup is destructive and was not approved. The explicit
+Calapres-only guardrail mitigates this during the pilot, but the knowledge set remains a quality
+risk that must be reviewed separately if real-channel replies cite or reflect unrelated content.
+
+The Shopify snapshot used for the assistant identity showed exactly three active burner products
+(white, beige, and gray) at SAR 390 each, with zero reported inventory. This is drift-prone and
+must be refreshed read-only before any later factual change. Never claim stock availability. A
+compare-at price of SAR 490 appeared in Captain knowledge but was not independently verified from
+the Shopify read and must not be asserted as a confirmed discount.
+
+Playground checks passed for the car, Mykonos ticket, missing green/orange burner, and order-status
+cases. This is not channel delivery proof. The exact next action is owner testing through the three
+connected channels, followed by inspection of any failed channel. Never publish the preserved n8n
+responder while Captain is connected.
+
+## Grounded natural conversation live — 2026-08-25
+
+The owner's rejection of repetitive WhatsApp and Instagram replies was correct: the classifier-only
+design still rendered final prose from fixed templates, and a field-name mismatch discarded the
+verified Chatwoot transcript before it reached the model. TikTok also had a separate ingress gap:
+the outer gate accepted only the string `incoming`, while Chatwoot can emit numeric `0`.
+
+The same responder `kAyF0D3ZZHxc0Hwp` is now active at version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`, 107 nodes. No parallel workflow, webhook, inbox, Captain,
+AgentBot, credential, or send path was created. The inbound gate accepts both valid direction forms;
+recent conversation is canonical `incoming/outgoing + content`; the classifier has its own strict
+parser; and every customer-visible grounded draft now passes through one context-aware natural
+Saudi-Arabic composer before the unchanged pre-send controls.
+
+The composer has no external tools and cannot decide facts. A deterministic validator rejects
+malformed, low-confidence, ungrounded, overlong, invented-number, and untrusted-action output, then
+uses the original grounded draft. Fresh n8n readback confirmed the published 107-node version, the
+new model/parser connections, the existing OpenAI credential, and the unchanged single
+`Customer Egress Authorized? -> Send Reply` edge. The update produced only two pre-existing
+disconnected-node warnings. Repository verification passes 277/277 Node tests, 92/92 Python tests,
+and the refreshed customer-service release lock. No synthetic channel message was sent, so owner-visible WhatsApp,
+Instagram, and TikTok behavior remains the final end-to-end observation rather than a publication
+claim. Rollback target: `ab7db7ab-0195-45dd-a061-8e4e8b157d46`.
+
+## Grounded support agent live for owner testing — 2026-08-25
+
+The fixed keyword grammar failed the owner's acceptance test and is no longer the primary
+understanding layer. The same responder `kAyF0D3ZZHxc0Hwp` now uses its existing restricted model
+only to classify meaning into an exact schema. A deterministic engine validates the brand, intent,
+confidence, capability, and fields before any route is allowed. The model cannot write the customer
+reply, search the web, choose an endpoint, or grant a new capability.
+
+The Calapres brand pack is isolated and records identity, the burner category, approved static
+facts, allowed intents, and allowed read capabilities. Product questions use a capped Shopify
+GraphQL query filtered to active Calapres burners; titles and prices are read at reply time. No
+inventory availability is inferred, and Shopify mutations remain prohibited. External requests
+such as cars or London weather receive a subject-aware store redirect without an external lookup.
+
+The existing 100-node workflow is active at version
+`ab7db7ab-0195-45dd-a061-8e4e8b157d46`. Fresh n8n reread confirmed active/draft parity, no execution
+retention, `Humanize Text -> Route Customer Service Decision`, human acknowledgement returning to
+the existing pre-send checks, and the unchanged single
+`Customer Egress Authorized? -> Send Reply` edge. The last deterministic governed version
+`d3d320d6-63be-4134-b333-a4941bf2480a` is the behavioral rollback target.
+
+Repository verification passes 322/322 Node tests and 92/92 Python tests. Strict model-node
+configuration validation passes. This proves source and graph contracts only. Owner-visible
+WhatsApp, Instagram, and TikTok delivery is still unproven; do not claim end-to-end success until
+the exact car, weather, and unmatched green/orange burner messages are physically observed and the
+matching executions are inspected.
+
+## Owner-test correction: burner color descriptions — 2026-08-25
+
+The first governed live version was not acceptable. Owner WhatsApp evidence showed `بكم المبخره
+الخضراء` and `بكم المبخره الخضراء المخططه بالبرتقالي` receiving the generic store clarification
 instead of a Shopify price read. Root cause was an over-broad external-merchant rule that treated
 the first color word after `المبخره` as if it were a merchant name. This disproved the earlier
 activation claim as an end-to-end success.

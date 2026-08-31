@@ -1,4 +1,3 @@
-/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # 0024 — Publish the reconciled Calapres theme with a verified WhatsApp destination
 
 Date: 2026-08-31
