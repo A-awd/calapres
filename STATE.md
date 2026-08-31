@@ -1,6 +1,40 @@
 
 # Project State
 
+## Rubik selected as the shared Calapres typeface; storefront preview only — 2026-08-31
+
+[Owner choice and compatibility] The owner selected Rubik as the intended common typeface for the
+storefront and checkout. The current Google Fonts source confirms Arabic support and the SIL Open
+Font License 1.1. Authenticated Shopify Checkout inspection showed Rubik in both the Headings and
+Body typography pickers; their saved values remain Almarai.
+
+[Canonical and unpublished storefront implementation] The bounded source change started from clean
+GitHub `origin/main` commit `51388fd8d97d7eb45ab96031d67c20e27d0fbc17` and reached canonical
+GitHub `main` commit `57ba09ae875dbf97572aa6d133e4b488eedfd43e`. Only
+`assets/calabriz.css`, `layout/theme.liquid`, and `layout/password.liquid` changed: the shared family
+is Rubik and the layouts request only weights 300, 400, 500, and 700. Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) remains `UNPUBLISHED`, not
+processing, and without a processing failure. The three persisted files exactly match the canonical
+source:
+
+- `assets/calabriz.css`: MD5 `6024e3040c7482a9b7bdf62951b8b97f`, 42,290 bytes.
+- `layout/theme.liquid`: MD5 `2050521984003899b13538d938fd10b3`, 3,762 bytes.
+- `layout/password.liquid`: MD5 `5c19d2d396eb36780f41bbfe4db90c0d`, 1,812 bytes.
+
+[Validation] Theme Check inspected 181 files with zero errors and six `RemoteAsset` warnings for the
+existing external-font loading pattern, now pointing to Rubik. Fresh renders at 320 px, 390 px, and
+1280 px loaded `Rubik, sans-serif`, passed `document.fonts.check`, had no horizontal overflow or
+header overlap, and retained all six footer glyphs on one row. WhatsApp and email destinations
+remained exact. The in-app preview console contained no errors or warnings.
+
+[Checkout and production boundary] In the active checkout editor, Rubik was selected for both
+Headings and Body only as an unsaved editor state; the Save action became enabled but was not
+pressed. The checkout preview and saved configuration therefore remain Almarai. Theme
+`165774786816` remains `MAIN`, so the public storefront also remains Cairo. Do not claim full-store
+alignment until theme `165777604864` is visually approved and published and the separate checkout
+save is confirmed, then survives a full reload with Rubik in both fields. Decision 0026 records this
+boundary.
+
 ## Two-colour Calapres storefront palette ready in an unpublished preview — 2026-08-31
 
 [Canonical source and Shopify roles] This bounded palette stage started from clean GitHub

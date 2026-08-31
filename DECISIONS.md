@@ -100,6 +100,11 @@ decision record.
   while preserving link rules; keep media, product swatches, native third-party branding, and
   checkout outside this theme-palette claim; and require owner approval before publishing the
   verified unpublished preview.
+- [0026 — Adopt Rubik as the shared Calapres interface typeface](decisions/0026-adopt-rubik-shared-typeface.md)
+  — use Rubik weights 300, 400, 500, and 700 for the storefront and password layout and use Rubik
+  separately for checkout headings and body; keep the verified theme draft unpublished and retain
+  Cairo on the public storefront and Almarai in active checkout until the coordinated production
+  changes are independently confirmed.
 
 ## Superseded decisions
 

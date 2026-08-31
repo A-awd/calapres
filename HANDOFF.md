@@ -1,6 +1,34 @@
 
 # Handoff
 
+## Resume here — Rubik selected; storefront staged, checkout still Almarai — 2026-08-31
+
+The owner selected Rubik as the intended shared storefront and checkout typeface. Arabic support
+and the SIL Open Font License 1.1 were verified from the current Google Fonts source, and Rubik is
+present in both Shopify Checkout typography pickers.
+
+Canonical GitHub `main` commit `57ba09ae875dbf97572aa6d133e4b488eedfd43e` changes only
+`assets/calabriz.css`, `layout/theme.liquid`, and `layout/password.liquid`, using Rubik weights 300,
+400, 500, and 700. The exact source is staged in existing Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`), which remains `UNPUBLISHED`:
+
+- `assets/calabriz.css`: `6024e3040c7482a9b7bdf62951b8b97f`, 42,290 bytes.
+- `layout/theme.liquid`: `2050521984003899b13538d938fd10b3`, 3,762 bytes.
+- `layout/password.liquid`: `5c19d2d396eb36780f41bbfe4db90c0d`, 1,812 bytes.
+
+Theme Check passed 181 files with zero errors and six external-font warnings. Fresh 320 px, 390 px,
+and 1280 px renders loaded Rubik, had no overflow or header overlap, and kept the six footer icons on
+one row. The in-app preview console had no errors or warnings. Review the exact draft at
+`https://calapres.com/?preview_theme_id=165777604864`.
+
+Checkout is not yet changed. The editor currently has unsaved Rubik selections for both Headings and
+Body, but Save was deliberately not pressed; the active configuration and its preview remain
+Almarai. Public theme `165774786816` also remains unchanged and continues to render Cairo. After the
+owner visually approves the combined draft, publish only theme `165777604864`, save Rubik in both
+checkout fields as the coordinated live step, fully reload both surfaces, and verify persistence.
+Preserve `165774786816` as the immediate theme rollback and Almarai as the exact checkout rollback.
+Do not run `.github/workflows/theme-deploy.yml`.
+
 ## Resume here — two-colour storefront palette awaits owner visual approval — 2026-08-31
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The bounded work began
