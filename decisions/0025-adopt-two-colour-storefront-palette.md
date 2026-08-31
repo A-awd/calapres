@@ -1,120 +1,4 @@
-# 0025 â€” Adopt the Calapres beige and burnt-brown storefront palette
-
-Date: 2026-08-31
-
-Status: accepted for implementation in an unpublished preview; production publication pending
-owner visual approval
-
-## Context
-
-The owner identified inconsistent interface colours across the storefront, including black and gray
-text, a gold scrollbar, gold cart quantity badges, and differently coloured logo and social glyphs.
-The owner selected the supplied Magnific-created wax-seal image as the visual colour authority and
-directed the storefront to use a light beige ground plus a burnt-brown ink for writing and the
-storefront logo.
-
-Magnific creation history described the source qualitatively as deep cocoa brown on warm ivory or
-soft cream, but it did not contain exact colour codes. The exact implementation values were therefore
-sampled from the owner's 1280 x 1280 source image, SHA-256
-`fb47a383ba18532aa2c90dfa4888b442f18f5af40130f95138e5599e6a4edaaa`, rather than guessed from the
-rendered browser preview.
-
-## Decision
-
-1. Use exactly two source colours for the Shopify theme-controlled storefront interface:
-   ground `#DFD4C3` and ink `#44271B`.
-2. Derive glass, borders, shadows, overlays, hover states, and control outlines only by applying
-   transparency to those two source colours. Do not introduce separate black, gray, gold, white, or
-   red interface tokens.
-3. Render the exact owner-supplied Calapres header wordmark silhouette and the existing social glyph
-   geometries as brown masks. Keep all social destinations, enabled/disabled rules, accessible labels,
-   and the verified WhatsApp and email destinations unchanged.
-4. Keep errors distinguishable without a third colour by combining brown text with bold weight and a
-   brown side rule. Keep keyboard focus visible with a brown outline.
-5. Guarantee readable image overlays and control boundaries: beige-on-brown text must meet WCAG AA,
-   and form/control boundaries must meet the 3:1 non-text contrast threshold.
-6. Treat product photography, product colour swatches, video, and native third-party payment or
-   application branding as truthful content outside the two-source interface-palette claim.
-7. This decision changes the storefront and password-layout palette only. Shopify checkout remains a
-   separately controlled surface and retains the colours recorded in decision 0022 until the owner
-   approves a separate checkout-alignment stage.
-8. This decision supersedes only the prior storefront colour tokens in decision 0022 and the displayed
-   black social-glyph colour in decision 0024. It does not supersede either decision's checkout,
-   identity-verification, link-destination, publication, or rollback rules.
-9. Implement and verify the palette first in an unpublished Shopify theme. Do not publish it without a
-   fresh explicit owner approval after visual review.
-
-## Implemented preview record
-
-The canonical source reached GitHub `main` commit
-`0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft
-`Preview â€” Calapres beige + burnt brown 2026-08-31` (`165777604864`) contains the six corresponding
-theme-file updates and remains `UNPUBLISHED`, not processing, and without a processing failure.
-
-The two source colours have a 9.24:1 contrast ratio. The final hero action is at least 5.25:1 over a
-worst-case white frame, collection labels are at least 5.60:1 over a worst-case white image, and the
-60% ink control boundary is 3.36:1 against the beige ground. Theme Check reports no errors; its six
-warnings are the pre-existing Cairo remote-font warnings.
-
-Fresh preview checks at 320 px, 390 px, and 1280 px showed no horizontal overflow, no header overlap,
-one row of six brown social glyphs, the exact WhatsApp and email links, no X destination, brown cart
-quantity badges with beige digits, and no browser-console errors or warnings. The public live theme
-was not changed.
-
-## Owner refinement â€” transparent hero-video action â€” 2026-08-31
-
-The owner subsequently rejected the brown rectangle around the first homepage video's action. The
-action is therefore transparent in both normal and hover states, has no full rectangular border,
-retains one beige underline and a brown-derived text halo, and is translated 12 px lower. An explicit
-beige keyboard-focus outline remains. This refinement supersedes only the earlier backed hero-action
-treatment and its unconditional 5.25:1 worst-frame contrast claim; it does not change the two source
-colours, link destination, label, video, publication gate, or any checkout rule.
-
-Because the action now sits directly over moving video, no single contrast ratio can be guaranteed
-for every frame. The owner-directed tradeoff is mitigated by the two-colour halo and underline and was
-visually checked at 320, 390, and 1280 px. Canonical GitHub `main` commit
-`bce7d159670147f365ac43eadbb2d4361ed04209` is staged in the same unpublished theme
-`165777604864`; the public theme was not changed.
-
-## Owner refinement â€” transparent scrollbar and layered beige glass â€” 2026-08-31
-
-The owner subsequently rejected the beige scrollbar column and the flat solid-beige page. The
-scrollbar track and corner are therefore transparent, its WebKit width is 4 px, its thumb is a
-brown-derived translucent line with no beige border, and Firefox uses its native thin setting. This
-removes the rejected 15 px beige gutter while preserving a visible scroll-position indicator.
-
-The solid beige canvas is superseded by a 16% beige page tint and subtle gradients derived only from
-the two approved source colours. Normal surfaces use 20% beige, panels 26%, header glass 58% with
-24 px blur, and floating navigation and cart surfaces 72% with blur for legibility over arbitrary
-content. Brown text remains solid; the search field is brown rather than beige. These are opacity
-derivatives of the existing palette, not new interface colours, and do not change product media,
-checkout, social destinations, typography, or the publication gate.
-
-Canonical GitHub source commit `9c6d580c5d90f36e15081cf02b3c9ea856352a6b` is staged in unpublished
-theme `165777604864` with MD5 `5059457f36d3dd3331be762a8eaa1b64`, 44,236 bytes. The final desktop
-preview measured a 4 px gutter, no horizontal overflow, and the intended glass values. The live
-theme was not changed; mobile owner review remains required before publication.
-
-## Owner refinement â€” cart drawer glass â€” 2026-08-31
-
-The owner subsequently rejected the cart drawer's 72% beige surface above its 22% brown scrim as
-too dark and opaque. The cart-specific drawer is therefore 46% beige with 30 px blur, its scrim is
-12% brown, and only its text-bearing header, item, empty, and footer regions add a 60% beige layer
-for legibility. The global `--glass-strong` token remains unchanged because it also governs mobile
-navigation and other surfaces.
-
-The Saudi Post helper is part of the same drawer acceptance boundary and now wraps at 320 px instead
-of exceeding its own box. These refinements use transparency derived only from `#DFD4C3` and
-`#44271B`; they do not change the cart data, checkout destination, helper destination, navigation
-glass, checkout branding, or publication gate. Canonical GitHub `main` commits
-`2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
-`a7e3c96a01112a8bf371003df9a1a958bbd6ffe4` are staged in unpublished theme `165777604864`.
-Theme Check passed and fresh populated-cart checks at 320, 390, and 1280 px found no horizontal
-overflow. The live theme was not changed.
-
-## Rollback
-
-No production rollback is needed while theme `165777604864` remains unpublished. If it is later
-approved and published, preserve the then-former main theme as the immediate unpublished rollback and
-verify the live palette, header wordmark, footer links, cart drawer, and mobile layout after the role
-change. Do not delete either theme and do not run the obsolete repository deployment workflow.
+ıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ìÈH8 %YÜHØ[\™\È™ZYÙH[™\›Xœ›İÛˆİÜ™Yœ›Û[]B‚‘]NˆŒ‹LLÌB‚”İ]\ÎˆXØÙ\Y›Üˆ[\[Y[][Ûˆ[ˆ[ˆ[œX›\ÚY™]šY]ÎÈ›ÙXİ[ÛˆX›XØ][Ûˆ[™[™Â›İÛ™\ˆš\İX[\›İ˜[‚ˆÈÈÛÛ^‚•HİÛ™\ˆY[YšYY[˜ÛÛœÚ\İ[[\™˜XÙHÛÛİ\œÈXÜ›ÜÜÈHİÜ™Yœ›Û[˜ÛY[™È›XÚÈ[™Ü˜^B^HÛÛØÜ›Û˜\‹ÛÛØ\]X[]H˜YÙ\Ë[™Y™™\™[HÛÛİ\™YÙÛÈ[™ÛØÚX[Û\Ë‚•HİÛ™\ˆÙ[XİYHİ\YYXYÛšYšXËXÜ™X]YØ^\ÙX[[XYÙH\ÈHš\İX[ÛÛİ\ˆ]]Üš]H[™™\™XİYHİÜ™Yœ›ÛÈ\ÙHHYÚ™ZYÙHÜ›İ[™\ÈH\›Xœ›İÛˆ[šÈ›ÜˆÜš][™È[™BœİÜ™Yœ›ÛÙÛË‚‚“XYÛšYšXÈÜ™X][Ûˆ\İÜH\ØÜšX™YHÛİ\˜ÙH]X[]]]™[H\ÈY\ÛØÛØHœ›İÛˆÛˆØ\›H]›ÜHÜ‚œÛÙÜ™X[K]]Y›İÛÛZ[ˆ^XİÛÛİ\ˆÛÙ\ËˆH^Xİ[\[Y[][Ûˆ˜[Y\ÈÙ\™H\™Y›Ü™BœØ[\Yœ›ÛHHİÛ™\‰ÜÈLLÛİ\˜ÙH[XYÙKÒKLM‚˜˜ØLÎØ˜LNLÌ˜XL˜ÎL˜M™ŒNXYLÌMLLÎMMNNYM˜MYXXX˜]\ˆ[ˆİY\ÜÙYœ›ÛHBœ™[™\™Yœ›İÜÙ\ˆ™]šY]Ë‚‚ˆÈÈXÚ\Ú[Û‚‚ŒKˆ\ÙH^XİHÛÈÛİ\˜ÙHÛÛİ\œÈ›ÜˆHÚÜYH[YKXÛÛ›ÛYİÜ™Yœ›Û[\™˜XÙN‚ˆÜ›İ[™Ñ‘ÌØ[™[šÈÍÌP˜‚Œ‹ˆ\š]™HÛ\ÜË›Ü™\œËÚYİÜËİ™\›^\Ëİ™\ˆİ]\Ë[™ÛÛ›Ûİ][™\ÈÛ›HH\Z[™Âˆ˜[œÜ\™[˜ŞHÈÜÙHÛÈÛİ\˜ÙHÛÛİ\œËˆÈ›İ[›ÙXÙHÙ\\˜]H›XÚËÜ˜^KÛÛÚ]KÜ‚ˆ™Y[\™˜XÙHÚÙ[œË‚ŒËˆ™[™\ˆH^XİİÛ™\‹\İ\YYØ[\™\ÈXY\ˆÛÜ™X\šÈÚ[İY]H[™H^\İ[™ÈÛØÚX[Û\ˆÙ[ÛY]šY\È\Èœ›İÛˆX\ÚÜËˆÙY\[ÛØÚX[\İ[˜][ÛœË[˜X›YÙ\ØX›Y[\ËXØÙ\ÜÚX›HX™[Ëˆ[™H™\šYšYYÚ]Ğ\[™[XZ[\İ[˜][ÛœÈ[˜Ú[™ÙY‚ˆÙY\\œ›ÜœÈ\İ[™İZ\ÚX›HÚ]İ]H\™ÛÛİ\ˆHÛÛXš[š[™Èœ›İÛˆ^Ú]›ÛÙZYÚ[™Bˆœ›İÛˆÚYH[KˆÙY\Ù^X›Ø\™›Øİ\Èš\ÚX›HÚ]Hœ›İÛˆİ][™K‚KˆİX\˜[YH™XYX›H[XYÙHİ™\›^\È[™ÛÛ›Û›İ[™\šY\Îˆ™ZYÙK[Û‹Xœ›İÛˆ^]\İYY]ĞĞQÈPKˆ[™›Ü›KØÛÛ›Û›İ[™\šY\È]\İYY]HÎŒH›Û‹]^ÛÛ˜\İ™\ÚÛ‚‹ˆ™X]›ÙXİİÙÜ˜\K›ÙXİÛÛİ\ˆİØ]Ú\ËšY[Ë[™˜]]™H\™\\H^[Y[Ü‚ˆ\XØ][Ûˆœ˜[™[™È\È][ÛÛ[İ]ÚYHHÛË\Ûİ\˜ÙH[\™˜XÙK\[]HÛZ[K‚Ëˆ\ÈXÚ\Ú[ÛˆÚ[™Ù\ÈHİÜ™Yœ›Û[™\ÜİÛÜ™[^[İ][]HÛ›KˆÚÜYHÚXÚÛİ]™[XZ[œÈBˆÙ\\˜][HÛÛ›ÛYİ\™˜XÙH[™™]Z[œÈHÛÛİ\œÈ™XÛÜ™Y[ˆXÚ\Ú[ÛˆŒˆ[[HİÛ™\‚ˆ\›İ™\ÈHÙ\\˜]HÚXÚÛİ]X[YÛ›Y[İYÙK‚ˆ\ÈXÚ\Ú[Ûˆİ\\œÙY\ÈÛ›HHš[ÜˆİÜ™Yœ›ÛÛÛİ\ˆÚÙ[œÈ[ˆXÚ\Ú[ÛˆŒˆ[™H\Ü^YYˆ›XÚÈÛØÚX[YÛ\ÛÛİ\ˆ[ˆXÚ\Ú[Ûˆˆ]Ù\È›İİ\\œÙYHZ]\ˆXÚ\Ú[Û‰ÜÈÚXÚÛİ]ˆY[]K]™\šYšXØ][Û‹[šËY\İ[˜][Û‹X›XØ][Û‹Üˆ›Û˜XÚÈ[\Ë‚Kˆ[\[Y[[™™\šYHH[]Hš\œİ[ˆ[ˆ[œX›\ÚYÚÜYH[YKˆÈ›İX›\Ú]Ú]İ]Bˆœ™\Ú^XÚ]İÛ™\ˆ\›İ˜[Y\ˆš\İX[™]šY]Ë‚‚ˆÈÈ[\[Y[Y™]šY]È™XÛÜ™‚•HØ[›ÛšXØ[Ûİ\˜ÙH™XXÚYÚ]XˆXZ[˜ÛÛ[Z]˜ÌX™Œ˜ÙNLŒM˜LXMŒÍNLXÌ˜ØXØÙM™™ÌØˆÚÜYH˜Y˜™]šY]È8 %Ø[\™\È™ZYÙH
+È\›œ›İÛˆŒ‹LLÌX
+MMÍÍÍŒ
+HÛÛZ[œÈHÚ^ÛÜœ™\ÜÛ™[™Â[YKYš[H\]\È[™™[XZ[œÈS”P“TÒQ›İ›ØÙ\ÜÚ[™Ë[™Ú]İ]H›ØÙ\ÜÚ[™È˜Z[\™K‚‚•HÛÈÛİ\˜ÙHÛÛİ\œÈ]™HHKŒŒHÛÛ˜\İ˜][ËˆHš[˜[\›ÈXİ[Ûˆ\È]X\İKŒNŒHİ™\ˆBÛÜœİXØ\ÙHÚ]Hœ˜[YKÛÛXİ[ÛˆX™[È\™H]X\İKŒŒHİ™\ˆHÛÜœİXØ\ÙHÚ]H[XYÙK[™BŒ	H[šÈÛÛ›Û›İ[™\H\ÈËŒÍŒHYØZ[œİH™ZYÙHÜ›İ[™ˆ[YHÚXÚÈ™\ÜÈ›È\œ›ÜœÎÈ]ÈÚ^Ø\›š[™ÜÈ\™HH™KY^\İ[™ÈØZ\›È™[[İKY›ÛØ\›š[™ÜË‚‚‘œ™\Ú™]šY]ÈÚXÚÜÈ]ÌŒÎL[™LÚİÙY›ÈÜš^›Û[İ™\™›İË›ÈXY\ˆİ™\›\›Û™H›İÈÙˆÚ^œ›İÛˆÛØÚX[Û\ËH^XİÚ]Ğ\[™[XZ[[šÜË›È\İ[˜][Û‹œ›İÛˆØ\œ]X[]H˜YÙ\ÈÚ]™ZYÙHYÚ]Ë[™›Èœ›İÜÙ\‹XÛÛœÛÛH\œ›ÜœÈÜˆØ\›š[™ÜËˆHX›XÈ]™H[YBØ\È›İÚ[™ÙY‚‚ˆÈÈİÛ™\ˆ™Yš[™[Y[8 %˜[œÜ\™[\›Ë]šY[ÈXİ[Ûˆ8 %Œ‹LLÌB‚•HİÛ™\ˆİXœÙ\]Y[H™Z™XİYHœ›İÛˆ™Xİ[™ÛH\›İ[™Hš\œİÛY\YÙHšY[ÉÜÈXİ[Û‹ˆB˜Xİ[Ûˆ\È\™Y›Ü™H˜[œÜ\™[[ˆ›İ›Ü›X[[™İ™\ˆİ]\Ë\È›È[™Xİ[™İ[\ˆ›Ü™\‹œ™]Z[œÈÛ™H™ZYÙH[™\›[™H[™Hœ›İÛ‹Y\š]™Y^[Ë[™\È˜[œÛ]YLˆİÙ\‹ˆ[ˆ^XÚ]˜™ZYÙHÙ^X›Ø\™Y›Øİ\Èİ][™H™[XZ[œËˆ\È™Yš[™[Y[İ\\œÙY\ÈÛ›HHX\›Y\ˆ˜XÚÙY\›ËXXİ[Û‚™X]Y[[™]È[˜ÛÛ™][Û˜[KŒNŒHÛÜœİYœ˜[YHÛÛ˜\İÛZ[NÈ]Ù\È›İÚ[™ÙHHÛÈÛİ\˜ÙB˜ÛÛİ\œË[šÈ\İ[˜][Û‹X™[šY[ËX›XØ][ÛˆØ]KÜˆ[HÚXÚÛİ][K‚‚™XØ]\ÙHHXİ[Ûˆ›İÈÚ]È\™XİHİ™\ˆ[İš[™ÈšY[Ë›ÈÚ[™ÛHÛÛ˜\İ˜][ÈØ[ˆ™HİX\˜[YY™›Üˆ]™\Hœ˜[YKˆHİÛ™\‹Y\™XİY˜Y[Ù™ˆ\ÈZ]YØ]YHHÛËXÛÛİ\ˆ[È[™[™\›[™H[™Ø\Âš\İX[HÚXÚÙY]ÌŒÎL[™LˆØ[›ÛšXØ[Ú]XˆXZ[˜ÛÛ[Z]˜˜ÙMÙMNMÌMÙŒÍXXÍÙXY˜Œ™ÍŒYYŒX\ÈİYÙY[ˆHØ[YH[œX›\ÚY[YB˜MMÍÍÍŒÈHX›XÈ[YHØ\È›İÚ[™ÙY‚‚ˆÈÈİÛ™\ˆ™Yš[™[Y[8 %˜[œÜ\™[ØÜ›Û˜\ˆ[™^Y\™Y™ZYÙHÛ\ÜÈ8 %Œ‹LLÌB‚•HİÛ™\ˆİXœÙ\]Y[H™Z™XİYH™ZYÙHØÜ›Û˜\ˆÛÛ[[ˆ[™H›]ÛÛYX™ZYÙHYÙKˆBœØÜ›Û˜\ˆ˜XÚÈ[™ÛÜ›™\ˆ\™H\™Y›Ü™H˜[œÜ\™[]ÈÙX’Ú]ÚY\È]È[Xˆ\ÈB˜œ›İÛ‹Y\š]™Y˜[œÛXÙ[[™HÚ]›È™ZYÙH›Ü™\‹[™š\™Y›Ş\Ù\È]È˜]]™H[ˆÙ][™Ëˆ\Âœ™[[İ™\ÈH™Z™XİYMH™ZYÙHİ]\ˆÚ[H™\Ù\š[™ÈHš\ÚX›HØÜ›Û\ÜÚ][Ûˆ[™XØ]Ü‹‚‚•HÛÛY™ZYÙHØ[˜\È\Èİ\\œÙYYHHM‰H™ZYÙHYÙH[[™İXHÜ˜YY[È\š]™YÛ›Hœ›ÛBHÛÈ\›İ™YÛİ\˜ÙHÛÛİ\œËˆ›Ü›X[İ\™˜XÙ\È\ÙHŒ	H™ZYÙK[™[È‰KXY\ˆÛ\ÜÈN	HÚ]Œ›\‹[™›Ø][™È˜]šYØ][Ûˆ[™Ø\İ\™˜XÙ\ÈÌ‰HÚ]›\ˆ›ÜˆYÚXš[]Hİ™\ˆ\˜š]˜\B˜ÛÛ[ˆœ›İÛˆ^™[XZ[œÈÛÛYÈHÙX\˜ÚšY[\Èœ›İÛˆ˜]\ˆ[ˆ™ZYÙKˆ\ÙH\™HÜXÚ]B™\š]˜]]™\ÈÙˆH^\İ[™È[]K›İ™]È[\™˜XÙHÛÛİ\œË[™È›İÚ[™ÙH›ÙXİYYXK˜ÚXÚÛİ]ÛØÚX[\İ[˜][ÛœË\ÙÜ˜\KÜˆHX›XØ][ÛˆØ]K‚‚Ø[›ÛšXØ[Ú]XˆÛİ\˜ÙHÛÛ[Z]XÍ™NÍYLŒÍ™LMLXÙŒ˜ŒØÎYXNMŒÍL˜M˜˜\ÈİYÙY[ˆ[œX›\ÚY[YHMMÍÍÍŒÚ]QHLNMMÙŒÍ™ÙÌÌÌX™MÍŒ˜NXXLXŒÍˆ]\ËˆHš[˜[\ÚİÜœ™]šY]ÈYX\İ\™YHİ]\‹›ÈÜš^›Û[İ™\™›İË[™H[[™YÛ\ÜÈ˜[Y\ËˆH]™B[YHØ\È›İÚ[™ÙYÈ[Øš[HİÛ™\ˆ™]šY]È™[XZ[œÈ™\]Z\™Y™Y›Ü™HX›XØ][Û‹‚‚ˆÈÈİÛ™\ˆ™Yš[™[Y[8 %Ø\˜]Ù\ˆÛ\ÜÈ8 %Œ‹LLÌB‚•HİÛ™\ˆİXœÙ\]Y[H™Z™XİYHØ\˜]Ù\‰ÜÈÌ‰H™ZYÙHİ\™˜XÙHX›İ™H]ÈŒ‰Hœ›İÛˆØÜš[H\ÂÛÈ\šÈ[™Ü\]YKˆHØ\\ÜXÚYšXÈ˜]Ù\ˆ\È\™Y›Ü™H‰H™ZYÙHÚ]Ì›\‹]ÈØÜš[H\ÂŒL‰Hœ›İÛ‹[™Û›H]È^X™X\š[™ÈXY\‹][K[\K[™›Ûİ\ˆ™YÚ[ÛœÈYHŒ	H™ZYÙH^Y\‚™›ÜˆYÚXš[]KˆHÛØ˜[KYÛ\ÜË\İ›Û™ØÚÙ[ˆ™[XZ[œÈ[˜Ú[™ÙY™XØ]\ÙH][ÛÈÛİ™\›œÈ[Øš[B›˜]šYØ][Ûˆ[™İ\ˆİ\™˜XÙ\Ë‚‚•HØ]YHÜİ[\ˆ\È\ÙˆHØ[YH˜]Ù\ˆXØÙ\[˜ÙH›İ[™\H[™›İÈÜ˜\È]ÌŒ[œİXY›Ùˆ^ÙYY[™È]ÈİÛˆ›Şˆ\ÙH™Yš[™[Y[È\ÙH˜[œÜ\™[˜ŞH\š]™YÛ›Hœ›ÛHÑ‘ÌØ[™˜ÍÌP˜È^HÈ›İÚ[™ÙHHØ\]KÚXÚÛİ]\İ[˜][Û‹[\ˆ\İ[˜][Û‹˜]šYØ][Û‚™Û\ÜËÚXÚÛİ]œ˜[™[™ËÜˆX›XØ][ÛˆØ]KˆØ[›ÛšXØ[Ú]XˆXZ[˜ÛÛ[Z]Â˜™LXØ˜LL™YŒXYLÌLÍÙYMXØØ˜Œ˜˜ŒÌ™[™˜MÙLØÎM˜LLLL˜N™ŒÍÌLÙXLXNMN˜™™™™M\™HİYÙY[ˆ[œX›\ÚY[YHMMÍÍÍŒ‚•[YHÚXÚÈ\ÜÙY[™œ™\ÚÜ[]YXØ\ÚXÚÜÈ]ÌŒÎL[™L›İ[™›ÈÜš^›Û[›İ™\™›İËˆH]™H[YHØ\È›İÚ[™ÙY‚‚ˆÈÈİÛ™\ˆ™Yš[™[Y[8 %YÚ\ˆØ\Û\ÜÈİ™\ˆ\šÈYYXH8 %Œ‹LLÌB‚Y\ˆ™]šY]Ú[™ÈHØ\X›İ™HH\šÈÛY\YÙHšY[ËHİÛ™\ˆ›İ[™H‰H˜]Ù\ˆ[™]ÂœİXÚÙYŒ	Hİ\™˜XÙ\Èš\İX[HÛÈX]H[™™\]Y\İYHYÚ\ˆ™\İ[Ú]İ]Ú[™Ú[™ÈH™\İÙ‚HİÜ™Yœ›ÛˆHØ\\ÜXÚYšXÈØÜš[H\È\™Y›Ü™H™YXÙYœ›ÛHL‰HÈ	Hœ›İÛ‹H˜]Ù\ˆ\Ù\ÂŒ‰H™ZYÙK[™]ÈXY\‹][K[\K[™›Ûİ\ˆ™YÚ[ÛœÈ\ÙHÍ	H™ZYÙKˆH^\İ[™ÈÌ›\‹œ›İ[™Y][HØ\™[™ÛØ˜[Û\ÜÈÚÙ[œÈ™[XZ[ˆ[˜Ú[™ÙY‚‚•\ÙH˜[Y\È\™Hİ[˜[œÜ\™[˜ŞH\š]˜]]™\ÈÙˆH\›İ™YÜ›İ[™Ñ‘ÌØ[™[šÂ˜ÍÌP˜È^H[›ÙXÙH›È\™[\™˜XÙHÛÛİ\‹ˆ\È™Yš[™[Y[İ\\œÙY\ÈÛ›HH™]š[İ\Â˜Ø\\ÜXÚYšXÈÜXÚ]H˜[Y\Ëˆ]Ù\È›İÚ[™ÙHØ\]KÚXÚÛİ]›İ][™ËHØ]YHÜİ[\‹›˜]šYØ][ÛˆÛ\ÜËÛØÚX[\İ[˜][ÛœËÚXÚÛİ]œ˜[™[™ËÜˆHX›XØ][ÛˆØ]KˆØ[›ÛšXØ[‘Ú]XˆXZ[˜ÛÛ[Z]ÌØŒ˜YLØÌL™NMYŒML˜LÎXØXÍ˜ÌY™™YMYLØ\ÈİYÙY[ˆ[œX›\ÚY[YB˜MMÍÍÍŒˆœ™\ÚÌŒÎL[™›Ü›X[]ÚYÚXÚÜÈ›İ[™›ÈØİ[Y[˜]Ù\‹Üˆ][B›İ™\™›İËˆH]™H[YHØ\È›İÚ[™ÙY‚‚ˆÈÈ›Û˜XÚÂ‚“›È›ÙXİ[Ûˆ›Û˜XÚÈ\È™YYYÚ[H[YHMMÍÍÍŒ™[XZ[œÈ[œX›\ÚYˆYˆ]\È]\‚˜\›İ™Y[™X›\ÚY™\Ù\™HH[‹Y›Ü›Y\ˆXZ[ˆ[YH\ÈH[[YYX]H[œX›\ÚY›Û˜XÚÈ[™™\šYHH]™H[]KXY\ˆÛÜ™X\šË›Ûİ\ˆ[šÜËØ\˜]Ù\‹[™[Øš[H^[İ]Y\ˆH›ÛB˜Ú[™ÙKˆÈ›İ[]HZ]\ˆ[YH[™È›İ[ˆHØœÛÛ]H™\ÜÚ]ÜH\Ş[Y[ÛÜšÙ›İË‚
