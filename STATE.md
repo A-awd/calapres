@@ -1,6 +1,32 @@
 
 # Project State
 
+## Footer icons optically normalized in the combined unpublished preview — 2026-08-31
+
+[Cause and bounded implementation] The owner reported that the X glyph appeared higher and larger
+than the other footer platforms and that only WhatsApp enlarged on hover. Fresh browser geometry
+proved that all six interaction boxes were already aligned at 40 by 40 px. The mismatch came from
+the SVG paint bounds: X filled almost its complete viewBox while the other platform glyphs retained
+internal whitespace. Instagram, Snapchat, TikTok, and X also have blank settings, so Liquid renders
+them as disabled spans and the former disabled-hover rule cancelled the shared transform.
+
+[Canonical source and Shopify preview] Canonical GitHub `main` commit
+`3e9e57423cd8b5b8ffc2f02f8aba47d026f5ea5d` changes only `assets/calabriz.css`. It optically
+calibrates Snapchat, WhatsApp, X, and email, lowers TikTok by 0.03 rem, and lets disabled platform
+glyphs inherit the same hover transform while retaining `cursor: default` and no `href`. The
+same file now persists in unpublished theme `165777604864` with MD5
+`ab04e90808c4306f42b34ce432dd728b` and size 42,475 bytes. Theme `165774786816` remains
+`MAIN` and unchanged.
+
+[Validation and boundary] Theme Check inspected 181 files with zero errors and six pre-existing
+external-font warnings. Fresh 320 px, 390 px, and 1280 px preview renders kept the six 40 px boxes
+on one row with no horizontal overflow. Their painted platform heights are now approximately
+25.6 px, and an in-app pointer test returned the same
+`translateY(-2px) scale(1.04)` transform for Instagram, Snapchat, TikTok, WhatsApp, X, and email.
+WhatsApp still links exactly to `https://wa.me/966508727687`, email to
+`mailto:info@calapres.com`; Instagram, Snapchat, TikTok, and X remain deliberately unlinked.
+Publication is pending owner visual approval of the combined preview.
+
 ## Rubik selected as the shared Calapres typeface; storefront preview only — 2026-08-31
 
 [Owner choice and compatibility] The owner selected Rubik as the intended common typeface for the

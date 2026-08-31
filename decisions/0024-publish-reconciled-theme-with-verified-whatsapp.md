@@ -108,3 +108,23 @@ exactly six 40 px interaction boxes on one shared row. WhatsApp linked exactly t
 disabled span without `href`, and the browser console contained no errors. This amendment did not
 alter any product, checkout, shipping, payment, Paymob, customer-service, or automation
 configuration.
+
+## Amendment — optical icon normalization and common hover — 2026-08-31
+
+Status: accepted for implementation; staged in an unpublished preview, publication pending visual
+approval
+
+The outer 40 by 40 px icon boxes and their row alignment are the stable layout contract. Because
+official SVG viewBoxes contain different amounts of internal whitespace, visible glyph size must be
+calibrated optically rather than by assigning one identical pseudo-element size to every asset. X
+and WhatsApp use a 1.6 rem mask box, Snapchat uses 1.93 rem, Instagram and TikTok retain 2 rem,
+TikTok moves down 0.03 rem, and email uses a 2.3 rem box to normalize its natural horizontal shape.
+
+All six glyphs share the same hover transform. Blank Instagram, Snapchat, TikTok, and X settings
+must still render as spans without `href`; they retain the default cursor and their hover is visual
+only. Never add a guessed destination to make the visual behavior functional.
+
+Canonical GitHub commit `3e9e57423cd8b5b8ffc2f02f8aba47d026f5ea5d` and unpublished Shopify
+theme `165777604864` contain this amendment. Validation at 320 px, 390 px, and 1280 px kept one
+non-overflowing row, and direct pointer checks returned the same hover transform for all six
+glyphs. Live theme `165774786816` was not changed.

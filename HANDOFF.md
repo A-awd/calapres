@@ -1,6 +1,30 @@
 
 # Handoff
 
+## Resume here — normalized footer icons staged; combined draft remains unpublished — 2026-08-31
+
+The footer correction is complete in canonical GitHub `main` commit
+`3e9e57423cd8b5b8ffc2f02f8aba47d026f5ea5d` and in Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; current live theme `165774786816` remains `MAIN` and was not edited.
+
+All social interaction boxes were already 40 by 40 px. X looked taller because its SVG fills its
+viewBox while the others include internal whitespace. `assets/calabriz.css` now calibrates each
+glyph optically to about 25.6 px of painted platform height, makes the envelope comparable in visual
+width, and lowers TikTok by 0.03 rem. It also gives all six glyphs the same
+`translateY(-2px) scale(1.04)` hover motion. The persisted draft asset is 42,475 bytes with MD5
+`ab04e90808c4306f42b34ce432dd728b`.
+
+Theme Check passed 181 files with zero errors and six existing external-font warnings. Fresh 320 px,
+390 px, and 1280 px renders kept one icon row without horizontal overflow, and direct in-app hover
+checks produced the same transform for every glyph. WhatsApp and email retain their exact verified
+destinations. Instagram, Snapchat, TikTok, and X remain spans with no `href` and the default cursor,
+so their new hover response is visual only until exact official URLs are verified.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish it or save the pending
+checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
 ## Resume here — Rubik selected; storefront staged, checkout still Almarai — 2026-08-31
 
 The owner selected Rubik as the intended shared storefront and checkout typeface. Arabic support

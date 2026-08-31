@@ -93,7 +93,10 @@ decision record.
   rollback, and do not use the Saudi Post helper number as Calapres contact information. The
   2026-08-31 amendment adds a verified email link and an official X glyph without guessing an X
   destination, requires all six footer icons to remain in one row at 320 px and wider, and is now
-  executed in live theme `165774786816` with `165770887424` preserved as rollback.
+  executed in live theme `165774786816` with `165770887424` preserved as rollback. A later
+  amendment optically normalizes the unequal SVG paint bounds and gives all six glyphs the same
+  hover motion in unpublished preview `165777604864`, without inventing links for disabled
+  platforms.
 - [0025 — Adopt the Calapres beige and burnt-brown storefront palette](decisions/0025-adopt-two-colour-storefront-palette.md)
   — use source ground `#DFD4C3` and ink `#44271B`, with interface layers derived only by
   transparency; recolour the exact header wordmark silhouette and existing social glyph geometries
