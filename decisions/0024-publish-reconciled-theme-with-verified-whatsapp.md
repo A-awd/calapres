@@ -71,3 +71,28 @@ Calapres monogram favicon, and verified Calapres WhatsApp footer link together. 
 WhatsApp destination must be withdrawn, clear `whatsapp_url` in the current main theme instead of
 rolling back unrelated approved visual work. Do not delete either theme or run the existing
 deployment workflow during rollback.
+
+## Amendment — six-icon responsive footer — 2026-08-31
+
+Status: accepted; verified in unpublished draft, public publication pending
+
+The owner found that the four-icon footer wrapped on mobile and requested X and email as well.
+Live measurement proved that the wrap came from the half-width mobile footer column, fixed icon
+boxes, and gap—not from a larger WhatsApp layout box.
+
+The durable rules are:
+
+1. Render Instagram, Snapchat, TikTok, WhatsApp, X, and email as one visually balanced set.
+2. At mobile widths, let the social block span both footer columns and keep all six icons in one
+   non-wrapping row at 320 px and wider.
+3. Keep the exact verified WhatsApp destination `https://wa.me/966508727687`.
+4. Link email only to the verified official address `info@calapres.com`.
+5. Use X's official current glyph, but keep it disabled until an exact official Calapres X URL is
+   verified. A search result or inferred handle is not authority.
+6. Use the unpublished duplicate `165774786816` for implementation and preview. Do not modify the
+   current main theme directly; publish only after the final public-site confirmation and retain
+   the then-former main theme as rollback.
+
+The draft passed 320 px, 390 px, and 1280 px render checks with one icon row, exact WhatsApp and
+email links, no X `href`, and no browser-console errors. This amendment does not authorize or alter
+any product, checkout, shipping, payment, Paymob, customer-service, or automation configuration.

@@ -1,6 +1,57 @@
 
 # Project State
 
+## Six-icon mobile footer verified in an unpublished draft — 2026-08-31
+
+[Canonical base] This bounded footer correction started from a clean worktree at freshly fetched
+GitHub `origin/main` commit `2dc41a860118802eed6f85a65588e03c12516d35`. The owner's dirty,
+diverged checkout and unrelated worktrees were not modified.
+
+[Verified live defect] The public storefront was inspected at a 390 px mobile viewport. The social
+column was only 158 px wide while every icon occupied a 44.8 px square with a 12.8 px gap and
+wrapping enabled. The four existing icons therefore rendered as two rows. WhatsApp's layout box was
+not larger than the others; its glyph only appeared visually larger because it filled more of its
+SVG view box.
+
+[Draft implementation] Shopify duplicated the current main theme `165770887424` into unpublished
+theme `165774786816`, renamed `Preview — six social icons mobile fix`. Only the draft was changed.
+The footer now renders six glyphs in this order: Instagram, Snapchat, TikTok, WhatsApp, X, and
+email. The X geometry comes from X's official Brand Toolkit; the email glyph comes from Shopify
+Polaris commit `af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2`. The WhatsApp glyph is optically
+reduced without changing its official asset. At mobile widths the social block spans both footer
+columns and the six equal interaction boxes are distributed in a single non-wrapping row.
+
+[Verified identities and link boundary] The exact official store email is
+`info@calapres.com`, confirmed by the authenticated Shopify store plus the public contact, privacy,
+and terms pages. Its icon uses `mailto:info@calapres.com`. No official Calapres X account URL was
+found in Shopify, the canonical repository, the public store, or a focused public search, so the X
+glyph is deliberately a disabled span rather than a guessed link. The verified Calapres WhatsApp
+destination remains exactly `https://wa.me/966508727687`.
+
+[Verified draft files] Shopify accepted all five unpublished-theme writes without user errors and
+reread the exact persisted bodies. Its returned checksums are:
+
+- `sections/footer.liquid`: `b9ead771d07e6a6fdbc6f86e9fe65bc8`.
+- `assets/calabriz.css`: `c5503cec29f1c5c4baf72e1742f6972a`.
+- `assets/icon-x.svg`: `f125a682c3f7f612bf66e786e6c94a2a`.
+- `assets/icon-email.svg`: `96ca267b44babbccb0f46d74c7de4308`.
+- `config/settings_data.json`: `8c265f87b89a1a49c641b842a37a323e`; its API-returned text
+  exactly matched the local source and contains the verified WhatsApp and email values with blank X.
+
+[Preview validation] Fresh draft renders at 320 px and 390 px contained exactly six icons with one
+shared y-coordinate and a 40 px-high container: one row, no overlap, and no wrap. A 1280 px render
+also held all six in one row. WhatsApp and email exposed the exact destinations above, X had no
+`href`, and the browser console contained no errors. The Liquid footer schema parses with 16 unique
+setting IDs, all changed JSON and SVG parse, the new SVGs contain no script or external reference,
+and `git diff --check` passes.
+
+[Publication boundary] The live theme remains `165770887424` as Shopify `MAIN`; no active-theme
+file has changed in this stage. Publishing draft `165774786816` is the only remaining action and
+requires the final public-site confirmation immediately before Shopify's publish control is used.
+The current main will become the direct rollback theme after publication. No product, customer,
+order, payment, Paymob, shipping, checkout, tax, app, Captain, n8n, Chatwoot, or Meta setting
+changed.
+
 ## Reconciled four-icon theme published with verified Calapres WhatsApp — 2026-08-31
 
 [Canonical base] This production publication started from a clean worktree at freshly fetched

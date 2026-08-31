@@ -14,6 +14,7 @@
 {%- assign privacy_policy_url = shop.privacy_policy.url | default: faq_url -%}
 {%- assign terms_policy_url = shop.terms_of_service.url | default: faq_url -%}
 {%- assign oud_collection = collections['oud-bakhour'] -%}
+{%- assign footer_email = section.settings.email_address | default: shop.email -%}
 <footer class="ftr" id="signup">
   <div class="wrap">
     <div class="ftr-signup">
@@ -77,7 +78,9 @@
           bc39a7d2024f1e5c14c42f855bd3552b4913e204.
           See assets/DAWN-SOCIAL-ICONS-LICENSE.txt.
           The WhatsApp glyph is the unmodified black digital SVG from Meta's
-          2026 WhatsApp Brand Resource Center logo pack.
+          2026 WhatsApp Brand Resource Center logo pack. The X glyph is from
+          X's official Brand Toolkit. The email glyph is vendored from Shopify
+          Polaris at commit af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2.
         {%- endcomment -%}
         <div class="social-links" aria-label="حسابات التواصل الاجتماعي">
           {%- if section.settings.instagram_url != blank -%}
@@ -109,11 +112,29 @@
           {%- endif -%}
           {%- if section.settings.whatsapp_url != blank -%}
           <a class="social-link" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="واتساب">
-            <img class="social-icon" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+            <img class="social-icon social-icon--whatsapp" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
           </a>
           {%- else -%}
           <span class="social-link social-link--disabled" aria-label="واتساب">
-            <img class="social-icon" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+            <img class="social-icon social-icon--whatsapp" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+          {%- if section.settings.x_url != blank -%}
+          <a class="social-link" href="{{ section.settings.x_url }}" target="_blank" rel="noopener" aria-label="إكس">
+            <img class="social-icon social-icon--x" src="{{ 'icon-x.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="إكس">
+            <img class="social-icon social-icon--x" src="{{ 'icon-x.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+          {%- if footer_email != blank -%}
+          <a class="social-link" href="mailto:{{ footer_email | strip | escape }}" aria-label="البريد الإلكتروني">
+            <img class="social-icon" src="{{ 'icon-email.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="البريد الإلكتروني">
+            <img class="social-icon" src="{{ 'icon-email.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
           </span>
           {%- endif -%}
         </div>
@@ -207,6 +228,17 @@
       "type": "url",
       "id": "whatsapp_url",
       "label": "رابط واتساب"
+    },
+    {
+      "type": "url",
+      "id": "x_url",
+      "label": "رابط إكس"
+    },
+    {
+      "type": "text",
+      "id": "email_address",
+      "label": "البريد الإلكتروني",
+      "default": "info@calapres.com"
     },
     {
       "type": "text",

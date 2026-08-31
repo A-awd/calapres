@@ -862,10 +862,19 @@ input{font-family:inherit}
   .burger span{width:1.15rem}
 }
 
-.social-links{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
-.social-link{display:inline-flex;align-items:center;justify-content:center;width:2.8rem;height:2.8rem;border:0;background:transparent;color:var(--ink);transition:transform .2s ease,opacity .2s ease}
+.social-links{display:flex;align-items:center;gap:.125rem;flex-wrap:nowrap}
+.social-link{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;flex:0 1 2.5rem;border:0;background:transparent;color:var(--ink);transition:transform .2s ease,opacity .2s ease}
 .social-link:hover{background:transparent;color:var(--ink);transform:translateY(-2px) scale(1.04)}
 .social-icon{display:block;width:2rem;height:2rem;object-fit:contain}
+.social-icon--whatsapp{width:1.7rem;height:1.7rem}
+.social-icon--x{filter:brightness(0)}
 .social-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:.45rem}
 .social-link--disabled{opacity:1;cursor:default}
 .social-link--disabled:hover{background:transparent;color:var(--ink);transform:none}
+@media (max-width:1200px){
+  .ftr-cols{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .ftr-social{grid-column:1 / -1}
+  .social-links{width:100%;max-width:22rem;justify-content:space-between}
+}
