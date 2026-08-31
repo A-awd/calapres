@@ -1,7 +1,7 @@
 
 # Project State
 
-## Cart drawer glass refined and exact checkout seal prepared; live checkout and Saudi-phone enforcement remain isolated — 2026-08-31
+## Exact checkout seal and pale-beige glass-like direction approved; draft creation remains blocked — 2026-08-31
 
 [Cart cause and implementation] The owner reported that opening the cart restored the rejected dark,
 opaque beige treatment. Fresh computed-style inspection confirmed that the draft drawer used a 72%
@@ -26,9 +26,11 @@ MD5 `842f3966eaec4a2280b5d811774c5cb9`, so production was not edited or publishe
 [Checkout read-only audit] The owner rejected the active checkout's stark white treatment and old
 simplified seal, initially requested the wordmark, and then corrected the intended identity before
 implementation to the exact realistic wax seal from the supplied 1280 x 1280 colour-source image.
-The intended surrounding identity remains very pale beige, burnt brown, and Rubik; the isolated
-word `blue` in the latest instruction conflicts with the approved source image and palette and is
-not treated as a confirmed colour change.
+The owner then explicitly approved that exact seal and clarified the surrounding treatment as a
+very light beige, glass-like background rather than blue. Burnt brown and Rubik remain the intended
+supporting identity. Shopify's Basic checkout editor cannot reproduce the storefront's actual
+backdrop blur or translucent CSS, so `glass-like` means very pale beige solid surfaces with subtle
+tonal separation inside the isolated checkout draft.
 The connected Basic store has exactly one checkout profile,
 `gid://shopify/CheckoutProfile/5133926656` (`My Store configuration`), and it is published;
 there is no checkout draft. Browser inspection confirmed the active logo is
@@ -45,12 +47,13 @@ redrawing it and staged as `assets/calapres-checkout-wax-seal.png`: 755 x 840 PN
 separate draft checkout configuration on Basic, so the safe sequence is to duplicate the active
 profile, upload this exact transparent seal, set very pale beige solid backgrounds, set actions to
 `#44271B`, set headings and body to Rubik, preview, and publish only after owner approval. The
-in-app browser could focus the active profile's More actions control but Shopify's popover did not
-open through the trusted browser interface; Computer Use is prohibited from controlling the Codex
-window. Fresh authenticated schema inspection also confirmed that this Basic store exposes no
-public checkout-profile duplication or checkout-branding mutation; the draft must be created in
-Shopify's Checkout settings interface. No draft was created and the active checkout was
-deliberately left untouched.
+target draft values remain `#FAF8F5` for main, `#F7F4EF` for header and order summary, and
+transparent inputs. After the owner's explicit approval, a fresh attempt confirmed the enabled
+`Duplicate` action exists, but Shopify's popover still did not open through the trusted browser
+interface and no duplicate action fired. Fresh authenticated schema inspection also confirmed that
+this Basic store exposes no public checkout-profile duplication or checkout-branding mutation; the
+draft must be created in Shopify's Checkout settings interface. No draft was created and the active
+checkout was deliberately left untouched.
 
 [Saudi phone boundary] Email remains the checkout contact method and the shipping-address phone is
 required, producing two separate required fields as intended. Native Shopify settings cannot lock

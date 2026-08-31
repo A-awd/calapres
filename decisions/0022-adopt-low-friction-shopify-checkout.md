@@ -167,10 +167,13 @@ old simplified `Artboard_4_2x-100-removebg-preview.png` seal. The staged 755 x 8
 alpha and SHA-256
 `2ffe03f1bff302b781bbd882d18e971f878d154aa6f90413e42b6643f25024f1`. Very pale beige
 backgrounds derived from the approved storefront ground, burnt-brown actions, and Rubik for both
-headings and body remain intended. The isolated word `blue` in the latest instruction conflicts
-with the approved source image and two-colour palette and is not treated as a confirmed colour
-change. This direction supersedes only the prior checkout seal, white-background, dark `#1B262D`,
-and Almarai presentation choices. It does not change guest checkout, the separate
+headings and body remain intended. The owner subsequently confirmed that the background is very
+light beige and glass-like, not blue, and explicitly approved the exact realistic seal. Because the
+Basic checkout editor does not expose arbitrary CSS, backdrop blur, or alpha-bearing surface
+controls, implement `glass-like` as very pale solid surfaces with subtle tonal separation and
+transparent input fills in the duplicate; do not claim actual glass blur. This direction supersedes
+only the prior checkout seal, white-background, dark `#1B262D`, and Almarai presentation choices.
+It does not change guest checkout, the separate
 required email and shipping-phone fields, shipping rates, address wording, policy links, payment
 providers, or publication safeguards.
 
