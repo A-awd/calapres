@@ -76,6 +76,25 @@ visually checked at 320, 390, and 1280 px. Canonical GitHub `main` commit
 `bce7d159670147f365ac43eadbb2d4361ed04209` is staged in the same unpublished theme
 `165777604864`; the public theme was not changed.
 
+## Owner refinement — transparent scrollbar and layered beige glass — 2026-08-31
+
+The owner subsequently rejected the beige scrollbar column and the flat solid-beige page. The
+scrollbar track and corner are therefore transparent, its WebKit width is 4 px, its thumb is a
+brown-derived translucent line with no beige border, and Firefox uses its native thin setting. This
+removes the rejected 15 px beige gutter while preserving a visible scroll-position indicator.
+
+The solid beige canvas is superseded by a 16% beige page tint and subtle gradients derived only from
+the two approved source colours. Normal surfaces use 20% beige, panels 26%, header glass 58% with
+24 px blur, and floating navigation and cart surfaces 72% with blur for legibility over arbitrary
+content. Brown text remains solid; the search field is brown rather than beige. These are opacity
+derivatives of the existing palette, not new interface colours, and do not change product media,
+checkout, social destinations, typography, or the publication gate.
+
+Canonical GitHub source commit `9c6d580c5d90f36e15081cf02b3c9ea856352a6b` is staged in unpublished
+theme `165777604864` with MD5 `5059457f36d3dd3331be762a8eaa1b64`, 44,236 bytes. The final desktop
+preview measured a 4 px gutter, no horizontal overflow, and the intended glass values. The live
+theme was not changed; mobile owner review remains required before publication.
+
 ## Rollback
 
 No production rollback is needed while theme `165777604864` remains unpublished. If it is later

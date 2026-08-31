@@ -1,6 +1,38 @@
 
 # Project State
 
+## Scrollbar gutter removed and the beige palette restored as layered glass in the combined unpublished preview — 2026-08-31
+
+[Owner correction and cause] The owner rejected the visible beige page-scrollbar column and the
+flat solid-beige page treatment. The former draft combined a 15 px native scrollbar gutter, a solid
+beige track, a beige border around the brown thumb, a solid beige body, 88% beige header glass, and
+72% beige panels. Because the glass sat over the same solid beige, blur could not create visible
+depth and the whole page read as one colour block.
+
+[Canonical implementation] Canonical GitHub `main` source commit
+`9c6d580c5d90f36e15081cf02b3c9ea856352a6b` changes only `assets/calabriz.css`. WebKit browsers now
+receive a 4 px brown-derived thumb, a fully transparent track and corner, and no beige thumb border;
+Firefox retains its native thin treatment in a Firefox-only feature query. The page tint is 16%
+beige, normal surfaces 20%, panels 26%, header glass 58% with 24 px blur, and floating navigation and
+cart surfaces 72% with blur for legibility. Text, controls, logo, and interaction states remain
+derived only from `#DFD4C3` and `#44271B`; the search field was corrected from beige text to brown.
+
+[Shopify preview and production boundary] The exact final asset persists in unpublished theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) with MD5
+`5059457f36d3dd3331be762a8eaa1b64` and size 44,236 bytes. Shopify reread shows the draft as
+`UNPUBLISHED`, not processing, and without a processing failure. Theme `165774786816` remains
+`MAIN`; its CSS checksum is still `c5503cec29f1c5c4baf72e1742f6972a`, so production was not edited
+or published.
+
+[Validation and remaining review] Theme Check inspected 181 files with zero errors and the six
+existing Rubik external-font warnings. A fresh in-app 1280 by 720 preview reduced the reserved
+scrollbar gutter from the measured 15 px baseline to exactly 4 px, removed the beige track, and had
+no horizontal overflow. Visual checks covered the page top, the light content area, the header over
+dark product photography, the footer, the cart drawer, and the navigation panel. Computed values
+matched the intended 16% page tint, 58% header glass, 24 px header blur, and 4 px gutter. Layout
+breakpoints were not changed, but a fresh final mobile screenshot was not available after the
+browser-session handoff; mobile owner review therefore remains part of the publication gate.
+
 ## Hero-video action is transparent and slightly lower in the combined unpublished preview — 2026-08-31
 
 [Owner correction and implementation] The owner rejected the brown rectangle around the first

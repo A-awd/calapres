@@ -1,6 +1,30 @@
 
 # Handoff
 
+## Resume here — transparent scrollbar and layered beige glass staged; combined draft remains unpublished — 2026-08-31
+
+The owner's scrollbar and beige-glass correction is complete in canonical GitHub source commit
+`9c6d580c5d90f36e15081cf02b3c9ea856352a6b` and Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; theme `165774786816` remains `MAIN` and its CSS was not edited.
+
+Only `assets/calabriz.css` changed. The page scrollbar now has a transparent track, no beige thumb
+border, and a 4 px WebKit width; Firefox keeps its native thin form. The former solid beige page is
+now a 16% tint over subtle two-colour gradients, ordinary surfaces are 20%, panels 26%, and header
+glass is 58% with 24 px blur. Floating navigation and cart surfaces stay stronger at 72% so brown
+text remains usable over imagery. No third interface colour was introduced.
+
+Shopify persisted MD5 `5059457f36d3dd3331be762a8eaa1b64`, 44,236 bytes. Theme Check passed
+181 files with zero errors and the six existing Rubik remote-font warnings. The final 1280 by 720
+in-app preview measured a 4 px gutter versus the 15 px rejected baseline, no beige scrollbar track,
+and no horizontal overflow. The header was visually checked over dark product images; the footer,
+cart drawer, and navigation glass were also opened and inspected. A fresh final mobile screenshot
+was not available after the browser-session handoff, so retain mobile owner review before publishing.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish this combined draft or
+save the pending checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
 ## Resume here — transparent hero-video action staged; combined draft remains unpublished — 2026-08-31
 
 The owner's correction to the first homepage video's `تسوقوا الآن` action is complete in canonical
