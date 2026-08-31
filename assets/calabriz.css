@@ -1,3 +1,4 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 /* ============================================================
    كالابريز — Shared base (from homepage template)
    ============================================================ */
@@ -18,7 +19,7 @@
   --control-line:rgba(var(--ink-rgb),.60);
   --line-light:rgba(var(--ground-rgb),.55);
   --glass:rgba(var(--ground-rgb),.88);
-  --font:'Cairo', sans-serif;
+  --font:'Rubik', sans-serif;
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
