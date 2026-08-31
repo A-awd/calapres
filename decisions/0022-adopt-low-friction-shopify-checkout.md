@@ -158,6 +158,31 @@ The phone is Shopify's native shipping-address phone field and is required only 
 collects a shipping address. Shopify does not establish that the value is mobile or SMS-capable,
 and the requirement is not SMS or WhatsApp marketing consent.
 
+## 2026-08-31 checkout-identity correction and Saudi-phone constraint boundary
+
+The owner has now rejected the active checkout's stark white background and the former 100 px seal
+as the checkout identity. The intended replacement is the exact Calapres wordmark, very pale beige
+backgrounds derived from the approved storefront ground, burnt-brown actions, and Rubik for both
+headings and body. This direction supersedes only the prior checkout seal, white-background, dark
+`#1B262D`, and Almarai presentation choices. It does not change guest checkout, the separate
+required email and shipping-phone fields, shipping rates, address wording, policy links, payment
+providers, or publication safeguards.
+
+The current Basic store has only one active checkout configuration and no draft. Because saving
+that configuration changes live checkout immediately, first duplicate it, perform this identity
+alignment only in the duplicate, preview it, and publish only after fresh owner approval. Do not
+treat a theme `preview_theme_id` as a checkout-branding preview. The present read-only audit
+confirmed the old seal, white and `#F5F5F5` backgrounds, `#1B262D` actions, and Almarai remain
+live; no checkout setting was changed.
+
+The owner's requested Saudi mobile rule is `+966` followed by exactly nine digits beginning with
+5. Shopify's native required-phone setting cannot lock a prefix, apply an input mask, or enforce
+that pattern. A cart-and-checkout validation Function may reject a normalized value that does not
+match `^\+9665[0-9]{8}$`, but on this Basic store it must be delivered by a public Shopify App
+Store app; a custom Function app requires Plus. App selection, price/privacy review, installation,
+and activation remain a separate owner choice. Do not claim that server-side validation visually
+locks `+966` in Shopify's native field.
+
 ## Plan boundary
 
 On the current non-Plus plan, Shopify can additionally keep the discount field visible on mobile,

@@ -4,6 +4,55 @@ Total output lines: 2104
 
 # Project State
 
+## Cart drawer glass refined in the unpublished theme; checkout identity and Saudi-phone enforcement remain isolated — 2026-08-31
+
+[Cart cause and implementation] The owner reported that opening the cart restored the rejected dark,
+opaque beige treatment. Fresh computed-style inspection confirmed that the draft drawer used a 72%
+beige surface above a 22% burnt-brown scrim, with an additional 26% beige header layer. Canonical
+GitHub `main` commits `2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
+`a7e3c96a01112a8bf371003df9a1a958bbd6ffe4` change only
+`assets/calabriz.css` and `snippets/cart-drawer.liquid`. The drawer now uses 46% beige with
+30 px blur, the page scrim is 12% brown, and the drawer's text-bearing header, item, empty, and
+footer regions use 60% beige. The 320 px Saudi Post helper now wraps instead of overflowing its
+box. No global glass token or navigation surface changed.
+
+[Preview persistence and validation] Unpublished theme `165777604864` persists
+`assets/calabriz.css` with MD5 `91f46f1d04a2b30d1f25677fb5054567`, size 44,422 bytes, and
+`snippets/cart-drawer.liquid` with MD5 `8e99438d4ff949d5269c2bac1488eebc`, size 2,938 bytes. It
+remains `UNPUBLISHED`, is not processing, and has no processing failure. Theme Check inspected
+181 files with zero errors and the six existing Rubik remote-font warnings. Fresh populated-cart
+checks at 320, 390, and 1280 px matched the intended values and found zero document or drawer
+horizontal overflow; the 320 px helper overflow fell from 10 px to zero. The public theme
+`165774786816` remains `MAIN` with CSS MD5 `c5503cec29f1c5c4baf72e1742f6972a` and cart snippet
+MD5 `842f3966eaec4a2280b5d811774c5cb9`, so production was not edited or published.
+
+[Checkout read-only audit] The owner rejected the active checkout's stark white treatment and old
+seal logo and requested the new wordmark and the current beige, burnt-brown, and Rubik identity.
+The connected Basic store has exactly one checkout profile,
+`gid://shopify/CheckoutProfile/5133926656` (`My Store configuration`), and it is published;
+there is no checkout draft. Browser inspection confirmed the active logo is
+`Artboard_4_2x-100-removebg-preview.png` at 100 px centered, main and header backgrounds are
+`#FFFFFF`, order-summary background is `#F5F5F5`, actions are `#1B262D`, and headings and body
+use Almarai. Shopify also displays a paused-rollout warning in that active editor. The
+`preview_theme_id` theme parameter does not preview checkout branding. No checkout value was
+changed and Save remained disabled.
+
+[Checkout safe path and present blocker] Shopify supports a separate draft checkout configuration
+on Basic, so the safe sequence is to duplicate the active profile, upload a transparent
+burnt-brown version of the exact wordmark, set very pale beige solid backgrounds, set actions to
+`#44271B`, set headings and body to Rubik, preview, and publish only after owner approval. The
+in-app browser could focus the active profile's More actions control but Shopify's popover did not
+open through the trusted browser interface; Computer Use is prohibited from controlling the Codex
+window. No draft was created and the active checkout was deliberately left untouched.
+
+[Saudi phone boundary] Email remains the checkout contact method and the shipping-address phone is
+required, producing two separate required fields as intended. Native Shopify settings cannot lock
+`+966`, add an input mask, or enforce a nine-digit local number beginning with 5. A server-side
+cart-and-checkout validation rule can enforce the normalized value
+`^\+9665[0-9]{8}$`, including accelerated checkout, but this Basic store must obtain that
+Function through a public Shopify App Store app; custom Function apps require Plus. No app was
+selected or installed, and no validation rule was added.
+
 ## Unconfigured social glyphs are hidden; official account URLs remain required — 2026-08-31
 
 [Owner correction and canonical rule] The owner rejected visible footer glyphs that behaved like

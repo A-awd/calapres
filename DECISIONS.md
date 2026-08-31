@@ -71,13 +71,15 @@ decision record.
 - [0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md)
   — preserve guest checkout, require first and last name, keep one-page checkout and address
   autocompletion, save the bounded Arabic labels including
-  `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, and match the live storefront
-  with Almarai and the dark `#1B262D` action color. The owner-approved implementation amendment uses
-  the selected Calapres seal for the centered 100 px checkout logo and active-theme favicon, names
+  `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, and require separate email and
+  shipping-phone fields. The former Almarai, white, dark `#1B262D`, and centered-seal presentation
+  is now rejected; duplicate the active checkout before previewing the exact wordmark, pale beige,
+  burnt-brown, and Rubik replacement. The implemented shipping amendment names
   both domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds,
   and places the compact Saudi Post WhatsApp helper only in the theme-controlled cart before
-  checkout. Apple Pay's branded button remains native, no Gulf shipping zone exists, and Paymob
-  remains in test mode, so real payment settlement is still unverified.
+  checkout. Native Shopify cannot enforce a fixed Saudi mobile pattern; a public validation app
+  remains an unapproved separate choice on Basic. Apple Pay stays native, no Gulf shipping zone
+  exists, and Paymob remains in test mode, so real payment settlement is still unverified.
 - [0023 — Set Saudi VAT collection to zero pending obligation review](decisions/0023-set-saudi-vat-collection-zero-pending-review.md)
   — based on the owner's statement that Calapres has no VAT registration, set the Saudi Manual Tax
   country rate from 15% to 0% while preserving tax-inclusive pricing off, tax on shipping off, and
@@ -100,9 +102,9 @@ decision record.
 - [0025 — Adopt the Calapres beige and burnt-brown storefront palette](decisions/0025-adopt-two-colour-storefront-palette.md)
   — use source ground `#DFD4C3` and ink `#44271B`, with interface layers derived only by
   transparency; recolour the exact header wordmark silhouette and existing social glyph geometries
-  while preserving link rules; keep media, product swatches, native third-party branding, and
-  checkout outside this theme-palette claim; and require owner approval before publishing the
-  verified unpublished preview.
+  while preserving link rules; use a cart-specific 46% glass surface above a 12% scrim with 60%
+  text panels; keep media, product swatches, native third-party branding, and checkout outside this
+  theme-palette claim; and require owner approval before publishing the verified unpublished preview.
 - [0026 — Adopt Rubik as the shared Calapres interface typeface](decisions/0026-adopt-rubik-shared-typeface.md)
   — use Rubik weights 300, 400, 500, and 700 for the storefront and password layout and use Rubik
   separately for checkout headings and body; keep the verified theme draft unpublished and retain

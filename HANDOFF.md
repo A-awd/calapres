@@ -1,6 +1,48 @@
 
 # Handoff
 
+## Resume here — cart glass is staged; duplicate checkout before changing its identity — 2026-08-31
+
+The cart correction is complete in canonical GitHub `main` commits
+`2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
+`a7e3c96a01112a8bf371003df9a1a958bbd6ffe4`, and in unpublished Shopify theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The drawer is now 46% beige
+with 30 px blur over a 12% brown scrim; text-bearing drawer regions are 60% beige. The Saudi Post
+helper wraps at 320 px. The exact draft files are:
+
+- `assets/calabriz.css`: MD5 `91f46f1d04a2b30d1f25677fb5054567`, 44,422 bytes.
+- `snippets/cart-drawer.liquid`: MD5 `8e99438d4ff949d5269c2bac1488eebc`, 2,938 bytes.
+
+Theme Check passed 181 files with zero errors and six existing Rubik warnings. Populated-cart
+checks at 320, 390, and 1280 px found zero document or drawer horizontal overflow and zero remaining
+helper overflow. Theme `165774786816` is still `MAIN`; its CSS and cart snippet checksums remain
+`c5503cec29f1c5c4baf72e1742f6972a` and `842f3966eaec4a2280b5d811774c5cb9`. Do not publish
+draft `165777604864` without the owner's explicit approval.
+
+Checkout remains unchanged. The Basic store has one profile only,
+`gid://shopify/CheckoutProfile/5133926656`, named `My Store configuration`, and it is active.
+There is no draft. The current live checkout is white, uses the old 100 px centered seal, dark
+`#1B262D` actions, and Almarai. Editing and saving this profile changes live checkout immediately,
+and the editor currently warns that it participates in a paused rollout. The theme preview
+parameter does not isolate checkout branding.
+
+Resume by using Checkout settings → More actions → Duplicate on the active configuration. Do not
+press Edit and Save on the active configuration. In the duplicate only, use a transparent
+`#44271B` version of the exact Calapres wordmark, approximately 180–200 px centered; use
+`#FAF8F5` for the main background, `#F7F4EF` for the header and order summary, `#44271B` for
+accent and button, transparent inputs, and Rubik for headings and body. Preview it before any
+publication. The in-app browser could focus the More actions button but Shopify's popover did not
+open through the trusted browser interface, so no draft was created and no live checkout value was
+changed.
+
+The required shipping phone field is already separate from the required email field. Shopify's
+native form setting cannot fix the country code or enforce a regex. The desired normalized rule is
+`^\+9665[0-9]{8}$` with an Arabic field error such as: `أدخل رقم جوال سعودي صحيحًا يبدأ بـ5
+ويتكون من 9 أرقام بعد رمز الدولة +966.` On Basic, implement that rule only through a
+privacy-and-price-reviewed public App Store app that provides a Cart and Checkout Validation
+Function. Do not install an app or claim a fixed visual `+966` input mask without a separate
+owner choice.
+
 ## Resume here — configured-only social links staged; three official URLs still needed — 2026-08-31
 
 The dead-button footer correction is complete in canonical GitHub `main` commit

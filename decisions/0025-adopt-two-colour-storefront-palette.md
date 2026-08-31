@@ -95,6 +95,23 @@ theme `165777604864` with MD5 `5059457f36d3dd3331be762a8eaa1b64`, 44,236 bytes. 
 preview measured a 4 px gutter, no horizontal overflow, and the intended glass values. The live
 theme was not changed; mobile owner review remains required before publication.
 
+## Owner refinement — cart drawer glass — 2026-08-31
+
+The owner subsequently rejected the cart drawer's 72% beige surface above its 22% brown scrim as
+too dark and opaque. The cart-specific drawer is therefore 46% beige with 30 px blur, its scrim is
+12% brown, and only its text-bearing header, item, empty, and footer regions add a 60% beige layer
+for legibility. The global `--glass-strong` token remains unchanged because it also governs mobile
+navigation and other surfaces.
+
+The Saudi Post helper is part of the same drawer acceptance boundary and now wraps at 320 px instead
+of exceeding its own box. These refinements use transparency derived only from `#DFD4C3` and
+`#44271B`; they do not change the cart data, checkout destination, helper destination, navigation
+glass, checkout branding, or publication gate. Canonical GitHub `main` commits
+`2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
+`a7e3c96a01112a8bf371003df9a1a958bbd6ffe4` are staged in unpublished theme `165777604864`.
+Theme Check passed and fresh populated-cart checks at 320, 390, and 1280 px found no horizontal
+overflow. The live theme was not changed.
+
 ## Rollback
 
 No production rollback is needed while theme `165777604864` remains unpublished. If it is later
