@@ -72,9 +72,10 @@ decision record.
   — preserve guest checkout, require first and last name, keep one-page checkout and address
   autocompletion, save the bounded Arabic labels including
   `( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`, and require separate email and
-  shipping-phone fields. The former Almarai, white, dark `#1B262D`, and centered-seal presentation
-  is now rejected; duplicate the active checkout before previewing the exact wordmark, pale beige,
-  burnt-brown, and Rubik replacement. The implemented shipping amendment names
+  shipping-phone fields. The former Almarai, white, dark `#1B262D`, and simplified-seal presentation
+  is now rejected; duplicate the active checkout before previewing the exact realistic wax seal,
+  pale beige, burnt-brown, and Rubik replacement. The English wordmark is not the checkout logo.
+  The implemented shipping amendment names
   both domestic manual rates `التوصيل داخل السعودية` without changing their prices or thresholds,
   and places the compact Saudi Post WhatsApp helper only in the theme-controlled cart before
   checkout. Native Shopify cannot enforce a fixed Saudi mobile pattern; a public validation app

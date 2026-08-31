@@ -1,7 +1,7 @@
 
 # Handoff
 
-## Resume here — cart glass is staged; duplicate checkout before changing its identity — 2026-08-31
+## Resume here — cart glass and exact checkout seal are staged; duplicate checkout before changing its identity — 2026-08-31
 
 The cart correction is complete in canonical GitHub `main` commits
 `2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
@@ -27,13 +27,20 @@ and the editor currently warns that it participates in a paused rollout. The the
 parameter does not isolate checkout branding.
 
 Resume by using Checkout settings → More actions → Duplicate on the active configuration. Do not
-press Edit and Save on the active configuration. In the duplicate only, use a transparent
-`#44271B` version of the exact Calapres wordmark, approximately 180–200 px centered; use
+press Edit and Save on the active configuration. In the duplicate only, upload the exact realistic
+wax seal staged as `assets/calapres-checkout-wax-seal.png`, center it, and choose its displayed
+width only after visual preview; do not use the English wordmark or the old simplified seal. The
+staged PNG is 755 x 840 with real alpha, 745,304 bytes, and SHA-256
+`2ffe03f1bff302b781bbd882d18e971f878d154aa6f90413e42b6643f25024f1`. Use
 `#FAF8F5` for the main background, `#F7F4EF` for the header and order summary, `#44271B` for
 accent and button, transparent inputs, and Rubik for headings and body. Preview it before any
-publication. The in-app browser could focus the More actions button but Shopify's popover did not
+publication. The owner's isolated word `blue` conflicts with the approved beige source image and
+palette, so do not introduce blue without explicit confirmation. The in-app browser could focus
+the More actions button but Shopify's popover did not
 open through the trusted browser interface, so no draft was created and no live checkout value was
-changed.
+changed. Authenticated schema inspection confirmed that the Basic store exposes no public
+checkout-profile duplication or checkout-branding mutation, so do not attempt an API workaround;
+create the draft through Shopify's Checkout settings interface.
 
 The required shipping phone field is already separate from the required email field. Shopify's
 native form setting cannot fix the country code or enforce a regex. The desired normalized rule is

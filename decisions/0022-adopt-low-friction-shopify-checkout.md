@@ -160,11 +160,17 @@ and the requirement is not SMS or WhatsApp marketing consent.
 
 ## 2026-08-31 checkout-identity correction and Saudi-phone constraint boundary
 
-The owner has now rejected the active checkout's stark white background and the former 100 px seal
-as the checkout identity. The intended replacement is the exact Calapres wordmark, very pale beige
+The owner has now rejected the active checkout's stark white background and former 100 px simplified
+seal. The intended replacement is the realistic wax seal isolated from the supplied 1280 x 1280
+image and staged as `assets/calapres-checkout-wax-seal.png`; do not use the English wordmark or the
+old simplified `Artboard_4_2x-100-removebg-preview.png` seal. The staged 755 x 840 PNG has real
+alpha and SHA-256
+`2ffe03f1bff302b781bbd882d18e971f878d154aa6f90413e42b6643f25024f1`. Very pale beige
 backgrounds derived from the approved storefront ground, burnt-brown actions, and Rubik for both
-headings and body. This direction supersedes only the prior checkout seal, white-background, dark
-`#1B262D`, and Almarai presentation choices. It does not change guest checkout, the separate
+headings and body remain intended. The isolated word `blue` in the latest instruction conflicts
+with the approved source image and two-colour palette and is not treated as a confirmed colour
+change. This direction supersedes only the prior checkout seal, white-background, dark `#1B262D`,
+and Almarai presentation choices. It does not change guest checkout, the separate
 required email and shipping-phone fields, shipping rates, address wording, policy links, payment
 providers, or publication safeguards.
 
@@ -173,7 +179,9 @@ that configuration changes live checkout immediately, first duplicate it, perfor
 alignment only in the duplicate, preview it, and publish only after fresh owner approval. Do not
 treat a theme `preview_theme_id` as a checkout-branding preview. The present read-only audit
 confirmed the old seal, white and `#F5F5F5` backgrounds, `#1B262D` actions, and Almarai remain
-live; no checkout setting was changed.
+live; no checkout setting was changed. Fresh authenticated schema inspection confirmed that the
+Basic store exposes no public checkout-profile duplication or checkout-branding mutation, so the
+draft must be created through Shopify's Checkout settings interface rather than an API workaround.
 
 The owner's requested Saudi mobile rule is `+966` followed by exactly nine digits beginning with
 5. Shopify's native required-phone setting cannot lock a prefix, apply an input mask, or enforce
