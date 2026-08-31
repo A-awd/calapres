@@ -1,63 +1,3 @@
-{%- comment -%}
-  Editorial band (.edit-band) ported 1:1 from the static
-  prototype. Reused on the homepage and the about page â€” each
-  template instance overrides the text settings.
-{%- endcomment -%}
-<section class="edit-band">
-  <div class="txt">
-    <h2>{{ section.settings.heading }}</h2>
-    <p>{{ section.settings.text }}</p>
-    {%- if section.settings.link_label != blank -%}
-    <a class="link-arrow" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.link_label }} <span>â†</span></a>
-    {%- endif -%}
-  </div>
-  <div class="media">
-    {%- if section.settings.image -%}
-    <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" loading="lazy" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
-    {%- else -%}
-    <img src="{{ 'product-beige.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="1600">
-    {%- endif -%}
-  </div>
-</section>
-
-{% schema %}
-{
-  "name": "Ø´Ø±ÙŠØ· ØªØ­Ø±ÙŠØ±ÙŠ",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù†",
-      "default": "Ø­ÙØ±ÙŒ Ø´Ø®ØµÙŠ Ø¹Ù„Ù‰ ÙƒÙ„Ù‘ Ø·Ù‚Ù…"
-    },
-    {
-      "type": "text",
-      "id": "text",
-      "label": "Ø§Ù„Ù†Øµ",
-      "default": "Ø¥Ù…ÙƒØ§Ù†ÙŠØ© Ø­ÙØ± Ø§Ø³Ù… Ø§Ù„Ø¹Ø±Ø³Ø§Ù† Ø£Ùˆ Ø§Ù„ØªØ§Ø±ÙŠØ® Ø¹Ù„Ù‰ Ø§Ù„Ø·Ù‚Ù…."
-    },
-    {
-      "type": "text",
-      "id": "link_label",
-      "label": "Ù†Øµ Ø§Ù„Ø±Ø§Ø¨Ø·",
-      "default": "Ø§ÙƒØªØ´Ù Ø§Ù„Ø£Ø·Ù‚Ù…"
-    },
-    {
-      "type": "url",
-      "id": "link",
-      "label": "Ø§Ù„Ø±Ø§Ø¨Ø·"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Ø§Ù„ØµÙˆØ±Ø©",
-      "info": "Ø¹Ù†Ø¯ ØªØ±ÙƒÙ‡Ø§ ÙØ§Ø±ØºØ© ØªÙØ¹Ø±Ø¶ ØµÙˆØ±Ø© Ø§Ù„Ù…Ù†ØªØ¬ Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠØ© Ø§Ù„Ù…Ø¶Ù…Ù‘Ù†Ø© ÙÙŠ Ø§Ù„Ù‚Ø§Ù„Ø¨."
-    }
-  ],
-  "presets": [
-    {
-      "name": "Ø´Ø±ÙŠØ· ØªØ­Ø±ÙŠØ±ÙŠ"
-    }
-  ]
-}
-{% endschema %}
+ıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ìÉKHÛÛ[Y[I_BˆY]ÜšX[˜[™
+™Y]X˜[™
+HÜYNŒHœ›ÛHHİ]XÂˆ›İİ\Kˆ™]\ÙYÛˆHÛY\YÙH[™HX›İ]YÙH8 %XXÚˆ[\]H[œİ[˜ÙHİ™\œšY\ÈH^Ù][™ÜË‚ÉKH[™ÛÛ[Y[I_BÙXİ[ÛˆÛ\ÜÏH™Y]X˜[™ÉH[›\ÜÈÙXİ[Û‹œÙ][™ÜËœÚİ×ÛYYXH	_HY]X˜[™K]^[Û›^ÉH[™[›\ÜÈ	_H‚ˆ]ˆÛ\ÜÏH‚ˆŞÈÙXİ[Û‹œÙ][™ÜËšXY[™È_OÚ‚ˆŞÈÙXİ[Û‹œÙ][™ÜË^_OÜ‚ˆÉKHYˆÙXİ[Û‹œÙ][™ÜË›[š×ÛX™[OH›[šÈI_BˆHÛ\ÜÏH›[šËX\œ›İÈˆ™YHŞÈÙXİ[Û‹œÙ][™ÜË›[šÈY˜][ˆ›İ]\Ë˜[Ü›ÙXİ×ØÛÛXİ[Û—İ\›_HŞÈÙXİ[Û‹œÙ][™ÜË›[š×ÛX™[_HÜ[¸¡¤ÜÜ[ØO‚ˆÉKH[™YˆI_BˆÙ]‚ˆÉKHYˆÙXİ[Û‹œÙ][™ÜËœÚİ×ÛYYXHI_Bˆ]ˆÛ\ÜÏH›YYXH‚ˆÉKHYˆÙXİ[Û‹œÙ][™ÜËš[XYÙHI_Bˆ[YÈÜ˜ÏHŞÈÙXİ[Û‹œÙ][™ÜËš[XYÙH[XYÙWİ\›ˆÚYˆM_Hˆ[HŞÈÙXİ[Û‹œÙ][™ÜËš[XYÙK˜[Y˜][ˆÙXİ[Û‹œÙ][™ÜËšXY[™È\ØØ\H_HˆØY[™ÏH›^HˆÚYHŞÈÙXİ[Û‹œÙ][™ÜËš[XYÙKÚY_HˆZYÚHŞÈÙXİ[Û‹œÙ][™ÜËš[XYÙKšZYÚ_H‚ˆÉKH[ÙHI_Bˆ[YÈÜ˜ÏHŞÈ	Ü›ÙXİX™ZYÙKšœÉÈ\ÜÙ]İ\›_Hˆ[HŞÈÙXİ[Û‹œÙ][™ÜËšXY[™È\ØØ\H_HˆØY[™ÏH›^HˆÚYHŒMŒˆZYÚHŒMŒ‚ˆÉKH[™YˆI_BˆÙ]‚ˆÉKH[™YˆI_BÜÙXİ[Û‚‚ÉHØÚ[XH	_BÂˆ›˜[YHˆ¶-6,vb¶-È6*¶+v,vb¶,vbˆ‹ˆœÙ][™ÜÈˆÂˆÂˆ\Hˆ^‹ˆšYˆšXY[™È‹ˆ›X™[ˆ¶)öa6.va¶b6)öaˆ‹ˆ™Y˜][ˆ¶+v`v,vc6-6+¶-vbˆ6.va6bH6`öa6dH6-ö`¶aH‚ˆKˆÂˆ\Hˆ^‹ˆšYˆ^‹ˆ›X™[ˆ¶)öa6a¶-H‹ˆ™Y˜][ˆ¶)vav`ö)öa¶b¶*H6+v`v,H6)ö,öaH6)öa6.v,v,ö)öaˆ6(öb6)öa6*¶)ö,vb¶+ˆ6.va6bH6)öa6-ö`¶aKˆ‚ˆKˆÂˆ\Hˆ^‹ˆšYˆ›[š×ÛX™[‹ˆ›X™[ˆ¶a¶-H6)öa6,v)ö*6-È‹ˆ™Y˜][ˆ¶)ö`ö*¶-6`H6)öa6(ö-ö`¶aH‚ˆKˆÂˆ\Hˆ\›‹ˆšYˆ›[šÈ‹ˆ›X™[ˆ¶)öa6,v)ö*6-È‚ˆKˆÂˆ\Hˆš[XYÙWÜXÚÙ\ˆ‹ˆšYˆš[XYÙH‹ˆ›X™[ˆ¶)öa6-vb6,v*H‹ˆš[™›Èˆ¶.va¶+È6*¶,v`öaö)È6`v)ö,v.¶*H6*¶cö.v,v-ˆ6-vb6,v*H6)öa6ava¶*¶+6)öa6)ö`v*¶,v)ö-¶b¶*H6)öa6av-¶avdva¶*H6`vbˆ6)öa6`¶)öa6*ˆ‚ˆKˆÂˆ\Hˆ˜ÚXÚØ›Ş‹ˆšYˆœÚİ×ÛYYXH‹ˆ›X™[ˆ¶)v.6aö)ö,H6)öa6-vb6,v*H‹ˆ™Y˜][ˆYBˆBˆKˆœ™\Ù]ÈˆÂˆÂˆ›˜[YHˆ¶-6,vb¶-È6*¶+v,vb¶,vbˆ‚ˆBˆBŸBÉH[™ØÚ[XH	_B
