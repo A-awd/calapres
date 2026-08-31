@@ -85,6 +85,12 @@ decision record.
   total with the currently applicable free shipping. Zero is a no-collection configuration, not a
   legal zero-rating claim. The connected Shopify store has zero sales in the prior 12 months, but
   entity-wide and forecast supplies remain unknown and require prompt confirmation.
+- [0024 — Publish the reconciled Calapres theme with a verified WhatsApp destination](decisions/0024-publish-reconciled-theme-with-verified-whatsapp.md)
+  — make the reconciled four-glyph and Calapres-favicon theme the live Shopify theme only after
+  matching the destination against the connected Chatwoot/Meta identity and opening the public
+  WhatsApp Business page headed `Calapres | كالابريز`. Keep Instagram, Snapchat, and TikTok
+  disabled until their official URLs are individually verified, preserve the former main theme as
+  rollback, and do not use the Saudi Post helper number as Calapres contact information.
 
 ## Superseded decisions
 

@@ -1,6 +1,60 @@
 
 # Project State
 
+## Reconciled four-icon theme published with verified Calapres WhatsApp — 2026-08-31
+
+[Canonical base] This production publication started from a clean worktree at freshly fetched
+GitHub `origin/main` commit `212401db65aa090b427ef760bb2827b46879f498`. The owner's dirty,
+diverged checkout and unrelated worktrees were not modified.
+
+[Verified WhatsApp identity] Authenticated Chatwoot account `179973`, WhatsApp inbox `128058`,
+and its Account Health surface all identify `+966 50 872 7687` as the connected Calapres
+Business account. The approved display name is `Calapres | كالابريز`, the phone status is
+`Connected`, the quality rating is `GREEN`, and the live phone-number and WABA identifiers
+match the canonical project record: `1202498582954919` and `1835160094133742`. The public link
+`https://wa.me/966508727687` redirected through WhatsApp to a page headed
+`Calapres | كالابريز`. No message was sent.
+
+[Draft-only link update] Before publication, only
+`config/settings_data.json` in theme `165770887424` was updated to set
+`whatsapp_url` to `https://wa.me/966508727687`. Shopify returned no user errors. The persisted
+file is 922 bytes with checksum `d63fd05a769262c4248c65749115c950`, updated
+`2026-08-31T11:54:17Z`. A fresh preview render exposed exactly that destination on the WhatsApp
+footer link.
+
+[Owner-authorized production publication] Authenticated Shopify Admin displayed the exact
+confirmation that publishing `Preview — official social icons + Safari favico...`
+(`165770887424`) would replace `Calabris Shopify Theme` (`163004449024`). The owner had
+explicitly authorized publication after WhatsApp verification, so the confirmation was accepted.
+The theme library then showed the new theme as `Active`.
+
+[Verified final Shopify roles] A fresh authenticated Admin GraphQL reread identifies
+`165770887424` as `MAIN`, not processing, with no processing failure. The former main
+`163004449024` is now `UNPUBLISHED` and remains the direct rollback theme. Both role changes
+were recorded at `2026-08-31T11:56:17Z`.
+
+[Verified public result] After exiting Shopify preview mode, a fresh public storefront render had
+no preview bar and exposed the footer WhatsApp link as
+`https://wa.me/966508727687`. The public document also emitted the approved Calapres monogram
+asset `calapres-favicon-monogram-2026-08-31.png` in its 16 px and 32 px favicon declarations.
+The published source contains the four previously approved official black social glyphs:
+Instagram, Snapchat, TikTok, and WhatsApp.
+
+[Social-link and SPL boundary] Only WhatsApp is clickable. `instagram_url`, `snapchat_url`, and
+`tiktok_url` remain blank, so those three glyphs remain visible disabled spans until their exact
+official account URLs are separately verified. The Saudi Post/SPL helper continues to use
+`966112898888` only for the explicitly labelled national-address assistance link in the cart; it
+was not reused as Calapres's WhatsApp identity.
+
+[Unchanged scope] No product, variant, inventory, collection, customer, order, discount, payment,
+Paymob, shipping, checkout, tax, app, Captain, n8n, Chatwoot, or Meta setting changed. The
+Chatwoot/Meta surfaces were read only, no WhatsApp conversation was started, and no customer
+message was sent. Do not run `.github/workflows/theme-deploy.yml`; it still contains obsolete
+theme-role assumptions and a noncanonical deployment branch.
+
+Canonical decision:
+[0024 — Publish the reconciled Calapres theme with a verified WhatsApp destination](decisions/0024-publish-reconciled-theme-with-verified-whatsapp.md).
+
 ## Official social icons and Calapres Safari favicon ready in preview — 2026-08-31
 
 [Canonical base] This bounded theme-reconciliation stage started from a clean worktree at freshly
