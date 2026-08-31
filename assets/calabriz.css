@@ -271,15 +271,17 @@ input::placeholder,textarea::placeholder{color:var(--ink);opacity:1}
 /* ============================================================
    Cart drawer + toast (same store, template palette)
    ============================================================ */
-.scrim{position:fixed;inset:0;z-index:960;background:rgba(var(--ink-rgb),.22);opacity:0;visibility:hidden;transition:.35s}
+.scrim{position:fixed;inset:0;z-index:960;background:rgba(var(--ink-rgb),.12);opacity:0;visibility:hidden;transition:.35s}
 
 .scrim.show{opacity:1;visibility:visible}
 
-.drawer{position:fixed;top:0;bottom:0;left:0;z-index:970;width:min(420px,94vw);background:var(--glass-strong);-webkit-backdrop-filter:blur(28px) saturate(1.08);backdrop-filter:blur(28px) saturate(1.08);display:flex;flex-direction:column;transform:translateX(-105%);transition:transform .45s ease}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:970;width:min(420px,94vw);background:rgba(var(--ground-rgb),.46);border-right:1px solid rgba(var(--ink-rgb),.18);box-shadow:20px 0 52px rgba(var(--ink-rgb),.10);-webkit-backdrop-filter:blur(30px) saturate(1.08);backdrop-filter:blur(30px) saturate(1.08);display:flex;flex-direction:column;transform:translateX(-105%);transition:transform .45s ease}
 
 .drawer.open{transform:translateX(0)}
 
-.d-head{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px solid var(--line);background:var(--panel)}
+.d-head{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px solid var(--line)}
+
+.drawer .d-head,.drawer .d-item,.drawer .d-empty,.drawer .d-foot{background:rgba(var(--ground-rgb),.60)}
 
 .d-head h3{font-size:1.15rem;font-weight:700}
 
