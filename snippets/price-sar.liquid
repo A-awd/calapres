@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders a price from cents in the design's format:
+  Arabic-Indic digits + Arabic thousands separator + ر.س
+  e.g. 39000 -> ٣٩٠ ر.س  /  117000 -> ١٬١٧٠ ر.س
+  Usage: {% render 'price-sar', cents: product.price %}
+{%- endcomment -%}
+{%- assign ps_whole = cents | divided_by: 100 -%}
+{%- if ps_whole >= 1000 -%}
+  {%- assign ps_th = ps_whole | divided_by: 1000 -%}
+  {%- assign ps_rem = ps_whole | modulo: 1000 | prepend: '00' -%}
+  {%- assign ps_rem = ps_rem | slice: -3, 3 -%}
+  {%- capture ps_num -%}{{ ps_th }}٬{{ ps_rem }}{%- endcapture -%}
+{%- else -%}
+  {%- capture ps_num -%}{{ ps_whole }}{%- endcapture -%}
+{%- endif -%}
+{%- render 'arabic-digits', value: ps_num %} ر.س

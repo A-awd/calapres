@@ -1,0 +1,43 @@
+{%- comment -%}
+  404 page (.nf) ported 1:1 from the static prototype.
+{%- endcomment -%}
+<main class="nf">
+  <div class="nf-code">{{ section.settings.code }}</div>
+  <p class="nf-msg">{{ section.settings.message }}</p>
+  <div class="nf-actions">
+    <a class="btn-dark" href="{{ routes.root_url }}">{{ section.settings.home_label }}</a>
+    <a class="link-arrow" href="{{ routes.all_products_collection_url }}">{{ section.settings.shop_label }} <span>←</span></a>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "صفحة ٤٠٤",
+  "settings": [
+    {
+      "type": "text",
+      "id": "code",
+      "label": "الرمز",
+      "default": "٤٠٤"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "الرسالة",
+      "default": "يبدو أن هذه الصفحة غير موجودة."
+    },
+    {
+      "type": "text",
+      "id": "home_label",
+      "label": "نص زر الرئيسية",
+      "default": "عُد إلى الرئيسية"
+    },
+    {
+      "type": "text",
+      "id": "shop_label",
+      "label": "نص رابط المتجر",
+      "default": "تصفّح المتجر"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{%- comment -%}
+  About CTA (.about-cta) ported 1:1 from the static prototype.
+{%- endcomment -%}
+<section class="about-cta">
+  <div class="wrap">
+    <a class="btn-dark" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.label }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "دعوة للتسوق",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "نص الزر",
+      "default": "تسوّق الأطقم"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "الرابط"
+    }
+  ],
+  "presets": [
+    {
+      "name": "دعوة للتسوق"
+    }
+  ]
+}
+{% endschema %}

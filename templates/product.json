@@ -1,7 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
+      "blocks": {
+        "qa1": {
+          "type": "qa",
+          "settings": {
+            "question": "ماذا يتضمّن الطقم؟",
+            "answer": "الطقم واحد متكامل: ستاند، ومبخر أنيق، وعلبة عود — كلّها باللون الذي تختاره."
+          }
+        },
+        "qa2": {
+          "type": "qa",
+          "settings": {
+            "question": "كيف يتم الحفر؟",
+            "answer": "اكتب الاسم أو الشعار في الحقل أعلاه قبل الإضافة إلى السلّة، وسيظهر نصّ الحفر مع طلبك في السلّة. الحفر متاح على كلّ طقم دون تكلفة إضافية."
+          }
+        },
+        "qa3": {
+          "type": "qa",
+          "settings": {
+            "question": "هل الطقم مناسب للإهداء؟",
+            "answer": "نعم — الطقم مصمَّم كهدية فاخرة، ويمكنك إضافة حفر اسم العروسين أو التاريخ لجعله هدية شخصية."
+          }
+        }
+      },
+      "block_order": ["qa1", "qa2", "qa3"],
       "settings": {}
     }
   },

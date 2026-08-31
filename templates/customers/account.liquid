@@ -1,0 +1,49 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>حسابي</h1>
+    <p>أهلًا {{ customer.first_name | default: customer.email }} — هنا تجد طلباتك وعناوينك.</p>
+  </div>
+</section>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem">طلباتي</h2>
+    {%- paginate customer.orders by 10 -%}
+    {%- if customer.orders.size > 0 -%}
+    <table class="tbl">
+      <thead>
+        <tr><th>الطلب</th><th>التاريخ</th><th>الحالة</th><th>الإجمالي</th></tr>
+      </thead>
+      <tbody>
+        {%- for order in customer.orders -%}
+        <tr>
+          <td><a class="link-arrow" href="{{ order.customer_url }}">{{ order.name }}</a></td>
+          {%- assign order_date = order.created_at | date: '%Y/%m/%d' -%}
+          <td>{% render 'arabic-digits', value: order_date %}</td>
+          <td>{{ order.financial_status_label }}</td>
+          <td>{% render 'price-sar', cents: order.total_price %}</td>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+    {%- else -%}
+    <p class="form-note">لا توجد طلبات بعد.</p>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}
+    <div class="sec-head" style="margin-top:1.4rem">
+      {%- if paginate.previous -%}<a class="link-arrow" href="{{ paginate.previous.url }}">السابق</a>{%- endif -%}
+      {%- if paginate.next -%}<a class="link-arrow" href="{{ paginate.next.url }}">التالي</a>{%- endif -%}
+    </div>
+    {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+  <aside class="side-card">
+    <h2>الحساب</h2>
+    <ul>
+      <li><a class="link-arrow" href="{{ routes.account_addresses_url }}">عناويني <span>←</span></a></li>
+      <li><a class="link-arrow" href="{{ routes.account_logout_url }}">تسجيل الخروج <span>←</span></a></li>
+    </ul>
+    {%- if customer.default_address -%}
+    <p><b>العنوان الافتراضي:</b> {{ customer.default_address.address1 }}{% if customer.default_address.city %}، {{ customer.default_address.city }}{% endif %}{% if customer.default_address.country %}، {{ customer.default_address.country }}{% endif %}</p>
+    {%- endif -%}
+  </aside>
+</section>

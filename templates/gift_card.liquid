@@ -1,0 +1,18 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>بطاقة هدية {{ settings.brand_name | default: shop.name }}</h1>
+    <p>رصيد البطاقة: {% render 'price-sar', cents: gift_card.balance %}</p>
+  </div>
+</section>
+<section class="wrap page-content">
+  <div class="form-card" style="max-width:460px">
+    <p class="form-note">رمز البطاقة:</p>
+    <p class="gift-code">{{ gift_card.code | format_code }}</p>
+    {%- if gift_card.expired -%}
+    <p class="form-note err">انتهت صلاحية هذه البطاقة.</p>
+    {%- elsif gift_card.enabled == false -%}
+    <p class="form-note err">هذه البطاقة غير مفعّلة.</p>
+    {%- endif -%}
+    <a class="btn-dark" href="{{ routes.all_products_collection_url }}">تسوّق الآن</a>
+  </div>
+</section>

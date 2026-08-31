@@ -1,0 +1,31 @@
+{%- comment -%}
+  Collections list — not part of the static prototype's
+  7 pages; built with the same design language (.cats tiles).
+{%- endcomment -%}
+<section class="page-head">
+  <div class="wrap">
+    <h1>المجموعات</h1>
+  </div>
+</section>
+
+<section class="wrap cats" style="padding-top:clamp(2rem,4vw,3rem)">
+  {%- for lc_collection in collections -%}
+  <a class="cat-tile" href="{{ lc_collection.url }}">
+    {%- if lc_collection.image -%}
+    <img src="{{ lc_collection.image | image_url: width: 1400 }}" alt="{{ lc_collection.title | escape }}" loading="lazy" width="{{ lc_collection.image.width }}" height="{{ lc_collection.image.height }}">
+    {%- elsif lc_collection.products.first.featured_image -%}
+    <img src="{{ lc_collection.products.first.featured_image | image_url: width: 1400 }}" alt="{{ lc_collection.title | escape }}" loading="lazy" width="{{ lc_collection.products.first.featured_image.width }}" height="{{ lc_collection.products.first.featured_image.height }}">
+    {%- else -%}
+    <img src="{{ 'atmo-silk.jpg' | asset_url }}" alt="{{ lc_collection.title | escape }}" loading="lazy" width="1536" height="942">
+    {%- endif -%}
+    <span class="lbl">{{ lc_collection.title }} <span>←</span></span>
+  </a>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "قائمة المجموعات",
+  "settings": []
+}
+{% endschema %}

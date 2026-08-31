@@ -1,0 +1,41 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>الطلب {{ order.name }}</h1>
+    {%- assign order_date = order.created_at | date: '%Y/%m/%d' -%}
+    <p>{% render 'arabic-digits', value: order_date %} — {{ order.financial_status_label }}{% if order.fulfillment_status_label %} · {{ order.fulfillment_status_label }}{% endif %}</p>
+  </div>
+</section>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    <table class="tbl">
+      <thead>
+        <tr><th>المنتج</th><th>الكمية</th><th>السعر</th></tr>
+      </thead>
+      <tbody>
+        {%- for line_item in order.line_items -%}
+        <tr>
+          <td>
+            {{ line_item.title }}
+            {%- assign li_eng = line_item.properties['نص الحفر'] -%}
+            {%- if li_eng != blank -%}
+            <div class="di-eng">الحفر: «{{ li_eng }}»</div>
+            {%- endif -%}
+          </td>
+          <td>{% render 'arabic-digits', value: line_item.quantity %}</td>
+          <td>{% render 'price-sar', cents: line_item.final_line_price %}</td>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+    <div class="cart-total"><span>الإجمالي</span><b>{% render 'price-sar', cents: order.total_price %}</b></div>
+  </div>
+  <aside class="side-card">
+    <h2>التفاصيل</h2>
+    {%- if order.shipping_address -%}
+    <p><b>عنوان الشحن:</b> {{ order.shipping_address.address1 }}{% if order.shipping_address.city %}، {{ order.shipping_address.city }}{% endif %}{% if order.shipping_address.country %}، {{ order.shipping_address.country }}{% endif %}</p>
+    {%- endif -%}
+    <ul style="margin-top:1rem">
+      <li><a class="link-arrow" href="{{ routes.account_url }}">عودة إلى حسابي <span>←</span></a></li>
+    </ul>
+  </aside>
+</section>

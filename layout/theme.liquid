@@ -1,47 +1,72 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%- assign brand_label = settings.brand_name | default: shop.name -%}
 <title>
-  {%- if template == 'index' -%}{{ shop.name }} · كالابريز — فنّ العطر
-  {%- elsif page_title == blank -%}{{ shop.name }}
-  {%- else -%}{{ page_title }} — {{ shop.name }}{%- endif -%}
+  {%- if template == 'index' -%}{{ brand_label }} — مباخر فاخرة
+  {%- elsif page_title == blank -%}{{ brand_label }}
+  {%- elsif page_title contains brand_label -%}{{ page_title }}
+  {%- else -%}{{ page_title }} — {{ brand_label }}{%- endif -%}
 </title>
-{%- if page_description -%}<meta name="description" content="{{ page_description | escape }}" />{%- endif -%}
-<link rel="canonical" href="{{ canonical_url }}" />
+{%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+<link rel="canonical" href="{{ canonical_url }}">
 {%- if settings.favicon -%}
-  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- assign favicon_16 = settings.favicon | image_url: width: 16, height: 16, crop: 'center' -%}
+  {%- assign favicon_32 = settings.favicon | image_url: width: 32, height: 32, crop: 'center' -%}
+  {%- assign favicon_180 = settings.favicon | image_url: width: 180, height: 180, crop: 'center' -%}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_16 | append: '&calapres_favicon=20260831' }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_32 | append: '&calapres_favicon=20260831' }}">
+<link rel="shortcut icon" type="image/png" href="{{ favicon_32 | append: '&calapres_favicon=20260831' }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_180 | append: '&calapres_favicon=20260831' }}">
+{%- else -%}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ 'calapres-favicon.png' | asset_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ 'calapres-favicon.png' | asset_url }}">
+<link rel="shortcut icon" type="image/png" href="{{ 'calapres-favicon.png' | asset_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ 'calapres-favicon.png' | asset_url }}">
 {%- endif -%}
-<meta property="og:site_name" content="{{ shop.name }}" />
-<meta property="og:url" content="{{ canonical_url }}" />
-<meta property="og:title" content="{{ page_title | default: shop.name }}" />
-{%- if page_description -%}<meta property="og:description" content="{{ page_description | escape }}" />{%- endif -%}
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-{{ 'theme.css' | asset_url | stylesheet_tag }}
+<meta name="apple-mobile-web-app-title" content="{{ brand_label | escape }}">
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | default: shop.name }}">
+{%- if page_description -%}<meta property="og:description" content="{{ page_description | escape }}">{%- endif -%}
+{%- liquid
+  assign social_image = nil
+  if request.page_type == 'product'
+    assign social_image = product.featured_image
+  elsif request.page_type == 'collection'
+    assign social_image = collection.image | default: collection.products.first.featured_image
+  elsif request.page_type == 'index'
+    assign social_image = collections['oud-bakhour'].products.first.featured_image
+  endif
+-%}
+<meta property="og:type" content="{%- if request.page_type == 'product' -%}product{%- else -%}website{%- endif -%}">
+{%- if social_image -%}
+<meta property="og:image" content="https:{{ social_image | image_url: width: 1200 }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+{%- endif -%}
+{% render 'seo-json-ld' %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+{{ 'calabriz.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}
+<!-- Calapres theme version: 62e1f6ea6fc6 -->
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
 {% section 'header' %}
 
-<!-- ============ MOBILE DRAWER ============ -->
-{% render 'mobile-drawer' %}
+{{ content_for_layout }}
 
-<!-- ============ MAIN ============ -->
-<main id="main-content" role="main" tabindex="-1">
-  {{ content_for_layout }}
-</main>
-
-<!-- ============ FOOTER ============ -->
 {% section 'footer' %}
 
-<!-- ============ CART SLIDE-OVER ============ -->
 {% render 'cart-drawer' %}
 
-<script src="{{ 'theme.js' | asset_url }}" defer></script>
+<script src="{{ 'calabriz.js' | asset_url | append: '&calapres_js=62e1f6ea6fc6' }}" defer></script>
+<script src="{{ 'calabriz-cart.js' | asset_url | append: '&calapres_js=62e1f6ea6fc6' }}" defer></script>
 </body>
 </html>

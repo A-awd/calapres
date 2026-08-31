@@ -1,6 +1,47 @@
 
 # Handoff
 
+## Resume here — four official social glyphs and Calapres favicon ready in preview — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded stage
+started from a clean, freshly fetched `origin/main` commit
+`a774056dbaf5105366ab9e938e3dec4ec5764f4b`; the owner's dirty, diverged checkout and unrelated
+worktrees were not modified.
+
+Shopify verifies `Calabris Shopify Theme` (`163004449024`) as `MAIN` and
+`Preview — official social icons + Safari favico...` (`165770887424`) as `UNPUBLISHED`. The owner
+approved the preview's black Instagram, Snapchat, and TikTok glyphs and requested a matching
+WhatsApp glyph. The preview now contains the unmodified black digital WhatsApp glyph from Meta's
+2026 Brand Resource Center pack. Its SHA-256 is
+`dea0d50de5d2e53320246d7172a2b8e84a999caa7798cd91681e63831cba6ed9`.
+
+Three preview files changed in the final refinement. Shopify returned no user errors and the
+verified checksums are `effe39ee446c06d7b3fc63450e694123` for
+`assets/icon-whatsapp.svg`, `a871f19bfbd8d4b45496eb525b66b777` for
+`sections/footer.liquid`, and `4dafdfa6e8d9d00cf29310561465ec14` for
+`layout/password.liquid`. The password layout's obsolete embedded circle-and-dot favicon was
+replaced with the same configured Calapres favicon declarations used by the storefront so the old
+symbol cannot return if password protection is enabled later. A fresh preview DOM and visual check showed exactly four balanced glyphs:
+Instagram, Snapchat, TikTok, and WhatsApp. The preview still emits the approved Calapres monogram
+as 16 px and 32 px favicons and a 180 px Apple touch icon.
+
+All four social destinations remain blank. The glyphs are deliberately visible but disabled; no
+Calapres WhatsApp number was guessed, and the SPL helper number `966112898888` was not reused. An
+owner-supplied official destination is required before enabling any social link.
+
+The exact 62-file preview source was reconciled into a clean Git worktree because the previous
+`main` tree held a different obsolete storefront prototype. All non-JSON theme files matched the
+Shopify checksums, every JSON body parsed, 16 Liquid section schemas passed unique-ID checks, the
+official WhatsApp asset passed a static safety check, and `git diff --check` passed. Shopify CLI
+`4.7.0` Theme Check returned no errors and only six existing `RemoteAsset` warnings for the Cairo
+Google Fonts links in the storefront and password layouts.
+
+The active public theme was not changed. Do not run `.github/workflows/theme-deploy.yml`; its theme
+roles are still wrong and it deploys the obsolete `shopify-theme` branch. The next production step
+is to view the final preview, obtain explicit live-publication approval, publish through the
+authenticated Shopify Admin surface, then verify the public DOM, footer visually, and Safari icon
+before updating this handoff again.
+
 ## Resume here — email and shipping phone are separate required fields — 2026-08-31
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:

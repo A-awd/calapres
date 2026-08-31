@@ -1,0 +1,99 @@
+{%- comment -%}
+  FAQ page (.page-head + .faq) ported 1:1 from the static
+  prototype. Questions are editable blocks; answers accept
+  inline HTML (bold, strikethrough, links) like the source.
+{%- endcomment -%}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ section.settings.heading | default: page.title }}</h1>
+    {%- if section.settings.text != blank -%}
+    <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="faq-list" id="faqList">
+      {%- for block in section.blocks -%}
+      {%- assign faq_index = forloop.index -%}
+      {%- capture faq_num -%}{% render 'arabic-digits', value: faq_index %}{%- endcapture -%}
+      <div class="faq-item" {{ block.shopify_attributes }}>
+        <button class="faq-q" aria-expanded="false" aria-controls="fa{{ faq_index }}" id="fq{{ faq_index }}"><span><span class="num">{{ faq_num }}.</span> {{ block.settings.question }}</span><span class="chev" aria-hidden="true">⌄</span></button>
+        <div class="faq-a" id="fa{{ faq_index }}" role="region" aria-labelledby="fq{{ faq_index }}"><div class="faq-a-in"><p>{{ block.settings.answer }}</p></div></div>
+      </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="faq-cta">
+      <h2>{{ section.settings.cta_heading }}</h2>
+      <p>{{ section.settings.cta_text }}</p>
+      <a class="btn-dark" href="{{ pages['contact'].url | default: routes.root_url }}">{{ section.settings.cta_label }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة الأسئلة الشائعة",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "السطر العلوي",
+      "default": "كالابريز"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان (يُترك فارغًا لعرض عنوان الصفحة)",
+      "default": "الأسئلة الشائعة"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "النص",
+      "default": "كل ما تحتاج معرفته عن طقم المبخرة الفاخر — من المحتويات والألوان إلى الحفر والإهداء وطريقة الطلب."
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "عنوان الدعوة",
+      "default": "ما زال لديك سؤال؟"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "نص الدعوة",
+      "default": "فريق كالابريز جاهز للإجابة عن استفساراتك ومساعدتك في اختيار الطقم المناسب."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "نص زر الدعوة",
+      "default": "تواصل معنا"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "سؤال وجواب",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "السؤال",
+          "default": "ماذا يتضمّن طقم المبخرة الفاخر؟"
+        },
+        {
+          "type": "html",
+          "id": "answer",
+          "label": "الجواب",
+          "default": "يتضمّن الطقم <b>ستاند</b> أنيقًا، و<b>مبخرًا</b> فاخرًا، و<b>علبة عود</b> — طقم واحد متكامل بثلاث قطع."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

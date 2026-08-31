@@ -1,59 +1,219 @@
-<footer class="site-footer" role="contentinfo">
-  <div class="wrap footer-grid">
-    <div class="footer-col">
-      <div class="footer-brand"><span data-ar>كالابريز</span><span data-en>Calapres</span></div>
-      <p style="color:rgba(239,233,221,.72);max-width:34ch;font-size:14px">
-        <span data-ar>{{ section.settings.tagline_ar | default: 'بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى.' }}</span>
-        <span data-en>{{ section.settings.tagline_en | default: 'A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten.' }}</span>
-      </p>
+{%- comment -%}
+  Footer (.ftr) ported 1:1 from the static prototype.
+  - Newsletter signup is a real Shopify customer form.
+  - Columns render assigned menus when set; otherwise they fall
+    back to the prototype's link set built from live routes.
+  - The products column lists each color product of the
+    featured collection dynamically.
+{%- endcomment -%}
+{%- assign about_url = pages['about'].url | default: routes.root_url -%}
+{%- assign contact_url = pages['contact'].url | default: routes.root_url -%}
+{%- assign faq_url = pages['faq'].url | default: routes.root_url -%}
+{%- assign refund_policy_url = shop.refund_policy.url | default: faq_url -%}
+{%- assign shipping_policy_url = shop.shipping_policy.url | default: faq_url -%}
+{%- assign privacy_policy_url = shop.privacy_policy.url | default: faq_url -%}
+{%- assign terms_policy_url = shop.terms_of_service.url | default: faq_url -%}
+{%- assign oud_collection = collections['oud-bakhour'] -%}
+<footer class="ftr" id="signup">
+  <div class="wrap">
+    <div class="ftr-signup">
+      <div>
+        <h3>{{ section.settings.signup_heading }}</h3>
+        <p>{{ section.settings.signup_text }}</p>
+      </div>
+      {% form 'customer', id: 'signupForm', class: 'signup-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="hidden" name="return_to" value="{{ request.path }}?subscribed=1">
+        <input type="email" name="contact[email]" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+        <button type="submit">اشترك</button>
+      {% endform %}
     </div>
-    <div class="footer-col">
-      <h4><span data-ar>تسوّق</span><span data-en>Shop</span></h4>
-      <ul>
-        <li><a href="/collections/niche"><span data-ar>عطور النيش</span><span data-en>Niche Perfumes</span></a></li>
-        <li><a href="/collections/oriental"><span data-ar>العطور الشرقية</span><span data-en>Oriental Perfumes</span></a></li>
-        <li><a href="/collections/oud-bakhour"><span data-ar>العود والمباخر</span><span data-en>Oud &amp; Bukhoor</span></a></li>
-        <li><a href="/collections/luxury-brands"><span data-ar>البراندات الفاخرة</span><span data-en>Luxury Brands</span></a></li>
-      </ul>
+    <div class="ftr-cols">
+      <div>
+        <h4>{{ section.settings.col1_heading }}</h4>
+        <ul>
+          {%- if section.settings.col1_menu.links.size > 0 -%}
+          {%- for link in section.settings.col1_menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+          {%- else -%}
+          <li><a href="{{ about_url }}">من نحن</a></li>
+          <li><a href="{{ contact_url }}">تواصل معنا</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h4>{{ section.settings.col2_heading }}</h4>
+        <ul>
+          {%- if section.settings.col2_menu.links.size > 0 -%}
+          {%- for link in section.settings.col2_menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+          {%- else -%}
+          <li><a href="{{ faq_url }}">الأسئلة الشائعة</a></li>
+          <li><a href="{{ refund_policy_url }}">سياسة الاسترجاع</a></li>
+          <li><a href="{{ shipping_policy_url }}">سياسة الشحن</a></li>
+          <li><a href="{{ privacy_policy_url }}">سياسة الخصوصية</a></li>
+          <li><a href="{{ terms_policy_url }}">شروط الخدمة</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h4>{{ section.settings.col3_heading }}</h4>
+        <ul>
+          {%- if section.settings.col3_menu.links.size > 0 -%}
+          {%- for link in section.settings.col3_menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+          {%- else -%}
+          <li><a href="{{ oud_collection.url | default: routes.all_products_collection_url }}">المباخر</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div class="ftr-social">
+        <h4>{{ section.settings.col4_heading }}</h4>
+        {%- comment -%}
+          Instagram, Snapchat, and TikTok glyph assets are vendored from Shopify Dawn at commit
+          bc39a7d2024f1e5c14c42f855bd3552b4913e204.
+          See assets/DAWN-SOCIAL-ICONS-LICENSE.txt.
+          The WhatsApp glyph is the unmodified black digital SVG from Meta's
+          2026 WhatsApp Brand Resource Center logo pack.
+        {%- endcomment -%}
+        <div class="social-links" aria-label="حسابات التواصل الاجتماعي">
+          {%- if section.settings.instagram_url != blank -%}
+          <a class="social-link" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="إنستغرام">
+            <img class="social-icon" src="{{ 'icon-instagram.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="إنستغرام">
+            <img class="social-icon" src="{{ 'icon-instagram.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+          {%- if section.settings.snapchat_url != blank -%}
+          <a class="social-link" href="{{ section.settings.snapchat_url }}" target="_blank" rel="noopener" aria-label="سناب شات">
+            <img class="social-icon" src="{{ 'icon-snapchat.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="سناب شات">
+            <img class="social-icon" src="{{ 'icon-snapchat.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+          {%- if section.settings.tiktok_url != blank -%}
+          <a class="social-link" href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="تيك توك">
+            <img class="social-icon" src="{{ 'icon-tiktok.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="تيك توك">
+            <img class="social-icon" src="{{ 'icon-tiktok.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+          {%- if section.settings.whatsapp_url != blank -%}
+          <a class="social-link" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="واتساب">
+            <img class="social-icon" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </a>
+          {%- else -%}
+          <span class="social-link social-link--disabled" aria-label="واتساب">
+            <img class="social-icon" src="{{ 'icon-whatsapp.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy" decoding="async">
+          </span>
+          {%- endif -%}
+        </div>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4><span data-ar>الميزون</span><span data-en>Maison</span></h4>
-      <ul>
-        <li><a href="/pages/maison"><span data-ar>قصّتنا</span><span data-en>Our story</span></a></li>
-        <li><a href="/pages/discovery-samples"><span data-ar>عيّنات الاكتشاف</span><span data-en>Discovery samples</span></a></li>
-        <li><a href="/blogs/journal"><span data-ar>المجلّة</span><span data-en>Journal</span></a></li>
-        <li><a href="/pages/order-tracking"><span data-ar>تتبّع الطلب</span><span data-en>Order tracking</span></a></li>
-      </ul>
+    <div class="ftr-bottom">
+      {%- assign ftr_year = 'now' | date: '%Y' -%}
+      <span>© {% render 'arabic-digits', value: ftr_year %} {{ section.settings.copyright_name }}</span>
+      <nav>
+        <a href="{{ about_url }}">من نحن</a>
+        <a href="{{ contact_url }}">تواصل معنا</a>
+        <a href="{{ faq_url }}">الأسئلة الشائعة</a>
+        <a href="{{ privacy_policy_url }}">سياسة الخصوصية</a>
+        <a href="{{ terms_policy_url }}">شروط الخدمة</a>
+      </nav>
     </div>
-    <div class="footer-col">
-      <h4><span data-ar>تواصل</span><span data-en>Contact</span></h4>
-      <ul>
-        {% if settings.social_instagram != blank %}
-          <li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener"><span data-ar>إنستغرام</span><span data-en>Instagram</span></a></li>
-        {% endif %}
-        {% if settings.footer_whatsapp != blank %}
-          <li><a href="https://wa.me/{{ settings.footer_whatsapp }}"><span data-ar>واتساب</span><span data-en>WhatsApp</span></a></li>
-        {% endif %}
-        {% if settings.footer_email != blank %}
-          <li><a href="mailto:{{ settings.footer_email }}">{{ settings.footer_email }}</a></li>
-        {% endif %}
-        <li><span data-ar>الرياض، السعودية</span><span data-en>Riyadh, KSA</span></li>
-      </ul>
-    </div>
-  </div>
-  <div class="wrap footer-bottom">
-    <span><span data-ar>© ٢٠٢٦ كالابريز</span><span data-en>© 2026 Calapres</span></span>
-    <span><span data-ar>صُنع بعناية في الرياض</span><span data-en>Crafted with care in Riyadh</span></span>
   </div>
 </footer>
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "الفوتر",
   "settings": [
-    { "type": "text", "id": "tagline_ar", "label": "Tagline (Arabic)", "default": "بيت العطور النيش والعود الفاخر في الرياض. رائحةٌ تُروى ولا تُنسى." },
-    { "type": "text", "id": "tagline_en", "label": "Tagline (English)", "default": "A house of niche perfume and fine oud in Riyadh. A scent that is told, never forgotten." }
-  ],
-  "presets": [{ "name": "Footer" }]
+    {
+      "type": "text",
+      "id": "signup_heading",
+      "label": "عنوان تسجيل البريد",
+      "default": "تسجيل البريد"
+    },
+    {
+      "type": "text",
+      "id": "signup_text",
+      "label": "نص تسجيل البريد",
+      "default": "اشترك ليصلك جديد كالابريز."
+    },
+    {
+      "type": "text",
+      "id": "col1_heading",
+      "label": "عنوان العمود الأول",
+      "default": "كالابريز"
+    },
+    {
+      "type": "link_list",
+      "id": "col1_menu",
+      "label": "قائمة العمود الأول"
+    },
+    {
+      "type": "text",
+      "id": "col2_heading",
+      "label": "عنوان العمود الثاني",
+      "default": "المساعدة"
+    },
+    {
+      "type": "link_list",
+      "id": "col2_menu",
+      "label": "قائمة العمود الثاني"
+    },
+    {
+      "type": "text",
+      "id": "col3_heading",
+      "label": "عنوان العمود الثالث",
+      "default": "المتجر"
+    },
+    {
+      "type": "link_list",
+      "id": "col3_menu",
+      "label": "قائمة العمود الثالث"
+    },
+    {
+      "type": "text",
+      "id": "col4_heading",
+      "label": "عنوان عمود التواصل",
+      "default": "تابعنا"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "رابط إنستغرام"
+    },
+    {
+      "type": "url",
+      "id": "snapchat_url",
+      "label": "رابط سناب شات"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "رابط تيك توك"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "رابط واتساب"
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "اسم حقوق النشر",
+      "default": "كالابريز"
+    }
+  ]
 }
 {% endschema %}

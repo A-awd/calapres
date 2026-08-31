@@ -1,0 +1,25 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>تفعيل الحساب</h1>
+    <p>أنشئ كلمة مرور لتفعيل حسابك.</p>
+  </div>
+</section>
+<section class="wrap page-content">
+  <div class="form-card" style="max-width:560px">
+    {% form 'activate_customer_password' %}
+      {%- if form.errors -%}
+      <p class="form-note err">تعذّر تفعيل الحساب — تحقق من كلمة المرور وحاول مرة أخرى.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="actPassword">كلمة المرور</label>
+        <input type="password" id="actPassword" name="customer[password]" required autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="actConfirm">تأكيد كلمة المرور</label>
+        <input type="password" id="actConfirm" name="customer[password_confirmation]" required autocomplete="new-password">
+      </div>
+      <button class="btn-dark" type="submit">تفعيل الحساب</button>
+      <button class="btn-dark" type="submit" name="decline" style="margin-top:.8rem;background:var(--ground);color:var(--ink);border:1px solid var(--ink)">رفض الدعوة</button>
+    {% endform %}
+  </div>
+</section>

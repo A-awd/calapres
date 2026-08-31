@@ -1,0 +1,103 @@
+{%- comment -%}
+  Contact page (.page-intro + .contact-grid) ported 1:1 from
+  the static prototype. The form is a real Shopify contact
+  form; success/error feedback reuses the prototype's toast.
+{%- endcomment -%}
+<section class="page-intro">
+  <div class="wrap">
+    <h1>{{ section.settings.heading | default: page.title }}</h1>
+    {%- if section.settings.text != blank -%}
+    <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="wrap contact-grid">
+  <div class="form-card">
+    {% form 'contact', id: 'contactForm' %}
+      {%- if form.posted_successfully? -%}
+      <div data-toast-message="وصلتنا رسالتك — سنعود إليك قريبًا" hidden></div>
+      {%- elsif form.errors -%}
+      <p class="form-note err">تعذّر إرسال الرسالة — تأكد من البريد الإلكتروني وحاول مرة أخرى.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="cName">الاسم</label>
+        <input type="text" id="cName" name="contact[name]" required autocomplete="name" value="{{ form.name }}">
+      </div>
+      <div class="field">
+        <label for="cEmail">البريد الإلكتروني</label>
+        <input type="email" id="cEmail" name="contact[email]" required autocomplete="email" value="{{ form.email }}">
+      </div>
+      <div class="field">
+        <label for="cSubject">الموضوع</label>
+        <select id="cSubject" name="contact[الموضوع]" required>
+          <option value="" disabled selected>اختر الموضوع</option>
+          <option value="استفسار عن منتج">استفسار عن منتج</option>
+          <option value="الحفر الشخصي">الحفر الشخصي</option>
+          <option value="اقتراح">اقتراح</option>
+          <option value="أخرى">أخرى</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cMsg">الرسالة</label>
+        <textarea id="cMsg" name="contact[body]" required>{{ form.body }}</textarea>
+      </div>
+      <button class="btn-dark" type="submit">إرسال الرسالة</button>
+    {% endform %}
+  </div>
+  <aside class="side-card">
+    <h2>{{ section.settings.side_heading }}</h2>
+    <ul>
+      {%- if section.settings.contact_email != blank -%}
+      <li><a class="link-arrow" href="mailto:{{ section.settings.contact_email | escape }}">{{ section.settings.contact_email | escape }}</a></li>
+      {%- endif -%}
+      <li><a class="link-arrow" href="{{ pages['faq'].url | default: routes.root_url }}">الأسئلة الشائعة <span>←</span></a></li>
+      <li><a class="link-arrow" href="{{ routes.all_products_collection_url }}">المتجر <span>←</span></a></li>
+    </ul>
+    <p><b>{{ section.settings.side_promise_title }}</b> {{ section.settings.side_promise_text }}</p>
+  </aside>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة تواصل معنا",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان (يُترك فارغًا لعرض عنوان الصفحة)",
+      "default": "تواصل معنا"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "النص",
+      "default": "سؤال عن طقم؟ فكرة لحفرٍ خاص؟ اكتب لنا — نقرأ كل رسالة."
+    },
+    {
+      "type": "text",
+      "id": "side_heading",
+      "label": "عنوان البطاقة الجانبية",
+      "default": "روابط سريعة"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "بريد التواصل",
+      "default": "info@calapres.com"
+    },
+    {
+      "type": "text",
+      "id": "side_promise_title",
+      "label": "عنوان الوعد",
+      "default": "وعدنا لكم:"
+    },
+    {
+      "type": "textarea",
+      "id": "side_promise_text",
+      "label": "نص الوعد",
+      "default": "فريق كالابريز يردّ على كل رسالة تصله — لا تترددوا في الكتابة إلينا في أي وقت."
+    }
+  ]
+}
+{% endschema %}

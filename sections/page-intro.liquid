@@ -1,0 +1,40 @@
+{%- comment -%}
+  Page intro (.page-intro) ported 1:1 from the static
+  prototype (about / contact heads). Falls back to the
+  page's own title and body when no overrides are set.
+{%- endcomment -%}
+<section class="page-intro">
+  <div class="wrap">
+    <h1>{{ section.settings.heading | default: page.title }}</h1>
+    {%- assign pi_text = section.settings.text -%}
+    {%- if pi_text == blank and page.content != blank -%}
+    {%- assign pi_text = page.content | strip_html | truncate: 300 -%}
+    {%- endif -%}
+    {%- if pi_text != blank -%}
+    <p>{{ pi_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "مقدمة الصفحة",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان (يُترك فارغًا لعرض عنوان الصفحة)"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "النص (يُترك فارغًا لعرض محتوى الصفحة)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "مقدمة الصفحة"
+    }
+  ]
+}
+{% endschema %}

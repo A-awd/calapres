@@ -1,0 +1,57 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>عناويني</h1>
+  </div>
+</section>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem">إضافة عنوان جديد</h2>
+    {% form 'customer_address', customer.new_address %}
+      <div class="field">
+        <label for="addrAddress1">العنوان</label>
+        <input type="text" id="addrAddress1" name="address[address1]" autocomplete="address-line1">
+      </div>
+      <div class="field">
+        <label for="addrCity">المدينة</label>
+        <input type="text" id="addrCity" name="address[city]" autocomplete="address-level2">
+      </div>
+      <div class="field">
+        <label for="addrCountry">الدولة</label>
+        <select id="addrCountry" name="address[country]">{{ all_country_option_tags }}</select>
+      </div>
+      <div class="field">
+        <label for="addrZip">الرمز البريدي</label>
+        <input type="text" id="addrZip" name="address[zip]" autocomplete="postal-code">
+      </div>
+      <div class="field">
+        <label for="addrPhone">الهاتف</label>
+        <input type="tel" id="addrPhone" name="address[phone]" autocomplete="tel">
+      </div>
+      <button class="btn-dark" type="submit">حفظ العنوان</button>
+    {% endform %}
+  </div>
+  <aside class="side-card">
+    <h2>العناوين المحفوظة</h2>
+    {%- paginate customer.addresses by 6 -%}
+    {%- if customer.addresses.size > 0 -%}
+    <ul>
+      {%- for address in customer.addresses -%}
+      <li style="margin-bottom:1rem">
+        <p>{{ address.address1 }}{% if address.city %}، {{ address.city }}{% endif %}{% if address.country %}، {{ address.country }}{% endif %}
+        {%- if address == customer.default_address %} <b>(الافتراضي)</b>{% endif %}</p>
+        <form method="post" action="{{ address.url }}" style="display:inline">
+          <input type="hidden" name="_method" value="delete">
+          <button class="di-remove" type="submit">حذف</button>
+        </form>
+      </li>
+      {%- endfor -%}
+    </ul>
+    {%- else -%}
+    <p class="form-note">لا توجد عناوين محفوظة.</p>
+    {%- endif -%}
+    {%- endpaginate -%}
+    <ul style="margin-top:1rem">
+      <li><a class="link-arrow" href="{{ routes.account_url }}">عودة إلى حسابي <span>←</span></a></li>
+    </ul>
+  </aside>
+</section>

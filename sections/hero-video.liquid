@@ -1,0 +1,85 @@
+<section class="hero">
+  <div class="hero-media">
+    {%- if section.settings.video -%}
+    {%- assign hv_video = section.settings.video -%}
+    <video autoplay muted loop playsinline preload="metadata" poster="{{ hv_video.preview_image | image_url: width: 1600 }}" aria-label="{{ section.settings.video_label | escape }}">
+      {%- for hv_source in hv_video.sources -%}
+      {%- if hv_source.format == 'mp4' -%}
+      <source src="{{ hv_source.url }}" type="{{ hv_source.mime_type }}">
+      {%- endif -%}
+      {%- endfor -%}
+    </video>
+    {%- else -%}
+    {%- if section.settings.poster -%}
+    {%- assign hero_poster = section.settings.poster | image_url: width: 1200 -%}
+    {%- else -%}
+    {%- assign hero_poster = 'product-white.jpg' | asset_url -%}
+    {%- endif -%}
+    <video src="{{ 'hero-video.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata" poster="{{ hero_poster }}" aria-label="{{ section.settings.video_label | escape }}"></video>
+    {%- endif -%}
+    <div class="hero-cta">
+      <a class="hero-cta-link" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        {{ section.settings.button_label | default: 'تسوقوا الآن' }} <span class="arr" aria-hidden="true">←</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "الواجهة — فيديو",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "فيديو الواجهة",
+      "info": "عند تركه فارغًا يُعرض الفيديو الافتراضي المضمّن في القالب (hero-video.mp4)."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "صورة الغلاف (poster) للفيديو الافتراضي"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "السطر العلوي",
+      "default": "مبخرة كالابريز الفاخرة"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "العنوان",
+      "default": "طقم المبخرة الفاخر للعروس"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "النص",
+      "default": "ستاند، ومبخر أنيق، وعلبة عود — طقم واحد متكامل."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "نص الزر",
+      "default": "تسوقوا الآن"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "رابط الزر"
+    },
+    {
+      "type": "text",
+      "id": "video_label",
+      "label": "وصف الفيديو (لقارئ الشاشة)",
+      "default": "مقطع طقم المبخرة الفاخر"
+    }
+  ],
+  "presets": [
+    {
+      "name": "الواجهة — فيديو"
+    }
+  ]
+}
+{% endschema %}

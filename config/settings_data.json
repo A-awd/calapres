@@ -1,13 +1,51 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "colors_primary": "#13362B",
-    "colors_secondary": "#B8956A",
-    "colors_background": "#F7F4EF",
-    "colors_text": "#171513",
-    "logo_text": "كالابريز",
-    "social_instagram": "",
-    "footer_whatsapp": "",
-    "footer_email": ""
-  },
-  "presets": {}
+    "favicon": "shopify://shop_images/calapres-favicon-monogram-2026-08-31.png",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_text": "كالابريز",
+          "menu": "main-menu",
+          "support_label": "خدمة العملاء",
+          "support_link": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "signup_heading": "تسجيل البريد",
+          "signup_text": "اشترك ليصلك جديد كالابريز.",
+          "col1_heading": "كالابريز",
+          "col1_menu": "",
+          "col2_heading": "المساعدة",
+          "col2_menu": "",
+          "col3_heading": "المتجر",
+          "col3_menu": "",
+          "col4_heading": "تابعنا",
+          "instagram_url": "",
+          "snapchat_url": "",
+          "tiktok_url": "",
+          "copyright_name": "كالابريز"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
 }

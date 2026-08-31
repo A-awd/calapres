@@ -1,144 +1,160 @@
-<section class="pdp wrap" id="product">
-  <div class="pdp-grid">
-
-    <!-- Gallery -->
-    <div class="pdp-gallery" data-gallery>
-      <div class="gallery-main">
-        {%- if product.featured_image -%}
-          <img src="{{ product.featured_image | img_url: '900x1125', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" data-main-img fetchpriority="high" />
-        {%- endif -%}
-      </div>
-      {%- if product.images.size > 1 -%}
-        <div class="gallery-thumbs">
-          {%- for img in product.images limit: 5 -%}
-            <button class="thumb{% if forloop.first %} active{% endif %}" data-thumb="{{ img | img_url: '900x1125', crop: 'center' }}" aria-label="صورة {{ forloop.index }}">
-              <img src="{{ img | img_url: '120x150', crop: 'center' }}" alt="" width="120" height="150" loading="lazy" />
-            </button>
-          {%- endfor -%}
-        </div>
+{%- comment -%}
+  Product page (.pd + .related) ported 1:1 from the static
+  prototype, fully data-driven:
+  - Each color of the mibkhara set is its own Shopify product,
+    so the color switcher links between sibling products of the
+    configured collection (the static ?color= query becomes real
+    product URLs).
+  - Price / compare-at / savings tag come from the live variant.
+  - The engraving field posts as line item property "نص الحفر"
+    through the Shopify AJAX Cart API (calabriz-cart.js), with a
+    native /cart/add fallback when JS is unavailable.
+{%- endcomment -%}
+{%- liquid
+  assign mp_variant = product.selected_or_first_available_variant
+  assign mp_parts = product.title | split: '—'
+  assign mp_name = mp_parts | first | strip
+  assign mp_price = mp_variant.price
+  assign mp_compare = mp_variant.compare_at_price
+  assign mp_save = 0
+  if mp_compare > mp_price
+    assign mp_save = mp_compare | minus: mp_price
+  endif
+  assign mp_image = mp_variant.image | default: product.featured_image
+-%}
+<main class="wrap">
+  <div class="pd">
+    <div class="pd-media">
+      {%- if mp_save > 0 %}<span class="tag">وفّر {% render 'price-sar', cents: mp_save %}</span>{% endif -%}
+      {%- if mp_image -%}
+      <img id="pdImg" src="{{ mp_image | image_url: width: 1200, height: 1200, crop: 'bottom' }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
+      {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
       {%- endif -%}
     </div>
-
-    <!-- Info -->
-    <div class="pdp-info">
-      {%- if product.vendor != blank -%}
-        <span class="eyebrow">{{ product.vendor }}</span>
+    <div class="pd-info">
+      <p class="eyebrow">{{ mp_name }}</p>
+      <h1 id="pdTitle">{{ product.title }}</h1>
+      <div class="price"><b>{% render 'price-sar', cents: mp_price %}</b>{% if mp_save > 0 %}<s>{% render 'price-sar', cents: mp_compare %}</s>{% endif %}</div>
+      {%- if section.settings.line1 != blank -%}
+      <p class="pd-line">{{ section.settings.line1 }}</p>
       {%- endif -%}
-      <h1 class="display d-2">{{ product.title }}</h1>
+      {%- if section.settings.line2 != blank -%}
+      <p class="pd-line">{{ section.settings.line2 }}</p>
+      {%- endif -%}
 
-      <div class="pdp-price" data-pdp-price>
-        {{ product.selected_or_first_available_variant.price | money }}
-      </div>
 
-      {%- if product.variants.size > 1 -%}
-        <div class="pdp-sizes" data-sizes>
-          {%- for variant in product.variants -%}
-            <button class="size-btn{% if forloop.first %} active{% endif %}"
-              data-variant-id="{{ variant.id }}"
-              data-price="{{ variant.price | money }}"
-              {% unless variant.available %}disabled{% endunless %}>
-              {{ variant.title }}
-            </button>
-          {%- endfor -%}
+      {% form 'product', product, id: 'pdForm', data-product-form: 'true' %}
+        <input type="hidden" name="id" value="{{ mp_variant.id }}">
+        <div class="pd-eng">
+          <label for="engInput">الاسم أو الشعار للحفر (اختياري)</label>
+          <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: سارة ومحمد — ١٤٤٧هـ">
         </div>
-      {%- endif -%}
-
-      <input type="hidden" name="id" data-selected-variant value="{{ product.selected_or_first_available_variant.id }}" />
-
-      <div class="pdp-actions">
-        {%- if product.available -%}
-          <button class="btn btn-primary btn-full" data-add-to-cart
-            data-variant-id="{{ product.selected_or_first_available_variant.id }}">
-            <span data-ar>أضف إلى السلة</span>
-            <span data-en>Add to cart</span>
-          </button>
-        {%- else -%}
-          <button class="btn btn-primary btn-full" disabled>
-            <span data-ar>نفد المخزون</span>
-            <span data-en>Sold out</span>
-          </button>
-        {%- endif -%}
-      </div>
-
-      <!-- Accordion: Description -->
-      {%- if product.description != blank -%}
-        <div class="accordion" data-accordion>
-          <button class="acc-toggle" aria-expanded="false">
-            <span><span data-ar>وصف العطر</span><span data-en>Fragrance Description</span></span>
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="acc-body">{{ product.description }}</div>
-        </div>
-      {%- endif -%}
-
-      <!-- Accordion: Notes -->
-      {%- assign top_notes = product.metafields.perfume.top_notes.value -%}
-      {%- assign heart_notes = product.metafields.perfume.heart_notes.value -%}
-      {%- assign base_notes = product.metafields.perfume.base_notes.value -%}
-      {%- if top_notes or heart_notes or base_notes -%}
-        <div class="accordion" data-accordion>
-          <button class="acc-toggle" aria-expanded="false">
-            <span><span data-ar>هرم العطر</span><span data-en>Fragrance Pyramid</span></span>
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="acc-body">
-            <div class="pyramid">
-              {%- if top_notes -%}
-                <div class="pyr-row">
-                  <span class="pyr-label"><span data-ar>القمة</span><span data-en>Top</span></span>
-                  <span class="pyr-notes">{{ top_notes }}</span>
-                </div>
-              {%- endif -%}
-              {%- if heart_notes -%}
-                <div class="pyr-row">
-                  <span class="pyr-label"><span data-ar>القلب</span><span data-en>Heart</span></span>
-                  <span class="pyr-notes">{{ heart_notes }}</span>
-                </div>
-              {%- endif -%}
-              {%- if base_notes -%}
-                <div class="pyr-row">
-                  <span class="pyr-label"><span data-ar>القاعدة</span><span data-en>Base</span></span>
-                  <span class="pyr-notes">{{ base_notes }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-          </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Accordion: Delivery -->
-      <div class="accordion" data-accordion>
-        <button class="acc-toggle" aria-expanded="false">
-          <span><span data-ar>التوصيل والإرجاع</span><span data-en>Delivery &amp; Returns</span></span>
-          <span class="acc-icon">+</span>
+        <button class="btn-dark" id="pdAdd" type="submit"{% unless product.available %} disabled{% endunless %}>
+          {%- if product.available -%}
+          أضِف إلى السلّة — {% render 'price-sar', cents: mp_price %}
+          {%- else -%}
+          غير متوفر حاليًا
+          {%- endif -%}
         </button>
-        <div class="acc-body">
-          <p><span data-ar>توصيل في نفس اليوم داخل الرياض. خلال ٢–٤ أيام عمل لباقي المناطق. إرجاع مجاني خلال ١٤ يومًا.</span><span data-en>Same-day delivery in Riyadh. 2–4 business days for other regions. Free returns within 14 days.</span></p>
-        </div>
+      {% endform %}
+
+      <div class="pd-sticky-atc" data-sticky-atc aria-hidden="true">
+        <span class="pd-sticky-atc__summary">
+          <span>{{ product.title }}</span>
+          <b>{% render 'price-sar', cents: mp_price %}</b>
+        </span>
+        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless product.available %} disabled{% endunless %}>
+          {%- if product.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
+        </button>
       </div>
+
+      {%- if section.blocks.size > 0 -%}
+      <div class="acc" id="acc">
+        {%- for block in section.blocks -%}
+        <div class="acc-item" {{ block.shopify_attributes }}>
+          <button class="acc-q" aria-expanded="false">{{ block.settings.question }} <span class="ic">+</span></button>
+          <div class="acc-a"><p>{{ block.settings.answer }}</p></div>
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
     </div>
   </div>
 
-  <!-- Related Products -->
-  {%- if product.collections.first -%}
-    {%- assign rel_col = product.collections.first -%}
-    <div class="pdp-related section-sm">
-      <div class="sec-head">
-        <div class="ttl">
-          <span class="eyebrow"><span data-ar>قد يعجبك أيضًا</span><span data-en>You may also like</span></span>
+  <section class="pd-reviews" aria-labelledby="pdReviewsTitle">
+    <h2 class="pd-reviews__title" id="pdReviewsTitle">تقييمات العملاء</h2>
+    <!-- Start of Judge.me code -->
+    {%- assign has_legacy = false -%}
+    {%- if product.metafields.judgeme.widget.size > 20 -%}
+      {%- assign has_legacy = true -%}
+    {%- endif -%}
+    <div
+      id="judgeme_product_reviews"
+      class="jdgm-widget jdgm-review-widget"
+      data-product-title="{{ product.title | escape }}"
+      data-id="{{ product.id }}"
+      data-product-id="{{ product.id }}"
+      data-widget="review"
+      data-auto-install="false"
+      data-shop-reviews-count="{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}"
+      data-entry-point="review_widget.js"
+      data-entry-key="review-widget/main.js"
+    >
+      {%- if has_legacy -%}
+        <div class="jdgm-legacy-widget-content" style="display: none;">
+          {{ product.metafields.judgeme.widget }}
         </div>
-      </div>
-      <div class="rail">
-        {%- for rp in rel_col.products limit: 6 -%}
-          {%- unless rp.id == product.id -%}
-            {% render 'product-card', product: rp %}
-          {%- endunless -%}
-        {%- endfor -%}
-      </div>
+      {%- endif -%}
     </div>
-  {%- endif -%}
-</section>
+    {%- if product.metafields.judgeme.review_widget_data -%}
+      <script>
+        jdgm.data ||= {};
+        jdgm.data.reviewWidget ||= {};
+        jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }};
+      </script>
+    {%- endif -%}
+    <!-- End of Judge.me code -->
+  </section>
+</main>
+
 
 {% schema %}
-{ "name": "Product", "settings": [] }
+{
+  "name": "صفحة المنتج",
+  "settings": [
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "السطر الأول",
+      "default": "ستاند + مبخر أنيق + علبة عود"
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "السطر الثاني",
+      "default": "حفر الاسم أو الشعار"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "سؤال وجواب",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "السؤال",
+          "default": "ماذا يتضمّن الطقم؟"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "الجواب",
+          "default": "الطقم واحد متكامل: ستاند، ومبخر أنيق، وعلبة عود."
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

@@ -1,0 +1,41 @@
+<section class="page-intro">
+  <div class="wrap">
+    <h1>تسجيل الدخول</h1>
+  </div>
+</section>
+<section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
+  <div class="form-card">
+    {% form 'customer_login' %}
+      {%- if form.errors -%}
+      <p class="form-note err">تعذّر تسجيل الدخول — تحقق من البريد الإلكتروني وكلمة المرور.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="loginEmail">البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" name="customer[email]" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="loginPassword">كلمة المرور</label>
+        <input type="password" id="loginPassword" name="customer[password]" required autocomplete="current-password">
+      </div>
+      <button class="btn-dark" type="submit">تسجيل الدخول</button>
+    {% endform %}
+    <div style="margin-top:1.6rem;border-top:1px solid var(--line);padding-top:1.3rem">
+      <p class="form-note">نسيت كلمة المرور؟ أدخل بريدك وسنرسل لك رابط إعادة التعيين.</p>
+      {% form 'recover_customer_password', class: 'notify-form', style: 'margin-top:.8rem' %}
+        {%- if form.posted_successfully? -%}
+        <p class="form-note">أرسلنا لك رابط إعادة تعيين كلمة المرور.</p>
+        {%- endif -%}
+        <input type="email" name="email" required placeholder="بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+        <button type="submit">إرسال</button>
+      {% endform %}
+    </div>
+  </div>
+  <aside class="side-card">
+    <h2>عميل جديد؟</h2>
+    <ul>
+      <li><a class="link-arrow" href="{{ routes.account_register_url }}">إنشاء حساب <span>←</span></a></li>
+      <li><a class="link-arrow" href="{{ routes.all_products_collection_url }}">تصفّح المتجر <span>←</span></a></li>
+    </ul>
+    <p>أنشئ حسابًا لمتابعة طلباتك وتسريع إتمام الشراء.</p>
+  </aside>
+</section>

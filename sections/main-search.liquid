@@ -1,0 +1,48 @@
+{%- comment -%}
+  Search page — not part of the static prototype's 7 pages;
+  built with the same design language (.page-head + .prod-grid).
+{%- endcomment -%}
+<section class="page-head">
+  <div class="wrap">
+    <h1>البحث</h1>
+    {%- if search.performed -%}
+    {%- assign sr_count = search.results_count -%}
+    <p>نتائج البحث عن «{{ search.terms | escape }}» — {% render 'arabic-digits', value: sr_count %} نتيجة</p>
+    {%- endif -%}
+    <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="ابحث في المتجر" aria-label="البحث">
+      <button type="submit">ابحث</button>
+    </form>
+  </div>
+</section>
+
+<section class="products">
+  <div class="wrap">
+    {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+    <div class="prod-grid">
+      {%- for sr_item in search.results -%}
+      {%- if sr_item.object_type == 'product' -%}
+      {% render 'product-card', card_product: sr_item, show_add: false %}
+      {%- endif -%}
+      {%- else -%}
+      <p class="form-note">لا توجد نتائج مطابقة.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+    <div class="sec-head" style="margin-top:2rem">
+      {%- if paginate.previous -%}<a class="link-arrow" href="{{ paginate.previous.url }}">السابق</a>{%- endif -%}
+      {%- if paginate.next -%}<a class="link-arrow" href="{{ paginate.next.url }}">التالي</a>{%- endif -%}
+    </div>
+    {%- endif -%}
+    {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة البحث",
+  "settings": []
+}
+{% endschema %}

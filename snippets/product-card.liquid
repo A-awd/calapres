@@ -1,26 +1,43 @@
-{%- assign tag_ar = '' -%}
-{%- assign tag_en = '' -%}
-{%- if product.tags contains 'جديد' or product.tags contains 'new' -%}
-  {%- assign tag_ar = 'جديد' -%}{%- assign tag_en = 'New' -%}
-{%- elsif product.tags contains 'توقيع' or product.tags contains 'signature' -%}
-  {%- assign tag_ar = 'توقيع كالابريز' -%}{%- assign tag_en = 'Signature' -%}
-{%- elsif product.tags contains 'bestseller' or product.tags contains 'الأكثر طلبًا' -%}
-  {%- assign tag_ar = 'الأكثر طلبًا' -%}{%- assign tag_en = 'Most loved' -%}
-{%- endif -%}
-<a class="product-card" href="{{ product.url }}">
-  <div class="frame">
-    {%- if tag_ar != '' -%}
-      <span class="tag"><span data-ar>{{ tag_ar }}</span><span data-en>{{ tag_en }}</span></span>
-    {%- endif -%}
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}" alt="{{ product.featured_image.alt | escape }}" width="600" height="750" loading="lazy" />
+{%- comment -%}
+  Product card (.pcard) ported 1:1 from the static prototype.
+  Each color of the mibkhara set is its own product, so the
+  card title/color split comes from the product title
+  ("مبخرة كالابريز الفاخرة — الأبيض").
+  Usage: {% render 'product-card', card_product: product, show_add: true %}
+{%- endcomment -%}
+{%- liquid
+  assign pc_parts = card_product.title | split: '—'
+  assign pc_name = pc_parts | first | strip
+  assign pc_color = ''
+  if pc_parts.size > 1
+    assign pc_color = pc_parts | last | strip
+  endif
+  assign pc_price = card_product.price
+  assign pc_compare = card_product.compare_at_price
+  assign pc_save = 0
+  if pc_compare > pc_price
+    assign pc_save = pc_compare | minus: pc_price
+  endif
+-%}
+<a class="pcard" href="{{ card_product.url }}">
+  <div class="ph">
+    {%- if pc_save > 0 %}<span class="tag">وفّر {% render 'price-sar', cents: pc_save %}</span>{% endif -%}
+    {%- if card_product.featured_image -%}
+    <img src="{{ card_product.featured_image | image_url: width: 900 }}" alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}" loading="lazy" width="900" height="900">
+    {%- else -%}
+    {{ 'product-1' | placeholder_svg_tag }}
     {%- endif -%}
   </div>
-  <div class="meta">
-    <div class="name"><span data-ar>{{ product.title }}</span><span data-en>{{ product.title }}</span></div>
-    <div class="price">
-      <span data-ar>{{ product.price | money }} · {{ product.variants.first.title }}</span>
-      <span data-en>{{ product.price | money }} · {{ product.variants.first.title }}</span>
-    </div>
+  <div class="pbody">
+    <h3>{{ pc_name }}</h3>
+    {% if pc_color != blank %}<div class="color">{{ pc_color }}</div>{% endif %}
+    <div class="price"><b>{% render 'price-sar', cents: pc_price %}</b>{% if pc_save > 0 %}<s>{% render 'price-sar', cents: pc_compare %}</s>{% endif %}</div>
+    {%- if show_add -%}
+    {%- if card_product.available -%}
+    <button class="padd" data-add="{{ card_product.selected_or_first_available_variant.id }}">أضِف إلى السلّة</button>
+    {%- else -%}
+    <button class="padd" disabled>غير متوفر حاليًا</button>
+    {%- endif -%}
+    {%- endif -%}
   </div>
 </a>

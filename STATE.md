@@ -1,6 +1,63 @@
 
 # Project State
 
+## Official social icons and Calapres Safari favicon ready in preview — 2026-08-31
+
+[Canonical base] This bounded theme-reconciliation stage started from a clean worktree at freshly
+fetched GitHub `origin/main` commit `a774056dbaf5105366ab9e938e3dec4ec5764f4b`. The owner's
+dirty, diverged repository checkout and unrelated worktrees were not modified.
+
+[Verified Shopify roles] Authenticated Shopify Admin GraphQL identifies `Calabris Shopify Theme`
+(`163004449024`) as `MAIN` and `Preview — official social icons + Safari favico...`
+(`165770887424`) as `UNPUBLISHED`. The preview is not processing and has no processing failure.
+
+[Owner-approved preview and executed draft-only refinement] The owner approved the preview's clean
+black Instagram, Snapchat, and TikTok glyphs and requested a matching WhatsApp glyph. Only the
+unpublished preview was changed. `assets/icon-whatsapp.svg` is the unmodified black digital glyph
+from Meta's 2026 WhatsApp Brand Resource Center pack; its SHA-256 is
+`dea0d50de5d2e53320246d7172a2b8e84a999caa7798cd91681e63831cba6ed9`.
+`sections/footer.liquid` now renders WhatsApp using the same accessible linked-or-disabled pattern
+as the other three services and defines one unique `whatsapp_url` setting. Shopify returned no
+user errors. The verified preview checksums are:
+
+- `assets/icon-whatsapp.svg`: `effe39ee446c06d7b3fc63450e694123`.
+- `sections/footer.liquid`: `a871f19bfbd8d4b45496eb525b66b777`.
+- `layout/password.liquid`: `4dafdfa6e8d9d00cf29310561465ec14`.
+
+The final review also found that the dormant password layout still embedded the former circle-and-dot
+favicon. It now uses the same configured Calapres monogram, 16 px and 32 px favicon declarations,
+and 180 px Apple touch icon as the storefront layout. Shopify accepted that unpublished-theme update
+without user errors. This prevents the obsolete symbol from returning if password protection is
+enabled later.
+
+[Verified preview result] A fresh preview render contained exactly four social items labelled
+Instagram, Snapchat, TikTok, and WhatsApp, each with its own theme asset. A visual check showed one
+balanced monochrome row. The preview also continues to emit the approved square Calapres monogram
+as 16 px and 32 px favicons plus a 180 px Apple touch icon. The active public theme still emits the
+older favicon and older hand-drawn footer artwork because no live publication occurred.
+
+[Social-link boundary] `instagram_url`, `snapchat_url`, `tiktok_url`, and `whatsapp_url` are blank,
+so all four glyphs are decorative disabled spans rather than clickable account links. No public
+Calapres WhatsApp destination was found and the private operational number remains intentionally
+redacted. The Saudi Post/SPL destination `966112898888` was not reused.
+
+[GitHub reconciliation] The exact 62-file unpublished preview source was read through authenticated
+Shopify Admin GraphQL into the clean worktree. Every non-JSON file matched Shopify's reported MD5,
+including the final password-layout correction;
+the JSON bodies were parsed successfully from the API-returned source. The obsolete, conflicting
+47-file storefront prototype from the prior `main` tree was replaced only inside this clean
+worktree so GitHub can represent the actual approved Calabriz theme instead of a hybrid. All 16
+Liquid section schemas have unique setting IDs and block types, all repository JSON parsed, the
+WhatsApp asset contains no scripts or external references, and `git diff --check` passed. Shopify
+CLI `4.7.0` Theme Check completed with no errors; it reported only six existing `RemoteAsset`
+warnings for the Cairo Google Fonts links in the storefront and password layouts.
+
+[Live and deployment boundary] No active-theme file, product, customer, order, payment, shipping,
+checkout, app, Captain, Chatwoot, n8n, or Meta configuration changed in this stage. Do not run
+`.github/workflows/theme-deploy.yml`: it still assigns the known theme IDs incorrectly and deploys
+the obsolete noncanonical `shopify-theme` branch. Live publication is a separate production step
+after the owner views the final four-icon preview and explicitly authorizes publication.
+
 ## Separate required email and shipping-phone fields live — 2026-08-31
 
 [Canonical base] This bounded checkout-setting stage started from a clean worktree at freshly
