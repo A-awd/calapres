@@ -833,6 +833,8 @@ input{font-family:inherit}
 .hdr-top{position:relative;display:flex;align-items:center;justify-content:center;height:60px;border-bottom:1px solid var(--line)}
 .hdr-top .util{display:none}
 .logo{position:absolute;left:50%;transform:translateX(-50%);font-size:1.5rem;font-weight:700;line-height:1;white-space:nowrap;text-align:center}
+.logo--wordmark{display:flex;align-items:center;justify-content:center;width:clamp(6.3rem,32vw,9rem);height:2rem}
+.logo__wordmark{display:block;width:100%;height:auto}
 .hdr-actions{display:flex;align-items:center;gap:.65rem;position:absolute;top:50%;transform:translateY(-50%)}
 .hdr-actions--left{left:clamp(1rem,4vw,3rem)}
 .hdr-actions--right{right:clamp(1rem,4vw,3rem)}

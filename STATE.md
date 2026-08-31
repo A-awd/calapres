@@ -1,6 +1,50 @@
 
 # Project State
 
+## Exact Calapres wordmark ready in an unpublished header preview — 2026-08-31
+
+[Canonical base] This bounded header stage started from a clean worktree at freshly fetched GitHub
+`origin/main` commit `0f8275069cef9d34cbce7e428d72643c0926d7d0`. Authenticated Shopify
+confirmed that `Preview — six social icons mobile fix` (`165774786816`) remains `MAIN` and that
+the immediate rollback theme `165770887424` remains `UNPUBLISHED`.
+
+[Owner-selected source and fidelity boundary] The owner supplied the transparent 1249 x 1443 PNG
+`معدل -7.png` and requested only its lower `CALAPRES` wordmark, not the oval monogram, in place of
+the Arabic text at the top of the storefront. Two generative extraction attempts were rejected and
+were not used because they redrew the letters and produced opaque checkerboard backgrounds. The
+implemented asset is a deterministic crop of the owner's exact transparent PNG: 1249 x 220 pixels,
+real alpha, SHA-256 `b4c993f9c4ea3618232b8346036b892b0ed1bf6f25561a2a7dabef2f78a20d02`.
+The adjacent original Illustrator file was inspected only to confirm the same artwork and was not
+modified or committed.
+
+[Draft-only implementation] Shopify duplicated the current main into
+`Preview — Calapres wordmark header 2026-08-31` (`165776949504`), which remains `UNPUBLISHED`, not
+processing, and without a processing failure. Only three files were written to this draft:
+
+- `assets/calapres-wordmark.png`: 42,020 bytes, MD5 `3945fcf018f3b264605a4deb46fa8a7c`.
+- `sections/header.liquid`: 2,902 bytes, MD5 `65a85e560125f6f2171923d821b79246`.
+- `assets/calabriz.css`: 41,027 bytes, MD5 `b5344d298d4fba4d9082a75ef7633dc0`.
+
+The header keeps the existing Arabic brand name as the link's accessible label while the exact
+English wordmark is decorative. Explicit image dimensions prevent layout shift, and responsive
+width is capped at 144 px so it does not collide with the account, cart, or menu controls.
+
+[Verified preview] A fresh preview render loaded the draft-only wordmark asset at its natural
+1249 x 220 dimensions. At 320 px and 390 px viewports the logo, left actions, and right menu had no
+overlap; the rendered wordmark widths were 102.4 px and 124.8 px respectively. The desktop render
+used 144 px, the logo link still targeted `/`, and the browser console contained no errors or
+warnings. No live publication occurred.
+
+[Font boundary and next action] The storefront still uses Cairo and checkout still uses Almarai.
+Shopify controls checkout typography separately from theme code, so no font was changed. The owner
+will shortlist Arabic families in Google Fonts; before implementation, verify each candidate is
+also present in the checkout typography picker, then apply one approved family separately to both
+surfaces and verify storefront plus checkout. Do not publish theme `165776949504` until the owner
+approves its visual preview.
+
+[Unchanged scope] No live theme, product, customer, order, payment, Paymob, shipping, checkout,
+tax, app, Captain, n8n, Chatwoot, Meta, or social-link setting changed.
+
 ## Six-icon mobile footer published and verified — 2026-08-31
 
 [Canonical base] This bounded footer correction was implemented from a clean worktree at freshly

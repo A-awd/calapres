@@ -17,7 +17,16 @@
         <span class="cart-count" id="cartCount">{% render 'arabic-digits', value: cart.item_count %}</span>
       </button>
     </div>
-    <a class="logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}</a>
+    <a class="logo logo--wordmark" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_text | escape }}">
+      <img
+        class="logo__wordmark"
+        src="{{ 'calapres-wordmark.png' | asset_url }}"
+        alt=""
+        width="1249"
+        height="220"
+        fetchpriority="high"
+      >
+    </a>
     <div class="hdr-actions hdr-actions--right">
       <button class="burger" id="menuOpen" type="button" aria-label="فتح قائمة المتجر" aria-controls="mnav" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -53,7 +62,7 @@
     {
       "type": "text",
       "id": "logo_text",
-      "label": "نص الشعار",
+      "label": "اسم الشعار لقارئات الشاشة",
       "default": "كالابريز"
     },
     {

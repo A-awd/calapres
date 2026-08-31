@@ -1,6 +1,41 @@
 
 # Handoff
 
+## Resume here — exact Calapres wordmark is in an unpublished header preview — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded stage
+started from clean GitHub `origin/main` commit `0f8275069cef9d34cbce7e428d72643c0926d7d0`.
+The public store remains on Shopify theme `165774786816`; its immediate rollback theme remains
+`165770887424`.
+
+The owner requested the lower `CALAPRES` wordmark from the supplied transparent
+`معدل -7.png` in place of the Arabic text at the top of the storefront, excluding the oval
+monogram. Do not use either rejected generative attempt: both altered the lettering and lacked true
+alpha. The implemented `assets/calapres-wordmark.png` is an exact deterministic crop of the supplied
+PNG, 1249 x 220 with real transparency and SHA-256
+`b4c993f9c4ea3618232b8346036b892b0ed1bf6f25561a2a7dabef2f78a20d02`. An adjacent original
+Illustrator file confirmed the same art but was not changed or committed.
+
+Shopify draft `Preview — Calapres wordmark header 2026-08-31` (`165776949504`) was duplicated from
+the current main and remains `UNPUBLISHED`, not processing, without failure. Only the new PNG,
+`sections/header.liquid`, and `assets/calabriz.css` were updated. Shopify reread MD5 checksums
+`3945fcf018f3b264605a4deb46fa8a7c`, `65a85e560125f6f2171923d821b79246`, and
+`b5344d298d4fba4d9082a75ef7633dc0` respectively. The image is decorative while the link retains
+`كالابريز` as its accessible name and still points to `/`.
+
+Fresh preview renders passed at 320 px, 390 px, and desktop widths. The wordmark widths were 102.4
+px, 124.8 px, and 144 px; it did not overlap the account/cart actions or the menu, and the browser
+console had no errors or warnings. The live theme was not edited or published.
+
+No font changed. The storefront remains Cairo and checkout remains Almarai. Shopify checkout
+typography is separate from theme typography. The owner is reviewing Arabic families in Google
+Fonts; after receiving two or three exact family names, verify each in Shopify's checkout font
+picker and implement only one family that can be used on both surfaces. Stop again for visual
+approval before publishing draft `165776949504`.
+
+No product, customer, order, payment, Paymob, shipping, checkout, tax, app, Captain, n8n, Chatwoot,
+Meta, or social-link setting changed.
+
 ## Resume here — six-icon mobile footer is live and verified — 2026-08-31
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The implementation
