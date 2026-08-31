@@ -1,6 +1,16 @@
 
 # Project State
 
+## Engraving copy corrected from `العروسين` to `العرسان` in the unpublished preview — 2026-08-31
+
+The owner confirmed that `إمكانية حفر اسم العرسان أو التاريخ على الطقم.` is the correct Arabic
+copy. Canonical GitHub `main` commit `b14a6b3e486245e7640c41789fe59e113e3a45e2` updates both the
+homepage editorial-band default and the related product-page gift FAQ answer. The two old
+`العروسين` occurrences were removed. Both files were uploaded only to unpublished theme
+`165777604864`; fresh homepage and product-page preview checks found the corrected phrase and no
+old phrase. Theme Check inspected 181 files with zero errors and the six existing Rubik remote-font
+warnings. Theme `165774786816` remains `MAIN`; no publication occurred.
+
 ## Rounded cart-item card staged for owner review; combined theme remains unpublished — 2026-08-31
 
 [Owner correction and implementation] The owner rejected the cart drawer's sharp opaque-looking

@@ -1,6 +1,16 @@
 
 # Handoff
 
+## Resume here — engraving copy uses `العرسان` in both preview surfaces — 2026-08-31
+
+The owner's Arabic correction is complete in canonical GitHub `main` commit
+`b14a6b3e486245e7640c41789fe59e113e3a45e2` and unpublished theme `165777604864`.
+`sections/editorial-band.liquid` now says `إمكانية حفر اسم العرسان أو التاريخ على الطقم.`, and
+the related answer in `templates/product.json` also uses `اسم العرسان`. Fresh homepage and product-
+page preview checks found the corrected wording and no `اسم العروسين` occurrence. Theme Check
+reported zero errors and the six existing Rubik remote-font warnings. The live theme remains
+`165774786816`; do not publish the combined draft without the owner's separate approval.
+
 ## Resume here — rounded cart-item card is open in the combined unpublished preview — 2026-08-31
 
 The owner rejected the sharp opaque-looking product band inside the glass cart drawer and asked to
