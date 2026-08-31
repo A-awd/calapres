@@ -1,6 +1,30 @@
 
 # Project State
 
+## Rounded cart-item card staged for owner review; combined theme remains unpublished — 2026-08-31
+
+[Owner correction and implementation] The owner rejected the cart drawer's sharp opaque-looking
+product band and asked to see the proposed correction before publication. Canonical GitHub `main`
+commit `1735ce8f07165be6851a969736937ceff116c596` changes only `assets/calabriz.css`. The drawer
+still uses the approved 46% beige glass and each product still uses the same 60% beige readability
+surface, but the product surface is now a contained card with a 16 px radius, a 14% brown border,
+a soft 6% brown shadow, and a 10 px image radius. Multiple cards receive a 12 px gap. The existing
+cart page is unchanged because every new rule is scoped to `.drawer`.
+
+[Narrow-screen containment] At 360 px and below, the card padding reduces to 12 px, its image reduces
+to 64 px, and the quantity/price row may wrap. The product-information flex child now has
+`min-width: 0`. These rules prevent the new inset card from causing narrow-screen overflow without
+changing the cart data, controls, focus order, or checkout action.
+
+[Draft persistence and validation] Unpublished theme `165777604864` persists the exact CSS with MD5
+`4005f5b8a8769e70e1840127d41143fb` and size 44,869 bytes; a fresh remote pull matched the local file
+byte-for-byte. Theme Check inspected 181 files with zero errors and the six existing Rubik remote-
+font warnings. Fresh populated-cart browser checks at the normal in-app width, 320 px, and 390 px
+confirmed the 16 px radius, 10 px image radius, 30 px drawer blur, zero document/drawer/item
+horizontal overflow, and a wrapped narrow quantity/price row at 320 px. Theme `165774786816`
+remains `MAIN`; draft `165777604864` remains visibly labelled `Draft` and open for owner review.
+Do not publish it without the owner's next explicit approval.
+
 ## Exact checkout seal and pale-beige glass-like direction approved; draft creation remains blocked — 2026-08-31
 
 [Cart cause and implementation] The owner reported that opening the cart restored the rejected dark,

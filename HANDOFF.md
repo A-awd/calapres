@@ -1,6 +1,28 @@
 
 # Handoff
 
+## Resume here — rounded cart-item card is open in the combined unpublished preview — 2026-08-31
+
+The owner rejected the sharp opaque-looking product band inside the glass cart drawer and asked to
+see a corrected card before publication. Canonical GitHub `main` commit
+`1735ce8f07165be6851a969736937ceff116c596` changes only `assets/calabriz.css`, and the same file is
+staged in unpublished Shopify theme `Preview — Calapres beige + burnt brown 2026-08-31`
+(`165777604864`). The card keeps the approved 60% beige readability layer but is now inset and
+rounded: 16 px card radius, 10 px image radius, 14% brown border, soft 6% brown shadow, and a 12 px
+gap between multiple products. New rules are scoped to `.drawer`, so the standalone cart page is
+unchanged.
+
+At 360 px and below, card padding is 12 px, the image is 64 px, and the quantity/price row can wrap;
+fresh 320 px and 390 px checks found zero document, drawer, or card horizontal overflow. The normal
+in-app preview also showed the correct rounded card with the drawer open. Theme Check inspected 181
+files with zero errors and the six existing Rubik remote-font warnings. A fresh remote pull matched
+`assets/calabriz.css` byte-for-byte at MD5 `4005f5b8a8769e70e1840127d41143fb`, 44,869 bytes.
+
+The preview is open at `https://calapres.com/?preview_theme_id=165777604864`. Theme
+`165774786816` remains `MAIN`; do not publish draft `165777604864` until the owner gives a new
+explicit visual approval. If the owner requests another cart-card adjustment, keep it limited to
+the drawer card and re-verify 320 px, 390 px, and the normal in-app width.
+
 ## Resume here — exact checkout seal and pale-beige glass-like direction approved; create the draft first — 2026-08-31
 
 The cart correction is complete in canonical GitHub `main` commits
