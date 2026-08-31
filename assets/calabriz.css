@@ -882,11 +882,14 @@ input::placeholder,textarea::placeholder{color:var(--ink);opacity:1}
 .social-link--whatsapp{--social-mask:url("icon-whatsapp.svg")}
 .social-link--x{--social-mask:url("icon-x.svg")}
 .social-link--email{--social-mask:url("icon-email.svg")}
-.social-link--whatsapp::before{width:1.7rem;height:1.7rem}
+.social-link--snapchat::before{width:1.93rem;height:1.93rem}
+.social-link--whatsapp::before,.social-link--x::before{width:1.6rem;height:1.6rem}
+.social-link--email::before{width:2.3rem;height:2.3rem}
+.social-link--tiktok::before{transform:translateY(.03rem)}
 .social-link:hover{background:transparent;color:var(--ink);transform:translateY(-2px) scale(1.04)}
 .social-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:.45rem}
 .social-link--disabled{opacity:1;cursor:default}
-.social-link--disabled:hover{background:transparent;color:var(--ink);transform:none}
+.social-link--disabled:hover{background:transparent;color:var(--ink)}
 .signup-form:focus-within,.notify-form:focus-within,.search-form:focus-within,.qty:focus-within{outline:2px solid var(--ink);outline-offset:3px}
 @media (max-width:1200px){
   .ftr-cols{grid-template-columns:1fr 1fr}
