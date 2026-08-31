@@ -61,6 +61,21 @@ one row of six brown social glyphs, the exact WhatsApp and email links, no X des
 quantity badges with beige digits, and no browser-console errors or warnings. The public live theme
 was not changed.
 
+## Owner refinement — transparent hero-video action — 2026-08-31
+
+The owner subsequently rejected the brown rectangle around the first homepage video's action. The
+action is therefore transparent in both normal and hover states, has no full rectangular border,
+retains one beige underline and a brown-derived text halo, and is translated 12 px lower. An explicit
+beige keyboard-focus outline remains. This refinement supersedes only the earlier backed hero-action
+treatment and its unconditional 5.25:1 worst-frame contrast claim; it does not change the two source
+colours, link destination, label, video, publication gate, or any checkout rule.
+
+Because the action now sits directly over moving video, no single contrast ratio can be guaranteed
+for every frame. The owner-directed tradeoff is mitigated by the two-colour halo and underline and was
+visually checked at 320, 390, and 1280 px. Canonical GitHub `main` commit
+`bce7d159670147f365ac43eadbb2d4361ed04209` is staged in the same unpublished theme
+`165777604864`; the public theme was not changed.
+
 ## Rollback
 
 No production rollback is needed while theme `165777604864` remains unpublished. If it is later

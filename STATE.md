@@ -1,6 +1,37 @@
 
 # Project State
 
+## Hero-video action is transparent and slightly lower in the combined unpublished preview — 2026-08-31
+
+[Owner correction and implementation] The owner rejected the brown rectangle around the first
+homepage video's `تسوقوا الآن` action and asked for the action to sit slightly lower. Canonical
+GitHub `main` commit `bce7d159670147f365ac43eadbb2d4361ed04209` changes only
+`assets/calabriz.css`: the normal and hover backgrounds are transparent, the full rectangular
+border is removed, a single beige underline remains, and the wrapper is translated 12 px downward.
+A brown-derived text halo preserves legibility across changing video frames, and keyboard focus has
+an explicit beige outline. The label, arrow animation, and exact destination
+`https://calapres.com/collections/all` are unchanged.
+
+[Shopify preview and production boundary] The same asset persists in unpublished theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) with MD5
+`6157d7918151a17a2d8d77889349fe04` and size 42,705 bytes. Shopify reread shows that draft as
+`UNPUBLISHED`, not processing, and without a processing failure. Theme `165774786816` remains
+`MAIN` and was not edited or published.
+
+[Validation] Theme Check inspected 181 files with zero errors and the six existing Rubik
+external-font warnings. Fresh preview renders at 320 by 700, 390 by 844, and 1280 by 900 px had no
+horizontal overflow. The action's bottom gap changed from 36 to 24 px on both mobile checks and from
+27 to 15 px at 1280 by 900; the in-app 1280 by 720 viewport measured 9.6 px after the same 12 px
+translation. Computed normal state is fully transparent with no box, one 1 px beige underline, and
+the intended brown shadow. The mobile visual read shows the action unobstructed above the video's
+lower edge.
+
+[Contrast boundary] This owner-directed transparent treatment supersedes the previous backed hero
+action and its unconditional 5.25:1 worst-frame contrast claim. The beige underline and brown halo
+remain derived only from the approved two-colour palette and improve practical legibility, but a
+single guaranteed contrast ratio cannot be claimed for every moving video frame. Publication of the
+combined draft still requires the owner's visual approval.
+
 ## Footer icons optically normalized in the combined unpublished preview — 2026-08-31
 
 [Cause and bounded implementation] The owner reported that the X glyph appeared higher and larger

@@ -1,6 +1,31 @@
 
 # Handoff
 
+## Resume here — transparent hero-video action staged; combined draft remains unpublished — 2026-08-31
+
+The owner's correction to the first homepage video's `تسوقوا الآن` action is complete in canonical
+GitHub `main` commit `bce7d159670147f365ac43eadbb2d4361ed04209` and Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; theme `165774786816` remains `MAIN` and was not edited.
+
+Only `assets/calabriz.css` changed. The brown normal/hover background and full rectangular border
+are gone, a light beige underline remains, and the whole action is 12 px lower. Its brown-derived
+text halo keeps it readable over the moving video without reintroducing a background, and its
+keyboard focus outline is explicit. The exact link remains
+`https://calapres.com/collections/all`. Shopify persisted MD5
+`6157d7918151a17a2d8d77889349fe04`, 42,705 bytes.
+
+Theme Check passed 181 files with zero errors and six existing Rubik external-font warnings. Fresh
+320 by 700, 390 by 844, and 1280 by 900 renders had no horizontal overflow; the action's bottom gaps
+are 24 px on both mobile checks and 15 px at 1280 by 900. The in-app 1280 by 720 check measured
+9.6 px. Computed normal state is transparent with no box and the mobile screenshot shows the action
+clear of the edge. The former 5.25:1 worst-frame contrast claim no longer applies to a transparent
+action over moving video; rely on the verified halo/underline treatment and owner visual review.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish this combined draft or
+save the pending checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
 ## Resume here — normalized footer icons staged; combined draft remains unpublished — 2026-08-31
 
 The footer correction is complete in canonical GitHub `main` commit
