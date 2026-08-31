@@ -1,6 +1,27 @@
 
 # Handoff
 
+## Resume here — configured-only social links staged; three official URLs still needed — 2026-08-31
+
+The dead-button footer correction is complete in canonical GitHub `main` commit
+`12a3ca53cb53ef4a09a0d9628ddc19265640b2cc` and unpublished Shopify theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft renders a social
+glyph only when its theme URL is configured. It currently shows only WhatsApp and email; blank X is
+hidden. Adding verified Instagram, Snapchat, or TikTok URLs in the footer settings will make each
+corresponding glyph appear and become clickable without another code change.
+
+Do not infer the missing public URLs from Chatwoot inbox IDs, old supplier accounts, search results,
+or the brand name. The repository and both Shopify themes contain no official Calapres URL or handle
+for the three accounts. Obtain the exact owner-confirmed Instagram, Snapchat, and TikTok profile URLs,
+then update only those three footer settings in draft `165777604864` and verify every destination.
+Leave X blank until its official account is ready.
+
+Shopify persisted `sections/footer.liquid` with MD5 `909b23bc8b16f2818d7fdc85fa3b3f16`, 8,594
+bytes. Theme Check passed 181 files with zero errors and six existing Rubik warnings. Fresh preview
+inspection found exactly `https://wa.me/966508727687` and `mailto:info@calapres.com`, zero disabled
+social spans, zero X glyphs, and no horizontal overflow. Theme `165774786816` remains `MAIN` and its
+footer was not edited. Do not publish draft `165777604864` without the owner's explicit approval.
+
 ## Resume here — transparent scrollbar and layered beige glass staged; combined draft remains unpublished — 2026-08-31
 
 The owner's scrollbar and beige-glass correction is complete in canonical GitHub source commit

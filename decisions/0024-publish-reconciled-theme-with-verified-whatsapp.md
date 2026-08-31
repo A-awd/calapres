@@ -128,3 +128,29 @@ Canonical GitHub commit `3e9e57423cd8b5b8ffc2f02f8aba47d026f5ea5d` and unpublish
 theme `165777604864` contain this amendment. Validation at 320 px, 390 px, and 1280 px kept one
 non-overflowing row, and direct pointer checks returned the same hover transform for all six
 glyphs. Live theme `165774786816` was not changed.
+
+## Amendment — configured-only social destinations — 2026-08-31
+
+Status: accepted for implementation; staged in an unpublished preview, publication pending
+
+The owner rejected visible social glyphs that behaved like buttons without opening a real account,
+confirmed that Instagram, Snapchat, and TikTok are the next accounts to connect, and stated that X
+is not ready. This supersedes the earlier presentation rule that kept blank destinations visible as
+disabled spans; it does not relax the requirement to verify each official destination.
+
+The durable rules are:
+
+1. Render a footer social glyph only when its corresponding Shopify theme URL is nonblank.
+2. A configured glyph is a real anchor; an unconfigured glyph is absent, not a decorative or dead
+   button.
+3. Keep the existing Shopify URL settings so a verified destination can be added later without a
+   code deployment.
+4. Leave X blank and absent until its official account is ready.
+5. Never derive a public profile from a Chatwoot inbox ID, supplier account, search result, or
+   guessed handle.
+
+No official Calapres Instagram, Snapchat, or TikTok URL was present in canonical GitHub or either
+Shopify theme at implementation time. Canonical GitHub commit
+`12a3ca53cb53ef4a09a0d9628ddc19265640b2cc` and unpublished theme `165777604864` therefore render
+only the verified WhatsApp and email anchors. The draft footer checksum is
+`909b23bc8b16f2818d7fdc85fa3b3f16`; live theme `165774786816` was not edited or published.
