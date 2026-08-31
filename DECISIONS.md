@@ -94,6 +94,12 @@ decision record.
   2026-08-31 amendment adds a verified email link and an official X glyph without guessing an X
   destination, requires all six footer icons to remain in one row at 320 px and wider, and is now
   executed in live theme `165774786816` with `165770887424` preserved as rollback.
+- [0025 — Adopt the Calapres beige and burnt-brown storefront palette](decisions/0025-adopt-two-colour-storefront-palette.md)
+  — use source ground `#DFD4C3` and ink `#44271B`, with interface layers derived only by
+  transparency; recolour the exact header wordmark silhouette and existing social glyph geometries
+  while preserving link rules; keep media, product swatches, native third-party branding, and
+  checkout outside this theme-palette claim; and require owner approval before publishing the
+  verified unpublished preview.
 
 ## Superseded decisions
 

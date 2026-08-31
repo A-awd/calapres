@@ -1,6 +1,49 @@
 
 # Handoff
 
+## Resume here — two-colour storefront palette awaits owner visual approval — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The bounded work began
+from `0b18953b8823bc254ff28406ae21be90f70cb7e0`; implementation source is now in canonical GitHub
+commit `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Authenticated Shopify still shows
+`165774786816` as `MAIN` and `165770887424` as the immediate unpublished rollback.
+
+The owner chose the supplied Magnific wax-seal image as the visual colour authority. Magnific
+creation `DoBCSVCpcl` contained qualitative cocoa/ivory wording but no numeric values. The exact
+image-derived interface sources are beige ground `#DFD4C3` and burnt-brown ink `#44271B`; their
+contrast is 9.24:1. Decision 0025 records that alpha derivatives are allowed for interface depth,
+while product media, product swatches, video, and native third-party branding remain truthful
+content rather than UI tokens. Checkout remains separate and unchanged.
+
+Shopify draft `Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) remains
+`UNPUBLISHED`, not processing, and without failure. It contains six changed files:
+
+- `assets/calabriz.css`: `3dd71367b0f450c1a47af1362fcb2275`.
+- `layout/theme.liquid`: `7df9733932f681968bc11c1d0277486b`.
+- `layout/password.liquid`: `9b69bba75122a3000b3857451bf92a05`.
+- `sections/header.liquid`: `a6a0c72959d62d639cc59a0119d65e50`.
+- `sections/footer.liquid`: `d91fdc9df03e364c531b73c43ca0a2e6`.
+- `snippets/cart-drawer.liquid`: `417fccebc63ff62eb65353cf220c22d1`.
+
+The draft unifies the scrollbar, text, buttons, cart badge/drawer, form controls, browser
+`theme-color`, header wordmark, and six footer glyphs. The raw wordmark and social assets are not
+redrawn; their silhouettes are rendered as brown CSS masks. WhatsApp remains exactly
+`https://wa.me/966508727687`, email remains exactly `mailto:info@calapres.com`, X remains disabled,
+and all other social-link rules are unchanged. Error notes retain a non-colour distinction, focus
+indicators are visible, and image overlays/control boundaries meet their applicable contrast gates.
+
+Theme Check passed with zero errors and six existing Cairo remote-font warnings. Final 320 px,
+390 px, and 1280 px renders had no horizontal overflow, header overlap, or browser-console errors or
+warnings. Both mobile sizes showed all six brown icons on one row; cart, national-address helper,
+contact fields, hero action, and collection labels rendered in the intended palette. The open store
+redirects `/password` to the homepage, so the password layout was checked statically.
+
+Next action: show the owner
+`https://calapres.com/?preview_theme_id=165777604864` and wait for a fresh explicit approval. If
+approved, publish only theme `165777604864`, verify its new `MAIN` role and public 320/390/1280
+renders, and preserve `165774786816` as the immediate rollback. Do not publish now, do not change
+checkout or the favicon asset in this stage, and do not run `.github/workflows/theme-deploy.yml`.
+
 ## Resume here — exact Calapres wordmark is in an unpublished header preview — 2026-08-31
 
 Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded stage

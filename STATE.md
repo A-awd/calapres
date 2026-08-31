@@ -1,6 +1,66 @@
 
 # Project State
 
+## Two-colour Calapres storefront palette ready in an unpublished preview — 2026-08-31
+
+[Canonical source and Shopify roles] This bounded palette stage started from clean GitHub
+`origin/main` commit `0b18953b8823bc254ff28406ae21be90f70cb7e0`. Its implementation source
+reached GitHub `main` commit `0030abf2cf99229426a29a63591c2cacce4ffdc3`. A fresh authenticated
+Shopify reread confirms theme `165774786816` remains `MAIN`, immediate rollback theme
+`165770887424` remains `UNPUBLISHED`, and the new palette preview `165777604864` remains
+`UNPUBLISHED`, not processing, and without a processing failure.
+
+[Owner direction and exact values] The owner selected the supplied Magnific-created wax-seal image
+as the colour authority and requested one light beige ground plus one burnt-brown ink for writing
+and the storefront logo. Magnific creation `DoBCSVCpcl` described deep cocoa brown on warm ivory or
+soft cream but contained no hex codes. Sampling the owner's 1280 x 1280 source image, SHA-256
+`fb47a383ba18532aa2c90dfa4888b442f18f5af40130f95138e5599e6a4edaaa`, produced ground
+`#DFD4C3` and ink `#44271B`, with 9.24:1 contrast. Decision 0025 records the exact scope and the
+production-approval gate.
+
+[Implemented interface] The storefront uses only those two source colours. Panels, borders,
+shadows, overlays, selection, hover states, and focus indicators are transparency derivatives.
+Black, gray, gold, white, and red interface literals were removed. Scrollbar track and thumb, all
+text, buttons, cart quantity badge, cart drawer, form controls, browser `theme-color`, the exact
+header wordmark silhouette, and all six footer glyph shapes now follow the beige/brown system. The
+raw wordmark and official social SVG files remain unchanged and are displayed as brown CSS masks;
+their destinations and enabled/disabled rules are unchanged. A small mobile footer-nav wrap rule
+was required after the preview exposed a 320 px horizontal overflow.
+
+[Accessibility and content boundary] Beige/brown base contrast is 9.24:1. The hero action remains at
+least 5.25:1 over a worst-case white video frame, collection labels at least 5.60:1 over a white
+image, and control boundaries 3.36:1 against the beige ground. Errors remain distinguishable by
+bold weight and a brown side rule, and keyboard focus has a brown outline. Product media, product
+colour swatches, video, and native third-party payment/application branding remain truthful content
+outside the two-source UI claim. Checkout is unchanged and remains separately controlled under
+decision 0022.
+
+[Unpublished Shopify implementation] Draft `Preview — Calapres beige + burnt brown 2026-08-31`
+(`165777604864`) contains exactly six changed files. Shopify reread checksums and sizes are:
+
+- `assets/calabriz.css`: MD5 `3dd71367b0f450c1a47af1362fcb2275`, 42,290 bytes.
+- `layout/theme.liquid`: MD5 `7df9733932f681968bc11c1d0277486b`, 3,774 bytes.
+- `layout/password.liquid`: MD5 `9b69bba75122a3000b3857451bf92a05`, 1,824 bytes.
+- `sections/header.liquid`: MD5 `a6a0c72959d62d639cc59a0119d65e50`, 2,876 bytes.
+- `sections/footer.liquid`: MD5 `d91fdc9df03e364c531b73c43ca0a2e6`, 9,428 bytes.
+- `snippets/cart-drawer.liquid`: MD5 `417fccebc63ff62eb65353cf220c22d1`, 2,938 bytes.
+
+[Validation] Shopify Theme Check inspected 181 files with zero errors and only the six pre-existing
+Cairo remote-font warnings. `git diff --check`, all repository JSON parsing, Liquid section-schema
+parsing, and unique setting-ID checks pass. Fresh renders at 320 px, 390 px, and 1280 px had no
+horizontal overflow or header overlap. Both mobile widths showed all six brown footer glyphs on one
+row; WhatsApp remained `https://wa.me/966508727687`, email remained
+`mailto:info@calapres.com`, and X remained disabled. The brown wordmark mask, beige/brown cart
+badge and drawer, national-address helper, contact fields, hero action, and collection labels all
+rendered with the intended computed colours. Browser console errors and warnings were empty. The
+password route redirects to the public homepage while the store is open, so its layout was validated
+statically rather than claimed as a separate public render.
+
+[Next gate and unchanged scope] The owner must visually review the preview and explicitly approve
+publication. No live theme, checkout, favicon asset, product, inventory, customer, order, payment,
+Paymob, shipping, tax, app, Captain, n8n, Chatwoot, Meta, or social-link setting changed. Do not run
+`.github/workflows/theme-deploy.yml`.
+
 ## Exact Calapres wordmark ready in an unpublished header preview — 2026-08-31
 
 [Canonical base] This bounded header stage started from a clean worktree at freshly fetched GitHub
