@@ -1,22 +1,24 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Handoff
 
-## Resume here — six-icon mobile footer is verified in draft; publish confirmation pending — 2026-08-31
+## Resume here — six-icon mobile footer is live and verified — 2026-08-31
 
-Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Start from the clean
-GitHub base `2dc41a860118802eed6f85a65588e03c12516d35`; the owner's dirty, diverged checkout and
-unrelated worktrees were not modified.
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The implementation
+started from clean GitHub base `2dc41a860118802eed6f85a65588e03c12516d35` and its source reached
+GitHub `main` commit `199010681eff2f36c252a7412aaedd1189f82717` before publication. The owner's
+dirty, diverged checkout and unrelated worktrees were not modified.
 
 The public mobile defect is proven. At 390 px the existing social column was 158 px wide, each
 icon box was 44.8 px wide, the gap was 12.8 px, and wrapping was enabled, so the four icons split
 into two rows. WhatsApp was not assigned a larger layout box; its official glyph only looked larger
 inside the same box.
 
-Shopify duplicated the current main theme `165770887424` into unpublished theme `165774786816`
-and renamed it `Preview — six social icons mobile fix`. The draft adds official-style X and email
-assets, keeps the existing Instagram, Snapchat, TikTok, and WhatsApp assets, optically reduces only
-the WhatsApp glyph, and makes the social block span both footer columns on mobile. The six items now
-stay in one non-wrapping row.
+Shopify duplicated theme `165770887424` into theme `165774786816` and renamed it
+`Preview — six social icons mobile fix`. It adds official-style X and email assets, keeps the
+existing Instagram, Snapchat, TikTok, and WhatsApp assets, optically reduces only the WhatsApp
+glyph, and makes the social block span both footer columns on mobile. The six items stay in one
+non-wrapping row.
 
 Identity rules are explicit. Email is clickable at `mailto:info@calapres.com`, proven from the
 authenticated Shopify store and public Calapres pages. WhatsApp remains
@@ -32,17 +34,24 @@ Shopify returned no user errors. The persisted draft checksums are
 `config/settings_data.json` reread exactly matched the local source and reported checksum
 `8c265f87b89a1a49c641b842a37a323e`.
 
-Fresh draft preview checks passed at 320 px, 390 px, and 1280 px. All six icon boxes shared one
+Pre-publication preview checks passed at 320 px, 390 px, and 1280 px. All six icon boxes shared one
 y-coordinate, the mobile container height was 40 px, WhatsApp and email had the exact links, X had
 no `href`, and the browser console had no errors. The footer schema has 16 unique setting IDs, the
 changed JSON and SVGs parse, the new SVGs contain no executable or external references, and
 `git diff --check` passes.
 
-Do not edit the active theme directly. The current main `165770887424` is unchanged. The only
-remaining action is to obtain the final action-time confirmation, publish draft `165774786816`
-through authenticated Shopify Admin, then verify a fresh public 320 px render and Shopify roles.
-After publication, preserve `165770887424` as the immediate rollback and update this handoff with
-the final live evidence. Do not run `.github/workflows/theme-deploy.yml`.
+The owner explicitly authorized publication. Authenticated Shopify Admin confirmed that publishing
+`165774786816` would replace `165770887424`; the confirmation was accepted and the theme library
+showed the new theme as `Active`. A fresh Admin GraphQL reread now shows `165774786816` as `MAIN`,
+not processing and without a processing failure, while `165770887424` is `UNPUBLISHED`. The role
+change timestamp is `2026-08-31T13:01:23Z`; the former main is preserved as the immediate rollback.
+
+After explicitly exiting preview mode, a fresh public 320 px render had no preview bar and showed
+all six 40 px icon boxes on one row. WhatsApp linked exactly to
+`https://wa.me/966508727687`, email linked exactly to `mailto:info@calapres.com`, X had no `href`,
+and the browser console had no errors. Instagram, Snapchat, and TikTok remain disabled until their
+official URLs are separately verified. The publication stage is complete; typography is the next
+separate storefront stage. Do not run `.github/workflows/theme-deploy.yml`.
 
 ## Resume here — reconciled four-icon theme is live with verified Calapres WhatsApp — 2026-08-31
 

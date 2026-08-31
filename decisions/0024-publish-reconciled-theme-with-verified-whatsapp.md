@@ -1,3 +1,4 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 # 0024 — Publish the reconciled Calapres theme with a verified WhatsApp destination
 
 Date: 2026-08-31
@@ -65,16 +66,17 @@ only. The other three social account URLs remain blank.
 
 ## Rollback
 
-Publish former main theme `163004449024` only after an explicit owner rollback request, then
-verify the live footer and favicon. That rollback removes the reconciled official glyph set,
-Calapres monogram favicon, and verified Calapres WhatsApp footer link together. If only the
-WhatsApp destination must be withdrawn, clear `whatsapp_url` in the current main theme instead of
-rolling back unrelated approved visual work. Do not delete either theme or run the existing
-deployment workflow during rollback.
+After the six-icon amendment, the immediate rollback theme is `165770887424`. Publish it only
+after an explicit owner rollback request, then verify the live footer and favicon. It restores the
+prior four-icon reconciled theme while retaining the verified Calapres WhatsApp link and monogram
+favicon. Theme `163004449024` remains an older unpublished fallback, not the direct rollback
+target. If only the WhatsApp destination must be withdrawn, clear `whatsapp_url` in the current
+main theme instead of rolling back unrelated approved visual work. Do not delete any theme or run
+the existing deployment workflow during rollback.
 
 ## Amendment — six-icon responsive footer — 2026-08-31
 
-Status: accepted; verified in unpublished draft, public publication pending
+Status: accepted and executed
 
 The owner found that the four-icon footer wrapped on mobile and requested X and email as well.
 Live measurement proved that the wrap came from the half-width mobile footer column, fixed icon
@@ -89,10 +91,21 @@ The durable rules are:
 4. Link email only to the verified official address `info@calapres.com`.
 5. Use X's official current glyph, but keep it disabled until an exact official Calapres X URL is
    verified. A search result or inferred handle is not authority.
-6. Use the unpublished duplicate `165774786816` for implementation and preview. Do not modify the
-   current main theme directly; publish only after the final public-site confirmation and retain
-   the then-former main theme as rollback.
+6. Use duplicate `165774786816` for implementation and preview rather than editing the then-current
+   main directly. After final confirmation, publish it as `MAIN` and retain `165770887424` as the
+   immediate unpublished rollback.
 
 The draft passed 320 px, 390 px, and 1280 px render checks with one icon row, exact WhatsApp and
-email links, no X `href`, and no browser-console errors. This amendment does not authorize or alter
-any product, checkout, shipping, payment, Paymob, customer-service, or automation configuration.
+email links, no X `href`, and no browser-console errors.
+
+The owner then explicitly authorized publication. Authenticated Shopify Admin confirmed that
+publishing `165774786816` would replace `165770887424`; after confirmation, a fresh Admin GraphQL
+reread showed `165774786816` as `MAIN`, not processing and without a processing failure, and
+`165770887424` as `UNPUBLISHED`. Both roles changed at `2026-08-31T13:01:23Z`.
+
+After explicitly exiting preview mode, a fresh public 320 px render had no preview bar and showed
+exactly six 40 px interaction boxes on one shared row. WhatsApp linked exactly to
+`https://wa.me/966508727687`, email linked exactly to `mailto:info@calapres.com`, X remained a
+disabled span without `href`, and the browser console contained no errors. This amendment did not
+alter any product, checkout, shipping, payment, Paymob, customer-service, or automation
+configuration.

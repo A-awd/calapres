@@ -1,3 +1,4 @@
+/Users/awd/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
 
 # Decision Index
 
@@ -92,7 +93,8 @@ decision record.
   disabled until their official URLs are individually verified, preserve the former main theme as
   rollback, and do not use the Saudi Post helper number as Calapres contact information. The
   2026-08-31 amendment adds a verified email link and an official X glyph without guessing an X
-  destination, and requires all six footer icons to remain in one row at 320 px and wider.
+  destination, requires all six footer icons to remain in one row at 320 px and wider, and is now
+  executed in live theme `165774786816` with `165770887424` preserved as rollback.
 
 ## Superseded decisions
 
