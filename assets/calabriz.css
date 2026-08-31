@@ -27,7 +27,11 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(var(--ink-rgb),.34) transparent}
+html{scroll-behavior:smooth}
+
+@supports (-moz-appearance:none){
+  html{scrollbar-width:thin;scrollbar-color:rgba(var(--ink-rgb),.34) transparent}
+}
 
 body{font-family:var(--font);background-color:var(--page);background-image:radial-gradient(80rem 45rem at 12% -8%,rgba(var(--ground-rgb),.30),transparent 68%),radial-gradient(60rem 38rem at 90% 68%,rgba(var(--ink-rgb),.035),transparent 72%);color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
