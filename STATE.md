@@ -11,16 +11,18 @@ engraving answer. The standalone FAQ received the same correction, and the schem
 changed so the rejected copy is not reintroduced when a future FAQ block is added.
 
 [Shopify product data] All three active products — white, beige, and gray — had their live
-`descriptionHtml` corrected to describe a `مبخرة`; the separate `محتويات الطقم` paragraph was
-removed. Titles, prices, variants, inventory, status, media, and handles were not changed.
+`descriptionHtml`, SEO title, SEO description, and image alternative text corrected to describe a
+`مبخرة`; the separate `محتويات الطقم` paragraph was removed. Product titles, prices, variants,
+inventory, status, handles, and image files were not changed.
 
 [Live deployment and verification] The four canonical theme files were pushed to live theme
 `165777604864` and pulled back byte-for-byte. Theme Check inspected 181 files with zero errors and
 the six existing remote-font warnings. Fresh public checks returned HTTP-rendered pages for all
 three product handles; every page showed exactly two accordions, contained
-`هل المبخرة مناسبة للإهداء؟`, and contained neither rejected question. A fresh read of all three
-Shopify records confirmed that none of their product descriptions contains `طقم`. The standalone
-FAQ likewise contains no `طقم` occurrence.
+`هل المبخرة مناسبة للإهداء؟`, and contained neither rejected question. A fresh Shopify GraphQL read
+and browser render of all three products confirmed that none of the product descriptions, SEO
+titles, SEO descriptions, or image alternative text contains `طقم`; the rendered browser titles and
+meta descriptions also use `مبخرة`. The standalone FAQ likewise contains no `طقم` occurrence.
 
 ## Beige and burnt-brown combined design published and verified live — 2026-08-31
 

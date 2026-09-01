@@ -115,8 +115,9 @@ decision record.
   changes are independently confirmed.
 - [0027 — Use `مبخرة`, not `طقم`, in product copy](decisions/0027-use-mibkhara-in-product-copy.md)
   — remove the contents-of-the-set accordion, use `هل المبخرة مناسبة للإهداء؟`, and describe all
-  three active products as a `مبخرة`; keep separately approved homepage and About-page marketing
-  copy outside this correction until the owner requests a broader terminology change.
+  three active products and their SEO and image alternative text as a `مبخرة`; keep separately
+  approved homepage and About-page marketing copy outside this correction until the owner requests
+  a broader terminology change.
 
 ## Superseded decisions
 

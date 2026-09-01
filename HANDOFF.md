@@ -10,15 +10,16 @@ standalone-FAQ answers, and changes both section schema defaults to prevent recu
 theme files are live in theme `165777604864` and match a fresh remote pull byte-for-byte.
 
 All three active Shopify products — white, beige, and gray — now have descriptions that start with
-`مبخرة كالابريز الفاخرة`; the `محتويات الطقم` paragraph was removed. Fresh product reads found no
-`طقم` in any of the three descriptions. Fresh public checks of all three product handles showed the
-new gift question and neither rejected question. Theme Check inspected 181 files with zero errors
-and the six existing remote-font warnings. No title, price, inventory, variant, status, handle, or
-media changed.
+`مبخرة كالابريز الفاخرة`; the `محتويات الطقم` paragraph was removed. Their SEO titles, SEO
+descriptions, and image alternative text were also corrected from `طقم` to `مبخرة`. Fresh Shopify
+GraphQL reads and public browser renders found no `طقم` in any of those fields, and all three product
+pages showed the new gift question and neither rejected question. Theme Check inspected 181 files
+with zero errors and the six existing remote-font warnings. No product title, price, inventory,
+variant, status, handle, or image file changed.
 
-This correction was intentionally limited to the product descriptions, product-page FAQ, and the
-standalone FAQ. Older marketing copy on the homepage and About page still contains separately
-approved `طقم` wording and should not be silently rewritten without a new owner request.
+This correction was intentionally limited to product descriptions and metadata, the product-page
+FAQ, and the standalone FAQ. Older marketing copy on the homepage and About page still contains
+separately approved `طقم` wording and should not be silently rewritten without a new owner request.
 
 ## Resume here — combined beige and burnt-brown design is live and verified — 2026-08-31
 
