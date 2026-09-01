@@ -2,7 +2,7 @@
 
 Date: 2026-09-01
 
-Status: accepted; implementation prepared for isolated preview
+Status: accepted; storefront implementation verified in draft, native Arabic checkout blocked
 
 ## Context
 
@@ -50,6 +50,30 @@ Before production publication:
 - test initial and dynamically inserted content, product prices, the cart badge, cart quantities,
   totals, dates or years where present, and mobile layout in a real browser;
 - inspect native checkout separately and record exactly what is and is not controlled.
+
+## Verified draft record
+
+Canonical GitHub `main` commit `f49f3871c4c650936925a0b55175ff17f29b245a` implements this rule in
+the seventeen theme files that render prices, cart values, static numbers, customer-data boundaries,
+and shared layouts. Shopify draft `165804638464`, `Preview — Western digits 0-9 2026-09-01`, is an
+isolated duplicate of live theme `165777604864`; every uploaded file matches canonical source by
+MD5 and size. The live theme was not changed.
+
+Theme Check inspected 181 files with zero errors and the six existing remote-font warnings. The
+independent suite converted all 680 Unicode decimal-number characters and passed syntax, dynamic-
+DOM, customer-data, attribute-safety, and batching-performance checks. Browser verification passed
+the homepage, product, cart drawer, standalone cart, About, and 404 surfaces, including a dynamic
+quantity and total update and a 390 px no-overflow check. A customer-entered search term `١٢` stayed
+exact while the store-generated result count used `0`.
+
+The native Arabic checkout remains outside this decision's executed coverage. It displayed
+`١ عنصر` and `٣٩٠٫٠٠ ر.س.`, and a direct `ar-SA-u-nu-latn` locale test did not change those values.
+The Admin API confirms the store is on Basic. Shopify's current platform documentation states that
+theme custom CSS does not apply to checkout and information, shipping, and payment-page UI
+extensions require Plus. No documented Basic control can replace Shopify's native checkout-number
+formatting. Publication therefore requires an explicit owner decision: accept the native Arabic-
+checkout exception while publishing the storefront improvement, or use an English checkout whose
+native numbers are Western. Neither choice has been executed.
 
 ## Rollback
 

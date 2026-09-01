@@ -1,6 +1,33 @@
 
 # Handoff
 
+## Resume here — Western digits are verified in draft; native Arabic checkout still uses Arabic digits — 2026-09-01
+
+Canonical GitHub `main` commit `f49f3871c4c650936925a0b55175ff17f29b245a` contains the complete
+theme-controlled implementation of the owner's `0–9` rule. Unpublished Shopify theme
+`165804638464`, `Preview — Western digits 0-9 2026-09-01`, is a clean duplicate of live theme
+`165777604864` plus the seventeen changed theme files. Remote MD5 and size match canonical source;
+the draft is not processing or failed. Nothing was published to the live theme.
+
+Theme Check has zero errors and the six existing remote-font warnings. Template and schema JSON
+parse, the independent conversion suite passed all 680 Unicode decimal-number characters, and
+browser checks passed the homepage, product, cart drawer, standalone cart, About, and 404 pages.
+Dynamic cart quantity `2` and total `780` appeared with Western digits; the original cart quantity
+`1` and total `390` were then restored. The 390 px storefront and drawer have no horizontal
+overflow. Customer input is deliberately preserved exactly: a search for `١٢` continued to show
+`١٢`, while the store-generated result count displayed `0`.
+
+The unresolved boundary is real and visible in Shopify's native Arabic checkout: it shows
+`١ عنصر` and `٣٩٠٫٠٠ ر.س.`. The theme cannot run there, and a direct
+`ar-SA-u-nu-latn` locale test did not change the output. A fresh Admin API read confirms the plan is
+Basic and not Plus; Shopify's current documentation says the information, shipping, and payment
+checkout steps cannot receive UI extensions on Basic, and theme custom CSS does not apply to
+checkout. Do not claim whole-site completion and do not publish draft `165804638464` without the
+owner's explicit decision. The safe choices are: publish the verified storefront improvement while
+accepting Shopify's Arabic-checkout exception, or switch checkout to English so its native numbers
+are Western at the cost of an English checkout. Preserve live theme `165777604864` and rollback
+theme `165774786816`; do not delete any theme.
+
 ## Resume here — the live offer is one elegant burner plus name-or-logo engraving — 2026-09-01
 
 The owner explicitly superseded the earlier narrow terminology boundary: Calapres does not sell a

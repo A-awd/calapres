@@ -1,6 +1,41 @@
 
 # Project State
 
+## Western digits completed in an isolated storefront preview; native Arabic checkout is blocked — 2026-09-01
+
+[Owner requirement] Every store-generated amount, quantity, duration, date, year, count, and other
+number must use Western `0–9` digits in Arabic and English. Canonical GitHub `main` commit
+`f49f3871c4c650936925a0b55175ff17f29b245a` removes the former Arabic-Indic conversion, replaces
+the static Arabic-Indic values, directs the cart quantity control to an English digit presentation,
+and adds a guarded normalizer for every Unicode decimal-number system introduced into the visible
+theme DOM later. Exact customer-authored engraving, names, addresses, search terms, rich-text input,
+and gift-card codes remain unchanged; URLs, identifiers, submitted values, data attributes, scripts,
+and JSON-LD are not rewritten.
+
+[Isolated Shopify preview] Live theme `165777604864` was duplicated to unpublished theme
+`165804638464`, `Preview — Western digits 0-9 2026-09-01`. Seventeen canonical theme files were
+uploaded only to the duplicate and reread with MD5 and size matching local source. The draft is not
+processing and has no processing failure. The live theme was not changed or republished.
+
+[Validation] Theme Check inspected 181 files with zero errors and the six existing remote-font
+warnings; all template JSON and 16 section schemas parse. An independent audit passed all 680
+Unicode decimal-number characters and the customer-data, machine-attribute, dynamic-DOM, syntax,
+and batching-performance checks. Fresh browser checks found only Western digits in the homepage,
+product, cart drawer, standalone cart, About, and 404 surfaces. Product prices display `390` and
+`490`, the footer year displays `2026`, About values display `01`, `02`, and `03`, and a dynamic
+cart change displayed quantity `2` and total `780` before the original quantity `1` and total `390`
+were restored. At 390 px the document and drawer had zero horizontal overflow. A synthetic search
+term `١٢` remained exact as customer input while the store-generated result count displayed `0`.
+
+[Genuine platform blocker] The separate native Arabic Shopify checkout rendered `١ عنصر` and
+`٣٩٠٫٠٠ ر.س.`. Adding the standard locale numbering extension `ar-SA-u-nu-latn` left those values
+unchanged. The connected store is currently Basic, not Plus. Theme code and theme custom CSS do not
+run in checkout, and Shopify documents that information, shipping, and payment-page UI extensions
+are Plus-only. No documented Basic-plan control can change Shopify's native Arabic number formatting.
+Do not publish the draft as satisfying the owner's whole-site requirement without the owner's
+explicit choice between accepting this checkout exception or using an English checkout. No payment,
+checkout setting, checkout configuration, customer data, or live theme changed.
+
 ## Product composition corrected to one burner plus engraving across the live storefront — 2026-09-01
 
 [Owner correction] The owner clarified the physical offer exactly: there is no stand, oud box, set,
