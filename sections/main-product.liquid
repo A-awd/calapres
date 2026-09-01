@@ -48,7 +48,7 @@
         <input type="hidden" name="id" value="{{ mp_variant.id }}">
         <div class="pd-eng">
           <label for="engInput">الاسم أو الشعار للحفر (اختياري)</label>
-          <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: سارة ومحمد — ١٤٤٧هـ">
+          <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: سارة ومحمد — 1447هـ">
         </div>
         <button class="btn-dark" id="pdAdd" type="submit"{% unless product.available %} disabled{% endunless %}>
           {%- if product.available -%}

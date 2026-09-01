@@ -8,9 +8,23 @@
 (function(){
 "use strict";
 var H=window.CALABRIZ||{};
-var AR="٠١٢٣٤٥٦٧٨٩";
-var ar=H.ar||function(n){return String(n).replace(/[0-9]/g,function(d){return AR[+d]})};
-var fmt=H.fmt||function(n){return ar(String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"٬"))+" ر.س"};
+var digits=H.digits||H.ar||function(value){
+  var decimalDigit;
+  try{decimalDigit=new RegExp("^\\p{Decimal_Number}$","u")}catch(error){decimalDigit=null}
+  var input=String(value),output="",index=0;
+  while(index<input.length){
+    var code=input.codePointAt(index),character=String.fromCodePoint(code);
+    if(code>=48&&code<=57)output+=character;
+    else if(decimalDigit&&decimalDigit.test(character)){
+      var start=code;
+      while(start>0&&decimalDigit.test(String.fromCodePoint(start-1)))start--;
+      output+=String((code-start)%10);
+    }else output+=character;
+    index+=character.length;
+  }
+  return output;
+};
+var fmt=H.fmt||function(n){return digits(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")+" ر.س"};
 var esc=H.esc||function(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
 var ENGRAVING_PROP="نص الحفر";
 
@@ -39,7 +53,7 @@ function fetchCart(){
 
 function renderBadge(){
   var b=document.getElementById("cartCount");if(!b||!cart)return;
-  b.textContent=ar(cart.item_count);
+  b.textContent=digits(cart.item_count);
 }
 
 /* "مبخرة كالابريز الفاخرة — الأبيض" -> name + color */
@@ -71,9 +85,9 @@ function renderCart(){
       (it.image?'<img src="'+esc(it.image)+'" alt="">':'')+
       '<div class="di-info"><h4>'+esc(t.name)+'</h4>'+
       (t.color?'<div class="di-color">اللون: '+esc(t.color)+'</div>':'')+
-      (eng?'<div class="di-eng">الحفر: «'+esc(eng)+'»</div>':'')+
+      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+
       '<div class="d-row"><span class="qty">'+
-      '<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+ar(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>'+
+      '<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+digits(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>'+
       '</span><span class="di-price">'+money(it.final_line_price)+'</span></div>'+
       '<button class="di-remove" data-del="'+idx+'">إزالة</button></div></div>';
   });

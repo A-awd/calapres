@@ -7,7 +7,7 @@
     <h1>البحث</h1>
     {%- if search.performed -%}
     {%- assign sr_count = search.results_count -%}
-    <p>نتائج البحث عن «{{ search.terms | escape }}» — {% render 'arabic-digits', value: sr_count %} نتيجة</p>
+    <p>نتائج البحث عن «<span data-preserve-digits>{{ search.terms | escape }}</span>» — {% render 'arabic-digits', value: sr_count %} نتيجة</p>
     {%- endif -%}
     <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
       <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="ابحث في المتجر" aria-label="البحث">

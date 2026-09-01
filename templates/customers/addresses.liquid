@@ -37,7 +37,7 @@
     <ul>
       {%- for address in customer.addresses -%}
       <li style="margin-bottom:1rem">
-        <p>{{ address.address1 }}{% if address.city %}، {{ address.city }}{% endif %}{% if address.country %}، {{ address.country }}{% endif %}
+        <p data-preserve-digits>{{ address.address1 }}{% if address.city %}، {{ address.city }}{% endif %}{% if address.country %}، {{ address.country }}{% endif %}
         {%- if address == customer.default_address %} <b>(الافتراضي)</b>{% endif %}</p>
         <form method="post" action="{{ address.url }}" style="display:inline">
           <input type="hidden" name="_method" value="delete">

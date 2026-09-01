@@ -7,7 +7,7 @@
 <section class="wrap page-content">
   <div class="form-card" style="max-width:460px">
     <p class="form-note">رمز البطاقة:</p>
-    <p class="gift-code">{{ gift_card.code | format_code }}</p>
+    <p class="gift-code" data-preserve-digits>{{ gift_card.code | format_code }}</p>
     {%- if gift_card.expired -%}
     <p class="form-note err">انتهت صلاحية هذه البطاقة.</p>
     {%- elsif gift_card.enabled == false -%}

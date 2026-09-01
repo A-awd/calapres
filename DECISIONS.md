@@ -117,6 +117,10 @@ decision record.
   — remove every stand, oud-box, set, and three-piece claim; show the exact product summary
   `مبخر أنيق` plus `حفر الاسم أو الشعار`; and keep product data, storefront pages, reusable theme
   defaults, and the homepage meta description aligned to that physical offer.
+- [0028 — Use Western `0–9` digits across customer-facing storefront numerals](decisions/0028-use-western-digits-across-storefront.md)
+  — render every store-authored decimal numeral with Western digits in every storefront locale,
+  normalize late theme-DOM content, preserve exact customer-authored and machine-readable values,
+  and verify native checkout as a separate Shopify-controlled surface.
 
 ## Superseded decisions
 

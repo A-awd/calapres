@@ -1,7 +1,7 @@
 <section class="page-intro">
   <div class="wrap">
     <h1>حسابي</h1>
-    <p>أهلًا {{ customer.first_name | default: customer.email }} — هنا تجد طلباتك وعناوينك.</p>
+    <p>أهلًا <span data-preserve-digits>{{ customer.first_name | default: customer.email }}</span> — هنا تجد طلباتك وعناوينك.</p>
   </div>
 </section>
 <section class="wrap contact-grid" style="padding-bottom:clamp(3.5rem,7vw,5.5rem)">
@@ -43,7 +43,7 @@
       <li><a class="link-arrow" href="{{ routes.account_logout_url }}">تسجيل الخروج <span>←</span></a></li>
     </ul>
     {%- if customer.default_address -%}
-    <p><b>العنوان الافتراضي:</b> {{ customer.default_address.address1 }}{% if customer.default_address.city %}، {{ customer.default_address.city }}{% endif %}{% if customer.default_address.country %}، {{ customer.default_address.country }}{% endif %}</p>
+    <p data-preserve-digits><b>العنوان الافتراضي:</b> {{ customer.default_address.address1 }}{% if customer.default_address.city %}، {{ customer.default_address.city }}{% endif %}{% if customer.default_address.country %}، {{ customer.default_address.country }}{% endif %}</p>
     {%- endif -%}
   </aside>
 </section>

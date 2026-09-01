@@ -18,7 +18,7 @@
             {{ line_item.title }}
             {%- assign li_eng = line_item.properties['نص الحفر'] -%}
             {%- if li_eng != blank -%}
-            <div class="di-eng">الحفر: «{{ li_eng }}»</div>
+            <div class="di-eng" data-preserve-digits>الحفر: «{{ li_eng }}»</div>
             {%- endif -%}
           </td>
           <td>{% render 'arabic-digits', value: line_item.quantity %}</td>
@@ -32,7 +32,7 @@
   <aside class="side-card">
     <h2>التفاصيل</h2>
     {%- if order.shipping_address -%}
-    <p><b>عنوان الشحن:</b> {{ order.shipping_address.address1 }}{% if order.shipping_address.city %}، {{ order.shipping_address.city }}{% endif %}{% if order.shipping_address.country %}، {{ order.shipping_address.country }}{% endif %}</p>
+    <p data-preserve-digits><b>عنوان الشحن:</b> {{ order.shipping_address.address1 }}{% if order.shipping_address.city %}، {{ order.shipping_address.city }}{% endif %}{% if order.shipping_address.country %}، {{ order.shipping_address.country }}{% endif %}</p>
     {%- endif -%}
     <ul style="margin-top:1rem">
       <li><a class="link-arrow" href="{{ routes.account_url }}">عودة إلى حسابي <span>←</span></a></li>

@@ -6,11 +6,137 @@
    ============================================================ */
 (function(){
 "use strict";
-var AR="٠١٢٣٤٥٦٧٨٩";
-function ar(n){return String(n).replace(/[0-9]/g,function(d){return AR[+d]})}
-function fmt(n){return ar(String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"٬"))+" ر.س"}
+var DECIMAL_DIGIT;
+try{DECIMAL_DIGIT=new RegExp("^\\p{Decimal_Number}$","u")}catch(error){DECIMAL_DIGIT=null}
+var DIGIT_CACHE={};
+function digits(value){
+  var input=String(value),output="",index=0;
+  while(index<input.length){
+    var code=input.codePointAt(index),character=String.fromCodePoint(code);
+    if(code>=48&&code<=57)output+=character;
+    else if(Object.prototype.hasOwnProperty.call(DIGIT_CACHE,code))output+=DIGIT_CACHE[code];
+    else if(DECIMAL_DIGIT&&DECIMAL_DIGIT.test(character)){
+      var start=code;
+      while(start>0&&DECIMAL_DIGIT.test(String.fromCodePoint(start-1)))start--;
+      DIGIT_CACHE[code]=String((code-start)%10);
+      output+=DIGIT_CACHE[code];
+    }else output+=character;
+    index+=character.length;
+  }
+  return output;
+}
+function fmt(n){return digits(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")+" ر.س"}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-window.CALABRIZ={ar:ar,fmt:fmt,esc:esc};
+window.CALABRIZ={digits:digits,ar:digits,fmt:fmt,esc:esc};
+
+/* Keep every storefront-authored numeral in Western 0-9 form, including
+   content injected later by the cart and storefront apps. Form values,
+   URLs, IDs, data attributes, scripts, and customer-authored content marked
+   with data-preserve-digits are deliberately left untouched. */
+var DIGIT_ATTRIBUTES=["aria-label","aria-valuetext","title","placeholder","alt"];
+var DIGIT_SKIP={SCRIPT:true,STYLE:true,NOSCRIPT:true,TEXTAREA:true,TEMPLATE:true};
+
+function preservesDigits(element){
+  return !element||DIGIT_SKIP[element.tagName]||Boolean(element.closest("[data-preserve-digits],[contenteditable]:not([contenteditable='false'])"));
+}
+
+function normalizeTextNode(node){
+  var parent=node.parentElement;
+  if(preservesDigits(parent))return;
+  var normalized=digits(node.nodeValue);
+  if(normalized!==node.nodeValue)node.nodeValue=normalized;
+}
+
+function normalizeAttributes(element){
+  if(preservesDigits(element))return;
+  DIGIT_ATTRIBUTES.forEach(function(name){
+    if(!element.hasAttribute(name))return;
+    var value=element.getAttribute(name);
+    var normalized=digits(value);
+    if(normalized!==value)element.setAttribute(name,normalized);
+  });
+}
+
+function normalizeDigitSubtree(root){
+  if(!root)return;
+  if(root.nodeType===3){normalizeTextNode(root);return;}
+  if(root.nodeType!==1&&root.nodeType!==11)return;
+  if(root.nodeType===1){
+    if(preservesDigits(root))return;
+    normalizeAttributes(root);
+  }
+  var walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);
+  var node;
+  while((node=walker.nextNode())){
+    if(node.nodeType===3)normalizeTextNode(node);
+    else normalizeAttributes(node);
+  }
+}
+
+function startDigitNormalizer(){
+  if(!document.body)return;
+  normalizeDigitSubtree(document.body);
+  if(!window.MutationObserver)return;
+  var pending=[],scheduled=false;
+  function flush(){
+    scheduled=false;
+    var records=pending;
+    pending=[];
+    var roots=[],texts=[],attributes=[];
+    records.forEach(function(record){
+      if(record.type==="characterData")texts.push(record.target);
+      else if(record.type==="attributes")attributes.push(record.target);
+      else record.addedNodes.forEach(function(node){roots.push(node)});
+    });
+    var rootSet=new Set(roots),seenRoots=new Set();
+    roots=roots.filter(function(root){
+      if(seenRoots.has(root))return false;
+      seenRoots.add(root);
+      var parent=root.parentNode;
+      while(parent){
+        if(rootSet.has(parent))return false;
+        parent=parent.parentNode;
+      }
+      return true;
+    });
+    roots.forEach(normalizeDigitSubtree);
+    function hasQueuedRoot(node){
+      var parent=node;
+      while(parent){
+        if(rootSet.has(parent))return true;
+        parent=parent.parentNode;
+      }
+      return false;
+    }
+    var seenTexts=new Set();
+    texts.forEach(function(node){
+      if(seenTexts.has(node))return;
+      seenTexts.add(node);
+      if(!hasQueuedRoot(node))normalizeTextNode(node);
+    });
+    var seenAttributes=new Set();
+    attributes.forEach(function(element){
+      if(seenAttributes.has(element))return;
+      seenAttributes.add(element);
+      if(!hasQueuedRoot(element))normalizeAttributes(element);
+    });
+  }
+  new MutationObserver(function(records){
+    pending=pending.concat(records);
+    if(scheduled)return;
+    scheduled=true;
+    if(window.queueMicrotask)window.queueMicrotask(flush);
+    else Promise.resolve().then(flush);
+  }).observe(document.body,{
+    subtree:true,
+    childList:true,
+    characterData:true,
+    attributes:true,
+    attributeFilter:DIGIT_ATTRIBUTES
+  });
+}
+
+startDigitNormalizer();
 
 var toastT;
 function toast(msg){

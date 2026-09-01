@@ -37,11 +37,11 @@
           {%- endif -%}
           {%- assign ci_eng = item.properties['نص الحفر'] -%}
           {%- if ci_eng != blank -%}
-          <div class="di-eng">الحفر: «{{ ci_eng }}»</div>
+          <div class="di-eng" data-preserve-digits>الحفر: «{{ ci_eng }}»</div>
           {%- endif -%}
           <div class="d-row">
             <span class="qty">
-              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="الكمية">
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" lang="en" dir="ltr" aria-label="الكمية">
             </span>
             <span class="di-price">{% render 'price-sar', cents: item.final_line_price %}</span>
           </div>
