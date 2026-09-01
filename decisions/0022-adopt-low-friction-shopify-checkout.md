@@ -194,6 +194,23 @@ Store app; a custom Function app requires Plus. App selection, price/privacy rev
 and activation remain a separate owner choice. Do not claim that server-side validation visually
 locks `+966` in Shopify's native field.
 
+## 2026-09-01 verified live identity execution amendment
+
+After reviewing the fully staged mobile preview, the owner explicitly directed `Save`. The active
+checkout profile now uses `calapres-checkout-wax-seal.png`, centered at 120 px. Main is `#FAF8F5`;
+header and order summary are `#F7F4EF`; header accent, order-summary accent, shared accent, and the
+primary button are `#44271B`; input fills are transparent; headings and body use Rubik. This
+supersedes the prior live simplified seal, white surfaces, `#1B262D`, opaque input fills, and
+Almarai presentation choices only.
+
+The active Basic store still has no checkout draft. Shopify's Duplicate action did not respond in
+the authenticated interface, so the exact old values were recorded before staging the active
+profile, and the final save occurred only after fresh owner approval. A new public Arabic checkout
+then independently loaded the realistic seal from Shopify CDN and computed the exact new background,
+button, transparent-input, and Rubik values. No checkout behavior, required contact field, address
+wording, shipping rate, payment provider, Paymob state, product, price, inventory, customer, order,
+or social setting changed.
+
 ## Plan boundary
 
 On the current non-Plus plan, Shopify can additionally keep the discount field visible on mobile,
