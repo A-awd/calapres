@@ -1,25 +1,29 @@
 
 # Handoff
 
-## Resume here — product copy is corrected live across all three products — 2026-09-01
+## Resume here — the live offer is one elegant burner plus name-or-logo engraving — 2026-09-01
 
-The owner clarified that the active item is a `مبخرة`, not a `طقم`. Canonical GitHub `main` commit
-`0887beaab5b769505c51fccdeb772faab79b3d06` removes the complete contents-of-the-set accordion,
-uses the exact gift question `هل المبخرة مناسبة للإهداء؟`, updates the remaining product-page and
-standalone-FAQ answers, and changes both section schema defaults to prevent recurrence. The four
-theme files are live in theme `165777604864` and match a fresh remote pull byte-for-byte.
+The owner explicitly superseded the earlier narrow terminology boundary: Calapres does not sell a
+stand, an oud box, a set, or a three-piece bundle. The product-facing summary is exactly
+`مبخر أنيق` and `حفر الاسم أو الشعار`. Canonical source commit
+`ecbcbc3aa81514107f640d5b1ec925c28c1bab7d` corrects nine theme files: the shared product summary,
+homepage engraving band, About page, Contact introduction, shopping labels, hero accessibility
+copy, and reusable defaults. Those files are live in theme `165777604864` and match a fresh remote
+pull byte-for-byte.
 
-All three active Shopify products — white, beige, and gray — now have descriptions that start with
-`مبخرة كالابريز الفاخرة`; the `محتويات الطقم` paragraph was removed. Their SEO titles, SEO
-descriptions, and image alternative text were also corrected from `طقم` to `مبخرة`. Fresh Shopify
-GraphQL reads and public browser renders found no `طقم` in any of those fields, and all three product
-pages showed the new gift question and neither rejected question. Theme Check inspected 181 files
-with zero errors and the six existing remote-font warnings. No product title, price, inventory,
-variant, status, handle, or image file changed.
+The three active Shopify products were audited read-only. Their titles, handles, descriptions, SEO
+titles, SEO descriptions, and image alternative text already contain no `ستاند`, `علبة عود`,
+`طقم`, `أطقم`, or multi-component claim, so no product record changed. The separate shop-level
+homepage meta description still said `مع طقم متكامل`; it was corrected through Online Store
+Preferences to one elegant burner with name-or-logo engraving. Shopify displayed `Settings saved`,
+and a fresh API read returned the new value.
 
-This correction was intentionally limited to product descriptions and metadata, the product-page
-FAQ, and the standalone FAQ. Older marketing copy on the homepage and About page still contains
-separately approved `طقم` wording and should not be silently rewritten without a new owner request.
+Theme Check inspected 181 files with zero errors and six existing remote-font warnings. Section
+schema IDs are unique, changed templates parse, and fresh public checks returned 200 for the
+homepage, all three products, About, Contact, and FAQ. None of those seven pages contains the
+rejected composition terms. A fresh browser render of the white product shows `مبخر أنيق` directly
+above `حفر الاسم أو الشعار`. No price, compare-at price, inventory, variant, status, handle, image,
+cart behavior, checkout, payment, shipping, tax, or social setting changed.
 
 ## Resume here — combined beige and burnt-brown design is live and verified — 2026-08-31
 
