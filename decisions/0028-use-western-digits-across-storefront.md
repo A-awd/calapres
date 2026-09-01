@@ -94,4 +94,3 @@ also excluded unverified social-account links from this publication.
 Restore only the files named in the production record from the parent of the eventual implementation
 commit, then recheck a product, search, cart, customer-data boundary, and checkout. Do not change
 prices, inventory, products, orders, payments, shipping, taxes, or customer data during rollback.
-ıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ì
