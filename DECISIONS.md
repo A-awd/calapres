@@ -68,68 +68,15 @@ decision record.
   HTTP `503`, the recovered host returned a successful exact title-plus-short-link Playground
   reply. Physical external-channel delivery remains unverified, and Chatwoot classification
   remains a documented proposal only.
-- [0022 â€” Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md)
-  â€” preserve guest checkout, require first and last name, keep one-page checkout and address
-  autocompletion, save the bounded Arabic labels including
-  `( Ø£Ø¯Ø®Ù„ Ø¹Ù†ÙˆØ§Ù†Ùƒ Ø§Ù„ÙˆØ·Ù†ÙŠ Ø§Ù„Ù…Ø®ØªØµØ± Ù„ØªØ³Ù‡ÙŠÙ„ Ø¹Ù…Ù„ÙŠØ© Ø§Ù„Ø¨Ø­Ø« Ø¹Ù† Ø¹Ù†ÙˆØ§Ù†Ùƒ )`, and require separate email and
-  shipping-phone fields. The former Almarai, white, dark `#1B262D`, and simplified-seal presentation
-  is now rejected; duplicate the active checkout before previewing the exact realistic wax seal,
-  owner-approved pale-beige glass-like treatment, burnt-brown, and Rubik replacement. On Basic,
-  glass-like is a pale solid-surface approximation rather than actual blur or checkout CSS. The
-  English wordmark is not the checkout logo.
-  The implemented shipping amendment names
-  both domestic manual rates `Ø§Ù„ØªÙˆØµÙŠÙ„ Ø¯Ø§Ø®Ù„ Ø§Ù„Ø³Ø¹ÙˆØ¯ÙŠØ©` without changing their prices or thresholds,
-  and places the compact Saudi Post WhatsApp helper only in the theme-controlled cart before
-  checkout. Native Shopify cannot enforce a fixed Saudi mobile pattern; a public validation app
-  remains an unapproved separate choice on Basic. Apple Pay stays native, no Gulf shipping zone
-  exists, and Paymob remains in test mode, so real payment settlement is still unverified.
-- [0023 â€” Set Saudi VAT collection to zero pending obligation review](decisions/0023-set-saudi-vat-collection-zero-pending-review.md)
-  â€” based on the owner's statement that Calapres has no VAT registration, set the Saudi Manual Tax
-  country rate from 15% to 0% while preserving tax-inclusive pricing off, tax on shipping off, and
-  no overrides or import-duty collection. A fresh 390 SAR checkout showed no tax line and a 390 SAR
-  total with the currently applicable free shipping. Zero is a no-collection configuration, not a
-  legal zero-rating claim. The connected Shopify store has zero sales in the prior 12 months, but
-  entity-wide and forecast supplies remain unknown and require prompt confirmation.
-- [0024 â€” Publish the reconciled Calapres theme with a verified WhatsApp destination](decisions/0024-publish-reconciled-theme-with-verified-whatsapp.md)
-  â€” make the reconciled four-glyph and Calapres-favicon theme the live Shopify theme only after
-  matching the destination against the connected Chatwoot/Meta identity and opening the public
-  WhatsApp Business page headed `Calapres | ÙƒØ§Ù„Ø§Ø¨Ø±ÙŠØ²`. Keep Instagram, Snapchat, and TikTok
-  disabled until their official URLs are individually verified, preserve the former main theme as
-  rollback, and do not use the Saudi Post helper number as Calapres contact information. The
-  2026-08-31 amendment adds a verified email link and an official X glyph without guessing an X
-  destination, requires all six footer icons to remain in one row at 320 px and wider, and is now
-  executed in live theme `165774786816` with `165770887424` preserved as rollback. A later
-  amendment optically normalizes the unequal SVG paint bounds and gives all six glyphs the same
-  hover motion in unpublished preview `165777604864`, without inventing links for disabled
-  platforms.
-- [0025 â€” Adopt the Calapres beige and burnt-brown storefront palette](decisions/0025-adopt-two-colour-storefront-palette.md)
-  â€” use source ground `#DFD4C3` and ink `#44271B`, with interface layers derived only by
-  transparency; recolour the exact header wordmark silhouette and existing social glyph geometries
-  while preserving link rules; use a cart-specific 46% glass surface above a 12% scrim with 60%
-  text panels; keep media, product swatches, native third-party branding, and checkout outside this
-  theme-palette claim; and require owner approval before publishing the verified unpublished preview.
-- [0026 â€” Adopt Rubik as the shared Calapres interface typeface](decisions/0026-adopt-rubik-shared-typeface.md)
-  â€” use Rubik weights 300, 400, 500, and 700 for the storefront and password layout and use Rubik
-  separately for checkout headings and body; keep the verified theme draft unpublished and retain
-  Cairo on the public storefront and Almarai in active checkout until the coordinated production
-  changes are independently confirmed.
-- [0027 â€” Use one `Ù…Ø¨Ø®Ø± Ø£Ù†ÙŠÙ‚`, not a set or multi-piece bundle, in customer-facing copy](decisions/0027-use-mibkhara-in-product-copy.md)
-  â€” remove every stand, oud-box, set, and three-piece claim; show the exact product summary
-  `Ù…Ø¨Ø®Ø± Ø£Ù†ÙŠÙ‚` plus `Ø­ÙØ± Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø§Ù„Ø´Ø¹Ø§Ø±`; and keep product data, storefront pages, reusable theme
-  defaults, and the homepage meta description aligned to that physical offer.
-- [0028 â€” Use Western `0â€“9` digits across customer-facing storefront numerals](decisions/0028-use-western-digits-across-storefront.md)
-  â€” render every store-authored decimal numeral with Western digits in every storefront locale,
-  normalize late theme-DOM content, preserve exact customer-authored and machine-readable values,
-  and verify native checkout as a separate Shopify-controlled surface.
-- [0029 â€” Hide the empty product-review section until authentic reviews exist](decisions/0029-hide-empty-product-reviews.md)
-  â€” remove the complete review heading, widget container, page data, unused spacing, and isolated
-  styling from every product page; keep review-app data untouched and restore a review surface only
-  through a later owner-approved implementation backed by authentic reviews.
-
-## Superseded decisions
-
-- [0005 â€” Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
-  â€” superseded by decision 0006.
-
-Add a numbered decision when scope, architecture, security posture, source authority, or operating
-policy changes.
+- [0022 â€” Adopt a low-frictioıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ìˆÚÜYHÚXÚÛİ]Ú]H]™HØ[\™\ÈY[]WJXÚ\Ú[ÛœËÌŒ‹XYÜ[İËYœšXİ[Û‹\ÚÜYKXÚXÚÛİ]›Y
+Bˆ8 %™\Ù\™HİY\İÚXÚÛİ]™\]Z\™Hš\œİ[™\İ˜[YKÙY\Û™K\YÙHÚXÚÛİ][™Y™\ÜÂˆ]]ØÛÛ\][Û‹Ø]™HH›İ[™Y\˜XšXÈX™[È[˜ÛY[™Âˆ
+6(ö+ö+¶a6.va¶b6)öa¶`È6)öa6b6-öa¶bˆ6)öa6av+¶*¶-v,H6a6*¶,öaöb¶a6.vava6b¶*H6)öa6*6+v*È6.vaˆ6.va¶b6)öa¶`È
+X[™™\]Z\™HÙ\\˜]H[XZ[[™ˆÚ\[™Ë\Û™HšY[ËˆH›Ü›Y\ˆ[X\˜ZKÚ]K\šÈÌPŒŒ‘[™Ú[\YšYY\ÙX[™\Ù[][Û‚ˆ\È›İÈ™Z™XİYÈ\XØ]HHXİ]™HÚXÚÛİ]™Y›Ü™H™]šY]Ú[™ÈH^Xİ™X[\İXÈØ^ÙX[ˆİÛ™\‹X\›İ™Y[KX™ZYÙHÛ\ÜË[ZÙH™X]Y[\›Xœ›İÛ‹[™XšZÈ™\XÙ[Y[ˆÛˆ˜\ÚXËˆÛ\ÜË[ZÙH\ÈH[HÛÛY\İ\™˜XÙH\›Ş[X][Ûˆ˜]\ˆ[ˆXİX[›\ˆÜˆÚXÚÛİ]ÔÔËˆBˆ[™Û\ÚÛÜ™X\šÈ\È›İHÚXÚÛİ]ÙÛË‚ˆH[\[Y[YÚ\[™È[Y[™Y[˜[Y\Âˆ›İÛY\İXÈX[X[˜]\È6)öa6*¶b6-vb¶a6+ö)ö+¶a6)öa6,ö.vb6+öb¶*XÚ]İ]Ú[™Ú[™ÈZ\ˆšXÙ\ÈÜˆ™\ÚÛËˆ[™XÙ\ÈHÛÛ\XİØ]YHÜİÚ]Ğ\[\ˆÛ›H[ˆH[YKXÛÛ›ÛYØ\™Y›Ü™BˆÚXÚÛİ]ˆ˜]]™HÚÜYHØ[››İ[™›Ü˜ÙHHš^YØ]YH[Øš[H]\›ÈHX›XÈ˜[Y][Ûˆ\ˆ™[XZ[œÈ[ˆ[˜\›İ™YÙ\\˜]HÚÚXÙHÛˆ˜\ÚXËˆ\H^Hİ^\È˜]]™K›Èİ[ˆÚ\[™È›Û™Bˆ^\İË[™^[[Øˆ™[XZ[œÈ[ˆ\İ[ÙKÛÈ™X[^[Y[Ù][Y[\Èİ[[™\šYšYY‚‹HÌŒÈ8 %Ù]Ø]YHUÛÛXİ[ÛˆÈ™\›È[™[™ÈØ›YØ][Ûˆ™]šY]×JXÚ\Ú[ÛœËÌŒË\Ù]\Ø]YK]˜]XÛÛXİ[Û‹^™\›Ë\[™[™Ë\™]šY]Ë›Y
+Bˆ8 %˜\ÙYÛˆHİÛ™\‰ÜÈİ][Y[]Ø[\™\È\È›ÈU™YÚ\İ˜][Û‹Ù]HØ]YHX[X[^ˆÛİ[H˜]Hœ›ÛHMIHÈ	HÚ[H™\Ù\š[™È^Z[˜Û\Ú]™HšXÚ[™ÈÙ™‹^ÛˆÚ\[™ÈÙ™‹[™ˆ›Èİ™\œšY\ÈÜˆ[\ÜY]HÛÛXİ[Û‹ˆHœ™\ÚÎLĞTˆÚXÚÛİ]ÚİÙY›È^[™H[™HÎLĞT‚ˆİ[Ú]Hİ\œ™[H\XØX›Hœ™YHÚ\[™Ëˆ™\›È\ÈH›ËXÛÛXİ[ÛˆÛÛ™šYİ\˜][Û‹›İBˆYØ[™\›Ë\˜][™ÈÛZ[KˆHÛÛ›™XİYÚÜYHİÜ™H\È™\›ÈØ[\È[ˆHš[ÜˆLˆ[ÛË]ˆ[]K]ÚYH[™›Ü™XØ\İİ\Y\È™[XZ[ˆ[šÛ›İÛˆ[™™\]Z\™H›Û\ÛÛ™š\›X][Û‹‚‹HÌ8 %X›\ÚH™XÛÛ˜Ú[YØ[\™\È[YHÚ]H™\šYšYYÚ]Ğ\\İ[˜][Û—JXÚ\Ú[ÛœËÌ\X›\Ú\™XÛÛ˜Ú[Y][YK]Ú]]™\šYšYY]Ú]Ø\›Y
+Bˆ8 %XZÙHH™XÛÛ˜Ú[Y›İ\‹YÛ\[™Ø[\™\ËY˜]šXÛÛˆ[YHH]™HÚÜYH[YHÛ›HY\‚ˆX]Ú[™ÈH\İ[˜][ÛˆYØZ[œİHÛÛ›™XİYÚ]ÛÛİÓY]HY[]H[™Ü[š[™ÈHX›XÂˆÚ]Ğ\\Ú[™\ÜÈYÙHXYYØ[\™\È6`ö)öa6)ö*6,vb¶,˜ˆÙY\[œİYÜ˜[KÛ˜\Ú][™ZÕÚÂˆ\ØX›Y[[Z\ˆÙ™šXÚX[T“È\™H[™]šYX[H™\šYšYY™\Ù\™HH›Ü›Y\ˆXZ[ˆ[YH\Âˆ›Û˜XÚË[™È›İ\ÙHHØ]YHÜİ[\ˆ[X™\ˆ\ÈØ[\™\ÈÛÛXİ[™›Ü›X][Û‹ˆBˆŒ‹LLÌH[Y[™Y[YÈH™\šYšYY[XZ[[šÈ[™[ˆÙ™šXÚX[Û\Ú]İ]İY\ÜÚ[™È[ˆˆ\İ[˜][Û‹™\]Z\™\È[Ú^›Ûİ\ˆXÛÛœÈÈ™[XZ[ˆ[ˆÛ™H›İÈ]ÌŒ[™ÚY\‹[™\È›İÂˆ^Xİ]Y[ˆ]™H[YHMMÍÍÎM˜Ú]MMÍÌÍ™\Ù\™Y\È›Û˜XÚËˆH]\‚ˆ[Y[™Y[ÜXØ[H›Ü›X[^™\ÈH[™\]X[Õ‘ÈZ[›İ[™È[™Ú]™\È[Ú^Û\ÈHØ[YBˆİ™\ˆ[İ[Ûˆ[ˆ[œX›\ÚY™]šY]ÈMMÍÍÍŒÚ]İ][™[[™È[šÜÈ›Üˆ\ØX›Yˆ]›Ü›\Ë‚‹HÌH8 %YÜHØ[\™\È™ZYÙH[™\›Xœ›İÛˆİÜ™Yœ›Û[]WJXÚ\Ú[ÛœËÌKXYÜ]ÛËXÛÛİ\‹\İÜ™Yœ›Û\[]K›Y
+Bˆ8 %\ÙHÛİ\˜ÙHÜ›İ[™Ñ‘ÌØ[™[šÈÍÌP˜Ú][\™˜XÙH^Y\œÈ\š]™YÛ›HBˆ˜[œÜ\™[˜ŞNÈ™XÛÛİ\ˆH^XİXY\ˆÛÜ™X\šÈÚ[İY]H[™^\İ[™ÈÛØÚX[Û\Ù[ÛY]šY\ÂˆÚ[H™\Ù\š[™È[šÈ[\ÎÈ\ÙHHØ\\ÜXÚYšXÈ‰HÛ\ÜÈİ\™˜XÙHX›İ™HHL‰HØÜš[HÚ]Œ	Bˆ^[™[ÎÈÙY\YYXK›ÙXİİØ]Ú\Ë˜]]™H\™\\Hœ˜[™[™Ë[™ÚXÚÛİ]İ]ÚYH\Âˆ[YK\[]HÛZ[NÈ[™™\]Z\™HİÛ™\ˆ\›İ˜[™Y›Ü™HX›\Ú[™ÈH™\šYšYY[œX›\ÚY™]šY]Ë‚‹HÌˆ8 %YÜXšZÈ\ÈHÚ\™YØ[\™\È[\™˜XÙH\Y˜XÙWJXÚ\Ú[ÛœËÌ‹XYÜ\XšZË\Ú\™Y]\Y˜XÙK›Y
+Bˆ8 %\ÙHXšZÈÙZYÚÈÌL[™Ì›ÜˆHİÜ™Yœ›Û[™\ÜİÛÜ™^[İ][™\ÙHXšZÂˆÙ\\˜][H›ÜˆÚXÚÛİ]XY[™ÜÈ[™›ÙNÈÙY\H™\šYšYY[YH˜Y[œX›\ÚY[™™]Z[‚ˆØZ\›ÈÛˆHX›XÈİÜ™Yœ›Û[™[X\˜ZH[ˆXİ]™HÚXÚÛİ][[HÛÛÜ™[˜]Y›ÙXİ[Û‚ˆÚ[™Ù\È\™H[™\[™[HÛÛ™š\›YY‚‹HÌÈ8 %\ÙHÛ™H6av*6+¶,H6(öa¶b¶`˜›İHÙ]Üˆ][K\YXÙH[™K[ˆİ\İÛY\‹Y˜XÚ[™ÈÛÜWJXÚ\Ú[ÛœËÌË]\ÙK[ZXšÚ\˜KZ[‹\›ÙXİXÛÜK›Y
+Bˆ8 %™[[İ™H]™\Hİ[™İYX›ŞÙ][™™YK\YXÙHÛZ[NÈÚİÈH^Xİ›ÙXİİ[[X\Bˆ6av*6+¶,H6(öa¶b¶`˜\È6+v`v,H6)öa6)ö,öaH6(öb6)öa6-6.v)ö,XÈ[™ÙY\›ÙXİ]KİÜ™Yœ›ÛYÙ\Ë™]\ØX›H[YBˆY˜][Ë[™HÛY\YÙHY]H\ØÜš\[Ûˆ[YÛ™YÈ]\ÚXØ[Ù™™\‹‚‹HÌ8 %\ÙHÙ\İ\›ˆ8 $ÎXYÚ]ÈXÜ›ÜÜÈİ\İÛY\‹Y˜XÚ[™ÈİÜ™Yœ›Û[Y\˜[×JXÚ\Ú[ÛœËÌ]\ÙK]Ù\İ\›‹YYÚ]ËXXÜ›ÜÜË\İÜ™Yœ›Û›Y
+Bˆ8 %™[™\ˆ]™\HİÜ™KX]]Ü™YXÚ[X[[Y\˜[Ú]Ù\İ\›ˆYÚ]È[ˆ]™\HİÜ™Yœ›ÛØØ[Kˆ›Ü›X[^™H]H[YKQÓHÛÛ[™\Ù\™H^Xİİ\İÛY\‹X]]Ü™Y[™XXÚ[™K\™XYX›H˜[Y\Ëˆ[™™\šYH˜]]™HÚXÚÛİ]\ÈHÙ\\˜]HÚÜYKXÛÛ›ÛYİ\™˜XÙKˆHİÛ™\ˆ\›İ™Y[™ˆ^Xİ]YİÜ™Yœ›ÛX›XØ][ÛˆÛˆŒ‹LKLHÚ[HXØÙ\[™ÈHØİ[Y[Y˜]]™H\˜XšXËBˆÚXÚÛİ]^Ù\[Û‹‚‹HÌH8 %YHH[\H›ÙXİ\™]šY]ÈÙXİ[Ûˆ[[]][XÈ™]šY]ÜÈ^\İJXÚ\Ú[ÛœËÌKZYKY[\K\›ÙXİ\™]šY]ÜË›Y
+Bˆ8 %™[[İ™HHÛÛ\]H™]šY]ÈXY[™ËÚYÙ]ÛÛZ[™\‹YÙH]K[\ÙYÜXÚ[™Ë[™\ÛÛ]Yˆİ[[™Èœ›ÛH]™\H›ÙXİYÙNÈÙY\™]šY]ËX\]H[İXÚY[™™\İÜ™HH™]šY]Èİ\™˜XÙHÛ›Bˆ›İYÚH]\ˆİÛ™\‹X\›İ™Y[\[Y[][Ûˆ˜XÚÙYH]][XÈ™]šY]ÜËˆ\È™\Ù[][Û‚ˆÚ[™ÙH\È]™H[ˆ[YHMNŒÎ‚‚ˆÈÈİ\\œÙYYXÚ\Ú[ÛœÂ‚‹HÌH8 %YÙ[XÈ\ØÛİ™\HØ[››İ\\ÜÈØ][ÙÈÛİ™\›˜[˜ÙWJXÚ\Ú[ÛœËÌKXYÙ[XËXØ][ÙËYÛİ™\›˜[˜ÙK›Y
+Bˆ8 %İ\\œÙYYHXÚ\Ú[Ûˆ‹‚‚YH[X™\™YXÚ\Ú[ÛˆÚ[ˆØÛÜK\˜Ú]Xİ\™KÙXİ\š]HÜİ\™KÛİ\˜ÙH]]Üš]KÜˆÜ\˜][™ÂœÛXŞHÚ[™Ù\Ë‚

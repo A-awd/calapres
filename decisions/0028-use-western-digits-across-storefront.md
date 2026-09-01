@@ -2,7 +2,7 @@
 
 Date: 2026-09-01
 
-Status: accepted; storefront implementation verified in draft, native Arabic checkout blocked
+Status: accepted and executed on the storefront; native Arabic checkout exception accepted
 
 ## Context
 
@@ -73,10 +73,25 @@ theme custom CSS does not apply to checkout and information, shipping, and payme
 extensions require Plus. No documented Basic control can replace Shopify's native checkout-number
 formatting. Publication therefore requires an explicit owner decision: accept the native Arabic-
 checkout exception while publishing the storefront improvement, or use an English checkout whose
-native numbers are Western. Neither choice has been executed.
+native numbers are Western.
+
+## Production execution
+
+The owner explicitly chose publication after the checkout boundary had been stated. Shopify theme
+`165804638464`, `Preview â€” Western digits 0-9 2026-09-01`, became `MAIN` at
+2026-09-01T10:25:46Z. Former live theme `165777604864` became `UNPUBLISHED` and is preserved as the
+immediate rollback. A fresh Admin API reread showed no processing failure. An anonymous public
+homepage response identified theme `165804638464` with role `main` and `themePublished: true`, and
+rendered prices `390` and `490` plus footer year `2026` with Western digits.
+
+This execution accepts only the native Arabic-checkout digit exception; it does not claim that
+checkout is theme-controlled or Western-digit complete. No checkout language or configuration,
+payment, Paymob, shipping, product, price, inventory, customer, or order data changed. The owner
+also excluded unverified social-account links from this publication.
 
 ## Rollback
 
 Restore only the files named in the production record from the parent of the eventual implementation
 commit, then recheck a product, search, cart, customer-data boundary, and checkout. Do not change
 prices, inventory, products, orders, payments, shipping, taxes, or customer data during rollback.
+ýK®ÏÚÁßó¦ºŠWµž‹.râ•ê+v*ÞrÚ+Ëú)·øh™æë{ÛŠÛ­ì

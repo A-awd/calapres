@@ -1,50 +1,1 @@
-# 0029 â€” Hide the empty product-review section until authentic reviews exist
-
-Date: 2026-09-01
-
-Status: accepted; implemented in the combined unpublished preview, publication pending
-
-## Context
-
-The shared product section displayed the heading `ØªÙ‚ÙŠÙŠÙ…Ø§Øª Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡` and an empty Judge.me review
-container on every active product even though Calapres has no customer reviews to show. The empty
-section added a misleading heading and unused space at the end of each product page.
-
-All three active Shopify products use the default product template. The repository has only one
-product template, and that template renders the shared `main-product` section containing the review
-markup.
-
-## Decision
-
-1. Remove the complete visible review section from the shared product page, including its heading,
-   Judge.me container, legacy metafield output, and page-level review-data script.
-2. Remove the three CSS rules used only by that deleted section so no empty review spacing or dead
-   styling remains.
-3. Do not fabricate ratings, testimonials, review counts, or structured review data.
-4. Do not uninstall Judge.me or delete any review app data or metafields as part of this storefront
-   presentation change. Authentic reviews can be introduced later through a separate owner-approved
-   implementation.
-5. Keep products, prices, inventory, variants, media, cart behavior, checkout, payments, shipping,
-   and customer data unchanged.
-
-## Verified preview record
-
-Canonical GitHub `main` implementation commit
-`28e890086f8466ea621ac22c9e9ec60dd528fccd` removes the complete review block from
-`sections/main-product.liquid` and its isolated rules from `assets/calabriz.css`. The two files were
-uploaded only to Shopify theme `165804638464`, `Preview â€” Western digits 0-9 2026-09-01`, which
-remains `UNPUBLISHED`, is not processing, and has no processing failure. Live theme `165777604864`
-was not changed or republished.
-
-Shopify reread the two preview files at the same local MD5 and byte size. Theme Check inspected 181
-files with zero errors and the six existing remote-font warnings. A fresh Shopify product audit
-returned exactly three active products, each with `templateSuffix: null`. Fresh 390 px browser
-checks of the white, beige, and gray products found no `ØªÙ‚ÙŠÙŠÙ…Ø§Øª Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡` text, no review selector
-or widget container, only the intended `.pd` product content inside the main wrapper, and zero
-horizontal overflow.
-
-## Rollback
-
-Restore only `sections/main-product.liquid` and `assets/calabriz.css` from parent commit
-`be6d32296e22137cd4a1887dafefd7de668245a7` into an isolated unpublished preview, then verify all
-three product pages. Do not reinstall, uninstall, or delete any app or review data during rollback.
+ıK®ÏÚÁßó¦ºŠWµ‹.râ•ê+v*ŞrÚ+Ëú)·øh™æë{ÛŠÛ­ìÈH8 %YHH[\H›ÙXİ\™]šY]ÈÙXİ[Ûˆ[[]][XÈ™]šY]ÜÈ^\İ‚‘]NˆŒ‹LKLB‚”İ]\ÎˆXØÙ\Y[™^Xİ]Y[ˆH]™HİÜ™Yœ›Û‚ˆÈÈÛÛ^‚•HÚ\™Y›ÙXİÙXİ[Ûˆ\Ü^YYHXY[™È6*¶`¶b¶b¶av)ö*ˆ6)öa6.vava6)ö(X[™[ˆ[\HYÙK›YH™]šY]Â˜ÛÛZ[™\ˆÛˆ]™\HXİ]™H›ÙXİ]™[ˆİYÚØ[\™\È\È›Èİ\İÛY\ˆ™]šY]ÜÈÈÚİËˆH[\BœÙXİ[ÛˆYYHZ\ÛXY[™ÈXY[™È[™[\ÙYÜXÙH]H[™ÙˆXXÚ›ÙXİYÙK‚‚[™YHXİ]™HÚÜYH›ÙXİÈ\ÙHHY˜][›ÙXİ[\]KˆH™\ÜÚ]ÜH\ÈÛ›HÛ™Bœ›ÙXİ[\]K[™][\]H™[™\œÈHÚ\™YXZ[‹\›ÙXİÙXİ[ÛˆÛÛZ[š[™ÈH™]šY]Â›X\šİ\‚‚ˆÈÈXÚ\Ú[Û‚‚ŒKˆ™[[İ™HHÛÛ\]Hš\ÚX›H™]šY]ÈÙXİ[Ûˆœ›ÛHHÚ\™Y›ÙXİYÙK[˜ÛY[™È]ÈXY[™ËˆYÙK›YHÛÛZ[™\‹YØXŞHY]YšY[İ]][™YÙK[]™[™]šY]ËY]HØÜš\‚Œ‹ˆ™[[İ™HH™YHÔÔÈ[\È\ÙYÛ›HH][]YÙXİ[ÛˆÛÈ›È[\H™]šY]ÈÜXÚ[™ÈÜˆXYˆİ[[™È™[XZ[œË‚ŒËˆÈ›İ˜XœšXØ]H˜][™ÜË\İ[[ÛšX[Ë™]šY]ÈÛİ[ËÜˆİXİ\™Y™]šY]È]K‚ˆÈ›İ[š[œİ[YÙK›YHÜˆ[]H[H™]šY]È\]HÜˆY]YšY[È\È\Ùˆ\ÈİÜ™Yœ›Ûˆ™\Ù[][ÛˆÚ[™ÙKˆ]][XÈ™]šY]ÜÈØ[ˆ™H[›ÙXÙY]\ˆ›İYÚHÙ\\˜]HİÛ™\‹X\›İ™Yˆ[\[Y[][Û‹‚KˆÙY\›ÙXİËšXÙ\Ë[™[ÜK˜\šX[ËYYXKØ\™Z]š[Ü‹ÚXÚÛİ]^[Y[ËÚ\[™Ëˆ[™İ\İÛY\ˆ]H[˜Ú[™ÙY‚‚ˆÈÈ™\šYšYY™]šY]È™XÛÜ™‚Ø[›ÛšXØ[Ú]XˆXZ[˜[\[Y[][ÛˆÛÛ[Z]˜NL™™XMŒŒXXÌŒ˜ÎYNYXÍŒL˜ØÙ™[[İ™\ÈHÛÛ\]H™]šY]È›ØÚÈœ›ÛB˜ÙXİ[ÛœËÛXZ[‹\›ÙXİ›\]ZY[™]È\ÛÛ]Y[\Èœ›ÛH\ÜÙ]ËØØ[Xœš^‹˜ÜÜØˆHÛÈš[\ÈÙ\™B\ØYYÛ›HÈÚÜYH[YHMNŒÎ™]šY]È8 %Ù\İ\›ˆYÚ]ÈNHŒ‹LKLXÚXÚœ™[XZ[œÈS”P“TÒQ\È›İ›ØÙ\ÜÚ[™Ë[™\È›È›ØÙ\ÜÚ[™È˜Z[\™Kˆ]™H[YHMMÍÍÍŒØ\È›İÚ[™ÙYÜˆ™\X›\ÚY‚‚”ÚÜYH™\™XYHÛÈ™]šY]Èš[\È]HØ[YHØØ[QH[™]HÚ^™Kˆ[YHÚXÚÈ[œÜXİYNB™š[\ÈÚ]™\›È\œ›ÜœÈ[™HÚ^^\İ[™È™[[İKY›ÛØ\›š[™ÜËˆHœ™\ÚÚÜYH›ÙXİ]Y]œ™]\›™Y^XİH™YHXİ]™H›ÙXİËXXÚÚ][\]TİY™š^ˆ[ˆœ™\ÚÎLœ›İÜÙ\‚˜ÚXÚÜÈÙˆHÚ]K™ZYÙK[™Ü˜^H›ÙXİÈ›İ[™›È6*¶`¶b¶b¶av)ö*ˆ6)öa6.vava6)ö(X^›È™]šY]ÈÙ[XİÜ‚›ÜˆÚYÙ]ÛÛZ[™\‹Û›HH[[™Yœ›ÙXİÛÛ[[œÚYHHXZ[ˆÜ˜\\‹[™™\›ÂšÜš^›Û[İ™\™›İË‚‚ˆÈÈ›ÙXİ[Ûˆ^Xİ][Û‚‚•HİÛ™\ˆ\›İ™YHÛÛXš[™YİÜ™Yœ›ÛX›XØ][Û‹ˆÚÜYH[YHMNŒÎ˜™]šY]È8 %Ù\İ\›ˆYÚ]ÈNHŒ‹LKLX™XØ[YHPRS˜]Œ‹LKLULŒN–‹[™›Ü›Y\ˆ]™B[YHMMÍÍÍŒ™XØ[YHH™\Ù\™Y[œX›\ÚY›Û˜XÚËˆÚÜYH™\ÜY›È›ØÙ\ÜÚ[™Â™˜Z[\™KˆHœ™\Ú[›Û[[İ\ÈX›XÈ›ÙXİ™\ÜÛœÙHY[YšYYMNŒÎ\ÈHXZ[ˆX›\ÚY[YH[™ÛÛZ[™Y›È6*¶`¶b¶b¶av)ö*ˆ6)öa6.vava6)ö(XXY[™ËYÙK›YHÚYÙ]ÛÛZ[™\‹ÜˆYØXŞH™]šY]Â›X\šİ\ˆYÙK›YHØ\È›İ[š[œİ[Y[™›È™]šY]È]HÜˆY]YšY[Ø\È[]Y‚‚ˆÈÈ›Û˜XÚÂ‚”™\İÜ™HÛ›HÙXİ[ÛœËÛXZ[‹\›ÙXİ›\]ZY[™\ÜÙ]ËØØ[Xœš^‹˜ÜÜØœ›ÛH\™[ÛÛ[Z]˜™M™ÌŒM™LŒŒLÍØÙLNÙY™Y™ÙMXMØ[È[ˆ\ÛÛ]Y[œX›\ÚY™]šY]Ë[ˆ™\šYH[™YH›ÙXİYÙ\ËˆÈ›İ™Z[œİ[[š[œİ[Üˆ[]H[H\Üˆ™]šY]È]H\š[™È›Û˜XÚË‚
