@@ -1,6 +1,26 @@
 
 # Handoff
 
+## Resume here — realistic seal and pale-beige checkout are live — 2026-09-01
+
+The owner explicitly approved the final unsaved mobile preview and then directed `Save`. Active
+checkout profile `5133926656` now uses `calapres-checkout-wax-seal.png`, centered at 120 px. Main
+is `#FAF8F5`; header and order summary are `#F7F4EF`; header accent, order-summary accent, shared
+accent, and primary button are `#44271B`; input fills are transparent; headings and body use
+Rubik. The surfaces are Shopify's very pale solid checkout colors, not actual glass blur.
+
+The editor disabled Save after the operation. A fresh public Arabic checkout independently loaded
+the new seal from Shopify CDN and computed the exact main, header, button, input, and Rubik values.
+No guest-checkout rule, required email or phone field, address wording, shipping rate, payment
+provider, Paymob state, product, price, inventory, customer, order, or social setting changed.
+
+The Basic store still has one active checkout configuration and no draft. Shopify's Duplicate menu
+did not respond through the authenticated interface; after the exact rollback values were recorded,
+the owner approved saving the active configuration. Rollback only if explicitly requested: restore
+`Artboard_4_2x-100-removebg-preview.png` centered at 100 px, main and header `#FFFFFF`, order summary
+`#F5F5F5`, accents and button `#1B262D`, opaque input fills, and Almarai for headings and body. Do
+not delete either logo asset or change checkout behavior during that rollback.
+
 ## Resume here — Western digits and review removal are live; social accounts remain deferred — 2026-09-01
 
 The owner explicitly approved publishing the combined storefront bundle after the native Arabic-
