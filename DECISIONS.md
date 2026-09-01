@@ -121,6 +121,10 @@ decision record.
   — render every store-authored decimal numeral with Western digits in every storefront locale,
   normalize late theme-DOM content, preserve exact customer-authored and machine-readable values,
   and verify native checkout as a separate Shopify-controlled surface.
+- [0029 — Hide the empty product-review section until authentic reviews exist](decisions/0029-hide-empty-product-reviews.md)
+  — remove the complete review heading, widget container, page data, unused spacing, and isolated
+  styling from every product page; keep review-app data untouched and restore a review surface only
+  through a later owner-approved implementation backed by authentic reviews.
 
 ## Superseded decisions
 

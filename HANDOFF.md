@@ -1,6 +1,27 @@
 
 # Handoff
 
+## Resume here — empty product reviews are gone from the combined draft; live remains unchanged — 2026-09-01
+
+The owner directed complete removal of the empty `تقييمات العملاء` section. Canonical GitHub
+`main` implementation commit `28e890086f8466ea621ac22c9e9ec60dd528fccd` removes the heading,
+Judge.me widget container, legacy metafield output, review-data script, empty spacing, and three
+isolated CSS rules from the shared product section. It does not uninstall Judge.me or delete review
+data. Decision 0029 records that authentic reviews may return only through a later owner-approved
+implementation.
+
+Shopify returned exactly three active products and `templateSuffix: null` for each, so white, beige,
+and gray all use the corrected default product template. Only unpublished theme `165804638464`,
+`Preview — Western digits 0-9 2026-09-01`, received the two files; their remote MD5 and sizes match
+canonical source. Theme Check passed 181 files with zero errors and six existing remote-font
+warnings. Fresh 390 px renders of all three product pages contained no review text or widget, had
+only the intended `.pd` block inside the main wrapper, and had zero horizontal overflow.
+
+Live theme `165777604864` remains unchanged. Do not publish the combined draft until the owner makes
+the separate Western-digit decision already recorded below: accept Shopify's native Arabic-checkout
+digit exception or switch the checkout to English. Preserve rollback theme `165774786816` and do
+not delete any theme or review data.
+
 ## Resume here — Western digits are verified in draft; native Arabic checkout still uses Arabic digits — 2026-09-01
 
 Canonical GitHub `main` commit `f49f3871c4c650936925a0b55175ff17f29b245a` contains the complete

@@ -1,6 +1,29 @@
 
 # Project State
 
+## Empty customer-review section removed in the combined unpublished preview — 2026-09-01
+
+[Owner direction and canonical implementation] Because Calapres has no customer reviews, the owner
+directed that `تقييمات العملاء` be removed completely from the product pages. Canonical GitHub
+`main` implementation commit `28e890086f8466ea621ac22c9e9ec60dd528fccd` deletes the full shared
+review block from `sections/main-product.liquid`, including the heading, Judge.me container, legacy
+metafield output, and page review-data script. It also deletes the three now-unused review rules
+from `assets/calabriz.css`. No app was uninstalled and no review data or metafield was deleted.
+
+[Shopify template and preview scope] A fresh Shopify read returned exactly three active products —
+white, beige, and gray — and all three have `templateSuffix: null`, so they use the one shared
+default product template. The two changed files were uploaded only to unpublished theme
+`165804638464`, `Preview — Western digits 0-9 2026-09-01`. Remote MD5 and byte size match canonical
+source; the draft is not processing and has no processing failure. Live theme `165777604864` was
+not changed or republished.
+
+[Validation] Theme Check inspected 181 files with zero errors and the six existing remote-font
+warnings. Repository search found no remaining customer-review heading, Judge.me widget, review
+container, or product-review CSS. Fresh 390 px browser checks of all three products found zero
+`تقييمات العملاء` text, zero review selectors, only the intended product block inside the main
+wrapper, and zero horizontal overflow. Publication remains pending the owner's separate decision
+on the combined preview and its native Arabic-checkout digit boundary.
+
 ## Western digits completed in an isolated storefront preview; native Arabic checkout is blocked — 2026-09-01
 
 [Owner requirement] Every store-generated amount, quantity, duration, date, year, count, and other
