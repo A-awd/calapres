@@ -16,7 +16,9 @@
     "edit-band": {
       "type": "editorial-band",
       "settings": {
-        "heading": "حفر شخصي على كل طقم",
+        "heading": "حفر شخصي على كل مبخرة",
+        "text": "إمكانية حفر الاسم أو الشعار على المبخرة.",
+        "link_label": "اكتشف المباخر",
         "show_media": false
       }
     },
