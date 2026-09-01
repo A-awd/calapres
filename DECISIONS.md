@@ -113,6 +113,10 @@ decision record.
   separately for checkout headings and body; keep the verified theme draft unpublished and retain
   Cairo on the public storefront and Almarai in active checkout until the coordinated production
   changes are independently confirmed.
+- [0027 — Use `مبخرة`, not `طقم`, in product copy](decisions/0027-use-mibkhara-in-product-copy.md)
+  — remove the contents-of-the-set accordion, use `هل المبخرة مناسبة للإهداء؟`, and describe all
+  three active products as a `مبخرة`; keep separately approved homepage and About-page marketing
+  copy outside this correction until the owner requests a broader terminology change.
 
 ## Superseded decisions
 
