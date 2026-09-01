@@ -128,6 +128,11 @@ decision record.
   styling from every product page; keep review-app data untouched and restore a review surface only
   through a later owner-approved implementation backed by authentic reviews. This presentation
   change is live in theme `165804638464`.
+- [0030 — Adopt OTO as the prepaid-only Shopify shipping bridge](decisions/0030-adopt-oto-prepaid-only-shipping-bridge.md)
+  — connect the existing Calapres OTO account and map the Shopify fulfillment location while
+  keeping cash on delivery off and preserving the current manual Saudi rates. Complete the exact
+  physical pickup address and packaged measurements before one prepaid end-to-end shipment test;
+  do not fund OTO, book a carrier, or enable OTO checkout rates by assumption.
 
 ## Superseded decisions
 

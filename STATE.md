@@ -1,6 +1,30 @@
 
 # Project State
 
+## OTO shipping channel connected; pickup activation awaits the physical address — 2026-09-01
+
+[Owner authorization and live execution] The official `OTO - Shipping Gateway` Shopify app is
+installed and connected to the existing OTO account `Calapres sa`. OTO shows the Shopify channel
+for store `Calapres - 82929975552` as active, and its connection test returned success. The owner
+explicitly rejected cash on delivery, so `Accept cash on delivery orders` remains off. No OTO
+wallet credit, IBAN, paid plan, shipment, carrier booking, or cash-on-delivery service was created.
+
+[Location mapping and preserved checkout rates] Shopify location `91940061440`, `SMSA Retail Shop`,
+is matched to OTO sender location `396002`, `SMSA Retail Shop`. The current Shopify Saudi rates
+remain unchanged: SAR 25 from SAR 0 through SAR 319.99, and free delivery from SAR 320. No OTO
+carrier rate was added to the Shopify delivery profile, and the embedded app's discounted-rate
+setup remains incomplete. OTO's auto-create setting is on, but no real order has yet proved order
+ingress, shipment creation, label generation, tracking, or status writeback.
+
+[Genuine blocker and next safe action] The imported OTO sender location is not ready for courier
+pickup: it has only the label `SMSA Retail Shop` and city `RIYADH`; phone, detailed pickup address,
+district, postal code, and Saudi short national address are not confirmed. The repository also
+contains no verified packaged weight or dimensions. Obtain the owner's exact physical pickup
+address, complete and activate that sender location, then record real packaged measurements before
+creating one prepaid test order and shipment. Do not guess the address or package data, enable cash
+on delivery, fund OTO, book a carrier, or replace the manual Shopify rates without a separate
+verified decision.
+
 ## Live checkout identity corrected and verified — 2026-09-01
 
 [Owner approval and live save] After reviewing the unsaved mobile preview, the owner explicitly

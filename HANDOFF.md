@@ -1,6 +1,30 @@
 
 # Handoff
 
+## Resume here — OTO is connected; complete the pickup origin before a test shipment — 2026-09-01
+
+The owner authorized installing and connecting shipping while keeping payment work for last. The
+official Shopify app `OTO - Shipping Gateway` is installed, the existing `Calapres sa` account is
+connected, OTO lists Shopify store `Calapres - 82929975552` as active, and the live OTO connection
+test returned success. Shopify location `91940061440`, `SMSA Retail Shop`, was matched successfully
+to OTO location `396002`, `SMSA Retail Shop`.
+
+Cash on delivery is explicitly prohibited by the owner and is off in the OTO channel. Preserve the
+two existing Shopify Saudi rates: SAR 25 for SAR 0–319.99 and free shipping from SAR 320. The OTO
+discounted-rates checklist remains incomplete and no OTO rate was added to the Shopify delivery
+profile. Do not press the embedded rate-activation action or alter the manual rates without a
+separate commercial decision.
+
+The remaining pickup blocker is factual, not technical. OTO's imported sender record has only the
+name `SMSA Retail Shop` and city `RIYADH`; it lacks a confirmed phone, detailed physical pickup
+address, district, postal code, and short national address. Ask whether the Shopify address
+`SMSA Retail Shop, Al Wadi District, Uthman Bin Affan (Exit 7) Road, RIYADH, Saudi Arabia` is the
+actual courier pickup origin. If not, obtain the exact short national address or complete pickup
+address. Only then fill and activate the sender location. Next obtain the packaged weight and
+dimensions and run one prepaid test order through order import, shipment creation, label, tracking,
+and Shopify status writeback. No wallet funding, IBAN, paid plan, carrier booking, shipment, or live
+order test has occurred.
+
 ## Resume here — realistic seal and pale-beige checkout are live — 2026-09-01
 
 The owner explicitly approved the final unsaved mobile preview and then directed `Save`. Active
