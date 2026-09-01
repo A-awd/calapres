@@ -1,6 +1,28 @@
 
 # Project State
 
+## Live checkout identity corrected and verified — 2026-09-01
+
+[Owner approval and live save] After reviewing the unsaved mobile preview, the owner explicitly
+directed `Save`. Shopify saved the one active checkout configuration, profile `5133926656`, with
+the approved realistic wax seal `calapres-checkout-wax-seal.png`, centered at 120 px. The old
+`Artboard_4_2x-100-removebg-preview.png` asset remains in Shopify Files for rollback but is no
+longer the live checkout logo.
+
+[Exact live presentation] Checkout main background is `#FAF8F5`; header and order-summary
+backgrounds are `#F7F4EF`; header accent, order-summary accent, shared accent, and primary button
+are burnt brown `#44271B`; input fills are transparent; headings and body use Rubik. These are
+very pale solid Shopify checkout surfaces, not true backdrop blur. No checkout flow, required
+contact field, address wording, shipping rate, payment provider, Paymob state, product, price,
+inventory, customer, order, or social setting changed.
+
+[Verification] Save became disabled after the operation. A fresh public Arabic checkout loaded
+the new Shopify CDN seal at a rendered width of 120 px, main `rgb(250, 248, 245)`, header
+`rgb(247, 244, 239)`, burnt-brown `rgb(68, 39, 27)` payment action, transparent input fill, and
+Rubik on the visible checkout controls and headings. The active Basic store still has no checkout
+draft; Shopify's duplicate action did not respond, so the owner-approved change was applied to the
+active profile only after its exact rollback values had been recorded.
+
 ## Western-digit storefront and empty-review removal published live — 2026-09-01
 
 [Owner approval and production role change] After being told that native Arabic Shopify checkout
