@@ -137,6 +137,9 @@ decision record.
   — keep only seven authoritative storefront documents, replace the old FAQ corpus with 18 curated
   static answers plus one live order-status topic, supersede all set and two-letter engraving
   claims, preserve `Wait for the customer`, and restrict handoff to explicit or operational cases.
+- [0032 — Adopt the Chatwoot conversation operations taxonomy](decisions/0032-adopt-chatwoot-conversation-operations-taxonomy.md)
+  — organize conversations with seven visible operational labels, require one controlled outcome
+  before resolution, and keep automated routing changes outside this bounded stage.
 
 ## Superseded decisions
 
