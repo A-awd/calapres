@@ -20,7 +20,9 @@ Require the conversation list attribute `نتيجة المحادثة` (`conversa
 conversation. Its allowed values are `تم الشراء`, `انتهى الاستفسار`, `بانتظار العميل`,
 `تم التحويل لموظف`, `مشكلة حُلّت`, `لم يتم الشراء`, and `سبام`.
 
-Use the saved view `بانتظار العميل` for Pending conversations. Keep auto-resolve disabled.
+Use eight saved filters under `المجلدات`: `بانتظار العميل`, `يحتاج تدخل بشري`,
+`عملاء منزعجون`, `مهتم ولم يطلب`, `طلبات قائمة`, `مشكلات الشحن`, `مشكلات الدفع`, and
+`سبام وخارج النطاق`. Keep auto-resolve disabled.
 
 ## Boundaries
 
@@ -32,5 +34,5 @@ verified stage and a one-conversation canary before broader use.
 ## Verification
 
 The live UI confirmed seven labels in the sidebar, successful creation of the custom attribute,
-`نتيجة المحادثة` under Attributes required on resolution, and saved view `custom_view/23632` under
-the conversation folders section.
+`نتيجة المحادثة` under Attributes required on resolution, and all eight saved filters under the
+conversation folders section.
