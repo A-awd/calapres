@@ -154,3 +154,18 @@ Shopify theme at implementation time. Canonical GitHub commit
 `12a3ca53cb53ef4a09a0d9628ddc19265640b2cc` and unpublished theme `165777604864` therefore render
 only the verified WhatsApp and email anchors. The draft footer checksum is
 `909b23bc8b16f2818d7fdc85fa3b3f16`; live theme `165774786816` was not edited or published.
+
+## Amendment — transparent brown wax-seal favicon — 2026-09-02
+
+Status: accepted, executed, and publicly verified
+
+The owner rejected the solid-background gold monogram as the browser-tab icon and selected the
+brown Calapres wax seal without a background. Live inspection proved that Shopify still emitted
+`calapres-favicon-monogram-2026-08-31.png`, an RGB image without transparency. The already-approved
+`calapres-checkout-wax-seal.png` is RGBA with a transparent background, so live theme
+`165804638464` now uses that existing Shopify File for the global `favicon` setting.
+
+Shopify saved the change. A fresh anonymous response emits the wax-seal file for the 16 px, 32 px,
+shortcut-icon, and 180 px Apple touch-icon declarations. The exact seal asset was reused without
+generation or visual reinterpretation. No product, checkout, payment, shipping, social,
+customer-service, or automation configuration changed.
