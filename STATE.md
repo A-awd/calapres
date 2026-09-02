@@ -1,8 +1,22 @@
-Warning: truncated output (original token count: 44966)
-Total output lines: 2448
+Warning: truncated output (original token count: 45214)
+Total output lines: 2462
 
 
 # Project State
+
+## Transparent brown Calapres seal is now the live browser icon — 2026-09-02
+
+[Owner direction and root cause] The owner rejected the flat gold monogram favicon on its solid
+brown square and requested the brown Calapres seal without a background. A fresh public-head read
+proved that Shopify was still emitting `calapres-favicon-monogram-2026-08-31.png`; that selected
+file is RGB and has no alpha channel. The approved checkout seal already existed in Shopify Files
+as `calapres-checkout-wax-seal.png` and is RGBA with a transparent background.
+
+[Live execution and verification] In live theme `165804638464`, the theme setting `favicon` now
+selects the existing transparent wax-seal file. Shopify saved the setting successfully. A fresh
+anonymous public request returns the new seal URL for 16 px, 32 px, shortcut-icon, and 180 px Apple
+touch-icon declarations. No logo was regenerated and no product, checkout, payment, shipping,
+social, customer-service, or automation setting changed.
 
 ## Captain knowledge rebuilt; ordinary questions no longer hand off — 2026-09-02
 
@@ -515,21 +529,7 @@ production-approval gate.
 shadows, overlays, selection, hover states, and focus indicators are transparency derivatives.
 Black, gray, gold, white, and red interface literals were removed. Scrollbar track and thumb, all
 text, buttons, cart quantity badge, cart drawer, form controls, browser `theme-color`, the exact
-header wordmark silhouette, and all six footer glyph shapes now follow the beige/brown system. The
-raw wordmark and official social SVG files remain unchanged and are displayed as brown CSS masks;
-their destinations and enabled/disabled rules are unchanged. A small mobile footer-nav wrap rule
-was required after the preview exposed a 320 px horizontal overflow.
-
-[Accessibility and content boundary] Beige/brown base contrast is 9.24:1. The hero action remains at
-least 5.25:1 over a worst-case white video frame, collection labels at least 5.60:1 over a white
-image, and control boundaries 3.36:1 against the beige ground. Errors remain distinguishable by
-bold weight and a brown side rule, and keyboard focus has a brown outline. Product media, product
-colour swatches, video, and native third-party payment/application branding remain truthful content
-outside the two-source UI claim. Checkout is unchanged and remains separately controlled under
-decision 0022.
-
-[Unpublished Shopify implementation] Draft `Preview — Calapres beige + burnt brown 2026-08-31`
-(`165777604864`)…24966 tokens truncated…biguous Sends Every 15 Minutes` trigger gained one isolated
+header wordmark silhouette, and all six footer glyph shapes now follow the beige/brown …25214 tokens truncated…biguous Sends Every 15 Minutes` trigger gained one isolated
 fan-out branch for this — no new trigger, workflow, webhook, or credential. Graph tests prove
 neither this branch nor the trigger can reach `Send Reply`. Frozen source SHA-256 is
 `5092f7311b033f362e03cb3f4953fca32f068596a820cd0958c38d7b9830e76e` (82 -> 99 nodes). Full
