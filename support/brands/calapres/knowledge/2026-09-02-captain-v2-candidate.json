@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0",
+  "brand_id": "calapres",
+  "version": "2026-09-02-captain-v2-candidate",
+  "status": "live_synced_and_playground_verified",
+  "effective_at": "2026-09-02",
+  "approval_basis": "owner_request_2026-09-02_build_captain_library",
+  "supersedes_approved": "2026-08-11-v3",
+  "change_summary": "A source-grounded Captain library that removes the retired three-piece set claims, separates stable facts from live Shopify facts, and narrows human handoff.",
+  "live_sync": {
+    "executed_at": "2026-09-02",
+    "assistant_id": 2187,
+    "account_id": 179973,
+    "retained_documents": 7,
+    "manual_faqs_created": 18,
+    "dynamic_topics_excluded_from_static_faqs": ["dynamic.order-status"],
+    "inactivity_behavior_verified": "wait_for_customer",
+    "handoff_scenario_verified": "تحويل محدود لخدمة العملاء",
+    "playground_checks": [
+      "other-services scope answered without handoff",
+      "one-burner composition answered without retired set contents",
+      "cash on delivery rejected and shipping thresholds returned with Western digits",
+      "current product price not invented"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "shopify-products-live",
+      "authority": "live_shopify",
+      "verified_at": "2026-09-02",
+      "facts": ["active product titles", "current price", "product status", "product description"]
+    },
+    {
+      "source_id": "storefront-about",
+      "url": "https://calapres.com/pages/about",
+      "authority": "published_storefront",
+      "verified_at": "2026-09-02"
+    },
+    {
+      "source_id": "storefront-faq",
+      "url": "https://calapres.com/pages/faq",
+      "authority": "published_storefront",
+      "verified_at": "2026-09-02"
+    },
+    {
+      "source_id": "shipping-policy",
+      "url": "https://calapres.com/policies/shipping-policy",
+      "authority": "published_policy",
+      "verified_at": "2026-09-02"
+    },
+    {
+      "source_id": "refund-policy",
+      "url": "https://calapres.com/policies/refund-policy",
+      "authority": "published_policy",
+      "verified_at": "2026-09-02",
+      "source_updated_at": "2026-07-29"
+    }
+  ],
+  "assistant_configuration": {
+    "description_ar": "مساعد خدمة عملاء كالابريز للمباخر الفاخرة. يجيب من الحقائق الثابتة المعتمدة، ويستخدم أدوات شوبيفاي للحقائق المتغيرة، ولا يحوّل للبشري لمجرد عدم وجود إجابة جاهزة.",
+    "response_rules_ar": [
+      "ابدأ بالجواب المباشر، واجعل الرد جملة قصيرة أو جملتين قصيرتين كحد أقصى.",
+      "لا تستخدم كلمة طقم؛ المنتج مبخرة واحدة، وليس ستاندًا أو علبة عود أو مجموعة من ثلاث قطع.",
+      "لا تخترع خدمة أو منتجًا أو مدة توصيل أو خصمًا أو توفرًا أو مخزونًا.",
+      "السعر والتوفر وحالة الطلب والتتبع حقائق متغيرة لا تؤخذ من الأسئلة الثابتة؛ استخدم المصدر الحي المخصص أو أرسل رابط المنتج دون ادعاء غير متحقق.",
+      "إذا سأل العميل عن خدمات أخرى، اذكر النطاق الحالي المؤكد بوضوح ولا تعد بالتحقق لاحقًا.",
+      "لا تحوّل المحادثة للبشري بسبب سؤال عام أو بسبب توقف العميل عن الرد.",
+      "حوّل للبشري فقط إذا طلب العميل موظفًا صراحة، أو احتاج طلبه تنفيذ إلغاء أو استرداد أو تغيير عنوان أو معالجة نزاع أو مشكلة دفع، أو تعذّر التحقق الآمن من بيانات طلبه بعد استخدام الأداة المخصصة.",
+      "استخدم الأرقام الإنجليزية في كل الردود، حتى عند الرد بالعربية."
+    ],
+    "inactivity_behavior": "wait_for_customer",
+    "handoff_scenario": {
+      "name_ar": "تحويل محدود لخدمة العملاء",
+      "allowed_reasons": [
+        "explicit_human_request",
+        "order_mutation_required",
+        "refund_or_cancellation_execution_required",
+        "payment_dispute_or_sensitive_case",
+        "verified_order_tool_failure_after_safe_attempt"
+      ],
+      "forbidden_reasons": [
+        "general_question",
+        "missing_static_faq",
+        "customer_inactivity",
+        "out_of_scope_question",
+        "request_for_other_services"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "knowledge_id": "brand.what-we-offer",
+      "question_ar": "وش عندكم أو ما المنتجات والخدمات المتوفرة؟",
+      "customer_response_ar": "نوفر حاليًا مبخرة كالابريز الفاخرة بثلاثة ألوان مع إمكانية حفر الاسم أو الشعار، ولا توجد خدمات أخرى معلنة حاليًا.",
+      "category": "brand_scope",
+      "fact_mode": "static",
+      "source_ref": "storefront-about"
+    },
+    {
+      "knowledge_id": "product.contents",
+      "question_ar": "ماذا يتضمن المنتج أو هل هو طقم؟",
+      "customer_response_ar": "المنتج مبخرة واحدة أنيقة فقط؛ لا يتضمن ستاندًا أو علبة عود.",
+      "category": "product_faq",
+      "fact_mode": "static",
+      "source_ref": "shopify-products-live"
+    },
+    {
+      "knowledge_id": "product.colors",
+      "question_ar": "ما الألوان المتوفرة؟",
+      "customer_response_ar": "المبخرة متوفرة بالأبيض والبيج والرمادي.",
+      "category": "product_faq",
+      "fact_mode": "static",
+      "source_ref": "storefront-faq"
+    },
+    {
+      "knowledge_id": "product.engraving",
+      "question_ar": "هل يمكن حفر اسم أو شعار على المبخرة؟",
+      "customer_response_ar": "نعم، يمكن حفر اسم أو شعار على المبخرة عند الطلب؛ اكتب التفاصيل في خانة التخصيص أو ملاحظات الطلب.",
+      "category": "product_faq",
+      "fact_mode": "static",
+      "source_ref": "storefront-faq"
+    },
+    {
+      "knowledge_id": "product.gifting",
+      "question_ar": "هل المبخرة مناسبة للإهداء؟",
+      "customer_response_ar": "نعم، المبخرة مناسبة للإهداء، ويمكن تخصيصها بحفر اسم أو شعار.",
+      "category": "product_faq",
+      "fact_mode": "static",
+      "source_ref": "storefront-faq"
+    },
+    {
+      "knowledge_id": "order.how-to-order",
+      "question_ar": "كيف أطلب؟",
+      "customer_response_ar": "اختر لون المبخرة، وأضف تفاصيل التخصيص إن رغبت، ثم أضفها إلى السلة وأكمل الدفع.",
+      "category": "ordering",
+      "fact_mode": "static",
+      "source_ref": "storefront-faq"
+    },
+    {
+      "knowledge_id": "checkout.phone-format",
+      "question_ar": "كيف أكتب رقم الجوال في الطلب؟",
+      "customer_response_ar": "اختر السعودية واكتب رقم جوال صحيحًا يبدأ بـ05، أو اكتبه دوليًا بصيغة +9665 متبوعًا بـ8 أرقام.",
+      "category": "checkout",
+      "fact_mode": "static",
+      "source_ref": "live_checkout_2026-09-02"
+    },
+    {
+      "knowledge_id": "payment.no-cod",
+      "question_ar": "هل يوجد دفع عند الاستلام؟",
+      "customer_response_ar": "لا، الدفع عند الاستلام غير متاح؛ يتم الدفع إلكترونيًا عند إتمام الطلب.",
+      "category": "payment",
+      "fact_mode": "owner_policy",
+      "source_ref": "owner_decision"
+    },
+    {
+      "knowledge_id": "shipping.saudi-only",
+      "question_ar": "إلى أين تشحنون؟",
+      "customer_response_ar": "الشحن متاح حاليًا داخل المملكة العربية السعودية فقط.",
+      "category": "shipping",
+      "fact_mode": "static",
+      "source_ref": "shipping-policy"
+    },
+    {
+      "knowledge_id": "shipping.price",
+      "question_ar": "كم سعر الشحن؟",
+      "customer_response_ar": "رسوم الشحن 25 ريالًا للطلبات الأقل من 320 ريالًا، والشحن مجاني للطلبات بقيمة 320 ريالًا أو أكثر.",
+      "category": "shipping",
+      "fact_mode": "static_policy",
+      "source_ref": "shipping-policy"
+    },
+    {
+      "knowledge_id": "shipping.duration",
+      "question_ar": "كم يستغرق التوصيل؟",
+      "customer_response_ar": "لا توجد مدة توصيل ثابتة منشورة حاليًا؛ سنرسل تحديث الشحنة بعد تجهيز الطلب وتسليمه لشركة الشحن.",
+      "category": "shipping",
+      "fact_mode": "boundary",
+      "source_ref": "shipping-policy"
+    },
+    {
+      "knowledge_id": "returns.change-of-mind",
+      "question_ar": "هل يمكنني إرجاع المنتج؟",
+      "customer_response_ar": "يمكن طلب التراجع خلال 7 أيام من الاستلام إذا لم يُستخدم المنتج؛ وقد لا يشمل ذلك المنتج المصمم حسب الطلب. أرسل رقم الطلب وسبب الطلب لبدء المراجعة.",
+      "category": "returns",
+      "fact_mode": "static_policy",
+      "source_ref": "refund-policy"
+    },
+    {
+      "knowledge_id": "returns.defect",
+      "question_ar": "وصل المنتج تالفًا أو غير مطابق، ماذا أفعل؟",
+      "customer_response_ar": "أرسل رقم الطلب وصور المنتج فور اكتشاف المشكلة؛ وبعد التحقق نعالج الحالة وفق السياسة وقد يشمل ذلك الاستبدال أو الاسترداد.",
+      "category": "returns",
+      "fact_mode": "static_policy",
+      "source_ref": "refund-policy"
+    },
+    {
+      "knowledge_id": "returns.order-error",
+      "question_ar": "أخطأت في الطلب، ماذا أفعل؟",
+      "customer_response_ar": "أبلغنا خلال 24 ساعة من إرسال الطلب مع رقم الطلب والتصحيح المطلوب، وسنراجع إمكانية التعديل قبل التنفيذ.",
+      "category": "orders",
+      "fact_mode": "static_policy",
+      "source_ref": "refund-policy"
+    },
+    {
+      "knowledge_id": "contact.channels",
+      "question_ar": "كيف أتواصل معكم؟",
+      "customer_response_ar": "يمكنك مراسلتنا هنا مباشرة، أو عبر واتساب، أو على البريد info@calapres.com.",
+      "category": "contact",
+      "fact_mode": "static",
+      "source_ref": "storefront-contact"
+    },
+    {
+      "knowledge_id": "dynamic.price",
+      "question_ar": "كم سعر المبخرة؟",
+      "customer_response_ar": "السعر الحالي يظهر في صفحة المنتج؛ اذكر اللون لأرسل لك رابط المبخرة الصحيحة.",
+      "category": "product_dynamic",
+      "fact_mode": "live_shopify_required",
+      "source_ref": "shopify"
+    },
+    {
+      "knowledge_id": "dynamic.availability",
+      "question_ar": "هل المنتج متوفر؟",
+      "customer_response_ar": "التوفر يتغير؛ اذكر اللون المطلوب لأتحقق من صفحة المنتج الحالية دون افتراض المخزون.",
+      "category": "product_dynamic",
+      "fact_mode": "live_shopify_required",
+      "source_ref": "shopify"
+    },
+    {
+      "knowledge_id": "dynamic.order-status",
+      "question_ar": "وين طلبي أو ما حالة طلبي؟",
+      "category": "order_dynamic",
+      "fact_mode": "live_shopify_tool_required",
+      "source_ref": "shopify_order_lookup_tool"
+    },
+    {
+      "knowledge_id": "scope.out-of-scope",
+      "question_ar": "سؤال خارج خدمات كالابريز",
+      "customer_response_ar": "أقدر أساعدك في مباخر كالابريز، التخصيص، الطلبات، الدفع، الشحن والاسترجاع. وش تحب تعرف عنها؟",
+      "category": "scope",
+      "fact_mode": "boundary",
+      "source_ref": "owner_scope"
+    }
+  ],
+  "excluded_static_facts": [
+    "inventory_quantity",
+    "product_availability",
+    "delivery_estimate",
+    "discount_or_compare_at_price",
+    "order_status",
+    "tracking_status",
+    "payment_gateway_availability"
+  ],
+  "whatsapp_outbound_boundary": {
+    "status": "not_implemented",
+    "template_approval_required": true,
+    "trigger_recommendation": "paid_order_confirmed",
+    "phone_normalization": {
+      "accepted_inputs": ["05XXXXXXXX", "5XXXXXXXX", "9665XXXXXXXX", "+9665XXXXXXXX"],
+      "canonical_output": "+9665XXXXXXXX",
+      "invalid_behavior": "do_not_send_and_flag_for_manual_review"
+    }
+  }
+}
