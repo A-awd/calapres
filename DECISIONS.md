@@ -133,6 +133,10 @@ decision record.
   keeping cash on delivery off and preserving the current manual Saudi rates. Complete the exact
   physical pickup address and packaged measurements before one prepaid end-to-end shipment test;
   do not fund OTO, book a carrier, or enable OTO checkout rates by assumption.
+- [0031 — Rebuild Captain knowledge and limit human handoff](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md)
+  — keep only seven authoritative storefront documents, replace the old FAQ corpus with 18 curated
+  static answers plus one live order-status topic, supersede all set and two-letter engraving
+  claims, preserve `Wait for the customer`, and restrict handoff to explicit or operational cases.
 
 ## Superseded decisions
 
