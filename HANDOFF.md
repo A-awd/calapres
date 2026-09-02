@@ -4,6 +4,17 @@ Total output lines: 1982
 
 # Handoff
 
+## Chatwoot conversation operations stage 1 — 2026-09-02
+
+Resume from decision 0032. In live Chatwoot account `179973`, use the seven sidebar labels to route
+attention and the saved `بانتظار العميل` folder for Pending conversations. Before resolving a
+conversation, select one value in the required `نتيجة المحادثة` (`conversation_outcome`) list.
+
+This stage deliberately did not alter Captain assistant `2187`, its connected inboxes, the enabled
+assignment automation, existing conversations, or Meta/WhatsApp templates. Auto-resolve remains
+off. Do not bulk-label old conversations. The next separately approved stage should define who or
+what applies each label, then test one new conversation per channel before expanding automation.
+
 ## Resume here — the live favicon is the transparent brown wax seal — 2026-09-02
 
 The owner requested the brown Calapres seal without a background in the browser tab. The former
