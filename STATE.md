@@ -4,6 +4,24 @@ Total output lines: 2462
 
 # Project State
 
+## Chatwoot conversation operations stage 1 — 2026-09-02
+
+The live Chatwoot account `179973` now has a bounded conversation-operations layer without changing
+Captain, its inbox connections, the existing assignment automation, historical conversations, or
+Meta templates. Seven sidebar-visible labels were created: `يحتاج-تدخل`, `عميل-منزعج`,
+`مهتم-بالشراء`, `طلب-قائم`, `مشكلة-شحن`, `مشكلة-دفع`, and `سبام`.
+
+A conversation list attribute named `نتيجة المحادثة` with key `conversation_outcome` was created
+with seven allowed outcomes: `تم الشراء`, `انتهى الاستفسار`, `بانتظار العميل`,
+`تم التحويل لموظف`, `مشكلة حُلّت`, `لم يتم الشراء`, and `سبام`. Chatwoot now requires this
+attribute when an agent resolves a conversation. Auto-resolve remains disabled.
+
+The seven labels are available as direct filtered lists in the conversation sidebar. A saved custom
+view named `بانتظار العميل` (`custom_view/23632`) was also created for conversations whose status is
+Pending. No labels or outcomes were retroactively applied to historical conversations.
+
+Decision: [0032 — Adopt the Chatwoot conversation operations taxonomy](decisions/0032-adopt-chatwoot-conversation-operations-taxonomy.md).
+
 ## Transparent brown Calapres seal is now the live browser icon — 2026-09-02
 
 [Owner direction and root cause] The owner rejected the flat gold monogram favicon on its solid
