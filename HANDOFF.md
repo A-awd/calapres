@@ -1,8 +1,21 @@
-Warning: truncated output (original token count: 35485)
-Total output lines: 1969
+Warning: truncated output (original token count: 35694)
+Total output lines: 1982
 
 
 # Handoff
+
+## Resume here — the live favicon is the transparent brown wax seal — 2026-09-02
+
+The owner requested the brown Calapres seal without a background in the browser tab. The former
+selected file, `calapres-favicon-monogram-2026-08-31.png`, was a flat gold monogram on a solid brown
+RGB square. Live theme `165804638464` now selects the already-approved transparent RGBA file
+`calapres-checkout-wax-seal.png` for its `favicon` setting.
+
+Shopify saved the change, and a fresh public response emits the new file for the 16 px and 32 px
+favicons, shortcut icon, and 180 px Apple touch icon. If Safari temporarily shows the prior icon,
+reload or open a new tab because Safari may retain the old site icon locally; do not revert the
+Shopify setting on that basis. No image was regenerated and no other storefront or checkout setting
+changed.
 
 ## Resume here — Captain library v2 is live; outbound WhatsApp remains separate — 2026-09-02
 
@@ -545,19 +558,7 @@ The owner explicitly authorized publication. Authenticated Shopify Admin confirm
 `165774786816` would replace `165770887424`; the confirmation was accepted and the theme library
 showed the new theme as `Active`. A fresh Admin GraphQL reread now shows `165774786816` as `MAIN`,
 not processing and without a processing failure, while `165770887424` is `UNPUBLISHED`. The role
-change timestamp is `2026-08-31T13:01:23Z`; the former main is preserved as the immediate rollback.
-
-After explicitly exiting preview mode, a fresh public 320 px render had no preview bar and showed
-all six 40 px icon boxes on one row. WhatsApp linked exactly to
-`https://wa.me/966508727687`, email linked exactly to `mailto:info@calapres.com`, X had no `href`,
-and the browser console had no errors. Instagram, Snapchat, and TikTok remain disabled until their
-official URLs are separately verified. The publication stage is complete; typography is the next
-separate storefront stage. Do not run `.github/workflows/theme-deploy.yml`.
-
-## Resume here — reconciled four-icon theme is live with verified Calapres WhatsApp — 2026-08-31
-
-Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This production
-publication started from a clean, freshly fetched `origin/…15485 tokens truncated…814`. Source/live parity verified and both CI workflows
+change timestamp is `2026-08-31T13:01:23Z`; the fo…15694 tokens truncated…814`. Source/live parity verified and both CI workflows
 passed (275 Node, 92 Python). Budget caps, kill switch, idempotency, final reread/send lease,
 Shopify read-only scope, and no execution-data retention are unchanged. Live Neon remains schema
 version 13; migration 0014 is still a separate explicit-approval gate.
