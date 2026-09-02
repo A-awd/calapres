@@ -16,9 +16,10 @@ with seven allowed outcomes: `تم الشراء`, `انتهى الاستفسار
 `تم التحويل لموظف`, `مشكلة حُلّت`, `لم يتم الشراء`, and `سبام`. Chatwoot now requires this
 attribute when an agent resolves a conversation. Auto-resolve remains disabled.
 
-The seven labels are available as direct filtered lists in the conversation sidebar. A saved custom
-view named `بانتظار العميل` (`custom_view/23632`) was also created for conversations whose status is
-Pending. No labels or outcomes were retroactively applied to historical conversations.
+The seven labels are available as direct filtered lists in the conversation sidebar. Eight saved
+filters were created under `المجلدات`: `بانتظار العميل`, `يحتاج تدخل بشري`, `عملاء منزعجون`,
+`مهتم ولم يطلب`, `طلبات قائمة`, `مشكلات الشحن`, `مشكلات الدفع`, and `سبام وخارج النطاق`.
+No labels or outcomes were retroactively applied to historical conversations.
 
 Decision: [0032 — Adopt the Chatwoot conversation operations taxonomy](decisions/0032-adopt-chatwoot-conversation-operations-taxonomy.md).
 
