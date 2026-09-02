@@ -7,8 +7,10 @@ Total output lines: 1982
 ## Chatwoot conversation operations stage 1 — 2026-09-02
 
 Resume from decision 0032. In live Chatwoot account `179973`, use the seven sidebar labels to route
-attention and the saved `بانتظار العميل` folder for Pending conversations. Before resolving a
-conversation, select one value in the required `نتيجة المحادثة` (`conversation_outcome`) list.
+attention. The `المجلدات` section contains eight saved filters: `بانتظار العميل`,
+`يحتاج تدخل بشري`, `عملاء منزعجون`, `مهتم ولم يطلب`, `طلبات قائمة`, `مشكلات الشحن`,
+`مشكلات الدفع`, and `سبام وخارج النطاق`. Before resolving a conversation, select one value in the
+required `نتيجة المحادثة` (`conversation_outcome`) list.
 
 This stage deliberately did not alter Captain assistant `2187`, its connected inboxes, the enabled
 assignment automation, existing conversations, or Meta/WhatsApp templates. Auto-resolve remains
