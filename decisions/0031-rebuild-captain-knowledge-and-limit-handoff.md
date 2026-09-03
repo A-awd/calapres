@@ -2,7 +2,8 @@
 
 Date: 2026-09-02
 
-Status: accepted, executed, and verified in Captain Playground
+Status: accepted; Captain v2 execution is verified, and the 2026-09-03 transfer-wording amendment
+requires a fresh live persistence check
 
 ## Context
 
@@ -26,6 +27,17 @@ as one Calapres burner in white, beige, or gray, with name-or-logo engraving.
 6. Hand off only for an explicit human request, an order mutation, cancellation or refund execution,
    a payment dispute or sensitive case, or a verified failure of the order tool after a safe attempt.
 7. Use Western digits in Captain replies.
+
+## 2026-09-03 transfer-wording amendment
+
+When a valid handoff is required, the customer-facing wording must begin with a brief, gentle
+apology and say that `الموظف المختص` will follow up. Do not describe the destination as a human,
+human agent, support employee, or similar system-revealing label. This is an owner-approved tone
+and terminology rule; it does not broaden the limited handoff triggers above.
+
+The source conversation does not contain a fresh final readback proving that this wording remains
+saved in the live Captain configuration. Verify it read-only before claiming the amendment is live,
+and test it in Playground before any external-channel acceptance test.
 
 ## Execution record
 

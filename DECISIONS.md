@@ -136,14 +136,23 @@ decision record.
 - [0031 — Rebuild Captain knowledge and limit human handoff](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md)
   — keep only seven authoritative storefront documents, replace the old FAQ corpus with 18 curated
   static answers plus one live order-status topic, supersede all set and two-letter engraving
-  claims, preserve `Wait for the customer`, and restrict handoff to explicit or operational cases.
+  claims, preserve `Wait for the customer`, restrict handoff to explicit or operational cases, and
+  describe a valid transfer gently as follow-up by `الموظف المختص` after a brief apology rather
+  than exposing a human/support-system distinction. The latest wording persistence still needs a
+  fresh live check.
 - [0032 — Adopt the Chatwoot conversation operations taxonomy](decisions/0032-adopt-chatwoot-conversation-operations-taxonomy.md)
   — organize conversations with seven visible operational labels, require one controlled outcome
   before resolution, and keep automated routing changes outside this bounded stage.
 - [0033 — Adopt a bounded Calapres Operations Director draft](decisions/0033-adopt-calapres-operations-director-draft.md)
-  — keep one unpublished owner-facing n8n agent with two approval-required read-only/public tools,
-  three English skills, Arabic owner responses, and no channel, schedule, sub-agent, episodic
-  memory, MCP, customer send, or commerce write authority.
+  — keep one unpublished owner-facing n8n agent with three English skills, Arabic owner responses,
+  and no channel, schedule, sub-agent, episodic memory, MCP, customer send, or commerce write
+  authority. Shopify and Firecrawl remain eligible for later separately approved read-only canaries
+  but are not currently attached after the documented recovery.
+- [0034 — Prefer direct OpenAI API as the primary Calapres agent provider, subject to n8n Agent compatibility](decisions/0034-use-direct-openai-api-for-calapres-agent.md)
+  — prefer a Calapres-dedicated customer-owned OpenAI project, credential, and budget for the
+  internal Operations Director; keep Gateway as the unpaid trial path, do not adopt OpenRouter as
+  primary, keep compatibility verification pending, and require fresh approval for payment,
+  credential creation, and binding work.
 
 ## Superseded decisions
 

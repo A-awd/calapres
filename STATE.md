@@ -1,30 +1,41 @@
-Warning: truncated output (original token count: 45214)
-Total output lines: 2462
-
-
 # Project State
 
-## Calapres Operations Director is configured as an unpublished internal draft — 2026-09-03
+## Calapres Operations Director restored; instructions-only preview passed — 2026-09-03
 
-The live n8n draft `Calapres Operations Director` has agent ID `olVB3TzKClXjuOei` in project
-`AeQgtZlgJbiXCM2e` and uses `GPT-5.6 Sol`. Its separate assistant-page URL identifier is
-`52257909-c5b9-4244-a471-4f808b31facd`, not the agent ID. Its configuration is in English and its
-owner-facing responses are instructed to be in Arabic. It has exactly three English skills:
-`Calapres Launch Readiness Audit`, `Daily Order Operations Triage`, and `Operational Incident
-Command`.
+[Current verified draft] The n8n Agent `Calapres Operations Director` retains stable agent ID
+`olVB3TzKClXjuOei` in project `AeQgtZlgJbiXCM2e` and uses `GPT-5.6 Sol`. Its configuration and
+three skills are in English, and owner-facing replies are instructed to be in Arabic. The skills
+remain `Calapres Launch Readiness Audit`, `Daily Order Operations Triage`, and `Operational
+Incident Command`. The draft is unpublished, custom routing and episodic memory are off, session
+memory remains at its default, MCP is off, and there are no channels, schedules, or sub-agents.
+Captain remains the only customer-facing responder.
 
-The draft has only two tools, and both require approval before every invocation: Shopify
-`Order / Get Many` through `Shopify-Calapres` with a limit of 20 records, and Firecrawl `Scrape`
-restricted to public pages on `calapres.com`. It has no channels, schedules, sub-agents, episodic
-memory, or MCP connection and remains unpublished. The n8n listing verified `published=false`,
-`availableInMCP=false`, and `updatedAt=2026-09-03T14:30:57.883Z`; MCP access remains intentionally
-off. It has no customer-send or Shopify-write authority; Captain remains the only customer-facing
-responder.
+[Recovered state] The saved draft was later observed as a blank `New Agent` while preserving the
+stable agent ID. The approved name, icon, model, instructions, skills, and safety settings were
+restored. The cause is unproven; stale or concurrent preview/editor state, autosave, and an
+interrupted connection remain the leading observed risks. An `/assistant/<uuid>` page is a transient
+assistant artifact, not an agent identity or safe resume target. Open the agent from the project
+Agents list and verify the stable agent ID before editing.
 
-This stage verified configuration only. Neither tool was executed, so connectivity, approval
-behavior, returned data, and answer accuracy remain unverified. Before publication or expanded
-access, perform a fresh configuration reread and one separately owner-approved read-only canary per
-tool. Decision: [0033 — Adopt a bounded Calapres Operations Director draft](decisions/0033-adopt-calapres-operations-director-draft.md).
+[Verification] A safe instructions-only preview passed after restoration: it replied in Arabic,
+used the required source hierarchy, respected the prohibited-action boundaries, prioritized work as
+P0/P1/P2, and marked tool-dependent facts `UNVERIFIED`. No Shopify or Firecrawl tool is currently
+attached after the restoration, and neither connection has been tested. No customer message,
+commerce write, publication, payment, provider credential, Gateway top-up, or OpenRouter setup was
+performed.
+
+[Provider direction and next action] Decision 0034 accepts a direct, Calapres-dedicated OpenAI API
+project and credential as the preferred future production model path, while leaving implementation,
+budget approval, and current n8n Agent compatibility verification pending. n8n Gateway remains the
+temporary trial path; it must not be topped up or given auto-top-up by assumption. OpenRouter is not
+the primary provider. First refresh the live agent read-only from its stable listing and verify that
+the current first-class Agent supports a user-owned OpenAI credential. Only after fresh owner
+approval may a budget, credential, or model binding be created. Then run one bounded model canary
+before separately approving and reattaching one read-only tool at a time. Keep the agent unpublished.
+
+Decisions: [0033 — Adopt a bounded Calapres Operations Director draft](decisions/0033-adopt-calapres-operations-director-draft.md)
+and [0034 — Prefer direct OpenAI API as the primary Calapres agent provider, subject to n8n Agent compatibility](decisions/0034-use-direct-openai-api-for-calapres-agent.md).
+Detailed record: [2026-09-03 Calapres agent recovery, provider direction, and WhatsApp history](docs/handoffs/2026-09-03-calapres-agent-recovery-provider-and-whatsapp-history.md).
 
 ## Chatwoot conversation operations stage 1 — 2026-09-02
 

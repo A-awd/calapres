@@ -1,29 +1,34 @@
-Warning: truncated output (original token count: 35694)
-Total output lines: 1982
-
-
 # Handoff
 
-## Resume here — verify the unpublished Calapres Operations Director draft — 2026-09-03
+## Resume here — verify the restored agent and its direct-OpenAI path — 2026-09-03
 
-Open existing n8n agent `Calapres Operations Director`, agent ID `olVB3TzKClXjuOei`, in project
-`AeQgtZlgJbiXCM2e`. The separate assistant-page URL identifier
-`52257909-c5b9-4244-a471-4f808b31facd` is not the agent ID. The agent should remain unpublished on
-`GPT-5.6 Sol`, with an English configuration and Arabic owner-facing responses. Verify exactly
-three English skills: `Calapres Launch Readiness Audit`, `Daily Order Operations Triage`, and
-`Operational Incident Command`.
+Open the existing n8n Agent `Calapres Operations Director` from the project Agents list and confirm
+stable agent ID `olVB3TzKClXjuOei` in project `AeQgtZlgJbiXCM2e`. Do not resume it from a saved
+`/assistant/<uuid>` route: that route is a transient assistant artifact, not the stable agent
+record. The saved draft was later observed as a blank `New Agent`; the cause is unproven, while
+stale or concurrent editor state, autosave, and an interrupted connection remain observed risks.
+The draft was restored and an instructions-only preview passed, but its former Shopify and
+Firecrawl tools were deliberately not reattached. It remains unpublished with no channels,
+schedules, sub-agents, episodic memory, or MCP access.
 
-Verify that Shopify `Order / Get Many` uses `Shopify-Calapres`, is limited to 20 records, and
-requires approval. Verify that Firecrawl `Scrape` also requires approval and is restricted to
-public `calapres.com` pages. Confirm there are no channels, schedules, sub-agents, episodic memory,
-or MCP connections. The n8n listing verified `published=false`, `availableInMCP=false`, and
-`updatedAt=2026-09-03T14:30:57.883Z`. Do not enable MCP to validate the agent. Neither tool has been
-executed, so do not claim connectivity or accurate output from the saved configuration alone.
+The immediate next action is read-only: verify the current live draft from the stable Agents list,
+then establish whether this n8n first-class Agent can use a customer-owned OpenAI credential. The
+accepted direction is a Calapres-dedicated direct OpenAI API project/key/budget with `GPT-5.6 Sol`;
+implementation is pending. Do not top up n8n Gateway, enable auto-top-up, fund OpenAI, create or
+attach a credential, configure OpenRouter, reattach a tool, or publish the agent without fresh
+action-time approval. If direct credentials are unsupported in the current Agent surface, preserve
+the Gateway draft and return for a new decision instead of building an unapproved workaround.
 
-The next safe action is one separately owner-approved read-only canary per tool after a fresh UI
-reread. Do not publish the agent, add capabilities, send messages, write to Shopify, alter orders or
-shipping, duplicate an existing Calapres bridge, or change Captain. Record exact canary evidence
-before expanding the draft. Decision: [0033 — Adopt a bounded Calapres Operations Director draft](decisions/0033-adopt-calapres-operations-director-draft.md).
+After any approved model binding, run one bounded instructions/model canary. Reattach Shopify and
+Firecrawl only as two later, separately approved read-only canaries, one tool at a time. Keep Captain
+as the only customer-facing responder and do not send messages or write to Shopify, orders,
+shipping, Chatwoot, Meta, or payment systems.
+
+Read [decision 0033](decisions/0033-adopt-calapres-operations-director-draft.md),
+[decision 0034](decisions/0034-use-direct-openai-api-for-calapres-agent.md), and the
+[detailed 2026-09-03 handoff](docs/handoffs/2026-09-03-calapres-agent-recovery-provider-and-whatsapp-history.md).
+The detailed record also preserves the official WhatsApp-history export limits and the proposed
+direct Chatwoot archive path; no archive was executed.
 
 ## Chatwoot conversation operations stage 1 — 2026-09-02
 
