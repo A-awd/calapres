@@ -42,6 +42,16 @@ ID fell back to another accessible account. Treat both candidates as unusable un
 full-control access are corrected. Do not bind by name alone or create an ad account without fresh
 approval of its permanent currency/timezone and ownership placement.
 
+[Account-quality recheck] Meta Business Support opened both exact ad-account records. Each exists,
+is labeled `Read-Only`, has zero ads under review, approved, or remaining rejected, and shows no
+current advertising-policy restriction. This differs from another portfolio account that Meta
+explicitly labels restricted. The `1055863030368089` record therefore is not proven disabled, but
+its `Open in Ads Manager` path redirects to accessible Oleel account `1120157883211551`, so it is
+not manageable by the current owner identity. The same happens for `1548956409428065`; its billing
+route additionally opens an asset named `Calapres deleted old`, so treat it as retired. A prior
+handoff recorded rejected Calapres ad-account creation and a payment-required notice, but did not
+record either ID; do not attribute that earlier failure to `1055863030368089` without evidence.
+
 ## Captain no longer hands off when a customer asks for a human — 2026-09-04
 
 [Owner-reported defect, live-verified] In Chatwoot conversation `#17`, the customer wrote
