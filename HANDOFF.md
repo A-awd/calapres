@@ -43,6 +43,14 @@ account. Neither candidate ad-account ID appears in Optix Business Settings, and
 either in Ads Manager redirected to an unrelated accessible account. No audience sync or lead-ad
 sync was created.
 
+A subsequent Meta Business Support recheck proved that both exact ad-account records still exist
+and currently show zero reviewed/approved/rejected ads and no visible policy restriction. The
+blocker is access and ownership, not a verified Meta suspension. Account `1055863030368089` is not
+proven disabled, but remains read-only and its Ads Manager link redirects to Oleel. Account
+`1548956409428065` behaves the same and its billing route is named `Calapres deleted old`; keep it
+retired. The earlier rejected-account-creation/payment notice did not preserve an account ID, so do
+not claim it was account `1055863030368089`.
+
 Next safe action: obtain explicit owner approval for one exact Meta account remedy after presenting
 the permanent ownership/currency/timezone choice. Prefer an Optix-owned, Calapres-only ad account
 assigned to the Calapres asset group and the owner with full control. Then re-open Klaviyo from
