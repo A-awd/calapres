@@ -45,6 +45,16 @@ rendered browser preview.
 
 ## Implemented preview record
 
+### 2026-09-05 campaign-logo clarification
+
+The owner explicitly required the existing CALAPRES wordmark with its distinctive C/first-A flourish
+in the Magnific campaign, not a generic font spelling or a newly generated logo. Reuse the approved
+`assets/calapres-wordmark.png` silhouette. The live homepage freshly resolves that same asset through
+its header CSS mask, in burnt brown; the underlying PNG's gold colour is not the rendered website
+colour. Use the original graphic geometry in the campaign, with brown ink, not a wax-seal substitute.
+This clarifies campaign asset reuse only; no storefront or checkout logo change is authorized.
+
+
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft
 `Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) contains the six corresponding

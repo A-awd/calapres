@@ -4,6 +4,9 @@
 Durable Calapres decisions live in the `decisions` directory. GitHub `main` is the authoritative
 decision record.
 
+Latest clarification (2026-09-05): decision 0025 requires the original flourished CALAPRES wordmark
+asset in the family campaign, not generic lettering. This does not change the live site or checkout.
+
 ## Active decisions
 
 - [0001 — Adopt the One Brain repository foundation](decisions/0001-one-brain-foundation.md)

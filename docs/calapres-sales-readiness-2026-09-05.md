@@ -104,3 +104,24 @@ Next safe creative step: preserve the actual single-product photograph in a cont
 and typeset the approved Arabic as editable text; review product fidelity and wording before any
 customer-visible publication. No more generation was queued in this trial. No generated asset was
 uploaded to Shopify or Klaviyo, and no storefront, ad, or customer message was published.
+
+## Original wordmark correction trial — 2026-09-05
+
+The owner requested the existing flourished CALAPRES wordmark, not a generic spelling. The live
+homepage header's mask resolves to `assets/calapres-wordmark.png`; its actual public asset was
+visually inspected and imported as Magnific reference `9ZcYPitNYZ`. The source PNG is gold, while
+the approved website mask renders its original silhouette in burnt brown (#44271B).
+
+One targeted logo-only edit used the preceding single-burner draft and actual logo as references,
+with GPT 2, requested 2k/high quality. [Result](https://www.magnific.com/app/creation/ovHQXKq829)
+completed; returned metadata reports 768 x 1024 while the authenticated creation UI shows
+1536 x 2048. Do not silently resolve that discrepancy as verified export dimensions. The edit cost
+700 existing credits; fresh balance is 7021 (previously 7721). No payment or top-up occurred.
+The wait tool returned HTTP 504, but a subsequent creation read independently confirmed completion.
+Visual inspection rejected the result for this request: the distinctive logo flourish was not
+faithfully preserved. Do not claim that supplying the reference pasted the exact asset. No additional
+generation is authorized by that failure alone. Use deterministic original-asset placement in an
+editable design instead of repeatedly asking a model to redraw the wordmark. No publication occurred.
+The authenticated Design UI exposes blank-canvas creation and local PSD/IDML/PDF/PPTX/HTML/image
+import. Inspection did not complete a deterministic logo-layer placement; no design was imported or
+created, and no export with the exact original logo was verified. This remains incomplete.

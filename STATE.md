@@ -1,5 +1,16 @@
 # Project State
 
+## Original wordmark required in campaign — 2026-09-05
+
+[Approved] The owner corrected the campaign branding: use the actual CALAPRES wordmark with the
+distinctive C/first-A flourish, not generic lettering. [Verified live] The homepage header uses
+`assets/calapres-wordmark.png` as its brown CSS mask. That actual file was imported to Magnific
+as reference `9ZcYPitNYZ`; no new logo was designed and no storefront setting changed.
+[Trial outcome] A targeted GPT 2 edit completed using 700 existing credits, but visual inspection
+found it still failed to preserve the distinctive logo. Rejected for logo fidelity; no publication.
+Exact-asset placement in an editable composition remains required. See the campaign trial record.
+
+
 ## Family campaign copy approved; Magnific experiment — 2026-09-05
 
 [Approved] The owner accepted `مبخرة تحمل اسم عائلتكم` with the exact shorter body recorded in

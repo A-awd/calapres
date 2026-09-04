@@ -1,5 +1,17 @@
 # Handoff
 
+## Resume here — exact original campaign wordmark — 2026-09-05
+
+Use the original `assets/calapres-wordmark.png` graphic (distinctive C/first-A flourish), as the owner
+explicitly requested. Do not replace it with a typed CALAPRES font or the wax seal. Its current live
+header rendering is brown via CSS mask even though the underlying PNG is gold. Magnific reference
+`9ZcYPitNYZ` is the actual imported asset. This logo correction does not approve image publication,
+Shopify changes, checkout changes, or a broad Arabic brand-name rewrite.
+The targeted logo edit `ovHQXKq829` completed (700 credits) but did not preserve the flourish; do not
+present it as a correct logo replacement. Fresh balance after it was 7021. Avoid further generative
+retries for this exact-asset task; use deterministic image-layer placement and verify it visually.
+
+
 ## Resume here — approved family campaign and Magnific trial — 2026-09-05
 
 The owner approved the exact shorter campaign heading/body recorded in
