@@ -153,6 +153,12 @@ decision record.
   internal Operations Director; keep Gateway as the unpaid trial path, do not adopt OpenRouter as
   primary, keep compatibility verification pending, and require fresh approval for payment,
   credential creation, and binding work.
+- [0035 — Adopt a private cross-brand owner command center](decisions/0035-adopt-private-owner-command-center.md)
+  — use `سكرتيرة عبدالرحمن` as a private Telegram-facing parent for the owner, restrict it by the
+  verified numeric Telegram identity, delegate bounded Calapres analysis to the unpublished
+  `Calapres Operations Director`, and keep customer contact, live operational actions, voice,
+  proactive alerts, provider funding, and future-brand access behind their stated verification and
+  approval gates.
 
 ## Superseded decisions
 

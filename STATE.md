@@ -1,5 +1,40 @@
 # Project State
 
+## Private owner command center text path verified — 2026-09-04
+
+[Executed and verified] A separate owner-facing n8n Agent named `سكرتيرة عبدالرحمن`, agent ID
+`LKA07iWfCpjawVNB` in project `AeQgtZlgJbiXCM2e`, is published on active version
+`ea5c657e-040a-48b6-b3bf-2c46c87c8321`. It uses `GPT-5.6 Sol` through the temporary managed n8n
+Gateway and answers the owner in Arabic. Its private Telegram channel uses
+`@AbdulrahmanCommandCenterBot` and credential `Qj1UoPHZNEEWn5dX`; the credential test passed. The
+integration is restricted to the owner's verified numeric Telegram identity, whose value is not
+stored in GitHub. A real Telegram text instruction received the expected reply `تم`, and n8n logged
+a successful Telegram execution.
+
+[Delegation verified] The existing unpublished `Calapres Operations Director`
+(`olVB3TzKClXjuOei`) is attached to the owner agent as a bounded internal specialist. A safe preview
+successfully delegated a Calapres launch-readiness assessment and returned Arabic P0/P1/P2 output
+with `UNVERIFIED` treatment and no external action. The parent was validated and republished after
+the attachment. The Calapres agent itself remains unpublished, retains its three approved skills,
+and has no customer channel, schedule, commerce tool, or expanded authority.
+
+[Boundary] Captain remains the only customer-facing automated responder. The owner command center
+must not contact customers or describe itself as customer support. For a valid customer transfer,
+the approved wording remains a brief gentle apology followed by notice that `الموظف المختص` will
+continue. No customer message, commerce write, schedule, proactive alert, live operational-source
+attachment, payment, Gateway top-up, auto-top-up, direct OpenAI credential, or OpenRouter route was
+created in this stage.
+
+[Unknown and next action] Voice handling is not yet verified; one real private Telegram voice note
+must be received, transcribed accurately, and answered before it can be relied on. Proactive incident
+notification is also not yet implemented because no live sources or triggers are attached. The
+direct customer-owned OpenAI provider remains the preferred production direction under decision
+0034, but its exact supported connection path, current plan restrictions, project, credential, and
+budget still require their separate live verification and action-time approval. The usable current
+capability is private Telegram text plus bounded internal Calapres delegation.
+
+Decision: [0035 — Adopt a private cross-brand owner command center](decisions/0035-adopt-private-owner-command-center.md).
+
 ## Calapres Operations Director restored; instructions-only preview passed — 2026-09-03
 
 [Current verified draft] The n8n Agent `Calapres Operations Director` retains stable agent ID

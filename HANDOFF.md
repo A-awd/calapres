@@ -1,5 +1,35 @@
 # Handoff
 
+## Resume here — verify voice, then add read-only incident sources — 2026-09-04
+
+The private owner command center is live for text. Open the stable n8n Agent
+`سكرتيرة عبدالرحمن`, agent ID `LKA07iWfCpjawVNB`, from the project Agents list and confirm active
+version `ea5c657e-040a-48b6-b3bf-2c46c87c8321` before editing. Its private Telegram bot is
+`@AbdulrahmanCommandCenterBot`; credential `Qj1UoPHZNEEWn5dX` passed connection testing, the
+integration is restricted to the verified numeric owner identity, and a real Telegram text round
+trip returned `تم`. Never place the bot token, numeric owner ID, webhook secret, or personal phone
+number in GitHub or an agent instruction.
+
+`Calapres Operations Director` (`olVB3TzKClXjuOei`) is attached only as a bounded internal
+specialist. The parent-agent delegation preview passed and the parent was republished. The Calapres
+agent itself remains unpublished with its existing three skills and without channels, schedules,
+commerce tools, or customer-send authority. Do not duplicate or replace it.
+
+The next canary is one real voice note sent by the owner to the private bot. Verify receipt,
+transcription accuracy, Arabic response, and the corresponding n8n Telegram execution. If native
+voice handling fails, stop treating voice as supported and design a separate transcription bridge
+before implementation. After voice, define and separately approve the minimum read-only sources and
+incident triggers needed for proactive P0/P1/P2 alerts. No such source, trigger, or schedule is
+currently attached.
+
+Captain remains the only customer-facing automated responder. Do not send customer messages,
+publish, alter commerce or fulfillment, expose or create credentials, fund a provider, or enable a
+schedule by assumption. The owner agent still uses finite managed Gateway trial credit; do not top
+it up or enable automatic top-up. Decision 0034's direct OpenAI path remains pending separate live
+compatibility and plan verification plus action-time approval for credential and payment work.
+
+Read [decision 0035](decisions/0035-adopt-private-owner-command-center.md) before continuing.
+
 ## Resume here — verify the restored agent and its direct-OpenAI path — 2026-09-03
 
 Open the existing n8n Agent `Calapres Operations Director` from the project Agents list and confirm
