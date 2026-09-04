@@ -30,6 +30,25 @@ campaign, customer message, paid trial, subscription, ad spend, or ad account bi
 Read [decision 0037](decisions/0037-establish-klaviyo-technically-defer-email-design.md) before
 changing Klaviyo or email design.
 
+### Meta blocker discovered during advertising-integration setup
+
+The owner authorized opening Meta, Google, and TikTok account-connection flows, but Meta binding is
+not complete. Klaviyo offered `Calapres | كالابريز` ad account `1055863030368089` and misspelled
+`Calaprs` account `1548956409428065`; both were `Read-Only`. Do not select either.
+
+Live Shopify and Meta Business evidence identifies the canonical Calapres dataset/pixel as
+`2087512885182244`, owned by Optix portfolio `3498131087080400`. Calapres asset group
+`1163328843541759` contains the page, catalog, Chatwoot app, pixel, and Instagram account but no ad
+account. Neither candidate ad-account ID appears in Optix Business Settings, and attempting to open
+either in Ads Manager redirected to an unrelated accessible account. No audience sync or lead-ad
+sync was created.
+
+Next safe action: obtain explicit owner approval for one exact Meta account remedy after presenting
+the permanent ownership/currency/timezone choice. Prefer an Optix-owned, Calapres-only ad account
+assigned to the Calapres asset group and the owner with full control. Then re-open Klaviyo from
+Integrations, authorize only the necessary Calapres assets, and verify the exact account ID before
+creating any audience. This does not authorize ad spend or campaign launch.
+
 ## Resume here — connect delayed Chatwoot escalation without restoring immediate handoff — 2026-09-04
 
 Live Captain assistant `2187` has been corrected after verified conversation `#17` showed an
