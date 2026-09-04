@@ -25,9 +25,15 @@ the Calapres agent only as an internal delegated specialist.
 2. Use the private Telegram bot `@AbdulrahmanCommandCenterBot` as the initial owner channel. Restrict
    access with the owner's verified numeric Telegram identity, not only a changeable username. Never
    store the bot token, numeric owner identifier, personal phone number, or webhook secret in GitHub.
-3. Work by exception. Ordinary customer conversations that Captain resolves do not need owner
-   notification. Escalate material issues using P0/P1/P2 priority, concise evidence, affected brand,
-   owner action required, and verified/unknown distinctions.
+3. Work by exception and default to the owner's complete portfolio. When no brand or project is
+   named, interpret the request as covering every authorized and connected business, commercial
+   operation, project, and personal organizational matter. Return one consolidated view grouped by
+   brand or project where useful. Do not ask for a brand merely because data is missing; report that
+   coverage as `UNKNOWN` or `UNVERIFIED`. Ask only when the request has materially different
+   meanings or a brand-specific risky action cannot be safely targeted. Ordinary customer
+   conversations that Captain resolves do not need owner notification. Escalate material issues
+   using P0/P1/P2 priority, concise evidence, affected brand, owner action required, and
+   verified/unknown distinctions.
 4. Attach `Calapres Operations Director` only as an internal specialist for Calapres launch-readiness
    audits, daily order operations triage, incident assessment, evidence classification, and internal
    recommendations. It must not contact customers, publish, change credentials, make payments, or
@@ -89,6 +95,21 @@ the Calapres agent only as an internal delegated specialist.
 - The direct Agent Telegram integration was disconnected to avoid competing webhook ownership. To
   roll back, first unpublish the workflow, then reconnect the Agent integration with the existing
   private numeric allowlist.
+
+## Portfolio-wide default amendment and verification — 2026-09-04
+
+- The earlier instruction to ask whenever the brand was ambiguous was removed because it made the
+  cross-brand secretary behave like a single-store order bot.
+- The Agent now covers all owner businesses, commerce, brands, projects, and personal organizational
+  follow-up. A brandless question requests one portfolio-wide view across all connected sources.
+- Missing integrations produce one explicit coverage-gap report instead of a brand question.
+  Brand clarification is reserved for genuine semantic ambiguity or a brand-specific risky action.
+- Internal canaries for `هل هناك طلبات اليوم؟` and `وش الجديد اليوم في كل شيء؟` passed without a
+  brand question. A real Telegram canary for all businesses also passed and returned a consolidated
+  `UNKNOWN` report because no live business sources are attached.
+- The Agent was validated and published as active version
+  `0512e496-51e9-421e-8880-0a499efe2c95`. No tool, source, schedule, customer message, credential,
+  payment, top-up, or external action was added.
 
 ## Remaining verification
 
