@@ -4,7 +4,7 @@
 
 [Executed and verified] The owner-facing n8n Agent `سكرتيرة عبدالرحمن`, agent ID
 `LKA07iWfCpjawVNB` in project `AeQgtZlgJbiXCM2e`, is published on active version
-`a95de83d-1275-4aae-9cff-bb5b2747634d`. It uses `GPT-5.6 Sol` through the temporary managed n8n
+`0512e496-51e9-421e-8880-0a499efe2c95`. It uses `GPT-5.6 Sol` through the temporary managed n8n
 Gateway and replies in Arabic. The authorized Telegram username typo was corrected to
 `@A_Awdsh`; numeric identity remains the enforced allowlist and is not stored in GitHub.
 
@@ -23,6 +23,14 @@ download, transcription, Agent, and Telegram reply. A two-message memory canary 
 previously supplied temporary value, and both calls used one stable owner session. The workflow
 adds trusted transport context only after the numeric user and private-chat allowlists pass; risky
 or external actions still require written action-time confirmation.
+
+[Portfolio-wide scope verified] The default scope is now all of Abdulrahman's businesses, commerce,
+brands, projects, and personal organizational matters—not orders or customer service alone. When no
+brand is named, the Agent must return one portfolio-wide view grouped by brand or project where
+useful. It asks for a brand only when a materially ambiguous request or a brand-specific risky action
+cannot be resolved safely. Missing live sources are reported once as `UNKNOWN` or `UNVERIFIED`
+instead of triggering a brand question. A real Telegram canary asking what was new across all
+businesses returned the expected consolidated coverage-gap answer without asking for a brand.
 
 [Delegation and boundary] The unpublished `Calapres Operations Director`
 (`olVB3TzKClXjuOei`) remains attached only as a bounded internal specialist with its three approved
