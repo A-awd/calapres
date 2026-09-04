@@ -1,5 +1,30 @@
 # Project State
 
+## Klaviyo technical foundation verified; email visual design deferred — 2026-09-04
+
+[Executed] Shopify-to-Klaviyo permissions and synchronization are current. Email subscribers feed
+double-opt-in list `XGX2zD`; Shopify Markets, product synchronization, the app embed, Viewed Product,
+and behavioral tracking are enabled. Klaviyo-to-Shopify sync is limited to profiles already in
+Shopify. Signup form `XsiWvE` version `27642620` is live in the Klaviyo UI with onsite tracking,
+cart/checkout exclusions, existing-profile suppression, UTM consent capture, and exit/time/scroll
+triggers. Storefront HTML contains company script `Rf93xb`; a clean visual popup canary is still
+`UNVERIFIED` in the already-identified browser session.
+
+[Verified technical email layer] Six current lifecycle flows and all eleven attached Arabic RTL
+emails remain draft. The sender is `info@calapres.com`, UTM tracking is enabled, unsubscribe and
+organization data exist, and render-only canaries resolved checkout and product URLs plus product
+name, image, and price without sending. Abandonment flows have post-start order/progression filters.
+Winback flow `WkkBUZ` now uses recipient-local timezone instead of `US/Eastern` for both waits.
+
+[Owner direction] Email appearance is delegated to a later design provider. Four hidden templates
+received partial palette/font changes before the visual operation was stopped: `RpQa6U`, `RjHf29`,
+`UpuXK2`, and `Y9Hvxg`; the other seven were not visually changed. None is approved final design.
+Do not activate flows or send customer email until design import, preview acceptance, and fresh send
+approval. WhatsApp stays in Chatwoot; SMS and Marketing Analytics stay off. Meta Ads and Google Ads
+are visible but unbound, and no paid Judge.me connection or advertising spend was started.
+
+Decision: [0037 — Establish Klaviyo technically and defer email visual design](decisions/0037-establish-klaviyo-technically-defer-email-design.md).
+
 ## Captain no longer hands off when a customer asks for a human — 2026-09-04
 
 [Owner-reported defect, live-verified] In Chatwoot conversation `#17`, the customer wrote
