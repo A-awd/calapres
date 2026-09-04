@@ -162,12 +162,12 @@ decision record.
   proactive alerts, provider funding, and future-brand access remain behind their stated gates.
 
 - [0036 — Federate owner business sources through brand-isolated read-only tools](decisions/0036-federate-owner-business-sources-read-only.md)
-  — keep one owner interface while isolating every brand's credentials and sources; attach only
-  fixed read-only operations first; use live systems for operational facts and GitHub for durable
-  state; and report unattached coverage as `UNKNOWN`. Two Calapres Shopify reads for orders and
-  products are live and verified through Telegram, while OTO, Chatwoot, generic mail/Drive/Notion,
-  marketing systems, ChatGPT-derived knowledge, and other brands remain separately scoped or
-  unverified.
+  — keep one owner interface, connect live sources read-only first, label every result by brand,
+  and report unattached coverage as `UNKNOWN`. Calapres Shopify orders/products are live and
+  verified through Telegram. Metricool is also live for five account-wide read operations with all
+  create, update, review, and publish tools excluded; named-brand isolation is instruction-enforced,
+  not credential-level. OTO, Chatwoot, generic mail/Drive/Notion, and ChatGPT-derived knowledge
+  remain separately scoped or unverified.
 
 ## Superseded decisions
 

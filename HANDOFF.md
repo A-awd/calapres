@@ -1,5 +1,32 @@
 # Handoff
 
+## Resume here — expand beyond verified Shopify and Metricool reads — 2026-09-04
+
+Published owner Agent `سكرتيرة عبدالرحمن` is active on version
+`27de4fbd-f4bf-47e3-b492-00abbfe56044`. It retains the two verified Calapres Shopify read tools and
+now also has Metricool restricted to five read-only operations: brand settings, scheduled posts,
+analytics metric discovery, analytics reads, and best-time reads. The Metricool operations that
+create, update, or submit posts for review are explicitly excluded.
+
+The live Metricool credential identified `Calapres | كالابريز` as brand `6694961`. A direct
+Agent canary for that exact brand returned zero scheduled unpublished posts with `VERIFIED` and
+performed no write. The account-wide credential can read other owner brands, so this is a
+portfolio-owner read source, not a credential-level single-brand boundary. Preserve the instruction
+gate: named-brand requests query only that brand, portfolio requests query brands separately, and
+every result stays labeled.
+
+The Telegram voice/text bridge remains unchanged. Its previously verified Shopify round trip still
+proves the transport-to-Agent path; the new Metricool publication was verified through the Agent
+canary, not a separate Telegram round trip.
+
+Next, obtain or build one bounded read path for Chatwoot and OTO. Do not treat Shopify fulfillment
+fields as OTO shipment proof. Do not attach generic Gmail, Drive, or Notion accounts until their
+exact business scope is named. ChatGPT conversations are context, while canonical GitHub remains
+durable authority. No customer send, shipment, commerce write, social publication, credential,
+payment, schedule, or proactive alert is approved by this read-source expansion.
+
+Read [decision 0036](decisions/0036-federate-owner-business-sources-read-only.md) before continuing.
+
 ## Resume here — expand the verified read-only business source federation — 2026-09-04
 
 The owner secretary is no longer source-blind for Calapres Shopify. Published Agent

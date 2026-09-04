@@ -2,9 +2,9 @@
 
 Date: 2026-09-04
 
-Status: accepted and partially executed; Calapres Shopify orders and products are live read-only
-sources, while OTO, Chatwoot, business mail, Drive, Notion, ChatGPT-derived knowledge, marketing
-systems, and other brands remain separately scoped or unverified
+Status: accepted and partially executed; Calapres Shopify orders/products and account-wide
+Metricool analytics/planning reads are live, while OTO, Chatwoot, business mail, Drive, Notion,
+ChatGPT-derived knowledge, and unreviewed brand systems remain separately scoped or unverified
 
 ## Context
 
@@ -41,8 +41,10 @@ outputs, but it must not mix customers, secrets, or actions between businesses.
    multiple businesses. First identify the exact account, label, folder, or data source for business
    use. Supabase remains retired for Calapres under decision 0006 and is not reintroduced as an
    owner-information source.
-8. Future brands receive their own specialist, credential set, source allowlist, and budget before
-   their data is added to the portfolio view.
+8. Future brand specialists receive their own credential set, source allowlist, and budget before
+   direct access. The private owner parent may use an account-wide portfolio connector only when
+   its exposed tools are strictly read-only, every output is labeled by brand, and the connector's
+   broader credential scope is stated explicitly rather than presented as single-brand isolation.
 
 ## Executed and verified — Calapres Shopify
 
@@ -61,15 +63,38 @@ outputs, but it must not mix customers, secrets, or actions between businesses.
 - No Shopify write, customer message, fulfillment, refund, OTO action, credential creation, payment,
   Gateway top-up, schedule, or proactive alert was executed.
 
+## Executed and verified — Metricool portfolio reads
+
+- The existing Metricool OAuth connection succeeded against the official MCP endpoint and exposed
+  eight tools.
+- The owner Agent allowlists only five original read operations: `getBrandSettings`,
+  `getScheduledPosts`, `getAnalyticsAvailableMetrics`, `getAnalyticsDataByMetrics`, and
+  `getBestTimeToPostByNetwork`.
+- `createScheduledPost`, `updateScheduledPost`, and the review-submission operations are excluded.
+  The Agent therefore cannot publish or alter Metricool content through this connection.
+- The source identified `Calapres | كالابريز` as brand `6694961`. A bounded read returned zero
+  scheduled unpublished posts with `VERIFIED` and performed no write.
+- Validation passed and the owner Agent was published as active version
+  `27de4fbd-f4bf-47e3-b492-00abbfe56044`.
+- The Metricool credential is account-wide. It is suitable for the private owner's portfolio reads,
+  but it is not credential-level brand isolation. Named-brand and portfolio separation are enforced
+  by Agent instructions and explicit brand labels. Do not grant this shared credential directly to
+  a future brand specialist.
+- No post, review request, customer message, credential, payment, schedule, or proactive alert was
+  created.
+
 ## Remaining work
 
 Verify and add one source at a time. The next Calapres candidates are Chatwoot conversation reads and
 OTO shipment reads, but neither has a clearly identified reusable n8n credential today. Business
-mail, Drive, Notion, marketing systems, and other brands require explicit account or container scope
-before attachment. Do not describe these sources as connected until a live read canary passes.
+mail, Drive, and Notion require explicit account or container scope before attachment. ChatGPT
+conversation history is not a live operational system and must not replace canonical repositories
+or authenticated business sources. Do not describe a source as connected until a live read canary
+passes.
 
 ## Rollback
 
-Remove only the two Calapres Shopify tools from the owner Agent, validate, and republish the previous
-tool-free configuration. Do not delete the Shopify credential, alter the store, reconnect retired
-Supabase architecture, or change the Telegram workflow as part of rollback.
+Remove the Metricool MCP server and/or the two Calapres Shopify tools from the owner Agent as needed,
+validate, and republish the prior version. Do not delete either reused credential, alter Shopify or
+Metricool data, reconnect retired Supabase architecture, or change the Telegram workflow as part of
+rollback.

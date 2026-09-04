@@ -1,5 +1,33 @@
 # Project State
 
+## Metricool portfolio reads attached to the owner secretary — 2026-09-04
+
+[Executed and verified] Published owner Agent `سكرتيرة عبدالرحمن` now has a Metricool MCP source
+restricted to five read-only operations: list brand settings, list scheduled posts, list available
+analytics metrics, read analytics data, and read best-time recommendations. The three discovered
+write-capable operations for creating, updating, or sending posts for review are excluded from the
+Agent tool surface.
+
+[Live canary] The authenticated connector identified `Calapres | كالابريز` as Metricool brand
+`6694961`. A bounded Agent read for that exact brand returned zero scheduled unpublished posts and
+`VERIFIED`; it created, changed, reviewed, or published nothing. Agent validation passed and the
+draft was published as active version `27de4fbd-f4bf-47e3-b492-00abbfe56044`.
+
+[Scope truth] The reused Metricool credential is account-wide and can read the owner's existing
+Metricool brands; isolation is enforced by the read-only tool allowlist plus Agent instructions to
+query only the named brand and label every portfolio result. It is not a credential-level
+single-brand boundary. Brand specialists still require their own credentials and allowlists before
+receiving direct access.
+
+[Remaining coverage] Calapres Shopify orders/products and Metricool reads are connected. OTO and
+Chatwoot remain unconnected to the owner Agent because no identified reusable read credential or
+bounded bridge is available. Generic Gmail, Drive, and Notion remain unattached until an exact
+business account, label, folder, or data source is approved. ChatGPT conversation history remains
+working context rather than live operational authority. No customer message, shipment, commerce
+write, social publication, credential creation, payment, schedule, or proactive alert was executed.
+
+Decision: [0036 — Federate owner business sources through brand-isolated read-only tools](decisions/0036-federate-owner-business-sources-read-only.md).
+
 ## First live business source attached to the owner secretary — 2026-09-04
 
 [Executed and verified] Published owner Agent `سكرتيرة عبدالرحمن` now has two Calapres-branded
