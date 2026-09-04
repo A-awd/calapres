@@ -1,5 +1,18 @@
 # Project State
 
+## Bridal preparation and gift concepts expanded — 2026-09-05
+
+[Owner approved direction] Prioritize bridal content with coordinated jewelry and wedding-day
+preparation. New front initials/Arabic letters/example dates may be invented as raised acrylic
+personalization; they no longer need to copy the Shopify ornament. Preserve burner body/colors,
+one-burner offer, no faces/full figures, and logo-free photographic treatment (decision 0025).
+[Executed/verified] Eight new Magnific concepts completed, all downloaded and visually inspected.
+Actual PNGs are saved in `/Users/awd/Downloads/Calapres-Bridal-Concepts-SHmTGI`. Cost 600 existing
+credits; fresh balance 4771. All have one burner, bridal jewelry, no advertising logo or face/full
+figure. Letter shapes, example-date layout and physical-production suitability remain review
+items, not approved manufacturing specifications. No Shopify/Klaviyo change or publication.
+Details and individual review notes: [bridal batch](docs/calapres-bridal-concepts-2026-09-05.md).
+
 ## Logo-free edits of four photographic concepts requested — 2026-09-05
 
 [Owner direction] Preserve the four photographs, remove their overlaid wordmarks/seals, and keep

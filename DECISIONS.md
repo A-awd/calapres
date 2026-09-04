@@ -15,6 +15,9 @@ Latest creative expansion: retain earlier images, but use distinct full-photogra
 and actual gray/beige product references, with only the approved logo (decision 0025).
 The owner subsequently approved logo-free photography and requested removal of overlaid branding
 from all four new concepts while retaining originals and the physical burner ornaments (0025).
+Latest owner amendment: prioritize bridal preparations/jewelry and bridal gifts; new concepts may
+use invented Arabic letters/initials or example dates as raised acrylic personalization (0025).
+This narrowly supersedes unchanged front ornaments, not burner-body fidelity or publication gates.
 
 ## Active decisions
 

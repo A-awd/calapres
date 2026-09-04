@@ -1,5 +1,17 @@
 # Handoff
 
+## Resume here — eight bridal concepts and acrylic-personalization freedom — 2026-09-05
+
+The owner explicitly prioritizes brides, wedding preparation with jewelry sets, and bridal gifts.
+New creative concepts may invent Arabic letters/initials/occasion dates with the same raised
+acrylic look. Do not incorrectly enforce the older unchanged-Shopify-ornament restriction on
+these new concepts; retain the actual burner body, available colors and one-burner offer.
+No faces/full figures or overlaid logos. Eight concepts are already generated, inspected and
+saved under `/Users/awd/Downloads/Calapres-Bridal-Concepts-SHmTGI`; do not regenerate this batch.
+Read [the batch record](docs/calapres-bridal-concepts-2026-09-05.md) for IDs, files and review notes.
+They are review concepts, not published ads or production-approved acrylic files. Preserve all
+earlier originals. Cost was 600 existing credits, resulting balance 4771; no top-up or live change.
+
 ## Resume here — four logo-free photographs — 2026-09-05
 
 Owner likes the four photo-first concepts and explicitly requests removing their overlaid logos.

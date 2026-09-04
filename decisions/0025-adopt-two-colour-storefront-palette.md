@@ -93,6 +93,26 @@ explicitly permitted. Remove the overlaid branding from all four while retaining
 ornament on each burner. Keep both original branded and new clean versions. This does not revoke
 approval of the logo assets, redesign the physical product, or authorize publication.
 
+### Bridal priority and illustrative acrylic personalization — 2026-09-05
+
+The owner now prioritizes bridal preparation and gifts for brides, especially scenes with the
+bride's coordinated jewelry set. The owner reports that brides are an important buying audience;
+this is owner direction, not an independently measured sales-segment statistic.
+
+For NEW creative concepts, the physical front personalization need not copy the Shopify photo's
+ornament. Invented Arabic initials, letters, monograms and example occasion dates are explicitly
+permitted, provided they keep the same raised acrylic-applique visual construction. This supersedes
+the earlier unchanged-ornament restriction for these new personalized concepts only. Do not
+retroactively delete or relabel old drafts, change the burner body, invent a new offered color,
+or treat a generated design as proof of exact manufacturing feasibility or dimensions.
+
+Use varied photographic compositions, no compulsory advertising logo, no headline panel, no bridal
+face or full figure, and no face reflection. Adult hands/wrists and jewelry/satin details are allowed.
+Keep the single-burner offer: jewelry and bridal accessories are contextual props, not merchandise
+included with the product. Any handled burner is unlit; lit scenes keep fabric and hands away.
+Generation approval does not authorize Shopify changes, advertising publication, or a top-up.
+See the eight-image [bridal batch record](../docs/calapres-bridal-concepts-2026-09-05.md).
+
 
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft
