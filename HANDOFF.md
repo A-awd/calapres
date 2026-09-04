@@ -1,5 +1,19 @@
 # Handoff
 
+## Resume here — review alternate-color photographic concepts — 2026-09-05
+
+The owner explicitly wants all earlier images kept, including assets excluded from final-use review;
+do not delete or overwrite them. For NEW work, do not repeat the pale top-header/burner-below template.
+Use full-bleed photographs with only the approved wordmark or CR icon, actual gray/beige references,
+and materially different camera angles, light and scenes. Bridal faces/full figures remain prohibited.
+Balance was checked and reported (5971), then owner said yes. Four fresh concepts, not a site/ad launch,
+were authorized as this bounded next batch. Results and review are in the campaign record.
+The four completed assets are `0emthm5TfW`, `aFr1xkHfSh`, `s76NiNSl8e`, `xS4P9P8jfW` (300 credits;
+balance 5671). The overhead bridal photo is strongest for brief compliance. Do not publish the
+other variants unchanged: cinema adds an extra seal/generic wordmark, sunlight invents a hybrid
+badge, and macro smoke appears disconnected from the burner. No additional retries were started.
+
+
 ## Resume here — both identities accepted, review eight lifestyle variants — 2026-09-05
 
 The owner explicitly approved BOTH earlier identity treatments for future alternating ads; do not

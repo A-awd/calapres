@@ -218,3 +218,31 @@ Cost: twelve requests at 75 credits = 900 existing credits (600 first pass + 300
 balance 5971, from 6871. No payment or top-up. The owner-approved existing logo treatments remain
 approved; the newly created imagery/copy is a curated draft set for review, not a live ad campaign.
 No Shopify, Klaviyo, ad-account, customer-message, payment, or shipment operation was performed.
+
+## Alternate-color, logo-only photographic concepts — 2026-09-05
+
+After asking to keep all earlier assets but change the concept completely, the owner received the
+fresh 5971-credit balance and answered yes to starting. Four distinct photo-first concepts were
+scoped and completed at 75 credits each (300 total), without any headline, paragraph or top panel.
+The references were the canonical `assets/product-gray.jpg` and `assets/product-beige.jpg`, visually
+inspected before upload as `9ZcW0npNYZ` (gray) and `SyR3ZNTUb8` (beige). Their historical short box
+and tray were explicitly excluded; only the tall burner was requested. The corresponding existing
+front ornaments in these original color photos differ from the white photo, so do not mistake all
+color-reference ornament differences for generated inventions or claim they are a new approved
+personalization design. Color and exact production finish still need final asset fidelity review.
+
+Model: Google Nano Banana 2 (`imagen-nano-banana-2-flash`), requested 2k. All four completed, were
+shown together in Magnific and individually visually inspected. Full photograph fills the canvas;
+no ad headline/body or upper banner appears. No faces/full figures, extra box or tray appeared.
+
+| Concept | Asset | Review result |
+| --- | --- | --- |
+| Gray cinematic, 4:5 | [0emthm5TfW](https://www.magnific.com/app/creation/0emthm5TfW) | Distinct dark photograph and sweeping smoke. Model added an unrequested extra seal and used generic lettering; logo cleanup needed. |
+| Beige overhead bridal detail, 1:1 | [aFr1xkHfSh](https://www.magnific.com/app/creation/aFr1xkHfSh) | Strongest brief compliance: top-down composition, adult hand/wrist only, watch/jewelry/satin, unlit empty bowl and CR reference. Still a generated draft, not a real product photograph. |
+| Beige sunlit hospitality, 4:5 | [s76NiNSl8e](https://www.magnific.com/app/creation/s76NiNSl8e) | New architectural light/shadows and off-center product. Invented a hybrid seal/wordmark badge instead of original logo; must correct branding. Coffee items are contextual props only. |
+| Gray material close-up, 3:2 | [xS4P9P8jfW](https://www.magnific.com/app/creation/xS4P9P8jfW) | Distinct macro/detail crop with CR; smoke origin reads disconnected from burner and near seal, and fine texture fidelity is unverified. Fix before final use. |
+
+No regeneration was queued after this review. Fresh balance after the four was 5671 (from 5971).
+No top-up, payment, deletion, overwriting, live publication or Shopify/Klaviyo mutation occurred.
+All prior and new creations remain available. These are concept directions for review, not four
+publication-ready advertisements. Preserve original logos as literal assets in final composition.

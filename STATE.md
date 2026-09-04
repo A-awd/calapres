@@ -1,5 +1,20 @@
 # Project State
 
+## New full-photograph concepts; preserve previous images — 2026-09-05
+
+[Owner direction] Keep all previous assets, but stop repeating the same top-text/bottom-product
+layout. New concepts should use alternate real product colors, varied framing/light/scenes, no
+headline or body required, and only the approved logo. Both logos and no-bridal-face rules remain.
+[Authorization sequence] Fresh Magnific balance 5971 was reported before any new spend; the owner
+then said yes to starting. Four concepts were scoped at 75 credits each (300 total), with no top-up,
+publication, deletion, Shopify/Klaviyo change or paid-ad launch.
+[Executed/reviewed] All four full-photograph concepts completed, 300 credits, fresh balance 5671:
+dark gray cinema, beige overhead bridal detail, beige sunlit hospitality, gray material macro.
+No headline/body/top panel or bridal face/full figure appears. The overhead variant best matches
+the brief; other variants need logo cleanup or smoke-origin correction. All remain review drafts,
+all previous assets retained. Creation links and defects are in the campaign record.
+
+
 ## Both campaign identities approved; expanded lifestyle batch — 2026-09-05
 
 [Owner approved] Both the English CALAPRES wordmark treatment and burnt-brown CR seal treatment

@@ -11,6 +11,8 @@ seal; this is a creative comparison, not a replacement of the live wordmark (dec
 Subsequent owner approval accepts BOTH campaign identities for alternating future ads. Decision 0025
 also records compact upper text, visible incense smoke, family/newlywed/bridal audiences, and no bridal
 faces or full figures. This does not itself authorize publishing a campaign or changing the storefront.
+Latest creative expansion: retain earlier images, but use distinct full-photograph/no-copy concepts
+and actual gray/beige product references, with only the approved logo (decision 0025).
 
 ## Active decisions
 

@@ -75,6 +75,16 @@ merchandise. Avoid hands/fabric contacting a lit burner or covering its opening.
 review drafts until inspected and accepted; approval of these identities is not account publication,
 advertising-spend authorization, payment, or permission to alter Shopify/Klaviyo.
 
+### Full-photograph creative expansion — 2026-09-05
+
+The owner likes and wants to retain all earlier images, but rejects repeating the same upper-headline/
+lower-burner layout. The next creative batch must change the concept substantially: full-bleed natural
+photographic compositions, no required headline/body/pale text panel, only one approved logo. Use the
+actual alternate gray/beige burner photo references, varied angles, lighting and scenes. Do not invent
+a new available color or change the physical offer. The owner requested a live credit balance before
+starting; 5971 was read and reported, then the owner answered yes to starting. Both logo directions
+remain approved. All prior assets must remain available; review exclusions are not deletion approval.
+
 
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft
