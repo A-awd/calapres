@@ -1,5 +1,18 @@
 # Handoff
 
+## Resume here — review wordmark versus CR seal concepts — 2026-09-05
+
+The owner explicitly requested a comparison of the original English wordmark and existing
+burnt-brown CR seal. Both are permitted in these review concepts; do not read the preceding
+wordmark-only correction as a prohibition of this subsequently requested comparison. No winner,
+font weight system, live publication, or new logo was approved. See the campaign record for assets
+and results. Do not claim generated Rubik-style lettering is verified real-font typography.
+The two completed concepts are linked in the campaign record: `ovHFhuI829` (wordmark) and
+`bxwUrsM5Y2` (CR seal). Both were shown and inspected, with 150 total credits spent. Wait for
+owner design direction rather than regenerating them. Final logo geometry and actual-font text
+still need controlled composition; no customer-visible surface was changed.
+
+
 ## Resume here — exact original campaign wordmark — 2026-09-05
 
 Use the original `assets/calapres-wordmark.png` graphic (distinctive C/first-A flourish), as the owner

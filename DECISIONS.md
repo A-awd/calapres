@@ -6,6 +6,8 @@ decision record.
 
 Latest clarification (2026-09-05): decision 0025 requires the original flourished CALAPRES wordmark
 asset in the family campaign, not generic lettering. This does not change the live site or checkout.
+The owner also authorized a two-concept campaign comparison against the existing burnt-brown CR
+seal; this is a creative comparison, not a replacement of the live wordmark (decision 0025).
 
 ## Active decisions
 

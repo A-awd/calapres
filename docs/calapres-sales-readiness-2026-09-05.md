@@ -125,3 +125,33 @@ editable design instead of repeatedly asking a model to redraw the wordmark. No 
 The authenticated Design UI exposes blank-canvas creation and local PSD/IDML/PDF/PPTX/HTML/image
 import. Inspection did not complete a deterministic logo-layer placement; no design was imported or
 created, and no export with the exact original logo was verified. This remains incomplete.
+
+## Owner-requested wordmark versus CR seal comparison — 2026-09-05
+
+The owner explicitly requested two new visual concepts, one with the original English wordmark,
+the other with the approved burnt-brown CR seal. This fresh request permits that comparison after
+the earlier failed logo-only edit; it does not choose a permanent logo replacement or approve ads.
+
+Both use `s7691a0l8e` as the same single-burner scene reference. Wordmark reference is `9ZcYPitNYZ`.
+Seal reference `5j7wrCTKxe` was imported from canonical `assets/calapres-checkout-wax-seal.png`, whose
+SHA-256 was verified as `2ffe03f1bff302b781bbd882d18e971f878d154aa6f90413e42b6643f25024f1`, matching
+decision 0022. The seal was visually inspected before use; no new CR icon was invented.
+
+- [English wordmark concept](https://www.magnific.com/app/creation/ovHFhuI829): completed and visually
+  inspected. The prominent top wordmark now visibly includes the C/first-A flourish and is closer
+  to the approved identity than the preceding plain-font attempts. Exact asset geometry is not
+  independently guaranteed by this generated rendering.
+- [Burnt-brown CR seal concept](https://www.magnific.com/app/creation/bxwUrsM5Y2): completed and visually
+  inspected. Shows the referenced wax-seal identity above the headline, and one burner without
+  tray or box. No publication or owner creative approval is implied.
+
+Model: Google Nano Banana 2 (`imagen-nano-banana-2-flash`), two 3:4 requests at 2k, 75 credits each;
+150 total existing credits. Fresh balance: 6871 (previously 7021). No top-up/payment. Both were
+rendered together in the Magnific widget and completion was verified. Typography, spacing and
+background tones are not identical between outputs, so this is a visual-direction comparison,
+not a controlled performance A/B test. Rubik-style prompting is not proof of real Rubik typesetting.
+
+Assistant visual preference, not owner approval: wordmark for immediate brand-name recognition;
+seal for a quieter gifting-oriented treatment. Preserve the actual logo assets and apply the
+approved font as editable text in final production. No Shopify, Klaviyo, campaign or customer-send
+change occurred. Do not queue more variants without further owner direction.

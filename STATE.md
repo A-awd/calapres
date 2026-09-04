@@ -1,5 +1,17 @@
 # Project State
 
+## Wordmark versus CR seal comparison requested — 2026-09-05
+
+[Approved scope] The owner requested two campaign concepts: original CALAPRES English wordmark
+and the existing burnt-brown CR wax seal. This explicitly permits the seal as the second concept,
+without choosing a winner or changing the live site. Both use the same single-burner scene and
+approved campaign copy. Generated lettering does not establish actual Rubik font use.
+[Executed, not published] Two Nano Banana 2 concepts completed and were visually inspected;
+wordmark `ovHFhuI829`, seal `bxwUrsM5Y2`, 150 credits total, fresh balance 6871. The wordmark now
+visibly carries its flourish; typography/spacing differ between variants and still require final
+asset-based production. Both remain review concepts; the owner has not selected a winner.
+
+
 ## Original wordmark required in campaign — 2026-09-05
 
 [Approved] The owner corrected the campaign branding: use the actual CALAPRES wordmark with the

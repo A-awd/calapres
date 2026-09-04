@@ -54,6 +54,11 @@ its header CSS mask, in burnt brown; the underlying PNG's gold colour is not the
 colour. Use the original graphic geometry in the campaign, with brown ink, not a wax-seal substitute.
 This clarifies campaign asset reuse only; no storefront or checkout logo change is authorized.
 
+The owner subsequently requested an explicit two-concept comparison: the original English wordmark
+versus the approved burnt-brown CR wax-seal icon. This authorizes the seal in that second campaign
+concept; it does not replace the storefront wordmark or choose a permanent campaign winner. Both
+must use the existing approved asset references, not invented letterforms.
+
 
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft
