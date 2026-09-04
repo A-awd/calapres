@@ -5,10 +5,12 @@
 [Executed] Shopify-to-Klaviyo permissions and synchronization are current. Email subscribers feed
 double-opt-in list `XGX2zD`; Shopify Markets, product synchronization, the app embed, Viewed Product,
 and behavioral tracking are enabled. Klaviyo-to-Shopify sync is limited to profiles already in
-Shopify. Signup form `XsiWvE` version `27642620` is live in the Klaviyo UI with onsite tracking,
-cart/checkout exclusions, existing-profile suppression, UTM consent capture, and exit/time/scroll
-triggers. Storefront HTML contains company script `Rf93xb`; a clean visual popup canary is still
-`UNVERIFIED` in the already-identified browser session.
+Shopify. Signup form `XsiWvE` version `27642620` retains its technical configuration but is now
+`Draft`. The earlier `Live` state was an incorrect expansion of technical setup into customer-
+visible presentation. After the owner reported the popup, the form showed zero submissions and was
+returned to `Draft`; a fresh storefront load after 6.5 seconds showed no form dialog, headline, or
+email placeholder. Storefront HTML may retain company script `Rf93xb` for approved tracking and
+integration; that script does not authorize a visible form.
 
 [Verified technical email layer] Six current lifecycle flows and all eleven attached Arabic RTL
 emails remain draft. The sender is `info@calapres.com`, UTM tracking is enabled, unsubscribe and
@@ -22,6 +24,9 @@ received partial palette/font changes before the visual operation was stopped: `
 Do not activate flows or send customer email until design import, preview acceptance, and fresh send
 approval. WhatsApp stays in Chatwoot; SMS and Marketing Analytics stay off. Meta Ads and Google Ads
 are visible but unbound, and no paid Judge.me connection or advertising spend was started.
+Do not publish any signup form until its design is approved and the owner gives fresh approval for
+the exact customer-visible form. The live recheck found no campaign and all seven listed flows in
+`Draft`, with zero recorded form submissions and zero listed flow conversions.
 
 Decision: [0037 — Establish Klaviyo technically and defer email visual design](decisions/0037-establish-klaviyo-technically-defer-email-design.md).
 

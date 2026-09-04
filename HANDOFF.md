@@ -14,18 +14,23 @@ now use recipient-local timezone. Keep every flow and email message draft until 
 provider supplies the approved visuals, the resulting desktop/mobile previews are accepted, and the
 owner gives fresh approval for live customer email.
 
-Signup form `XsiWvE`, version `27642620`, is live; its target is double-opt-in list `XGX2zD`.
-Onsite tracking and storefront script `Rf93xb` are present. A visual popup canary remains
-`UNVERIFIED` because the available test browser is already identified; recheck in a genuinely clean
-session without clearing owner data. Four hidden templates were partially restyled before the owner
+Signup form `XsiWvE`, version `27642620`, is `Draft`; its target remains double-opt-in list `XGX2zD`.
+The owner rejected its unintended customer-visible publication because visual work was explicitly
+deferred. The form had zero submissions when inspected. After it was returned to `Draft`, a fresh
+storefront load after 6.5 seconds showed no form dialog, headline, or email placeholder. Onsite
+tracking and storefront script `Rf93xb` remain present for the approved technical foundation; they
+do not authorize a visible form. Four hidden templates were partially restyled before the owner
 delegated visual work: `RpQa6U`, `RjHf29`, `UpuXK2`, and `Y9Hvxg`. Do not continue or reverse that
-appearance work during technical setup.
+appearance work during technical setup, and do not publish any signup form without approved design
+and fresh owner approval for the exact customer-visible result.
 
 Klaviyo currently shows Shopify and the Klaviyo MCP Server as enabled. Meta Ads and Google Ads are
 discoverable but unbound; binding requires the applicable account authorization, and the present
 audience is too small for a meaningful sync. Keep WhatsApp in Chatwoot, SMS and Marketing Analytics
 off, and Judge.me independent unless its paid Klaviyo connection is explicitly approved. No flow,
 campaign, customer message, paid trial, subscription, ad spend, or ad account binding was executed.
+The live recheck found no campaign and all seven listed flows in `Draft`, with zero recorded form
+submissions and zero listed flow conversions.
 
 Read [decision 0037](decisions/0037-establish-klaviyo-technically-defer-email-design.md) before
 changing Klaviyo or email design.
