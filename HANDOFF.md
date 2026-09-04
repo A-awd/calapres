@@ -1,5 +1,32 @@
 # Handoff
 
+## Resume here — connect delayed Chatwoot escalation without restoring immediate handoff — 2026-09-04
+
+Live Captain assistant `2187` has been corrected after verified conversation `#17` showed an
+immediate same-minute handoff when the customer wrote `ابي انسان اكلمه واضح انت Ai`. The response
+guideline and guardrail now say that asking for a human/employee or challenging the reply as AI is
+not a handoff trigger. Captain must continue inside the same chat as Calapres service, must not claim
+to be human, and must not mention AI, inability to route, or technical failure.
+
+The `تحويل محدود لخدمة العملاء` scenario is disabled. This was necessary because its Handoff tool
+still attempted a transfer on a repeated request despite softer instructions. Its description no
+longer names an explicit employee request as a trigger. The stored handoff fallback is verified as
+`أعتذر لك، سيتابع معك الموظف المختص هنا.`
+
+A fresh two-message Playground canary passed: the initial AI/human challenge received a continuing
+service reply, and the repeated demand for a human received a direct order-or-product clarification.
+No handoff, AI disclosure, human claim, or technical-failure excuse appeared.
+
+Do not re-enable the disabled scenario as a shortcut. It also means automated handoff for
+cancellation/refund/address-change execution, payment disputes, and unresolved order-tool cases is
+currently unavailable. Priority labeling remains enabled, but the requested 24-hour or 48-hour owner
+notification is not implemented. The next safe stage is a bounded Chatwoot read/alert bridge to
+`سكرتيرة عبدالرحمن` that labels and notifies the owner while leaving Captain customer-facing.
+Require a live one-conversation canary before broader activation.
+
+Read [decision 0031](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md) before changing
+Captain handoff behavior.
+
 ## Resume here — expand beyond verified Shopify and Metricool reads — 2026-09-04
 
 Published owner Agent `سكرتيرة عبدالرحمن` is active on version

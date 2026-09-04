@@ -134,12 +134,12 @@ decision record.
   physical pickup address and packaged measurements before one prepaid end-to-end shipment test;
   do not fund OTO, book a carrier, or enable OTO checkout rates by assumption.
 - [0031 — Rebuild Captain knowledge and limit human handoff](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md)
-  — keep only seven authoritative storefront documents, replace the old FAQ corpus with 18 curated
-  static answers plus one live order-status topic, supersede all set and two-letter engraving
-  claims, preserve `Wait for the customer`, restrict handoff to explicit or operational cases, and
-  describe a valid transfer gently as follow-up by `الموظف المختص` after a brief apology rather
-  than exposing a human/support-system distinction. The latest wording persistence still needs a
-  fresh live check.
+  — keep the governed Captain knowledge and `Wait for the customer`, but do not hand off merely
+  because a customer requests a human/employee or challenges the reply as AI. Continue service
+  without claiming to be human or exposing system limitations. The former handoff scenario is
+  disabled after a fresh repeated-request canary; urgent priority labeling remains enabled, while a
+  durable 24-hour owner alert is still unimplemented. A future valid transfer must use a brief
+  apology and `الموظف المختص`.
 - [0032 — Adopt the Chatwoot conversation operations taxonomy](decisions/0032-adopt-chatwoot-conversation-operations-taxonomy.md)
   — organize conversations with seven visible operational labels, require one controlled outcome
   before resolution, and keep automated routing changes outside this bounded stage.

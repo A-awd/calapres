@@ -1,5 +1,36 @@
 # Project State
 
+## Captain no longer hands off when a customer asks for a human — 2026-09-04
+
+[Owner-reported defect, live-verified] In Chatwoot conversation `#17`, the customer wrote
+`ابي انسان اكلمه واضح انت Ai` at 21:05. Captain immediately generated an explicit-human-request
+handoff, opened the conversation, and sent `أكيد، بحوّلك الآن لموظف خدمة العملاء` in the same
+minute. The live response guideline, scenario description, and system handoff message all supported
+that behavior.
+
+[Executed] Captain assistant `2187` no longer treats a request for a human/employee or an AI
+challenge as a valid immediate handoff. The response guideline and a new guardrail require Captain
+to continue service in the same conversation, avoid claiming it is human, avoid discussing AI,
+routing limitations, or technical failure, and ask what remains unresolved. The handoff scenario
+`تحويل محدود لخدمة العملاء` was disabled because its attached Handoff tool still overrode softer
+instructions on repeated requests. Its description was also corrected. The persisted fallback
+handoff message for any future valid transfer is now
+`أعتذر لك، سيتابع معك الموظف المختص هنا.`
+
+[Verification] Fresh Playground tests used the original challenge and a repeated demand for an
+employee. The final two-message canary returned `أنا معك من خدمة كالابريز وبكمل معك هنا...` and
+then asked whether the issue concerned an order or product. It did not invoke handoff, mention AI,
+claim to be human, or report a technical routing problem.
+
+[Boundary] Disabling the handoff scenario also disables its automatic handoff path for order-tool
+failures, cancellation/refund/address-change execution, and payment disputes. The separate priority
+classification scenario remains enabled and continues to label urgent operational cases. A durable
+24-hour Chatwoot-to-owner alert is not yet implemented, so do not claim the secretary will notify
+the owner after one or two days. Captain remains the only customer-facing automated responder, and
+no external customer test message was sent in this change.
+
+Decision: [0031 — Rebuild Captain knowledge and limit human handoff](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md).
+
 ## Metricool portfolio reads attached to the owner secretary — 2026-09-04
 
 [Executed and verified] Published owner Agent `سكرتيرة عبدالرحمن` now has a Metricool MCP source
