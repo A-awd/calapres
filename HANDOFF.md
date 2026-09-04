@@ -1,5 +1,32 @@
 # Handoff
 
+## Resume here — expand the verified read-only business source federation — 2026-09-04
+
+The owner secretary is no longer source-blind for Calapres Shopify. Published Agent
+`سكرتيرة عبدالرحمن` has exactly two live business tools:
+`calapres_shopify_orders_readonly` and `calapres_shopify_products_readonly`. Both use the existing
+`Shopify-Calapres` OAuth credential and expose only `getAll` reads. The Agent is active on version
+`465ba704-3580-4df4-b453-8093a6b59d7d`.
+
+A direct canary returned zero Calapres orders created on 2026-09-04 Riyadh time. A catalog canary
+returned three active products and three variants, with recorded quantity zero and inventory
+tracking disabled. A real Telegram request through `Owner Telegram Voice Bridge` returned
+`0 — VERIFIED`. This proves the published owner path can call the live Shopify read source.
+
+Do not describe OTO, Chatwoot, mail, Drive, Notion, marketing platforms, ChatGPT history, or other
+brands as connected. No clearly identified reusable n8n read credential was found for OTO or
+Chatwoot. Generic Gmail, Drive, and Notion credentials remain unattached because their business
+scope is not bounded. ChatGPT context is not operational authority; use canonical GitHub for durable
+project state. Supabase remains retired for Calapres.
+
+Next, verify and add one named source at a time with a live read canary. Keep brand-specific tool
+names and credentials, omit customer contact and address fields when they are not needed, and never
+expose write operations. Any send, update, fulfillment, refund, payment, credential, permission,
+schedule, or proactive alert still requires its applicable action-time approval.
+
+Read [decision 0036](decisions/0036-federate-owner-business-sources-read-only.md) and
+[decision 0035](decisions/0035-adopt-private-owner-command-center.md) before continuing.
+
 ## Resume here — add read-only incident sources after verified voice bridge — 2026-09-04
 
 The private owner command center is live for text and voice. Open the stable n8n Agent
