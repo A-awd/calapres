@@ -1,32 +1,38 @@
 # Handoff
 
-## Resume here — verify voice, then add read-only incident sources — 2026-09-04
+## Resume here — add read-only incident sources after verified voice bridge — 2026-09-04
 
-The private owner command center is live for text. Open the stable n8n Agent
+The private owner command center is live for text and voice. Open the stable n8n Agent
 `سكرتيرة عبدالرحمن`, agent ID `LKA07iWfCpjawVNB`, from the project Agents list and confirm active
-version `ea5c657e-040a-48b6-b3bf-2c46c87c8321` before editing. Its private Telegram bot is
-`@AbdulrahmanCommandCenterBot`; credential `Qj1UoPHZNEEWn5dX` passed connection testing, the
-integration is restricted to the verified numeric owner identity, and a real Telegram text round
-trip returned `تم`. Never place the bot token, numeric owner ID, webhook secret, or personal phone
-number in GitHub or an agent instruction.
+version `a95de83d-1275-4aae-9cff-bb5b2747634d` before editing. Its authorized Telegram username is
+`@A_Awdsh`. The numeric Telegram owner identity remains the actual allowlist and must not be placed
+in GitHub, instructions, logs, or owner-facing reports.
 
-`Calapres Operations Director` (`olVB3TzKClXjuOei`) is attached only as a bounded internal
-specialist. The parent-agent delegation preview passed and the parent was republished. The Calapres
-agent itself remains unpublished with its existing three skills and without channels, schedules,
-commerce tools, or customer-send authority. Do not duplicate or replace it.
+Published workflow `Owner Telegram Voice Bridge` (`0EQB4mv5NknrXsHM`, active version
+`454e29f5-b6dc-4569-8a1b-c3267470041c`) owns the webhook for
+`@AbdulrahmanCommandCenterBot`. The Agent's direct Telegram integration is intentionally
+disconnected to avoid webhook conflict. The workflow reuses credential `Qj1UoPHZNEEWn5dX`,
+requires both the exact numeric user and private-chat allowlists, sends text to the existing Agent,
+and uses the managed n8n OpenAI audio transcription operation for Arabic voice notes before sending
+the transcript to that Agent. Do not reconnect the direct Agent integration while this workflow is
+published unless first unpublishing the workflow.
 
-The next canary is one real voice note sent by the owner to the private bot. Verify receipt,
-transcription accuracy, Arabic response, and the corresponding n8n Telegram execution. If native
-voice handling fails, stop treating voice as supported and design a separate transcription bridge
-before implementation. After voice, define and separately approve the minimum read-only sources and
-incident triggers needed for proactive P0/P1/P2 alerts. No such source, trigger, or schedule is
-currently attached.
+Voice is verified, not proposed: a real 3-second owner note was transcribed exactly as
+`أريد أن أسأل، هل هناك طلبات اليوم؟`; the Agent replied in Telegram and workflow execution
+`45166` succeeded end to end. A separate two-message canary confirmed one stable conversation
+session. The workflow-authored trusted transport context is valid only after the numeric user and
+private-chat gates pass and never waives written action-time approval for risky or external actions.
 
-Captain remains the only customer-facing automated responder. Do not send customer messages,
-publish, alter commerce or fulfillment, expose or create credentials, fund a provider, or enable a
-schedule by assumption. The owner agent still uses finite managed Gateway trial credit; do not top
-it up or enable automatic top-up. Decision 0034's direct OpenAI path remains pending separate live
-compatibility and plan verification plus action-time approval for credential and payment work.
+`Calapres Operations Director` (`olVB3TzKClXjuOei`) remains an unpublished bounded internal
+specialist with its three approved skills and no channel, schedule, commerce tool, customer-send
+authority, or expanded permission. Captain remains the only customer-facing automated responder.
+
+The next stage is to define and separately approve the minimum read-only operational sources and
+incident rules needed for meaningful P0/P1/P2 alerts. No live source, proactive trigger, or schedule
+is attached yet. Do not send customer messages, alter commerce or fulfillment, create or expose
+credentials, fund a provider, top up the Gateway, enable automatic top-up, or enable schedules by
+assumption. Decision 0034's direct OpenAI path remains pending separate live compatibility and plan
+verification plus action-time approval for credential and payment work.
 
 Read [decision 0035](decisions/0035-adopt-private-owner-command-center.md) before continuing.
 
