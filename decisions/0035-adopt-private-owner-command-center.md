@@ -2,9 +2,9 @@
 
 Date: 2026-09-04
 
-Status: accepted and partially executed; private Telegram text path and Calapres delegation verified,
-while voice, proactive alerts, live operational sources, and durable direct-provider funding remain
-unverified or pending
+Status: accepted and partially executed; private Telegram text, Arabic voice, stable owner session,
+and Calapres delegation are verified, while proactive alerts, live operational sources, and durable
+direct-provider funding remain unverified or pending
 
 ## Context
 
@@ -36,10 +36,11 @@ the Calapres agent only as an internal delegated specialist.
 5. Keep every future brand isolated. A future brand gets its own specialist, credentials, budget,
    sources, and permissions before it can be delegated work. The owner command center is a routing
    surface, not a shared credential vault or cross-brand data store.
-6. Voice notes are an intended input but are not an accepted capability until one real Telegram voice
-   note is received, transcribed accurately, and answered in the same private conversation. If the
-   first-class channel cannot do this natively, design a separately reviewed transcription bridge;
-   do not imply support from a text-only test.
+6. Accept voice notes through the owner-only `Owner Telegram Voice Bridge`. The workflow must
+   enforce the numeric user and private-chat allowlists, download the Telegram voice file, transcribe
+   Arabic audio through the existing managed Gateway capability, and pass the transcript to the same
+   owner Agent and stable owner session. The direct Agent Telegram integration stays disconnected
+   while the workflow owns the bot webhook.
 7. Keep risky or external actions approval-gated at action time. The owner agent may summarize,
    classify, delegate internal analysis, and recommend. It may not send customer messages, publish,
    alter commerce or fulfillment, create or expose credentials, fund providers, change security
@@ -65,12 +66,36 @@ the Calapres agent only as an internal delegated specialist.
 - No customer message, commerce write, schedule, proactive alert, live operational-source attachment,
   Gateway top-up, automatic top-up, direct OpenAI credential, payment, or OpenRouter route was created.
 
+## Voice bridge amendment and verified execution — 2026-09-04
+
+- The first-class Agent received Telegram voice attachments but had no attached transcription
+  capability, so it returned a text fallback. This was a deterministic missing-path defect, not a
+  Telegram delivery failure.
+- Published workflow `Owner Telegram Voice Bridge` (`0EQB4mv5NknrXsHM`, active version
+  `454e29f5-b6dc-4569-8a1b-c3267470041c`) now owns the Telegram webhook. It reuses the existing
+  Telegram credential and managed n8n OpenAI audio-transcription credential; no credential,
+  payment, Gateway top-up, or automatic top-up was created.
+- The workflow requires the verified numeric owner user and private-chat identities, routes text to
+  the existing Agent, and downloads and transcribes Arabic voice before routing. Its trusted
+  transport marker is generated only after these gates pass and does not remove written action-time
+  approval requirements.
+- The incorrect owner username spelling in Agent instructions was corrected to `@A_Awdsh`. The
+  Agent was validated, tested, and republished as active version
+  `a95de83d-1275-4aae-9cff-bb5b2747634d`.
+- End-to-end execution `45166` transcribed a real owner voice note exactly as
+  `أريد أن أسأل، هل هناك طلبات اليوم؟` and returned the Agent's Arabic follow-up in the same
+  Telegram conversation. A separate two-message canary proved that text and voice use one stable
+  owner session.
+- The direct Agent Telegram integration was disconnected to avoid competing webhook ownership. To
+  roll back, first unpublish the workflow, then reconnect the Agent integration with the existing
+  private numeric allowlist.
+
 ## Remaining verification
 
-Run one real voice-note canary from the owner's Telegram account. Separately design and approve the
-read-only operational sources and incident triggers that will create meaningful owner alerts. Until
-those tests pass, the command center is a verified private text-and-delegation interface, not a
-verified voice assistant or proactive operations monitor.
+Voice is verified. Separately design and approve the read-only operational sources and incident
+triggers that will create meaningful owner alerts. Until those later gates pass, the command center
+is a verified private text, voice, memory, and delegation interface, not a proactive operations
+monitor.
 
 ## Rollback
 
