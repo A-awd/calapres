@@ -1,5 +1,35 @@
 # Handoff
 
+## Resume here — import approved Klaviyo email design, then authorize sending — 2026-09-04
+
+Klaviyo's technical foundation is ready and verified; visual email design is intentionally deferred.
+Open the six current draft flows by stable ID: welcome `Y39TRB`, checkout abandonment `RXMMLx`, cart
+abandonment `UBeYDd`, browse abandonment `UyRJwi`, post-purchase thanks `VRHuL9`, and winback
+`WkkBUZ`. Old flow `Y6eq9T` is retired and must not be activated.
+
+All eleven flow emails are attached to the correct message, use `info@calapres.com`, have UTM
+tracking, unsubscribe and organization data, and passed render-only checks for checkout/product
+destinations and commerce variables. The abandonment filters are present, and both winback delays
+now use recipient-local timezone. Keep every flow and email message draft until the external design
+provider supplies the approved visuals, the resulting desktop/mobile previews are accepted, and the
+owner gives fresh approval for live customer email.
+
+Signup form `XsiWvE`, version `27642620`, is live; its target is double-opt-in list `XGX2zD`.
+Onsite tracking and storefront script `Rf93xb` are present. A visual popup canary remains
+`UNVERIFIED` because the available test browser is already identified; recheck in a genuinely clean
+session without clearing owner data. Four hidden templates were partially restyled before the owner
+delegated visual work: `RpQa6U`, `RjHf29`, `UpuXK2`, and `Y9Hvxg`. Do not continue or reverse that
+appearance work during technical setup.
+
+Klaviyo currently shows Shopify and the Klaviyo MCP Server as enabled. Meta Ads and Google Ads are
+discoverable but unbound; binding requires the applicable account authorization, and the present
+audience is too small for a meaningful sync. Keep WhatsApp in Chatwoot, SMS and Marketing Analytics
+off, and Judge.me independent unless its paid Klaviyo connection is explicitly approved. No flow,
+campaign, customer message, paid trial, subscription, ad spend, or ad account binding was executed.
+
+Read [decision 0037](decisions/0037-establish-klaviyo-technically-defer-email-design.md) before
+changing Klaviyo or email design.
+
 ## Resume here — connect delayed Chatwoot escalation without restoring immediate handoff — 2026-09-04
 
 Live Captain assistant `2187` has been corrected after verified conversation `#17` showed an
