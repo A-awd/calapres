@@ -1,5 +1,16 @@
 # Handoff
 
+## Resume here — four logo-free photographs — 2026-09-05
+
+Owner likes the four photo-first concepts and explicitly requests removing their overlaid logos.
+Visible branding is not mandatory. Preserve the physical burner-front ornaments and the original
+branded files; save clean versions separately on the owner's device. Do not mistake this for a
+new product/logo design or ad-publication authorization. See the campaign record for exact files.
+Completed: four clean PNGs and `Calapres-Photos-No-Logo.zip` in
+`/Users/awd/Downloads/Calapres-Photo-Concepts-4wizrv/No-Logo-6hK9eD`. All visually inspected and ZIP
+integrity checked. Do not regenerate to remove logos again; this requested removal is done.
+
+
 ## Resume here — review alternate-color photographic concepts — 2026-09-05
 
 The owner explicitly wants all earlier images kept, including assets excluded from final-use review;

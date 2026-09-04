@@ -85,6 +85,14 @@ a new available color or change the physical offer. The owner requested a live c
 starting; 5971 was read and reported, then the owner answered yes to starting. Both logo directions
 remain approved. All prior assets must remain available; review exclusions are not deletion approval.
 
+### Logo-free versions of the four photographs — 2026-09-05
+
+The owner strongly liked the four latest photographic concepts but rejected the dominant overlaid
+logos. A visible wordmark or seal is not mandatory for these images; logo-free photography is
+explicitly permitted. Remove the overlaid branding from all four while retaining the actual raised
+ornament on each burner. Keep both original branded and new clean versions. This does not revoke
+approval of the logo assets, redesign the physical product, or authorize publication.
+
 
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft

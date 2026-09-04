@@ -13,6 +13,8 @@ also records compact upper text, visible incense smoke, family/newlywed/bridal a
 faces or full figures. This does not itself authorize publishing a campaign or changing the storefront.
 Latest creative expansion: retain earlier images, but use distinct full-photograph/no-copy concepts
 and actual gray/beige product references, with only the approved logo (decision 0025).
+The owner subsequently approved logo-free photography and requested removal of overlaid branding
+from all four new concepts while retaining originals and the physical burner ornaments (0025).
 
 ## Active decisions
 

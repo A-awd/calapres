@@ -246,3 +246,26 @@ No regeneration was queued after this review. Fresh balance after the four was 5
 No top-up, payment, deletion, overwriting, live publication or Shopify/Klaviyo mutation occurred.
 All prior and new creations remain available. These are concept directions for review, not four
 publication-ready advertisements. Preserve original logos as literal assets in final composition.
+
+## Four logo-free photographs saved locally — 2026-09-05
+
+Owner approved the photographs but rejected dominant overlaid branding and explicitly requested
+removal from all four. Visible branding is optional. Four localized Magnific edits completed using
+Google Nano Banana 2, 75 credits each (300 total), without a new scene-generation request. All four
+downloaded PNGs were individually visually inspected: the separate advertising seals/lettering are
+absent and physical pale burner ornaments remain. This is visual verification, not a claim of
+pixel-identical preservation outside edited areas. The original macro smoke-origin limitation was
+not independently corrected by this logo-only request.
+
+| Local clean file | Magnific edit | Source |
+| --- | --- | --- |
+| 01-Gray-Cinematic-No-Logo.png | [gO3iYCaSXO](https://www.magnific.com/app/creation/gO3iYCaSXO) | 0emthm5TfW |
+| 02-Bridal-Overhead-No-Logo.png | [0emtQO6TfW](https://www.magnific.com/app/creation/0emtQO6TfW) | aFr1xkHfSh |
+| 03-Beige-Sunlit-Hospitality-No-Logo.png | [JNGAVbTOq4](https://www.magnific.com/app/creation/JNGAVbTOq4) | s76NiNSl8e |
+| 04-Gray-Macro-Detail-No-Logo.png | [4RWYekC9Aa](https://www.magnific.com/app/creation/4RWYekC9Aa) | xS4P9P8jfW |
+
+Owner-device folder: `/Users/awd/Downloads/Calapres-Photo-Concepts-4wizrv/No-Logo-6hK9eD`.
+The four files were validated as PNGs at 1856x2304, 2048x2048, 1856x2304 and 2528x1696 respectively.
+`Calapres-Photos-No-Logo.zip` includes the four clean PNGs and passed archive integrity verification.
+The original four branded PNGs and original ZIP remain unchanged in the parent folder. All prior
+Magnific creations remain available; nothing was deleted. No ad or storefront was published.

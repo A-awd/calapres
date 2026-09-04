@@ -1,5 +1,16 @@
 # Project State
 
+## Logo-free edits of four photographic concepts requested — 2026-09-05
+
+[Owner direction] Preserve the four photographs, remove their overlaid wordmarks/seals, and keep
+the original files. Logo visibility is optional, not compulsory. Actual burner-front ornaments
+remain part of the product and are not targets for removal. No publication or storefront change.
+[Executed/verified] All four logo-free edits completed and were downloaded/visually inspected.
+Overlaid branding removed; physical burner ornaments remain. PNGs and a verified ZIP are saved
+under `/Users/awd/Downloads/Calapres-Photo-Concepts-4wizrv/No-Logo-6hK9eD`; parent originals preserved.
+The four edits cost 300 existing credits. No top-up/payment, deletion or live publication occurred.
+
+
 ## New full-photograph concepts; preserve previous images — 2026-09-05
 
 [Owner direction] Keep all previous assets, but stop repeating the same top-text/bottom-product
