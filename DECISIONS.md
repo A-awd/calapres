@@ -8,6 +8,9 @@ Latest clarification (2026-09-05): decision 0025 requires the original flourishe
 asset in the family campaign, not generic lettering. This does not change the live site or checkout.
 The owner also authorized a two-concept campaign comparison against the existing burnt-brown CR
 seal; this is a creative comparison, not a replacement of the live wordmark (decision 0025).
+Subsequent owner approval accepts BOTH campaign identities for alternating future ads. Decision 0025
+also records compact upper text, visible incense smoke, family/newlywed/bridal audiences, and no bridal
+faces or full figures. This does not itself authorize publishing a campaign or changing the storefront.
 
 ## Active decisions
 

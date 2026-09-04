@@ -59,6 +59,22 @@ versus the approved burnt-brown CR wax-seal icon. This authorizes the seal in th
 concept; it does not replace the storefront wordmark or choose a permanent campaign winner. Both
 must use the existing approved asset references, not invented letterforms.
 
+### Owner approval of both campaign identities and lifestyle direction — 2026-09-05
+
+The owner explicitly approved both demonstrated campaign identity treatments for alternating future
+advertisements: the original English CALAPRES wordmark and the existing burnt-brown CR wax seal.
+Do not force a single winner or seek the same logo-direction approval again. This supersedes the
+preceding comparison-only/no-winner state for those two existing treatments, not the live site logo.
+The owner also requested less header background: move/compact the writing upward so the burner smoke
+is clearly visible, rather than allowing a text panel to consume half the image.
+
+The campaign audience is not families only: include newlyweds and brides. For bridal visuals, never
+show a bride's face or full figure (including reflections). Use adult hand/wrist details, ivory satin,
+watch and jewelry still life. Preserve the one-burner offer; contextual jewelry/satin are not included
+merchandise. Avoid hands/fabric contacting a lit burner or covering its opening. New variants are
+review drafts until inspected and accepted; approval of these identities is not account publication,
+advertising-spend authorization, payment, or permission to alter Shopify/Klaviyo.
+
 
 The canonical source reached GitHub `main` commit
 `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Shopify draft

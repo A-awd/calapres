@@ -1,5 +1,20 @@
 # Project State
 
+## Both campaign identities approved; expanded lifestyle batch — 2026-09-05
+
+[Owner approved] Both the English CALAPRES wordmark treatment and burnt-brown CR seal treatment
+are accepted for alternating future ads. No single winner is required. The owner requested raised,
+compact text so smoke remains visible, and expansion from families to newlyweds/brides. Bridal
+content must omit faces/full figures and may show adult hands/wrists, satin, watches and jewelry.
+[Boundary] This is creative direction and generation approval, not ad launch or Shopify/Klaviyo
+publication. Context props do not change the single-burner offer or authorize invented packaging.
+[Executed] Twelve image drafts completed (eight initial + four compact corrections), total 900
+existing credits, balance 5971. All inspected: no faces/full figures. Curated eight for owner review;
+excluded two repeated-text drafts and two corrections that invented a different physical emblem.
+Compact family and bridal-gift revisions show more smoke; other retained drafts still need layout/
+typography cleanup. Links, rejected IDs and costs are in the campaign record. Nothing published.
+
+
 ## Wordmark versus CR seal comparison requested — 2026-09-05
 
 [Approved scope] The owner requested two campaign concepts: original CALAPRES English wordmark

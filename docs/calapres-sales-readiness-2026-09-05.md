@@ -155,3 +155,66 @@ Assistant visual preference, not owner approval: wordmark for immediate brand-na
 seal for a quieter gifting-oriented treatment. Preserve the actual logo assets and apply the
 approved font as editable text in final production. No Shopify, Klaviyo, campaign or customer-send
 change occurred. Do not queue more variants without further owner direction.
+
+## Both identities approved; family, newlywed and bridal batch — 2026-09-05
+
+The owner approved BOTH prior identity treatments for alternating future advertisements. Approval
+is not restricted to a family audience: newlyweds and brides are explicitly included. The owner
+requested a higher/smaller text area to reveal smoke, plus bridal hand/wrist, satin, watch and jewelry
+details without any bride face or full figure. These are approved creative rules (decision 0025),
+not an instruction to publish ads, change Shopify, activate Klaviyo, or fund an account.
+
+Eight first-pass variants completed with Google Nano Banana 2 (`imagen-nano-banana-2-flash`), 3:4,
+requested 2k, 75 existing credits each. All eight were rendered and visually inspected. No faces,
+heads or full figures appeared. The vanity scenes contain adult hands/wrists only; all contain one
+burner without tray/box. Watch/jewelry/satin are scene props, not offered merchandise.
+
+The first-pass header reduction was partial: headers generally remained around the upper third
+rather than the requested quarter. Some smoke faded into the header. Two outputs repeated Arabic
+phrases. They are review drafts, not eight ready-to-publish advertisements. Four compact headline-only
+corrections were therefore requested within the owner's multi-model task, removing the panel/body.
+
+| Concept | First-pass asset | Visual review |
+| --- | --- | --- |
+| مجلس العائلة — الاسم الإنجليزي | [fHxr54TCDY](https://www.magnific.com/app/creation/fHxr54TCDY) | Repeated family-name phrase; superseded by compact revision. |
+| مجلس العائلة — ختم CR | [SyR39pbUb8](https://www.magnific.com/app/creation/SyR39pbUb8) | Smoke clearer; header still taller than requested. |
+| بداية بيت للعرسان — الاسم الإنجليزي | [1lyOUWMr4r](https://www.magnific.com/app/creation/1lyOUWMr4r) | Smoke clearer; header still tall and typography needs final checks. |
+| بداية بيت للعرسان — ختم CR | [jU94JpZLD0](https://www.magnific.com/app/creation/jU94JpZLD0) | Repeated body phrase and unwanted bottom wordmark; superseded by compact revision. |
+| العروسة والساعة والمجوهرات — الاسم الإنجليزي | [MBavISuDCm](https://www.magnific.com/app/creation/MBavISuDCm) | Adult hands/wrists only; watch/jewelry context; header can be lighter. |
+| العروسة والساعة والمجوهرات — ختم CR | [tC5bQ6nmZJ](https://www.magnific.com/app/creation/tC5bQ6nmZJ) | Adult hands/wrists only; unwanted bottom wordmark and upper fade remain. |
+| هدية للعروس بتفاصيل الستان — الاسم الإنجليزي | [MBavIlCDCm](https://www.magnific.com/app/creation/MBavIlCDCm) | Satin/jewelry still life, no person; hard header edge remains. |
+| هدية للعروس بتفاصيل الستان — ختم CR | [XmQuayaBfo](https://www.magnific.com/app/creation/XmQuayaBfo) | No person; satin/jewelry still life; header can be lighter. |
+
+New Arabic copy in this batch is proposed campaign variation, not a change to the previously
+approved long family paragraph: `بداية بيت… باسمكما`, `تفاصيل تشبهكِ`, and `هدية تحمل اسمها`.
+The two approved original logo files remain the identity sources. Rubik-style generated glyphs
+do not prove real Rubik font application or pixel-exact logo reproduction. No new engraving finish,
+physical dimension, jewelry inclusion, safety rating, price or delivery promise was introduced.
+
+### Compact revisions and curated review set
+
+Four headline-only corrections completed and were individually inspected:
+
+| Revision | Asset | Outcome |
+| --- | --- | --- |
+| Family, English wordmark | [BhFQC2BoQR](https://www.magnific.com/app/creation/BhFQC2BoQR) | Keep for review: repeated body removed, no hard panel, more open smoke area. |
+| Newlyweds, CR seal | [3zMVcxsREY](https://www.magnific.com/app/creation/3zMVcxsREY) | Reject: model replaced the burner's physical emblem with CR and retained unwanted bottom wordmark. |
+| Bride/watch, English wordmark | [gO3i9CkSXO](https://www.magnific.com/app/creation/gO3i9CkSXO) | Reject: model changed the burner's physical emblem into an Arabic letter. |
+| Bridal gift, CR seal | [EbLj1DhuuO](https://www.magnific.com/app/creation/EbLj1DhuuO) | Keep for review: body removed, lighter header, single original-style burner emblem; no person. |
+
+Do not describe the excluded generated emblems as an approved engraving preview. For the last
+revision, wait returned completed without an asset URL; creations_get then returned its URL and
+the image was visually inspected. All twelve generations completed, but completion is not approval.
+
+Curated review set (eight, rendered together): `BhFQC2BoQR`, `SyR39pbUb8`, `1lyOUWMr4r`,
+`MBavISuDCm`, `tC5bQ6nmZJ`, `MBavIlCDCm`, `XmQuayaBfo`, `EbLj1DhuuO`.
+Excluded four: `fHxr54TCDY`, `jU94JpZLD0` (repeated text), `3zMVcxsREY`, `gO3i9CkSXO`
+(invented physical emblems). Keep all assets recoverable; none was deleted. Some retained first-pass
+variants still have a large header or unwanted small footer text and require final typography/layout
+cleanup. The compact family and gift revisions improve smoke visibility; do not claim that every
+variant satisfies a measured 17% or 28% header limit. No face/full-figure restriction was violated.
+
+Cost: twelve requests at 75 credits = 900 existing credits (600 first pass + 300 revisions). Fresh
+balance 5971, from 6871. No payment or top-up. The owner-approved existing logo treatments remain
+approved; the newly created imagery/copy is a curated draft set for review, not a live ad campaign.
+No Shopify, Klaviyo, ad-account, customer-message, payment, or shipment operation was performed.

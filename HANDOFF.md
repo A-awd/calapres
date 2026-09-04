@@ -1,5 +1,21 @@
 # Handoff
 
+## Resume here — both identities accepted, review eight lifestyle variants — 2026-09-05
+
+The owner explicitly approved BOTH earlier identity treatments for future alternating ads; do not
+ask again which one must win. New requested direction: writing moves upward/compacts to reveal
+smoke; include families, newlyweds and brides. Never show bridal faces or full figures, including
+reflections. Hands/wrists, satin, watches and jewelry still life are allowed; they are context props,
+not items included with the one burner. Campaign publication and paid media remain separate actions.
+The eight-variant batch and review outcomes are in the campaign record.
+Twelve total drafts completed including four corrections, costing 900 credits; eight were curated
+and displayed. Read the campaign table before reusing images: four are excluded for repeated text
+or invented product emblems. Prefer `BhFQC2BoQR` for the compact family/wordmark treatment and
+`EbLj1DhuuO` for the compact bridal-gift/seal treatment. The bride/watch first pass `MBavISuDCm`
+retains the original-style emblem; its correction `gO3i9CkSXO` does not and must not be used.
+Do not regenerate this batch without new direction or mistake identity approval for ad publication.
+
+
 ## Resume here — review wordmark versus CR seal concepts — 2026-09-05
 
 The owner explicitly requested a comparison of the original English wordmark and existing
