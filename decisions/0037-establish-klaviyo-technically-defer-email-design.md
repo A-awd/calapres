@@ -63,3 +63,11 @@ verified the canonical Calapres pixel `2087512885182244` inside Optix portfolio
 neither candidate account is present in the portfolio. Therefore neither candidate may be bound by
 name alone. A future remedy requires fresh owner approval for the exact Optix-owned Calapres ad
 account, including its permanent currency/timezone choice, followed by full-control verification.
+
+Meta Business Support subsequently verified that both records exist and show no current ad-policy
+restriction or rejected ads. This does not make either usable: both remain `Read-Only`, and each
+Ads Manager link redirects to a different accessible account. Account `1548956409428065` also maps
+to a billing asset named `Calapres deleted old` and is retired. Account `1055863030368089` is not
+proven suspended, but it must not be connected until ownership and full-control access are live-
+verified. The earlier rejected account-creation/payment notice cannot be assigned to either ID
+because that earlier evidence did not record an ID.
