@@ -55,3 +55,11 @@ The account currently has too few consented profiles to treat advertising audien
 Klaviyo shows only Shopify and its MCP server as enabled integrations; Meta Ads and Google Ads are
 discoverable but unbound. No ad spend, subscription, trial with automatic renewal, campaign send,
 flow activation, review request, SMS, or WhatsApp migration is authorized or executed.
+
+On 2026-09-04, a live Meta setup audit found two Calapres-like ad-account candidates in Klaviyo,
+`1055863030368089` and `1548956409428065`, both `Read-Only`. Shopify and Meta Business instead
+verified the canonical Calapres pixel `2087512885182244` inside Optix portfolio
+`3498131087080400` and Calapres asset group `1163328843541759`; that group has no ad account, and
+neither candidate account is present in the portfolio. Therefore neither candidate may be bound by
+name alone. A future remedy requires fresh owner approval for the exact Optix-owned Calapres ad
+account, including its permanent currency/timezone choice, followed by full-control verification.
