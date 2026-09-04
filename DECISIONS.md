@@ -154,12 +154,12 @@ decision record.
   primary, keep compatibility verification pending, and require fresh approval for payment,
   credential creation, and binding work.
 - [0035 — Adopt a private cross-brand owner command center](decisions/0035-adopt-private-owner-command-center.md)
-  — use `سكرتيرة عبدالرحمن` as the private Telegram-facing parent, with published owner-only
-  workflow `Owner Telegram Voice Bridge` handling text, Arabic voice transcription, verified
+  — use `سكرتيرة عبدالرحمن` as the private Telegram-facing parent, with portfolio-wide default
+  scope across all owner businesses and personal organizational matters. Published owner-only
+  workflow `Owner Telegram Voice Bridge` handles text, Arabic voice transcription, verified
   transport identity, and one stable owner session. Delegate bounded Calapres analysis to the
   unpublished `Calapres Operations Director`; customer contact, live operational actions,
-  proactive alerts, provider funding, and future-brand access remain behind their stated
-  verification and approval gates.
+  proactive alerts, provider funding, and future-brand access remain behind their stated gates.
 
 ## Superseded decisions
 
