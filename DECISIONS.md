@@ -168,6 +168,12 @@ decision record.
   create, update, review, and publish tools excluded; named-brand isolation is instruction-enforced,
   not credential-level. OTO, Chatwoot, generic mail/Drive/Notion, and ChatGPT-derived knowledge
   remain separately scoped or unverified.
+- [0037 — Establish Klaviyo technically and defer email visual design](decisions/0037-establish-klaviyo-technically-defer-email-design.md)
+  — keep Klaviyo connected to Shopify for consented email, markets, products, and onsite events;
+  establish Arabic RTL lifecycle flows with verified dynamic links and fail-closed order filters;
+  keep every email flow and message in draft until external visual design and fresh send approval;
+  retain Chatwoot for WhatsApp, keep SMS and paid analytics off, and require separate approval to
+  bind ad accounts, start paid review integration, or incur spend.
 
 ## Superseded decisions
 
