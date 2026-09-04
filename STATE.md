@@ -1,5 +1,39 @@
 # Project State
 
+## Sales-readiness audit and family engraving copy prepared — 2026-09-05
+
+[Live verified] Shopify Payments settings still show Paymob in `Test mode`, explicitly stating
+that no actual transactions will be processed. PayPal is not activated. No payment setting changed.
+The three active burners each have one product image. Their exact variants have quantity `0`,
+inventory policy `DENY`, and `inventoryItem.tracked=false`; zero is not proof of physical stockout.
+Actual stock, production capacity, and engraving lead time remain owner facts to establish.
+
+[Live storefront and source verified] The product page displays one image and the engraving example
+`سارة ومحمد — 1447هـ`. The shared product section renders only the featured image, with no gallery
+for additional images or videos. Product descriptions exist in Shopify but are not rendered by this
+section. Merely adding product images or rewriting descriptionHtml would therefore not complete the
+visible product-page improvement. The public shipping policy gives Saudi rates but no delivery lead
+time. The footer currently exposes WhatsApp and email only.
+
+[Prepared, not deployed] The owner's family-engraving request is implemented in the two shared
+product source files: family-name wording, the `آل العواد` placeholder, household/majlis examples,
+and a family-specific FAQ. The existing optional 40-character `نص الحفر` property is preserved.
+The main theme's two original file checksums matched this session's canonical baseline before
+editing. No Shopify theme, product record, image, price, stock, payment, or customer message was
+changed. Copy publication and browser acceptance remain pending; no lifestyle image was generated.
+Theme Check inspected 182 files with zero errors and six existing external-font warnings.
+
+[Launch priorities] First establish real stock, engraving/dispatch lead time, actual pickup address,
+and packaged dimensions/weight; complete one prepaid payment-to-delivery acceptance cycle after
+payment-provider authorization. Before significant promotion, prepare approved true-to-product
+lifestyle imagery and a product gallery, verify the conversion events and usable ad-account access,
+and establish a daily owner support review or a separately approved alert path. OTO pickup/test,
+Meta access, owner alerts, and Klaviyo design are recorded outstanding items, not freshly reverified
+account states in this audit. Klaviyo design/activation and broader agent federation are not
+prerequisites for a small manually supervised launch.
+
+Details: [Sales-readiness audit and family copy](docs/calapres-sales-readiness-2026-09-05.md).
+
 ## Klaviyo technical foundation verified; email visual design deferred — 2026-09-04
 
 [Executed] Shopify-to-Klaviyo permissions and synchronization are current. Email subscribers feed

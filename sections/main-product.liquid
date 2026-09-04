@@ -47,8 +47,9 @@
       {% form 'product', product, id: 'pdForm', data-product-form: 'true' %}
         <input type="hidden" name="id" value="{{ mp_variant.id }}">
         <div class="pd-eng">
-          <label for="engInput">الاسم أو الشعار للحفر (اختياري)</label>
-          <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: سارة ومحمد — 1447هـ">
+          <label for="engInput">الاسم أو اسم العائلة أو الشعار للحفر (اختياري)</label>
+          <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: آل العواد" aria-describedby="engHint">
+          <small id="engHint">لبيتكم أو هدية لأهلكم: آل العواد، مجلس آل العواد، أو سارة ومحمد.</small>
         </div>
         <button class="btn-dark" id="pdAdd" type="submit"{% unless product.available %} disabled{% endunless %}>
           {%- if product.available -%}
@@ -99,7 +100,7 @@
       "type": "text",
       "id": "line2",
       "label": "السطر الثاني",
-      "default": "حفر الاسم أو الشعار"
+      "default": "حفر اسمك أو اسم العائلة أو الشعار"
     }
   ],
   "blocks": [

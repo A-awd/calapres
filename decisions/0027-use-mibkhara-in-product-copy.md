@@ -54,7 +54,22 @@ three product pages, About, Contact, and FAQ returned 200 with no stand, oud-box
 or integrated-bundle term. A fresh browser render showed the exact two-line summary on the white
 product page.
 
-## Rollback
+## 2026-09-05 family-name engraving amendment
+
+The owner requested that engraving examples also address families, rather than only personal or
+couple names. Family and majlis names are examples within the existing name-engraving offer, not a
+new product, bundle, price, or manufacturing promise. Prepare the shared summary as
+`حفر اسمك أو اسم العائلة أو الشعار`, use `آل العواد` as the placeholder, retain the couple example
+in helper text, and add a FAQ explaining `آل العواد` and `مجلس آل العواد` for home use and gifts.
+This supersedes the exact second-summary-line requirement only; `مبخر أنيق` and the single-burner
+composition remain unchanged. Preserve the optional 40-character line-item property `نص الحفر`.
+
+Implementation is prepared in canonical source only. The Shopify theme and product records have
+not been changed by this amendment; live appearance and full order persistence are not yet proven.
+No lifestyle image was generated or approved. This does not approve a gallery redesign, new product
+claims, fees, engraving production time, or marketing activation.
+
+## Original composition rollback
 
 If the owner reverses this factual offer definition, restore only the nine theme files from the
 parent of commit `ecbcbc3aa81514107f640d5b1ec925c28c1bab7d`, restore the prior shop-level meta

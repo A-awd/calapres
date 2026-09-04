@@ -1,5 +1,25 @@
 # Handoff
 
+## Resume here — close the sales gates and review family engraving copy — 2026-09-05
+
+Read [the current sales-readiness audit](docs/calapres-sales-readiness-2026-09-05.md). Paymob was
+freshly verified in test mode; no real transaction will be processed through it. Three active
+burners have one image each and untracked inventory with recorded quantity zero. Do not label them
+physically out of stock without owner evidence. Establish stock, engraving/dispatch time, actual
+pickup origin, and packaged measurements before the prepaid end-to-end acceptance order.
+
+Family-name copy is prepared in `sections/main-product.liquid` and `templates/product.json`,
+including `آل العواد`, `مجلس آل العواد`, and a family FAQ. It is source-only and has not changed
+Shopify or the live storefront. Preserve the existing optional 40-character `نص الحفر` field.
+The shared section does not render Shopify descriptionHtml and has no image gallery: updating
+product data alone will not expose the family copy or additional lifestyle images on that page.
+
+Next implementation: review/deploy this bounded copy change and verify all three product pages;
+prepare faithful lifestyle assets and a separately scoped gallery. Do not publish unapproved
+imagery or activate Klaviyo while its design remains deferred. Broader automation and paid app
+integrations should not delay the minimum manually supervised selling workflow.
+
+
 ## Resume here — import approved Klaviyo email design, then authorize sending — 2026-09-04
 
 Klaviyo's technical foundation is ready and verified; visual email design is intentionally deferred.
