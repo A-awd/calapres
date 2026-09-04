@@ -114,6 +114,8 @@ decision record.
   Cairo on the public storefront and Almarai in active checkout until the coordinated production
   changes are independently confirmed.
 - [0027 — Use one `مبخر أنيق`, not a set or multi-piece bundle, in customer-facing copy](decisions/0027-use-mibkhara-in-product-copy.md)
+  — includes the owner-approved family-name campaign text and bounded Magnific trial; single-burner
+  composition remains mandatory and trial generation is not publication approval.
   — remove every stand, oud-box, set, and three-piece claim; show the exact product summary
   `مبخر أنيق` plus `حفر الاسم أو الشعار`; and keep product data, storefront pages, reusable theme
   defaults, and the homepage meta description aligned to that physical offer.

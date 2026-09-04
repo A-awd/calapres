@@ -55,12 +55,18 @@ These are proposed deliverables, not generated images or claims of a finished cr
 Keep product reference fidelity. Confirm dimensions and packaging from real evidence. Do not add a
 stand, oud box, multi-piece set, accessories, or invented construction/heat-resistance claims.
 
-## Prepared Arabic copy
+## Owner-approved campaign copy — 2026-09-05
 
 Campaign heading: **مبخرة تحمل اسم عائلتكم**
 
-Supporting copy: **اجعلوا لمجلسكم قطعة تحمل اسم عائلتكم. مبخرة كالابريز بحفر مخصص مثل «آل العواد»
-أو «مجلس آل العواد»؛ لبيتكم أو هدية للأهل بمناسبة منزل جديد.**
+Supporting copy: **اجعلوا لمجلسكم قطعة تحمل اسم عائلتكم. خصّصوا مبخرة كالابريز بحفر اسم العائلة، لبيتكم أو هدية بمناسبة منزل جديد.**
+
+The owner explicitly approved this shorter campaign wording and requested a Magnific content
+experiment. It supersedes the earlier proposed campaign body with named family examples. Approval
+of this text and an image experiment does not authorize live publication, marketing activation,
+new payment, top-up, or changes to the single-burner offer.
+
+### Previously prepared product-page support copy (not deployed)
 
 Product summary: `مبخر أنيق` / `حفر اسمك أو اسم العائلة أو الشعار`.
 
@@ -75,5 +81,26 @@ Answer: `نعم، اجعلوا لمجلسكم قطعة تحمل اسم عائل�
 
 Prepared source changes affect only the shared product section and product template. No Shopify
 write, live theme deployment, image generation, marketing activation, payment, shipment, or send
-was performed. Production verification remains pending. Theme Check inspected 182 files with
+was performed at the initial source-preparation checkpoint. Production verification remains pending. Theme Check inspected 182 files with
 zero errors and six existing external-font warnings. `git diff --check` passed.
+
+## Magnific experiment result — 2026-09-05
+
+Two 1728 x 2304 (3:4, 2k) Seedream 5 Pro drafts completed using the existing Premium balance,
+100 credits each (200 total). No subscription change, payment, or top-up was performed.
+Reference upload: `XmQETEXBfo`, imported from the white Shopify product photo `final-white`.
+The historical photo includes a box and tray, but decision 0027 overrides its implied bundle.
+
+- [Initial draft](https://www.magnific.com/app/creation/fHx1I6fCDY): rejected. The initial prompt
+  incorrectly retained the box/tray from the photograph; this was an assistant composition error,
+  not owner approval of a bundle. The result also lost product emblems and distorted Arabic.
+- [Corrected single-burner concept](https://www.magnific.com/app/creation/s7691a0l8e): completed and
+  visually inspected. The majlis scene now shows the tall burner alone, without the box/tray.
+  Arabic text is not a faithful final typesetting of the approved copy, and product details are
+  not an exact photographic match. Review concept only; not approved or suitable for publication
+  without correction. Do not mistake successful image generation for creative acceptance.
+
+Next safe creative step: preserve the actual single-product photograph in a controlled composition
+and typeset the approved Arabic as editable text; review product fidelity and wording before any
+customer-visible publication. No more generation was queued in this trial. No generated asset was
+uploaded to Shopify or Klaviyo, and no storefront, ad, or customer message was published.

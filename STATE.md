@@ -1,5 +1,18 @@
 # Project State
 
+## Family campaign copy approved; Magnific experiment — 2026-09-05
+
+[Approved] The owner accepted `مبخرة تحمل اسم عائلتكم` with the exact shorter body recorded in
+[the campaign record](docs/calapres-sales-readiness-2026-09-05.md#owner-approved-campaign-copy--2026-09-05)
+and requested a Magnific experiment. This supersedes the earlier proposed campaign paragraph.
+[Executed, review-only] Two Magnific drafts completed (200 existing credits). The first incorrectly
+retained reference-photo accessories and is rejected. The corrected draft shows only the burner,
+but Arabic typesetting and product fidelity still need correction. Neither is publication-ready.
+Creation links and the exact outcome are in the campaign record; no generated asset was deployed.
+[Boundary] No Shopify deployment, ad publication, Klaviyo activation, payment/top-up, or customer
+message is authorized by this experiment. The offer remains one burner, without tray or box.
+
+
 ## Sales-readiness audit and family engraving copy prepared — 2026-09-05
 
 [Live verified] Shopify Payments settings still show Paymob in `Test mode`, explicitly stating

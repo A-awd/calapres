@@ -66,8 +66,17 @@ composition remain unchanged. Preserve the optional 40-character line-item prope
 
 Implementation is prepared in canonical source only. The Shopify theme and product records have
 not been changed by this amendment; live appearance and full order persistence are not yet proven.
-No lifestyle image was generated or approved. This does not approve a gallery redesign, new product
+At that source-preparation checkpoint, no lifestyle image was generated or approved. This does not approve a gallery redesign, new product
 claims, fees, engraving production time, or marketing activation.
+
+### Owner-approved campaign text and Magnific trial — 2026-09-05
+
+The owner subsequently approved the heading `مبخرة تحمل اسم عائلتكم` and exact supporting text
+`اجعلوا لمجلسكم قطعة تحمل اسم عائلتكم. خصّصوا مبخرة كالابريز بحفر اسم العائلة، لبيتكم أو هدية بمناسبة منزل جديد.`
+This replaces the earlier proposed campaign body, not the physical offer. A Magnific experiment
+using existing credits is authorized; image publication and paid top-up are not. Product references
+may show accessories historically: isolate the tall burner and do not reproduce the short box or
+tray as an offered bundle. Generated engraving cannot establish an achievable manufacturing finish.
 
 ## Original composition rollback
 

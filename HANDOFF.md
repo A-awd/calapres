@@ -1,5 +1,21 @@
 # Handoff
 
+## Resume here — approved family campaign and Magnific trial — 2026-09-05
+
+The owner approved the exact shorter campaign heading/body recorded in
+[the sales-readiness record](docs/calapres-sales-readiness-2026-09-05.md#owner-approved-campaign-copy--2026-09-05)
+and asked to test it with Magnific. Do not ask for the wording again or restore the earlier proposed
+paragraph with family examples. Existing product-page support copy is still source-only.
+The two completed Magnific drafts cost 200 existing credits. Reject the first (box/tray retained).
+The corrected single-burner draft is linked in the campaign record; it is a visual concept only,
+with Arabic and product-fidelity issues. Do not repeat this trial without a changed creative method.
+The next creative step is controlled product-photo composition plus separately typeset editable
+Arabic, followed by review, not publication of the generated draft.
+Generated images are review drafts, not publication approval. Preserve decision 0027's one-burner
+offer even when the historical reference photograph contains a box and tray. Do not activate
+Klaviyo, publish a theme/gallery, or send ads during the creative trial.
+
+
 ## Resume here — close the sales gates and review family engraving copy — 2026-09-05
 
 Read [the current sales-readiness audit](docs/calapres-sales-readiness-2026-09-05.md). Paymob was
