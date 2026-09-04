@@ -25,6 +25,23 @@ are visible but unbound, and no paid Judge.me connection or advertising spend wa
 
 Decision: [0037 — Establish Klaviyo technically and defer email visual design](decisions/0037-establish-klaviyo-technically-defer-email-design.md).
 
+## Meta advertising account ambiguity blocks Klaviyo binding — 2026-09-04
+
+[Live verified, no binding] Klaviyo's Meta authorization exposed two Calapres-like ad accounts:
+`Calapres | كالابريز` (`1055863030368089`) and misspelled `Calaprs`
+(`1548956409428065`). Both were marked `Read-Only`, so neither meets Klaviyo's requirement for
+ad-account administrator access. No ad account, audience, or lead form was selected or synced.
+
+[Canonical asset evidence] Shopify's active Facebook & Instagram channel uses Meta dataset/pixel
+`2087512885182244` (`Calapres`), owned by verified business portfolio `Optix`
+(`3498131087080400`), with Maximum sharing through Pixel, Advanced Matching, and Conversions API.
+The portfolio's Calapres business-asset group `1163328843541759` contains the Facebook page,
+catalog, Chatwoot app, pixel, and Instagram account, but no ad account. Direct Meta Business search
+found neither Calapres-like ad-account ID inside Optix, and direct Ads Manager navigation to either
+ID fell back to another accessible account. Treat both candidates as unusable until ownership and
+full-control access are corrected. Do not bind by name alone or create an ad account without fresh
+approval of its permanent currency/timezone and ownership placement.
+
 ## Captain no longer hands off when a customer asks for a human — 2026-09-04
 
 [Owner-reported defect, live-verified] In Chatwoot conversation `#17`, the customer wrote
