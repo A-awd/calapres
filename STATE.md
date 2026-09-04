@@ -1,5 +1,34 @@
 # Project State
 
+## First live business source attached to the owner secretary — 2026-09-04
+
+[Executed and verified] Published owner Agent `سكرتيرة عبدالرحمن` now has two Calapres-branded
+Shopify tools: `calapres_shopify_orders_readonly` and
+`calapres_shopify_products_readonly`. Both reuse the existing `Shopify-Calapres` OAuth credential
+and expose only `getAll` reads. Order output omits customer contact and address fields. No create,
+update, cancel, refund, fulfill, inventory write, or delete operation is exposed.
+
+[Live canaries] A direct Agent read returned zero orders created on 2026-09-04 Riyadh time. A product
+read returned three active products with three variants, recorded quantity zero, and inventory
+tracking disabled. The validated Agent was published as active version
+`465ba704-3580-4df4-b453-8093a6b59d7d`. A real Telegram question then passed through the existing
+voice/text bridge and returned `0 — VERIFIED` from Shopify.
+
+[Coverage boundary] OTO and Chatwoot are not connected to the owner Agent: no clearly identified
+reusable n8n read credential was found for either. Shopify fulfillment fields are not proof of OTO
+shipment state. Generic Gmail, Drive, and Notion credentials were not attached because their
+business/account/container scope is not yet bounded. ChatGPT conversations and memory remain
+working context, not live operational authority; canonical GitHub remains the durable project
+source. Supabase remains retired for Calapres. No customer message, shipment, write, payment,
+credential creation, top-up, schedule, or proactive alert was executed.
+
+[Next action] Verify one bounded read source at a time, beginning with a named Chatwoot read
+credential or bridge and a named OTO read credential or bridge. Then add explicitly scoped business
+mail, Drive, Notion, marketing sources, and other brands through their own specialists and
+credentials before including them in the portfolio-wide answer.
+
+Decision: [0036 — Federate owner business sources through brand-isolated read-only tools](decisions/0036-federate-owner-business-sources-read-only.md).
+
 ## Private owner command center voice and text paths verified — 2026-09-04
 
 [Executed and verified] The owner-facing n8n Agent `سكرتيرة عبدالرحمن`, agent ID
