@@ -161,6 +161,14 @@ decision record.
   unpublished `Calapres Operations Director`; customer contact, live operational actions,
   proactive alerts, provider funding, and future-brand access remain behind their stated gates.
 
+- [0036 — Federate owner business sources through brand-isolated read-only tools](decisions/0036-federate-owner-business-sources-read-only.md)
+  — keep one owner interface while isolating every brand's credentials and sources; attach only
+  fixed read-only operations first; use live systems for operational facts and GitHub for durable
+  state; and report unattached coverage as `UNKNOWN`. Two Calapres Shopify reads for orders and
+  products are live and verified through Telegram, while OTO, Chatwoot, generic mail/Drive/Notion,
+  marketing systems, ChatGPT-derived knowledge, and other brands remain separately scoped or
+  unverified.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
