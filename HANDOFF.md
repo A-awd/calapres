@@ -4,7 +4,7 @@
 
 The private owner command center is live for text and voice. Open the stable n8n Agent
 `سكرتيرة عبدالرحمن`, agent ID `LKA07iWfCpjawVNB`, from the project Agents list and confirm active
-version `a95de83d-1275-4aae-9cff-bb5b2747634d` before editing. Its authorized Telegram username is
+version `0512e496-51e9-421e-8880-0a499efe2c95` before editing. Its authorized Telegram username is
 `@A_Awdsh`. The numeric Telegram owner identity remains the actual allowlist and must not be placed
 in GitHub, instructions, logs, or owner-facing reports.
 
@@ -22,6 +22,14 @@ Voice is verified, not proposed: a real 3-second owner note was transcribed exac
 `45166` succeeded end to end. A separate two-message canary confirmed one stable conversation
 session. The workflow-authored trusted transport context is valid only after the numeric user and
 private-chat gates pass and never waives written action-time approval for risky or external actions.
+
+The owner Agent's default scope is portfolio-wide. If the owner does not name a brand, treat the
+request as covering every authorized and connected business, project, commercial operation, and
+personal organizational matter. Return one consolidated view and group evidence by brand where
+useful. Do not ask which brand merely because a source is absent; state the missing coverage as
+`UNKNOWN` or `UNVERIFIED`. Ask a brand question only for a materially ambiguous request or
+immediately before a brand-specific risky action whose target cannot be safely inferred. A live
+Telegram canary for `وش الجديد اليوم في كل أعمالي؟` passed this behavior.
 
 `Calapres Operations Director` (`olVB3TzKClXjuOei`) remains an unpublished bounded internal
 specialist with its three approved skills and no channel, schedule, commerce tool, customer-send
