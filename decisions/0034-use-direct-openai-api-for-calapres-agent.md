@@ -46,7 +46,27 @@ OpenAI project, service account, or credential was created, no direct credential
 the agent, no Gateway top-up or auto-top-up was configured, and no OpenRouter account or route was
 created. OpenAI API billing is separate from ChatGPT and Codex subscriptions.
 
-The current first-class Agent's support for a customer-owned OpenAI credential remains unverified.
+### Recovered read-only compatibility evidence — documented 2026-09-06
+
+During the continuation immediately after the September 3 handoff, the stable Agents listing was
+reopened and the restored instructions, model and all three skill bodies were reread. The observed
+connection path was:
+
+`Agents → Calapres Operations Director → Model → OpenAI → Create credential`
+
+The form displayed a required API Key, optional Organization ID and base URL
+`https://api.openai.com/v1`. No manual-key plan gate was displayed. The contemporaneous official
+documentation distinguished external-secret-vault integration (Enterprise) from manual credential
+entry. This is dated UI/documentation evidence, not a September 6 account or entitlement refresh.
+References: [OpenAI credentials](https://docs.n8n.io/integrations/builtin/credentials/openai/) and
+[external secrets](https://docs.n8n.io/administer/manage-credentials/use-external-secret-stores/).
+
+This supersedes the earlier "credential surface unknown" conclusion only. A user-owned credential
+was not created or saved, provider binding did not change, and no direct-key model canary passed.
+The managed Gateway trial remains the recorded path. Refresh the actual account/form, supported
+model and plan before any later credential action; all existing financial and action-time gates
+remain. A proposed budget or alert must not be represented as an enforced hard spending cap.
+
 Current model prices, Gateway prices, taxes, credit balances, provider availability, and privacy
 terms are drift-prone and must be refreshed from first-party sources before any financial or
 technical action.

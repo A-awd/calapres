@@ -19,6 +19,10 @@ Latest owner amendment: prioritize bridal preparations/jewelry and bridal gifts;
 use invented Arabic letters/initials or example dates as raised acrylic personalization (0025).
 This narrowly supersedes unchanged front ornaments, not burner-body fidelity or publication gates.
 
+Verification clarification (2026-09-06): decision 0034 now records the recovered direct OpenAI
+credential-form inspection. A supported input surface is not a saved credential or passed model
+canary. No provider, funding or architecture decision changed during the documentation closeout.
+
 ## Active decisions
 
 - [0001 — Adopt the One Brain repository foundation](decisions/0001-one-brain-foundation.md)
