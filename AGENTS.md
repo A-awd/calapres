@@ -90,3 +90,10 @@ Existing SKUs are immutable. New SKUs are assigned in Shopify, must be unique, a
 4. Commit and push authorized work to `main`.
 5. Verify the remote revision and record blockers and the next safe action.
 6. Never leave durable project state only in a conversation.
+
+## Calapres creative tool restriction — owner amendment 2026-09-06
+
+Use Magnific exclusively for image generation and editing. Do not use ChatGPT built-in image
+generation or silently substitute another provider. If Magnific is unavailable, report the blocker.
+For accessory accuracy and the current bridal refinement, follow decision 0025 and the existing
+bridal concepts record. Approval of a concept is not publication or manufacturing approval.

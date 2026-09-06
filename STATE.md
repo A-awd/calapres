@@ -1,5 +1,19 @@
 # Project State
 
+## Resume — Magnific-only bridal refinement — 2026-09-06
+
+Owner requires Magnific exclusively for Calapres image generation/editing and real brand-product
+references for watches/accessories. Cartier Panthere selected; watch must rest naturally, with
+oud and bowl-originating smoke in this stationary vanity scene. One corrected Magnific draft
+`1ly0ioFr4r` completed (75 credits, balance 19925), locally saved and inspected under
+`Calapres/Ai-Work/Bridal-Refinement-2026-09-06/06-Bridal-Vanity-Cartier-Smoke-Magnific-v1.png`.
+Owner acceptance, exact product-fidelity acceptance and iCloud server upload remain unverified.
+Three preceding built-in-generator trials were the wrong tool choice, acknowledged and superseded;
+never label them Magnific. Original assets retained. No live commerce/marketing change.
+Read [the refinement record](docs/calapres-bridal-concepts-2026-09-05.md) and decision 0025.
+Next: review this single Magnific draft with the owner; no unsolicited batch or publication.
+
+
 ## Documentation closeout and recovered evidence — 2026-09-06
 
 The [operations-to-bridal closeout](docs/handoffs/2026-09-06-calapres-operations-and-bridal-creative-closeout.md) is the current continuation map.

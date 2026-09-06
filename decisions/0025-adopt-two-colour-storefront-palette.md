@@ -218,3 +218,16 @@ only configured footer links.
 If the owner rejects the live result, publish only former live theme `165774786816`, then verify the
 public palette, header wordmark, footer links, cart drawer, favicon, and mobile layout. Preserve both
 themes, do not delete either one, and do not run the obsolete repository deployment workflow.
+
+## 2026-09-06 — Exclusive Magnific renderer and authentic accessory references
+
+The owner explicitly requires Magnific ONLY for Calapres image generation and image editing.
+Do not substitute ChatGPT built-in image generation or any other provider. If unavailable, stop the
+creative operation and report the blocker. This supersedes generic tool-selection guidance.
+Use real, identifiable watch/perfume/accessory models from verified product photographs, not invented
+branded-looking jewelry. Cartier Panthere is the selected watch reference for the current vanity
+refinement. Keep props physically plausible: watch resting on the surface, not standing upright.
+For the current stationary burner scene, include oud and smoke visibly originating from the recessed
+bowl; preserve the burner body, color, one-burner offer and no-face rules. This does not approve smoke
+for held burners, new included merchandise, affiliation, manufacturing or publication. Record and
+review the result in [the existing bridal record](../docs/calapres-bridal-concepts-2026-09-05.md).
