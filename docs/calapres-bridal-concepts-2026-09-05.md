@@ -254,3 +254,14 @@ INCENSE: place two small recognizable resinous dark agarwood/bakhoor chips on ch
 
 CAMERA AND SCENE: waist-up/head-to-upper-hips framing, NOT a full figure; enough skirt at lower edge to show dress material, both supporting hands fully visible. Eye-level/very slightly low side camera, flattering 50–85mm portrait feel; model and burner sharp, background soft. Single warm-neutral softbox from front-left skims the dress and burner and illuminates the smoke, gentle subtle rim light, rich shadows but readable product. Wedding-morning/evening preparation emotion, graceful natural posture. Nothing else in the room. No vanity, necklace mannequin, furniture reflection, windows reflecting a second bride, second burner, branding overlay, wordmark, captions, graphic panels, watermark or frame. Real photograph aesthetics with cohesive lighting and fine texture. Private concept for owner review only.
 ```
+
+
+## 2026-09-06 — Owner adopts reference-example testing workflow
+
+The owner objected to the realism of the latest holding-pose draft and the repeated generation
+approach. It is not accepted. The subsequent research presented external libraries (YouMind,
+PromptHero) and published guides (Guy Parsons, Learn Prompting); no images were generated during
+that research. The owner explicitly adopted selecting and testing a published image-plus-prompt
+example before future generation. Follow [decision 0038](../decisions/0038-require-reference-examples-before-image-generation.md) for the bounded test,
+actual reference-upload verification and successful-example record. Keep prior drafts and defects
+visible; no new pilot, image credit spend, media save or publication occurred during adoption.

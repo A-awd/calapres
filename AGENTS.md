@@ -97,3 +97,13 @@ Use Magnific exclusively for image generation and editing. Do not use ChatGPT bu
 generation or silently substitute another provider. If Magnific is unavailable, report the blocker.
 For accessory accuracy and the current bridal refinement, follow decision 0025 and the existing
 bridal concepts record. Approval of a concept is not publication or manufacturing approval.
+
+## Reference examples before creative generation — owner approval 2026-09-06
+
+Follow [decision 0038](decisions/0038-require-reference-examples-before-image-generation.md) for all future Calapres image work:
+select a published image-plus-prompt example with model/settings/reference provenance, verify actual
+reference delivery to Magnific, and run a bounded test before expansion. Default to one pilot and
+at most one targeted correction; stop repeated failures. Reuse successful recorded tests without
+redundant paid trials. Keep photographic plausibility, product fidelity and owner acceptance distinct.
+Save the tested prompt, inputs, settings, output and cost for reuse. Magnific only; no new publication,
+funding, account binding, subscriptions or schedules are authorized by this workflow.

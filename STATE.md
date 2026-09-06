@@ -1,5 +1,19 @@
 # Project State
 
+## Resume — approved reference-example workflow — 2026-09-06
+
+The owner adopted published image references and a bounded example test before future generation,
+using external prompt libraries and guides. [Decision 0038](decisions/0038-require-reference-examples-before-image-generation.md) defines source/model/reference
+provenance, one pilot plus at most one targeted correction by default, visual/product-fidelity
+review, and reuse of successful recorded tests. Magnific remains the exclusive renderer/editor.
+This adoption step changed documentation only: no new generation, credit spend, purchase or publication.
+The owner objected to the realism of holding-pose result `u5sZ3OdQLD`; it is not accepted.
+The earlier six-motif Alhambra bracelet defect remains unresolved. Preserve both as failed/unaccepted
+attempts, not reusable successful examples. This update supersedes the older next-action wording
+that simply requests review or another correction of the same drafts.
+Next: prepare relevant published image-plus-prompt examples and their actual required references,
+then apply the bounded test workflow within the creative request. All live commerce gates remain.
+
 ## Resume — model holding burner, no mirror — 2026-09-06
 
 Owner supplied a bridal pose reference and requested a DIFFERENT fictional model face and dress,

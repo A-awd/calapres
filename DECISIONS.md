@@ -196,6 +196,10 @@ canary. No provider, funding or architecture decision changed during the documen
   retain Chatwoot for WhatsApp, keep SMS and paid analytics off, and require separate approval to
   bind ad accounts, start paid review integration, or incur spend.
 
+- [0038 — Require reference examples before image generation](decisions/0038-require-reference-examples-before-image-generation.md)
+  — use published image-plus-prompt references, a bounded Magnific test and recorded successful
+  examples before creative expansion; retain exact product fidelity and all publication/funding gates.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
