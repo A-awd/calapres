@@ -231,3 +231,17 @@ For the current stationary burner scene, include oud and smoke visibly originati
 bowl; preserve the burner body, color, one-burner offer and no-face rules. This does not approve smoke
 for held burners, new included merchandise, affiliation, manufacturing or publication. Record and
 review the result in [the existing bridal record](../docs/calapres-bridal-concepts-2026-09-05.md).
+
+### Further owner refinement — jewelry bust and explicit flat-watch physics
+
+The owner selected Van Cleef & Arpels Vintage Alhambra in mother-of-pearl/yellow gold after asking
+for recognizable luxury jewelry with its display mannequin. An inanimate neck/chest jewelry bust
+is permitted; no human head, face or full figure is introduced. The watch must lie on its caseback,
+face-up parallel to the table, clasp fully open and both bracelet ends extending across the table;
+a closed oval loop with an upright dial was rejected even when described as low/resting.
+Bakhoor pieces must be visibly recognizable on the charcoal and smoke must emerge from the bowl.
+Real reference-model geometry and counts must be checked; the real matching bracelet has five
+motifs, while the current generated six-motif bracelet is a known unresolved defect. Do not equate
+use of a named luxury reference with exact or authenticated physical-product reproduction.
+Jewelry and bust remain styling props outside the one-burner offer. Magnific-only and publication
+gates continue unchanged.

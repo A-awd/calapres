@@ -114,3 +114,85 @@ Add real-use incense to the burner: a few modest dark natural oud chips inside t
 Preserve the EXACT beige Calapres burner from reference 1: body silhouette, proportions, same beige color and fabric-like material, textured side panels, stitched front border, raised flowing ivory Arabic front ornament, original metallic bowl rim and original position at left. ONE burner only. Keep marble, morning lighting, curtains, white satin and white bridal bouquet as in the existing image. Keep white flowers/satin as bridal context, with no extra jewelry or accessories. No head, face, hands, person, reflection, extra burner, tray, box, perfume, captions, graphic panels or advertising logos. Logos only as genuine markings on the referenced watch.
 A premium but plausible photographic bridal still life, not a catalog cut-and-paste. Private review concept; Cartier watch is context and is not included in the burner offer.
 ```
+
+## 2026-09-06 — Alhambra display and natural watch placement
+
+Owner explicitly rejected the preceding Magnific draft `1ly0ioFr4r`: its upright dial/closed
+bracelet was still perceived as a standing watch, and its incense was not convincing. The owner
+requested a known luxury jewelry collection and display mannequin, selecting Van Cleef Alhambra.
+This supersedes the earlier claim that the previous resting pose adequately met the brief.
+
+### Sources and fidelity boundary
+
+Read the official Saudi product descriptions for:
+- [Necklace VCARA42800, ten motifs](https://www.vancleefarpels.com/sa/en/collections/jewelry/alhambra/vcara42800---vintage-alhambra-necklace-10-motifs.html)
+- [Bracelet VCARA41800, five motifs](https://www.vancleefarpels.com/sa/en/collections/jewelry/alhambra/vcara41800---vintage-alhambra-bracelet-5-motifs.html)
+- [Earrings VCARA44100](https://www.vancleefarpels.com/sa/en/collections/jewelry/alhambra/vcara44100---vintage-alhambra-earrings.html)
+All are matching white mother-of-pearl/yellow-gold Vintage Alhambra references. This verifies the
+catalog models, not inventory or physical authenticity of resale photos. Official asset retrieval
+was unavailable; browser access was denied because its admin policy could not be verified.
+No browser security bypass was attempted. The photographic inputs were instead already-discovered
+resale listing images, NOT mislabeled as official brand photography:
+- [66mint necklace photo](https://www.66mint.com/products/van-cleef-arpels-alhambra-10-motifs-necklace), imported as `fHxiJUWCDY`.
+- [Perspectiva earrings photo](https://lombard-perspectiva.com/jewelry/jewelry-1725190493/), imported as `Cqj3O79EEy`.
+Their local copies are `references/VCA-Alhambra-Necklace-66mint.jpg` and
+`references/VCA-Alhambra-Earrings-Perspectiva.webp` inside the existing refinement directory.
+The bracelet used the catalog's five-motif design description and corresponding motif references;
+a separate exact bracelet photograph was not supplied. Cartier official reference `O6ztTVOynm`
+and the original Magnific vanity `yinzXjQPW9` were reused.
+
+### Executed and visually checked
+
+All three renders used Magnific `imagen-nano-banana-2`, 2k, 75 credits each:
+1. [aFr67e8fSh](https://www.magnific.com/app/creation/aFr67e8fSh): added taupe velvet bust,
+necklace, two earrings and loose bracelet; watch successfully lies flat with its clasp open and
+both ends extended. Bakhoor and smoke visible. Bracelet incorrectly has six motifs.
+2. [lJiecvNgv9](https://www.magnific.com/app/creation/lJiecvNgv9): targeted bracelet-count and
+bakhoor-placement correction; bakhoor now appears on the charcoal, but six bracelet motifs remain.
+3. [xS4Vn0ljfW](https://www.magnific.com/app/creation/xS4Vn0ljfW): a second narrowly located
+single-motif removal request also failed; six motifs remain. Do not claim this correction passed.
+No further retry was submitted. Fresh balance: 19925 before this stage, 19700 after (225 credits).
+No top-up, payment, model-provider credential, other image service, or live commerce change.
+
+Saved PNGs are all 1856 x 2304 in `Calapres/Ai-Work/Bridal-Refinement-2026-09-06/`:
+- `06-Bridal-Vanity-Alhambra-Bust-Flat-Cartier-Magnific-v2.png`
+- `06-Bridal-Vanity-Alhambra-Bust-Flat-Cartier-Magnific-v3.png`
+- `06-Bridal-Vanity-Alhambra-Bust-Flat-Cartier-Magnific-v4.png`
+Latest SHA-256: `94108bb6a75c6be25037311238f9d9c06e2f778a44144c3e8af320757f61d62d`.
+Local save/read/visual inspection passed. Cloud-server synchronization is not confirmed.
+
+The output satisfies the flat watch, jewelry bust, two earrings, one burner and visible incense/
+smoke composition goals. Exact jewelry/Cartier reproduction is NOT accepted: the bracelet count
+is visibly wrong and microscopic dial/manufacturing fidelity is not proven. Owner visual acceptance
+is pending. Keep it a review draft and preserve originals; no Shopify/gallery, campaign, artwork
+publication, manufacturing, included-accessory or brand-affiliation claim is authorized.
+
+### Exact Magnific prompts
+
+Initial refinement:
+```text
+Refine the existing Calapres bridal vanity photograph using the four reference photographs. REFERENCE 1 = original beige Calapres burner on sunlit marble (scene and burner authority). REFERENCE 2 = real Cartier Panthere WGPN0059 watch, exact product design. REFERENCE 3 = real Van Cleef & Arpels Vintage Alhambra ten-motif mother-of-pearl/yellow-gold necklace (JEWELRY ONLY, ignore packaging/text). REFERENCE 4 = matching real Vintage Alhambra mother-of-pearl/yellow-gold earrings (JEWELRY ONLY, ignore glove).
+
+The owner rejected two things: a stiff watch propped upright on its bracelet, and incense that is too subtle or looks like an empty bowl. Solve these visibly. Deliver ONE credible, richly detailed bridal preparation photograph.
+
+COMPOSITION: retain the original warm morning sun, beige marble vanity, sheer curtains, draped ivory satin and white bouquet. Preserve EXACTLY ONE original Calapres beige burner at front-left: same body silhouette and proportions, beige textured material, stitched front edge, patterned side panel, raised ivory flowing Arabic front ornament and circular metal bowl. Do not invent another color/body or any accessory for the burner.
+
+INCENSE: the bowl visibly contains THREE OR FOUR recognizable small dark-brown resinous bakhoor/agarwood pieces, irregular woody pieces around 1–2 cm, resting on one realistic charcoal disc with a little gray ash and small subdued ember beneath. The pieces must clearly read as incense, not an empty black hole, metal scraps, rocks or huge wooden planks. Keep them inside the bowl below/just at the rim. Visible natural incense smoke rises directly from these pieces in a continuous connected wisp and curls upward above the burner. Smoke should be CLEARLY VISIBLE against the light curtain, mid-gray at origin becoming translucent soft gray-white as it rises; moderate density, elegant natural wisps, never a barely visible trace, never dense room fog or flame. The owner's eye must immediately see both the bakhoor and its smoke. Do not obscure the front ornament.
+
+JEWELRY DISPLAY: remove every invented pearl accessory, ring, round watch and hair comb from reference 1. In their place add a realistic small charcoal-taupe velvet necklace DISPLAY BUST at mid-right/back of the vanity, no mannequin head or human. It is a boutique neck-and-upper-chest jewelry holder on a stable flat base, clearly an inanimate velvet display, appropriately sized and grounded, set comfortably away from the smoking burner. Drape the actual reference 3 Vintage Alhambra necklace naturally around this holder, gravity pulling it into an elegant U: thin yellow-gold chain, ten total evenly spaced white mother-of-pearl four-lobed clover motifs, each with fine gold beaded borders. Correct identifiable Alhambra silhouette, NOT round pearls, generic flowers, hearts, oversized beads or random diamonds. Portions may follow around the back; do not duplicate into multiple necklaces. Place exactly TWO matching reference 4 Alhambra earrings on a small matching flat velvet earring pad in front of the bust. Beside that pad, lay ONE matching Vintage Alhambra five-motif mother-of-pearl/yellow-gold bracelet as a loose chain on the marble: exactly five delicate clover motifs, identical design/size family to the necklace, with fine chain and proper clasp. No jewelry boxes or invented logo boards. This is the owner-selected real collection, not a generic jewelry set.
+
+WATCH — PHYSICS IS CRITICAL: ONE small Cartier Panthere watch rests FACE-UP FLAT ON ITS CASE BACK on the foreground marble, well in front of the necklace bust and right of the burner. Bracelet clasp is FULLY OPEN; both bracelet ends EXTEND OUT FROM OPPOSITE ENDS of the case along the tabletop in a relaxed nearly straight line. Entire watch long axis lies diagonally across the HORIZONTAL tabletop from lower-left to upper-right. Case back TOUCHES marble, face plane is PARALLEL to the tabletop. Both bracelets TOUCH marble along their entire length. NO oval bracelet loop, no circular band, no standing watch, no propped-up vertical dial, no upright case, no arch, no watch display stand or cushion. It must look like a woman has just unclasped her watch and laid it down flat. Camera sees the face foreshortened from above just as it sees the horizontal table. Accept a less prominent dial to maintain real gravity. Use reference 2 exact gold rounded-square case, black Roman numerals, blue two hands, silver dial, blue crown at its 3-o'clock edge, gold linked bracelet; rotate watch/dial together, preserve real lettering. Bracelet can curve gently IN THE TABLE PLANE only, not upward. Natural small scale, case much smaller than burner bowl diameter.
+
+Light all objects consistently with original sunlight, realistic contact shadows, natural tiny imperfections. One coherent photograph, not separately pasted catalog assets. No person, face, hand, head, reflection, full mannequin figure, second burner, perfume, jewelry duplication, CALAPRES advertising logo, headlines or captions. Physical merchandise offer remains one burner; jewelry and watch are stylistic context only. Private review concept, not a manufacture/affiliation claim.
+```
+First correction:
+```text
+Make a minimal local correction to this exact existing photograph. Preserve EVERYTHING except two small areas:
+1. The loose Van Cleef Vintage Alhambra bracelet on the marble at right has SIX white clover motifs. Correct it to EXACTLY FIVE TOTAL white mother-of-pearl clover motifs in the SAME existing bracelet, since the real matching product VCARA41800 is a five-motif bracelet. Keep beaded yellow-gold borders, fine chain, same scale, same position, same relaxed near-oval flat footprint. Remove one extra clover and redistribute five naturally with fine chain between them and a single clasp. Carefully count: 1,2,3,4,5, no sixth. Do not add a second bracelet. Do not modify the displayed necklace or the pair of earrings.
+2. In the burner bowl, keep the visible charcoal disc but place TWO clearly visible small natural dark brown resinous oud/bakhoor chips ON TOP of its hot surface, not only around its sides or inside its center hole. A few smaller pieces can remain beside it. Continuous natural smoke must originate visibly from those two chips on the charcoal. Keep the smoke's existing elegant shape/density and the metal bowl/body unchanged. No flames.
+CRITICAL KEEP: the Cartier watch's fully OPEN, EXTENDED bracelet and FACE-UP FLAT pose on its caseback touching the horizontal marble, both ends resting low on marble. Do not prop up, curve into an oval hoop, move, enlarge or redraw that watch. Keep original reference photo precise Calapres burner form/color/stitched body/front ornament, necklace bust, earrings/pad, all remaining light/shadows, bouquet/satin/background, crop and proportions unchanged. One burner, one watch, one necklace, TWO earrings, one FIVE-motif bracelet. No words or overlays. Return only the corrected photograph.
+```
+Second correction:
+```text
+Edit ONLY the loose clover bracelet at the RIGHT of the photograph, directly above the wristwatch. There are currently six white clovers in that bracelet. DELETE the single BOTTOM-CENTER white clover (the one nearest the wristwatch, centered approximately at 82% of image width and 62.5% of image height). Replace that ONE white clover and its gold border with a short segment of fine gold chain joining the neighboring chain ends along the same curve. The other FIVE white clovers must remain exactly where they are. Count the result: five clovers, not six. This is a specific object removal, not a recreation of the bracelet. Do not move or redraw any other object, watch, necklace, earrings, smoke or burner. Maintain full original framing. Output the full photograph with just that single bottom bracelet charm removed and replaced by chain.
+```

@@ -1,5 +1,21 @@
 # Project State
 
+## Resume — Alhambra bust, flat watch and visible bakhoor — 2026-09-06
+
+Owner rejected the preceding Magnific draft's watch pose and insufficiently convincing incense,
+then selected Van Cleef & Arpels Alhambra jewelry with a display bust. Current review image
+`xS4Vn0ljfW` now has a face-up Cartier watch lying flat with open extended bracelet, a velvet
+necklace bust, two earrings, and visible bakhoor on charcoal with bowl-originating smoke.
+IMPORTANT unresolved fidelity defect: loose bracelet still has SIX motifs versus the real
+five-motif model. Two targeted correction attempts failed; do not call it an exact genuine-product
+reproduction or publish it. Three Magnific renders cost 225 credits in this stage; balance 19700.
+Saved locally: `Calapres/Ai-Work/Bridal-Refinement-2026-09-06/06-Bridal-Vanity-Alhambra-Bust-Flat-Cartier-Magnific-v4.png`.
+iCloud server upload and owner acceptance remain unverified. All earlier files preserved.
+Next: review the composition, then correct the bracelet with a more reliable bounded Magnific edit
+if requested; do not repeat ineffective full-image prompts or switch away from Magnific.
+See [the detailed bridal record](docs/calapres-bridal-concepts-2026-09-05.md).
+
+
 ## Resume — Magnific-only bridal refinement — 2026-09-06
 
 Owner requires Magnific exclusively for Calapres image generation/editing and real brand-product
