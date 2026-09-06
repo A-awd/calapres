@@ -196,3 +196,61 @@ Second correction:
 ```text
 Edit ONLY the loose clover bracelet at the RIGHT of the photograph, directly above the wristwatch. There are currently six white clovers in that bracelet. DELETE the single BOTTOM-CENTER white clover (the one nearest the wristwatch, centered approximately at 82% of image width and 62.5% of image height). Replace that ONE white clover and its gold border with a short segment of fine gold chain joining the neighboring chain ends along the same curve. The other FIVE white clovers must remain exactly where they are. Count the result: five clovers, not six. This is a specific object removal, not a recreation of the bracelet. Do not move or redraw any other object, watch, necklace, earrings, smoke or burner. Maintain full original framing. Output the full photograph with just that single bottom bracelet charm removed and replaced by chain.
 ```
+
+## 2026-09-06 — Bridal holding-pose concept without mirror
+
+[Owner request] Supplied a side-profile bridal photograph as pose/mood reference. Asked for a new
+model face, different dress and no mirror, while retaining the bride-holding-burner idea. This
+newest bounded request explicitly permits a visible fictional adult face and a held smoking burner
+for this concept (decision 0025), without blanket changes to unrelated creative restrictions.
+
+[Input handling] The attached photo was visible in the conversation. Its local Downloads file
+existed on the first read but became unavailable before copying/upload; the copy and Magnific
+upload failed. A focused lookup in Downloads/Calapres found no matching file. No source image was
+altered or reconstructed; no attachment upload succeeded. The pose was therefore described from
+visible conversation content, and the owner was told this. The reference's obscured face was NOT
+unmasked. The sole supplied Magnific image input was original white Calapres product
+`XmQETEXBfo`, freshly retrieved and visually inspected. This historic reference contains a short
+box and tray; both were explicitly excluded from the generated offer.
+
+[Executed] [Bridal holding Calapres — u5sZ3OdQLD](https://www.magnific.com/app/creation/u5sZ3OdQLD)
+completed through Magnific, `imagen-nano-banana-2` (Google Nano Banana Pro), 2k. Cost 75 existing
+credits; balance 19700 before and 19625 after. No second generation, paid top-up, account binding,
+ChatGPT image generation, other renderer, advertising/customer send or store change occurred.
+
+[Visual check] One fictional adult model in side/three-quarter profile, a new long-sleeve ivory
+satin dress and plain veil; one tapered Calapres burner with reference texture, stitching and front
+ornament; one hand under its base and one steadying its side; visible wood pieces and continuous
+bowl-originating smoke. No mirror/reflection, pink mask, full figure, cylindrical handle, tray,
+short box, advertising text or extra jewelry appears. The model does not replicate a recoverable
+identity from the masked source. The result remains illustrative, not a physical-use safety claim
+or proof of exact manufacturing/scale. Owner visual acceptance is pending.
+
+[Local save verified] 1856 x 2304 PNG:
+`Calapres/Ai-Work/Bridal-Holding-Burner-2026-09-06/Bridal-Holding-Calapres-No-Mirror-Magnific-v1.png`
+SHA-256: `a05c32f4c38f487945d0d9fa11e7396a7fd7f1a223828a9538d8303c90050221`.
+Product reference is saved as `references/Calapres-White-Original.png` in the same directory.
+No owner-pose-reference copy was saved because that source became unavailable. iCloud server upload
+metadata was unavailable; distinguish local completion from confirmed remote synchronization.
+
+Next: owner review, then only named Magnific corrections. Keep all prior concepts, including the
+unresolved Alhambra six-motif bracelet draft; this new concept does not repair or approve it.
+No publication/manufacturing approval is implied.
+
+### Exact Magnific prompt
+
+```text
+Create ONE realistic premium bridal editorial photograph for Calapres, following this owner-supplied pose concept: a bride in three-quarter side profile occupies the RIGHT half of frame, holds ONE smoking incense burner upright in front of her at upper-waist/chest height, hands clearly supporting it; a tall elegant column of incense smoke curls upward in the negative space to her LEFT. Dramatic gentle side lighting, dark plain warm-charcoal background. NO MIRROR anywhere.
+
+The attached image is the PRODUCT REFERENCE only: copy ONLY the tall tapered incense burner from its RIGHT side, NOT the short box and NOT its tray. The real Calapres product has a tall tapered trapezoidal body, wider at the base, warm white/ivory fabric-textured material, stitched front border, patterned side panel, original subtle pale raised Arabic front ornament, low integrated base and a small recessed circular metal bowl on top. Preserve these real body proportions, color, surface construction and front ornament. EXACTLY ONE burner. Never substitute the cylindrical handled burner from the owner's pose photograph. This Calapres burner has NO HANDLE, no pedestal, no separate plate, no carrying tray, no extra gift box. It remains the hero product, with its front and one side visible.
+
+MODEL: an entirely fictional adult bridal fashion model around age 28, natural warm complexion, believable skin texture, softly defined eyebrows and distinct natural facial features, dark brown hair in a simple low bun. Her face must be visible in side/three-quarter profile and must NOT reproduce, reconstruct, identify or unmask anyone from another photograph. Make a new person. No pink brush marks, censorship bands, blur patches, face duplication, celebrity likeness or mirror reflections. Calm warm expression, eyes directed gently toward the burner rather than into camera.
+
+DRESS: a distinctly new luxurious IVORY MIKADO/SATIN wedding dress, matte-satin structured bodice, elegant high boat neckline, long fitted opaque sleeves with small fabric-covered cuff buttons, soft sculptural skirt folds. Quiet couture fabric and tailoring, not dense silver sequins/lace/beaded sheer sleeves. Simple sheer unembroidered veil flows behind her shoulders, safely behind and away from the burner, never draped across the smoke/bowl. No tiara, added watch, jewelry set, necklace, ornate earring or invented branded accessory.
+
+HOLDING POSE / ANATOMY: her left hand palm-up directly supports the burner BASE, fingers naturally wrapping lightly underneath its integrated base. Her right hand steadies the LOWER side of the body with a comfortable natural grip. Five fingers per hand, correct joints, no duplicated digits, realistic modest product weight, no impossible support, no floating base. Hold upright about 25 cm in front of her torso, separated from dress/veil, hands far below and away from the metal rim. Front Arabic ornament remains unobscured. Burner is tabletop-product size, not gigantic. Do NOT add a handle, saucer or tray to solve the grip.
+
+INCENSE: place two small recognizable resinous dark agarwood/bakhoor chips on charcoal INSIDE the top recessed metal bowl. A visible naturally translucent pale gray/ivory smoke ribbon must start continuously at the chips in that bowl and rise in the open dark left area, with a few soft curls. Moderate elegant smoke, no flame, sparks, fog bank, smoke from base or seams. Smoke flows away from the model's face and veil. This is a posed creative concept, not a heat-safety/manufacturing certification.
+
+CAMERA AND SCENE: waist-up/head-to-upper-hips framing, NOT a full figure; enough skirt at lower edge to show dress material, both supporting hands fully visible. Eye-level/very slightly low side camera, flattering 50–85mm portrait feel; model and burner sharp, background soft. Single warm-neutral softbox from front-left skims the dress and burner and illuminates the smoke, gentle subtle rim light, rich shadows but readable product. Wedding-morning/evening preparation emotion, graceful natural posture. Nothing else in the room. No vanity, necklace mannequin, furniture reflection, windows reflecting a second bride, second burner, branding overlay, wordmark, captions, graphic panels, watermark or frame. Real photograph aesthetics with cohesive lighting and fine texture. Private concept for owner review only.
+```

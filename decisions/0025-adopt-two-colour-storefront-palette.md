@@ -245,3 +245,17 @@ motifs, while the current generated six-motif bracelet is a known unresolved def
 use of a named luxury reference with exact or authenticated physical-product reproduction.
 Jewelry and bust remain styling props outside the one-burner offer. Magnific-only and publication
 gates continue unchanged.
+
+### Narrow owner exception — visible fictional bridal model holding a smoking burner
+
+For the owner-supplied side-profile bridal pose request on 2026-09-06, the owner explicitly asked
+to change the bride's face to a model face, change the dress, retain the holding pose and omit the
+mirror because reflections create inconsistent faces. This authorizes ONE private review concept
+with an entirely fictional adult model's visible face, a different dress, and a held smoking burner.
+It narrowly supersedes the older no-visible-face and unlit-held-burner rules for this concept; do
+not reimpose those superseded restrictions or ask for their approval again in the same scope.
+Do not reconstruct or unmask the obscured face in the reference. No full figure, mirror, duplicate
+reflection, advertising overlay, handle, carrying tray or extra burner is introduced. Use the
+actual tall Calapres burner from the product reference, supported under its base and on its lower
+side, with visible incense/smoke. This is creative permission, not evidence of heat-safety,
+manufacturability, product dimensions, brand affiliation or publication approval. Magnific only.

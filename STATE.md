@@ -1,5 +1,19 @@
 # Project State
 
+## Resume — model holding burner, no mirror — 2026-09-06
+
+Owner supplied a bridal pose reference and requested a DIFFERENT fictional model face and dress,
+with the bride holding a smoking Calapres burner and no mirror. This is a narrow owner-approved
+exception to older no-visible-face and unlit-handled-scene constraints for this one concept.
+One Magnific image `u5sZ3OdQLD` completed with a fictional adult model, new long-sleeve ivory satin
+dress, one original-reference Calapres burner supported by two hands, visible oud/smoke and no mirror.
+Saved locally under `Calapres/Ai-Work/Bridal-Holding-Burner-2026-09-06/Bridal-Holding-Calapres-No-Mirror-Magnific-v1.png`.
+75 existing credits; fresh balance 19625. No publication or live commerce change. Owner acceptance
+and iCloud server upload remain pending. Previous Alhambra bracelet-count defect remains unresolved.
+Next: owner visual review of this single holding-pose concept; Magnific only for requested edits.
+See [the bridal record](docs/calapres-bridal-concepts-2026-09-05.md) and decision 0025.
+
+
 ## Resume — Alhambra bust, flat watch and visible bakhoor — 2026-09-06
 
 Owner rejected the preceding Magnific draft's watch pose and insufficiently convincing incense,
