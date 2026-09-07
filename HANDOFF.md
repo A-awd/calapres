@@ -1,5 +1,58 @@
 # Handoff
 
+## Owner payment/upload canary audit and WhatsApp gap — 2026-09-08
+
+Fresh Shopify readback of the owner's completed canary confirms PAID, order test=false and a
+Paymob SALE transaction SUCCESS, test=false, SAR 0.04. This proves the successful live payment
+reported by Shopify, not payout/bank settlement. Fulfillment remains unfulfilled.
+
+Paid design-upload variant was purchased at original unit price SAR 400. Its line-item
+attributes include design URL on Shopify uploads CDN, filename and design notes. Thus attachment
+URL receipt on a completed order is verified. Browser opening the image returned
+ERR_BLOCKED_BY_CLIENT; actual image bytes/visual content and manufacturing suitability remain
+unverified. Do not persist the owner identity, number, order identifiers or uploaded image URL
+in the repository. Shopify remains the source for these private order details.
+
+Order-level phone is null. Shipping-address phone is a 9-digit Saudi mobile national number,
+without +966. A future outbound workflow must read the shipping phone fallback and normalize
+it using country SA; a populated checkout phone field does not guarantee E.164 storage.
+
+Live Chatwoot account 179973 Templates UI lists five synced WhatsApp templates, last sync
+attempt September 7. order_confirmation preview reports Approved, Utility, Arabic (ar),
+WhatsApp. It contains an order-received confirmation and promises an update when prepared for
+shipping. Preview displayed example name/number; actual parameter mapping must be inspected
+before implementation. This supersedes assumptions that no confirmation template exists.
+Also visible: delivery_update, order_shipped, customer_support_followup, hello_world.
+
+Read-only n8n project search found 11 Calapres-named workflows, all inactive; the full returned
+project list had 58 workflows with no identifiable active Calapres order-paid sender.
+Do not revive retired catalog/supplier/image workflows. Owner Telegram Voice Bridge remains
+the sole Telegram webhook owner. No customer message, template sync, schedule, credential
+binding, workflow publication or shipment was executed during this audit.
+
+## Proposed bounded order-confirmation implementation
+
+- Subscribe to the existing Calapres Shopify orders/paid event, verify its authenticity,
+  refetch order status and constrain to the correct shop. Exclude test/cancelled/unpaid orders.
+- Extract selected variant and line-item engraving attributes. Require usable design attachment
+  for design orders before engraving; missing/unreadable attachment goes to human review.
+- Normalize phone from order/shipping data using an explicit country, preserve source number,
+  reject ambiguous/invalid numbers. Do not infer marketing consent from an order or email checkbox.
+- Reuse approved Arabic Utility order_confirmation through existing WhatsApp Cloud API/Chatwoot.
+  Inspect template parameter schema and channel permission before enabling any sender.
+- Deduplicate by shop+order+notification kind and delivery event. Record provider/message ID
+  and delivery state; do not report sent as delivered or blindly retry uncertain submissions.
+- Keep confirmation separate from manufacturing and shipping. A label/pickup requires the
+  outstanding stock, dispatch timing, pickup and package measures; OTO prepaid only.
+- First external send and continuous activation require fresh bounded owner authorization;
+  current request is the audit and how-to proposal, not explicit authorization to send messages.
+
+References:
+https://developers.chatwoot.com/api-reference/messages/create-new-message
+https://www.chatwoot.com/features/whatsapp-for-business
+https://shopify.dev/docs/apps/build/webhooks/verify-deliveries
+
+
 ## Current owner amendment — CR99 plus CR98 — 2026-09-08
 
 Owner explicitly restored the two-code approach: keep CR99's current discount and add short
