@@ -1,5 +1,31 @@
 # Handoff
 
+## Resume — Safari icon report remains unresolved — 2026-09-08
+
+The owner reports the old browser icon still appears in desktop/mobile Safari and disputes the
+earlier completion claim. Do NOT dismiss this report as cache or claim the user's Safari is fixed.
+
+Fresh verification against GitHub main `ddafd3cce04d4f838e84a2bd714bca57a62c884c` and Shopify
+MAIN theme `165804638464` found the selected favicon still is
+`shopify://shop_images/calapres-checkout-wax-seal.png`. Both homepage and gray-product DOMs
+emit this file for 16px, 32px, shortcut and 180px Apple touch icons. The actual 180px image was
+opened and visually inspected: it is the brown CR wax seal. Both live layouts agree with this
+configuration. The older `calapres-favicon.png` asset remains a fallback only; it was not emitted
+by those inspected pages. No duplicate icon or manifest link was observed in those page DOMs.
+
+These observations establish current website configuration and the delivered seal image only.
+They do not reproduce the owner's Safari tab/favorites/Home Screen or identify which surface is
+showing the reported old icon. The supplied `IMG_1043.jpg` was unavailable at its attachment
+path, so the screenshot could not be inspected. Separate root-icon/www attempts through the web
+tool returned access errors; those results do not establish HTTP status or content at those paths.
+
+No theme, asset, Shopify setting or browser cache was changed during this investigation.
+Do not make another speculative icon change or clear the owner's browser data. Next: obtain
+the missing screenshot with its address bar/icon location visible, identify the exact URL and
+Safari surface, then correct the evidenced cause. The September 2 “live icon” entry remains
+historical server-side evidence, not proof of successful display on the owner's devices.
+
+
 ## Resume — paid engraving design upload live — 2026-09-08
 
 **Executed and verified:** the owner explicitly authorized direct live implementation, no preview
