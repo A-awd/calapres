@@ -75,3 +75,16 @@ The API client returned no owned Functions; this does not prove all other instal
 Next step: owner decision on a new paid app, or another narrowly agreed native shipping arrangement.
 Current completed functionality remains CR99 plus QXMRKSHIP as two codes.
 
+
+## Final owner amendment — CR99 is 99.99% only — 2026-09-08
+
+The owner dropped the combined free-shipping/app request and authorized 99.99% instead.
+Executed and verified: CR99 (1696022790400) percentage 0.9999, ACTIVE, one use, zero uses,
+expiry 2026-09-09T21:00:00Z, all discount combinations disabled. Deactivated obsolete shipping
+code QXMRKSHIP (1698864922880); API readback EXPIRED. No app or subscription was installed.
+Fresh checkout via /discount/CR99?redirect=%2Fcheckout accepted CR99 as the only code:
+white burner SAR 390, discount SAR 389.96, remaining merchandise SAR 0.04, shipping SAR 25,
+total and Pay now button SAR 25.04. No payment submitted. Earlier two-code, free-shipping and
+pending paid-app proposals are superseded by this amendment. Owner completes payment next;
+real capture/settlement remains unverified.
+
