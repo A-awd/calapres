@@ -1,5 +1,29 @@
 # Project State
 
+## Resume — paid engraving design upload live — 2026-09-08
+
+**Executed and verified:** the owner explicitly authorized direct live implementation, no preview
+theme/test order, and SAR 10 extra for an uploaded engraving design. All three burners now retain
+their original SAR 390 text variant and have a new SAR 400 design-upload variant. The live MAIN
+theme `165804638464` has the Arabic selector, required paid-choice JPG/PNG upload, local preview,
+optional notes, native multipart submission, and cart attachment/price presentation.
+Read [decision 0039](decisions/0039-add-paid-native-engraving-design-upload.md) for IDs, exact scope, implementation and verification limits.
+
+The four edited live files were read back exactly; primary/sticky prices and file-required state
+were inspected on the storefront without submitting a file or changing the cart. No new theme,
+test order or checkout was created. Completed-order file receipt remains unverified. Existing
+GitHub-only family engraving copy remains preserved but unpublished; do not wholesale deploy it
+as part of this feature. Original variant IDs/SKUs and base prices are unchanged.
+Native paid variants mirror existing untracked stock/zero weight; these are NOT verified physical
+stock/packaged measurements and do not implement shared tracked inventory.
+
+Next safe action: review actual incoming customization orders for the paid variant and usable
+attachment before engraving. Any later upload/order canary needs bounded scope; do not invent a
+passed end-to-end result. Keep payment/dispatch readiness, Captain-only customer response,
+draft email and Magnific-only/reference-first creative gates as already documented. This live
+authorization supersedes older blanket “no storefront changes” wording only for this feature.
+
+
 ## Resume — approved reference-example workflow — 2026-09-06
 
 The owner adopted published image references and a bounded example test before future generation,

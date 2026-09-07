@@ -12,6 +12,15 @@
 {%- endcomment -%}
 {%- liquid
   assign mp_variant = product.selected_or_first_available_variant
+  assign mp_initial_variant = mp_variant
+  assign mp_design_variant = nil
+  for candidate in product.variants
+    if candidate.title == 'نص الحفر فقط'
+      assign mp_variant = candidate
+    elsif candidate.title == 'تصميم مرفق (+10 ر.س)'
+      assign mp_design_variant = candidate
+    endif
+  endfor
   assign mp_parts = product.title | split: '—'
   assign mp_name = mp_parts | first | strip
   assign mp_price = mp_variant.price
@@ -25,7 +34,7 @@
 <main class="wrap">
   <div class="pd">
     <div class="pd-media">
-      {%- if mp_save > 0 %}<span class="tag">وفّر {% render 'price-sar', cents: mp_save %}</span>{% endif -%}
+      <span class="tag" data-product-saving{% unless mp_save > 0 %} hidden{% endunless %}>وفّر {% render 'price-sar', cents: mp_save %}</span>
       {%- if mp_image -%}
       <img id="pdImg" src="{{ mp_image | image_url: width: 1200, height: 1200, crop: 'bottom' }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
       {%- else -%}
@@ -35,7 +44,7 @@
     <div class="pd-info">
       <p class="eyebrow">{{ mp_name }}</p>
       <h1 id="pdTitle">{{ product.title }}</h1>
-      <div class="price"><b>{% render 'price-sar', cents: mp_price %}</b>{% if mp_save > 0 %}<s>{% render 'price-sar', cents: mp_compare %}</s>{% endif %}</div>
+      <div class="price"><b data-product-price>{% render 'price-sar', cents: mp_price %}</b><s data-product-compare{% unless mp_save > 0 %} hidden{% endunless %}>{% render 'price-sar', cents: mp_compare %}</s></div>
       {%- if section.settings.line1 != blank -%}
       <p class="pd-line">{{ section.settings.line1 }}</p>
       {%- endif -%}
@@ -44,15 +53,44 @@
       {%- endif -%}
 
 
-      {% form 'product', product, id: 'pdForm', data-product-form: 'true' %}
+      {% form 'product', product, id: 'pdForm', data-product-form: 'true', enctype: 'multipart/form-data' %}
+        {%- if mp_design_variant -%}
+        <div class="pd-eng pd-customization">
+          <label for="designService">طريقة التخصيص</label>
+          <select id="designService" name="id" data-design-select data-initial-variant="{{ mp_initial_variant.id }}">
+            <option value="{{ mp_variant.id }}" data-price="{{ mp_variant.price }}" data-compare="{{ mp_variant.compare_at_price | default: 0 }}" data-available="{{ mp_variant.available }}" selected>نص الحفر فقط — {% render 'price-sar', cents: mp_variant.price %}</option>
+            <option value="{{ mp_design_variant.id }}" data-price="{{ mp_design_variant.price }}" data-compare="{{ mp_design_variant.compare_at_price | default: 0 }}" data-available="{{ mp_design_variant.available }}" data-paid="true" disabled>تصميم مرفق — {% render 'price-sar', cents: mp_design_variant.price %} (إضافة 10 ر.س)</option>
+          </select>
+          <p class="pd-design-help">رفع صورة أو شعار بتصميمك: إضافة 10 ر.س لكل مبخرة. كتابة نص الحفر فقط دون رسوم إضافية.</p>
+        </div>
+        {%- else -%}
         <input type="hidden" name="id" value="{{ mp_variant.id }}">
+        {%- endif -%}
         <div class="pd-eng">
-          <label for="engInput">الاسم أو اسم العائلة أو الشعار للحفر (اختياري)</label>
+          <label for="engInput">نص الحفر (اختياري)</label>
           <input type="text" id="engInput" name="properties[نص الحفر]" maxlength="40" placeholder="مثال: آل العواد" aria-describedby="engHint">
           <small id="engHint">لبيتكم أو هدية لأهلكم: آل العواد، مجلس آل العواد، أو سارة ومحمد.</small>
         </div>
-        <button class="btn-dark" id="pdAdd" type="submit"{% unless product.available %} disabled{% endunless %}>
-          {%- if product.available -%}
+        {%- if mp_design_variant -%}
+        <fieldset class="pd-design" data-design-fields hidden disabled>
+          <legend>التصميم المرفق</legend>
+          <label for="designFile">صورة التصميم أو الشعار</label>
+          <input type="file" id="designFile" name="properties[تصميم الحفر]" accept="image/jpeg,image/png" aria-describedby="designFileHelp">
+          <p id="designFileHelp" class="pd-design-help">صورة واضحة بصيغة JPG أو PNG، حتى 5 ميجابايت. نراجع ملاءمة التصميم للحفر قبل التنفيذ.</p>
+          <div class="pd-design-preview" data-design-preview hidden>
+            <img data-design-image alt="معاينة التصميم المرفق" width="180" height="180">
+            <span data-design-filename data-preserve-digits></span>
+            <button type="button" data-design-remove>إزالة الصورة</button>
+          </div>
+          <input type="hidden" name="properties[اسم ملف التصميم]" data-design-file-name>
+          <label for="designNotes">ملاحظات التصميم (اختياري)</label>
+          <textarea id="designNotes" name="properties[ملاحظات التصميم]" rows="3" maxlength="300" placeholder="مثال: الشعار في المنتصف، والاسم أسفله"></textarea>
+        </fieldset>
+        <noscript><p>لرفع تصميم مرفق، فعّل JavaScript في المتصفح. يمكنك إضافة المبخرة مع نص الحفر الآن.</p></noscript>
+        {%- endif -%}
+        <p class="pd-design-status" data-product-status role="status" aria-live="polite"></p>
+        <button class="btn-dark" id="pdAdd" type="submit"{% unless mp_variant.available %} disabled{% endunless %}>
+          {%- if mp_variant.available -%}
           أضِف إلى السلّة — {% render 'price-sar', cents: mp_price %}
           {%- else -%}
           غير متوفر حاليًا
@@ -63,10 +101,10 @@
       <div class="pd-sticky-atc" data-sticky-atc aria-hidden="true">
         <span class="pd-sticky-atc__summary">
           <span>{{ product.title }}</span>
-          <b>{% render 'price-sar', cents: mp_price %}</b>
+          <b data-product-price>{% render 'price-sar', cents: mp_price %}</b>
         </span>
-        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless product.available %} disabled{% endunless %}>
-          {%- if product.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
+        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless mp_variant.available %} disabled{% endunless %}>
+          {%- if mp_variant.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
         </button>
       </div>
 
@@ -85,6 +123,19 @@
 
 </main>
 
+
+<style>
+.pd-customization select,.pd-design input[type=file],.pd-design textarea{display:block;width:100%;max-width:100%;box-sizing:border-box;padding:12px;border:1px solid #cfc7ba;border-radius:4px;background:#fff;color:inherit;font:inherit}
+.pd-design{min-width:0;margin:20px 0;padding:18px;border:1px solid #cfc7ba}
+.pd-design legend{padding:0 8px}.pd-design label{display:block;margin:12px 0 8px}
+.pd-design-help{font-size:13px;line-height:1.8;margin:8px 0;color:#655e54}
+.pd-design-preview{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:16px 0;overflow-wrap:anywhere}
+.pd-design-preview img{width:140px;height:140px;object-fit:contain;background:#f7f4ee;border:1px solid #ddd}
+.pd-design-preview button{padding:8px 12px;border:1px solid #cfc7ba;background:transparent;font:inherit;cursor:pointer}
+.pd-design-status{font-size:14px;line-height:1.7}.pd-design-status:empty{display:none}
+[data-design-fields][hidden],[data-design-preview][hidden],[data-product-saving][hidden],[data-product-compare][hidden]{display:none!important}
+.pd-customization select:focus-visible,.pd-design input:focus-visible,.pd-design textarea:focus-visible,.pd-design button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+</style>
 
 {% schema %}
 {

@@ -200,6 +200,11 @@ canary. No provider, funding or architecture decision changed during the documen
   — use published image-plus-prompt references, a bounded Magnific test and recorded successful
   examples before creative expansion; retain exact product fidelity and all publication/funding gates.
 
+- [0039 — Add paid native engraving design uploads](decisions/0039-add-paid-native-engraving-design-upload.md)
+  — owner-approved direct live product upload; SAR 10 per burner via Shopify variants, multipart
+  file properties and Arabic cart presentation; no preview theme or test order. End-to-end order
+  attachment receipt remains unverified, and unrelated live-action gates remain.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

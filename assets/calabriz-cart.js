@@ -59,7 +59,7 @@ function renderBadge(){
 /* "مبخرة كالابريز الفاخرة — الأبيض" -> name + color */
 function splitTitle(item){
   var name=item.product_title||"",color="";
-  if(item.variant_title&&item.variant_title!=="Default Title"){
+  if(item.variant_title&&item.variant_title!=="Default Title"&&item.variant_title!=="نص الحفر فقط"&&item.variant_title!=="تصميم مرفق (+10 ر.س)"){
     color=item.variant_title;
   }else{
     var parts=name.split("—");
@@ -85,7 +85,7 @@ function renderCart(){
       (it.image?'<img src="'+esc(it.image)+'" alt="">':'')+
       '<div class="di-info"><h4>'+esc(t.name)+'</h4>'+
       (t.color?'<div class="di-color">اللون: '+esc(t.color)+'</div>':'')+
-      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+
+      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+designDetails(it)+
       '<div class="d-row"><span class="qty">'+
       '<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+digits(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>'+
       '</span><span class="di-price">'+money(it.final_line_price)+'</span></div>'+
@@ -151,23 +151,118 @@ document.addEventListener("click",function(e){
   if(t.closest("#checkoutBtn"))window.location.href="/checkout";
 });
 
-/* product form -> AJAX add with line item property "نص الحفر" */
+/* Native text engraving and paid file personalization share the product form. */
 document.addEventListener("submit",function(e){
   var form=e.target.closest("[data-product-form]");
   if(!form)return;
   e.preventDefault();
-  if(busy)return;
-  var id=form.querySelector('[name="id"]');
-  if(!id)return;
-  var props={};
-  form.querySelectorAll('[name^="properties["]').forEach(function(inp){
-    var m=inp.name.match(/^properties\[(.+)\]$/);
-    if(m&&inp.value.trim())props[m[1]]=inp.value.trim();
-  });
-  addToCart(id.value,props);
+  submitProduct(form);
 });
 
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCart()});
 
+/* Paid engraving files travel with the selected variant as multipart FormData. */
+function safeDesignUrl(value){
+  if(typeof value!=="string"||!value.trim())return "";
+  try{
+    var url=new URL(String(value||""),window.location.origin);
+    if(url.protocol==="https:"&&(url.hostname==="cdn.shopify.com"||url.origin===window.location.origin))return url.href;
+  }catch(error){}
+  return "";
+}
+function designDetails(item){
+  var p=item.properties||{},url=safeDesignUrl(p["تصميم الحفر"]),html="";
+  if(item.variant_title==="نص الحفر فقط"||item.variant_title==="تصميم مرفق (+10 ر.س)"){
+    html+='<div class="di-eng">التخصيص: '+esc(item.variant_title)+'</div>';
+  }
+  if(url)html+='<div class="di-eng"><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">عرض التصميم المرفق ↗</a></div>';
+  if(url&&p["اسم ملف التصميم"])html+='<div class="di-eng" data-preserve-digits>'+esc(p["اسم ملف التصميم"])+'</div>';
+  if(p["ملاحظات التصميم"])html+='<div class="di-eng" data-preserve-digits>ملاحظات التصميم: '+esc(p["ملاحظات التصميم"])+'</div>';
+  return html;
+}
+function initDesignForm(){
+  var form=document.querySelector("[data-product-form]");if(!form)return;
+  var select=form.querySelector("[data-design-select]");if(!select)return;
+  var fields=form.querySelector("[data-design-fields]"),file=form.querySelector("#designFile");
+  var preview=form.querySelector("[data-design-preview]"),image=form.querySelector("[data-design-image]");
+  var filename=form.querySelector("[data-design-filename]"),fileNameValue=form.querySelector("[data-design-file-name]");
+  var status=form.querySelector("[data-product-status]"),objectUrl="";
+  function clearFile(){
+    if(objectUrl)URL.revokeObjectURL(objectUrl);
+    objectUrl="";file.value="";file.setCustomValidity("");
+    image.removeAttribute("src");preview.hidden=true;filename.textContent="";fileNameValue.value="";
+  }
+  function updateSelection(){
+    var option=select.options[select.selectedIndex],paid=option.dataset.paid==="true";
+    fields.hidden=!paid;fields.disabled=!paid;file.required=paid;
+    if(!paid){clearFile();form.querySelector("#designNotes").value=""}
+    status.textContent="";
+    var price=Number(option.dataset.price),compare=Number(option.dataset.compare)||0;
+    document.querySelectorAll("[data-product-price]").forEach(function(el){el.textContent=money(price)});
+    var compareEl=document.querySelector("[data-product-compare]"),saving=document.querySelector("[data-product-saving]");
+    if(compareEl){compareEl.hidden=compare<=price;compareEl.textContent=money(compare)}
+    if(saving){saving.hidden=compare<=price;saving.textContent="وفّر "+money(Math.max(0,compare-price))}
+    var available=option.dataset.available==="true",button=form.querySelector('[type="submit"]');
+    button.disabled=!available;button.textContent=available?"أضِف إلى السلّة — "+money(price):"غير متوفر حاليًا";
+    document.querySelectorAll("[data-sticky-atc-submit]").forEach(function(el){el.disabled=!available;el.textContent=available?"أضِف إلى السلّة":"غير متوفر"});
+  }
+  Array.prototype.forEach.call(select.options,function(option){option.disabled=option.dataset.available!=="true"});
+  if(Array.prototype.some.call(select.options,function(option){return option.value===select.dataset.initialVariant&&!option.disabled})){
+    select.value=select.dataset.initialVariant;
+  }
+  select.addEventListener("change",updateSelection);
+  file.addEventListener("change",function(){
+    if(objectUrl)URL.revokeObjectURL(objectUrl);
+    objectUrl="";preview.hidden=true;image.removeAttribute("src");filename.textContent="";fileNameValue.value="";
+    file.setCustomValidity("");status.textContent="";
+    var chosen=file.files&&file.files[0];if(!chosen)return;
+    if(chosen.size===0||chosen.size>5*1024*1024||["image/jpeg","image/png"].indexOf(chosen.type)===-1){
+      file.value="";file.setCustomValidity("اختر صورة JPG أو PNG لا تتجاوز 5 ميجابايت.");
+      status.textContent=file.validationMessage;file.reportValidity();return;
+    }
+    objectUrl=URL.createObjectURL(chosen);
+    filename.textContent=chosen.name;fileNameValue.value=chosen.name;preview.hidden=false;
+    image.onerror=function(){file.setCustomValidity("تعذر قراءة الصورة. اختر صورة JPG أو PNG سليمة.");status.textContent=file.validationMessage};
+    image.onload=function(){file.setCustomValidity("")};
+    image.src=objectUrl;
+  });
+  form.querySelector("[data-design-remove]").addEventListener("click",function(){clearFile();status.textContent="أُزيلت الصورة. أرفق صورة أخرى أو اختر نص الحفر فقط.";file.focus()});
+  updateSelection();
+}
+function submitProduct(form){
+  if(busy||!form.reportValidity())return;
+  var payload=new FormData(form),status=form.querySelector("[data-product-status]");
+  Array.from(payload.entries()).forEach(function(entry){
+    if(entry[0].indexOf("properties[")!==0)return;
+    if((typeof entry[1]==="string"&&!entry[1].trim())||(entry[1] instanceof File&&!entry[1].size))payload.delete(entry[0]);
+  });
+  var hasDesign=payload.has("properties[تصميم الحفر]");
+  var controls=Array.from(form.querySelectorAll("input,select,textarea,button"));
+  var disabled=controls.map(function(el){return el.disabled});
+  var sticky=Array.from(document.querySelectorAll("[data-sticky-atc-submit]")),stickyDisabled=sticky.map(function(el){return el.disabled});
+  busy=true;controls.forEach(function(el){el.disabled=true});sticky.forEach(function(el){el.disabled=true});
+  form.setAttribute("aria-busy","true");
+  if(status)status.textContent=hasDesign?"جارٍ رفع التصميم وإضافة المبخرة…":"جارٍ إضافة المبخرة…";
+  var accepted=false;
+  fetch("/cart/add.js",{method:"POST",headers:{"Accept":"application/json"},body:payload})
+    .then(function(response){return response.json().then(function(data){
+      if(!response.ok)throw new Error(data.description||data.message||"تعذرت الإضافة.");
+      accepted=true;
+      if(hasDesign&&!(data.properties&&safeDesignUrl(data.properties["تصميم الحفر"]))){
+        throw new Error("أُضيفت المبخرة، لكن تعذر تأكيد مرفق التصميم. راجع السلة قبل الدفع؛ لا تعِد الإضافة.");
+      }
+      return fetchCart();
+    })})
+    .then(function(){if(status)status.textContent="أُضيفت المبخرة"+(hasDesign?" مع التصميم المرفق":"")+" إلى السلة.";window.toast&&window.toast("أُضيفت إلى سلّتك")})
+    .catch(function(error){
+      var message=error.message;
+      if(error instanceof TypeError)message=accepted?"أُضيفت المبخرة، وتعذر تحديث عرض السلة. افتح السلة قبل المحاولة مجددًا.":"تعذر تأكيد الإضافة. راجع السلة قبل المحاولة مجددًا.";
+      if(status)status.textContent=message;
+      window.toast&&window.toast(message);
+    })
+    .then(function(){busy=false;form.removeAttribute("aria-busy");controls.forEach(function(el,i){el.disabled=disabled[i]});sticky.forEach(function(el,i){el.disabled=stickyDisabled[i]})});
+}
+
+initDesignForm();
 fetchCart();
 })();

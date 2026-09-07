@@ -20,7 +20,7 @@
         assign ci_parts = item.product.title | split: '—'
         assign ci_name = ci_parts | first | strip
         assign ci_color = ''
-        if item.variant.title != 'Default Title'
+        if item.variant.title != 'Default Title' and item.variant.title != 'نص الحفر فقط' and item.variant.title != 'تصميم مرفق (+10 ر.س)'
           assign ci_color = item.variant.title
         elsif ci_parts.size > 1
           assign ci_color = ci_parts | last | strip
@@ -37,7 +37,21 @@
           {%- endif -%}
           {%- assign ci_eng = item.properties['نص الحفر'] -%}
           {%- if ci_eng != blank -%}
-          <div class="di-eng" data-preserve-digits>الحفر: «{{ ci_eng }}»</div>
+          <div class="di-eng" data-preserve-digits>الحفر: «{{ ci_eng | escape }}»</div>
+          {%- endif -%}
+          {%- if item.variant.title == 'نص الحفر فقط' or item.variant.title == 'تصميم مرفق (+10 ر.س)' -%}
+          <div class="di-eng">التخصيص: {{ item.variant.title | escape }}</div>
+          {%- endif -%}
+          {%- assign ci_design = item.properties['تصميم الحفر'] -%}
+          {%- assign ci_design_parts = ci_design | split: '/' -%}
+          {%- if ci_design_parts[0] == 'https:' and ci_design_parts[2] == 'cdn.shopify.com' -%}
+          <div class="di-eng"><a href="{{ ci_design | escape }}" target="_blank" rel="noopener noreferrer">عرض التصميم المرفق ↗</a></div>
+          {%- if item.properties['اسم ملف التصميم'] != blank -%}
+          <div class="di-eng" data-preserve-digits>{{ item.properties['اسم ملف التصميم'] | escape }}</div>
+          {%- endif -%}
+          {%- endif -%}
+          {%- if item.properties['ملاحظات التصميم'] != blank -%}
+          <div class="di-eng" data-preserve-digits>ملاحظات التصميم: {{ item.properties['ملاحظات التصميم'] | escape }}</div>
           {%- endif -%}
           <div class="d-row">
             <span class="qty">
