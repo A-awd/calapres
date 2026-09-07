@@ -1,5 +1,24 @@
 # Handoff
 
+## Owner amendment — short discount code; combined benefit pending — 2026-09-08
+
+The owner requested one code with exactly two letters and two digits that grants 99% off and
+free shipping. Renamed the existing 99% discount (1696022790400) from QXMRK to CR99;
+the same one-use limit, percentage, expiry and shipping-combination setting are retained.
+CR99 does not itself grant free shipping. QXMRKSHIP remains the separate active shipping code.
+Do not claim the requested one-code experience is complete.
+
+Shopify documents single discounts with order and shipping savings through compatible apps:
+https://help.shopify.com/en/manual/discounts/discount-types/discounts-with-apps
+Candidate Single Code Discount Swiftbee explicitly supports this at USD 6/month with a 3-day
+trial (https://apps.shopify.com/single-code-discounts). Installation/billing, store compatibility,
+exact one-use configuration and live combined-code behavior are not verified or approved.
+No app was installed, no subscription accepted, no general free-shipping rule created.
+The API client returned no owned Functions; this does not prove all other installed apps absent.
+Next step: owner decision on a new paid app, or another narrowly agreed native shipping arrangement.
+Current completed functionality remains CR99 plus QXMRKSHIP as two codes.
+
+
 ## Resume — live Paymob mode and one-use owner payment test — 2026-09-08
 
 **Approved:** Abdulrahman explicitly requested disabling payment test mode and a 99% discount
