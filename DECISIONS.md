@@ -209,6 +209,8 @@ canary. No provider, funding or architecture decision changed during the documen
   — owner-approved test-mode deactivation, one-use 99% order discount plus SA free shipping;
   checkout total verified at SAR 3.90, real payment and delivery still pending.
 
+- [0041 — Automatic paid-order WhatsApp confirmation](decisions/0041-automate-paid-order-whatsapp-confirmation.md)
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

@@ -1,0 +1,643 @@
+{
+  "name": "كالابريز | تأكيد الطلب المدفوع عبر واتساب",
+  "nodes": [
+    {
+      "id": "5774ae95-fe47-4e26-abf1-98831b3adca1",
+      "name": "عند دفع الطلب",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "topic": "orders/paid"
+      },
+      "webhookId": "6a79a009-eab2-4649-8c3e-1ee58b4c1619",
+      "credentials": {
+        "shopifyOAuth2Api": {
+          "id": "QLsvwO73GFsQfy0w",
+          "name": "Shopify-Calapres"
+        }
+      }
+    },
+    {
+      "id": "2e402851-49b4-40ce-89c2-94c610ec2aa6",
+      "name": "تحقق من معرف الطلب",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const x=$input.first().json;const id=String(x.id||'');if(!/^\\d{5,20}$/.test(id))throw new Error('invalid_order_id');return[{json:{request:{query:\"query PaidConfirmation($id: ID!){shop{myshopifyDomain} order(id:$id){id name test cancelledAt createdAt displayFinancialStatus phone shippingAddress{firstName phone countryCodeV2} metafield(namespace:\\\"calapres_operations\\\",key:\\\"whatsapp_order_confirmation\\\"){value compareDigest}}}\",variables:{id:'gid://shopify/Order/'+id}},gid:'gid://shopify/Order/'+id}}];"
+      }
+    },
+    {
+      "id": "d470a31b-8b75-4bf0-9460-175ddadf6613",
+      "name": "اقرأ الطلب المدفوع",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "url": "https://unywbe-ub.myshopify.com/admin/api/2026-07/graphql.json",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "shopifyOAuth2Api",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "shopifyOAuth2Api": {
+          "id": "QLsvwO73GFsQfy0w",
+          "name": "Shopify-Calapres"
+        }
+      }
+    },
+    {
+      "id": "4272efb0-d045-4a41-9d13-8d2cc9238ee7",
+      "name": "جهز التأكيد",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const o=h.body?.data?.order;const d=$('تحقق من معرف الطلب').first().json;if(h.statusCode!==200||h.body?.errors||h.body?.data?.shop?.myshopifyDomain!=='unywbe-ub.myshopify.com'||!o||o.id!==d.gid)throw new Error('order_read_failed');if(o.test||o.cancelledAt||o.displayFinancialStatus!=='PAID'||o.metafield)return[];if(Date.parse(o.createdAt)<Date.parse('2026-09-07T22:20:00Z'))return[];const a=o.shippingAddress||{};if(a.countryCodeV2!=='SA')throw new Error('country_requires_review');let p=String(o.phone||a.phone||'').replace(/[\\s()\\-]/g,'');if(/^00966/.test(p))p='+'+p.slice(2);if(/^05\\d{8}$/.test(p))p='+966'+p.slice(1);else if(/^5\\d{8}$/.test(p))p='+966'+p;else if(/^9665\\d{8}$/.test(p))p='+'+p;if(!/^\\+9665\\d{8}$/.test(p))throw new Error('phone_requires_review');const name=String(a.firstName||'عميلنا العزيز').replace(/[\\r\\n\\t]/g,' ').trim().slice(0,60)||'عميلنا العزيز';const number=o.name.replace(/^#/,'');const claim=JSON.stringify({state:'claimed',execution:String($execution.id),at:new Date().toISOString()});return[{json:{request:{query:\"mutation ClaimConfirmation($metafields:[MetafieldsSetInput!]!){metafieldsSet(metafields:$metafields){metafields{namespace key value compareDigest}userErrors{field message code}}}\",variables:{metafields:[{ownerId:o.id,namespace:'calapres_operations',key:'whatsapp_order_confirmation',type:'json',compareDigest:null,value:claim}]}},gid:o.id,phone:p,name,number,claim,content:'مرحبًا '+name+'، تم استلام طلبك رقم '+number+' لدى كالابريز بنجاح. سنرسل لك تحديثًا جديدًا عند تجهيز الطلب للشحن.'}}];"
+      }
+    },
+    {
+      "id": "04731846-6c47-4d51-9fb4-2bbcad229f8c",
+      "name": "احجز إرسال واحد",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1320,
+        0
+      ],
+      "parameters": {
+        "url": "https://unywbe-ub.myshopify.com/admin/api/2026-07/graphql.json",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "shopifyOAuth2Api",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "shopifyOAuth2Api": {
+          "id": "QLsvwO73GFsQfy0w",
+          "name": "Shopify-Calapres"
+        }
+      }
+    },
+    {
+      "id": "885c43ce-a228-4705-b456-91858a1fdebe",
+      "name": "تحقق من حجز الإرسال",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const p=h.body?.data?.metafieldsSet;const s=$('جهز التأكيد').first().json;if(h.statusCode!==200||h.body?.errors||!p)throw new Error('claim_unknown_no_send');if(p.userErrors?.length){if(p.userErrors.every(e=>/STALE|COMPARE|TAKEN/.test(e.code)))return[];throw new Error('claim_rejected_no_send');}const f=p.metafields?.[0];if(f?.value!==s.claim||!f.compareDigest)throw new Error('claim_proof_missing');return[{json:{...s,digest:f.compareDigest}}];"
+      }
+    },
+    {
+      "id": "4c162313-e0e1-4eb3-a95d-79f43cd987cd",
+      "name": "ابحث عن جهة الاتصال",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1760,
+        0
+      ],
+      "parameters": {
+        "url": "={{ \"https://app.chatwoot.com/api/v1/accounts/179973/contacts/search?q=\"+encodeURIComponent($json.phone) }}",
+        "method": "GET",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t76jS10WMK1hD1cm",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "id": "1039f15f-bfc3-4a61-844d-b6382069ea4f",
+      "name": "حدد جهة الاتصال",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;if(h.statusCode!==200||!Array.isArray(h.body?.payload))throw new Error('contact_search_failed');const s=$('تحقق من حجز الإرسال').first().json;const rows=h.body.payload.filter(c=>c.phone_number===s.phone);if(rows.length>1||h.body?.meta?.count>h.body.payload.length)throw new Error('contact_search_ambiguous');if(rows[0]?.blocked)throw new Error('contact_blocked');return[{json:{...s,contact_id:rows[0]?.id||null}}];"
+      }
+    },
+    {
+      "id": "e45a67d2-a38b-489a-9e0b-4c84129597ff",
+      "name": "جهة الاتصال موجودة",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2200,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "typeValidation": "strict",
+            "caseSensitive": true
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.contact_id !== null }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "98c17737-3e72-4864-ac64-9f4159904a32",
+      "name": "أنشئ جهة اتصال للطلب",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2420,
+        0
+      ],
+      "parameters": {
+        "url": "https://app.chatwoot.com/api/v1/accounts/179973/contacts",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({inbox_id:128058,name:$json.name,phone_number:$json.phone}) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t76jS10WMK1hD1cm",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "id": "d5ed2c9e-ab10-46b3-849b-20840a567703",
+      "name": "تحقق من جهة الاتصال الجديدة",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const b=h.body;const c=b?.payload?.contact||b?.payload?.[0]||b?.payload||b;const s=$('حدد جهة الاتصال').first().json;if(![200,201].includes(h.statusCode)||!c?.id||c.phone_number!==s.phone||c.blocked)throw new Error('contact_create_requires_review');return[{json:{...s,contact_id:c.id}}];"
+      }
+    },
+    {
+      "id": "3d830a5c-0040-4614-a4a1-5e7422a766b7",
+      "name": "افتح محادثة الطلب",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2860,
+        0
+      ],
+      "parameters": {
+        "url": "https://app.chatwoot.com/api/v1/accounts/179973/conversations",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({inbox_id:128058,contact_id:$json.contact_id,source_id:$json.phone.slice(1),status:\"open\"}) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t76jS10WMK1hD1cm",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "id": "89477335-4398-42c4-ba8f-1f67ed36485d",
+      "name": "تحقق من مسار واتساب",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const b=h.body;const s=$('تحقق من حجز الإرسال').first().json;if(![200,201].includes(h.statusCode)||!Number.isSafeInteger(b?.id)||b.inbox_id!==128058||b.meta?.sender?.phone_number!==s.phone)throw new Error('conversation_route_mismatch');return[{json:{...s,conversation_id:b.id,message_request:{content:s.content,message_type:'outgoing',private:false,content_attributes:{calapres_confirmation:true},template_params:{name:'order_confirmation',category:'UTILITY',language:'ar',processed_params:{body:{'1':s.name,'2':s.number}}}}}}];"
+      }
+    },
+    {
+      "id": "f9f78744-3ada-4c5f-8956-16f11a1a2581",
+      "name": "أرسل قالب تأكيد الطلب",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3300,
+        0
+      ],
+      "parameters": {
+        "url": "={{ \"https://app.chatwoot.com/api/v1/accounts/179973/conversations/\"+$json.conversation_id+\"/messages\" }}",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.message_request) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "t76jS10WMK1hD1cm",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "id": "49b1ffc9-f493-4a8c-b762-c43be513260c",
+      "name": "سجل نتيجة الإرسال",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3520,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const b=h.body;const s=$('تحقق من مسار واتساب').first().json;const ok=[200,201].includes(h.statusCode)&&Number.isSafeInteger(b?.id)&&b.conversation_id===s.conversation_id&&b.inbox_id===128058&&b.private===false&&b.message_type===1;const value=JSON.stringify({state:ok?(b.status==='failed'?'failed':'accepted'):'unknown',message_id:ok?b.id:null,conversation_id:s.conversation_id,at:new Date().toISOString()});return[{json:{request:{query:\"mutation ClaimConfirmation($metafields:[MetafieldsSetInput!]!){metafieldsSet(metafields:$metafields){metafields{namespace key value compareDigest}userErrors{field message code}}}\",variables:{metafields:[{ownerId:s.gid,namespace:'calapres_operations',key:'whatsapp_order_confirmation',type:'json',compareDigest:s.digest,value}]}},gid:s.gid,digest:s.digest,value}}];"
+      }
+    },
+    {
+      "id": "21d1d6c9-1ff5-40ec-86a5-5464cf62a59b",
+      "name": "احفظ حالة التأكيد في الطلب",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3740,
+        0
+      ],
+      "parameters": {
+        "url": "https://unywbe-ub.myshopify.com/admin/api/2026-07/graphql.json",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "shopifyOAuth2Api",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "shopifyOAuth2Api": {
+          "id": "QLsvwO73GFsQfy0w",
+          "name": "Shopify-Calapres"
+        }
+      }
+    },
+    {
+      "id": "fbd6f8f1-2b49-4f66-879d-8603578e7b59",
+      "name": "تحقق من حفظ النتيجة",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3960,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const h=$input.first().json;const p=h.body?.data?.metafieldsSet;if(h.statusCode!==200||h.body?.errors||!p||p.userErrors?.length)throw new Error('confirmation_result_save_failed');return[{json:{status:'confirmation_result_recorded'}}];"
+      }
+    }
+  ],
+  "connections": {
+    "عند دفع الطلب": {
+      "main": [
+        [
+          {
+            "node": "تحقق من معرف الطلب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "تحقق من معرف الطلب": {
+      "main": [
+        [
+          {
+            "node": "اقرأ الطلب المدفوع",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "اقرأ الطلب المدفوع": {
+      "main": [
+        [
+          {
+            "node": "جهز التأكيد",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "جهز التأكيد": {
+      "main": [
+        [
+          {
+            "node": "احجز إرسال واحد",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "احجز إرسال واحد": {
+      "main": [
+        [
+          {
+            "node": "تحقق من حجز الإرسال",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "تحقق من حجز الإرسال": {
+      "main": [
+        [
+          {
+            "node": "ابحث عن جهة الاتصال",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ابحث عن جهة الاتصال": {
+      "main": [
+        [
+          {
+            "node": "حدد جهة الاتصال",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "حدد جهة الاتصال": {
+      "main": [
+        [
+          {
+            "node": "جهة الاتصال موجودة",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "جهة الاتصال موجودة": {
+      "main": [
+        [
+          {
+            "node": "افتح محادثة الطلب",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "أنشئ جهة اتصال للطلب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "أنشئ جهة اتصال للطلب": {
+      "main": [
+        [
+          {
+            "node": "تحقق من جهة الاتصال الجديدة",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "تحقق من جهة الاتصال الجديدة": {
+      "main": [
+        [
+          {
+            "node": "افتح محادثة الطلب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "افتح محادثة الطلب": {
+      "main": [
+        [
+          {
+            "node": "تحقق من مسار واتساب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "تحقق من مسار واتساب": {
+      "main": [
+        [
+          {
+            "node": "أرسل قالب تأكيد الطلب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "أرسل قالب تأكيد الطلب": {
+      "main": [
+        [
+          {
+            "node": "سجل نتيجة الإرسال",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "سجل نتيجة الإرسال": {
+      "main": [
+        [
+          {
+            "node": "احفظ حالة التأكيد في الطلب",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "احفظ حالة التأكيد في الطلب": {
+      "main": [
+        [
+          {
+            "node": "تحقق من حفظ النتيجة",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "saveExecutionProgress": false,
+    "saveManualExecutions": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none"
+  }
+}

@@ -1,5 +1,50 @@
 # Project State
 
+## Paid-order WhatsApp confirmation activated — 2026-09-08
+
+The owner's latest explicit request authorizes completing this automatic transactional sender
+and one existing paid-owner-order canary. This supersedes the older unapproved/unsent status
+below only for this scope. See decision [0041](decisions/0041-automate-paid-order-whatsapp-confirmation.md).
+
+**Executed and verified:** workflow `FwJvEt91ZB61lPI7`, “كالابريز | تأكيد الطلب المدفوع عبر واتساب”,
+is active with published version `a4c63377-b8a4-42d1-850f-45424c3065d9`. Shopify returned HTTP 200
+and an orders/paid subscription matching the workflow's native webhook. The clean 17-node draft
+matches the published nodes and connections. Source: `n8n/calapres-paid-order-whatsapp-confirmation.json`.
+
+The bounded owner canary traversed the send and Shopify result-save path. Chatwoot subsequently
+returned HTTP 200, one outbound message with provider ID and **delivered** status. Read status
+was not asserted. Repeating the normal canary stopped before claim/send; no second message.
+The canary used an existing paid order through temporary manual scaffolding, now removed.
+A fresh production payment event after activation and the new-contact branch have not yet
+been observed end-to-end; subscription registration is not that test.
+
+**Design:** native Shopify paid trigger, refetch/validate order, Saudi mobile normalization without
+altering stored customer data, atomic Shopify metafield first-send claim, exact Chatwoot contact
+resolution, approved Arabic UTILITY template `order_confirmation`, and CAS result persistence.
+Scope is paid, non-test, non-cancelled Saudi orders created at/after 2026-09-07T22:20:00Z.
+The template personalizes the entered name and order number; its approved wording confirms
+receipt but does not contain an additional thank-you sentence. No template text was changed.
+
+**Account correction:** reusable Calapres customer-service credentials/workflows are in team
+project `0kVami0vGGBbT7Cy`; previous personal-project-only searches were incomplete.
+Owner secretary stays in `AeQgtZlgJbiXCM2e`. Captain remains the conversational responder.
+The Telegram bridge, retired bots, provider credentials, marketing/email and shipping remain unchanged.
+
+**Operational limits:** claims prevent repeated sends; failed/unknown sends are not automatically
+retried. Native trigger acknowledges before downstream completion, so missed/failed processing
+can require bounded manual reconciliation. No proactive incident alert or scheduled reconciliation
+was enabled. Verify Chatwoot before ever resetting a claim. Do not promise guaranteed delivery.
+
+**Privacy:** manual/success/error execution payload saving is disabled. A temporary diagnostic
+returned sensitive provider configuration unexpectedly; its saved execution was deleted and
+absence verified in the workflow execution list. No configuration secrets or customer canary
+identifiers are included in GitHub. Tool-session exposure is not erased by deleting n8n history.
+
+**Next:** observe the next naturally occurring eligible paid order without requesting another
+purchase. Snapchat, Instagram and TikTok purchase attribution remain the owner's next priority;
+no attribution implementation or advertising change was made here.
+
+
 ## Phone correction and Chatwoot confirmation draft — 2026-09-08
 
 Fresh Shopify order UI shows the Saudi +966 prefix. The API returns the national
