@@ -1,5 +1,25 @@
 # Handoff
 
+## Resume — use the existing iCloud content library — 2026-09-08
+
+Read [the content foundation audit](docs/calapres-content-foundation-2026-09-08.md).
+The owner's correction is explicit: creative work starts from Calapres's iCloud library.
+Ai-Work now freshly verifies Calapres-Bridal-Concepts-SHmTGI, Calapres-Photo-Concepts-4wizrv and
+its No-Logo-6hK9eD folder, plus prior refinements. Use these current paths instead of historical
+Downloads assumptions. Preserve the sibling archive and all rejected concepts; no move/delete.
+
+Ai-Work/Content-Foundation-2026-09-08 contains the Arabic three-piece plan, content board and
+912-row media/design inventory. These are local preparation, not platform drafts or activation.
+Seven selected files were visually sampled; do not imply every media file/video was reviewed.
+The proposed native publishing route still needs an authenticated account/role/draft/tool audit:
+Meta and TikTok navigation failed at the browser administrative-policy check. Existing handles
+remain historical evidence, queue counts unknown. Do not bypass browser controls or infer a ban.
+
+Next: owner review of the plan, existing-asset selection, and the account audit after access returns.
+No new rendering, posting, scheduling, account binding, subscription or operational mutation was
+performed. Local saves and three ZIPs verified; iCloud server sync unconfirmed. Keep the WhatsApp
+sender, Captain, Telegram and n8n untouched. Sales attribution remains separately pending.
+
 ## Resume — TikTok and Instagram content — 2026-09-08
 
 Read [the verified commerce/WhatsApp closeout and content resume](docs/handoffs/2026-09-08-commerce-whatsapp-and-content-resume.md) first, then STATE.md,

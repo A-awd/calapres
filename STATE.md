@@ -1,5 +1,26 @@
 # Project State
 
+## Content foundation prepared; iCloud library first — 2026-09-08
+
+The owner corrected the content audit: start from the existing iCloud project library, not the
+Shopify media subset. Freshly verified Ai-Work includes both Calapres-Bridal-Concepts-SHmTGI and
+Calapres-Photo-Concepts-4wizrv (including No-Logo-6hK9eD), plus the earlier refinement/holding
+folders. Three ZIPs passed integrity checks. The broader sibling archive remains preserved;
+its label does not authorize deletion. A private 912-row media/design metadata inventory and
+three Arabic content briefs are prepared under Ai-Work/Content-Foundation-2026-09-08.
+
+Full evidence and proposed workflow: [content foundation](docs/calapres-content-foundation-2026-09-08.md).
+Actual Instagram/TikTok identity, roles, tools, posts/drafts and schedules remain unverified:
+browser access failed because its administrative policy could not be verified. Do not report
+empty queues or absent accounts. Shopify refreshed the SAR 10 customization difference only;
+downloaded Shopify images are supplementary references, not the creative selection source.
+
+Prepared is not activated: no final video/artwork, platform draft, schedule, post, image render,
+account binding, paid spend or operational change. Native publishing tools are proposed pending
+account verification and exact owner approval. Local saves verified; iCloud upload unconfirmed.
+Next: review the iCloud plan and existing media, then complete the authenticated account audit
+when access returns. WhatsApp/n8n work stays deferred and purchase attribution stays separate.
+
 ## Current focus — content automation; WhatsApp work deferred — 2026-09-08
 
 Owner directed leaving n8n alone for now and focusing the next conversation on TikTok/Instagram
