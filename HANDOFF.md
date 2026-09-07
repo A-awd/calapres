@@ -1,5 +1,27 @@
 # Handoff
 
+## Phone correction and Chatwoot confirmation draft — 2026-09-08
+
+Fresh Shopify order UI shows the Saudi +966 prefix. The API returns the national
+part with shipping country SA. The existing owner's Chatwoot contact has the
+matching full international number and is not blocked. Do not blame customer
+entry or change the stored contact number: this is a representation difference,
+not evidence that an invalid phone caused the absent confirmation.
+
+Chatwoot outbound composer verifies order_confirmation in ar, UTILITY, with
+body variable 1 = customer name and variable 2 = order number. The approved
+template was selected and both fields populated for the existing paid owner
+canary; preview and enabled send control verified. No Send was clicked, no
+message ID exists from this preparation, and delivery is not yet verified.
+The composer draft is transient UI state, not a durable automated workflow.
+
+The previous audit found no identifiable active Calapres order-paid sender.
+Current evidence points to missing dispatch automation, not provider rejection.
+Next bounded step is explicit authorization for one confirmation to the owner
+for the existing order, then inspect actual sent/delivered/failed status. Do not
+require another paid order. Continuous automation remains unactivated and
+requires its own bounded approval. Preserve Captain and the Telegram bridge.
+
 ## Owner payment/upload canary audit and WhatsApp gap — 2026-09-08
 
 Fresh Shopify readback of the owner's completed canary confirms PAID, order test=false and a
