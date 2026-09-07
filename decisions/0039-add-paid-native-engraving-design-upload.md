@@ -84,6 +84,11 @@ Do not treat these retained draft copy differences as an unrelated new publicati
 
 ## Verification and remaining limits
 
+Later evidence (September 8): completed paid-owner-order attachment URL receipt is now verified
+in STATE.md under the owner payment/upload canary audit. Image decoding, manufacturing acceptance
+and fulfillment remain unverified. The original pre-order verification limits below are historical.
+
+
 Verified: Shopify mutation responses with no user errors; preserved original IDs/SKUs/prices;
 three paid variants at SAR 400; exact readback of all four edited MAIN-theme files; valid
 JavaScript syntax and JSON; live product forms and required-file behavior by read-only UI

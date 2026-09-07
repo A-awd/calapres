@@ -202,12 +202,13 @@ canary. No provider, funding or architecture decision changed during the documen
 
 - [0039 — Add paid native engraving design uploads](decisions/0039-add-paid-native-engraving-design-upload.md)
   — owner-approved direct live product upload; SAR 10 per burner via Shopify variants, multipart
-  file properties and Arabic cart presentation; no preview theme or test order. End-to-end order
-  attachment receipt remains unverified, and unrelated live-action gates remain.
+  file properties and Arabic cart presentation; no preview theme or test order. Completed-order attachment URL receipt was subsequently verified in STATE.md;
+  image content/manufacturing acceptance and unrelated live-action gates remain.
 
 - [0040 — Enable live Paymob for a bounded owner payment test](decisions/0040-enable-live-paymob-owner-payment-test.md)
   — owner-approved test-mode deactivation, one-use 99% order discount plus SA free shipping;
-  checkout total verified at SAR 3.90, real payment and delivery still pending.
+  later amended to CR99 99.99% plus CR98 free shipping; Shopify confirmed the owner's
+  successful real payment. Bank settlement and merchandise delivery remain unverified.
 
 - [0041 — Automatic paid-order WhatsApp confirmation](decisions/0041-automate-paid-order-whatsapp-confirmation.md)
 

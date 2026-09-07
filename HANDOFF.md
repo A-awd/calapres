@@ -1,5 +1,15 @@
 # Handoff
 
+## Resume — TikTok and Instagram content — 2026-09-08
+
+Read [the verified commerce/WhatsApp closeout and content resume](docs/handoffs/2026-09-08-commerce-whatsapp-and-content-resume.md) first, then STATE.md,
+AGENTS.md and decision 0038. The owner deferred n8n/native-WhatsApp work; preserve the active
+sender and Captain. Next: verify actual social accounts and reusable assets read-only, then
+prepare a concrete content workflow and first draft plan. No posting/schedule/binding approval.
+The detailed record maps earlier work to its canonical home and records unresolved Meta-app
+compatibility. This supersedes older next-action suggestions below.
+
+
 ## Paid-order WhatsApp confirmation activated — 2026-09-08
 
 The owner's latest explicit request authorizes completing this automatic transactional sender

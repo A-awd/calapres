@@ -1,7 +1,9 @@
 # 0040 — Enable live Paymob for a bounded owner payment test
 
 - Date: 2026-09-08 (Asia/Riyadh)
-- Status: Approved; configuration executed and checkout totals verified; real payment pending.
+- Status: Approved; live configuration and later successful paid-owner transaction verified in Shopify.
+  See STATE.md's owner payment/upload canary audit; bank settlement and fulfillment remain unverified.
+  Earlier pending-payment/zero-use snapshots below are historical.
 - Canonical starting commit: 7c3f7df4d9f795784aa933639ddcb776420ecd83
 
 ## Owner authorization

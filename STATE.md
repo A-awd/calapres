@@ -1,5 +1,18 @@
 # Project State
 
+## Current focus — content automation; WhatsApp work deferred — 2026-09-08
+
+Owner directed leaving n8n alone for now and focusing the next conversation on TikTok/Instagram
+content automation. Keep the active WhatsApp sender unchanged; this is not a shutdown.
+Native Meta app investigation did not prove compatibility with the same Cloud API number plus
+Chatwoot/Captain. The installed app showed incomplete onboarding. No migration was performed.
+Full new evidence, coverage map and exact content startup: [closeout](docs/handoffs/2026-09-08-commerce-whatsapp-and-content-resume.md).
+Start with read-only profile/tool/asset verification, then a reviewable content plan and workflow.
+Publishing, schedules, account bindings, paid spend and new subscriptions remain unapproved.
+Earlier Snapchat/Instagram/TikTok purchase attribution stays pending, distinct from content.
+The paid-order workflow verification below remains the operational authority, not a guarantee.
+
+
 ## Paid-order WhatsApp confirmation activated — 2026-09-08
 
 The owner's latest explicit request authorizes completing this automatic transactional sender
@@ -40,9 +53,8 @@ returned sensitive provider configuration unexpectedly; its saved execution was 
 absence verified in the workflow execution list. No configuration secrets or customer canary
 identifiers are included in GitHub. Tool-session exposure is not erased by deleting n8n history.
 
-**Next:** observe the next naturally occurring eligible paid order without requesting another
-purchase. Snapchat, Instagram and TikTok purchase attribution remain the owner's next priority;
-no attribution implementation or advertising change was made here.
+**Deferred follow-up:** verify the next naturally occurring eligible paid order when this work
+resumes; do not request another purchase. Current content priority is recorded above.
 
 
 ## Phone correction and Chatwoot confirmation draft — 2026-09-08
