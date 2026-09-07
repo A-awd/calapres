@@ -88,3 +88,18 @@ total and Pay now button SAR 25.04. No payment submitted. Earlier two-code, free
 pending paid-app proposals are superseded by this amendment. Owner completes payment next;
 real capture/settlement remains unverified.
 
+
+## Current owner amendment — CR99 plus CR98 — 2026-09-08
+
+Owner explicitly restored the two-code approach: keep CR99's current discount and add short
+free-shipping code CR98. Executed: CR99 stays 99.99% (0.9999), shipping combination enabled.
+Reused shipping discount 1698864922880, renamed it CR98 and restored expiry to
+2026-09-09T21:00:00Z. Both ACTIVE, one-use limit, zero uses, reciprocal order/shipping
+combination enabled; CR98 covers SA only. No new app, subscription or general shipping-rate change.
+
+Fresh checkout verified both codes accepted together: existing white burner SAR 390,
+order discount SAR 389.96, merchandise remainder SAR 0.04, shipping SAR 25 reduced to free,
+total and Pay now button SAR 0.04. This supersedes the immediately preceding CR99-only/
+shipping-deactivated amendment. No payment submitted; gateway acceptance of this small total,
+capture and settlement remain unverified until the owner completes the transaction.
+
