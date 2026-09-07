@@ -1,5 +1,22 @@
 # Project State
 
+## Resume — browser icon refreshed and owner confirmed — 2026-09-08
+
+**Executed and verified:** the received screenshot showed the obsolete circle/dot icon in address-bar
+suggestions; the owner confirmed it also appeared in the site tab. The approved seal was already
+served by the site, so the bounded repair copied that same image to
+`calapres-cr-browser-icon-2026-09-08.png` and updated the MAIN-theme favicon setting plus both
+layout icon/fallback links to the new filename and `cr-seal-20260908` revision.
+
+Shopify readback and the delivered seal image were verified. After reopening the store in a new
+tab, the owner confirmed “ظهر الختم البني”. The reported display issue is now resolved by owner
+confirmation; do not continue speculative cache deletion or repeated filename rotation.
+This does not claim independent verification of every device, saved favorite or Google result.
+See [the focused repair record](docs/handoffs/2026-09-08-safari-browser-icon-refresh.md) for evidence, exact scope and asset IDs.
+No image was generated, no browser history was cleared, and no checkout/product/payment change
+was made. Earlier missing-screenshot/unresolved notes below are historical and superseded here.
+
+
 ## Resume — Safari icon report remains unresolved — 2026-09-08
 
 The owner reports the old browser icon still appears in desktop/mobile Safari and disputes the
