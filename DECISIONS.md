@@ -205,6 +205,10 @@ canary. No provider, funding or architecture decision changed during the documen
   file properties and Arabic cart presentation; no preview theme or test order. End-to-end order
   attachment receipt remains unverified, and unrelated live-action gates remain.
 
+- [0040 — Enable live Paymob for a bounded owner payment test](decisions/0040-enable-live-paymob-owner-payment-test.md)
+  — owner-approved test-mode deactivation, one-use 99% order discount plus SA free shipping;
+  checkout total verified at SAR 3.90, real payment and delivery still pending.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

@@ -1,5 +1,38 @@
 # Project State
 
+## Resume — live Paymob mode and one-use owner payment test — 2026-09-08
+
+**Approved:** Abdulrahman explicitly requested disabling payment test mode and a 99% discount
+with free shipping so he can place one ordinary order using real money himself. This is the
+bounded payment-setting/test authorization previously missing; it does not authorize an agent
+to enter card data, submit a payment, issue a refund, fulfill an order or purchase a shipping label.
+
+**Executed and verified:** Shopify Paymob Native Checkout (provider 26640385) test mode is OFF.
+Saved successfully, then reopened the provider page: Active, unchecked "Turn on test mode",
+no "Test mode is on" warning and disabled Save. Visa, Mastercard, Amex and Apple Pay remained
+checked. Provider-side live merchant approval/settlement and successful authorization/capture
+are not proven by this configuration change.
+
+Existing unused 99% code QXMRK (discount 1696022790400) was reused, allowed to combine with
+shipping discounts and given an expiry. Created QXMRKSHIP (discount 1698864922880), free shipping
+to Saudi Arabia, combinable with order discounts. Both are ACTIVE, usage limit 1, usage count 0,
+and expire at 2026-09-09T21:00:00Z (end of September 9 in Riyadh).
+These are two native codes; no all-store shipping-rate change or discount app was needed.
+
+**Checkout verified, not purchased:** used the existing one-white-burner cart, text engraving
+variant priced SAR 390. The 99% code reduced merchandise by SAR 386.10; shipping then displayed
+SAR 25. Applying the shipping code reduced shipping to free and checkout total to SAR 3.90.
+Both codes were visibly accepted together. Contact/address/card fields remained empty; no
+Pay now click, order, payment or fulfillment was submitted. A combined-code share link was not
+validated; the actual checkout was prepared directly through its visible discount fields.
+
+**Next:** owner completes the real payment and supplies the order result; refresh Shopify and
+Paymob transaction state read-only before calling the payment canary passed. Physical stock,
+engraving/dispatch timing, pickup address and packaged measurements still gate actual delivery.
+OTO remains prepaid-only; COD, provider funding/credentials, email activation and unrelated
+publication remain outside this approval. See [decision 0040](decisions/0040-enable-live-paymob-owner-payment-test.md).
+
+
 ## Resume — browser icon refreshed and owner confirmed — 2026-09-08
 
 **Executed and verified:** the received screenshot showed the obsolete circle/dot icon in address-bar
