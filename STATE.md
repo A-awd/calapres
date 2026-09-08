@@ -1,5 +1,18 @@
 # Project State
 
+## Social website follow-up: native-app step required — 2026-09-08
+
+Fresh TikTok @calapres has no bio or website. Standard desktop editor exposes avatar,
+username, nickname and bio only. Business Suite > business verification displays ready status,
+Saudi Arabia, Optix legal entity and its registration number; Company Website is blank.
+Its Edit button edits audience-restricted industry, not website; dialog cancelled without changes.
+Do not re-register the company or claim it lacks commercial verification. Official May 2026
+TikTok Business Page guidance says website/business-page setup is mobile-app-only:
+https://ads.tiktok.com/resources/help/article/how-to-set-up-a-business-page-for-your-business-account?lang=en
+Snapchat Profile Manager fresh attempt still fails React #130 before form rendering.
+No profile changes or link publication in this follow-up. Need native-app screen/access to
+finish links; do not claim text in bio is a working clickable profile link.
+
 ## Snapchat profile link investigation — 2026-09-08
 
 Owner reports no clickable profile website. Public web /add/calapres redirects to /@calapres
