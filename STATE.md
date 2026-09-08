@@ -1,5 +1,17 @@
 # Project State
 
+## Direct overlay pilot shown - 2026-09-08
+
+Owner asked for an example after direct local compositing was explained. This
+explicitly authorizes one local sample, not automatic batch approval.
+Source: original-content portrait 1 White.jpg, 4452x7915. Official wordmark alpha
+mask recolored beige #DFD4C3, width12%, opacity35%, bottom margin5%, centered.
+Saved lossless PNG at Ai-Work/Logo-Batch-2026-09-08/sample-wordmark-original-size.png
+and a 1080px-wide sample-wordmark-preview.jpg for viewing only.
+Pixel comparison verified no changes outside watermark rectangle; original dimensions
+preserved and source untouched. No Magnific credits used. Await owner sample feedback
+before full batch. Platform-specific safe-zone placement still pending.
+
 ## Wordmark batch intake and full source audit - 2026-09-08
 
 Owner requests Magnific watermarking of all original-content photos, exact source
