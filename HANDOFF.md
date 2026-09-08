@@ -1,5 +1,21 @@
 # Handoff
 
+## Drive content download and exact duplicate audit - 2026-09-08
+
+User requested download of Drive folder 15RmjpI3BwLs8Lo4CyfuJrMiPh1b_IsKl
+and comparison against current iCloud content. Connector recursively listed 43
+stored files: 42 JPEGs and one MOV, 610058566 uncompressed bytes. Browser folder
+ZIP download succeeded; original ZIP preserved at Ai-Work/Drive-Content-Audit-2026-09-08/
+Drive-content-original.zip (610169094 bytes). No duplicate library extraction.
+All 43 ZIP members read fully (CRC checked by zipfile) and SHA-256 matched files
+already in Ai-Work/content (actual Arabic folder name). Zero missing/new files.
+Local content audit: 151 files excluding .DS_Store; 72 unique hashes; 36 duplicate
+groups; 79 excess copies totaling 1074814274 bytes. No deletions or replacements.
+Full private mapping in same iCloud audit folder: comparison.json and report-ar.md.
+Local completion verified; iCloud server upload not independently verified.
+Next: report duplicates to owner. Do not delete or reclassify historical media
+without explicit owner instruction. Different crops/encodings are not exact duplicates.
+
 ## Text-free header supersedes wordmark versions - 2026-09-08
 
 Owner screenshots IMG_1085/1086 confirm text remains under buttons in compact
