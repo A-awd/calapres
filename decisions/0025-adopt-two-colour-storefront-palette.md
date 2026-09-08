@@ -259,3 +259,14 @@ reflection, advertising overlay, handle, carrying tray or extra burner is introd
 actual tall Calapres burner from the product reference, supported under its base and on its lower
 side, with visible incense/smoke. This is creative permission, not evidence of heat-safety,
 manufacturability, product dimensions, brand affiliation or publication approval. Magnific only.
+
+
+### 2026-09-08 — Profile identity clarification
+
+Owner explicitly fixed account/profile avatars to the existing CR wax seal. The flourished
+CALAPRES wordmark remains available for other creative uses, including later posts, and is not
+the profile icon. Verify platform image requirements before preparing/uploading derivatives.
+Use Magnific-only preparation; prefer non-generative resizing when the exact fixed logo only
+needs a platform size. Owner reports Instagram and TikTok complete; final current execution
+was limited to Snapchat. See docs/handoffs/2026-09-08-social-links-snapchat-cr.md.
+This does not authorize replacing unrelated storefront header artwork or publishing posts.

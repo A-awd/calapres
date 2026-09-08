@@ -1,5 +1,17 @@
 # Project State
 
+## Live social links and Snapchat CR identity — 2026-09-08
+
+[Execution record](docs/handoffs/2026-09-08-social-links-snapchat-cr.md).
+Three verified social links saved to the active Shopify footer and checked on the public store
+after exiting a stale draft preview. Snapchat bio/contact updated and CR seal uploaded/saved
+using a verified 1024x1024 PNG under 2 MB, prepared through Magnific non-AI resizing (40 credits).
+Public Story auto-post toggle was explicitly off. No wordmark was applied to any profile.
+Owner clarified CR-only account/profile icons and deferred wordmark use to future creative posts.
+Final scope is Snapchat only; Instagram/TikTok are complete per owner and were not modified.
+Policy drafts remain unpublished; local asset verified, iCloud cloud synchronization unconfirmed.
+
+
 ## Policy, social links and logo preparation — 2026-09-08
 
 [Current preparation record](docs/handoffs/2026-09-08-policy-social-logo-preparation.md).
