@@ -212,6 +212,11 @@ canary. No provider, funding or architecture decision changed during the documen
 
 - [0041 — Automatic paid-order WhatsApp confirmation](decisions/0041-automate-paid-order-whatsapp-confirmation.md)
 
+- [0042 — Owner-curated content realism folders](decisions/0042-owner-curated-content-realism-folders.md)
+  — collect content in iCloud Ai-Work/المحتوى; the owner alone sorts `أصيل` and
+  `محتوى غير مرغوب به`. Folder choice guides visual realism without granting publication,
+  certifying provenance or authorizing deletion. Original files remain preserved.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

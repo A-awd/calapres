@@ -1,5 +1,20 @@
 # Handoff
 
+## Resume — owner selects realistic content in iCloud — 2026-09-08
+
+Start at `عمل/تجارة/Calapres/Ai-Work/المحتوى`; see
+[decision 0042](decisions/0042-owner-curated-content-realism-folders.md).
+The owner asked for the collection and defined `أصيل` as visually convincing/closer to reality.
+There are 468 verified content copies, two administrative files and exactly the two owner sorting
+folders `أصيل` and `محتوى غير مرغوب به`. Both folders were empty when created; root files await
+classification. Originals and prior creative records were preserved, with mappings private in iCloud.
+
+Inspect the actual folder choices on resumption, do not invent selections or treat authenticity
+as publication approval. Unwanted content is excluded but retained, including same-content aliases.
+No automated watcher, file deletion, image generation, schedule, platform/account or n8n change.
+Local hashes verified; iCloud server upload unconfirmed. The native social account audit remains
+blocked by the previously recorded browser access issue and is not a prerequisite for owner sorting.
+
 ## Resume — use the existing iCloud content library — 2026-09-08
 
 Read [the content foundation audit](docs/calapres-content-foundation-2026-09-08.md).

@@ -20,6 +20,17 @@ These instructions apply equally to Claude, Codex, ChatGPT, Hermes, and every fu
   configuration.
 - Approved Design Labs: visual direction until superseded by a recorded decision.
 
+## Creative library and owner realism selection
+
+Start content work from iCloud `عمل/تجارة/Calapres/Ai-Work/المحتوى`, not Shopify's media subset
+or old Downloads locations. Verify actual access and inspect the current owner folders first.
+Under [decision 0042](decisions/0042-owner-curated-content-realism-folders.md), only Abdulrahman
+classifies files into `أصيل` (closer to reality/visually convincing) and
+`محتوى غير مرغوب به` (excluded from creative selection; preserve, do not delete).
+Root-level content is unclassified. These owner selections guide realism; they do not certify
+photographic provenance, manufacturing accuracy or publication approval. Preserve original files
+and do not reintroduce an excluded image under another filename. Save new deliverables in Ai-Work.
+
 ## Binding architecture
 
 Calapres is Shopify-native and owner-curated:

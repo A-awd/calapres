@@ -1,5 +1,20 @@
 # Project State
 
+## Owner content sorting library created — 2026-09-08
+
+Owner requested one collection inside Ai-Work with `أصيل` and `محتوى غير مرغوب به`.
+Executed locally at `عمل/تجارة/Calapres/Ai-Work/المحتوى`: 468 content files (about 2.48 GB),
+copied from 931 source entries with full SHA-256 verification and byte/extension deduplication.
+All originals remain in place. The two classification folders are empty for the owner to sort;
+root files remain unclassified. Arabic instructions and a private source manifest are included.
+See [decision 0042](decisions/0042-owner-curated-content-realism-folders.md) for exact coverage.
+
+Owner placement in `أصيل` means visually closer to reality, not automatically a real photograph,
+manufacturing proof or publication permission. Excluded content is preserved and not reused under
+aliases. Future creative work must read these current selections first; AGENTS.md now requires it.
+Local saves verified; cloud upload unconfirmed. No generation, live service or schedule changed.
+Next: owner sorting, then one bounded content piece grounded in the selected visual standard.
+
 ## Content foundation prepared; iCloud library first — 2026-09-08
 
 The owner corrected the content audit: start from the existing iCloud project library, not the
