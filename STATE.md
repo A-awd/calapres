@@ -1,5 +1,13 @@
 # Project State
 
+## Flat deletion-review folder - 2026-09-08
+
+Owner explicitly rejected nesting inside the deletion-review folder.
+Flattened Ai-Work/حذف so all 79 content files appear directly inside it.
+Also preserved hidden Finder metadata. Name collisions resolved with numeric suffixes;
+all moved file hashes verified. Removed only emptied subdirectories. Other folders
+unchanged. Reversible ledger: Drive-Content-Audit-2026-09-08/flatten-delete-ledger.jsonl.
+
 ## Owner-authorized duplicate relocation and Drive comparison library - 2026-09-08
 
 Owner asked to put iCloud duplicate copies into a folder named deletion (Arabic)
