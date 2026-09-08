@@ -1,5 +1,24 @@
 # Handoff
 
+## Full approved wordmark batch completed - 2026-09-08
+
+Owner instructed completing all remaining photos after enlarging the direct-overlay
+pilot. This authorizes source-preserving local compositing for this batch.
+Produced 42 original-dimension PNG masters, 42 Stories JPEGs (1080x1920), and
+42 Instagram post JPEGs (1080x1350). Official wordmark width20%, opacity35%;
+placement adjusted per product. Sources unchanged by SHA256, all master pixels
+outside logo rectangle unchanged. Social exports fit full image with margins,
+no crop/stretch/upscale; sRGB. All 126 images reviewed via contact sheets.
+Each of three flat ZIPs has 42 entries, verified CRC. Ai-Work deliverables:
+- Calapres-Original-Resolution.zip (1124788261 bytes)
+- Calapres-Stories.zip (12989261 bytes)
+- Calapres-Instagram-Posts.zip (10117275 bytes)
+Individual photos remain in three flat Arabic-named output folders. Evidence:
+Ai-Work/مراجعة صور الشعار/manifest.json and eight review sheets.
+One reference collage is included among42; one MOV untouched. No publication,
+Magnific credits or generative edits. Local saves verified; remote iCloud sync
+not independently confirmed. Supersedes earlier unfinished-batch status below.
+
 ## Larger watermark pilot - 2026-09-08
 
 Owner requested larger lettering. Revised source-preserving sample increases
