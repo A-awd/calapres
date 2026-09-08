@@ -1,5 +1,27 @@
 # Project State
 
+## Wordmark batch intake and full source audit - 2026-09-08
+
+Owner requests Magnific watermarking of all original-content photos, exact source
+dimensions, tiny subtle official wordmark bottom-center, alternate positions for
+conflicts, plus Snapchat/Instagram Stories and Instagram feed exports today.
+Inspected all 42 JPEGs visually on three contact sheets and measured dimensions:
+19 approximately 9:16, 17 approximately 4:5, 3 square, 1 landscape 16:9,
+1 landscape 5:4, 1 reference collage 1382x2999. One MOV also present, not edited.
+Most source dimensions exceed generative output limits (up to 8192px). Magnific
+Nano Banana Pro supports 1k/2k/4k and generative editing cannot guarantee original
+pixel preservation. Balance checked: 18790; no generation or upload charged here.
+Asked owner asynchronously whether direct local compositing is authorized instead,
+or Magnific-only pilot. Awaiting answer; DO NOT silently override Magnific-only rule.
+No watermarked output produced. Prepared Ai-Work/Logo-Batch-2026-09-08/audit-ar.md,
+inventory.json and three audit sheets. Exact official wordmark source remains
+assets/calapres-wordmark.png (1249x220 RGBA). Original files unchanged.
+Meta official spec pages were inaccessible; don't claim verified current Meta limits.
+Snap official source verifies image ads 1080x1920 minimum, not all organic placements.
+Next: resolve implementation choice; use source-preserving overlays if approved,
+then validate outside-logo pixels, original dimensions and platform export crops.
+Keep flat output folders and all source names disambiguated. Full batch unfinished.
+
 ## Flat deletion-review folder - 2026-09-08
 
 Owner explicitly rejected nesting inside the deletion-review folder.
