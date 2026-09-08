@@ -1,5 +1,10 @@
 # Handoff
 
+Footer spacing follow-up (2026-09-08): owner requested one space before the colon.
+Saved to live theme 165804638464; fresh public store readback confirms
+`الرقم الوطني الموحد : 7025878104`. Store is public and this change is published.
+
+
 ## Simplified biographies and registration footer — 2026-09-08
 
 Owner removed the Optix ownership tagline from public biographies while retaining the legal
