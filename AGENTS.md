@@ -24,6 +24,11 @@ These instructions apply equally to Claude, Codex, ChatGPT, Hermes, and every fu
 
 Start content work from iCloud `عمل/تجارة/Calapres/Ai-Work/المحتوى`, not Shopify's media subset
 or old Downloads locations. Verify actual access and inspect the current owner folders first.
+Consolidation must MOVE existing originals, never create a copied media library. The owner has
+authorized moving content from both Ai-Work and the project `مكرر` archive; this move is complete.
+The mistaken copy folder was deleted first. Use the private iCloud move ledger for historical paths.
+Use actual current files; do not restore absent files from old manifests or delete historical
+duplicate originals without separate authorization.
 Under [decision 0042](decisions/0042-owner-curated-content-realism-folders.md), only Abdulrahman
 classifies files into `أصيل` (closer to reality/visually convincing) and
 `محتوى غير مرغوب به` (excluded from creative selection; preserve, do not delete).

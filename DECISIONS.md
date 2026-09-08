@@ -213,7 +213,9 @@ canary. No provider, funding or architecture decision changed during the documen
 - [0041 — Automatic paid-order WhatsApp confirmation](decisions/0041-automate-paid-order-whatsapp-confirmation.md)
 
 - [0042 — Owner-curated content realism folders](decisions/0042-owner-curated-content-realism-folders.md)
-  — collect content in iCloud Ai-Work/المحتوى; the owner alone sorts `أصيل` and
+  — move original content from Ai-Work and the project archive into Ai-Work/المحتوى; do not copy.
+  The mistaken copied collection was deleted; 925 existing files were moved and verified.
+  The owner alone sorts `أصيل` and
   `محتوى غير مرغوب به`. Folder choice guides visual realism without granting publication,
   certifying provenance or authorizing deletion. Original files remain preserved.
 
