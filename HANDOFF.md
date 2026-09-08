@@ -1,5 +1,16 @@
 # Handoff
 
+## Revised Snapchat header - 2026-09-08
+
+Owner rejected the first three concepts and requested a more luxurious result.
+Magnific revision 79GWvuRJAL: burnt-brown suede-like ground, soft diagonal beige
+light and beige official-reference wordmark; no seal/products. Nano Banana Pro,
+2k, 16:9, 75 credits. Completed, visually reviewed, locally saved as
+Ai-Work/Snapchat-Headers-2026-09-08/04-brown-light.png (2752 x 1536).
+Shown inline for owner review; not approved or published. Platform crop still
+requires verification. iCloud server sync not confirmed. Prior options remain
+preserved but rejected. Next: obtain owner's design selection before upload.
+
 ## Snapchat header concepts awaiting owner selection - 2026-09-08
 
 - Owner requested actual alternatives using the official flourished CALAPRES wordmark,
