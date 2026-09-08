@@ -1,5 +1,13 @@
 # Project State
 
+## Larger watermark pilot - 2026-09-08
+
+Owner requested larger lettering. Revised source-preserving sample increases
+wordmark width from12% to20%, keeps opacity35%, centered x50%, top y75.5%.
+Original4452x7915 preserved; no pixel changes outside watermark rectangle.
+Ai-Work/Logo-Batch-2026-09-08/sample-wordmark-larger.png plus
+sample-wordmark-larger-preview.jpg. Await owner feedback; full batch unfinished.
+
 ## Watermark moved closer to product - 2026-09-08
 
 Owner requested moving pilot watermark toward burner to make cropping it out harder.
