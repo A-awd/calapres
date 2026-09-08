@@ -1,5 +1,29 @@
 # Project State
 
+## Prelaunch influencer audit — 2026-09-09
+
+Live read-only audit found Snapchat and TikTok app pixels Optimized / Access paused
+since Sep 8 19:55 (No signals detected). Meta and Google Access on. Snap registered
+pixel 136d05e0-1e3a-4712-9b9b-6797d118c61c; Server + Web configured, provider receipt
+NOT verified. Pixel Test click yielded no visible helper/storefront result.
+GA4 property 350424085 receives traffic: last7days 11 active users,72 events,0 key
+events; ig/social sessions present. Purchase receipt and deduplication NOT verified.
+Google channel Merchant active,4 submitted/4 approved; Ads and Analytics active.
+Generic Google tag migration banner requires investigation, not proof of data loss.
+Paymob Native Checkout configured; no payment performed. PayPal inactive. Shipping
+profile has Saudi zone only, two free rates spanning order values; no international
+zone. Rate names do not contain14-day delivery notice; checkout flow not validated.
+No pixel sharing/payment/shipping changes, no creator invitation, no short URL made.
+Await creator username. Research confirms Paid Partnership disclosure per commercial
+Snap; formal creator invitation in Business Manager Public Profiles settings, with
+creator acceptance. No restriction immunity. Proposed branded redirect to creator
+UTMs must be created and tested before delivery. No Search Console access needed.
+Arabic research/audit saved locally at Ai-Work/إطلاق إعلان سناب/فحص الجاهزية والشراكة والتتبع.md;
+iCloud cloud synchronization not independently confirmed. Before launch, verify Snap
+access/events, perform authorized purchase test with GA4/Snap receipt, create/test
+creator link, confirm partnership active and mobile personalization/delivery flow.
+Store is NOT certified100%ready. Detailed sources and caveats in Arabic report.
+
 ## Ratio correction and rejected padded social exports - 2026-09-08
 
 Owner rejected padded social exports and two Snapchat highlights. Requires one
