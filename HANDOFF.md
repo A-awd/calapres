@@ -1,5 +1,39 @@
 # Handoff
 
+## Exact duplicate organization and quality comparison — 2026-09-08
+
+Owner asked to label or arrange duplicate burner files, explicitly concerned that visually similar
+copies can have different image quality. Authorized scope was organization, not deletion.
+Refreshed the actual `عمل/تجارة/Calapres/Ai-Work/المحتوى/المبخر` folder after owner cleanup:
+144 media files remained (142 images, 2 videos; 1,778,293,720 bytes), not the historical 170.
+No previously removed asset was restored.
+
+Full-file SHA-256 identified 66 distinct byte contents and 35 groups of exact duplicates containing
+113 files (78 extra identical aliases). MOVED those 113 originals into
+`المبخر/متطابقة تمامًا/` with one folder per hash group, named with group number, copy count and
+pixel dimensions. Preserved original filenames. The 31 files without an exact duplicate remain at
+the burner root, including both non-identical videos. A different crop, resolution, encoding or
+creative variant was never combined into a byte-identical group based on visual similarity.
+
+Every retained file was re-read and matched its prior full SHA-256, size and inode. All moved
+source paths are absent; all 144 media files remain. No content copy, deletion, overwrite,
+recompression, upscaling, quality modification or quality-based winner selection occurred.
+Exact byte matches have the same encoded quality; size or dimensions alone do not establish which
+non-identical image has better detail, provenance or fidelity. Crop and aspect differences matter.
+
+Prepared `المبخر/مراجعة التكرار والجودة.html`: a local Arabic comparison page showing all 66
+byte-distinct contents, dimensions, formats, file sizes and original-file links, with filters for
+exact duplicate groups and distinct files. Seventeen visually reviewed sets compare similar shots
+and crop/dimension variants without declaring them identical or assigning a quality winner. Images
+are loaded from existing original paths, not copied into new media. All local links, anchors and
+media counts validated. The page is a static inspection snapshot: owner moves/deletions may stale
+its links; inspect the current folders before reuse. Private before/after audit remains in the
+agent workspace; raw private filenames and media were not committed to GitHub.
+
+Owner realism folders remain unchanged. Local integrity verified; iCloud server synchronization
+is unconfirmed. No generation, live publication, schedule, account or operating workflow changed.
+Next: owner reviews the exact groups and visually distinct variants before deciding what to remove.
+
 ## Burner content isolated for owner cleanup — 2026-09-08
 
 Owner requested one folder named `المبخر` containing burner content so he can clean it himself.

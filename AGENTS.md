@@ -35,6 +35,10 @@ classifies files into `أصيل` (closer to reality/visually convincing) and
 Burner media is grouped by subject in `المحتوى/المبخر` for owner cleanup. Moving it there
 is not an authenticity or quality classification. Preserve existing duplicate files until the owner
 explicitly directs their deletion; do not restore files removed during owner cleanup.
+Use complete file hashes for exact-duplicate grouping. Similar imagery, filenames, dimensions or
+file sizes do not prove duplication or which version has better quality. Keep alternate crops,
+resolutions and encodings distinct; do not compress or delete media while organizing it.
+The burner folder now has `متطابقة تمامًا` groups and a local Arabic quality-comparison HTML page.
 Root-level content is unclassified. These owner selections guide realism; they do not certify
 photographic provenance, manufacturing accuracy or publication approval. Preserve original files
 and do not reintroduce an excluded image under another filename. Save new deliverables in Ai-Work.
