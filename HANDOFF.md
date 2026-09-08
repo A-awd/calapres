@@ -1,5 +1,15 @@
 # Handoff
 
+## Snapchat visible domain and TikTok save blocker — 2026-09-08
+
+Snapchat website field confirmed https://calapres.com. Admin website button opens its editor;
+it is not proof of visitor-side link behavior. Added literal domain to bio, now ending
+`تسوّق: calapres.com`, saved and admin display verified. Native visitor link remains unverified.
+TikTok fresh reload still showed no bio. One shorter single-line retry with keyboard Save did
+not persist or show a reason; stop repeated web saves. Draft: مباخر وهدايا سعودية باسمك أو شعارك | calapres.com.
+Owner needs working native app Save; do not claim TikTok completed.
+
+
 Footer spacing follow-up (2026-09-08): owner requested one space before the colon.
 Saved to live theme 165804638464; fresh public store readback confirms
 `الرقم الوطني الموحد : 7025878104`. Store is public and this change is published.
