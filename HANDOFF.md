@@ -1,5 +1,19 @@
 # Handoff
 
+## Text-free header supersedes wordmark versions - 2026-09-08
+
+Owner screenshots IMG_1085/1086 confirm text remains under buttons in compact
+view and visible expanded. Owner now requests original preferred brown-light
+background with NO lettering, prioritizing the original fine texture.
+Magnific edit SyZzxqDUb8 used original 79GWvuRJAL directly, not degraded portrait
+revisions. One text-removal edit, 75 credits. Visually reviewed: no lettering,
+no seal or frame, original-style diagonal illumination and fine brown texture.
+Saved and dimensions verified: Ai-Work/Snapchat-Headers-2026-09-08/
+08-brown-light-no-text.png, 2752 x 1536, matching original pixel dimensions.
+AI edit is not claimed pixel-identical. No upload or live crop validation performed.
+iCloud server sync unverified. Deliver this version for manual upload; no further
+wordmark repositioning or portrait regeneration without owner request.
+
 ## Portrait header revision after actual crop failure - 2026-09-08
 
 Owner screenshots IMG_1081/1082 show uploaded landscape header clipped in both
