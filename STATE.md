@@ -1,5 +1,23 @@
 # Project State
 
+## Owner-authorized duplicate relocation and Drive comparison library - 2026-09-08
+
+Owner asked to put iCloud duplicate copies into a folder named deletion (Arabic)
+and all Drive files into a folder named original content (Arabic) for manual comparison.
+Revalidated all 151 local inventory files by SHA-256 before mutation; no drift.
+Moved 79 excess copies into Ai-Work/حذف, retaining one copy per hash in
+existing content locations. Preserved relative subfolders to avoid name collisions.
+Extraction of the verified Drive archive into Ai-Work/المحتوى الأصيل
+preserves portrait/landscape folders and all 43 original files without recompression.
+Every extracted file and moved destination verified by SHA-256. Existing content now
+contains 72 files, deletion-review folder 79, original-content comparison folder 43.
+No permanent deletion. User explicitly requested this comparison copy; do not treat
+folder name as proof of photographic authenticity or publication approval.
+Private reversible move ledger: Ai-Work/Drive-Content-Audit-2026-09-08/
+move-to-delete-ledger.jsonl. Older audit describes pre-move paths and remains historical.
+Local filesystem completion verified; remote iCloud synchronization not independently
+confirmed. Next: owner compares folders; no deletion until explicit authorization.
+
 ## Drive content download and exact duplicate audit - 2026-09-08
 
 User requested download of Drive folder 15RmjpI3BwLs8Lo4CyfuJrMiPh1b_IsKl
