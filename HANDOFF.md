@@ -1,5 +1,15 @@
 # Handoff
 
+## Arabic policies and free Saudi shipping — 2026-09-08
+
+Four concise Arabic policies published and publicly verified. Refund/shipping titles unified.
+All Saudi shipping is now free; actual checkout displays the personalized-burner 14-day notice
+and optional unchecked discounts/offers email copy. See [execution record](docs/handoffs/2026-09-08-arabic-policies-free-shipping.md)
+and [decision 0043](decisions/0043-concise-arabic-policies-free-saudi-shipping.md).
+International shipping activation, plain delivery time, refund processing time, legal address
+and Merchant Center synchronization remain unresolved. Reconcile live theme locale edits before
+future deployment. No order submitted; test cart removed.
+
 ## Snapchat visible domain and TikTok save blocker — 2026-09-08
 
 Snapchat website field confirmed https://calapres.com. Admin website button opens its editor;

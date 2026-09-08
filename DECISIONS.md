@@ -219,6 +219,8 @@ canary. No provider, funding or architecture decision changed during the documen
   `محتوى غير مرغوب به`. Folder choice guides visual realism without granting publication,
   certifying provenance or authorizing deletion. Original files remain preserved.
 
+- [0043 — Concise Arabic policies and free Saudi shipping](decisions/0043-concise-arabic-policies-free-saudi-shipping.md)
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
