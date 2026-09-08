@@ -1,5 +1,15 @@
 # Project State
 
+## Social biographies and Saudi trust — 2026-09-08
+
+[Execution and blockers](docs/handoffs/2026-09-08-social-biographies-trust.md).
+Owner now authorized biography improvements across all three accounts. Instagram and Snapchat
+bios saved and read back; existing website links retained. TikTok draft did not persist through
+its web editor and remains blocked. Official store inquiry found no result for the tested names
+and URL; this is inconclusive. Await current certificate/registration identifier before publishing
+trust proof. No certification claim, highlight, post, avatar or policy change in this step.
+
+
 ## Live social links and Snapchat CR identity — 2026-09-08
 
 [Execution record](docs/handoffs/2026-09-08-social-links-snapchat-cr.md).
