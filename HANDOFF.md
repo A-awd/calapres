@@ -1,5 +1,14 @@
 # Handoff
 
+## Simplified biographies and registration footer — 2026-09-08
+
+Owner removed the Optix ownership tagline from public biographies while retaining the legal
+ownership fact. Instagram/Snapchat removal saved and verified; TikTok had no such tagline.
+Live Shopify footer now displays الرقم الوطني الموحد: 7025878104 through the existing copyright
+setting; public DOM and desktop visual verified. Direct store links adopted; registration highlight
+remains planned, not published. See decision 0007 latest presentation amendment.
+
+
 ## Legal identity corrected to Optix — 2026-09-08
 
 Owner confirms all brands, including Calapres, belong to مؤسسة أوبتيكس. Supplied certificate

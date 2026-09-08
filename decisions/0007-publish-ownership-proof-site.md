@@ -54,3 +54,15 @@ TikTok draft contains no old entity name; its earlier persistence blocker remain
 Owner-site source still contains the old entity and requires a separate complete publication
 verification before claiming all public surfaces corrected. No legal-account, billing, or
 verification ownership transfer executed. Creator partnership remains pending username/destination.
+
+## Public presentation amendment — 2026-09-08
+
+Owner chooses direct calapres.com links for social accounts; no Linktree. Remove the promotional
+phrase إحدى علامات مؤسسة أوبتيكس from biographies and current copy. This does not reverse the
+legal ownership correction. Registration document is intended for a future highlight; none was
+published in this step. Instagram/Snapchat phrase removal saved and verified; TikTok profile and
+its unsaved draft do not contain it (prior save blocker remains).
+Live theme 165804638464 footer copyright_name now reads كالابريز | الرقم الوطني الموحد: 7025878104.
+Used the exact certificate identifier label, not an invented separate commercial registration number.
+Saved via theme editor; fresh public storefront DOM and desktop screenshot verified the footer.
+Source config mirrors the single setting. No theme deployment or switch; no original PDF published.
