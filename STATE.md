@@ -1,5 +1,21 @@
 # Project State
 
+## Portrait header revision after actual crop failure - 2026-09-08
+
+Owner screenshots IMG_1081/1082 show uploaded landscape header clipped in both
+compact and expanded views. Owner requested same design with corrected dimensions.
+Magnific portrait adaptation delivered as
+Ai-Work/Snapchat-Headers-2026-09-08/07-snapchat-portrait.png,
+creation 0ehC3ybTfW, PNG dimensions verified 3000 x 4552 (375:569).
+This ratio comes from secondary published guidance, NOT verified official Snapchat
+requirements. Visual review confirms entire wordmark, brown texture, no frame.
+AI did not reliably follow requested upper-third wordmark placement; final remains
+near center. Do not claim both in-app states validated or pixel-identical preservation.
+No upload performed. Actual Snapchat preview remains required. Earlier local 05/06
+are unsuccessful intermediate layouts, not deliverables to upload. Preserve originals.
+Three generation edits plus three resize operations charged 345 credits this turn.
+iCloud server sync unverified. Next: actual in-app crop validation before acceptance.
+
 ## Snapchat header approved by owner - 2026-09-08
 
 Owner explicitly approved the revised brown header ("adopt it, beautiful").
