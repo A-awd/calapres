@@ -1,5 +1,39 @@
 # Handoff
 
+## Ratio correction and rejected padded social exports - 2026-09-08
+
+Owner rejected padded social exports and two Snapchat highlights. Requires one
+highlight named مباخر كالابريس using native portrait source photos only, and
+Instagram drafts using native feed ratios without padding or repurposed portraits.
+Audited all42 sources: 19 near9:16, 17 near4:5, 3 near1:1, 2 landscapes, 1 reference
+collage. All source resolutions exceed export targets. Prepared39 JPEGs from native
+watermarked masters with sRGB and no padding: stories1080x1920, feed1080x1350,
+squares1080x1080. Tiny source pixel-rounding differences normalized with ImageOps.fit;
+no substantial crop or upscale. Landscapes27 (6830x3842),30 (6830x5464) held.
+Folders Ai-Work/سناب - صور طولية فقط and إنستجرام - نسب أصلية. Full CSV dimensions
+at Ai-Work/تقرير مقاسات الصور.csv; Arabic explanation توضيح المقاسات المصححة.md.
+
+Owner gave action-time approval to permanently delete the two prior Snapchat
+highlights after native replacement was prepared. Both deleted with success,
+then19 native portraits published in one saved story. Reload verified exactly one
+مباخر كالابريس card with19Snaps. No duplicate highlight remains.
+
+IMPORTANT BLOCKER: attempted replacing media in all7 existing Instagram drafts,
+but persistence verification reopened the last edited draft with OLD5 padded
+1080x1350 photos. Reload and second edit including caption change still failed to
+persist. Therefore do NOT treat any attempted in-place correction as verified.
+Existing7 drafts remain unsafe to publish; native20 replacements ready locally.
+No new Instagram drafts or published posts created this correction turn. No visible
+delete option in inspected draft menu (only copy ID); row selection control has0x0
+bounds and failed, so no destructive draft action attempted. Need supported persistent
+draft replacement/management surface, then validate each saved draft. Earlier verbal
+update saying drafts corrected was retracted immediately after verification failed.
+Likes/views hiding remains pending for Meta drafts. Snapchat website issue remains
+unresolved as owner confirms absent in app; stop treating admin field as visitor proof.
+Private evidence: Ai-Work/مراجعة صور الشعار/corrected-ratios.json and
+correction-status.json. Existing padded exports and old ledgers are superseded,
+not deleted. Remote iCloud synchronization not independently confirmed.
+
 ## Instagram drafts and Snapchat saved stories - 2026-09-08
 
 Owner authorized Instagram drafts with short Arabic captions and Snapchat profile
