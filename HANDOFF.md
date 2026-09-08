@@ -1,5 +1,22 @@
 # Handoff
 
+## Cross-device continuation handoff prepared — 2026-09-08
+
+The owner is continuing from another computer because these conversations were not visible there.
+Use [the portable continuation and project-instructions record](docs/handoffs/2026-09-08-cross-device-content-cleanup-resume.md).
+This is a documentation handoff, not a diagnosis or repair of ChatGPT sync. Other-device access
+and ChatGPT UI project settings were not verified or changed. GitHub main and its AGENTS.md remain
+the live source of instructions; resolve the actual device iCloud root and verify file access.
+
+Saved the Arabic prompt and separate project-instructions text at
+`عمل/تجارة/Calapres/Ai-Work/التسليم/متابعة كالابريز من جهاز آخر - 2026-09-08.md`.
+Local file readback passed; iCloud server upload and visibility on the other device are unconfirmed.
+The latest local read still showed 144 burner media files plus the comparison HTML, and empty
+owner classification folders. Reinventory on the new device; no old missing asset should be restored.
+Next action there: read-only source/access verification and a short current-state summary, then the
+owner's next cleanup decision. This handoff authorizes no new media move, deletion, generation,
+publishing, schedule, account, payment or operational workflow change.
+
 ## Exact duplicate organization and quality comparison — 2026-09-08
 
 Owner asked to label or arrange duplicate burner files, explicitly concerned that visually similar

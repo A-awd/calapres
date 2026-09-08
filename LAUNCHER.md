@@ -17,6 +17,15 @@ authority.
 3. Verify the relevant live Shopify state before trusting a stored status claim.
 4. Confirm scope, protected data, blockers, and the next authorized action.
 
+## Device changes
+
+For another computer, use the current main version of
+`docs/handoffs/2026-09-08-cross-device-content-cleanup-resume.md`. It provides an Arabic continuation
+prompt and separate project-instructions text. Verify actual GitHub and iCloud access first; do not
+recreate copied media, restore owner-deleted files, or assume previous chat/settings synchronization.
+Resolve `عمل/تجارة/Calapres/Ai-Work` under the new device's iCloud root. Keep uncertainty about
+cloud upload and other-device UI settings explicit.
+
 ## Runtime boundary
 
 Shopify is the operational source of truth. GitHub is the technical source of truth.

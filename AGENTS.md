@@ -43,6 +43,18 @@ Root-level content is unclassified. These owner selections guide realism; they d
 photographic provenance, manufacturing accuracy or publication approval. Preserve original files
 and do not reintroduce an excluded image under another filename. Save new deliverables in Ai-Work.
 
+## Cross-device continuity
+
+Chat history, attached source mirrors and UI project instructions may be stale. Verify current
+GitHub main and read its instructions on every device before meaningful work. Use the portable
+[handoff and project-instructions text](docs/handoffs/2026-09-08-cross-device-content-cleanup-resume.md)
+when restarting elsewhere; do not replay completed operations because chats are unavailable.
+Resolve the device's actual iCloud Drive root, then `عمل/تجارة/Calapres/Ai-Work`. A known path
+is not filesystem permission, and local existence is not confirmed cloud upload. Report missing
+access rather than inventing a read. Keep synced `sources/` reference mirrors read-only where present.
+Editing this repository does not prove ChatGPT UI project settings or another device updated.
+Do not claim UI updates or conversation-sync repair without independent verification.
+
 ## Binding architecture
 
 Calapres is Shopify-native and owner-curated:
