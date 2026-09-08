@@ -3169,3 +3169,16 @@ project and acknowledging irreversibility.
   than the current operational Calapres WABA.
 - The owner explicitly paused this topic. Do not delete the official catalog, change its native
   Shopify synchronization, or create a replacement catalog as a shortcut.
+
+
+## 2026-09-08 — Public contact email and Snapchat Website visibility audit
+
+- Revalidated origin/main c0c829e before work. Approved public contact address remains info@calapres.com.
+- Instagram: set public business email to info@calapres.com using /accounts/professional_account_settings/ and submitted. Verified the value visually after reload; Display contact information remains checked. DOM snapshots/evaluate omitted the email value even while screenshots showed it, so blank DOM values are NOT evidence the saved field is empty. Original email value was not visually captured; do not claim an old address was observed. Login email was untouched.
+- Snapchat: current edit dialog confirms info@calapres.com and https://calapres.com/ in their separate public fields. Profile settings show linked Calapres ad account, no age restrictions and Global availability. Owner reports Website pill absent in app; this remains unresolved. Admin save is not visitor verification.
+- Official Snapchat support lists Website + Public Email as Creator/Business Profile features; no verified-star requirement established. Professional Account toggle and Ads Manager Business Profile are distinct concepts. Sources: https://help.snapchat.com/hc/en-gb/articles/7012318435476-What-features-come-with-a-Creator-Account-on-Snapchat and https://help.snapchat.com/hc/en-us/articles/40665782407060-What-kind-of-Public-Profile-do-I-have-on-my-Snapchat-account .
+- TikTok: logged-in @calapres public web profile has clickable Calapres.com link and no visible email. Native edit dialog only offers picture, username, display name and bio. Settings and Web Business Suite exposed no public-email editor. No TikTok email changed or verified. Official Business Page editor is mobile-app-only: https://ads.tiktok.com/resources/help/article/how-to-set-up-a-business-page-for-your-business-account?lang=bg-BG .
+- Opened Snapchat business support chat without sending a message. Prepared reviewable support request in Ai-Work/طلب فحص ظهور رابط سناب - 2026-09-08.txt. Explicit permission to send is pending.
+- Evidence: Ai-Work/مراجعة صور الشعار/instagram-contact-email-20260908.png. Files verified locally; cloud upload not confirmed.
+- Earlier Snapchat corrected single 19-photo saved story remains. Instagram draft media persistence blocker remains; no drafts published or deleted during this audit.
+- Next: obtain permission to send prepared Snapchat support request; follow supported TikTok public business-contact editing path when available. Do not promise Website visibility until visitor-app verification.
