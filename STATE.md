@@ -1,5 +1,13 @@
 # Project State
 
+## Snapchat partnership and tracking inquiry — 2026-09-08
+
+[Read-only findings](docs/handoffs/2026-09-08-snap-partnership-tracking.md).
+Shopify lists Snapchat, Meta, TikTok and Google app pixels with Server/Web and Optimized settings.
+Actual event delivery, purchase attribution and GA4 property remain unverified. No partnership
+invitation or paid promotion sent. Need creator username and destination for campaign setup.
+
+
 ## Social biographies and Saudi trust — 2026-09-08
 
 [Execution and blockers](docs/handoffs/2026-09-08-social-biographies-trust.md).
