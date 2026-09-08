@@ -32,6 +32,9 @@ duplicate originals without separate authorization.
 Under [decision 0042](decisions/0042-owner-curated-content-realism-folders.md), only Abdulrahman
 classifies files into `أصيل` (closer to reality/visually convincing) and
 `محتوى غير مرغوب به` (excluded from creative selection; preserve, do not delete).
+Burner media is grouped by subject in `المحتوى/المبخر` for owner cleanup. Moving it there
+is not an authenticity or quality classification. Preserve existing duplicate files until the owner
+explicitly directs their deletion; do not restore files removed during owner cleanup.
 Root-level content is unclassified. These owner selections guide realism; they do not certify
 photographic provenance, manufacturing accuracy or publication approval. Preserve original files
 and do not reintroduce an excluded image under another filename. Save new deliverables in Ai-Work.

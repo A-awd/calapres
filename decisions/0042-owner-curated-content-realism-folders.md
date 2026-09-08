@@ -40,6 +40,34 @@ refresh the plan against the owner's actual choices. No new media or media backu
 Local moves and byte integrity are verified. Live iCloud server synchronization remains unconfirmed.
 No image generation, social publication, schedule, account binding or operational workflow changed.
 
+## Burner content isolated for owner cleanup — 2026-09-08
+
+Owner requested one folder named `المبخر` containing burner content so he can clean it himself.
+Executed and verified: MOVED 170 existing media files (166 images, 4 videos; 2,002,525,509 bytes)
+into `عمل/تجارة/Calapres/Ai-Work/المحتوى/المبخر`. This is a subject grouping, not a quality,
+authenticity, manufacturing or publication approval. It includes actual burner photography,
+generated trials, older multi-burner sets, and burner references/trials depicting other forms.
+They are not all faithful representations of the currently approved one-burner offer.
+
+Selection used visual review of 203 distinct image hashes and five sampled frames for each of
+24 distinct videos in the then-current local media inventory. Full-video editorial review was not
+performed. Full SHA-256 identified identical aliases so existing duplicates of selected content
+were moved together. The resulting 170 files contain 69 distinct hashes; no duplicate was deleted.
+The existing root `hero-video.mp4` was also moved into the burner folder after frame inspection.
+
+Every moved file retained its name, filesystem inode, size and complete SHA-256, and its former
+path is absent. No content copy, link, overwrite, image edit or media deletion occurred in this step.
+Owner cleanup continued in unrelated files during inspection; only existing, unchanged selected
+burner files were moved. No missing item was restored. The earlier content-plan file and private
+CSV ledgers were no longer present and were not recreated. Prior counts/paths are historical.
+The private move audit remains in the agent workspace, with no raw filenames committed here.
+
+The existing `أصيل` and `محتوى غير مرغوب به` folders remain at the parent collection level and
+were empty when verified. The owner alone selects accepted/excluded files. Future work must inspect
+these folders and the actual burner folder rather than regenerating assets from stale inventories.
+Local movement and integrity verified; iCloud server upload remains unconfirmed. No live service,
+account, schedule, generation, purchase, or publication changed. Next: owner cleanup in `المبخر`.
+
 ## Owner direction
 
 After requiring repeated review and visually convincing content, Abdulrahman asked to collect
