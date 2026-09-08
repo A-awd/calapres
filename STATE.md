@@ -1,5 +1,29 @@
 # Project State
 
+## Instagram drafts and Snapchat saved stories - 2026-09-08
+
+Owner authorized Instagram drafts with short Arabic captions and Snapchat profile
+highlights. Later required hiding likes/views on all posts and spaced punctuation,
+one sentence per line, blank line before CTA.
+Executed and verified: 7 Instagram-only drafts in Meta Business Suite containing
+all41 product photos: one single image plus six color-grouped albums (10,2,10,3,10,5).
+Reference collage01 excluded. No Instagram post published. Native Instagram web
+composer cannot save drafts (exit explicitly discards); kept its one unsaved composer
+open, with hide-like/view-count switch checked. Meta composer exposes no equivalent
+switch, so all7 draft hide-count settings remain UNVERIFIED/UNAPPLIED and must be
+set before publication. Do not claim account-wide completion or silently publish.
+Snapchat: saved-story publishing returned success twice. After reload, Saved Stories
+confirmed مباخر كالابريز (30) and تفاصيل كالابريز (11). All41 uploaded, no Spotlight
+or temporary public-story destination selected. Website field was already populated;
+re-saved https://calapres.com/ and received profile-update success. Mobile visitor
+website button remains unverified; owner reports absent. Do not claim resolved.
+Business support draft prepared locally, not sent; sending requires owner request.
+Private evidence and file mapping: Ai-Work/مراجعة صور الشعار/social-publication-ledger.json,
+instagram-drafts-verified.txt and snapchat-saved-stories-verified.txt.
+Local captions: Ai-Work/أوصاف إنستجرام - كالابريز.md. Remote iCloud sync unverified.
+Next: owner reviews drafts; resolve hide-count setting before any Instagram publication,
+and obtain Snapchat support investigation if website button remains absent in app.
+
 ## Full approved wordmark batch completed - 2026-09-08
 
 Owner instructed completing all remaining photos after enlarging the direct-overlay
