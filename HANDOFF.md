@@ -1,5 +1,13 @@
 # Handoff
 
+## Legal identity corrected to Optix — 2026-09-08
+
+Owner confirms all brands, including Calapres, belong to مؤسسة أوبتيكس. Supplied certificate
+visually verifies the name and unified national number 7025878104. Instagram/Snapchat bio
+corrections saved and verified. Earlier عبق الخيل references are superseded for current use.
+See decision 0007 amendment for evidence boundaries and outstanding owner-site correction.
+
+
 ## Snapchat partnership and tracking inquiry — 2026-09-08
 
 [Read-only findings](docs/handoffs/2026-09-08-snap-partnership-tracking.md).

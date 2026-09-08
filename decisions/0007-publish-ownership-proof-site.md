@@ -38,3 +38,19 @@ No other brand is included until its ownership and public details are separately
   verification, or unrelated custom records is prohibited.
 - The page improves the evidence available to Meta but does not guarantee a display-name approval;
   Meta retains the final decision.
+
+## Owner correction — 2026-09-08: Optix establishment
+
+The owner explicitly states all his brands belong to مؤسسة أوبتيكس, including Calapres.
+The supplied one-page Arabic commercial register was extracted and visually inspected: exact
+legal name مؤسسة أوبتيكس; unified national number 7025878104; entity type establishment;
+issue date 25/09/2021; certificate states active. This is document evidence, not a live registry
+status check or Calapres e-commerce certification. Brand relationship is owner-attested.
+This supersedes the earlier عبق الخيل ownership assertion for current Calapres usage; preserve
+historical records rather than interpreting them as current identity.
+Original stays in iCloud: عمل/تجارة/Optix/أصيل/سجل اوبتيكس عربي .pdf. Do not move or publish it.
+Instagram and Snapchat biographies corrected to إحدى علامات مؤسسة أوبتيكس and display verified.
+TikTok draft contains no old entity name; its earlier persistence blocker remains.
+Owner-site source still contains the old entity and requires a separate complete publication
+verification before claiming all public surfaces corrected. No legal-account, billing, or
+verification ownership transfer executed. Creator partnership remains pending username/destination.
