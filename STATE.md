@@ -1,5 +1,16 @@
 # Project State
 
+## Snapchat profile link investigation — 2026-09-08
+
+Owner reports no clickable profile website. Public web /add/calapres redirects to /@calapres
+and shows account identity/add prompt with no store website link in the rendered page.
+Business dashboard authenticates as Calapres organization admin and lists its public profile.
+Direct Profile Manager, its root, and Business dashboard Edit Profile all fail with the same
+React #130 application error before the form renders. English admin-language test did not fix it.
+No profile website change succeeded this turn. Prior stored website is not proof of visitor UI.
+Next step: inspect native Snapchat My Public Profile > Edit Profile website field and visitor
+preview; requires owner-provided native screen or access. Do not claim completion from bio text.
+
 ## Arabic policies and free Saudi shipping — 2026-09-08
 
 Four concise Arabic policies published and publicly verified. Refund/shipping titles unified.
