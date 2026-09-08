@@ -1,5 +1,16 @@
 # Handoff
 
+## Policy, social links and logo preparation — 2026-09-08
+
+[Current preparation record](docs/handoffs/2026-09-08-policy-social-logo-preparation.md).
+Shopify policies inspected read-only; Arabic review package saved in Ai-Work/السياسات.
+Privacy is currently English, shipping claims conflict with prior checkout evidence, and identity,
+retention/transfer details and operating commitments need verification before publication.
+Existing social icons can be reused; three URLs await owner input. Magnific connection verified;
+logo/photo selection pending and no credits spent. No live write or image change occurred.
+Local files verified; cloud synchronization unconfirmed.
+
+
 ## Cross-device continuation handoff prepared — 2026-09-08
 
 The owner is continuing from another computer because these conversations were not visible there.
