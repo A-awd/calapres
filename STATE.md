@@ -3697,3 +3697,8 @@ absent until the separate activation decision and every safety gate pass.
 - Evidence: Ai-Work/مراجعة صور الشعار/instagram-contact-email-20260908.png. Files verified locally; cloud upload not confirmed.
 - Earlier Snapchat corrected single 19-photo saved story remains. Instagram draft media persistence blocker remains; no drafts published or deleted during this audit.
 - Next: obtain permission to send prepared Snapchat support request; follow supported TikTok public business-contact editing path when available. Do not promise Website visibility until visitor-app verification.
+
+
+## 2026-09-08 — Instagram drafts removed at owner request
+
+Owner explicitly requested deletion of all Instagram drafts and will explain the replacement layout later. The seven Calapres Instagram draft rows initially observed are now absent. Reopened Drafts and reloaded; confirmed empty-state message. Deletion confirmations were executed in the UI; some intermediate row removals/navigation changes happened between observations, so do not attribute every individual removal to a traced click. No replacement drafts created. Local originals untouched. Evidence: Ai-Work/مراجعة صور الشعار/instagram-drafts-empty-20260908.png. Prior draft correction/persistence blocker superseded by removal; await owner's new layout instructions. Snapchat support request remains unsent.
