@@ -1,5 +1,25 @@
 # Handoff
 
+## Snapchat header concepts awaiting owner selection - 2026-09-08
+
+- Owner requested actual alternatives using the official flourished CALAPRES wordmark,
+  approved beige #DFD4C3 and burnt brown #44271B only; no CR seal or products.
+- Magnific generated three reviewed concepts: 01-letterpress.png (iGMdvPb3uK),
+  02-frame.png (s7i2MOYl8e), 03-paper-waves.png (YMIv5XvWeC).
+  Nano Banana Pro / imagen-nano-banana-2, 2k, landscape 16:9 request;
+  actual PNGs 2752 x 1536; 75 credits each, 225 total generation charges.
+- Reference: existing official wordmark upload jUN3c8RLD0. Generative reference guidance
+  is not a guarantee of pixel-identical letter outlines or exact flat RGB values.
+- Local deliverables verified under Ai-Work/Snapchat-Headers-2026-09-08/.
+  iCloud server upload not independently confirmed. All three completed and shown inline.
+- Letterpress inspiration: https://www.forthemakers.design/prompts/textures-and-materials
+  visible Letterpress Card description/model inspected; full copied prompt and example
+  image were not retrieved. Full decision 0038 example-verification gate was not established;
+  the first generated concept was visually reviewed before producing the remaining two.
+- Proposed designs only: none selected or published. Actual Snapchat header crop and
+  platform requirements remain unverified; verify before final export/upload after selection.
+- Next: owner chooses 1/2/3. Preserve existing profile seal. Social link blockers below remain.
+
 ## Social website follow-up: native-app step required — 2026-09-08
 
 Fresh TikTok @calapres has no bio or website. Standard desktop editor exposes avatar,
