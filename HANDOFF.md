@@ -1,5 +1,15 @@
 # Handoff
 
+## Watermark moved closer to product - 2026-09-08
+
+Owner requested moving pilot watermark toward burner to make cropping it out harder.
+Revised sample uses original source; width12%, opacity35% unchanged, centered at
+x50%, top y75.5%, just below tray. Dimensions4452x7915 preserved; pixel comparison
+confirms no changes outside logo rectangle. Files in Ai-Work/Logo-Batch-2026-09-08:
+sample-wordmark-near-burner.png and sample-wordmark-near-burner-preview.jpg.
+Shown for review. Do not apply same normalized y to every photo; placement must
+follow product location. Batch not yet produced. Watermark is not copy protection.
+
 ## Direct overlay pilot shown - 2026-09-08
 
 Owner asked for an example after direct local compositing was explained. This
