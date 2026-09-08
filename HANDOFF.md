@@ -1,5 +1,16 @@
 # Handoff
 
+## Snapchat header approved by owner - 2026-09-08
+
+Owner explicitly approved the revised brown header ("adopt it, beautiful").
+Selected Magnific creation: 79GWvuRJAL; deliverable:
+Ai-Work/Snapchat-Headers-2026-09-08/04-brown-light.png.
+This supersedes the pending-selection state below. Keep the CR seal as profile
+avatar and use the beige CALAPRES wordmark/brown-light design as the header.
+Approval is confirmed; upload/publication is NOT confirmed. Next safe action:
+verify Snapchat's actual header dimensions/crop and apply the selected header
+when Profile Manager is accessible. Preserve the approved original image.
+
 ## Revised Snapchat header - 2026-09-08
 
 Owner rejected the first three concepts and requested a more luxurious result.
