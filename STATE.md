@@ -1,3 +1,9 @@
+## 2026-09-09 — Optional conversation outcome
+
+- Owner approved removing the required-resolution constraint. Removed conversation_outcome from Attributes required on resolution in live Chatwoot.
+- UI confirmed Required attributes updated; after reload showed No attributes added yet. Auto-resolve remains off.
+- This change does not itself resolve or delete existing conversations.
+
 ## 2026-09-09 — Launch-day Chatwoot settings review
 
 - Owner authorized deletion of all previous experimental conversations. UI all-status list showed 21; no deletion performed. Bulk actions and individual menu did not expose conversation deletion. Current user is verified administrator, so do not claim missing admin role. Do not delete contacts/account as substitute. Need supported authenticated conversation-delete route; no Chatwoot connector available this session.
