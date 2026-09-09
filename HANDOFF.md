@@ -1,3 +1,11 @@
+## 2026-09-09 — WhatsApp conversation continuity
+
+- Live Chatwoot WhatsApp inbox: changed Conversation Routing from Create new conversations to Reopen same conversation; saved and verified checked after reload.
+- No historical conversations or contacts were deleted or merged. No customer message sent.
+- Paid-order workflow uses POST conversations. Upstream ConversationBuilder respects lock_to_single_conversation and returns the existing contact-inbox conversation; production end-to-end reuse remains untested. Do not claim historical consolidation or tested order-message reuse.
+- Unsupported incoming message original type remains unknown. Chatwoot placeholder does not expose the lost content; owner has no WhatsApp app. Existing Captain response already requests resend. Do not advise app access as an available remedy.
+- Next: inspect same-number historical contact/conversation identities and safe consolidation support; verify future inbound continuity without sending unsolicited customer messages.
+
 ## Deferred shipping facts — owner instruction 2026-09-09
 
 Owner will confirm later; save as a deferred task, not a current blocker for email/template review. Deferred: actual courier pickup address and contact phone, packaged burner weight and dimensions, preferred carrier. Do not invent these values, activate label automation, or create a shipment pending confirmation. Embedded automatic label creation and carrier checkout rates remain OFF as last verified. Next active work: review customer email/WhatsApp copy and Klaviyo configuration; no reminder schedule requested.
