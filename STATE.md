@@ -1,4 +1,9 @@
 
+## 2026-09-09 — Mobile purchase #1002 verified; attribution pending
+
+Owner completed mobile checkout. Shopify readback: order #1002 at 01:32:05Z, PAID, Paymob SALE SUCCESS, 0.04 SAR, CR99 applied. Unfulfilled. No fulfillment/refund performed. CR99 was explicitly changed to unlimited usage and repeat customer usage; expiry retained 2026-09-09T21:00:00Z. GA4 realtime inspected all 7 event types: no purchase/key event observed at inspection. Snap overview shows last ingested event 2 hours ago, no purchase row; cannot conclude failure or success for this fresh order from that delayed overview. Shopify customerJourneySummary ready=false. Meta/TikTok purchase receipt not verified. Asked owner whether mobile returned to thank-you page after payment. Do not claim 100% launch/tracking readiness.
+
+
 ## 2026-09-09 04:15 Arabia — Duplicate cart tracking fixed and published
 
 Supersedes prior duplicate ADD_CART blocker. Live Shopify Pixel Helper reproduced two product_added_to_cart events from one form submission and one real cart item. Changed only assets/calabriz-cart.js delegated submit handler to capture phase so preventDefault runs before Shopify native form tracking; successful AJAX cart request remains the event source. No manual pixel calls added.
