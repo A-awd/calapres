@@ -1,4 +1,8 @@
 
+## 2026-09-09 — Customer-message designs prepared, not applied
+
+Owner moved focus to emails/WhatsApp/Apple Branded Mail. Three-case local review at Ai-Work/رسائل العملاء/معاينة الإيميل وواتساب.html. Shopify sender info@calapres.com authenticated; Apple tab still signup; public DMARC p=none requires reviewed strengthening after sender DKIM checks. No messages sent, templates activated, DNS modified or Apple registration submitted. See docs/customer-message-design-review-2026-09-09.md for evidence, preview limitations and implementation gates. Purchase tracking remains unresolved.
+
 ## 2026-09-09 — Apple Pay verified; purchase telemetry remains unverified
 
 Order #1003 (01:48:30Z) is PAID, 0.04 SAR, Paymob SALE SUCCESS, wallet APPLE_PAY. Admin timeline independently confirms Apple Pay. Test engraving says not to fulfill; no fulfillment/refund performed. GA4 realtime has no purchase; Transactions report for Sep9 also zero at about04:55 Arabia, too fresh to use standard reporting latency as definitive failure. Prior Aug12–Sep8 report also zero. Snapchat refreshed overview has158 events (56 web,102 CAPI), latest about1 hour old, no purchase row; does not yet cover fresh tests. Google native settings remain connected/on. Checkout-link enhancement observed On; inspected dialog and canceled, no setting changes in this check. Earlier summary suspected unintended change but no save evidence established; do not assert provenance.
