@@ -1,5 +1,30 @@
 # Project State
 
+## Marketing data access enabled and Merchant count corrected — 2026-09-09
+
+Owner authorized enabling data access and launch preparation. Saved and verified
+Always on for Meta, Google, Snapchat and TikTok in Shopify Customer events. Consent
+requirements unchanged. Snap had automatically resumed Optimized at02:10 before
+this change. All4 rows verified Always on after saves/reloads.
+Direct Merchant Center account582442539 has6 approved offers: white,gray,beige each
+with text-only and attached-design variants. Previous Shopify-app summary4 must not
+be described as4 base products. No extra base product, no catalog deletion/change.
+Snap Events Manager verified81 historical events (43Pixel,38CAPIv3); partner settings
+show Shopify WPE and server-to-server connected, additional event setup unconfigured.
+Official Test Events live03:56-03:58 received valid PAGE_VIEW,VIEW_CONTENT,ADD_CART,
+START_CHECKOUT. However ADD_CART repeats twice per one click, with DIFFERENT sh-
+client_dedup_id values, both displayed as Snap Pixel web. Reproduced with one store
+tab and empty cart; only1actual item added. Root cause unresolved; no manual snaptr
+found in local assets/layout/snippets. Do not claim deduplication fixed or purchases
+verified. ADD_BILLING event appeared without card entry; also not payment evidence.
+Checkout visibly shows free Saudi shipping and14days from reservation confirmation
+for name/logo customization. No order/payment/customer data submitted. Test cart
+emptied and verified. TikTok/Meta/Google provider-side tests remain unverified.
+Snap ad balance low/empty, campaigns inactive; no spend authorized or enabled.
+Evidence and dated Arabic addendum at Ai-Work/إطلاق إعلان سناب/ . Local writes verified,
+cloud sync not independently verified. Remaining: diagnose vendor/native duplicate
+ADD_CART, perform authorized purchase validation, receive creator username/link setup.
+
 ## Prelaunch influencer audit — 2026-09-09
 
 Live read-only audit found Snapchat and TikTok app pixels Optimized / Access paused
