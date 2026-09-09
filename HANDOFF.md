@@ -1,3 +1,9 @@
+## OTO and customer-notification audit — 2026-09-09
+
+Owner requested resuming customer email/WhatsApp designs and inspecting automatic OTO labels and notifications. Live Shopify embedded OTO inspection: three owner test orders imported and assigned to the existing warehouse; all pending, carrier and tracking fields empty, zero awaiting pickup/shipping/delivered. OTO wallet displays SAR 0. Auto-create is ON, with explicit UI condition that the customer selects a delivery company at checkout. Discounted carrier rates toggle is ON; this is not proof those carrier choices are available in actual checkout. Current free manual Saudi rate must be preserved. No label, carrier purchase, pickup or notification was created during this audit.
+
+Decision 0041 remains the documented paid-order WhatsApp confirmation implementation; it contains no shipping sender. Receipt is owner-confirmed. Label-triggered WhatsApp and fulfillment email delivery remain unverified. Do not promise dispatched/delivered based on label creation. Next work: verify pickup/contact/package facts and carrier selection rules, choose readiness trigger for customized goods, prepare transactional email/WhatsApp templates for owner review, and run a bounded label/writeback/notification test only after shipping charge authorization. Keep prepaid-only and no COD.
+
 
 ## 2026-09-09 — Customer-message designs prepared, not applied
 
