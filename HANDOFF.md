@@ -1,3 +1,10 @@
+## 2026-09-09 — MDA Snapchat campaign link live
+
+- Created Shopify redirect /mda (gid://shopify/UrlRedirect/482986197248) to https://calapres.com/?utm_source=snapchat&utm_medium=paid_social&utm_campaign=mda_snap_202609&utm_content=mda_story. Mutation returned no errors.
+- Public HTTP test verified one redirect, final HTTP 200 and all UTM parameters preserved. Short URL: https://calapres.com/mda. No purchase receipt/attribution validation performed; do not equate link success with measurement readiness.
+- Live Snapchat settings identify @mda.alshammari; partnership invitation remains pending. Profile age restriction None and geography Global. No new invitation, message, ad or age-setting mutation performed.
+- Saved owner handoff locally at Ai-Work/إطلاق إعلان سناب/MDA سناب - رابط الإعلان.txt; cloud sync not independently confirmed. Next: creator accepts and labels commercial Snaps, attaches link; verify real purchase receipt and campaign attribution in analytics before claiming full readiness.
+
 ## 2026-09-09 — Snapchat influencer operating research
 
 - Owner requested independent practitioner research and a repeatable campaign method. Prepared a dated Arabic working guide in Ai-Work/إطلاق إعلان سناب/دليل إعلانات المشاهير - البحث وطريقة العمل - 2026-09-09.md.
