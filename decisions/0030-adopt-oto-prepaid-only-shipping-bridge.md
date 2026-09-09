@@ -58,3 +58,7 @@ specific approval before that action.
 Disable the OTO Shopify channel or uninstall the OTO app only after confirming that no shipment is
 in progress. Preserve the Shopify manual Saudi delivery rates. Do not delete historical shipping or
 order records as part of rollback.
+
+## Superseding owner decision — 2026-09-09
+
+Labels must not be created on booking/payment. Release only after physical readiness. Embedded OTO automatic shipment creation and carrier rate display at checkout were disabled and reload-verified. Free Saudi shipping supersedes the historical SAR 25 threshold per decision 0043. Standalone warehouse automation still requires live verification after owner sign-in.
