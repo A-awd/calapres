@@ -1,3 +1,7 @@
+## Deferred shipping facts — owner instruction 2026-09-09
+
+Owner will confirm later; save as a deferred task, not a current blocker for email/template review. Deferred: actual courier pickup address and contact phone, packaged burner weight and dimensions, preferred carrier. Do not invent these values, activate label automation, or create a shipment pending confirmation. Embedded automatic label creation and carrier checkout rates remain OFF as last verified. Next active work: review customer email/WhatsApp copy and Klaviyo configuration; no reminder schedule requested.
+
 ## Manual label release and notification copy — 2026-09-09
 
 Owner explicitly requires no label at booking; customized orders must be ready before label release. Disabled Shopify embedded OTO Auto-create Shipments and OTO Discounted Rates at Checkout. Reload verified both OFF. No checkout shipping profile, account, pickup address, rate purchase, wallet, message or template activation changed. Standalone OTO requires user login, so warehouse-level auto-create rules and sender configuration remain unchecked. Existing import bridge was not disabled; no fresh order was created to retest ingress. Need actual pickup/contact and packaged dimensions/weight before configuration and a shipping budget before payment.
