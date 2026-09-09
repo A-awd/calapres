@@ -1,3 +1,10 @@
+## 2026-09-09 — Snapchat influencer operating research
+
+- Owner requested independent practitioner research and a repeatable campaign method. Prepared a dated Arabic working guide in Ai-Work/إطلاق إعلان سناب/دليل إعلانات المشاهير - البحث وطريقة العمل - 2026-09-09.md.
+- Findings distinguish anecdotal Spotlight complaints, paid-media attribution discrepancies, self-reported agency cases, and official requirements. No proven anti-restriction workaround found; duplicate posts from one complainant are not independent corroboration.
+- Working method: accepted partnership and per-Snap disclosure, clear store link, verified purchase measurement, natural product demonstration, pre/post-publication checks and per-creator reporting. Durations/link counts/report windows are explicit test hypotheses, not platform requirements. No campaign launched, invitation sent, or new tracking URL created.
+- Deliverable saved and read locally; iCloud server sync not independently confirmed. Next: obtain creator username, audience statistics, agreed scope and campaign identifiers; inspect live partnership UI and verify measurement before activation.
+
 ## 2026-09-09 — Optional conversation outcome
 
 - Owner approved removing the required-resolution constraint. Removed conversation_outcome from Attributes required on resolution in live Chatwoot.
