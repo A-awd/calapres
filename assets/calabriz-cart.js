@@ -151,13 +151,14 @@ document.addEventListener("click",function(e){
   if(t.closest("#checkoutBtn"))window.location.href="/checkout";
 });
 
-/* Native text engraving and paid file personalization share the product form. */
+/* Cancel native submission before Shopify's form listener runs. The successful
+   Ajax cart request remains the sole source of product_added_to_cart events. */
 document.addEventListener("submit",function(e){
   var form=e.target.closest("[data-product-form]");
   if(!form)return;
   e.preventDefault();
   submitProduct(form);
-});
+},true);
 
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCart()});
 

@@ -1,3 +1,12 @@
+
+## 2026-09-09 04:15 Arabia — Duplicate cart tracking fixed and published
+
+Supersedes prior duplicate ADD_CART blocker. Live Shopify Pixel Helper reproduced two product_added_to_cart events from one form submission and one real cart item. Changed only assets/calabriz-cart.js delegated submit handler to capture phase so preventDefault runs before Shopify native form tracking; successful AJAX cart request remains the event source. No manual pixel calls added.
+
+Duplicated live theme 165804638464 to 166066389248, retaining live settings and main-product markup that differ from repository. Uploaded only cart JS. Preview tests: first add increased helper events 2 to 3, second add 3 to 4; quantities 1 then 2. Published through Shopify UI; API confirms new theme MAIN. Live Snap test at 04:14: one valid ADD_CART and cart quantity 1. Previous theme retained for rollback. No paid checkout, purchase event, CAPI purchase deduplication, or all-platform purchase attribution verified.
+
+Evidence locally saved at Ai-Work/إطلاق إعلان سناب/إثبات إصلاح تكرار الإضافة - سناب.txt. iCloud upload not independently confirmed. Remaining launch work includes end-to-end purchase verification and influencer-specific attribution link once identity is known.
+
 # Project State
 
 ## Marketing data access enabled and Merchant count corrected — 2026-09-09
