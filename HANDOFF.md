@@ -1,3 +1,13 @@
+## 2026-09-09 — Launch-day Chatwoot settings review
+
+- Owner authorized deletion of all previous experimental conversations. UI all-status list showed 21; no deletion performed. Bulk actions and individual menu did not expose conversation deletion. Current user is verified administrator, so do not claim missing admin role. Do not delete contacts/account as substitute. Need supported authenticated conversation-delete route; no Chatwoot connector available this session.
+- WhatsApp Reopen same conversation remains checked. Greeting off. Four inboxes present; channel delivery health not tested.
+- One enabled automation assigns new conversations to service agent. One administrator. Macros empty; external Agent Bots empty (distinct from Captain).
+- Webhook integration enabled; other displayed integrations disabled. Webhook destination/execution not audited.
+- Custom conversation outcome attribute exists and is required on resolution. Auto-resolve off.
+- Audit logs view empty. Security page SAML requires Enterprise. Assignment page offers assignment and capacity policies; policy contents not inspected.
+- Recommendations only: verify human escalation notifications; macros for human handoff and waiting customer; order context attributes only when reliably populated; no additional responder or SAML upgrade needed for current single-agent launch. No new automations or outbound messages executed.
+
 ## 2026-09-09 — WhatsApp conversation continuity
 
 - Live Chatwoot WhatsApp inbox: changed Conversation Routing from Create new conversations to Reopen same conversation; saved and verified checked after reload.
