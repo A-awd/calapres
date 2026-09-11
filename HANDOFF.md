@@ -2,6 +2,8 @@
 
 Read-only inventory found 42 logo-added PNGs in the legacy Drive folder. All 42 match names and byte sizes of existing original-resolution PNGs in the project iCloud Ai-Work. Local SHA-256 values and comparison results were saved privately. The connector did not expose remote hashes, so byte identity is NOT established and deletion is NOT approved by this comparison. No images were copied, moved, compressed, restored, classified or published. Existing creative-library authority and owner selections remain unchanged.
 
+Evidence locator (clarified 2026-09-11): under the verified project iCloud-relative root `عمل/تجارة/Calapres/Ai-Work`, read `drive-logo-inventory-20260911.json` and `drive-logo-comparison-20260911.json`. The inventory contains the exact 42 Drive file IDs and names; the comparison records each corresponding local size result and SHA-256. Both private records were read locally for this clarification. The inventory does not record a parent folder ID, so the historical parent folder remains unverified and must not be inferred from a folder with the same item count. Revalidate by the recorded file IDs before any retirement decision; do not treat this coverage as proof of a whole folder's identity or completeness.
+
 ---
 
 ## 2026-09-11 — Continuation checkpoint
