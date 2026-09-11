@@ -1,3 +1,11 @@
+## Legacy source folder identity verified — 2026-09-11
+
+The connected Drive root listing identified the logo-added folder, and its complete direct listing returned 42 files below the 100-item cap. All 42 IDs, names and byte sizes matched the prior private inventory exactly. This resolves the earlier parent-folder identification gap; it does not establish remote byte identity, historical-version completeness or deletion approval.
+
+Private evidence: `عمل/تجارة/Calapres/Ai-Work/drive-logo-parent-verification-20260911.json` records the exact source folder URL and the matching membership. It was saved and read back locally; this new evidence file's cloud upload is unverified. Existing `drive-logo-inventory-20260911.json` and `drive-logo-comparison-20260911.json` remain intact. Continue through these records for any future approved source-retirement review. No original media, sharing or store state changed.
+
+---
+
 ## Legacy Drive media coverage — 2026-09-11
 
 Read-only inventory found 42 logo-added PNGs in the legacy Drive folder. All 42 match names and byte sizes of existing original-resolution PNGs in the project iCloud Ai-Work. Local SHA-256 values and comparison results were saved privately. The connector did not expose remote hashes, so byte identity is NOT established and deletion is NOT approved by this comparison. No images were copied, moved, compressed, restored, classified or published. Existing creative-library authority and owner selections remain unchanged.
