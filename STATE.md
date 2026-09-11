@@ -1,3 +1,11 @@
+## 2026-09-11 — Continuation checkpoint
+
+- Confirmed from GitHub: prior main 4fc5a1b; full current evidence, history, safety boundaries and next diagnostic in docs/handoffs/2026-09-11-mda-snapchat-continuation.md.
+- Confirmed live today: https://calapres.com/mda ends HTTP 200 with existing mda_snap_202609 UTM intact. Purchase attribution remains not tested.
+- Owner reports partnership accepted; old pending status below is historical and must not be repeated as current. Live acceptance and actual publication remain unverified.
+- Arabic four-panel illustrative guide saved in Ai-Work/إطلاق إعلان سناب/MDA - شرح إضافة الرابط والشراكة - توضيحي.png; local hash verified, cloud synchronization untested. This is not a screenshot or product creative.
+- Next: inspect live partnership/publication and existing purchase evidence across Shopify/GA4/Snapchat; continue existing setup, never equate redirect success with sales measurement readiness.
+
 ## 2026-09-09 — MDA Snapchat campaign link live
 
 - Created Shopify redirect /mda (gid://shopify/UrlRedirect/482986197248) to https://calapres.com/?utm_source=snapchat&utm_medium=paid_social&utm_campaign=mda_snap_202609&utm_content=mda_story. Mutation returned no errors.
