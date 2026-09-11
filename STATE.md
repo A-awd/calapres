@@ -1,3 +1,9 @@
+## Legacy Drive media coverage — 2026-09-11
+
+Read-only inventory found 42 logo-added PNGs in the legacy Drive folder. All 42 match names and byte sizes of existing original-resolution PNGs in the project iCloud Ai-Work. Local SHA-256 values and comparison results were saved privately. The connector did not expose remote hashes, so byte identity is NOT established and deletion is NOT approved by this comparison. No images were copied, moved, compressed, restored, classified or published. Existing creative-library authority and owner selections remain unchanged.
+
+---
+
 ## 2026-09-11 — Continuation checkpoint
 
 - Confirmed from GitHub: prior main 4fc5a1b; full current evidence, history, safety boundaries and next diagnostic in docs/handoffs/2026-09-11-mda-snapchat-continuation.md.
