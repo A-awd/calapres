@@ -1,0 +1,3378 @@
+## Legacy source folder identity verified — 2026-09-11
+
+The connected Drive root listing identified the logo-added folder, and its complete direct listing returned 42 files below the 100-item cap. All 42 IDs, names and byte sizes matched the prior private inventory exactly. This resolves the earlier parent-folder identification gap; it does not establish remote byte identity, historical-version completeness or deletion approval.
+
+Private evidence: `عمل/تجارة/Calapres/Ai-Work/drive-logo-parent-verification-20260911.json` records the exact source folder URL and the matching membership. It was saved and read back locally; this new evidence file's cloud upload is unverified. Existing `drive-logo-inventory-20260911.json` and `drive-logo-comparison-20260911.json` remain intact. Continue through these records for any future approved source-retirement review. No original media, sharing or store state changed.
+
+---
+
+## Legacy Drive media coverage — 2026-09-11
+
+Read-only inventory found 42 logo-added PNGs in the legacy Drive folder. All 42 match names and byte sizes of existing original-resolution PNGs in the project iCloud Ai-Work. Local SHA-256 values and comparison results were saved privately. The connector did not expose remote hashes, so byte identity is NOT established and deletion is NOT approved by this comparison. No images were copied, moved, compressed, restored, classified or published. Existing creative-library authority and owner selections remain unchanged.
+
+Evidence locator (clarified 2026-09-11): under the verified project iCloud-relative root `عمل/تجارة/Calapres/Ai-Work`, read `drive-logo-inventory-20260911.json` and `drive-logo-comparison-20260911.json`. The inventory contains the exact 42 Drive file IDs and names; the comparison records each corresponding local size result and SHA-256. Both private records were read locally for this clarification. The inventory does not record a parent folder ID, so the historical parent folder remains unverified and must not be inferred from a folder with the same item count. Revalidate by the recorded file IDs before any retirement decision; do not treat this coverage as proof of a whole folder's identity or completeness.
+
+---
+
+## 2026-09-11 — Continuation checkpoint
+
+- Confirmed from GitHub: prior main 4fc5a1b; full current evidence, history, safety boundaries and next diagnostic in docs/handoffs/2026-09-11-mda-snapchat-continuation.md.
+- Confirmed live today: https://calapres.com/mda ends HTTP 200 with existing mda_snap_202609 UTM intact. Purchase attribution remains not tested.
+- Owner reports partnership accepted; old pending status below is historical and must not be repeated as current. Live acceptance and actual publication remain unverified.
+- Arabic four-panel illustrative guide saved in Ai-Work/إطلاق إعلان سناب/MDA - شرح إضافة الرابط والشراكة - توضيحي.png; local hash verified, cloud synchronization untested. This is not a screenshot or product creative.
+- Next: inspect live partnership/publication and existing purchase evidence across Shopify/GA4/Snapchat; continue existing setup, never equate redirect success with sales measurement readiness.
+
+## 2026-09-09 — MDA Snapchat campaign link live
+
+- Created Shopify redirect /mda (gid://shopify/UrlRedirect/482986197248) to https://calapres.com/?utm_source=snapchat&utm_medium=paid_social&utm_campaign=mda_snap_202609&utm_content=mda_story. Mutation returned no errors.
+- Public HTTP test verified one redirect, final HTTP 200 and all UTM parameters preserved. Short URL: https://calapres.com/mda. No purchase receipt/attribution validation performed; do not equate link success with measurement readiness.
+- Live Snapchat settings identify @mda.alshammari; partnership invitation remains pending. Profile age restriction None and geography Global. No new invitation, message, ad or age-setting mutation performed.
+- Saved owner handoff locally at Ai-Work/إطلاق إعلان سناب/MDA سناب - رابط الإعلان.txt; cloud sync not independently confirmed. Next: creator accepts and labels commercial Snaps, attaches link; verify real purchase receipt and campaign attribution in analytics before claiming full readiness.
+
+## 2026-09-09 — Snapchat influencer operating research
+
+- Owner requested independent practitioner research and a repeatable campaign method. Prepared a dated Arabic working guide in Ai-Work/إطلاق إعلان سناب/دليل إعلانات المشاهير - البحث وطريقة العمل - 2026-09-09.md.
+- Findings distinguish anecdotal Spotlight complaints, paid-media attribution discrepancies, self-reported agency cases, and official requirements. No proven anti-restriction workaround found; duplicate posts from one complainant are not independent corroboration.
+- Working method: accepted partnership and per-Snap disclosure, clear store link, verified purchase measurement, natural product demonstration, pre/post-publication checks and per-creator reporting. Durations/link counts/report windows are explicit test hypotheses, not platform requirements. No campaign launched, invitation sent, or new tracking URL created.
+- Deliverable saved and read locally; iCloud server sync not independently confirmed. Next: obtain creator username, audience statistics, agreed scope and campaign identifiers; inspect live partnership UI and verify measurement before activation.
+
+## 2026-09-09 — Optional conversation outcome
+
+- Owner approved removing the required-resolution constraint. Removed conversation_outcome from Attributes required on resolution in live Chatwoot.
+- UI confirmed Required attributes updated; after reload showed No attributes added yet. Auto-resolve remains off.
+- This change does not itself resolve or delete existing conversations.
+
+## 2026-09-09 — Launch-day Chatwoot settings review
+
+- Owner authorized deletion of all previous experimental conversations. UI all-status list showed 21; no deletion performed. Bulk actions and individual menu did not expose conversation deletion. Current user is verified administrator, so do not claim missing admin role. Do not delete contacts/account as substitute. Need supported authenticated conversation-delete route; no Chatwoot connector available this session.
+- WhatsApp Reopen same conversation remains checked. Greeting off. Four inboxes present; channel delivery health not tested.
+- One enabled automation assigns new conversations to service agent. One administrator. Macros empty; external Agent Bots empty (distinct from Captain).
+- Webhook integration enabled; other displayed integrations disabled. Webhook destination/execution not audited.
+- Custom conversation outcome attribute exists and is required on resolution. Auto-resolve off.
+- Audit logs view empty. Security page SAML requires Enterprise. Assignment page offers assignment and capacity policies; policy contents not inspected.
+- Recommendations only: verify human escalation notifications; macros for human handoff and waiting customer; order context attributes only when reliably populated; no additional responder or SAML upgrade needed for current single-agent launch. No new automations or outbound messages executed.
+
+## 2026-09-09 — WhatsApp conversation continuity
+
+- Live Chatwoot WhatsApp inbox: changed Conversation Routing from Create new conversations to Reopen same conversation; saved and verified checked after reload.
+- No historical conversations or contacts were deleted or merged. No customer message sent.
+- Paid-order workflow uses POST conversations. Upstream ConversationBuilder respects lock_to_single_conversation and returns the existing contact-inbox conversation; production end-to-end reuse remains untested. Do not claim historical consolidation or tested order-message reuse.
+- Unsupported incoming message original type remains unknown. Chatwoot placeholder does not expose the lost content; owner has no WhatsApp app. Existing Captain response already requests resend. Do not advise app access as an available remedy.
+- Next: inspect same-number historical contact/conversation identities and safe consolidation support; verify future inbound continuity without sending unsolicited customer messages.
+
+## Deferred shipping facts — owner instruction 2026-09-09
+
+Owner will confirm later; save as a deferred task, not a current blocker for email/template review. Deferred: actual courier pickup address and contact phone, packaged burner weight and dimensions, preferred carrier. Do not invent these values, activate label automation, or create a shipment pending confirmation. Embedded automatic label creation and carrier checkout rates remain OFF as last verified. Next active work: review customer email/WhatsApp copy and Klaviyo configuration; no reminder schedule requested.
+
+## Manual label release and notification copy — 2026-09-09
+
+Owner explicitly requires no label at booking; customized orders must be ready before label release. Disabled Shopify embedded OTO Auto-create Shipments and OTO Discounted Rates at Checkout. Reload verified both OFF. No checkout shipping profile, account, pickup address, rate purchase, wallet, message or template activation changed. Standalone OTO requires user login, so warehouse-level auto-create rules and sender configuration remain unchecked. Existing import bridge was not disabled; no fresh order was created to retest ingress. Need actual pickup/contact and packaged dimensions/weight before configuration and a shipping budget before payment.
+
+Prepared 14 Arabic transactional message drafts with meanings, triggers and guards in Ai-Work/رسائل العملاء/قوالب رسائل الطلب والشحن - للمراجعة - 2026-09-09.md. Local file verified; iCloud server sync not independently verified. Draft copy only, not imported into Klaviyo or approved by Meta. Fourteen-day custom Saudi promise covers preparation plus delivery, not preparation plus extra shipping. Label creation cannot imply carrier pickup. Current paid-order WhatsApp sender remains unchanged. Next: user logs in to existing OTO; inspect warehouse and channel rules, review drafted copy, then inspect Klaviyo plan/transactional eligibility and existing flows before implementation, preserving current notifications until replacement is tested.
+
+## OTO and customer-notification audit — 2026-09-09
+
+Owner requested resuming customer email/WhatsApp designs and inspecting automatic OTO labels and notifications. Live Shopify embedded OTO inspection: three owner test orders imported and assigned to the existing warehouse; all pending, carrier and tracking fields empty, zero awaiting pickup/shipping/delivered. OTO wallet displays SAR 0. Auto-create is ON, with explicit UI condition that the customer selects a delivery company at checkout. Discounted carrier rates toggle is ON; this is not proof those carrier choices are available in actual checkout. Current free manual Saudi rate must be preserved. No label, carrier purchase, pickup or notification was created during this audit.
+
+Decision 0041 remains the documented paid-order WhatsApp confirmation implementation; it contains no shipping sender. Receipt is owner-confirmed. Label-triggered WhatsApp and fulfillment email delivery remain unverified. Do not promise dispatched/delivered based on label creation. Next work: verify pickup/contact/package facts and carrier selection rules, choose readiness trigger for customized goods, prepare transactional email/WhatsApp templates for owner review, and run a bounded label/writeback/notification test only after shipping charge authorization. Keep prepaid-only and no COD.
+
+
+## 2026-09-09 — Customer-message designs prepared, not applied
+
+Owner moved focus to emails/WhatsApp/Apple Branded Mail. Three-case local review at Ai-Work/رسائل العملاء/معاينة الإيميل وواتساب.html. Shopify sender info@calapres.com authenticated; Apple tab still signup; public DMARC p=none requires reviewed strengthening after sender DKIM checks. No messages sent, templates activated, DNS modified or Apple registration submitted. See docs/customer-message-design-review-2026-09-09.md for evidence, preview limitations and implementation gates. Purchase tracking remains unresolved.
+
+## 2026-09-09 — Apple Pay verified; purchase telemetry remains unverified
+
+Order #1003 (01:48:30Z) is PAID, 0.04 SAR, Paymob SALE SUCCESS, wallet APPLE_PAY. Admin timeline independently confirms Apple Pay. Test engraving says not to fulfill; no fulfillment/refund performed. GA4 realtime has no purchase; Transactions report for Sep9 also zero at about04:55 Arabia, too fresh to use standard reporting latency as definitive failure. Prior Aug12–Sep8 report also zero. Snapchat refreshed overview has158 events (56 web,102 CAPI), latest about1 hour old, no purchase row; does not yet cover fresh tests. Google native settings remain connected/on. Checkout-link enhancement observed On; inspected dialog and canceled, no setting changes in this check. Earlier summary suspected unintended change but no save evidence established; do not assert provenance.
+
+No proven root cause or purchase fix. Two mobile paid tests did not capture checkout_completed in an instrumented browser. Do not request another payment blindly or inject synthetic purchases. Await actual post-Apple-Pay mobile landing URL requested from owner to distinguish thank-you from order-status return; this may narrow diagnosis, not automatically prove a cause. Previous desktop-payment next step is superseded. No claim of full campaign readiness.
+
+## 2026-09-09 04:44 — Purchase diagnostics prepared, no confirmed purchase fix
+Owner confirms mobile returned to thank-you. GA4 shows order #1002 page view but no purchase among all 10 realtime event types. Google app verified G-3YZFD1XGVL, conversion measurement on, checkout completed mapped to Google Shopping App Purchase. Native app tags installed. Migration banner concerns existing Ads add-cart action, not evidence of purchase cause; not migrated. Meta Maximum pixel+CAPI verified; today overview no purchase, data latest about 42 minutes old, so delayed evidence inconclusive. Checkout configuration active, no legacy upgrade warning. Google Pixel Helper now open on desktop checkout; loaded and receiving checkout_started and checkout_shipping_info_submitted; CR99 applied for controlled runtime test. No additional order/payment submitted. Need owner-entered payment in instrumented desktop session to observe checkout_completed; cannot retroactively recover mobile runtime event. No full-readiness claim.
+
+
+## 2026-09-09 — Mobile purchase #1002 verified; attribution pending
+
+Owner completed mobile checkout. Shopify readback: order #1002 at 01:32:05Z, PAID, Paymob SALE SUCCESS, 0.04 SAR, CR99 applied. Unfulfilled. No fulfillment/refund performed. CR99 was explicitly changed to unlimited usage and repeat customer usage; expiry retained 2026-09-09T21:00:00Z. GA4 realtime inspected all 7 event types: no purchase/key event observed at inspection. Snap overview shows last ingested event 2 hours ago, no purchase row; cannot conclude failure or success for this fresh order from that delayed overview. Shopify customerJourneySummary ready=false. Meta/TikTok purchase receipt not verified. Asked owner whether mobile returned to thank-you page after payment. Do not claim 100% launch/tracking readiness.
+
+
+## 2026-09-09 04:15 Arabia — Duplicate cart tracking fixed and published
+
+Supersedes prior duplicate ADD_CART blocker. Live Shopify Pixel Helper reproduced two product_added_to_cart events from one form submission and one real cart item. Changed only assets/calabriz-cart.js delegated submit handler to capture phase so preventDefault runs before Shopify native form tracking; successful AJAX cart request remains the event source. No manual pixel calls added.
+
+Duplicated live theme 165804638464 to 166066389248, retaining live settings and main-product markup that differ from repository. Uploaded only cart JS. Preview tests: first add increased helper events 2 to 3, second add 3 to 4; quantities 1 then 2. Published through Shopify UI; API confirms new theme MAIN. Live Snap test at 04:14: one valid ADD_CART and cart quantity 1. Previous theme retained for rollback. No paid checkout, purchase event, CAPI purchase deduplication, or all-platform purchase attribution verified.
+
+Evidence locally saved at Ai-Work/إطلاق إعلان سناب/إثبات إصلاح تكرار الإضافة - سناب.txt. iCloud upload not independently confirmed. Remaining launch work includes end-to-end purchase verification and influencer-specific attribution link once identity is known.
+
+# Handoff
+
+## Marketing data access enabled and Merchant count corrected — 2026-09-09
+
+Owner authorized enabling data access and launch preparation. Saved and verified
+Always on for Meta, Google, Snapchat and TikTok in Shopify Customer events. Consent
+requirements unchanged. Snap had automatically resumed Optimized at02:10 before
+this change. All4 rows verified Always on after saves/reloads.
+Direct Merchant Center account582442539 has6 approved offers: white,gray,beige each
+with text-only and attached-design variants. Previous Shopify-app summary4 must not
+be described as4 base products. No extra base product, no catalog deletion/change.
+Snap Events Manager verified81 historical events (43Pixel,38CAPIv3); partner settings
+show Shopify WPE and server-to-server connected, additional event setup unconfigured.
+Official Test Events live03:56-03:58 received valid PAGE_VIEW,VIEW_CONTENT,ADD_CART,
+START_CHECKOUT. However ADD_CART repeats twice per one click, with DIFFERENT sh-
+client_dedup_id values, both displayed as Snap Pixel web. Reproduced with one store
+tab and empty cart; only1actual item added. Root cause unresolved; no manual snaptr
+found in local assets/layout/snippets. Do not claim deduplication fixed or purchases
+verified. ADD_BILLING event appeared without card entry; also not payment evidence.
+Checkout visibly shows free Saudi shipping and14days from reservation confirmation
+for name/logo customization. No order/payment/customer data submitted. Test cart
+emptied and verified. TikTok/Meta/Google provider-side tests remain unverified.
+Snap ad balance low/empty, campaigns inactive; no spend authorized or enabled.
+Evidence and dated Arabic addendum at Ai-Work/إطلاق إعلان سناب/ . Local writes verified,
+cloud sync not independently verified. Remaining: diagnose vendor/native duplicate
+ADD_CART, perform authorized purchase validation, receive creator username/link setup.
+
+## Prelaunch influencer audit — 2026-09-09
+
+Live read-only audit found Snapchat and TikTok app pixels Optimized / Access paused
+since Sep 8 19:55 (No signals detected). Meta and Google Access on. Snap registered
+pixel 136d05e0-1e3a-4712-9b9b-6797d118c61c; Server + Web configured, provider receipt
+NOT verified. Pixel Test click yielded no visible helper/storefront result.
+GA4 property 350424085 receives traffic: last7days 11 active users,72 events,0 key
+events; ig/social sessions present. Purchase receipt and deduplication NOT verified.
+Google channel Merchant active,4 submitted/4 approved; Ads and Analytics active.
+Generic Google tag migration banner requires investigation, not proof of data loss.
+Paymob Native Checkout configured; no payment performed. PayPal inactive. Shipping
+profile has Saudi zone only, two free rates spanning order values; no international
+zone. Rate names do not contain14-day delivery notice; checkout flow not validated.
+No pixel sharing/payment/shipping changes, no creator invitation, no short URL made.
+Await creator username. Research confirms Paid Partnership disclosure per commercial
+Snap; formal creator invitation in Business Manager Public Profiles settings, with
+creator acceptance. No restriction immunity. Proposed branded redirect to creator
+UTMs must be created and tested before delivery. No Search Console access needed.
+Arabic research/audit saved locally at Ai-Work/إطلاق إعلان سناب/فحص الجاهزية والشراكة والتتبع.md;
+iCloud cloud synchronization not independently confirmed. Before launch, verify Snap
+access/events, perform authorized purchase test with GA4/Snap receipt, create/test
+creator link, confirm partnership active and mobile personalization/delivery flow.
+Store is NOT certified100%ready. Detailed sources and caveats in Arabic report.
+
+## Ratio correction and rejected padded social exports - 2026-09-08
+
+Owner rejected padded social exports and two Snapchat highlights. Requires one
+highlight named مباخر كالابريس using native portrait source photos only, and
+Instagram drafts using native feed ratios without padding or repurposed portraits.
+Audited all42 sources: 19 near9:16, 17 near4:5, 3 near1:1, 2 landscapes, 1 reference
+collage. All source resolutions exceed export targets. Prepared39 JPEGs from native
+watermarked masters with sRGB and no padding: stories1080x1920, feed1080x1350,
+squares1080x1080. Tiny source pixel-rounding differences normalized with ImageOps.fit;
+no substantial crop or upscale. Landscapes27 (6830x3842),30 (6830x5464) held.
+Folders Ai-Work/سناب - صور طولية فقط and إنستجرام - نسب أصلية. Full CSV dimensions
+at Ai-Work/تقرير مقاسات الصور.csv; Arabic explanation توضيح المقاسات المصححة.md.
+
+Owner gave action-time approval to permanently delete the two prior Snapchat
+highlights after native replacement was prepared. Both deleted with success,
+then19 native portraits published in one saved story. Reload verified exactly one
+مباخر كالابريس card with19Snaps. No duplicate highlight remains.
+
+IMPORTANT BLOCKER: attempted replacing media in all7 existing Instagram drafts,
+but persistence verification reopened the last edited draft with OLD5 padded
+1080x1350 photos. Reload and second edit including caption change still failed to
+persist. Therefore do NOT treat any attempted in-place correction as verified.
+Existing7 drafts remain unsafe to publish; native20 replacements ready locally.
+No new Instagram drafts or published posts created this correction turn. No visible
+delete option in inspected draft menu (only copy ID); row selection control has0x0
+bounds and failed, so no destructive draft action attempted. Need supported persistent
+draft replacement/management surface, then validate each saved draft. Earlier verbal
+update saying drafts corrected was retracted immediately after verification failed.
+Likes/views hiding remains pending for Meta drafts. Snapchat website issue remains
+unresolved as owner confirms absent in app; stop treating admin field as visitor proof.
+Private evidence: Ai-Work/مراجعة صور الشعار/corrected-ratios.json and
+correction-status.json. Existing padded exports and old ledgers are superseded,
+not deleted. Remote iCloud synchronization not independently confirmed.
+
+## Instagram drafts and Snapchat saved stories - 2026-09-08
+
+Owner authorized Instagram drafts with short Arabic captions and Snapchat profile
+highlights. Later required hiding likes/views on all posts and spaced punctuation,
+one sentence per line, blank line before CTA.
+Executed and verified: 7 Instagram-only drafts in Meta Business Suite containing
+all41 product photos: one single image plus six color-grouped albums (10,2,10,3,10,5).
+Reference collage01 excluded. No Instagram post published. Native Instagram web
+composer cannot save drafts (exit explicitly discards); kept its one unsaved composer
+open, with hide-like/view-count switch checked. Meta composer exposes no equivalent
+switch, so all7 draft hide-count settings remain UNVERIFIED/UNAPPLIED and must be
+set before publication. Do not claim account-wide completion or silently publish.
+Snapchat: saved-story publishing returned success twice. After reload, Saved Stories
+confirmed مباخر كالابريز (30) and تفاصيل كالابريز (11). All41 uploaded, no Spotlight
+or temporary public-story destination selected. Website field was already populated;
+re-saved https://calapres.com/ and received profile-update success. Mobile visitor
+website button remains unverified; owner reports absent. Do not claim resolved.
+Business support draft prepared locally, not sent; sending requires owner request.
+Private evidence and file mapping: Ai-Work/مراجعة صور الشعار/social-publication-ledger.json,
+instagram-drafts-verified.txt and snapchat-saved-stories-verified.txt.
+Local captions: Ai-Work/أوصاف إنستجرام - كالابريز.md. Remote iCloud sync unverified.
+Next: owner reviews drafts; resolve hide-count setting before any Instagram publication,
+and obtain Snapchat support investigation if website button remains absent in app.
+
+## Full approved wordmark batch completed - 2026-09-08
+
+Owner instructed completing all remaining photos after enlarging the direct-overlay
+pilot. This authorizes source-preserving local compositing for this batch.
+Produced 42 original-dimension PNG masters, 42 Stories JPEGs (1080x1920), and
+42 Instagram post JPEGs (1080x1350). Official wordmark width20%, opacity35%;
+placement adjusted per product. Sources unchanged by SHA256, all master pixels
+outside logo rectangle unchanged. Social exports fit full image with margins,
+no crop/stretch/upscale; sRGB. All 126 images reviewed via contact sheets.
+Each of three flat ZIPs has 42 entries, verified CRC. Ai-Work deliverables:
+- Calapres-Original-Resolution.zip (1124788261 bytes)
+- Calapres-Stories.zip (12989261 bytes)
+- Calapres-Instagram-Posts.zip (10117275 bytes)
+Individual photos remain in three flat Arabic-named output folders. Evidence:
+Ai-Work/مراجعة صور الشعار/manifest.json and eight review sheets.
+One reference collage is included among42; one MOV untouched. No publication,
+Magnific credits or generative edits. Local saves verified; remote iCloud sync
+not independently confirmed. Supersedes earlier unfinished-batch status below.
+
+## Larger watermark pilot - 2026-09-08
+
+Owner requested larger lettering. Revised source-preserving sample increases
+wordmark width from12% to20%, keeps opacity35%, centered x50%, top y75.5%.
+Original4452x7915 preserved; no pixel changes outside watermark rectangle.
+Ai-Work/Logo-Batch-2026-09-08/sample-wordmark-larger.png plus
+sample-wordmark-larger-preview.jpg. Await owner feedback; full batch unfinished.
+
+## Watermark moved closer to product - 2026-09-08
+
+Owner requested moving pilot watermark toward burner to make cropping it out harder.
+Revised sample uses original source; width12%, opacity35% unchanged, centered at
+x50%, top y75.5%, just below tray. Dimensions4452x7915 preserved; pixel comparison
+confirms no changes outside logo rectangle. Files in Ai-Work/Logo-Batch-2026-09-08:
+sample-wordmark-near-burner.png and sample-wordmark-near-burner-preview.jpg.
+Shown for review. Do not apply same normalized y to every photo; placement must
+follow product location. Batch not yet produced. Watermark is not copy protection.
+
+## Direct overlay pilot shown - 2026-09-08
+
+Owner asked for an example after direct local compositing was explained. This
+explicitly authorizes one local sample, not automatic batch approval.
+Source: original-content portrait 1 White.jpg, 4452x7915. Official wordmark alpha
+mask recolored beige #DFD4C3, width12%, opacity35%, bottom margin5%, centered.
+Saved lossless PNG at Ai-Work/Logo-Batch-2026-09-08/sample-wordmark-original-size.png
+and a 1080px-wide sample-wordmark-preview.jpg for viewing only.
+Pixel comparison verified no changes outside watermark rectangle; original dimensions
+preserved and source untouched. No Magnific credits used. Await owner sample feedback
+before full batch. Platform-specific safe-zone placement still pending.
+
+## Wordmark batch intake and full source audit - 2026-09-08
+
+Owner requests Magnific watermarking of all original-content photos, exact source
+dimensions, tiny subtle official wordmark bottom-center, alternate positions for
+conflicts, plus Snapchat/Instagram Stories and Instagram feed exports today.
+Inspected all 42 JPEGs visually on three contact sheets and measured dimensions:
+19 approximately 9:16, 17 approximately 4:5, 3 square, 1 landscape 16:9,
+1 landscape 5:4, 1 reference collage 1382x2999. One MOV also present, not edited.
+Most source dimensions exceed generative output limits (up to 8192px). Magnific
+Nano Banana Pro supports 1k/2k/4k and generative editing cannot guarantee original
+pixel preservation. Balance checked: 18790; no generation or upload charged here.
+Asked owner asynchronously whether direct local compositing is authorized instead,
+or Magnific-only pilot. Awaiting answer; DO NOT silently override Magnific-only rule.
+No watermarked output produced. Prepared Ai-Work/Logo-Batch-2026-09-08/audit-ar.md,
+inventory.json and three audit sheets. Exact official wordmark source remains
+assets/calapres-wordmark.png (1249x220 RGBA). Original files unchanged.
+Meta official spec pages were inaccessible; don't claim verified current Meta limits.
+Snap official source verifies image ads 1080x1920 minimum, not all organic placements.
+Next: resolve implementation choice; use source-preserving overlays if approved,
+then validate outside-logo pixels, original dimensions and platform export crops.
+Keep flat output folders and all source names disambiguated. Full batch unfinished.
+
+## Flat deletion-review folder - 2026-09-08
+
+Owner explicitly rejected nesting inside the deletion-review folder.
+Flattened Ai-Work/حذف so all 79 content files appear directly inside it.
+Also preserved hidden Finder metadata. Name collisions resolved with numeric suffixes;
+all moved file hashes verified. Removed only emptied subdirectories. Other folders
+unchanged. Reversible ledger: Drive-Content-Audit-2026-09-08/flatten-delete-ledger.jsonl.
+
+## Owner-authorized duplicate relocation and Drive comparison library - 2026-09-08
+
+Owner asked to put iCloud duplicate copies into a folder named deletion (Arabic)
+and all Drive files into a folder named original content (Arabic) for manual comparison.
+Revalidated all 151 local inventory files by SHA-256 before mutation; no drift.
+Moved 79 excess copies into Ai-Work/حذف, retaining one copy per hash in
+existing content locations. Preserved relative subfolders to avoid name collisions.
+Extraction of the verified Drive archive into Ai-Work/المحتوى الأصيل
+preserves portrait/landscape folders and all 43 original files without recompression.
+Every extracted file and moved destination verified by SHA-256. Existing content now
+contains 72 files, deletion-review folder 79, original-content comparison folder 43.
+No permanent deletion. User explicitly requested this comparison copy; do not treat
+folder name as proof of photographic authenticity or publication approval.
+Private reversible move ledger: Ai-Work/Drive-Content-Audit-2026-09-08/
+move-to-delete-ledger.jsonl. Older audit describes pre-move paths and remains historical.
+Local filesystem completion verified; remote iCloud synchronization not independently
+confirmed. Next: owner compares folders; no deletion until explicit authorization.
+
+## Drive content download and exact duplicate audit - 2026-09-08
+
+User requested download of Drive folder 15RmjpI3BwLs8Lo4CyfuJrMiPh1b_IsKl
+and comparison against current iCloud content. Connector recursively listed 43
+stored files: 42 JPEGs and one MOV, 610058566 uncompressed bytes. Browser folder
+ZIP download succeeded; original ZIP preserved at Ai-Work/Drive-Content-Audit-2026-09-08/
+Drive-content-original.zip (610169094 bytes). No duplicate library extraction.
+All 43 ZIP members read fully (CRC checked by zipfile) and SHA-256 matched files
+already in Ai-Work/content (actual Arabic folder name). Zero missing/new files.
+Local content audit: 151 files excluding .DS_Store; 72 unique hashes; 36 duplicate
+groups; 79 excess copies totaling 1074814274 bytes. No deletions or replacements.
+Full private mapping in same iCloud audit folder: comparison.json and report-ar.md.
+Local completion verified; iCloud server upload not independently verified.
+Next: report duplicates to owner. Do not delete or reclassify historical media
+without explicit owner instruction. Different crops/encodings are not exact duplicates.
+
+## Text-free header supersedes wordmark versions - 2026-09-08
+
+Owner screenshots IMG_1085/1086 confirm text remains under buttons in compact
+view and visible expanded. Owner now requests original preferred brown-light
+background with NO lettering, prioritizing the original fine texture.
+Magnific edit SyZzxqDUb8 used original 79GWvuRJAL directly, not degraded portrait
+revisions. One text-removal edit, 75 credits. Visually reviewed: no lettering,
+no seal or frame, original-style diagonal illumination and fine brown texture.
+Saved and dimensions verified: Ai-Work/Snapchat-Headers-2026-09-08/
+08-brown-light-no-text.png, 2752 x 1536, matching original pixel dimensions.
+AI edit is not claimed pixel-identical. No upload or live crop validation performed.
+iCloud server sync unverified. Deliver this version for manual upload; no further
+wordmark repositioning or portrait regeneration without owner request.
+
+## Portrait header revision after actual crop failure - 2026-09-08
+
+Owner screenshots IMG_1081/1082 show uploaded landscape header clipped in both
+compact and expanded views. Owner requested same design with corrected dimensions.
+Magnific portrait adaptation delivered as
+Ai-Work/Snapchat-Headers-2026-09-08/07-snapchat-portrait.png,
+creation 0ehC3ybTfW, PNG dimensions verified 3000 x 4552 (375:569).
+This ratio comes from secondary published guidance, NOT verified official Snapchat
+requirements. Visual review confirms entire wordmark, brown texture, no frame.
+AI did not reliably follow requested upper-third wordmark placement; final remains
+near center. Do not claim both in-app states validated or pixel-identical preservation.
+No upload performed. Actual Snapchat preview remains required. Earlier local 05/06
+are unsuccessful intermediate layouts, not deliverables to upload. Preserve originals.
+Three generation edits plus three resize operations charged 345 credits this turn.
+iCloud server sync unverified. Next: actual in-app crop validation before acceptance.
+
+## Snapchat header approved by owner - 2026-09-08
+
+Owner explicitly approved the revised brown header ("adopt it, beautiful").
+Selected Magnific creation: 79GWvuRJAL; deliverable:
+Ai-Work/Snapchat-Headers-2026-09-08/04-brown-light.png.
+This supersedes the pending-selection state below. Keep the CR seal as profile
+avatar and use the beige CALAPRES wordmark/brown-light design as the header.
+Approval is confirmed; upload/publication is NOT confirmed. Next safe action:
+verify Snapchat's actual header dimensions/crop and apply the selected header
+when Profile Manager is accessible. Preserve the approved original image.
+
+## Revised Snapchat header - 2026-09-08
+
+Owner rejected the first three concepts and requested a more luxurious result.
+Magnific revision 79GWvuRJAL: burnt-brown suede-like ground, soft diagonal beige
+light and beige official-reference wordmark; no seal/products. Nano Banana Pro,
+2k, 16:9, 75 credits. Completed, visually reviewed, locally saved as
+Ai-Work/Snapchat-Headers-2026-09-08/04-brown-light.png (2752 x 1536).
+Shown inline for owner review; not approved or published. Platform crop still
+requires verification. iCloud server sync not confirmed. Prior options remain
+preserved but rejected. Next: obtain owner's design selection before upload.
+
+## Snapchat header concepts awaiting owner selection - 2026-09-08
+
+- Owner requested actual alternatives using the official flourished CALAPRES wordmark,
+  approved beige #DFD4C3 and burnt brown #44271B only; no CR seal or products.
+- Magnific generated three reviewed concepts: 01-letterpress.png (iGMdvPb3uK),
+  02-frame.png (s7i2MOYl8e), 03-paper-waves.png (YMIv5XvWeC).
+  Nano Banana Pro / imagen-nano-banana-2, 2k, landscape 16:9 request;
+  actual PNGs 2752 x 1536; 75 credits each, 225 total generation charges.
+- Reference: existing official wordmark upload jUN3c8RLD0. Generative reference guidance
+  is not a guarantee of pixel-identical letter outlines or exact flat RGB values.
+- Local deliverables verified under Ai-Work/Snapchat-Headers-2026-09-08/.
+  iCloud server upload not independently confirmed. All three completed and shown inline.
+- Letterpress inspiration: https://www.forthemakers.design/prompts/textures-and-materials
+  visible Letterpress Card description/model inspected; full copied prompt and example
+  image were not retrieved. Full decision 0038 example-verification gate was not established;
+  the first generated concept was visually reviewed before producing the remaining two.
+- Proposed designs only: none selected or published. Actual Snapchat header crop and
+  platform requirements remain unverified; verify before final export/upload after selection.
+- Next: owner chooses 1/2/3. Preserve existing profile seal. Social link blockers below remain.
+
+## Social website follow-up: native-app step required — 2026-09-08
+
+Fresh TikTok @calapres has no bio or website. Standard desktop editor exposes avatar,
+username, nickname and bio only. Business Suite > business verification displays ready status,
+Saudi Arabia, Optix legal entity and its registration number; Company Website is blank.
+Its Edit button edits audience-restricted industry, not website; dialog cancelled without changes.
+Do not re-register the company or claim it lacks commercial verification. Official May 2026
+TikTok Business Page guidance says website/business-page setup is mobile-app-only:
+https://ads.tiktok.com/resources/help/article/how-to-set-up-a-business-page-for-your-business-account?lang=en
+Snapchat Profile Manager fresh attempt still fails React #130 before form rendering.
+No profile changes or link publication in this follow-up. Need native-app screen/access to
+finish links; do not claim text in bio is a working clickable profile link.
+
+## Snapchat profile link investigation — 2026-09-08
+
+Owner reports no clickable profile website. Public web /add/calapres redirects to /@calapres
+and shows account identity/add prompt with no store website link in the rendered page.
+Business dashboard authenticates as Calapres organization admin and lists its public profile.
+Direct Profile Manager, its root, and Business dashboard Edit Profile all fail with the same
+React #130 application error before the form renders. English admin-language test did not fix it.
+No profile website change succeeded this turn. Prior stored website is not proof of visitor UI.
+Next step: inspect native Snapchat My Public Profile > Edit Profile website field and visitor
+preview; requires owner-provided native screen or access. Do not claim completion from bio text.
+
+## Arabic policies and free Saudi shipping — 2026-09-08
+
+Four concise Arabic policies published and publicly verified. Refund/shipping titles unified.
+All Saudi shipping is now free; actual checkout displays the personalized-burner 14-day notice
+and optional unchecked discounts/offers email copy. See [execution record](docs/handoffs/2026-09-08-arabic-policies-free-shipping.md)
+and [decision 0043](decisions/0043-concise-arabic-policies-free-saudi-shipping.md).
+International shipping activation, plain delivery time, refund processing time, legal address
+and Merchant Center synchronization remain unresolved. Reconcile live theme locale edits before
+future deployment. No order submitted; test cart removed.
+
+## Snapchat visible domain and TikTok save blocker — 2026-09-08
+
+Snapchat website field confirmed https://calapres.com. Admin website button opens its editor;
+it is not proof of visitor-side link behavior. Added literal domain to bio, now ending
+`تسوّق: calapres.com`, saved and admin display verified. Native visitor link remains unverified.
+TikTok fresh reload still showed no bio. One shorter single-line retry with keyboard Save did
+not persist or show a reason; stop repeated web saves. Draft: مباخر وهدايا سعودية باسمك أو شعارك | calapres.com.
+Owner needs working native app Save; do not claim TikTok completed.
+
+
+Footer spacing follow-up (2026-09-08): owner requested one space before the colon.
+Saved to live theme 165804638464; fresh public store readback confirms
+`الرقم الوطني الموحد : 7025878104`. Store is public and this change is published.
+
+
+## Simplified biographies and registration footer — 2026-09-08
+
+Owner removed the Optix ownership tagline from public biographies while retaining the legal
+ownership fact. Instagram/Snapchat removal saved and verified; TikTok had no such tagline.
+Live Shopify footer now displays الرقم الوطني الموحد: 7025878104 through the existing copyright
+setting; public DOM and desktop visual verified. Direct store links adopted; registration highlight
+remains planned, not published. See decision 0007 latest presentation amendment.
+
+
+## Legal identity corrected to Optix — 2026-09-08
+
+Owner confirms all brands, including Calapres, belong to مؤسسة أوبتيكس. Supplied certificate
+visually verifies the name and unified national number 7025878104. Instagram/Snapchat bio
+corrections saved and verified. Earlier عبق الخيل references are superseded for current use.
+See decision 0007 amendment for evidence boundaries and outstanding owner-site correction.
+
+
+## Snapchat partnership and tracking inquiry — 2026-09-08
+
+[Read-only findings](docs/handoffs/2026-09-08-snap-partnership-tracking.md).
+Shopify lists Snapchat, Meta, TikTok and Google app pixels with Server/Web and Optimized settings.
+Actual event delivery, purchase attribution and GA4 property remain unverified. No partnership
+invitation or paid promotion sent. Need creator username and destination for campaign setup.
+
+
+## Social biographies and Saudi trust — 2026-09-08
+
+[Execution and blockers](docs/handoffs/2026-09-08-social-biographies-trust.md).
+Owner now authorized biography improvements across all three accounts. Instagram and Snapchat
+bios saved and read back; existing website links retained. TikTok draft did not persist through
+its web editor and remains blocked. Official store inquiry found no result for the tested names
+and URL; this is inconclusive. Await current certificate/registration identifier before publishing
+trust proof. No certification claim, highlight, post, avatar or policy change in this step.
+
+
+## Live social links and Snapchat CR identity — 2026-09-08
+
+[Execution record](docs/handoffs/2026-09-08-social-links-snapchat-cr.md).
+Three verified social links saved to the active Shopify footer and checked on the public store
+after exiting a stale draft preview. Snapchat bio/contact updated and CR seal uploaded/saved
+using a verified 1024x1024 PNG under 2 MB, prepared through Magnific non-AI resizing (40 credits).
+Public Story auto-post toggle was explicitly off. No wordmark was applied to any profile.
+Owner clarified CR-only account/profile icons and deferred wordmark use to future creative posts.
+Final scope is Snapchat only; Instagram/TikTok are complete per owner and were not modified.
+Policy drafts remain unpublished; local asset verified, iCloud cloud synchronization unconfirmed.
+
+
+## Policy, social links and logo preparation — 2026-09-08
+
+[Current preparation record](docs/handoffs/2026-09-08-policy-social-logo-preparation.md).
+Shopify policies inspected read-only; Arabic review package saved in Ai-Work/السياسات.
+Privacy is currently English, shipping claims conflict with prior checkout evidence, and identity,
+retention/transfer details and operating commitments need verification before publication.
+Existing social icons can be reused; three URLs await owner input. Magnific connection verified;
+logo/photo selection pending and no credits spent. No live write or image change occurred.
+Local files verified; cloud synchronization unconfirmed.
+
+
+## Cross-device continuation handoff prepared — 2026-09-08
+
+The owner is continuing from another computer because these conversations were not visible there.
+Use [the portable continuation and project-instructions record](docs/handoffs/2026-09-08-cross-device-content-cleanup-resume.md).
+This is a documentation handoff, not a diagnosis or repair of ChatGPT sync. Other-device access
+and ChatGPT UI project settings were not verified or changed. GitHub main and its AGENTS.md remain
+the live source of instructions; resolve the actual device iCloud root and verify file access.
+
+Saved the Arabic prompt and separate project-instructions text at
+`عمل/تجارة/Calapres/Ai-Work/التسليم/متابعة كالابريز من جهاز آخر - 2026-09-08.md`.
+Local file readback passed; iCloud server upload and visibility on the other device are unconfirmed.
+The latest local read still showed 144 burner media files plus the comparison HTML, and empty
+owner classification folders. Reinventory on the new device; no old missing asset should be restored.
+Next action there: read-only source/access verification and a short current-state summary, then the
+owner's next cleanup decision. This handoff authorizes no new media move, deletion, generation,
+publishing, schedule, account, payment or operational workflow change.
+
+## Exact duplicate organization and quality comparison — 2026-09-08
+
+Owner asked to label or arrange duplicate burner files, explicitly concerned that visually similar
+copies can have different image quality. Authorized scope was organization, not deletion.
+Refreshed the actual `عمل/تجارة/Calapres/Ai-Work/المحتوى/المبخر` folder after owner cleanup:
+144 media files remained (142 images, 2 videos; 1,778,293,720 bytes), not the historical 170.
+No previously removed asset was restored.
+
+Full-file SHA-256 identified 66 distinct byte contents and 35 groups of exact duplicates containing
+113 files (78 extra identical aliases). MOVED those 113 originals into
+`المبخر/متطابقة تمامًا/` with one folder per hash group, named with group number, copy count and
+pixel dimensions. Preserved original filenames. The 31 files without an exact duplicate remain at
+the burner root, including both non-identical videos. A different crop, resolution, encoding or
+creative variant was never combined into a byte-identical group based on visual similarity.
+
+Every retained file was re-read and matched its prior full SHA-256, size and inode. All moved
+source paths are absent; all 144 media files remain. No content copy, deletion, overwrite,
+recompression, upscaling, quality modification or quality-based winner selection occurred.
+Exact byte matches have the same encoded quality; size or dimensions alone do not establish which
+non-identical image has better detail, provenance or fidelity. Crop and aspect differences matter.
+
+Prepared `المبخر/مراجعة التكرار والجودة.html`: a local Arabic comparison page showing all 66
+byte-distinct contents, dimensions, formats, file sizes and original-file links, with filters for
+exact duplicate groups and distinct files. Seventeen visually reviewed sets compare similar shots
+and crop/dimension variants without declaring them identical or assigning a quality winner. Images
+are loaded from existing original paths, not copied into new media. All local links, anchors and
+media counts validated. The page is a static inspection snapshot: owner moves/deletions may stale
+its links; inspect the current folders before reuse. Private before/after audit remains in the
+agent workspace; raw private filenames and media were not committed to GitHub.
+
+Owner realism folders remain unchanged. Local integrity verified; iCloud server synchronization
+is unconfirmed. No generation, live publication, schedule, account or operating workflow changed.
+Next: owner reviews the exact groups and visually distinct variants before deciding what to remove.
+
+## Burner content isolated for owner cleanup — 2026-09-08
+
+Owner requested one folder named `المبخر` containing burner content so he can clean it himself.
+Executed and verified: MOVED 170 existing media files (166 images, 4 videos; 2,002,525,509 bytes)
+into `عمل/تجارة/Calapres/Ai-Work/المحتوى/المبخر`. This is a subject grouping, not a quality,
+authenticity, manufacturing or publication approval. It includes actual burner photography,
+generated trials, older multi-burner sets, and burner references/trials depicting other forms.
+They are not all faithful representations of the currently approved one-burner offer.
+
+Selection used visual review of 203 distinct image hashes and five sampled frames for each of
+24 distinct videos in the then-current local media inventory. Full-video editorial review was not
+performed. Full SHA-256 identified identical aliases so existing duplicates of selected content
+were moved together. The resulting 170 files contain 69 distinct hashes; no duplicate was deleted.
+The existing root `hero-video.mp4` was also moved into the burner folder after frame inspection.
+
+Every moved file retained its name, filesystem inode, size and complete SHA-256, and its former
+path is absent. No content copy, link, overwrite, image edit or media deletion occurred in this step.
+Owner cleanup continued in unrelated files during inspection; only existing, unchanged selected
+burner files were moved. No missing item was restored. The earlier content-plan file and private
+CSV ledgers were no longer present and were not recreated. Prior counts/paths are historical.
+The private move audit remains in the agent workspace, with no raw filenames committed here.
+
+The existing `أصيل` and `محتوى غير مرغوب به` folders remain at the parent collection level and
+were empty when verified. The owner alone selects accepted/excluded files. Future work must inspect
+these folders and the actual burner folder rather than regenerating assets from stale inventories.
+Local movement and integrity verified; iCloud server upload remains unconfirmed. No live service,
+account, schedule, generation, purchase, or publication changed. Next: owner cleanup in `المبخر`.
+
+## Correction: remove copied collection; move originals only — 2026-09-08
+
+This entry supersedes the earlier collection status. The owner explicitly rejected copying:
+he requested moving original content, authorized deletion of the agent-created copied collection,
+and explicitly selected both existing Ai-Work content and media from the project `مكرر` archive.
+The earlier 468-copy implementation was an agent mistake, not the requested outcome.
+
+Executed: deleted the entire former `عمل/تجارة/Calapres/Ai-Work/المحتوى` copy folder.
+Before deletion, all 338 remaining media copies matched their recorded complete SHA-256 and
+at least one intact original outside the collection. There were no added/changed media files or
+owner-classified files in its two folders. 130 of the initially copied files were already absent;
+this operation did not restore them or infer who removed them. Administrative files and the two
+empty classification folders were removed with the copied collection. Original paths survived.
+
+Executed after the owner confirmed he had finished changing files and explicitly instructed
+resumption: reinventoried the current sources and MOVED 925 existing content files (6,771,251,964
+bytes) into `عمل/تجارة/Calapres/Ai-Work/المحتوى`. Scope: current images, video, editable design
+files, 15 clearly named branding/packaging PDFs and the existing Arabic content plan, from
+Ai-Work and the project `مكرر` archive. No absent item was restored from the earlier manifest.
+Files were moved on the same filesystem with no copying fallback, collision or renaming.
+Every file retained its filesystem inode and full SHA-256; all 925 previous file paths are absent.
+There are 461 distinct hashes: byte-identical originals already present in the source archive
+were moved as existing files, not newly copied or automatically deleted. Financial/legal PDFs,
+technical files and remaining ZIP bundles stayed outside the sorting library.
+
+The replacement collection contains the moved originals, `سجل نقل الأصول.csv` with private
+previous/current path mappings, Arabic `اقرأني.txt`, and the empty `أصيل` and
+`محتوى غير مرغوب به` folders for owner classification. Earlier inventories, plans and provenance
+records retain historical paths; resolve them through the move ledger and actual file existence.
+Some previously proposed assets were removed by the owner during cleanup: do not restore missing
+plan references or treat an old content proposal as current approval. Before later content work,
+refresh the plan against the owner's actual choices. No new media or media backup was created.
+
+Local moves and byte integrity are verified. Live iCloud server synchronization remains unconfirmed.
+No image generation, social publication, schedule, account binding or operational workflow changed.
+
+## Resume — owner selects realistic content in iCloud — 2026-09-08
+
+Start at `عمل/تجارة/Calapres/Ai-Work/المحتوى`; see
+[decision 0042](decisions/0042-owner-curated-content-realism-folders.md).
+The owner asked for the collection and defined `أصيل` as visually convincing/closer to reality.
+There are 468 verified content copies, two administrative files and exactly the two owner sorting
+folders `أصيل` and `محتوى غير مرغوب به`. Both folders were empty when created; root files await
+classification. Originals and prior creative records were preserved, with mappings private in iCloud.
+
+Inspect the actual folder choices on resumption, do not invent selections or treat authenticity
+as publication approval. Unwanted content is excluded but retained, including same-content aliases.
+No automated watcher, file deletion, image generation, schedule, platform/account or n8n change.
+Local hashes verified; iCloud server upload unconfirmed. The native social account audit remains
+blocked by the previously recorded browser access issue and is not a prerequisite for owner sorting.
+
+## Resume — use the existing iCloud content library — 2026-09-08
+
+Read [the content foundation audit](docs/calapres-content-foundation-2026-09-08.md).
+The owner's correction is explicit: creative work starts from Calapres's iCloud library.
+Ai-Work now freshly verifies Calapres-Bridal-Concepts-SHmTGI, Calapres-Photo-Concepts-4wizrv and
+its No-Logo-6hK9eD folder, plus prior refinements. Use these current paths instead of historical
+Downloads assumptions. Preserve the sibling archive and all rejected concepts; no move/delete.
+
+Ai-Work/Content-Foundation-2026-09-08 contains the Arabic three-piece plan, content board and
+912-row media/design inventory. These are local preparation, not platform drafts or activation.
+Seven selected files were visually sampled; do not imply every media file/video was reviewed.
+The proposed native publishing route still needs an authenticated account/role/draft/tool audit:
+Meta and TikTok navigation failed at the browser administrative-policy check. Existing handles
+remain historical evidence, queue counts unknown. Do not bypass browser controls or infer a ban.
+
+Next: owner review of the plan, existing-asset selection, and the account audit after access returns.
+No new rendering, posting, scheduling, account binding, subscription or operational mutation was
+performed. Local saves and three ZIPs verified; iCloud server sync unconfirmed. Keep the WhatsApp
+sender, Captain, Telegram and n8n untouched. Sales attribution remains separately pending.
+
+## Resume — TikTok and Instagram content — 2026-09-08
+
+Read [the verified commerce/WhatsApp closeout and content resume](docs/handoffs/2026-09-08-commerce-whatsapp-and-content-resume.md) first, then STATE.md,
+AGENTS.md and decision 0038. The owner deferred n8n/native-WhatsApp work; preserve the active
+sender and Captain. Next: verify actual social accounts and reusable assets read-only, then
+prepare a concrete content workflow and first draft plan. No posting/schedule/binding approval.
+The detailed record maps earlier work to its canonical home and records unresolved Meta-app
+compatibility. This supersedes older next-action suggestions below.
+
+
+## Paid-order WhatsApp confirmation activated — 2026-09-08
+
+The owner's latest explicit request authorizes completing this automatic transactional sender
+and one existing paid-owner-order canary. This supersedes the older unapproved/unsent status
+below only for this scope. See decision [0041](decisions/0041-automate-paid-order-whatsapp-confirmation.md).
+
+**Executed and verified:** workflow `FwJvEt91ZB61lPI7`, “كالابريز | تأكيد الطلب المدفوع عبر واتساب”,
+is active with published version `a4c63377-b8a4-42d1-850f-45424c3065d9`. Shopify returned HTTP 200
+and an orders/paid subscription matching the workflow's native webhook. The clean 17-node draft
+matches the published nodes and connections. Source: `n8n/calapres-paid-order-whatsapp-confirmation.json`.
+
+The bounded owner canary traversed the send and Shopify result-save path. Chatwoot subsequently
+returned HTTP 200, one outbound message with provider ID and **delivered** status. Read status
+was not asserted. Repeating the normal canary stopped before claim/send; no second message.
+The canary used an existing paid order through temporary manual scaffolding, now removed.
+A fresh production payment event after activation and the new-contact branch have not yet
+been observed end-to-end; subscription registration is not that test.
+
+**Design:** native Shopify paid trigger, refetch/validate order, Saudi mobile normalization without
+altering stored customer data, atomic Shopify metafield first-send claim, exact Chatwoot contact
+resolution, approved Arabic UTILITY template `order_confirmation`, and CAS result persistence.
+Scope is paid, non-test, non-cancelled Saudi orders created at/after 2026-09-07T22:20:00Z.
+The template personalizes the entered name and order number; its approved wording confirms
+receipt but does not contain an additional thank-you sentence. No template text was changed.
+
+**Account correction:** reusable Calapres customer-service credentials/workflows are in team
+project `0kVami0vGGBbT7Cy`; previous personal-project-only searches were incomplete.
+Owner secretary stays in `AeQgtZlgJbiXCM2e`. Captain remains the conversational responder.
+The Telegram bridge, retired bots, provider credentials, marketing/email and shipping remain unchanged.
+
+**Operational limits:** claims prevent repeated sends; failed/unknown sends are not automatically
+retried. Native trigger acknowledges before downstream completion, so missed/failed processing
+can require bounded manual reconciliation. No proactive incident alert or scheduled reconciliation
+was enabled. Verify Chatwoot before ever resetting a claim. Do not promise guaranteed delivery.
+
+**Privacy:** manual/success/error execution payload saving is disabled. A temporary diagnostic
+returned sensitive provider configuration unexpectedly; its saved execution was deleted and
+absence verified in the workflow execution list. No configuration secrets or customer canary
+identifiers are included in GitHub. Tool-session exposure is not erased by deleting n8n history.
+
+**Next:** observe the next naturally occurring eligible paid order without requesting another
+purchase. Snapchat, Instagram and TikTok purchase attribution remain the owner's next priority;
+no attribution implementation or advertising change was made here.
+
+
+## Phone correction and Chatwoot confirmation draft — 2026-09-08
+
+Fresh Shopify order UI shows the Saudi +966 prefix. The API returns the national
+part with shipping country SA. The existing owner's Chatwoot contact has the
+matching full international number and is not blocked. Do not blame customer
+entry or change the stored contact number: this is a representation difference,
+not evidence that an invalid phone caused the absent confirmation.
+
+Chatwoot outbound composer verifies order_confirmation in ar, UTILITY, with
+body variable 1 = customer name and variable 2 = order number. The approved
+template was selected and both fields populated for the existing paid owner
+canary; preview and enabled send control verified. No Send was clicked, no
+message ID exists from this preparation, and delivery is not yet verified.
+The composer draft is transient UI state, not a durable automated workflow.
+
+The previous audit found no identifiable active Calapres order-paid sender.
+Current evidence points to missing dispatch automation, not provider rejection.
+Next bounded step is explicit authorization for one confirmation to the owner
+for the existing order, then inspect actual sent/delivered/failed status. Do not
+require another paid order. Continuous automation remains unactivated and
+requires its own bounded approval. Preserve Captain and the Telegram bridge.
+
+## Owner payment/upload canary audit and WhatsApp gap — 2026-09-08
+
+Fresh Shopify readback of the owner's completed canary confirms PAID, order test=false and a
+Paymob SALE transaction SUCCESS, test=false, SAR 0.04. This proves the successful live payment
+reported by Shopify, not payout/bank settlement. Fulfillment remains unfulfilled.
+
+Paid design-upload variant was purchased at original unit price SAR 400. Its line-item
+attributes include design URL on Shopify uploads CDN, filename and design notes. Thus attachment
+URL receipt on a completed order is verified. Browser opening the image returned
+ERR_BLOCKED_BY_CLIENT; actual image bytes/visual content and manufacturing suitability remain
+unverified. Do not persist the owner identity, number, order identifiers or uploaded image URL
+in the repository. Shopify remains the source for these private order details.
+
+Order-level phone is null. Shipping-address phone is a 9-digit Saudi mobile national number,
+without +966. A future outbound workflow must read the shipping phone fallback and normalize
+it using country SA; a populated checkout phone field does not guarantee E.164 storage.
+
+Live Chatwoot account 179973 Templates UI lists five synced WhatsApp templates, last sync
+attempt September 7. order_confirmation preview reports Approved, Utility, Arabic (ar),
+WhatsApp. It contains an order-received confirmation and promises an update when prepared for
+shipping. Preview displayed example name/number; actual parameter mapping must be inspected
+before implementation. This supersedes assumptions that no confirmation template exists.
+Also visible: delivery_update, order_shipped, customer_support_followup, hello_world.
+
+Read-only n8n project search found 11 Calapres-named workflows, all inactive; the full returned
+project list had 58 workflows with no identifiable active Calapres order-paid sender.
+Do not revive retired catalog/supplier/image workflows. Owner Telegram Voice Bridge remains
+the sole Telegram webhook owner. No customer message, template sync, schedule, credential
+binding, workflow publication or shipment was executed during this audit.
+
+## Proposed bounded order-confirmation implementation
+
+- Subscribe to the existing Calapres Shopify orders/paid event, verify its authenticity,
+  refetch order status and constrain to the correct shop. Exclude test/cancelled/unpaid orders.
+- Extract selected variant and line-item engraving attributes. Require usable design attachment
+  for design orders before engraving; missing/unreadable attachment goes to human review.
+- Normalize phone from order/shipping data using an explicit country, preserve source number,
+  reject ambiguous/invalid numbers. Do not infer marketing consent from an order or email checkbox.
+- Reuse approved Arabic Utility order_confirmation through existing WhatsApp Cloud API/Chatwoot.
+  Inspect template parameter schema and channel permission before enabling any sender.
+- Deduplicate by shop+order+notification kind and delivery event. Record provider/message ID
+  and delivery state; do not report sent as delivered or blindly retry uncertain submissions.
+- Keep confirmation separate from manufacturing and shipping. A label/pickup requires the
+  outstanding stock, dispatch timing, pickup and package measures; OTO prepaid only.
+- First external send and continuous activation require fresh bounded owner authorization;
+  current request is the audit and how-to proposal, not explicit authorization to send messages.
+
+References:
+https://developers.chatwoot.com/api-reference/messages/create-new-message
+https://www.chatwoot.com/features/whatsapp-for-business
+https://shopify.dev/docs/apps/build/webhooks/verify-deliveries
+
+
+## Current owner amendment — CR99 plus CR98 — 2026-09-08
+
+Owner explicitly restored the two-code approach: keep CR99's current discount and add short
+free-shipping code CR98. Executed: CR99 stays 99.99% (0.9999), shipping combination enabled.
+Reused shipping discount 1698864922880, renamed it CR98 and restored expiry to
+2026-09-09T21:00:00Z. Both ACTIVE, one-use limit, zero uses, reciprocal order/shipping
+combination enabled; CR98 covers SA only. No new app, subscription or general shipping-rate change.
+
+Fresh checkout verified both codes accepted together: existing white burner SAR 390,
+order discount SAR 389.96, merchandise remainder SAR 0.04, shipping SAR 25 reduced to free,
+total and Pay now button SAR 0.04. This supersedes the immediately preceding CR99-only/
+shipping-deactivated amendment. No payment submitted; gateway acceptance of this small total,
+capture and settlement remain unverified until the owner completes the transaction.
+
+
+## Final owner amendment — CR99 is 99.99% only — 2026-09-08
+
+The owner dropped the combined free-shipping/app request and authorized 99.99% instead.
+Executed and verified: CR99 (1696022790400) percentage 0.9999, ACTIVE, one use, zero uses,
+expiry 2026-09-09T21:00:00Z, all discount combinations disabled. Deactivated obsolete shipping
+code QXMRKSHIP (1698864922880); API readback EXPIRED. No app or subscription was installed.
+Fresh checkout via /discount/CR99?redirect=%2Fcheckout accepted CR99 as the only code:
+white burner SAR 390, discount SAR 389.96, remaining merchandise SAR 0.04, shipping SAR 25,
+total and Pay now button SAR 25.04. No payment submitted. Earlier two-code, free-shipping and
+pending paid-app proposals are superseded by this amendment. Owner completes payment next;
+real capture/settlement remains unverified.
+
+
+## Owner amendment — short discount code; combined benefit pending — 2026-09-08
+
+The owner requested one code with exactly two letters and two digits that grants 99% off and
+free shipping. Renamed the existing 99% discount (1696022790400) from QXMRK to CR99;
+the same one-use limit, percentage, expiry and shipping-combination setting are retained.
+CR99 does not itself grant free shipping. QXMRKSHIP remains the separate active shipping code.
+Do not claim the requested one-code experience is complete.
+
+Shopify documents single discounts with order and shipping savings through compatible apps:
+https://help.shopify.com/en/manual/discounts/discount-types/discounts-with-apps
+Candidate Single Code Discount Swiftbee explicitly supports this at USD 6/month with a 3-day
+trial (https://apps.shopify.com/single-code-discounts). Installation/billing, store compatibility,
+exact one-use configuration and live combined-code behavior are not verified or approved.
+No app was installed, no subscription accepted, no general free-shipping rule created.
+The API client returned no owned Functions; this does not prove all other installed apps absent.
+Next step: owner decision on a new paid app, or another narrowly agreed native shipping arrangement.
+Current completed functionality remains CR99 plus QXMRKSHIP as two codes.
+
+
+## Resume — live Paymob mode and one-use owner payment test — 2026-09-08
+
+**Approved:** Abdulrahman explicitly requested disabling payment test mode and a 99% discount
+with free shipping so he can place one ordinary order using real money himself. This is the
+bounded payment-setting/test authorization previously missing; it does not authorize an agent
+to enter card data, submit a payment, issue a refund, fulfill an order or purchase a shipping label.
+
+**Executed and verified:** Shopify Paymob Native Checkout (provider 26640385) test mode is OFF.
+Saved successfully, then reopened the provider page: Active, unchecked "Turn on test mode",
+no "Test mode is on" warning and disabled Save. Visa, Mastercard, Amex and Apple Pay remained
+checked. Provider-side live merchant approval/settlement and successful authorization/capture
+are not proven by this configuration change.
+
+Existing unused 99% code QXMRK (discount 1696022790400) was reused, allowed to combine with
+shipping discounts and given an expiry. Created QXMRKSHIP (discount 1698864922880), free shipping
+to Saudi Arabia, combinable with order discounts. Both are ACTIVE, usage limit 1, usage count 0,
+and expire at 2026-09-09T21:00:00Z (end of September 9 in Riyadh).
+These are two native codes; no all-store shipping-rate change or discount app was needed.
+
+**Checkout verified, not purchased:** used the existing one-white-burner cart, text engraving
+variant priced SAR 390. The 99% code reduced merchandise by SAR 386.10; shipping then displayed
+SAR 25. Applying the shipping code reduced shipping to free and checkout total to SAR 3.90.
+Both codes were visibly accepted together. Contact/address/card fields remained empty; no
+Pay now click, order, payment or fulfillment was submitted. A combined-code share link was not
+validated; the actual checkout was prepared directly through its visible discount fields.
+
+**Next:** owner completes the real payment and supplies the order result; refresh Shopify and
+Paymob transaction state read-only before calling the payment canary passed. Physical stock,
+engraving/dispatch timing, pickup address and packaged measurements still gate actual delivery.
+OTO remains prepaid-only; COD, provider funding/credentials, email activation and unrelated
+publication remain outside this approval. See [decision 0040](decisions/0040-enable-live-paymob-owner-payment-test.md).
+
+
+## Resume — browser icon refreshed and owner confirmed — 2026-09-08
+
+**Executed and verified:** the received screenshot showed the obsolete circle/dot icon in address-bar
+suggestions; the owner confirmed it also appeared in the site tab. The approved seal was already
+served by the site, so the bounded repair copied that same image to
+`calapres-cr-browser-icon-2026-09-08.png` and updated the MAIN-theme favicon setting plus both
+layout icon/fallback links to the new filename and `cr-seal-20260908` revision.
+
+Shopify readback and the delivered seal image were verified. After reopening the store in a new
+tab, the owner confirmed “ظهر الختم البني”. The reported display issue is now resolved by owner
+confirmation; do not continue speculative cache deletion or repeated filename rotation.
+This does not claim independent verification of every device, saved favorite or Google result.
+See [the focused repair record](docs/handoffs/2026-09-08-safari-browser-icon-refresh.md) for evidence, exact scope and asset IDs.
+No image was generated, no browser history was cleared, and no checkout/product/payment change
+was made. Earlier missing-screenshot/unresolved notes below are historical and superseded here.
+
+
+## Resume — Safari icon report remains unresolved — 2026-09-08
+
+The owner reports the old browser icon still appears in desktop/mobile Safari and disputes the
+earlier completion claim. Do NOT dismiss this report as cache or claim the user's Safari is fixed.
+
+Fresh verification against GitHub main `ddafd3cce04d4f838e84a2bd714bca57a62c884c` and Shopify
+MAIN theme `165804638464` found the selected favicon still is
+`shopify://shop_images/calapres-checkout-wax-seal.png`. Both homepage and gray-product DOMs
+emit this file for 16px, 32px, shortcut and 180px Apple touch icons. The actual 180px image was
+opened and visually inspected: it is the brown CR wax seal. Both live layouts agree with this
+configuration. The older `calapres-favicon.png` asset remains a fallback only; it was not emitted
+by those inspected pages. No duplicate icon or manifest link was observed in those page DOMs.
+
+These observations establish current website configuration and the delivered seal image only.
+They do not reproduce the owner's Safari tab/favorites/Home Screen or identify which surface is
+showing the reported old icon. The supplied `IMG_1043.jpg` was unavailable at its attachment
+path, so the screenshot could not be inspected. Separate root-icon/www attempts through the web
+tool returned access errors; those results do not establish HTTP status or content at those paths.
+
+No theme, asset, Shopify setting or browser cache was changed during this investigation.
+Do not make another speculative icon change or clear the owner's browser data. Next: obtain
+the missing screenshot with its address bar/icon location visible, identify the exact URL and
+Safari surface, then correct the evidenced cause. The September 2 “live icon” entry remains
+historical server-side evidence, not proof of successful display on the owner's devices.
+
+
+## Resume — paid engraving design upload live — 2026-09-08
+
+**Executed and verified:** the owner explicitly authorized direct live implementation, no preview
+theme/test order, and SAR 10 extra for an uploaded engraving design. All three burners now retain
+their original SAR 390 text variant and have a new SAR 400 design-upload variant. The live MAIN
+theme `165804638464` has the Arabic selector, required paid-choice JPG/PNG upload, local preview,
+optional notes, native multipart submission, and cart attachment/price presentation.
+Read [decision 0039](decisions/0039-add-paid-native-engraving-design-upload.md) for IDs, exact scope, implementation and verification limits.
+
+The four edited live files were read back exactly; primary/sticky prices and file-required state
+were inspected on the storefront without submitting a file or changing the cart. No new theme,
+test order or checkout was created. Completed-order file receipt remains unverified. Existing
+GitHub-only family engraving copy remains preserved but unpublished; do not wholesale deploy it
+as part of this feature. Original variant IDs/SKUs and base prices are unchanged.
+Native paid variants mirror existing untracked stock/zero weight; these are NOT verified physical
+stock/packaged measurements and do not implement shared tracked inventory.
+
+Next safe action: review actual incoming customization orders for the paid variant and usable
+attachment before engraving. Any later upload/order canary needs bounded scope; do not invent a
+passed end-to-end result. Keep payment/dispatch readiness, Captain-only customer response,
+draft email and Magnific-only/reference-first creative gates as already documented. This live
+authorization supersedes older blanket “no storefront changes” wording only for this feature.
+
+
+## Resume — approved reference-example workflow — 2026-09-06
+
+The owner adopted published image references and a bounded example test before future generation,
+using external prompt libraries and guides. [Decision 0038](decisions/0038-require-reference-examples-before-image-generation.md) defines source/model/reference
+provenance, one pilot plus at most one targeted correction by default, visual/product-fidelity
+review, and reuse of successful recorded tests. Magnific remains the exclusive renderer/editor.
+This adoption step changed documentation only: no new generation, credit spend, purchase or publication.
+The owner objected to the realism of holding-pose result `u5sZ3OdQLD`; it is not accepted.
+The earlier six-motif Alhambra bracelet defect remains unresolved. Preserve both as failed/unaccepted
+attempts, not reusable successful examples. This update supersedes the older next-action wording
+that simply requests review or another correction of the same drafts.
+Next: prepare relevant published image-plus-prompt examples and their actual required references,
+then apply the bounded test workflow within the creative request. All live commerce gates remain.
+
+## Resume — model holding burner, no mirror — 2026-09-06
+
+Owner supplied a bridal pose reference and requested a DIFFERENT fictional model face and dress,
+with the bride holding a smoking Calapres burner and no mirror. This is a narrow owner-approved
+exception to older no-visible-face and unlit-handled-scene constraints for this one concept.
+One Magnific image `u5sZ3OdQLD` completed with a fictional adult model, new long-sleeve ivory satin
+dress, one original-reference Calapres burner supported by two hands, visible oud/smoke and no mirror.
+Saved locally under `Calapres/Ai-Work/Bridal-Holding-Burner-2026-09-06/Bridal-Holding-Calapres-No-Mirror-Magnific-v1.png`.
+75 existing credits; fresh balance 19625. No publication or live commerce change. Owner acceptance
+and iCloud server upload remain pending. Previous Alhambra bracelet-count defect remains unresolved.
+Next: owner visual review of this single holding-pose concept; Magnific only for requested edits.
+See [the bridal record](docs/calapres-bridal-concepts-2026-09-05.md) and decision 0025.
+
+
+## Resume — Alhambra bust, flat watch and visible bakhoor — 2026-09-06
+
+Owner rejected the preceding Magnific draft's watch pose and insufficiently convincing incense,
+then selected Van Cleef & Arpels Alhambra jewelry with a display bust. Current review image
+`xS4Vn0ljfW` now has a face-up Cartier watch lying flat with open extended bracelet, a velvet
+necklace bust, two earrings, and visible bakhoor on charcoal with bowl-originating smoke.
+IMPORTANT unresolved fidelity defect: loose bracelet still has SIX motifs versus the real
+five-motif model. Two targeted correction attempts failed; do not call it an exact genuine-product
+reproduction or publish it. Three Magnific renders cost 225 credits in this stage; balance 19700.
+Saved locally: `Calapres/Ai-Work/Bridal-Refinement-2026-09-06/06-Bridal-Vanity-Alhambra-Bust-Flat-Cartier-Magnific-v4.png`.
+iCloud server upload and owner acceptance remain unverified. All earlier files preserved.
+Next: review the composition, then correct the bracelet with a more reliable bounded Magnific edit
+if requested; do not repeat ineffective full-image prompts or switch away from Magnific.
+See [the detailed bridal record](docs/calapres-bridal-concepts-2026-09-05.md).
+
+
+## Resume — Magnific-only bridal refinement — 2026-09-06
+
+Owner requires Magnific exclusively for Calapres image generation/editing and real brand-product
+references for watches/accessories. Cartier Panthere selected; watch must rest naturally, with
+oud and bowl-originating smoke in this stationary vanity scene. One corrected Magnific draft
+`1ly0ioFr4r` completed (75 credits, balance 19925), locally saved and inspected under
+`Calapres/Ai-Work/Bridal-Refinement-2026-09-06/06-Bridal-Vanity-Cartier-Smoke-Magnific-v1.png`.
+Owner acceptance, exact product-fidelity acceptance and iCloud server upload remain unverified.
+Three preceding built-in-generator trials were the wrong tool choice, acknowledged and superseded;
+never label them Magnific. Original assets retained. No live commerce/marketing change.
+Read [the refinement record](docs/calapres-bridal-concepts-2026-09-05.md) and decision 0025.
+Next: review this single Magnific draft with the owner; no unsolicited batch or publication.
+
+
+## Resume here — verified documentation closeout — 2026-09-06
+
+Read [the detailed phase closeout](docs/handoffs/2026-09-06-calapres-operations-and-bridal-creative-closeout.md), then the linked current decisions and creative
+records. It preserves the missing Instagram/Search Console distinctions, provider-form evidence,
+remaining marketing audit and local archive checks. Existing operational/creative decisions are
+reused rather than duplicated. Literal truncation gaps in older history have been restored.
+Immediate next action: review the existing eight bridal concepts and select bounded corrections;
+do not regenerate them. Keep the saved local ZIPs. Images remain review-only, while payment,
+fulfillment and proactive incident delivery retain their separate approval/acceptance gates.
+No live system was changed by the handoff. Follow the newest amendments, not old dated resume steps.
+
+## Resume here — eight bridal concepts and acrylic-personalization freedom — 2026-09-05
+
+The owner explicitly prioritizes brides, wedding preparation with jewelry sets, and bridal gifts.
+New creative concepts may invent Arabic letters/initials/occasion dates with the same raised
+acrylic look. Do not incorrectly enforce the older unchanged-Shopify-ornament restriction on
+these new concepts; retain the actual burner body, available colors and one-burner offer.
+No faces/full figures or overlaid logos. Eight concepts are already generated, inspected and
+saved under `/Users/awd/Downloads/Calapres-Bridal-Concepts-SHmTGI`; do not regenerate this batch.
+Read [the batch record](docs/calapres-bridal-concepts-2026-09-05.md) for IDs, files and review notes.
+They are review concepts, not published ads or production-approved acrylic files. Preserve all
+earlier originals. Cost was 600 existing credits, resulting balance 4771; no top-up or live change.
+
+## Resume here — four logo-free photographs — 2026-09-05
+
+Owner likes the four photo-first concepts and explicitly requests removing their overlaid logos.
+Visible branding is not mandatory. Preserve the physical burner-front ornaments and the original
+branded files; save clean versions separately on the owner's device. Do not mistake this for a
+new product/logo design or ad-publication authorization. See the campaign record for exact files.
+Completed: four clean PNGs and `Calapres-Photos-No-Logo.zip` in
+`/Users/awd/Downloads/Calapres-Photo-Concepts-4wizrv/No-Logo-6hK9eD`. All visually inspected and ZIP
+integrity checked. Do not regenerate to remove logos again; this requested removal is done.
+
+
+## Resume here — review alternate-color photographic concepts — 2026-09-05
+
+The owner explicitly wants all earlier images kept, including assets excluded from final-use review;
+do not delete or overwrite them. For NEW work, do not repeat the pale top-header/burner-below template.
+Use full-bleed photographs with only the approved wordmark or CR icon, actual gray/beige references,
+and materially different camera angles, light and scenes. Bridal faces/full figures remain prohibited.
+Balance was checked and reported (5971), then owner said yes. Four fresh concepts, not a site/ad launch,
+were authorized as this bounded next batch. Results and review are in the campaign record.
+The four completed assets are `0emthm5TfW`, `aFr1xkHfSh`, `s76NiNSl8e`, `xS4P9P8jfW` (300 credits;
+balance 5671). The overhead bridal photo is strongest for brief compliance. Do not publish the
+other variants unchanged: cinema adds an extra seal/generic wordmark, sunlight invents a hybrid
+badge, and macro smoke appears disconnected from the burner. No additional retries were started.
+
+
+## Resume here — both identities accepted, review eight lifestyle variants — 2026-09-05
+
+The owner explicitly approved BOTH earlier identity treatments for future alternating ads; do not
+ask again which one must win. New requested direction: writing moves upward/compacts to reveal
+smoke; include families, newlyweds and brides. Never show bridal faces or full figures, including
+reflections. Hands/wrists, satin, watches and jewelry still life are allowed; they are context props,
+not items included with the one burner. Campaign publication and paid media remain separate actions.
+The eight-variant batch and review outcomes are in the campaign record.
+Twelve total drafts completed including four corrections, costing 900 credits; eight were curated
+and displayed. Read the campaign table before reusing images: four are excluded for repeated text
+or invented product emblems. Prefer `BhFQC2BoQR` for the compact family/wordmark treatment and
+`EbLj1DhuuO` for the compact bridal-gift/seal treatment. The bride/watch first pass `MBavISuDCm`
+retains the original-style emblem; its correction `gO3i9CkSXO` does not and must not be used.
+Do not regenerate this batch without new direction or mistake identity approval for ad publication.
+
+
+## Resume here — review wordmark versus CR seal concepts — 2026-09-05
+
+The owner explicitly requested a comparison of the original English wordmark and existing
+burnt-brown CR seal. Both are permitted in these review concepts; do not read the preceding
+wordmark-only correction as a prohibition of this subsequently requested comparison. No winner,
+font weight system, live publication, or new logo was approved. See the campaign record for assets
+and results. Do not claim generated Rubik-style lettering is verified real-font typography.
+The two completed concepts are linked in the campaign record: `ovHFhuI829` (wordmark) and
+`bxwUrsM5Y2` (CR seal). Both were shown and inspected, with 150 total credits spent. Wait for
+owner design direction rather than regenerating them. Final logo geometry and actual-font text
+still need controlled composition; no customer-visible surface was changed.
+
+
+## Resume here — exact original campaign wordmark — 2026-09-05
+
+Use the original `assets/calapres-wordmark.png` graphic (distinctive C/first-A flourish), as the owner
+explicitly requested. Do not replace it with a typed CALAPRES font or the wax seal. Its current live
+header rendering is brown via CSS mask even though the underlying PNG is gold. Magnific reference
+`9ZcYPitNYZ` is the actual imported asset. This logo correction does not approve image publication,
+Shopify changes, checkout changes, or a broad Arabic brand-name rewrite.
+The targeted logo edit `ovHQXKq829` completed (700 credits) but did not preserve the flourish; do not
+present it as a correct logo replacement. Fresh balance after it was 7021. Avoid further generative
+retries for this exact-asset task; use deterministic image-layer placement and verify it visually.
+
+
+## Resume here — approved family campaign and Magnific trial — 2026-09-05
+
+The owner approved the exact shorter campaign heading/body recorded in
+[the sales-readiness record](docs/calapres-sales-readiness-2026-09-05.md#owner-approved-campaign-copy--2026-09-05)
+and asked to test it with Magnific. Do not ask for the wording again or restore the earlier proposed
+paragraph with family examples. Existing product-page support copy is still source-only.
+The two completed Magnific drafts cost 200 existing credits. Reject the first (box/tray retained).
+The corrected single-burner draft is linked in the campaign record; it is a visual concept only,
+with Arabic and product-fidelity issues. Do not repeat this trial without a changed creative method.
+The next creative step is controlled product-photo composition plus separately typeset editable
+Arabic, followed by review, not publication of the generated draft.
+Generated images are review drafts, not publication approval. Preserve decision 0027's one-burner
+offer even when the historical reference photograph contains a box and tray. Do not activate
+Klaviyo, publish a theme/gallery, or send ads during the creative trial.
+
+
+## Resume here — close the sales gates and review family engraving copy — 2026-09-05
+
+Read [the current sales-readiness audit](docs/calapres-sales-readiness-2026-09-05.md). Paymob was
+freshly verified in test mode; no real transaction will be processed through it. Three active
+burners have one image each and untracked inventory with recorded quantity zero. Do not label them
+physically out of stock without owner evidence. Establish stock, engraving/dispatch time, actual
+pickup origin, and packaged measurements before the prepaid end-to-end acceptance order.
+
+Family-name copy is prepared in `sections/main-product.liquid` and `templates/product.json`,
+including `آل العواد`, `مجلس آل العواد`, and a family FAQ. It is source-only and has not changed
+Shopify or the live storefront. Preserve the existing optional 40-character `نص الحفر` field.
+The shared section does not render Shopify descriptionHtml and has no image gallery: updating
+product data alone will not expose the family copy or additional lifestyle images on that page.
+
+Next implementation: review/deploy this bounded copy change and verify all three product pages;
+prepare faithful lifestyle assets and a separately scoped gallery. Do not publish unapproved
+imagery or activate Klaviyo while its design remains deferred. Broader automation and paid app
+integrations should not delay the minimum manually supervised selling workflow.
+
+
+## Resume here — import approved Klaviyo email design, then authorize sending — 2026-09-04
+
+Klaviyo's technical foundation is ready and verified; visual email design is intentionally deferred.
+Open the six current draft flows by stable ID: welcome `Y39TRB`, checkout abandonment `RXMMLx`, cart
+abandonment `UBeYDd`, browse abandonment `UyRJwi`, post-purchase thanks `VRHuL9`, and winback
+`WkkBUZ`. Old flow `Y6eq9T` is retired and must not be activated.
+
+All eleven flow emails are attached to the correct message, use `info@calapres.com`, have UTM
+tracking, unsubscribe and organization data, and passed render-only checks for checkout/product
+destinations and commerce variables. The abandonment filters are present, and both winback delays
+now use recipient-local timezone. Keep every flow and email message draft until the external design
+provider supplies the approved visuals, the resulting desktop/mobile previews are accepted, and the
+owner gives fresh approval for live customer email.
+
+Signup form `XsiWvE`, version `27642620`, is `Draft`; its target remains double-opt-in list `XGX2zD`.
+The owner rejected its unintended customer-visible publication because visual work was explicitly
+deferred. The form had zero submissions when inspected. After it was returned to `Draft`, a fresh
+storefront load after 6.5 seconds showed no form dialog, headline, or email placeholder. Onsite
+tracking and storefront script `Rf93xb` remain present for the approved technical foundation; they
+do not authorize a visible form. Four hidden templates were partially restyled before the owner
+delegated visual work: `RpQa6U`, `RjHf29`, `UpuXK2`, and `Y9Hvxg`. Do not continue or reverse that
+appearance work during technical setup, and do not publish any signup form without approved design
+and fresh owner approval for the exact customer-visible result.
+
+Klaviyo currently shows Shopify and the Klaviyo MCP Server as enabled. Meta Ads and Google Ads are
+discoverable but unbound; binding requires the applicable account authorization, and the present
+audience is too small for a meaningful sync. Keep WhatsApp in Chatwoot, SMS and Marketing Analytics
+off, and Judge.me independent unless its paid Klaviyo connection is explicitly approved. No flow,
+campaign, customer message, paid trial, subscription, ad spend, or ad account binding was executed.
+The live recheck found no campaign and all seven listed flows in `Draft`, with zero recorded form
+submissions and zero listed flow conversions.
+
+Read [decision 0037](decisions/0037-establish-klaviyo-technically-defer-email-design.md) before
+changing Klaviyo or email design.
+
+### Meta blocker discovered during advertising-integration setup
+
+The owner authorized opening Meta, Google, and TikTok account-connection flows, but Meta binding is
+not complete. Klaviyo offered `Calapres | كالابريز` ad account `1055863030368089` and misspelled
+`Calaprs` account `1548956409428065`; both were `Read-Only`. Do not select either.
+
+Live Shopify and Meta Business evidence identifies the canonical Calapres dataset/pixel as
+`2087512885182244`, owned by Optix portfolio `3498131087080400`. Calapres asset group
+`1163328843541759` contains the page, catalog, Chatwoot app, pixel, and Instagram account but no ad
+account. Neither candidate ad-account ID appears in Optix Business Settings, and attempting to open
+either in Ads Manager redirected to an unrelated accessible account. No audience sync or lead-ad
+sync was created.
+
+A subsequent Meta Business Support recheck proved that both exact ad-account records still exist
+and currently show zero reviewed/approved/rejected ads and no visible policy restriction. The
+blocker is access and ownership, not a verified Meta suspension. Account `1055863030368089` is not
+proven disabled, but remains read-only and its Ads Manager link redirects to Oleel. Account
+`1548956409428065` behaves the same and its billing route is named `Calapres deleted old`; keep it
+retired. The earlier rejected-account-creation/payment notice did not preserve an account ID, so do
+not claim it was account `1055863030368089`.
+
+Next safe action: obtain explicit owner approval for one exact Meta account remedy after presenting
+the permanent ownership/currency/timezone choice. Prefer an Optix-owned, Calapres-only ad account
+assigned to the Calapres asset group and the owner with full control. Then re-open Klaviyo from
+Integrations, authorize only the necessary Calapres assets, and verify the exact account ID before
+creating any audience. This does not authorize ad spend or campaign launch.
+
+## Resume here — connect delayed Chatwoot escalation without restoring immediate handoff — 2026-09-04
+
+Live Captain assistant `2187` has been corrected after verified conversation `#17` showed an
+immediate same-minute handoff when the customer wrote `ابي انسان اكلمه واضح انت Ai`. The response
+guideline and guardrail now say that asking for a human/employee or challenging the reply as AI is
+not a handoff trigger. Captain must continue inside the same chat as Calapres service, must not claim
+to be human, and must not mention AI, inability to route, or technical failure.
+
+The `تحويل محدود لخدمة العملاء` scenario is disabled. This was necessary because its Handoff tool
+still attempted a transfer on a repeated request despite softer instructions. Its description no
+longer names an explicit employee request as a trigger. The stored handoff fallback is verified as
+`أعتذر لك، سيتابع معك الموظف المختص هنا.`
+
+A fresh two-message Playground canary passed: the initial AI/human challenge received a continuing
+service reply, and the repeated demand for a human received a direct order-or-product clarification.
+No handoff, AI disclosure, human claim, or technical-failure excuse appeared.
+
+Do not re-enable the disabled scenario as a shortcut. It also means automated handoff for
+cancellation/refund/address-change execution, payment disputes, and unresolved order-tool cases is
+currently unavailable. Priority labeling remains enabled, but the requested 24-hour or 48-hour owner
+notification is not implemented. The next safe stage is a bounded Chatwoot read/alert bridge to
+`سكرتيرة عبدالرحمن` that labels and notifies the owner while leaving Captain customer-facing.
+Require a live one-conversation canary before broader activation.
+
+Read [decision 0031](decisions/0031-rebuild-captain-knowledge-and-limit-handoff.md) before changing
+Captain handoff behavior.
+
+## Resume here — expand beyond verified Shopify and Metricool reads — 2026-09-04
+
+Published owner Agent `سكرتيرة عبدالرحمن` is active on version
+`27de4fbd-f4bf-47e3-b492-00abbfe56044`. It retains the two verified Calapres Shopify read tools and
+now also has Metricool restricted to five read-only operations: brand settings, scheduled posts,
+analytics metric discovery, analytics reads, and best-time reads. The Metricool operations that
+create, update, or submit posts for review are explicitly excluded.
+
+The live Metricool credential identified `Calapres | كالابريز` as brand `6694961`. A direct
+Agent canary for that exact brand returned zero scheduled unpublished posts with `VERIFIED` and
+performed no write. The account-wide credential can read other owner brands, so this is a
+portfolio-owner read source, not a credential-level single-brand boundary. Preserve the instruction
+gate: named-brand requests query only that brand, portfolio requests query brands separately, and
+every result stays labeled.
+
+The Telegram voice/text bridge remains unchanged. Its previously verified Shopify round trip still
+proves the transport-to-Agent path; the new Metricool publication was verified through the Agent
+canary, not a separate Telegram round trip.
+
+Next, obtain or build one bounded read path for Chatwoot and OTO. Do not treat Shopify fulfillment
+fields as OTO shipment proof. Do not attach generic Gmail, Drive, or Notion accounts until their
+exact business scope is named. ChatGPT conversations are context, while canonical GitHub remains
+durable authority. No customer send, shipment, commerce write, social publication, credential,
+payment, schedule, or proactive alert is approved by this read-source expansion.
+
+Read [decision 0036](decisions/0036-federate-owner-business-sources-read-only.md) before continuing.
+
+## Resume here — expand the verified read-only business source federation — 2026-09-04
+
+The owner secretary is no longer source-blind for Calapres Shopify. Published Agent
+`سكرتيرة عبدالرحمن` has exactly two live business tools:
+`calapres_shopify_orders_readonly` and `calapres_shopify_products_readonly`. Both use the existing
+`Shopify-Calapres` OAuth credential and expose only `getAll` reads. The Agent is active on version
+`465ba704-3580-4df4-b453-8093a6b59d7d`.
+
+A direct canary returned zero Calapres orders created on 2026-09-04 Riyadh time. A catalog canary
+returned three active products and three variants, with recorded quantity zero and inventory
+tracking disabled. A real Telegram request through `Owner Telegram Voice Bridge` returned
+`0 — VERIFIED`. This proves the published owner path can call the live Shopify read source.
+
+Do not describe OTO, Chatwoot, mail, Drive, Notion, marketing platforms, ChatGPT history, or other
+brands as connected. No clearly identified reusable n8n read credential was found for OTO or
+Chatwoot. Generic Gmail, Drive, and Notion credentials remain unattached because their business
+scope is not bounded. ChatGPT context is not operational authority; use canonical GitHub for durable
+project state. Supabase remains retired for Calapres.
+
+Next, verify and add one named source at a time with a live read canary. Keep brand-specific tool
+names and credentials, omit customer contact and address fields when they are not needed, and never
+expose write operations. Any send, update, fulfillment, refund, payment, credential, permission,
+schedule, or proactive alert still requires its applicable action-time approval.
+
+Read [decision 0036](decisions/0036-federate-owner-business-sources-read-only.md) and
+[decision 0035](decisions/0035-adopt-private-owner-command-center.md) before continuing.
+
+## Resume here — add read-only incident sources after verified voice bridge — 2026-09-04
+
+The private owner command center is live for text and voice. Open the stable n8n Agent
+`سكرتيرة عبدالرحمن`, agent ID `LKA07iWfCpjawVNB`, from the project Agents list and confirm active
+version `0512e496-51e9-421e-8880-0a499efe2c95` before editing. Its authorized Telegram username is
+`@A_Awdsh`. The numeric Telegram owner identity remains the actual allowlist and must not be placed
+in GitHub, instructions, logs, or owner-facing reports.
+
+Published workflow `Owner Telegram Voice Bridge` (`0EQB4mv5NknrXsHM`, active version
+`454e29f5-b6dc-4569-8a1b-c3267470041c`) owns the webhook for
+`@AbdulrahmanCommandCenterBot`. The Agent's direct Telegram integration is intentionally
+disconnected to avoid webhook conflict. The workflow reuses credential `Qj1UoPHZNEEWn5dX`,
+requires both the exact numeric user and private-chat allowlists, sends text to the existing Agent,
+and uses the managed n8n OpenAI audio transcription operation for Arabic voice notes before sending
+the transcript to that Agent. Do not reconnect the direct Agent integration while this workflow is
+published unless first unpublishing the workflow.
+
+Voice is verified, not proposed: a real 3-second owner note was transcribed exactly as
+`أريد أن أسأل، هل هناك طلبات اليوم؟`; the Agent replied in Telegram and workflow execution
+`45166` succeeded end to end. A separate two-message canary confirmed one stable conversation
+session. The workflow-authored trusted transport context is valid only after the numeric user and
+private-chat gates pass and never waives written action-time approval for risky or external actions.
+
+The owner Agent's default scope is portfolio-wide. If the owner does not name a brand, treat the
+request as covering every authorized and connected business, project, commercial operation, and
+personal organizational matter. Return one consolidated view and group evidence by brand where
+useful. Do not ask which brand merely because a source is absent; state the missing coverage as
+`UNKNOWN` or `UNVERIFIED`. Ask a brand question only for a materially ambiguous request or
+immediately before a brand-specific risky action whose target cannot be safely inferred. A live
+Telegram canary for `وش الجديد اليوم في كل أعمالي؟` passed this behavior.
+
+`Calapres Operations Director` (`olVB3TzKClXjuOei`) remains an unpublished bounded internal
+specialist with its three approved skills and no channel, schedule, commerce tool, customer-send
+authority, or expanded permission. Captain remains the only customer-facing automated responder.
+
+The next stage is to define and separately approve the minimum read-only operational sources and
+incident rules needed for meaningful P0/P1/P2 alerts. No live source, proactive trigger, or schedule
+is attached yet. Do not send customer messages, alter commerce or fulfillment, create or expose
+credentials, fund a provider, top up the Gateway, enable automatic top-up, or enable schedules by
+assumption. Decision 0034's direct OpenAI path remains pending separate live compatibility and plan
+verification plus action-time approval for credential and payment work.
+
+Read [decision 0035](decisions/0035-adopt-private-owner-command-center.md) before continuing.
+
+## Resume here — verify the restored agent and its direct-OpenAI path — 2026-09-03
+
+Open the existing n8n Agent `Calapres Operations Director` from the project Agents list and confirm
+stable agent ID `olVB3TzKClXjuOei` in project `AeQgtZlgJbiXCM2e`. Do not resume it from a saved
+`/assistant/<uuid>` route: that route is a transient assistant artifact, not the stable agent
+record. The saved draft was later observed as a blank `New Agent`; the cause is unproven, while
+stale or concurrent editor state, autosave, and an interrupted connection remain observed risks.
+The draft was restored and an instructions-only preview passed, but its former Shopify and
+Firecrawl tools were deliberately not reattached. It remains unpublished with no channels,
+schedules, sub-agents, episodic memory, or MCP access.
+
+The immediate next action is read-only: verify the current live draft from the stable Agents list,
+then establish whether this n8n first-class Agent can use a customer-owned OpenAI credential. The
+accepted direction is a Calapres-dedicated direct OpenAI API project/key/budget with `GPT-5.6 Sol`;
+implementation is pending. Do not top up n8n Gateway, enable auto-top-up, fund OpenAI, create or
+attach a credential, configure OpenRouter, reattach a tool, or publish the agent without fresh
+action-time approval. If direct credentials are unsupported in the current Agent surface, preserve
+the Gateway draft and return for a new decision instead of building an unapproved workaround.
+
+After any approved model binding, run one bounded instructions/model canary. Reattach Shopify and
+Firecrawl only as two later, separately approved read-only canaries, one tool at a time. Keep Captain
+as the only customer-facing responder and do not send messages or write to Shopify, orders,
+shipping, Chatwoot, Meta, or payment systems.
+
+Read [decision 0033](decisions/0033-adopt-calapres-operations-director-draft.md),
+[decision 0034](decisions/0034-use-direct-openai-api-for-calapres-agent.md), and the
+[detailed 2026-09-03 handoff](docs/handoffs/2026-09-03-calapres-agent-recovery-provider-and-whatsapp-history.md).
+The detailed record also preserves the official WhatsApp-history export limits and the proposed
+direct Chatwoot archive path; no archive was executed.
+
+## Chatwoot conversation operations stage 1 — 2026-09-02
+
+Resume from decision 0032. In live Chatwoot account `179973`, use the seven sidebar labels to route
+attention. The `المجلدات` section contains eight saved filters: `بانتظار العميل`,
+`يحتاج تدخل بشري`, `عملاء منزعجون`, `مهتم ولم يطلب`, `طلبات قائمة`, `مشكلات الشحن`,
+`مشكلات الدفع`, and `سبام وخارج النطاق`. Before resolving a conversation, select one value in the
+required `نتيجة المحادثة` (`conversation_outcome`) list.
+
+This stage deliberately did not alter Captain assistant `2187`, its connected inboxes, the enabled
+assignment automation, existing conversations, or Meta/WhatsApp templates. Auto-resolve remains
+off. Do not bulk-label old conversations. The next separately approved stage should define who or
+what applies each label, then test one new conversation per channel before expanding automation.
+
+## Resume here — the live favicon is the transparent brown wax seal — 2026-09-02
+
+The owner requested the brown Calapres seal without a background in the browser tab. The former
+selected file, `calapres-favicon-monogram-2026-08-31.png`, was a flat gold monogram on a solid brown
+RGB square. Live theme `165804638464` now selects the already-approved transparent RGBA file
+`calapres-checkout-wax-seal.png` for its `favicon` setting.
+
+Shopify saved the change, and a fresh public response emits the new file for the 16 px and 32 px
+favicons, shortcut icon, and 180 px Apple touch icon. If Safari temporarily shows the prior icon,
+reload or open a new tab because Safari may retain the old site icon locally; do not revert the
+Shopify setting on that basis. No image was regenerated and no other storefront or checkout setting
+changed.
+
+## Resume here — Captain library v2 is live; outbound WhatsApp remains separate — 2026-09-02
+
+The owner approved and the live Chatwoot Captain assistant `2187` received the full knowledge
+cleanup. It now has seven authoritative documents and 18 curated manual FAQs. The separate order-
+status topic is intentionally not a static FAQ; it must use the existing read-only order tool.
+Do not restore the deleted product/sitemap documents or any set, stand, oud-box, or two-letter
+engraving claim.
+
+The assistant description, product and engraving guardrails, response guidelines, and enabled
+handoff scenario are updated. General questions, missing answers, out-of-scope questions, and
+inactivity must not hand off. `Wait for the customer` is selected. The limited scenario may hand
+off only for an explicit employee request, an order mutation, cancellation/refund execution,
+payment dispute or sensitive case, or verified order-tool failure after a safe attempt.
+
+Playground verification passed for service scope, one-burner contents, no cash on delivery, the
+SAR 25 / SAR 320 shipping thresholds using Western digits, and the changing-price boundary. A
+stale two-letter engraving response appeared in the first test, so an explicit supersession
+guardrail was added; the fresh rerun correctly returned name-or-logo engraving.
+
+The next customer-service stage is separate: design and approve a Meta utility template for a paid-
+order confirmation, normalize accepted Saudi phone forms to E.164, and send nothing when the number
+is invalid. No proactive WhatsApp message, template, outbound workflow, checkout validation change,
+or external-channel delivery test was created here.
+
+## Resume here — OTO is connected; complete the pickup origin before a test shipment — 2026-09-01
+
+The owner authorized installing and connecting shipping while keeping payment work for last. The
+official Shopify app `OTO - Shipping Gateway` is installed, the existing `Calapres sa` account is
+connected, OTO lists Shopify store `Calapres - 82929975552` as active, and the live OTO connection
+test returned success. Shopify location `91940061440`, `SMSA Retail Shop`, was matched successfully
+to OTO location `396002`, `SMSA Retail Shop`.
+
+Cash on delivery is explicitly prohibited by the owner and is off in the OTO channel. Preserve the
+two existing Shopify Saudi rates: SAR 25 for SAR 0–319.99 and free shipping from SAR 320. The OTO
+discounted-rates checklist remains incomplete and no OTO rate was added to the Shopify delivery
+profile. Do not press the embedded rate-activation action or alter the manual rates without a
+separate commercial decision.
+
+The remaining pickup blocker is factual, not technical. OTO's imported sender record has only the
+name `SMSA Retail Shop` and city `RIYADH`; it lacks a confirmed phone, detailed physical pickup
+address, district, postal code, and short national address. Ask whether the Shopify address
+`SMSA Retail Shop, Al Wadi District, Uthman Bin Affan (Exit 7) Road, RIYADH, Saudi Arabia` is the
+actual courier pickup origin. If not, obtain the exact short national address or complete pickup
+address. Only then fill and activate the sender location. Next obtain the packaged weight and
+dimensions and run one prepaid test order through order import, shipment creation, label, tracking,
+and Shopify status writeback. No wallet funding, IBAN, paid plan, carrier booking, shipment, or live
+order test has occurred.
+
+## Resume here — realistic seal and pale-beige checkout are live — 2026-09-01
+
+The owner explicitly approved the final unsaved mobile preview and then directed `Save`. Active
+checkout profile `5133926656` now uses `calapres-checkout-wax-seal.png`, centered at 120 px. Main
+is `#FAF8F5`; header and order summary are `#F7F4EF`; header accent, order-summary accent, shared
+accent, and primary button are `#44271B`; input fills are transparent; headings and body use
+Rubik. The surfaces are Shopify's very pale solid checkout colors, not actual glass blur.
+
+The editor disabled Save after the operation. A fresh public Arabic checkout independently loaded
+the new seal from Shopify CDN and computed the exact main, header, button, input, and Rubik values.
+No guest-checkout rule, required email or phone field, address wording, shipping rate, payment
+provider, Paymob state, product, price, inventory, customer, order, or social setting changed.
+
+The Basic store still has one active checkout configuration and no draft. Shopify's Duplicate menu
+did not respond through the authenticated interface; after the exact rollback values were recorded,
+the owner approved saving the active configuration. Rollback only if explicitly requested: restore
+`Artboard_4_2x-100-removebg-preview.png` centered at 100 px, main and header `#FFFFFF`, order summary
+`#F5F5F5`, accents and button `#1B262D`, opaque input fills, and Almarai for headings and body. Do
+not delete either logo asset or change checkout behavior during that rollback.
+
+## Resume here — Western digits and review removal are live; social accounts remain deferred — 2026-09-01
+
+The owner explicitly approved publishing the combined storefront bundle after the native Arabic-
+checkout digit boundary had been stated, and explicitly excluded social-account setup. Shopify
+theme `165804638464`, `Preview — Western digits 0-9 2026-09-01`, became `MAIN` at
+2026-09-01T10:25:46Z. Former live theme `165777604864`,
+`Preview — Calapres beige + burnt brown 2026-08-31`, is now `UNPUBLISHED` and is the immediate
+rollback. Both themes are finished processing without failure; no theme was deleted.
+
+The live theme now renders Western `0–9` digits across theme-controlled storefront surfaces and
+removes the complete empty `تقييمات العملاء` product section. Native Arabic Shopify checkout is
+unchanged and can still render Arabic-Indic digits because the Basic-plan checkout is outside theme
+control. Do not describe the whole checkout as Western-digit complete.
+
+Instagram, Snapchat, TikTok, and X remain blank and hidden exactly as the owner requested for this
+publication. Only `https://wa.me/966508727687` and `mailto:info@calapres.com` are visible in the
+footer. Add another platform only after receiving and verifying its exact official public URL in
+the current theme's Footer settings.
+
+Post-publication proof is complete: Shopify displayed `Theme published`; the Admin API returned
+`165804638464` as `MAIN` and `165777604864` as `UNPUBLISHED`; an anonymous public homepage response
+identified theme `165804638464` with role `main`, rendered Western prices, and exposed only the two
+verified contact links; a public product response used the same theme and contained no review
+heading or widget. Products, prices, inventory, checkout, payment, Paymob, shipping, tax, customer
+and order data did not change. If rollback is requested, publish only theme `165777604864`, verify
+the homepage, cart, footer, product page, and native checkout boundary, and do not delete either
+theme.
+
+## Resume here — empty product reviews are gone from the combined draft; live remains unchanged — 2026-09-01
+
+The owner directed complete removal of the empty `تقييمات العملاء` section. Canonical GitHub
+`main` implementation commit `28e890086f8466ea621ac22c9e9ec60dd528fccd` removes the heading,
+Judge.me widget container, legacy metafield output, review-data script, empty spacing, and three
+isolated CSS rules from the shared product section. It does not uninstall Judge.me or delete review
+data. Decision 0029 records that authentic reviews may return only through a later owner-approved
+implementation.
+
+Shopify returned exactly three active products and `templateSuffix: null` for each, so white, beige,
+and gray all use the corrected default product template. Only unpublished theme `165804638464`,
+`Preview — Western digits 0-9 2026-09-01`, received the two files; their remote MD5 and sizes match
+canonical source. Theme Check passed 181 files with zero errors and six existing remote-font
+warnings. Fresh 390 px renders of all three product pages contained no review text or widget, had
+only the intended `.pd` block inside the main wrapper, and had zero horizontal overflow.
+
+Live theme `165777604864` remains unchanged. Do not publish the combined draft until the owner makes
+the separate Western-digit decision already recorded below: accept Shopify's native Arabic-checkout
+digit exception or switch the checkout to English. Preserve rollback theme `165774786816` and do
+not delete any theme or review data.
+
+## Resume here — Western digits are verified in draft; native Arabic checkout still uses Arabic digits — 2026-09-01
+
+Canonical GitHub `main` commit `f49f3871c4c650936925a0b55175ff17f29b245a` contains the complete
+theme-controlled implementation of the owner's `0–9` rule. Unpublished Shopify theme
+`165804638464`, `Preview — Western digits 0-9 2026-09-01`, is a clean duplicate of live theme
+`165777604864` plus the seventeen changed theme files. Remote MD5 and size match canonical source;
+the draft is not processing or failed. Nothing was published to the live theme.
+
+Theme Check has zero errors and the six existing remote-font warnings. Template and schema JSON
+parse, the independent conversion suite passed all 680 Unicode decimal-number characters, and
+browser checks passed the homepage, product, cart drawer, standalone cart, About, and 404 pages.
+Dynamic cart quantity `2` and total `780` appeared with Western digits; the original cart quantity
+`1` and total `390` were then restored. The 390 px storefront and drawer have no horizontal
+overflow. Customer input is deliberately preserved exactly: a search for `١٢` continued to show
+`١٢`, while the store-generated result count displayed `0`.
+
+The unresolved boundary is real and visible in Shopify's native Arabic checkout: it shows
+`١ عنصر` and `٣٩٠٫٠٠ ر.س.`. The theme cannot run there, and a direct
+`ar-SA-u-nu-latn` locale test did not change the output. A fresh Admin API read confirms the plan is
+Basic and not Plus; Shopify's current documentation says the information, shipping, and payment
+checkout steps cannot receive UI extensions on Basic, and theme custom CSS does not apply to
+checkout. Do not claim whole-site completion and do not publish draft `165804638464` without the
+owner's explicit decision. The safe choices are: publish the verified storefront improvement while
+accepting Shopify's Arabic-checkout exception, or switch checkout to English so its native numbers
+are Western at the cost of an English checkout. Preserve live theme `165777604864` and rollback
+theme `165774786816`; do not delete any theme.
+
+## Resume here — the live offer is one elegant burner plus name-or-logo engraving — 2026-09-01
+
+The owner explicitly superseded the earlier narrow terminology boundary: Calapres does not sell a
+stand, an oud box, a set, or a three-piece bundle. The product-facing summary is exactly
+`مبخر أنيق` and `حفر الاسم أو الشعار`. Canonical source commit
+`ecbcbc3aa81514107f640d5b1ec925c28c1bab7d` corrects nine theme files: the shared product summary,
+homepage engraving band, About page, Contact introduction, shopping labels, hero accessibility
+copy, and reusable defaults. Those files are live in theme `165777604864` and match a fresh remote
+pull byte-for-byte.
+
+The three active Shopify products were audited read-only. Their titles, handles, descriptions, SEO
+titles, SEO descriptions, and image alternative text already contain no `ستاند`, `علبة عود`,
+`طقم`, `أطقم`, or multi-component claim, so no product record changed. The separate shop-level
+homepage meta description still said `مع طقم متكامل`; it was corrected through Online Store
+Preferences to one elegant burner with name-or-logo engraving. Shopify displayed `Settings saved`,
+and a fresh API read returned the new value.
+
+Theme Check inspected 181 files with zero errors and six existing remote-font warnings. Section
+schema IDs are unique, changed templates parse, and fresh public checks returned 200 for the
+homepage, all three products, About, Contact, and FAQ. None of those seven pages contains the
+rejected composition terms. A fresh browser render of the white product shows `مبخر أنيق` directly
+above `حفر الاسم أو الشعار`. No price, compare-at price, inventory, variant, status, handle, image,
+cart behavior, checkout, payment, shipping, tax, or social setting changed.
+
+## Resume here — combined beige and burnt-brown design is live and verified — 2026-08-31
+
+The owner explicitly approved publication. Shopify theme `165777604864`,
+`Preview — Calapres beige + burnt brown 2026-08-31`, is now `MAIN`; former live theme
+`165774786816`, `Preview — six social icons mobile fix`, is `UNPUBLISHED` and remains the immediate
+rollback. The role change completed at 21:19:02 Riyadh time. Neither theme is processing or failed,
+and no theme was deleted.
+
+Before publication, a full comparison detected corruption in six GitHub files caused by an unrelated
+shell-startup line being included in two earlier base64 upload batches. Publication was stopped, the
+three theme files were recovered from local commit `0836fac`, the three operating documents from
+local commit `6854cd3`, and canonical `main` repair commit
+`34cf93d03a63e9da80200d403d12dbca6fc825ae` restored them without rewriting history. The repaired
+CSS, editorial section, and homepage template match the live Shopify theme by MD5. Theme Check has
+zero errors and six existing remote-font warnings.
+
+Fresh public checks after leaving preview mode confirmed no preview bar, the exact homepage heading
+`حفر شخصي على كل طقم`, zero editorial media, live 62% beige cart glass, 74% beige item surface, and
+zero document, drawer, or item overflow at the normal width, 390 px, and 320 px. The footer correctly
+shows only WhatsApp and email because Instagram, Snapchat, TikTok, and X remain blank. Checkout,
+payments, catalog data, and social settings were not changed.
+
+Continue with the next owner-requested stage. If rollback is requested, publish only former live
+theme `165774786816`, verify the public storefront, and keep both themes. Do not use the obsolete
+repository deployment workflow and do not delete either theme.
+
+## Resume here — lighter cart and image-free homepage band are staged; social URLs are the next input — 2026-08-31
+
+Canonical GitHub `main` commit `73b2ae3c092e949f152a385cac66b705f6fee5e3` and unpublished
+Shopify theme `Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) contain the
+owner-requested cart and homepage refinements. The cart now uses an 8% brown scrim, 62% beige drawer,
+74% beige text-bearing surfaces, and the existing 30 px blur. The rounded product card and all cart
+behaviour are unchanged. The homepage editorial band sets `show_media` to false and now follows the
+video directly with `حفر شخصي على كل طقم`; the about-page image remains enabled by default.
+
+Remote pulls matched the staged CSS and Liquid files byte-for-byte, and a second template push was
+required before Shopify retained `show_media: false`; the final template pull then matched exactly.
+Theme Check reported zero errors and six existing remote-font warnings. Fresh checks at 320 px,
+390 px, and the normal in-app width found no document, drawer, or item overflow, zero editorial-band
+media on the homepage, and the exact heading. Theme `165774786816` is still `MAIN`; do not publish
+draft `165777604864` without a fresh explicit owner approval.
+
+The social icons are not a rendering regression. Direct reads of both themes and the repository
+confirmed blank Instagram, Snapchat, TikTok, and X values; only WhatsApp
+`https://wa.me/966508727687` and `info@calapres.com` are configured. The draft intentionally hides
+blank links instead of restoring the dead buttons still drawn by the live footer. Obtain the exact
+owner-confirmed Instagram, Snapchat, and TikTok profile URLs, update only those three footer settings
+in draft `165777604864`, and verify each destination. Keep X blank until its account is ready.
+
+## Resume here — engraving copy uses `العرسان` in both preview surfaces — 2026-08-31
+
+The owner's Arabic correction is complete in canonical GitHub `main` commit
+`b14a6b3e486245e7640c41789fe59e113e3a45e2` and unpublished theme `165777604864`.
+`sections/editorial-band.liquid` now says `إمكانية حفر اسم العرسان أو التاريخ على الطقم.`, and
+the related answer in `templates/product.json` also uses `اسم العرسان`. Fresh homepage and product-
+page preview checks found the corrected wording and no `اسم العروسين` occurrence. Theme Check
+reported zero errors and the six existing Rubik remote-font warnings. The live theme remains
+`165774786816`; do not publish the combined draft without the owner's separate approval.
+
+## Resume here — rounded cart-item card is open in the combined unpublished preview — 2026-08-31
+
+The owner rejected the sharp opaque-looking product band inside the glass cart drawer and asked to
+see a corrected card before publication. Canonical GitHub `main` commit
+`1735ce8f07165be6851a969736937ceff116c596` changes only `assets/calabriz.css`, and the same file is
+staged in unpublished Shopify theme `Preview — Calapres beige + burnt brown 2026-08-31`
+(`165777604864`). The card keeps the approved 60% beige readability layer but is now inset and
+rounded: 16 px card radius, 10 px image radius, 14% brown border, soft 6% brown shadow, and a 12 px
+gap between multiple products. New rules are scoped to `.drawer`, so the standalone cart page is
+unchanged.
+
+At 360 px and below, card padding is 12 px, the image is 64 px, and the quantity/price row can wrap;
+fresh 320 px and 390 px checks found zero document, drawer, or card horizontal overflow. The normal
+in-app preview also showed the correct rounded card with the drawer open. Theme Check inspected 181
+files with zero errors and the six existing Rubik remote-font warnings. A fresh remote pull matched
+`assets/calabriz.css` byte-for-byte at MD5 `4005f5b8a8769e70e1840127d41143fb`, 44,869 bytes.
+
+The preview is open at `https://calapres.com/?preview_theme_id=165777604864`. Theme
+`165774786816` remains `MAIN`; do not publish draft `165777604864` until the owner gives a new
+explicit visual approval. If the owner requests another cart-card adjustment, keep it limited to
+the drawer card and re-verify 320 px, 390 px, and the normal in-app width.
+
+## Resume here — exact checkout seal and pale-beige glass-like direction approved; create the draft first — 2026-08-31
+
+The cart correction is complete in canonical GitHub `main` commits
+`2e1cbb90e2ed61ad52724937dede5ccbb2bb272d` and
+`a7e3c96a01112a8bf371003df9a1a958bbd6ffe4`, and in unpublished Shopify theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The drawer is now 46% beige
+with 30 px blur over a 12% brown scrim; text-bearing drawer regions are 60% beige. The Saudi Post
+helper wraps at 320 px. The exact draft files are:
+
+- `assets/calabriz.css`: MD5 `91f46f1d04a2b30d1f25677fb5054567`, 44,422 bytes.
+- `snippets/cart-drawer.liquid`: MD5 `8e99438d4ff949d5269c2bac1488eebc`, 2,938 bytes.
+
+Theme Check passed 181 files with zero errors and six existing Rubik warnings. Populated-cart
+checks at 320, 390, and 1280 px found zero document or drawer horizontal overflow and zero remaining
+helper overflow. Theme `165774786816` is still `MAIN`; its CSS and cart snippet checksums remain
+`c5503cec29f1c5c4baf72e1742f6972a` and `842f3966eaec4a2280b5d811774c5cb9`. Do not publish
+draft `165777604864` without the owner's explicit approval.
+
+Checkout remains unchanged. The Basic store has one profile only,
+`gid://shopify/CheckoutProfile/5133926656`, named `My Store configuration`, and it is active.
+There is no draft. The current live checkout is white, uses the old 100 px centered seal, dark
+`#1B262D` actions, and Almarai. Editing and saving this profile changes live checkout immediately,
+and the editor currently warns that it participates in a paused rollout. The theme preview
+parameter does not isolate checkout branding.
+
+Resume by using Checkout settings → More actions → Duplicate on the active configuration. Do not
+press Edit and Save on the active configuration. In the duplicate only, upload the exact realistic
+wax seal staged as `assets/calapres-checkout-wax-seal.png`, center it, and choose its displayed
+width only after visual preview; do not use the English wordmark or the old simplified seal. The
+staged PNG is 755 x 840 with real alpha, 745,304 bytes, and SHA-256
+`2ffe03f1bff302b781bbd882d18e971f878d154aa6f90413e42b6643f25024f1`. Use
+`#FAF8F5` for the main background, `#F7F4EF` for the header and order summary, `#44271B` for
+accent and button, transparent inputs, and Rubik for headings and body. Preview it before any
+publication. The owner explicitly confirmed the background is very light beige and glass-like, not
+blue, and approved the exact realistic seal. On Basic, do not claim actual glass blur or CSS
+transparency: approximate the intended depth with the two pale solid surfaces and transparent input
+fills above. A fresh browser attempt found the enabled `Duplicate` action, but Shopify's popover did
+not open and no duplicate action fired. No draft was created and no live checkout value changed.
+Authenticated schema inspection confirmed that the Basic store exposes no public checkout-profile
+duplication or checkout-branding mutation, so do not attempt an API workaround; create the draft
+through Shopify's Checkout settings interface.
+
+The required shipping phone field is already separate from the required email field. Shopify's
+native form setting cannot fix the country code or enforce a regex. The desired normalized rule is
+`^\+9665[0-9]{8}$` with an Arabic field error such as: `أدخل رقم جوال سعودي صحيحًا يبدأ بـ5
+ويتكون من 9 أرقام بعد رمز الدولة +966.` On Basic, implement that rule only through a
+privacy-and-price-reviewed public App Store app that provides a Cart and Checkout Validation
+Function. Do not install an app or claim a fixed visual `+966` input mask without a separate
+owner choice.
+
+## Resume here — configured-only social links staged; three official URLs still needed — 2026-08-31
+
+The dead-button footer correction is complete in canonical GitHub `main` commit
+`12a3ca53cb53ef4a09a0d9628ddc19265640b2cc` and unpublished Shopify theme
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft renders a social
+glyph only when its theme URL is configured. It currently shows only WhatsApp and email; blank X is
+hidden. Adding verified Instagram, Snapchat, or TikTok URLs in the footer settings will make each
+corresponding glyph appear and become clickable without another code change.
+
+Do not infer the missing public URLs from Chatwoot inbox IDs, old supplier accounts, search results,
+or the brand name. The repository and both Shopify themes contain no official Calapres URL or handle
+for the three accounts. Obtain the exact owner-confirmed Instagram, Snapchat, and TikTok profile URLs,
+then update only those three footer settings in draft `165777604864` and verify every destination.
+Leave X blank until its official account is ready.
+
+Shopify persisted `sections/footer.liquid` with MD5 `909b23bc8b16f2818d7fdc85fa3b3f16`, 8,594
+bytes. Theme Check passed 181 files with zero errors and six existing Rubik warnings. Fresh preview
+inspection found exactly `https://wa.me/966508727687` and `mailto:info@calapres.com`, zero disabled
+social spans, zero X glyphs, and no horizontal overflow. Theme `165774786816` remains `MAIN` and its
+footer was not edited. Do not publish draft `165777604864` without the owner's explicit approval.
+
+## Resume here — transparent scrollbar and layered beige glass staged; combined draft remains unpublished — 2026-08-31
+
+The owner's scrollbar and beige-glass correction is complete in canonical GitHub source commit
+`9c6d580c5d90f36e15081cf02b3c9ea856352a6b` and Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; theme `165774786816` remains `MAIN` and its CSS was not edited.
+
+Only `assets/calabriz.css` changed. The page scrollbar now has a transparent track, no beige thumb
+border, and a 4 px WebKit width; Firefox keeps its native thin form. The former solid beige page is
+now a 16% tint over subtle two-colour gradients, ordinary surfaces are 20%, panels 26%, and header
+glass is 58% with 24 px blur. Floating navigation and cart surfaces stay stronger at 72% so brown
+text remains usable over imagery. No third interface colour was introduced.
+
+Shopify persisted MD5 `5059457f36d3dd3331be762a8eaa1b64`, 44,236 bytes. Theme Check passed
+181 files with zero errors and the six existing Rubik remote-font warnings. The final 1280 by 720
+in-app preview measured a 4 px gutter versus the 15 px rejected baseline, no beige scrollbar track,
+and no horizontal overflow. The header was visually checked over dark product images; the footer,
+cart drawer, and navigation glass were also opened and inspected. A fresh final mobile screenshot
+was not available after the browser-session handoff, so retain mobile owner review before publishing.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish this combined draft or
+save the pending checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
+## Resume here — transparent hero-video action staged; combined draft remains unpublished — 2026-08-31
+
+The owner's correction to the first homepage video's `تسوقوا الآن` action is complete in canonical
+GitHub `main` commit `bce7d159670147f365ac43eadbb2d4361ed04209` and Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; theme `165774786816` remains `MAIN` and was not edited.
+
+Only `assets/calabriz.css` changed. The brown normal/hover background and full rectangular border
+are gone, a light beige underline remains, and the whole action is 12 px lower. Its brown-derived
+text halo keeps it readable over the moving video without reintroducing a background, and its
+keyboard focus outline is explicit. The exact link remains
+`https://calapres.com/collections/all`. Shopify persisted MD5
+`6157d7918151a17a2d8d77889349fe04`, 42,705 bytes.
+
+Theme Check passed 181 files with zero errors and six existing Rubik external-font warnings. Fresh
+320 by 700, 390 by 844, and 1280 by 900 renders had no horizontal overflow; the action's bottom gaps
+are 24 px on both mobile checks and 15 px at 1280 by 900. The in-app 1280 by 720 check measured
+9.6 px. Computed normal state is transparent with no box and the mobile screenshot shows the action
+clear of the edge. The former 5.25:1 worst-frame contrast claim no longer applies to a transparent
+action over moving video; rely on the verified halo/underline treatment and owner visual review.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish this combined draft or
+save the pending checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
+## Resume here — normalized footer icons staged; combined draft remains unpublished — 2026-08-31
+
+The footer correction is complete in canonical GitHub `main` commit
+`3e9e57423cd8b5b8ffc2f02f8aba47d026f5ea5d` and in Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`). The draft remains
+`UNPUBLISHED`; current live theme `165774786816` remains `MAIN` and was not edited.
+
+All social interaction boxes were already 40 by 40 px. X looked taller because its SVG fills its
+viewBox while the others include internal whitespace. `assets/calabriz.css` now calibrates each
+glyph optically to about 25.6 px of painted platform height, makes the envelope comparable in visual
+width, and lowers TikTok by 0.03 rem. It also gives all six glyphs the same
+`translateY(-2px) scale(1.04)` hover motion. The persisted draft asset is 42,475 bytes with MD5
+`ab04e90808c4306f42b34ce432dd728b`.
+
+Theme Check passed 181 files with zero errors and six existing external-font warnings. Fresh 320 px,
+390 px, and 1280 px renders kept one icon row without horizontal overflow, and direct in-app hover
+checks produced the same transform for every glyph. WhatsApp and email retain their exact verified
+destinations. Instagram, Snapchat, TikTok, and X remain spans with no `href` and the default cursor,
+so their new hover response is visual only until exact official URLs are verified.
+
+Review `https://calapres.com/?preview_theme_id=165777604864`. Do not publish it or save the pending
+checkout Rubik selection without the owner's next explicit approval. Do not run
+`.github/workflows/theme-deploy.yml`.
+
+## Resume here — Rubik selected; storefront staged, checkout still Almarai — 2026-08-31
+
+The owner selected Rubik as the intended shared storefront and checkout typeface. Arabic support
+and the SIL Open Font License 1.1 were verified from the current Google Fonts source, and Rubik is
+present in both Shopify Checkout typography pickers.
+
+Canonical GitHub `main` commit `57ba09ae875dbf97572aa6d133e4b488eedfd43e` changes only
+`assets/calabriz.css`, `layout/theme.liquid`, and `layout/password.liquid`, using Rubik weights 300,
+400, 500, and 700. The exact source is staged in existing Shopify draft
+`Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`), which remains `UNPUBLISHED`:
+
+- `assets/calabriz.css`: `6024e3040c7482a9b7bdf62951b8b97f`, 42,290 bytes.
+- `layout/theme.liquid`: `2050521984003899b13538d938fd10b3`, 3,762 bytes.
+- `layout/password.liquid`: `5c19d2d396eb36780f41bbfe4db90c0d`, 1,812 bytes.
+
+Theme Check passed 181 files with zero errors and six external-font warnings. Fresh 320 px, 390 px,
+and 1280 px renders loaded Rubik, had no overflow or header overlap, and kept the six footer icons on
+one row. The in-app preview console had no errors or warnings. Review the exact draft at
+`https://calapres.com/?preview_theme_id=165777604864`.
+
+Checkout is not yet changed. The editor currently has unsaved Rubik selections for both Headings and
+Body, but Save was deliberately not pressed; the active configuration and its preview remain
+Almarai. Public theme `165774786816` also remains unchanged and continues to render Cairo. After the
+owner visually approves the combined draft, publish only theme `165777604864`, save Rubik in both
+checkout fields as the coordinated live step, fully reload both surfaces, and verify persistence.
+Preserve `165774786816` as the immediate theme rollback and Almarai as the exact checkout rollback.
+Do not run `.github/workflows/theme-deploy.yml`.
+
+## Resume here — two-colour storefront palette awaits owner visual approval — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The bounded work began
+from `0b18953b8823bc254ff28406ae21be90f70cb7e0`; implementation source is now in canonical GitHub
+commit `0030abf2cf99229426a29a63591c2cacce4ffdc3`. Authenticated Shopify still shows
+`165774786816` as `MAIN` and `165770887424` as the immediate unpublished rollback.
+
+The owner chose the supplied Magnific wax-seal image as the visual colour authority. Magnific
+creation `DoBCSVCpcl` contained qualitative cocoa/ivory wording but no numeric values. The exact
+image-derived interface sources are beige ground `#DFD4C3` and burnt-brown ink `#44271B`; their
+contrast is 9.24:1. Decision 0025 records that alpha derivatives are allowed for interface depth,
+while product media, product swatches, video, and native third-party branding remain truthful
+content rather than UI tokens. Checkout remains separate and unchanged.
+
+Shopify draft `Preview — Calapres beige + burnt brown 2026-08-31` (`165777604864`) remains
+`UNPUBLISHED`, not processing, and without failure. It contains six changed files:
+
+- `assets/calabriz.css`: `3dd71367b0f450c1a47af1362fcb2275`.
+- `layout/theme.liquid`: `7df9733932f681968bc11c1d0277486b`.
+- `layout/password.liquid`: `9b69bba75122a3000b3857451bf92a05`.
+- `sections/header.liquid`: `a6a0c72959d62d639cc59a0119d65e50`.
+- `sections/footer.liquid`: `d91fdc9df03e364c531b73c43ca0a2e6`.
+- `snippets/cart-drawer.liquid`: `417fccebc63ff62eb65353cf220c22d1`.
+
+The draft unifies the scrollbar, text, buttons, cart badge/drawer, form controls, browser
+`theme-color`, header wordmark, and six footer glyphs. The raw wordmark and social assets are not
+redrawn; their silhouettes are rendered as brown CSS masks. WhatsApp remains exactly
+`https://wa.me/966508727687`, email remains exactly `mailto:info@calapres.com`, X remains disabled,
+and all other social-link rules are unchanged. Error notes retain a non-colour distinction, focus
+indicators are visible, and image overlays/control boundaries meet their applicable contrast gates.
+
+Theme Check passed with zero errors and six existing Cairo remote-font warnings. Final 320 px,
+390 px, and 1280 px renders had no horizontal overflow, header overlap, or browser-console errors or
+warnings. Both mobile sizes showed all six brown icons on one row; cart, national-address helper,
+contact fields, hero action, and collection labels rendered in the intended palette. The open store
+redirects `/password` to the homepage, so the password layout was checked statically.
+
+Next action: show the owner
+`https://calapres.com/?preview_theme_id=165777604864` and wait for a fresh explicit approval. If
+approved, publish only theme `165777604864`, verify its new `MAIN` role and public 320/390/1280
+renders, and preserve `165774786816` as the immediate rollback. Do not publish now, do not change
+checkout or the favicon asset in this stage, and do not run `.github/workflows/theme-deploy.yml`.
+
+## Resume here — exact Calapres wordmark is in an unpublished header preview — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded stage
+started from clean GitHub `origin/main` commit `0f8275069cef9d34cbce7e428d72643c0926d7d0`.
+The public store remains on Shopify theme `165774786816`; its immediate rollback theme remains
+`165770887424`.
+
+The owner requested the lower `CALAPRES` wordmark from the supplied transparent
+`معدل -7.png` in place of the Arabic text at the top of the storefront, excluding the oval
+monogram. Do not use either rejected generative attempt: both altered the lettering and lacked true
+alpha. The implemented `assets/calapres-wordmark.png` is an exact deterministic crop of the supplied
+PNG, 1249 x 220 with real transparency and SHA-256
+`b4c993f9c4ea3618232b8346036b892b0ed1bf6f25561a2a7dabef2f78a20d02`. An adjacent original
+Illustrator file confirmed the same art but was not changed or committed.
+
+Shopify draft `Preview — Calapres wordmark header 2026-08-31` (`165776949504`) was duplicated from
+the current main and remains `UNPUBLISHED`, not processing, without failure. Only the new PNG,
+`sections/header.liquid`, and `assets/calabriz.css` were updated. Shopify reread MD5 checksums
+`3945fcf018f3b264605a4deb46fa8a7c`, `65a85e560125f6f2171923d821b79246`, and
+`b5344d298d4fba4d9082a75ef7633dc0` respectively. The image is decorative while the link retains
+`كالابريز` as its accessible name and still points to `/`.
+
+Fresh preview renders passed at 320 px, 390 px, and desktop widths. The wordmark widths were 102.4
+px, 124.8 px, and 144 px; it did not overlap the account/cart actions or the menu, and the browser
+console had no errors or warnings. The live theme was not edited or published.
+
+No font changed. The storefront remains Cairo and checkout remains Almarai. Shopify checkout
+typography is separate from theme typography. The owner is reviewing Arabic families in Google
+Fonts; after receiving two or three exact family names, verify each in Shopify's checkout font
+picker and implement only one family that can be used on both surfaces. Stop again for visual
+approval before publishing draft `165776949504`.
+
+No product, customer, order, payment, Paymob, shipping, checkout, tax, app, Captain, n8n, Chatwoot,
+Meta, or social-link setting changed.
+
+## Resume here — six-icon mobile footer is live and verified — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. The implementation
+started from clean GitHub base `2dc41a860118802eed6f85a65588e03c12516d35` and its source reached
+GitHub `main` commit `199010681eff2f36c252a7412aaedd1189f82717` before publication. The owner's
+dirty, diverged checkout and unrelated worktrees were not modified.
+
+The public mobile defect is proven. At 390 px the existing social column was 158 px wide, each
+icon box was 44.8 px wide, the gap was 12.8 px, and wrapping was enabled, so the four icons split
+into two rows. WhatsApp was not assigned a larger layout box; its official glyph only looked larger
+inside the same box.
+
+Shopify duplicated theme `165770887424` into theme `165774786816` and renamed it
+`Preview — six social icons mobile fix`. It adds official-style X and email assets, keeps the
+existing Instagram, Snapchat, TikTok, and WhatsApp assets, optically reduces only the WhatsApp
+glyph, and makes the social block span both footer columns on mobile. The six items stay in one
+non-wrapping row.
+
+Identity rules are explicit. Email is clickable at `mailto:info@calapres.com`, proven from the
+authenticated Shopify store and public Calapres pages. WhatsApp remains
+`https://wa.me/966508727687`. X is visible but disabled because no official Calapres X destination
+was found in Shopify, GitHub, the public store, or a focused search. Do not invent or infer an X
+handle.
+
+Shopify returned no user errors. The persisted draft checksums are
+`b9ead771d07e6a6fdbc6f86e9fe65bc8` for `sections/footer.liquid`,
+`c5503cec29f1c5c4baf72e1742f6972a` for `assets/calabriz.css`,
+`f125a682c3f7f612bf66e786e6c94a2a` for `assets/icon-x.svg`, and
+`96ca267b44babbccb0f46d74c7de4308` for `assets/icon-email.svg`. Shopify's
+`config/settings_data.json` reread exactly matched the local source and reported checksum
+`8c265f87b89a1a49c641b842a37a323e`.
+
+Pre-publication preview checks passed at 320 px, 390 px, and 1280 px. All six icon boxes shared one
+y-coordinate, the mobile container height was 40 px, WhatsApp and email had the exact links, X had
+no `href`, and the browser console had no errors. The footer schema has 16 unique setting IDs, the
+changed JSON and SVGs parse, the new SVGs contain no executable or external references, and
+`git diff --check` passes.
+
+The owner explicitly authorized publication. Authenticated Shopify Admin confirmed that publishing
+`165774786816` would replace `165770887424`; the confirmation was accepted and the theme library
+showed the new theme as `Active`. A fresh Admin GraphQL reread now shows `165774786816` as `MAIN`,
+not processing and without a processing failure, while `165770887424` is `UNPUBLISHED`. The role
+change timestamp is `2026-08-31T13:01:23Z`; the former main is preserved as the immediate rollback.
+
+After explicitly exiting preview mode, a fresh public 320 px render had no preview bar and showed
+all six 40 px icon boxes on one row. WhatsApp linked exactly to
+`https://wa.me/966508727687`, email linked exactly to `mailto:info@calapres.com`, X had no `href`,
+and the browser console had no errors. Instagram, Snapchat, and TikTok remain disabled until their
+official URLs are separately verified. The publication stage is complete; typography is the next
+separate storefront stage. Do not run `.github/workflows/theme-deploy.yml`.
+
+## Resume here — reconciled four-icon theme is live with verified Calapres WhatsApp — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This production
+publication started from a clean, freshly fetched `origin/main` commit
+`212401db65aa090b427ef760bb2827b46879f498`; the owner's dirty, diverged checkout and unrelated
+worktrees were not modified.
+
+The official WhatsApp destination was proved before publication from authenticated Chatwoot
+account `179973`, inbox `128058`, and its Account Health surface. They show the connected,
+approved `Calapres | كالابريز` Business account at `+966 50 872 7687`, with phone-number ID
+`1202498582954919` and WABA ID `1835160094133742`, matching the canonical project record. The
+public destination `https://wa.me/966508727687` opened a WhatsApp page headed
+`Calapres | كالابريز`; no message was sent.
+
+Before publication, only `config/settings_data.json` in the unpublished preview theme
+`165770887424` was updated to set `whatsapp_url` to that exact destination. Shopify returned no
+user errors. The persisted file checksum is `d63fd05a769262c4248c65749115c950`, size 922 bytes,
+updated `2026-08-31T11:54:17Z`. A fresh preview DOM showed the exact link on the WhatsApp glyph.
+
+The owner explicitly authorized production publication after that verification. Authenticated
+Shopify Admin confirmed that publishing
+`Preview — official social icons + Safari favico...` would replace
+`Calabris Shopify Theme`; the confirmation was accepted. A fresh Admin GraphQL reread now shows
+`165770887424` as `MAIN`, not processing, with no processing failure, and the former main
+`163004449024` as `UNPUBLISHED`. The former main is the direct rollback theme and was not
+deleted.
+
+After exiting preview mode, the public store had no preview bar and exposed the footer WhatsApp
+link as `https://wa.me/966508727687`. The live document emits
+`calapres-favicon-monogram-2026-08-31.png` as its 16 px and 32 px favicons. The four approved
+official black glyphs are now live. Instagram, Snapchat, and TikTok remain disabled because their
+URL settings are still blank; do not invent those account destinations. The separately labelled
+Saudi Post helper remains `966112898888` and is not the Calapres account.
+
+No product, customer, order, payment, Paymob, shipping, checkout, tax, app, Captain, n8n, Chatwoot,
+or Meta setting changed, and no WhatsApp message was sent. Do not run
+`.github/workflows/theme-deploy.yml`; its IDs/roles and deployment branch remain obsolete. Any
+rollback or deployment-workflow correction is a separate bounded stage.
+
+Canonical decision:
+[0024 — Publish the reconciled Calapres theme with a verified WhatsApp destination](decisions/0024-publish-reconciled-theme-with-verified-whatsapp.md).
+
+## Resume here — four official social glyphs and Calapres favicon ready in preview — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded stage
+started from a clean, freshly fetched `origin/main` commit
+`a774056dbaf5105366ab9e938e3dec4ec5764f4b`; the owner's dirty, diverged checkout and unrelated
+worktrees were not modified.
+
+Shopify verifies `Calabris Shopify Theme` (`163004449024`) as `MAIN` and
+`Preview — official social icons + Safari favico...` (`165770887424`) as `UNPUBLISHED`. The owner
+approved the preview's black Instagram, Snapchat, and TikTok glyphs and requested a matching
+WhatsApp glyph. The preview now contains the unmodified black digital WhatsApp glyph from Meta's
+2026 Brand Resource Center pack. Its SHA-256 is
+`dea0d50de5d2e53320246d7172a2b8e84a999caa7798cd91681e63831cba6ed9`.
+
+Three preview files changed in the final refinement. Shopify returned no user errors and the
+verified checksums are `effe39ee446c06d7b3fc63450e694123` for
+`assets/icon-whatsapp.svg`, `a871f19bfbd8d4b45496eb525b66b777` for
+`sections/footer.liquid`, and `4dafdfa6e8d9d00cf29310561465ec14` for
+`layout/password.liquid`. The password layout's obsolete embedded circle-and-dot favicon was
+replaced with the same configured Calapres favicon declarations used by the storefront so the old
+symbol cannot return if password protection is enabled later. A fresh preview DOM and visual check showed exactly four balanced glyphs:
+Instagram, Snapchat, TikTok, and WhatsApp. The preview still emits the approved Calapres monogram
+as 16 px and 32 px favicons and a 180 px Apple touch icon.
+
+All four social destinations remain blank. The glyphs are deliberately visible but disabled; no
+Calapres WhatsApp number was guessed, and the SPL helper number `966112898888` was not reused. An
+owner-supplied official destination is required before enabling any social link.
+
+The exact 62-file preview source was reconciled into a clean Git worktree because the previous
+`main` tree held a different obsolete storefront prototype. All non-JSON theme files matched the
+Shopify checksums, every JSON body parsed, 16 Liquid section schemas passed unique-ID checks, the
+official WhatsApp asset passed a static safety check, and `git diff --check` passed. Shopify CLI
+`4.7.0` Theme Check returned no errors and only six existing `RemoteAsset` warnings for the Cairo
+Google Fonts links in the storefront and password layouts.
+
+The active public theme was not changed. Do not run `.github/workflows/theme-deploy.yml`; its theme
+roles are still wrong and it deploys the obsolete `shopify-theme` branch. The next production step
+is to view the final preview, obtain explicit live-publication approval, publish through the
+authenticated Shopify Admin surface, then verify the public DOM, footer visually, and Safari icon
+before updating this handoff again.
+
+## Resume here — email and shipping phone are separate required fields — 2026-08-31
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-31 Asia/Riyadh. This bounded live-setting stage started from a clean, freshly fetched
+`origin/main` commit `1d71ecb833c08aedaeb9e5bbd4863cf2b6df9baf`; the owner's dirty, diverged
+checkout and unrelated worktrees were not modified.
+
+Authenticated Shopify Checkout settings now use `Email` as the Customer contact method and
+`Required` for Shipping address phone number. Shopify displayed `Settings saved`, and a full Admin
+reload persisted both values. A fresh checkout with one physical product displayed separate Arabic
+fields for `البريد الإلكتروني` under Contact and `الهاتف` under Delivery; both rendered with
+`required=true` and `aria-required=true`.
+
+This is Shopify's native shipping-address phone field, not a custom field. It is enforced when the
+checkout collects a shipping address; it does not verify that the number is mobile or SMS-capable
+and does not grant marketing consent. Guest checkout and the existing marketing opt-in
+configuration remain unchanged.
+
+No customer data, address data, card data, order, payment, discount, shipping rate,
+payment-provider setting, theme file, or app changed. `Pay now` was not pressed. Paymob remains
+untouched and test-only. This newest section supersedes only the older historical wording that no
+Checkout configuration apart from the address label had changed.
+
+Rollback only on an explicit owner request: restore the combined `Phone number or email` contact
+method and/or reduce or remove the shipping-phone requirement. Do not alter Paymob or any unrelated
+Checkout setting during that rollback.
+
+Canonical decision:
+[0022 — Adopt a low-friction Shopify checkout with the live Calapres identity](decisions/0022-adopt-low-friction-shopify-checkout.md).
+
+## Resume here — branded footer icons live; checkout friction bounded — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 17:15 Asia/Riyadh. This bounded live-stage record started from a clean, freshly fetched
+`origin/main` commit `c008947e21d927329dff1bb4b41ab3f0604fc183`. Shopify remains on the Basic
+plan, and the active MAIN theme remains `Calabris Shopify Theme` (`163004449024`).
+
+Before the footer change, Shopify created unpublished draft theme
+`Backup before social icons 2026-08-30` (`165747851520`). Its prechange checksums are
+`0ddff0f3df2da32eb52dfb3a26591e9b` for `sections/footer.liquid` and
+`01908b01ff2616099da2d1656f2147c7` for `assets/calabriz.css`.
+
+Only those two files changed in the active theme. The square frames and backgrounds were removed,
+the icons were enlarged, and natural brand treatments were applied: Instagram gradient, Snapchat
+yellow and black, and TikTok black, cyan, and red. A public desktop visual check passed, and the
+rendered DOM contained one each of the three new branded icons. The current live reread returned:
+
+- `sections/footer.liquid`: `fcbf12d5636339dbc91e67fd64d249b4`, updated
+  `2026-08-30T14:03:49Z`.
+- `assets/calabriz.css`: `de2d9c3dab282a01c09175bc2d8e2fa3`, updated
+  `2026-08-30T14:04:21Z`.
+
+Do not describe the icons as connected social accounts. `instagram_url`, `snapchat_url`, and
+`tiktok_url` are blank, so they are decorative disabled spans and are not clickable. No destination
+was invented. Obtain the owner's exact official URLs in a separate stage before enabling links.
+
+The current exact Address line 1 checkout text is
+`( أدخل عنوانك الوطني المختصر لتسهيل عملية البحث عن عنوانك )`. It includes one space inside each
+parenthesis and was verified after a full Admin reload and in the existing public checkout. It guides Shopify
+address autocompletion; it does not prove a direct National Address integration.
+
+No Apple Pay or card ordering changed. Shopify controls native wallet presentation, cannot place
+Apple Pay first by merchant preference, and varies accelerated-wallet visibility by device and
+eligibility. No shipping setting changed: Shopify reveals applicable rates after it has an address,
+and the observed checkout already held a valid restored address, so its applicable rate appeared
+immediately. The marketing checkbox was deliberately preserved because hiding it would not make an
+entered email valid marketing consent; creating a customer record is not the same as subscribing
+that customer to marketing. Paymob remains test-only.
+
+No payment, shipping, marketing-consent, customer, order, product, discount, privacy, Captain,
+Chatwoot, n8n, or Meta state changed. Apart from the exact checkout-address string and the two
+named footer files, no checkout or theme surface changed.
+
+Do not run `.github/workflows/theme-deploy.yml` in its current state. Shopify verifies
+`163004449024` as the active MAIN theme, while the workflow labels that ID as staging and labels
+`163072377088` as live. It also deploys the unreconciled `shopify-theme` branch. Reconcile the
+exact live source and verify both destination roles before a separate workflow repair; any design
+translation must go to an unpublished preview theme and stop before live publication.
+
+For footer rollback, restore only `sections/footer.liquid` and `assets/calabriz.css` from draft
+`165747851520`, then verify the live footer. Do not publish that entire backup: the current address
+language was saved after the theme was duplicated and would be lost or made stale by a whole-theme
+publication. Leave the draft unpublished.
+
+Detailed same-conversation record:
+[Shopify checkout polish and payment-readiness handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md).
+
+## Resume here — SPL WhatsApp helper live before checkout — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. This bounded
+live-theme stage started from clean, freshly fetched `origin/main`
+`a5ca00aaad4293039870fa642d86d8a13b63d364`; the later refinement was documented from clean,
+freshly fetched `origin/main` `3a9f2b2f0f6b22cf8820be86ec97932412125704`; and the final
+compact-mobile refinement was documented from freshly fetched `origin/main`
+`e8f9392136fb6a08e271b1605f993ec48583fa71`. Read this section and
+[decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) before any further cart,
+theme, address-assistance, or checkout work.
+
+The distinction that triggered this stage is now proven in production: a custom link cannot be
+inserted into the protected Information, Shipping, or Payment steps on Basic, Grow, or Advanced,
+but it can be placed in the theme-controlled cart immediately before checkout. Shopify Plus is
+required for custom text or links in those checkout steps, and even Plus uses constrained Checkout
+Blocks or Checkout UI extensions rather than arbitrary `checkout.liquid` or checkout-DOM access.
+
+The live helper now appears on both the cart drawer and `/cart` with exactly two lines:
+
+- `لتسهيل شحنتك، أضف عنوانك المختصر في صفحة الدفع.`
+- `لا تعرف عنوانك المختصر؟ اعرفه عبر واتساب سبل ↗`
+
+Its exact destination is
+`https://wa.me/966112898888?text=%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A`.
+WhatsApp opens with decoded draft text `العنوان الوطني`; the customer must press Send.
+
+Active MAIN theme `Calabris Shopify Theme` is `163004449024`. Before the edit, draft backup
+`Copy of Calabris Shopify Theme` (`165745590528`) was created and left unpublished. No new backup
+was created before the refinement, so this draft rolls back to no helper rather than the first
+helper design. Only `sections/main-cart.liquid` and `snippets/cart-drawer.liquid` were refined.
+The final live reread returned checksum `18a9fab56106ebefe4a2479ae12bf5f7` at
+`2026-08-30T12:52:52Z` for the cart page and checksum `842f3966eaec4a2280b5d811774c5cb9`
+at `2026-08-30T12:53:19Z` for the drawer, with role `MAIN`.
+
+The earlier larger typography and spacing wrapped the two text elements into four visual lines on
+mobile. The owner rejected that presentation; it and its prior checksums are historical and
+superseded. The current styling reduces typography, spacing, and padding. Visual verification at
+390 by 844 passed on `/cart` and in the opened drawer with exactly two lines and no wrapping. A
+320 by 700 check also preserved both single-line sentences, although the fit is very tight.
+
+This is a WhatsApp handoff, not a direct SPL API connection. No WhatsApp exchange or address
+retrieval was performed or observed, and the helper does not automatically send identity data or
+the prefilled message; the customer must press Send.
+No checkout setting, payment provider, shipping setting, or product changed; no other system was
+included in this bounded mutation.
+
+The live Liquid source is still not reconciled into canonical GitHub `main`. Do not deploy the
+stale repository theme over the active theme. The exact next theme-code action is a separate
+read-only pull and reconciliation of the current MAIN theme into a clean reviewed branch. If the
+owner requests rollback first, restore only the two files from draft theme `165745590528`, verify
+the link disappears from both cart surfaces, and leave the backup unpublished. That rollback
+removes the helper entirely; it does not restore the first helper wording or the superseded
+oversized refinement.
+
+## Resume here — Saudi customer VAT collection set to zero — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 13:57 Asia/Riyadh. This bounded tax stage started from clean `origin/main`
+`cad21a8f16b644d2bb98a6df20d4626200d00604`. Read
+[decision 0023](decisions/0023-set-saudi-vat-collection-zero-pending-review.md) and the
+[focused tax handoff](docs/handoffs/2026-08-30-shopify-saudi-vat-zero-collection.md) before any
+further tax, pricing, shipping-total, or invoice work.
+
+The owner stated that Calapres has no Saudi VAT registration and instructed that checkout must not
+add VAT. Before the change, Saudi Arabia used active Manual Tax with a 15% country base rate while
+tax-inclusive pricing and tax on shipping were off, the Saudi override list was empty, and duties
+and import taxes were not set up. Only the Saudi country rate changed: 15% to 0%. Shopify confirmed
+the save, and a full Admin reload reread 0%.
+
+A read-only Shopify analytics query for 2025-08-30 through 2026-08-30 returned zero orders, gross
+sales, net sales, taxes, and total sales. This establishes only the connected store's Shopify
+history. It does not include taxable supplies outside Shopify or the expected next 12 months, so
+the entity-wide ZATCA threshold position remains unknown and needs prompt confirmation.
+
+A fresh guest checkout with one live 390 SAR burner and synthetic, non-personal Saudi test data
+showed free `التوصيل داخل السعودية`, no estimated-tax or tax line, and a 390 SAR total. No card
+data, real customer data, order, or payment was submitted. The owner's earlier open checkout had
+reported 10 SAR shipping, but that amount was not reproduced in the fresh checkout and no shipping
+setting changed during this tax stage.
+
+Treat 0% here as a Shopify no-collection configuration, not a claim that Calapres products are
+legally zero-rated. The owner's registration and taxable-supplies position was not independently
+audited. ZATCA currently describes mandatory registration above 375,000 SAR in taxable supplies
+under the applicable 12-month test and voluntary eligibility above 187,500 SAR in taxable supplies
+or expenses, with forecast and special-case rules. Promptly establish the prior- and next-12-month
+position across the entity, not only this Shopify store. Reopen immediately if collection is
+already required, becomes required, or a VAT registration takes effect, and follow ZATCA or
+licensed Saudi tax advice for the effective date, invoices, price display, and shipping treatment.
+
+Do not add a Tax ID under Shopify Billing as a substitute; that setting concerns VAT on Shopify's
+own bill, not customer checkout collection. Do not restore 15%, issue VAT invoices, label supplies
+zero-rated, or alter the 390 SAR product price without a separately verified tax and pricing stage.
+Paymob test mode, all payment settings, products, shipping rates, checkout branding and language,
+theme code, privacy settings, Captain, Chatwoot, n8n, and Meta were unchanged.
+
+## Historical address guidance; current wording is in the newest section — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 13:42 Asia/Riyadh. This bounded follow-up started from clean `origin/main`
+`76788b86ff464efd1b883112cc99e1adb449eac0`. Read
+[decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) and the
+[focused checkout handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md)
+before any further checkout, shipping, payment, or Safari-icon work.
+
+At this stage, the checkout Address line 1 label was
+`ابحث عن عنوانك (أدخل عنوانك الوطني لتسهيل البحث)`. It was saved and reread unchanged after a full
+Shopify Admin reload. The value has since been superseded by the exact current wording in the newest
+handoff section above. Treat both strings as guidance for Shopify address autocompletion, not proof
+of a direct Saudi National Address integration.
+
+Shopify already hides delivery rates until the customer enters a delivery address, then displays
+only rates applicable to that address and order. The live profile still has one Saudi Arabia zone
+and no Gulf zone. Its two rates named `التوصيل داخل السعودية` are subtotal tiers, not two carriers:
+25 SAR from 0 through 319.99 SAR and free from 320 SAR. No shipping configuration changed. A future
+Gulf stage must first receive the exact countries, fees or thresholds, delivery estimates, and
+whether the owner wants manual rate labels or real carrier-calculated services. The live plan is
+Basic: manual zones and rates remain possible, but third-party carrier-calculated rates are not
+available on this plan.
+
+Do not recolor the branded Apple Pay button; Shopify does not allow that button's brand treatment
+to be customized. The public storefront currently emits the owner-selected PNG favicon from
+Shopify CDN, but the owner's existing Safari profile reportedly shows an older icon. Safari may
+cache favicons; its Page Menu control is browser UI, and Home Screen icons use a separate path. The
+current document exposes no `apple-touch-icon` or web-app manifest. No theme code was changed, and
+no visual Safari success is claimed from the server reread alone.
+
+No order, customer, payment setting, payment transaction, shipping zone, rate, condition, carrier,
+app, fulfillment service, theme file, product, privacy setting, Captain, Chatwoot, n8n, Meta
+setting, or customer conversation changed in this follow-up. The only live mutation was the exact
+Address line 1 wording above.
+
+## Resume here — checkout branded; shipping labels clarified; Paymob still test-only — 2026-08-30
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-30 13:27 Asia/Riyadh. Read
+[decision 0022](decisions/0022-adopt-low-friction-shopify-checkout.md) and the
+[focused checkout handoff](docs/handoffs/2026-08-30-shopify-checkout-polish-and-payment-readiness.md)
+before any further checkout or payment work. This stage started from clean `origin/main`
+`d4abddd4fb907d423b7f46aeb52b1a4349a48015`; the later logo, favicon, and shipping-label
+follow-up was documented after a fresh `origin/main` verification at
+`3a66851a2a6225481207f506be0868d2c2bda6e3`.
+
+Shopify now requires both first and last name while guest checkout remains available. The saved
+Arabic overrides are `ابحث عن عنوانك`, `ادفع الآن`, and
+`جميع عمليات الدفع آمنة ومشفّرة.`. The active checkout was saved with Almarai for headings and
+body and the live storefront's dark `#1B262D` action color. One-page checkout, address
+autocompletion, buy-again, white backgrounds, native payment logos, and the security structure were
+preserved. In a later owner-approved follow-up, the owner visually selected the existing Calapres
+seal asset. It is now the checkout logo, centered at 100 px, and the active theme favicon. The
+checkout editor persisted the file, width, and alignment after a full reload and rendered the same
+Shopify CDN asset in its checkout preview. A fresh public storefront document returned the PNG
+favicon from Shopify CDN instead of the former temporary inline icon. The separate icon at the far
+left of Safari's address bar is Safari's own page-control button and cannot be branded by the site.
+
+Temporary code `QXMRK` is active at 99% with one total use and one use per customer, no minimum,
+and no combinations. It is only for the owner's bounded checkout test.
+
+Paymob remains active in test mode. The provider lists Visa, Mastercard, American Express, and
+Apple Pay, but Shopify explicitly says every transaction is simulated and customers cannot make
+real purchases. Do not enter a real card or claim settlement. The exact next stage is to verify
+Paymob live onboarding and settlement readiness before turning off test mode, then perform one
+bounded low-value proof and stop.
+
+Both domestic manual rate labels were changed from `قياسي` to `التوصيل داخل السعودية`. The paid
+rate remains 25 SAR from 0 through 319.99 SAR and the free rate remains available from 320 SAR.
+Shopify displayed `Profile updated` after each final profile save, and the final profile reread
+showed both new labels with the original prices and thresholds. The profile still uses one normal
+Shopify location named `SMSA Retail Shop`; the name is not proof of a fulfillment service or SMSA
+integration. `Carrier accounts` shows `None`, no carrier service is configured or available,
+OTO/Torod/SIDEUP are not installed, and no Fastlo application handle is present. The carrier the
+owner previously preferred is Fastlo where covered, behind one approved multi-carrier gateway plus
+a backup. That remains proposed only; no provider has been selected, installed, paid, connected,
+or tested. The first preserved commercial check is whether OTO's 59 SAR tier accepts the owner's
+Fastlo contract and writes tracking/status back to Shopify.
+
+No order, customer, real payment, refund, payout, shipping price or threshold, carrier, fulfillment
+connection, policy, pixel, privacy setting, theme code, product, Captain, Chatwoot, n8n, Meta
+setting, or customer conversation was changed. The bounded live deltas were the checkout logo, the
+active theme favicon setting, and the two manual shipping-rate names. The preserved storefront
+prototype remains local and undeployed.
+
+## Resume here — Saudi Arabia removed from Shopify cookie-banner regions — 2026-08-29
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-29 18:50 Asia/Riyadh. Read the
+[focused execution handoff](docs/handoffs/2026-08-29-shopify-cookie-banner-saudi-region-removal.md)
+before any further privacy or storefront work.
+
+The owner explicitly approved one bounded Shopify Admin change. The manual cookie-banner region
+set started at 32 of 299: Saudi Arabia was the only selected Asian region and 31 European
+recommended regions were selected. Only Saudi Arabia was unchecked, then `Done` and `Save` were
+submitted. After a full Admin reload, Shopify showed 31 of 299 selected, Europe 31 of 31 on the
+Recommended tab, and the United Kingdom still checked. No Asian region remained selected.
+
+A newly opened public storefront page identified its Shopify country as `SA`, remained Arabic and
+SAR, loaded Shopify's native privacy-banner and consent-tracking scripts, and showed no visible
+banner or consent controls. This observation is consistent with the saved Saudi exclusion but is
+not an independent clean-visitor proof because the browser profile's prior consent state was not
+inspected or reset. A `?country=GB` attempt remained in the Saudi context, so no live UK network
+simulation is claimed; UK retention is proved only by the post-save Admin configuration reread.
+
+No banner content, appearance, position, checkout setting, automation choice, privacy policy,
+theme file, pixel, product, Captain, Chatwoot, n8n, Meta, redirect, or customer conversation was
+changed. Do not reopen privacy policy translation or pixel work from this handoff.
+
+The owner-approved Admin mutation and its post-reload persistence verification are complete. A
+clean-visitor Saudi presentation and a live UK presentation were not independently verified in
+this session. Stop without expanding the privacy scope. The next separate design action is owner
+visual review of the preserved mobile prototype; only after approval should a clean stage
+reconcile the live theme, translate the accepted design to Liquid, deploy to an unpublished
+preview theme, verify mobile behavior, and stop before live publication.
+
+## Resume here — local mobile prototype prepared; Shopify privacy not changed — 2026-08-29
+
+Canonical project: `Calapres`; repository: `A-awd/calapres`; branch: `main`. Last verified:
+2026-08-29 10:52 Asia/Riyadh.
+
+Read the
+[focused storefront and privacy handoff](docs/handoffs/2026-08-29-storefront-prototype-and-shopify-privacy.md),
+then preserve the current Captain state from
+[decision 0021](decisions/0021-adopt-shopify-native-short-product-links.md) and the
+[2026-08-28 Captain handoff](docs/handoffs/2026-08-28-captain-native-short-links-and-chatwoot-reporting.md).
+This closeout started from clean GitHub `origin/main`
+`922e22263ca0a18d176b0f2a4abc26cd9d67cd87`; the dirty owner checkout was not touched.
+
+A verified local-only mobile-first prototype exists in
+`/Users/awd/Documents/calapres/worktrees/storefront-hero-prototype-20260829`, branch
+`codex/storefront-hero-prototype-20260829`. It follows the owner's preferred FRAMA editorial
+direction and uses Calapres assets. Its comparison, interaction, build, and worker checks passed,
+but it is untracked, uncommitted, not production-approved, not implemented as Shopify Liquid, and
+not deployed. Preserve that worktree until the owner accepts or rejects the prototype.
+
+The live cookie banner is Shopify Customer Privacy, not theme code. Read-only evidence showed it
+enabled in the full-width bottom position with Saudi Arabia explicitly included. The connected
+Shopify MCP lacked the privacy-read scope, and no safe region-edit mutation was found; it cannot
+perform the requested Saudi-only change in its current state. Do not hide the banner with theme
+CSS and do not use the broader global-disable operation as a substitute.
+
+No live system changed during this storefront-and-privacy phase. Preserve Captain, its two tools
+and two bridges, the native short links, Chatwoot, n8n, Meta, Shopify products and pixels, Customer
+Privacy settings, the live theme, and customer conversations.
+
+The immediate next action is owner review. If the owner explicitly reopens privacy execution,
+make one bounded Shopify Admin change only: remove Saudi Arabia from the cookie-banner regions,
+verify the banner is absent in a Saudi context and remains present in a configured EEA or UK
+context, record the exact result, and stop. Keep mobile design review and any later Liquid-theme
+implementation as a separate stage.
+
+## Resume here — native short links accepted in Playground; stop for review — 2026-08-28
+
+Read
+[decision 0021](decisions/0021-adopt-shopify-native-short-product-links.md), the
+[v1.3 short-link baseline](docs/baselines/2026-08-28-calapres-captain-v1.3-shopify-native-short-links.md),
+and the
+[focused short-link and reporting handoff](docs/handoffs/2026-08-28-captain-native-short-links-and-chatwoot-reporting.md).
+This stage started from clean GitHub `origin/main`
+`e1188212d6361c852778c88e1eff54dbf37d3226`; the owner's dirty, diverged checkout was not touched.
+
+Shopify now owns exactly three first-party redirects: `/p/white`, `/p/beige`, and `/p/gray`, each
+pointing to its existing canonical white, beige, or gray product path. Direct checks returned HTTP
+`301` to each exact target and final HTTP `200` product pages. No product handle or other product
+record changed, and no third-party shortener was introduced.
+
+Workflow `8jtjLu261ZzcipGq` still has the same five linear nodes, tool, endpoint, credentials,
+request contract, Shopify read, and response envelope. Only `Shape Safe Product Link Result`
+changed. It now maps a safe exact canonical product URL to one of three exact allow-listed short
+URLs; seven local test cases passed. The published n8n version is
+`روابط شوبيفاي المختصرة الأصلية`, with description
+`إرجاع روابط شوبيفاي المختصرة الأصلية`.
+
+The first fresh Captain Playground prompt,
+`أبغى أطلب المبخرة البيضاء`, returned the safe technical-unavailable wording while the n8n host
+and the production webhook independently returned HTTP `503`; the n8n Cloud page showed the
+instance as `In progress`. This was a transient infrastructure-availability observation, not
+evidence that the deterministic mapping was wrong. The host and webhook then recovered to HTTP
+`200`.
+
+One retry used the same prompt. Captain returned exactly the public title
+`مبخرة كالابريز الفاخرة — الأبيض` plus `https://calapres.com/p/white`, with no price,
+availability, inventory, discount, previous-price, or bundle-content claim. This accepts the
+bounded Playground path after recovery. It does not prove the short link was physically delivered
+in WhatsApp or delivered on Instagram or TikTok.
+
+The exact next action is owner review. Do not send a WhatsApp test, edit a customer conversation,
+create another redirect, change any other workflow node, or combine a later external-channel proof
+with the pending order-bridge authorization rotation.
+
+Preserve Captain, its three inboxes, Audience, Schedule, assignment automation, knowledge,
+guidelines, inactivity choice, and two tools. Preserve all Meta WhatsApp settings, the order
+bridge, and the unpublished old responder. Roll back only by restoring the prior Shape-node code
+and deleting the three exact Shopify redirects; remember that HTTP `301` responses can be cached.
+
+The Chatwoot reporting review was read-only. The live account has zero labels, zero custom
+attributes, and exactly one unchanged conversation-created assignment automation. No report or
+classification setup is live. A later owner-approved stage may separate contact purchase status,
+conversation result, labels, and saved filters. `شكراً لطلبك` may set only `يحتاج تحقق`; it must
+never establish `طلب موثق` without a uniquely matched Shopify order. The proposed independent
+bridge `كالابريز | تصنيف العملاء حسب طلبات شوبيفاي` is not approved or executed.
+
+## Resume here — Captain replied in Chatwoot; verify physical WhatsApp visibility — 2026-08-28
+
+The fresh-message gate after the conversation's `Open` to `Pending` recovery has now been crossed.
+In the real WhatsApp conversation, Captain answered an external car-link request with a concise
+store-scope redirect in the same minute. The owner's beige follow-up then produced the exact beige
+product title and canonical Calapres URL. Captain's generation trace explicitly showed a tool call
+with product query `البيج`, and the outbound message tooltip read `تم الإرسال بنجاح`.
+
+This verifies inbound eligibility, Captain response generation, product-link tool selection, and
+the Chatwoot-side status label. It does not yet verify physical display on the owner's WhatsApp
+screen: the owner reported that no reply was visible when checked. n8n execution evidence was also
+not refreshed because workflow `8jtjLu261ZzcipGq` is not exposed through the current n8n MCP
+access. Do not infer either a bridge failure or physical delivery from those observability limits.
+
+No live configuration changed during this read-only check. Preserve the current conversation state,
+Captain, both tools, both workflows, channels, Audience, Schedule, assignment automation,
+knowledge, Shopify, and Meta state. The next bounded action is observation only: confirm the same
+two replies on the owner's WhatsApp client. If they remain absent, inspect the outbound
+Chatwoot-to-WhatsApp delivery layer without changing global routing or either bridge, document the
+evidence, and stop.
+
+## Resume here — WhatsApp handoff-routing recovery awaiting one fresh message — 2026-08-27
+
+The latest owner test message was visible in Chatwoot, but its existing conversation had already
+been handed off by Captain and marked `Open`. The message therefore remained on the human path;
+the product-link bridge was not invoked, and its execution history contained no call matching the
+message. This proves ingress and isolates the silence to conversation routing. It does not prove a
+failure of WhatsApp, Captain, or either Shopify bridge.
+
+Live reread preserved assistant `2187`, its three connected social inboxes, Audience `Everyone`,
+Schedule `Anytime`, `Wait for the customer`, and the unpublished old responder. Only the affected
+owner test conversation was returned from `Open` to `Pending`. The older inbound message was not
+replayed during observation, so no reply success is claimed.
+
+Ask for no configuration work. The exact next action is one fresh owner-originated WhatsApp
+message in that same conversation. Observe the physical WhatsApp reply. If the request is for a
+product link, also confirm one new execution of `8jtjLu261ZzcipGq` and compare only the returned
+title and canonical URL. Then document the evidence and stop. Do not manually reply from Chatwoot,
+resolve the conversation, change assistant settings or automation, publish the old responder, or
+modify either bridge while performing this proof.
+
+## Resume here — product-link bridge accepted in Playground; stop for owner review — 2026-08-27
+
+Read
+[decision 0020](decisions/0020-adopt-captain-product-link-bridge-and-concise-replies.md), the
+[v1.2 product-link baseline](docs/baselines/2026-08-27-calapres-captain-v1.2-product-links-and-concise-replies.md),
+and the
+[detailed product-link handoff](docs/handoffs/2026-08-27-captain-product-link-and-response-quality.md).
+They supersede the earlier sequencing instruction that prohibited a second bridge before the
+order-bridge credential stage: the owner explicitly reopened and approved this bounded product-link and
+response-quality stage. The order-bridge credential rotation itself remains pending.
+
+Captain still has one assistant, `Calapres Assistant` (`2187`), connected only to WhatsApp
+`128058`, Instagram `128031`, and TikTok `128033`, with Audience `Everyone`, Schedule `Anytime`,
+74 FAQs, and 22 documents. The existing assignment automation was not changed. The internal
+description already identified a luxury burner store, so it was left alone. Meta WhatsApp profile,
+display name, catalog, Shopify records, customer conversations, and the old unpublished responder
+were not changed.
+
+Captain now has two tools. Preserve the unchanged order tool and its bridge. The new tool is
+`كالابريز | البحث عن رابط منتج شوبيفاي`; it calls published workflow
+`كالابريز | جسر روابط منتجات شوبيفاي للكابتن | الإصدار 1` (`8jtjLu261ZzcipGq`). The workflow has
+five linear nodes and only reads a bounded set of active Shopify product titles and canonical
+online-store URLs. Its safe envelope is `status`, `title`, `url`, and `clarification`; it does not
+return price, availability, discounts, bundle contents, customer or order data, and it cannot send
+a reply or mutate Shopify.
+
+Two independent response guidelines are live: one owns reply length and shape; the other owns the
+live-product-fact boundary. Keep them separate by purpose. Do not fragment every sentence into a
+new guideline. The inactivity behavior is now `Wait for the customer`. Previously, one hour of
+silence allowed Captain to review and resolve the conversation. The exact `سعدنا بخدمتك...` text
+was configured for that route and no once-per-day campaign was identified, so this is its likely
+source.
+
+The original Playground acceptance failed. Execution `44652` proved Shopify returned the active
+white product and canonical URL, but the safe-URL helper used unavailable `new URL(...)` behavior
+inside the n8n Code-node sandbox and silently rejected the URL. Only that helper was replaced with
+an anchored exact-Calapres HTTPS validator, and eight offline safe/unsafe URL cases passed. The
+workflow retained the same five linear nodes and was published as
+`تصحيح فحص رابط المنتج في بيئة عقدة الكود`.
+
+The product-link authorization exposed during diagnosis was then rotated in both Chatwoot and n8n
+through owner handoff. Keep all values outside GitHub. Executions `44662` and `44664` failed in
+`Validate Request and Resolve Color` with `Unauthorized request`, proving the retired value is
+rejected. Execution `44663` proved the replacement value reaches a matched safe result.
+
+Two bounded diagnostic replies then isolated the remaining Captain-side defects. The tool
+description was strengthened to require the product-link tool for explicit Arabic purchase/link
+intent such as `أبغى أطلب`, to preserve the customer's product and color words, and to forbid adding
+`طقم` or an unrequested color. More importantly, the Chatwoot response template had omitted the
+required `response.` object prefix. It now reads `response.status`, `response.title`,
+`response.url`, and `response.clarification`, so Captain receives the parsed bridge fields.
+
+[Accepted final Playground evidence] A fresh final prompt, `أبغى أطلب المبخرة البيضاء`, returned
+exactly two short lines: `مبخرة كالابريز الفاخرة — الأبيض` followed by the
+[canonical product URL](https://calapres.com/products/مبخرة-كالابريز-الفاخرة-الأبيض).
+Execution `44668` succeeded in 2.182 seconds through all
+five nodes and returned `matched` with the same URL. This proves the bounded Playground path only.
+It does not prove availability, price, discount, inventory, bundle contents, a real customer reply,
+or delivery on WhatsApp, Instagram, or TikTok.
+
+Stop for owner review. The order-bridge authorization rotation from decision 0019 remains a
+separate pending security stage. Do not combine it with price or inventory lookup, product writes,
+order-number search, shipping, outbound WhatsApp, another knowledge group, another bridge, Meta
+changes, or a real customer conversation.
+
+Each separately owner-approved capability may use the modular pattern. Naming or specifying a
+capability does not approve implementation. An approved bridge still needs an Arabic display name,
+bounded inputs and outputs, a declared source of truth, one acceptance test, and an independent
+rollback. To roll back only this stage, remove or disable the new Captain tool, deactivate only
+workflow `8jtjLu261ZzcipGq`, remove only the two recorded guidelines, and restore the former
+inactivity choice only if the owner explicitly requests that behavior. Do not touch the order
+bridge or protected Captain state.
+
+## Resume here — isolated Captain order bridge live — 2026-08-26
+
+Start with
+[decision 0019](decisions/0019-adopt-isolated-captain-external-tool-bridges.md) and the
+[detailed closeout](docs/handoffs/2026-08-26-captain-order-bridge-and-deferred-roadmap.md).
+They supersede lower historical statements that the current Chatwoot plan has no Captain tools.
+
+The protected conversational state remains unchanged. `Calapres Assistant` (`2187`) is the only
+automatic responder on WhatsApp `128058`, Instagram `128031`, and TikTok `128033`, with Audience
+`Everyone`, Schedule `Anytime`, and the existing assignment automation. Captain contains 74
+approved FAQs and 22 documents. The old responder `kAyF0D3ZZHxc0Hwp` remains unpublished and must
+never run alongside Captain.
+
+[Verified live] Captain now has one custom tool, `Calapres Shopify Order Lookup`, connected to the
+active five-node n8n workflow `Calapres | Captain Shopify Order Bridge v1`
+(`lLJpvjtcxTaoQeGj`). This is not the old architecture. Captain still understands and answers the
+customer; n8n only validates the authenticated request, reads bounded order facts from Shopify by
+the current contact phone, and returns a structured safe result. It contains no AI composer, sends
+no Chatwoot message, and performs no Shopify write.
+
+Successful history proves authorization, Shopify read connectivity, and the safe no-match path.
+It does not prove a real matched order, greeting by name, fulfillment or tracking answer, or
+customer-channel delivery. The current tool cannot search the full order number it asks for after
+no match. No carrier API is connected; only tracking already in Shopify can be returned.
+
+The owner-approved reusable pattern is one accepted Captain assistant plus one small, independent
+n8n bridge for each separately approved external feature. Shopify owns dynamic prices, products,
+orders, fulfillment, and tracking; do not copy changing facts into Captain knowledge. Respond.io is
+closed. Shipping selection and outbound WhatsApp remain deferred. Do not publish the unsolicited
+local shipping PDF.
+
+The exact next safe stage is one separately approved security change: rotate only the bridge
+authorization in Chatwoot and n8n together, verify that the retired value fails and the new value
+reaches the safe no-match result, record the result, and stop. Do not change Captain, its inboxes,
+knowledge, assignment, workflow shape, Shopify data, or customer conversations during that stage.
+After owner review, the next functional stage is one controlled matched-order test without parcel
+dispatch. Do not add order-number search, shipping, outbound messages, another bridge, or another
+knowledge group at the same time.
+
+## Resume here — Captain v1.1 engraving knowledge live — 2026-08-26
+
+Continue from the protected `v1.0` architecture with one additive `v1.1` engraving delta. Live
+Chatwoot reread confirmed assistant `2187`, WhatsApp, Instagram, and TikTok connections, Audience
+`Everyone`, Schedule `Anytime`, and the single enabled new-conversation assignment automation are
+unchanged. Account-level audio transcription is enabled. Captain now shows 74 approved FAQs and 22
+documents.
+
+The complete executed delta is two engraving FAQs plus one narrow engraving guardrail. Captain may
+confirm only two letters, or two letters plus a date. It must not claim that engraving is free,
+must not invent a price, and must not promise a full name or logo. Exact text, tests, and rollback
+instructions are in
+[Calapres Captain v1.1 — Engraving](docs/baselines/2026-08-26-calapres-captain-v1.1-engraving.md).
+
+Playground verification passed for the price boundary, rejection of a full-name-and-logo request,
+and confirmation of the approved two-letters-plus-date format. This is Playground evidence only,
+not new WhatsApp, Instagram, or TikTok delivery evidence. Older crawled FAQs still conflict with
+the owner facts; they were left intact, and the new guardrail is required for the verified result.
+
+Do not configure n8n, Shopify, Captain tools, or another knowledge group from this handoff. Stop
+for owner review. If rollback is required, remove only the two exact FAQs and the one exact
+guardrail recorded in the v1.1 delta document.
+
+## Resume here — v1.1 blocked before knowledge execution — 2026-08-26
+
+At 09:08 Asia/Riyadh, a clean worktree based on GitHub `origin/main`
+`9f9dbd3ed9d8ac4c47e2d695e216ad194505aaac` completed the required read-only Shopify and n8n
+refresh. Shopify still shows the three active white, beige, and gray Calapres burners at SAR 390
+each and reports inventory 0. n8n workflow `kAyF0D3ZZHxc0Hwp` remains unpublished with no active
+version and was not executed.
+
+The live Chatwoot refresh could not proceed because the required browser security policy check was
+temporarily unavailable for `app.chatwoot.com` in both supported authenticated browser surfaces.
+No security control was bypassed and no unauthenticated workaround was used. As a result, no
+Captain knowledge was added, no Playground test was run, and no `v1.1` behavior may be claimed.
+The current executed baseline remains `Calapres Captain v1.0 — Stable`.
+
+Next, retry the live Chatwoot read. Confirm assistant `2187`, WhatsApp `128058`, Instagram
+`128031`, TikTok `128033`, Audience `Everyone`, Schedule `Anytime`, the single assignment
+automation, knowledge counts, and disabled memory/contact/citation/automatic-FAQ settings. If all
+match the baseline, add exactly one owner-approved knowledge group as an additive reversible delta,
+verify only that group in Playground, document it, and stop for owner review.
+
+## Resume here — Calapres Captain v1.0 stable — 2026-08-26
+
+[Verified, owner-observed] The owner accepted the current Captain behavior as the best configuration
+reached so far in this project after a physically visible WhatsApp reply gave a direct, natural,
+store-grounded answer and kept an uncertain shipping request inside the same chat without referring
+the customer to email. Preserve this result as the behavioral baseline.
+
+Read
+[Calapres Captain v1.0 — Stable](docs/baselines/2026-08-26-calapres-captain-v1.0-stable.md),
+[decision 0018](decisions/0018-adopt-chatwoot-captain-prelaunch-pilot.md), and the
+[detailed Captain handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+The canonical branch is `main`; the GitHub rollback branch is `captain-v1.0-stable`.
+
+Assistant `2187` remains the only automatic responder on WhatsApp `128058`, Instagram `128031`,
+and TikTok `128033`. The existing assignment automation, Audience `Everyone`, and Schedule
+`Anytime` must remain unchanged. The n8n responder `kAyF0D3ZZHxc0Hwp` remains unpublished.
+
+The immediate next action is a single additive `v1.1` knowledge group using the pending
+owner-supplied facts already listed in the baseline. Explain and verify that group, then stop before
+adding another. Do not rename or replace Captain, delete baseline knowledge, change architecture,
+buy or enable a paid service, publish n8n, or claim live order lookup. The accepted WhatsApp result
+does not by itself verify the final baseline on Instagram or TikTok.
+
+## Captain routing correction — 2026-08-25
+
+The initial post-connection silence was traced to historical conversations that were still Open.
+Captain does not re-evaluate audience and schedule for each new message in an existing open
+conversation; it enters when a conversation is new or a resolved conversation reopens. The owner
+messages had reached Chatwoot, but they remained on the old human/open path.
+
+All seven existing conversations are now assigned to `خدمة عملاء كالابريز` and resolved. The
+Chatwoot dashboard readback showed `غير معيّن: 0`. A single enabled automation rule named
+`إسناد كل محادثة جديدة إلى خدمة عملاء كالابريز` triggers on conversation creation, covers the
+four existing inboxes (`Calapres`, Instagram, TikTok, and WhatsApp), and assigns the human agent
+`خدمة عملاء كالابريز`. Captain remains connected only to WhatsApp, Instagram, and TikTok; its
+Audience is `Everyone` and Schedule is `Anytime`.
+
+The n8n responder remains unpublished with no active version. No synthetic or operator-authored
+customer message was sent during this routing correction. This evidence boundary was later
+superseded for WhatsApp only by the owner's physically visible, accepted Captain reply recorded in
+the 2026-08-26 stable closeout above. Final Instagram and TikTok behavior remains unverified in
+this closeout; inspect the exact channel before changing global knowledge, guardrails, or
+architecture.
+
+## Captain prelaunch pilot — 2026-08-25
+
+Detailed closeout: [Captain prelaunch customer-service handoff](docs/handoffs/2026-08-25-captain-prelaunch-pilot.md).
+
+Resume from decision 0018. Chatwoot Captain assistant `Calapres Assistant` (`2187`) is the only
+automatic responder and is connected to WhatsApp `128058`, Instagram `128031`, and TikTok
+`128033`. Email and website remain disconnected. n8n workflow `kAyF0D3ZZHxc0Hwp` is unpublished;
+fresh readback showed `active=false` and no active version. Do not reconnect or publish it while
+Captain is connected.
+
+Captain now has the exact Calapres-only scope guardrail, a natural Saudi-Arabic response guideline
+that explicitly forbids `وش حاب تعرف عن منتجات كالابريز أو طلبك؟`, and a corrected identity for
+the live white, beige, and gray burner catalog. Its Playground replies were materially better for
+the owner's car, Mykonos-ticket, missing green/orange burner, and order-status examples. No paid
+upgrade or additional service was added.
+
+The current plan blocks Captain custom tools. Treat product-page knowledge as crawled support
+content rather than a guaranteed live Shopify read, and hand order-status questions to a human.
+Long-term memories, contact access, citations, and automatic FAQ generation remain off. The only
+next action is the owner's real WhatsApp, Instagram, and TikTok test. Record the physically visible
+reply before claiming success. If rollback is required, disconnect Captain from all three inboxes
+first, then and only then consider republishing preserved n8n draft version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`.
+
+## Grounded natural conversation live — 2026-08-25
+
+Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version
+`b67ae1e3-98df-4665-9bee-29754d1beafd`, 107 nodes. Decision 0017 supersedes decision 0016 only where
+0016 required deterministic customer-visible prose. Facts still come only from the isolated
+Calapres pack or bounded Shopify reads; external lookup and Shopify writes remain unavailable.
+
+Root causes fixed in place: numeric TikTok `message_type=0` now passes the same ingress condition as
+string `incoming`; verified recent Chatwoot messages now use the canonical fields consumed by the
+classifier; the classifier has a dedicated structured parser; and every grounded draft passes
+through one natural Saudi-Arabic composer plus a deterministic validator. New numbers, unsupported
+actions, malformed output, or confidence below 0.85 fall back to the original grounded draft.
+
+Fresh active-version readback confirmed the new nodes, parsers, OpenAI credential, graph connections,
+and 107-node count. Repository verification passes 277/277 Node tests, 92/92 Python tests, and the
+refreshed release lock. No duplicate workflow or synthetic customer message was created. The immediate
+rollback target is `ab7db7ab-0195-45dd-a061-8e4e8b157d46`. The only remaining behavioral evidence is
+the owner's own message through WhatsApp, Instagram, and TikTok; inspect the resulting execution if
+any channel does not visibly reply, but do not reopen the architecture or create a test copy.
+
+## Grounded support agent owner test — 2026-08-25
+
+Resume from the same live workflow `kAyF0D3ZZHxc0Hwp`, active version
+`ab7db7ab-0195-45dd-a061-8e4e8b157d46`, 100 nodes. Decision 0016 supersedes decision 0015 only where
+0015 made fixed grammar the primary understanding layer. The existing restricted model now returns
+strict classification JSON; the grounded engine revalidates it and alone selects an approved
+static fact, a read-only Shopify product/order lookup, a store boundary, clarification, or human
+handoff. There is no web-search tool and no model-authored customer prose.
+
+No workflow, webhook, inbox, Captain, AgentBot, credential, or customer-send path was created.
+The one inbound edge to `Send Reply` remains `Customer Egress Authorized?` output 0. The model is
+temperature zero with strict schema; product queries are capped and include the Calapres vendor and
+burner product-type filter. Node tests pass 322/322 and Python tests pass 92/92. The previous
+deterministic version `d3d320d6-63be-4134-b333-a4941bf2480a` is the behavioral rollback target.
+
+End-to-end delivery is not yet proven. Ask the owner to send, through a real connected channel:
+`أبغى أشتري سيارة`, `ما هو طقس لندن اليوم؟`, and
+`بكم المبخره الخضراء المخططه بالبرتقالي`. Confirm the physically visible replies and then inspect
+the matching executions. The expected last response must say the described product was not found
+and list the live white, beige, and gray catalog alternatives and prices; it must not say available.
+
+## Owner-test correction — 2026-08-25
+
+Do not treat the first activation as end-to-end success. The owner's WhatsApp screenshot proved
+that two valid burner price descriptions were sent to the generic clarification. The scope parser
+mistook the color word after `المبخره` for an external merchant. The corrected closed descriptor
+grammar is live on the same workflow at version `d3d320d6-63be-4134-b333-a4941bf2480a`, still 100
+nodes, with no graph, credential, webhook, inbox, or send-edge change. Targeted tests pass 51/51.
+Rollback target is `1afb2f65-0f5c-4a87-9525-03a11088d6ff`. Wait for the owner to repeat the exact
+green/orange burner question and confirm the physically visible reply before claiming success.
+
+## Governed responder activation — 2026-08-25
+
+The owner explicitly authorized live testing. Existing workflow `kAyF0D3ZZHxc0Hwp` is active on
+version `1afb2f65-0f5c-4a87-9525-03a11088d6ff` with 100 nodes. The only new live node is `Governed
+Customer Scope Router`, connected `Verify Chatwoot Anchor and Route -> Governed Customer Scope
+Router -> Route Customer Service Decision`. It embeds knowledge candidate
+`2026-08-25-v4-candidate`, never emits the model route, and limits Shopify to exact read-only
+product/order capabilities. External questions use the pinned store redirect.
+
+No new workflow, webhook, Chatwoot inbox, Captain, AgentBot, credential, or send path was created.
+The single inbound edge to `Send Reply` remains `Customer Egress Authorized?` output 0. Local
+targeted tests passed 50/50, and the post-publish n8n reread confirmed active/draft parity and the
+expected graph. Roll back to version `aa654b47-1b8f-4132-979e-0199454028a2` if the owner's real
+TikTok, Instagram, or WhatsApp tests expose a regression. Do not describe any channel as proven
+until the owner confirms the physically visible reply and the matching execution is inspected.
+
+## Verification update — 2026-08-14
+
+Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit
+`e269ccb38b80f4156f065b3e5660b177f3c281b3`, Draft PR #4. GitHub confirmed the protected source
+digest `2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`; live n8n read confirmed
+workflow `kAyF0D3ZZHxc0Hwp`, version `aa654b47-1b8f-4132-979e-0199454028a2`, 99 nodes, and no
+execution-data retention. No external message, Shopify write, workflow, webhook, or credential was
+created during this continuation.
+
+The current GitHub guard failure was release-lock drift, not a workflow-contract failure: source
+and manifest changed in `36c289f`, and migration 0015 was not locked. The lock was regenerated and
+local `release_lock.py --check` passes with digest
+`90e549cc03507c3d23abfea118ecec96f026b94e8eb562e1308bbb8777de4c26`.
+
+Neon live verification confirmed schema versions 0014 and 0015 in `calapres_cs.schema_migrations`
+for `shiny-hill-38628371/neondb`. Recent durable records include unresolved `processing` events on
+WhatsApp and Instagram without a decision or Chatwoot message id. Treat this as confirmed live
+state requiring diagnosis, not as delivery proof. The current selected Node tests pass 40/40;
+older checkpoint language saying 32/32 is historical.
+
+Remaining acceptance gates are unchanged and must be proven separately: a real WhatsApp catalog
+question reaching Shopify and a physically received grounded answer; real Instagram and TikTok
+platform delivery; then an evidence-based canonical responder/webhook decision with rollback. Do
+not synthesize customer messages, expose secrets or PII, write Shopify, or retire either existing
+responder/webhook.
+
+## Clean-session handoff — 2026-08-14
+
+Resume from branch `agent/preserve-calapres-customer-service-checkpoint`, commit
+`36c289fb00aa6e224030ad6ea8d2d460b7e085f7`. Read this section and the matching top section in
+`STATE.md` before touching anything; they supersede older live snapshots below. Frozen responder
+SHA-256: `2795336b25d88b2ed4b7cc2246fd4efbc6ee47e0f80ec152bbf35bacd5bcc49a`.
+
+- Live responder: `kAyF0D3ZZHxc0Hwp`, active version `aa654b47-1b8f-4132-979e-0199454028a2`,
+  99 nodes. Execution-data diagnostics are off again.
+- Live Neon `shiny-hill-38628371` / `neondb`: migrations 0014 and 0015 are applied. Exact allowed
+  inboxes are Instagram `128031`, TikTok `128033`, WhatsApp `128058`; website `128028` is rejected.
+- Social evidence is split: n8n/Chatwoot replay succeeded and created messages `794491944` and
+  `794491968`, but the owner did not observe Instagram/TikTok delivery. Treat both channels as not
+  end-to-end proven and trace a fresh message without creating another webhook.
+- Broad WhatsApp price/catalog routing is present and Shopify is read-only, but a fresh post-version
+  `aa654...` inbound execution has not proved the route. Verify it with a real catalog question and
+  inspect the Shopify node plus the physically received answer.
+- Existing Edge workflow `e442GlRmKP4IO8pm` and two Chatwoot webhooks remain. Do not create a third.
+  Canonical-responder consolidation is unresolved and requires evidence before any retirement.
+- Latest targeted tests: 32/32. Full suite and current GitHub CI were not rechecked here.
+
+Preserve the rollback chronology: initial catalog/social patch -> owner observed outage -> immediate
+revert `b08e406` -> discovery of missing migration 0014 and WhatsApp-only DB constraints -> apply
+0014/0015 -> reapply in `36c289f`. Do not misattribute the outage or rebuild the workflow.
+
+The next agent should verify GitHub/origin first, inspect only these unresolved gates, keep Shopify
+read-only, avoid secrets/PII, and never equate successful n8n execution with customer delivery.
+
+## Verified Calapres social inbox allowlist live — 2026-08-13 (session 6)
+
+Enabled the existing workflow for the verified Calapres Chatwoot inboxes: Instagram `128031`,
+TikTok `128033`, and WhatsApp `128058`; website `128028` remains rejected. This was a six-node
+parameter-only update to the same 99-node workflow, preserving dynamic inbox binding through final
+reread, send proof, and recovery. Social-channel order questions without a trusted phone ask for
+the order number and do not disclose Shopify identity or order data. Active version
+`523a1bc0-daea-4d81-95e0-8912e4630455`; source SHA-256
+`fa418c30417e43f15924ce7c545059bf612545523a13b6daeb2015bb75dffadc`; commit `dec732e`. Targeted
+tests 27/27 and both CI workflows green. Source/configuration is confirmed; real inbound Instagram
+and TikTok messages remain the required channel-delivery proof.
+
+## Contextual bounded replies live — 2026-08-13 (session 5)
+
+Fixed the owner's observed canned behavior at its actual source: unknown/off-topic messages were
+being answered by one hard-coded router sentence without reaching GPT. They now use the existing
+restricted GPT-5.4 route with recent Chatwoot context and natural, varied Saudi-Arabic behavior;
+brief social exchanges and safe simple facts are handled naturally, genuinely unrelated work gets
+a topic-specific concise boundary and redirect, and unclear business requests get one useful
+clarification. The model still cannot invent store/order facts or perform open-ended unrelated
+tasks. `Humanize Text` accepts up to three short sentences and enforces confidence 0..1;
+temperature is 0.4.
+
+Live workflow remains `kAyF0D3ZZHxc0Hwp`, 99 nodes, active version
+`a2e3352f-36d4-49e2-b585-3197dea3e322`; no workflow/node duplication. Frozen source SHA-256 is
+`e62a0afc063953b0eff5f613f70601d1af453945a566fd2febc615900b015337`, implementation commit
+`f2c23627177882339143fb4a6b4b07064e9a5814`. Source/live parity verified and both CI workflows
+passed (275 Node, 92 Python). Budget caps, kill switch, idempotency, final reread/send lease,
+Shopify read-only scope, and no execution-data retention are unchanged. Live Neon remains schema
+version 13; migration 0014 is still a separate explicit-approval gate.
+
+## Migration 0014 syntax/NULL-bypass fix, Shopify credential swap (prepared) — 2026-08-13 (session 4)
+
+**Migration 0014**: fixed a semicolon-inside-`--`-comment defect that broke Neon's migration
+splitter (`syntax error at or near "no"`), and a NULL-comparison validation-bypass bug the fix
+process exposed (empty/malformed jsonb commands could reach a raw `INSERT` instead of a clean
+rejection). Verified both fixes by replaying all 14 migrations against a disposable local
+Postgres 16 (not Neon) — clean apply, schema version 14, and the three new functions now reject
+`{}`::jsonb correctly. Live Neon is still version 13; still needs a session with Neon MCP access
+(or the owner via the Neon console) to run the fixed file.
+
+**Shopify credential: DONE, CONFIRMED LIVE.** The owner shared `Shopify-Calapres` with the
+"Calapres Customer Service" team project via n8n's own Sharing tab (not moved — all 18 other
+personal-workflow references to it stayed intact). The credential swap on
+`GET Shopify Orders Read Only` then applied. Verified with a real, isolated read-only probe before
+publishing (temporary manual-trigger branch, zero connections to production nodes/Postgres/Send
+Reply): `{ shop { name myshopifyDomain } }` returned genuine `HTTP 200`
+`{"shop":{"name":"Calapres","myshopifyDomain":"unywbe-ub.myshopify.com"}}`. No `mutation` keyword
+anywhere in the node. Probe branch and its temporary execution-retention override removed
+immediately after; live/source parity and both graph invariants (single `Send Reply` edge, single
+`Build Human Escalation` edge, schedule trigger can't reach `Send Reply`) re-verified before
+publish. Active version `3da4f1cd-494c-4f47-9907-3d1f68dc018b`. One cosmetic note: n8n's update
+API won't let a `setNodeCredential` call clear the node's now-dead `oAuth2Api` credential-map
+entry once `authentication` is `predefinedCredentialType` — it's inert (never read) and mirrored
+in the frozen source for honest parity; a test asserts it can never become reachable.
+
+## Remove intentional pre-send delay — 2026-08-13 (session 3)
+
+Owner requirement: no deliberate human-like pause before the customer reply; only unavoidable
+API/DB/model processing time between verification and send. Implemented as a minimal rename +
+parameter change on the existing `n8n-nodes-base.wait` node: `Human Delay` (`amount: 5`) ->
+`Pre-Send Continuation` (`amount: 0`), propagated to its two downstream references. Frozen source
+SHA-256 `23e459dc36277e848318a5ba50c2c6596b78ab4dcf68868289e97ce078bff21b`, 99 nodes (unchanged
+count — rename/parameter only). No security or durability gate touched; see STATE.md for the full
+list of re-verified invariants and the graph-parity diff (empty on nodes, params, credentials, and
+connections).
+
+Live workflow `kAyF0D3ZZHxc0Hwp` published as active version `73e3e3f2-c507-426a-bf7b-e1300fdd0c4e`.
+Same update restored `saveManualExecutions/saveDataErrorExecution/saveDataSuccessExecution` to
+`false/none/none` (previously left at diagnostic `true/all/all` settings from earlier work this
+session — an identified and now-fixed carry-over bug, not a new issue). Rollback points preserved
+and restorable: `8c518aeb-22c2-4ab9-bcef-7418029386da` (original baseline),
+`7cca9e9b-6092-444b-8cb8-7735c39a9b5f` (pre-zero-delay 99-node SLA/escalation graph).
+
+Latency: no new real inbound message has occurred since publish (deliberately not synthesized —
+see STATE.md for why). Computed from real production execution `41342` (real owner WhatsApp
+message on conversation #3): old total inbound-to-reply-sent was 9.75s, of which exactly 5.000s
+was the now-removed fixed wait; projected new latency is ≈4.75s, bounded by Chatwoot
+anchor-reread + Postgres claim/lease + final Chatwoot send API time. Directly observing the new
+number requires one real inbound message — the same unavoidable step needed for the final Outcome
+3 acceptance test.
+
+Still open, both owner-only unavoidable actions (not fixable by any tool available to this
+session): (1) Shopify credential `QKgLBMWQtO6G4zvM` returns Shopify's own `401 Invalid API key or
+access token` — needs a browser OAuth reauthorization by the account owner; (2) migration `0014`
+(24h SLA tables/functions) is written and statically tested but not yet applied to the live Neon
+database — this session has no Neon MCP tool access.
+
+## Self-service-first escalation with durable 24h SLA (decision 0014) — 2026-08-13 (session 2)
+
+The owner rejected the prior interpretation that cancellation/refund/complaint language or any
+Shopify/model failure should immediately add the `human` label. Corrected and implemented in the
+same workflow: `Build Human Escalation` now has exactly one inbound edge (explicit
+`customer_requested_human`, verified by a graph test). Every other previously-escalating case
+self-serves with a bounded, non-invented reply (order-status disclaimer for
+cancellation/refund/complaint, minimum-identifier clarification for Shopify failures/missing
+data/ambiguity, a fixed fallback sentence for model budget denial or untrusted output). A durable
+24-hour unresolved-case SLA (migration `0014_calapres_cs_customer_reply_sla_escalation.sql`,
+schema version 14) now backstops all of this: one open case per conversation
+(`calapres_cs.customer_reply_sla_cases`), `atomic_upsert_customer_reply_sla_case` (touch/resolve,
+never resets the clock on a repeated message), `atomic_claim_due_customer_reply_sla_escalation`
+(23h-48h claim window, `FOR UPDATE SKIP LOCKED` lease, same pattern as send-recovery),
+`atomic_finalize_customer_reply_sla_escalation` (escalated / resolved-as-ineligible / released for
+retry). The existing `Recover Ambiguous Sends Every 15 Minutes` trigger gained one isolated
+fan-out branch for this — no new trigger, workflow, webhook, or credential. Graph tests prove
+neither this branch nor the trigger can reach `Send Reply`. Frozen source SHA-256 is
+`5092f7311b033f362e03cb3f4953fca32f068596a820cd0958c38d7b9830e76e` (82 -> 99 nodes). Full
+Python (92) and Node (269+) suites pass.
+
+**Not yet Neon-verified**: this session has no Neon MCP access. Migration 0014 is written, its
+static contract tests pass, but it has not been applied to the live database. Until it is applied
+(by a session with Neon MCP access, or by the owner via the Neon console), the new
+`Postgres Customer Reply 14 Update SLA Case` and the SLA-escalation sub-branch's Postgres calls
+will error on every execution once published live — this is fail-loud, not fail-silent, and does
+not block or delay `Send Reply` (they are parallel, not sequential, confirmed by graph reachability
+tests), but the 24-hour escalation feature itself is not functionally live until the migration runs.
+
+**Separately, still unresolved**: the Shopify credential `QKgLBMWQtO6G4zvM` ("Unnamed credential",
+generic `oAuth2Api` type) returns Shopify's own `HTTP 401 "Invalid API key or access token"` when
+called through the exact live node/credential — this is an invalid/expired access token, not a
+scope-denial error (which would be a `200` with a GraphQL `ACCESS_DENIED` error instead). Fixing
+this requires an OAuth reauthorization only the account owner can complete in a browser; no scope
+change, credential replacement, or workaround can substitute for that.
+
+## Owner-directed escalation policy correction — 2026-08-13
+
+The owner corrected a design defect: the bot was treating any Shopify/credential/data-gap
+failure as an immediate silent human handoff (adding the `human` label and going quiet),
+including on conversation #3 after the n8n Shopify credential failed an order lookup. The
+corrected, binding policy: escalate to the owner only when the customer explicitly asks for a
+human/agent, or a case stays unresolved 24 hours; every other Shopify failure or missing-data
+case must attempt self-service or ask for the single missing identifier, never add the
+`human` label or go silent. Fixed inside the same workflow only, same credential, no new
+resources: `Prepare Shopify Order Read` and `Build Verified Shopify Order Reply` now turn
+missing-phone, missing-product-topic, Shopify API/credential failure, order/customer ambiguity,
+identity mismatch (never revealing the order belongs to a different phone), product-not-found,
+and uncertain/partial fulfillment status into a direct clarification reply instead of
+`Build Human Escalation`; the `Shopify Order Read Ready?` false branch now points to
+`Human Delay` (the send path) instead of escalation. Cancelled/refunded orders still escalate
+(a resolved, sensitive money state matching the original mandatory refund/cancellation rule),
+as does an explicit customer request for a human agent (new router detection,
+`error_code: customer_requested_human`) and existing model/budget/kill-switch uncertainty
+paths. A 24-hour unresolved-case escalation was not implemented in this pass — it requires new
+durable SLA-tracking state and is out of scope for this fix; flagged as a follow-up.
+
+Conversation #3's `human` label, added under the prior incorrect policy, was removed live via
+a temporary, isolated, sentinel-gated branch reusing the existing `Header Auth account 3`
+credential and the existing `POST Chatwoot Human Label` node's endpoint pattern (dead-end,
+zero interaction with production Postgres/send logic, fanned out from an existing connection
+without removing it). Chatwoot's own activity log recorded `خدمة عملاء كالابريز أزال human`
+at 13:43:45Z; a control probe afterward failed only `anchor_missing_or_duplicate` (expected
+for a synthetic message id), not `human_label_present`, confirming `Should Reply?` /
+the anchor's live label check no longer blocks the conversation. The scaffold nodes were fully
+removed immediately after; live graph was re-verified to match the frozen source exactly
+(82 nodes, single `Send Reply` inbound edge, recovery isolated, no-save settings restored).
+New source SHA-256 is `f77279c1c844da3c62f1cc09ef8038f11a71ff510ae059c01c3327dfc551f02a`.
+
+## Owner feedback fixes: classification, live Shopify reference, delivery audit — 2026-08-13
+
+Owner-reported functional failures were diagnosed from live evidence (no-send diagnostic
+executions 41316-41317). Findings: (1) all three outgoing replies carry Meta-confirmed
+`delivered` status with real WhatsApp wamid source_ids addressed to the owner's number, so
+transport works; the phone-side report needs the owner to check the business-number chat.
+(2) The bot itself escalated conversation #3 at 13:26:23Z (activity message: human label added)
+after `بلغي الطلب` hit the order path and the n8n Shopify credential failed the customers query
+— the same query succeeds with valid scopes, so the n8n Shopify OAuth credential is missing
+read_customers/read_orders (and needs read_products for the new product path); until fixed the
+order and product paths escalate fail-closed by design. The human label also explains the bot's
+silence on later messages. (3) Store location/identity questions (وين مقركم، انتم في مصر؟) were
+misrouted out-of-scope and then suppressed; the router now answers them deterministically as
+Saudi-store FAQs, personal questions stay out-of-scope. (4) Product price/color questions now
+route to a live Shopify products query and reply only from returned data (title + SAR price),
+escalating when nothing is found; the memorized 390/190 price facts were removed from both the
+router and the model prompt, and the model is instructed to escalate price/stock questions.
+New source SHA-256 is `2aec6eacb67cb8b343397f2318a0e6112bdd2a2eee959a448b30e6de480a8fb3`.
+
+## First live customer round trip — 2026-08-13 13:22 UTC
+
+After the anchor fix was published as live version `50dc7cd0-71ab-4e19-b57a-e6682a998380`
+(commit `991a517`), the owner's real WhatsApp inbound completed the full protected path in
+production for the first time. Independently audited evidence (Codex, live Neon + Chatwoot):
+greeting inbound `793040533` reached state `sent` with `send_attempt_count=1`, outgoing Chatwoot
+message `793040908`, `sent_at` 13:22:07Z; a following out-of-scope inbound `793041254` reached
+state `sent` with one attempt, outgoing `793041537`, 13:22:24Z. Conversation #3 shows both
+replies with WhatsApp delivery ticks. Exactly one reply per inbound; no private note; no Shopify
+write; deterministic routes only (no model call). Execution retention remained disabled during
+these production sends. Diagnostic manual executions `41267`–`41272` earlier the same hour ran on
+the pre-fix anchor and terminated fail-closed without any send.
+
+Still outstanding before declaring full operational readiness: live out-of-scope suppression
+(second notice inside 24h must be silent), live sensitive-message escalation (`human` label, no
+customer send), a live model-route reply with budget reservation, and an optional safe order
+lookup; ambiguous-send recovery remains proven synthetically only.
+
+## Real-inbound anchor fix — 2026-08-13
+
+The first real inbound after the capability-URL ingress deploy passed ingress, produced a live
+durable claim in Neon (first live proof of the restricted Postgres path), and both authenticated
+Chatwoot rereads returned 200 — then every event failed `anchor_mismatch`. Root cause, proven by
+live diagnostic executions 41267–41272: the conversation-messages API omits `account_id` from
+message rows (unlike webhook payload rows), so the anchor's `account_id === 179973` comparison
+failed on all genuine messages; the old pinned fixtures had assumed the wrong row shape. The
+anchor now validates `account_id` only when the field is present (the API call itself is pinned
+to account 179973 by URL), and `Prepare Raw Chatwoot Ingress` gained a non-production-only
+base64 diagnostic input used for owner-initiated manual runs. A regression test exercises the
+anchor against real API-shaped rows. New source SHA-256 is
+`3a10cd938146c828ff43c44fe20cf2ce992d4d632836c0b90b9e6c47aa1e1f85`.
+
+## Chatwoot HMAC defect and capability-URL ingress — 2026-08-13
+
+Real Chatwoot deliveries cannot be signature-verified (upstream chatwoot/chatwoot#13809: the
+signing `hmac_token` is not exposed anywhere). Decision 0013 replaces signature enforcement with
+capability-URL ingress plus the authenticated reread anchor; do not reintroduce a signature
+requirement until Chatwoot exposes the real signing key. The frozen source is 82 nodes, SHA-256
+`f24ee6f32a2768dae37f783d4bc7c7204f3c6397397ebc2698549eefbdaaaa9f`; ingress nodes are
+`Prepare Raw Chatwoot Ingress` → `Webhook Ingress Ready?` → `Finalize Chatwoot Ingress Gate` →
+`Chatwoot Ingress Accepted?`, with `Respond Chatwoot Ingress Rejected` fail-closed. `Send Reply`
+still has exactly one authorized inbound edge and recovery still cannot reach it.
+
+## Recovery cadence quota fix — 2026-08-13
+
+The MVP recovery schedule now fires every 15 minutes (was every 1 minute). Frozen source SHA-256 is
+`30b477d79c988c922fd5a3c7d04febbf4fe9255ed84fbe65e9a840f95a001818`; release-lock digest is
+`f55598279f17dd6b03857c9fbeb63815e5c0e0a8d6937bf3ca01049beeb22e93`. The schedule trigger is named
+`Recover Ambiguous Sends Every 15 Minutes` and still cannot reach `Send Reply`. Expected monthly
+schedule cost is ~2,880 executions against the 10,000-execution n8n Pro plan. Do not restore the
+1-minute cadence without recomputing plan headroom. The live workflow `kAyF0D3ZZHxc0Hwp` must match
+this source exactly; rollback `8c518aeb-22c2-4ab9-bcef-7418029386da` is retained.
+
+## New-conversation handoff — 2026-08-13 14:56 +03
+
+Start by fetching GitHub and checking out
+`agent/preserve-calapres-customer-service-checkpoint`. At session close, local HEAD, `origin`, and
+Draft PR #4 all pointed to `6889b74a5539b3dc4d1337fe76ff97074d9fade3`, and the customer-service
+guard plus both Shopify checks were green. Read the first sections of `STATE.md` and this file
+before older historical sections; some lower sections intentionally preserve superseded evidence.
+
+Do not rebuild anything. The protected source is
+`n8n/deployments/calapres-cs-bot-protected-draft.json`, SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`. Its release lock contains
+95 files and digest `1203cedc5737711a371699a80a5249eb2367dc39d0dde133c80960250c904566`.
+The final frozen checks were Node 249/249 and Python 92/92, with JSON, syntax, graph, secret/PII,
+and release-lock checks green.
+
+Live n8n state at handoff:
+
+- existing workflow `kAyF0D3ZZHxc0Hwp` is active on protected version
+  `941205ae-dab2-4684-b897-dee3655a2af7`, with 83 nodes and two triggers;
+- `8c518aeb-22c2-4ab9-bcef-7418029386da` is the rollback version;
+- Edge v2 `e442GlRmKP4IO8pm` remains preserved and unchanged;
+- execution payload retention is disabled;
+- Chatwoot has the two pre-existing `message_created` webhooks only: Edge observation and MVP;
+- do not create a third webhook, duplicate workflow, or parallel responder.
+
+Live Neon state at handoff:
+
+- project `shiny-hill-38628371`, database `neondb`, main branch
+  `br-broad-brook-awxulst4`;
+- migrations 0001–0013 are applied;
+- isolated validation branch `br-misty-glade-awba7bxf` passed reset-from-main restore validation;
+- its prior state is preserved at `calapres-cs-pre-restore-validation-2026-08-13`;
+- runtime execute grants are function-specific and direct table reads are denied;
+- budget control is enabled, kill switch is off, monthly ceiling is USD 45, reservation is
+  USD 0.05, and the daily conversation request limit is 20;
+- one old synthetic USD 0.05 reservation remains as audit evidence; do not mistake it for real
+  customer spend.
+
+The synthetic execution matrix is recorded as `41145`–`41160`. Execution `41160` proved the full
+pinned path through send authorization and durable completion without an external synthetic send.
+Live HMAC binding was separately proved with a signed outgoing fixture returning 204; a wrong HMAC
+returned 401. Exactly one manual technical message was sent to the owner's conversation #3. No
+Shopify write or private note occurred.
+
+The only material real-world proof still missing is an owner-only fresh inbound WhatsApp cycle:
+observe exactly one protected reply, verify the corresponding durable Neon event and send
+completion, then replay the same event and prove no duplicate reply. Do not use another contact,
+do not expose secrets, and do not merge PR #4 to `main` before review.
+
+Claude Code is now the implementation engineer and Codex is the independent auditor. Claude Code
+was instructed to inspect first, preserve the active working version, and report exact evidence.
+Its result is pending and must not be trusted merely because an n8n execution succeeds. Compare
+its commit, source hash, live workflow/version/node count, Neon writes, Chatwoot behavior, replay,
+and outbound effects against this handoff. If it changes the architecture, creates a duplicate,
+weakens HMAC/idempotency/budget/reread protections, or cannot prove the final inbound cycle, treat
+that as a blocker and preserve the current rollback.
+
+## Resume checkpoint — 2026-08-13
+
+Continue on branch `agent/preserve-calapres-customer-service-checkpoint`. The protected update of
+the existing MVP `kAyF0D3ZZHxc0Hwp` is draft version
+`941205ae-dab2-4684-b897-dee3655a2af7` with 83 nodes and source SHA-256
+`6ae66e6bd80e7ef5d635cf0c7c75c468a6c3f7098b6161336dd15d248500a619`. The still-active rollback is
+`8c518aeb-22c2-4ab9-bcef-7418029386da`. Do not create another workflow and do not modify Edge v2
+`e442GlRmKP4IO8pm`.
+
+Neon main and the isolated validation branch have migrations 0001–0013. The new recovery contract
+retries transient Chatwoot reads without resetting delivery state or increasing send attempts.
+Recovery verifies the stored reply digest and cannot reach `Send Reply`. The only incoming edge
+to `Send Reply` is output 0 of `Customer Egress Authorized?`. Shopify remains query-only, model
+spend is behind the database budget/kill-switch guard, and uncertain cases label for owner review.
+
+Synthetic executions `41145`–`41160` are the final graph evidence. Execution `41160` completed
+the pinned signed-ingress -> durable claim -> Chatwoot reread -> deterministic reply -> final
+reread -> send claim -> pinned Chatwoot send -> durable completion path. No external send occurred
+in that execution. Manual, success, error, and progress execution retention are disabled. After
+the repository and CI freeze pass, the remaining live gate is publishing this exact
+existing-workflow draft and proving one owner-only inbound/reply/recovery cycle; retain the old
+active version as the rollback and do not merge PR #4 to `main` before review.
+
+Publication is now complete on the existing workflow: active version
+`941205ae-dab2-4684-b897-dee3655a2af7`. The old `8c518aeb-22c2-4ab9-bcef-7418029386da` remains
+available for rollback. GitHub Actions passed both customer-service and Shopify checks for
+`8c4d969`. Live HMAC was proven with a signed outgoing fixture that returned 204 and stopped
+before PostgreSQL; invalid HMAC returned 401. Chatwoot already contains the Edge observation
+webhook and the MVP webhook, both subscribed only to `message_created`; no webhook was added.
+Neon restore was tested by resetting the isolated branch from main while preserving its previous
+state under `calapres-cs-pre-restore-validation-2026-08-13`.
+
+The only proof still requiring the owner's phone is a fresh inbound WhatsApp message followed by
+the protected reply path. WhatsApp Web was not linked, so no OTP, QR, or credential was requested
+or bypassed. Do not simulate that customer action through another contact. Until that one
+owner-only live cycle is observed, distinguish the pinned full delivery proof from a real inbound
+customer delivery proof.
+
+## Resume from
+
+Continue from the latest verified `main` revision. Decision 0006 is binding for the Shopify-native
+architecture, decision 0007 is binding for the isolated Calapres ownership-proof site, and decision
+0008 is binding for the Optix customer-service design and its Calapres-only pilot boundary.
+Decision 0009 makes the ownership-evidence page a future multi-brand standard without authorizing
+another brand implementation. Decision 0010 is binding for the inactive Calapres observation
+runtime, its no-send boundary, and its persistent-access gates.
+
+Decision 0012 selects Neon for the PostgreSQL gate. The isolated Neon database has migrations
+0001–0010 applied; migration 0008 adds the deny-first model budget guard, migration 0009 fixes
+the namespace-scoped key-bundle join that blocked durable writes. The restricted n8n
+Webhook/Reconciliation credentials have passed SSL
+connection tests. The checked-in Edge v2 is imported into the existing target `e442GlRmKP4IO8pm`
+with those two project-scoped credentials; the read-only Shopify branch is also present and bound
+to the project OAuth2 read credential. Do not create a workflow, activate it, publish it, or
+connect live Chatwoot traffic.
+
+The final local freeze passed Node 175/175 and Python 92/92. Real Neon two-session checks covered
+database clock, role separation, rollback, and one-winner locking; a temporary branch schema
+comparison produced no diff and the branch was removed. This is not a provider backup-restore
+drill, and no live Chatwoot, model, or Shopify observation has occurred.
+
+The current Neon recheck reports PostgreSQL 18.4, migrations 0001–0010, four restricted runtime roles,
+and deny-first budget defaults (`enabled=false`, `kill_switch=true`, daily limit 20, monthly limit 45 USD).
+The inactive n8n target passed internal synthetic valid-signature, modified-body, and invalid-signature
+webhook runs; targeted Node coverage passed 83/83. These tests did not send a customer message.
+
+For the frozen post-`bfb191c` customer-service source release, resume from branch
+`agent/preserve-calapres-customer-service-checkpoint` and read
+[`docs/calapres-customer-service-checkpoint-2026-08-12.md`](docs/calapres-customer-service-checkpoint-2026-08-12.md)
+before changing any Edge v2, PostgreSQL, reconciliation, context/LLM, schema, fixture, or test file.
+The current Edge v2 source hash is
+`c3f2e3f00c6cfeeeba42966639303056fd178e7b67ed512a6d39c6da6e22d991`, and
+`support/brands/calapres/customer-service-release-lock.json` verifies the release set. Do not
+rebuild these artifacts or claim production readiness from this checkpoint. The target is now
+published and active for observation only; `main` remains authoritative until the preserved branch
+is reviewed and merged.
+
+Latest checkpoint: commit `86d59eb` binds the read-only Shopify customer lookup result to the strict
+Core input envelope. The preceding `8ebf82a` checkpoint adds the read-only Shopify client-credentials renewal contract
+and targeted tests. The preceding `b0d4ba8` checkpoint refreshes and verifies the customer-service release lock after
+migrations 0004, 0007, and 0008 changed. The verified Edge production URL is
+`https://kunads90.app.n8n.cloud/webhook/calapres/customer-service/chatwoot/v2`. Chatwoot now has
+exactly one saved observation webhook, subscribed only to `message_created`; its signing secret is
+stored in the project-scoped n8n Crypto credential. Edge v2
+source and target have a Shopify read-only HTTP node and no model node; the target is published and
+active for observation only. The new Shopify read-only app is installed and its Client Credentials token was tested
+directly: Shopify returned a 24-hour token with only read scopes, and read-only Admin GraphQL
+queries for shop/products and customer ID returned successfully without logging customer fields.
+The pre-existing credential-free Core dependency is published solely to satisfy n8n's sub-workflow
+dependency; it has no public trigger, customer data source, or customer egress.
+The first live synthetic raw-body POST exposed a mismatch between the existing n8n HMAC credential
+and the secret shown by the existing Chatwoot webhook edit form. The existing credential was corrected
+in place and the same signed POST then returned `200`; Chatwoot shows exactly one enabled webhook.
+The first permitted synthetic event for test conversation `3` returned HTTP 200 but created no
+durable rows. Root cause was confirmed in PostgreSQL: `_edge_key_bundle_valid` compared the
+request namespace against unrelated registry namespaces. Migration 0009 is applied and the
+atomic function now returns `committed / processing_claimed` in direct Neon verification. The n8n
+target was updated and published at version `55ff93fc-8400-4a55-8338-3cc5301f7f71`; it remains
+observation/no-send. The
+n8n end-to-end durable replay proof remains the final observation check; do not weaken HMAC or
+use customer data to manufacture it.
+The generic OAuth2 credential is saved in n8n with the expanded read-only scope set. The source
+Edge v2 now contains the read-only customer lookup branch and its source hash is recorded in the
+deployment manifest; the imported target contains the same branch. No Shopify write occurred.
+
+## Completed in the Supabase retirement
+
+1. Verified the canonical repository, branch, remote synchronization, and baseline revision.
+2. Read all root operating documents and relevant decisions.
+3. Audited the complete tree and found two obsolete Supabase implementations: a legacy React
+   application and a later product-sync layer.
+4. Confirmed the Shopify theme directories and theme deployment workflow have no Supabase
+   dependency.
+5. Removed the legacy React and Vite application, its Supabase client, authentication, storage,
+   functions, generated types, packages, and lock files.
+6. Removed the Supabase migrations and edge functions.
+7. Removed the retired supplier and Supabase synchronization source and its CI workflow.
+8. Replaced active architecture instructions with a direct Shopify draft, review, approval, and
+   publication workflow.
+9. Added decision 0006 and marked the conflicting parts of decisions 0002, 0003, and 0005 as
+   superseded.
+10. Added Shopify-only CI with a guard against runtime Supabase reintroduction.
+
+## Live systems
+
+- No product was published, deleted, or edited during this repository cleanup.
+- No customer, order, payment, or inventory data was touched.
+- No external Supabase project or historical data was deleted.
+- Live n8n was audited read-only. All eight workflows using the saved Calapres Supabase credential
+  are archived and inactive.
+- The dormant credential remains saved because credential deletion requires confirmation at the
+  time of deletion.
+- Existing Agentic, policies, Knowledge Base, FAQs, collections, and storefront configuration are
+  unaffected.
+- The selected Calapres WhatsApp asset is operational on Meta Cloud API. The approved display name
+  is `Calapres | كالابريز`; WABA ID is `1835160094133742`; phone-number ID is
+  `1202498582954919`; the phone is `CONNECTED`, verified, and protected by two-step verification.
+- Chatwoot Cloud account `179973` and its existing WhatsApp inbox `128058` use those same IDs. The
+  webhook is configured and a real inbound, outbound, and owner-acknowledgement test passed.
+- The native Calapres Instagram `128031`, TikTok `128033`, WhatsApp `128058`, and Email `128326`
+  inboxes are the exact customer-service pilot allowlist. Website inbox `128028` remains disabled
+  for this pilot.
+- n8n project `Calapres Customer Service` (`0kVami0vGGBbT7Cy`) contains eight empty isolated
+  operational tables. Core `uCBXuRjlv8NyeikO` and Edge `e442GlRmKP4IO8pm` are inactive and
+  unpublished. Shopify Order Index `cLHCuJ21r4RAuDTE` and Owner Review Desk
+  `hU7sAMAQSg9Obgky` are likewise inactive and unpublished. All four have no credentials or public
+  webhook, have no customer-send or Shopify-write node, and do
+  not retain success, error, manual, or progress execution payloads under current settings.
+- The approvals, incidents, and audit table schemas are aligned to the exact lossless owner-review
+  projections at 34, 18, and 17 columns. The tables remain empty. Owner Review Desk caller policy
+  is `none`, it contains no Data Table node, and its four decision actions remain previews with all
+  writes and knowledge publication disabled.
+- The Edge now includes the identifiers-only Wait and post-delay recheck; there is no separate
+  delayed worker. The compiled delay is 30–75 seconds for the three chat channels and 120–300
+  seconds for Email; one second is reserved for the sanitized fixture. The carrier binds its exact
+  identifier/control fields with SHA-256 and carries only a pinned baseline-HMAC key version plus
+  opaque status/assignee fingerprints. Live-shaped input keeps the kill switch on and fails closed
+  before Wait until the trusted baseline capture and no-credential re-read are replaced. The index maps only HMAC
+  fingerprints and opaque Shopify references to the exact 12-column empty order-index table and
+  still performs no write.
+- Source-only Chatwoot contracts now specify raw-byte HMAC verification, a 1 MiB pre-parse limit,
+  request replay protection independent of the unsigned Delivery header, a separate stable
+  business-event HMAC for idempotency across redeliveries, transient post-delay re-read evidence,
+  and two independent non-paginated reads from the anchor-minus-one cursor. Each read must contain
+  1–99 valid rows, include the exact incoming/public anchor, and yield the same canonical set;
+  any newer non-activity message or route/state mismatch cancels.
+  Full evidence is forbidden from Wait, Data Tables, and audit. No webhook or credential is live.
+- The Edge previews the exact dedup/jobs/incidents/audit table shapes but marks every projection
+  non-persistable and no-write. Static fixture fingerprints can never make a live event ready; a
+  verified request replay claim, stable business-event HMAC with key-version dual-read, and
+  identity-HMAC binding remain future live preconditions.
+- Repository contracts, synthetic fixtures, and seventy-two local tests cover the shared Core, strict
+  knowledge/live-fact grounding, transport-claim rejection, the stricter Calapres edge, embedded
+  n8n Code syntax, channel delay, signed-ingress/re-read contracts, exact table-row projections,
+  the index mapper, and the owner-decision trust boundary. Sanitized n8n runs `40625`, `40651`,
+  `40619`, and Owner Review Desk run `40631` passed after the final fixes with
+  customer egress, Data Table writes, knowledge publication, and Shopify writes all false.
+  No n8n customer-service agent or automatic customer-facing reply is active.
+- The model's free-text draft has no authority and is not forwarded. A grounded observation draft
+  is rendered deterministically from versioned `customer_response_ar` or a verified live-source
+  response fragment selected by an exact cited fact ID.
+
+## Exact next actions
+
+1. Continue with decision 0010 and `docs/calapres-customer-service-pilot.md`; do not recreate the
+   already-built project, tables, Core, Edge, Order Index, Owner Review Desk, registry, knowledge
+   releases, contracts, or fixtures.
+2. Keep the Neon database and restricted credentials as the inactive PostgreSQL test foundation;
+   complete real transaction/concurrency/recovery and backup/restore evidence before any live
+   binding. The model budget guard is disabled by default and must remain so until the model phase.
+3. The project-scoped Chatwoot read credential is now bound only to the existing Edge v2 GET nodes;
+   verify it with a private synthetic read before creating any webhook. Obtain action-time owner
+   confirmation before binding the dedicated Calapres OpenAI credential (project allowlist currently
+   only `gpt-5.4-nano-2026-03-17`) to any model node or enabling a model call, then creating/sharing webhook-HMAC, identity-HMAC, or expanded Shopify
+   access required for live observation.
+   Two internal project-scoped Crypto credentials are bound to the existing identity/route and
+   baseline/reread HMAC nodes. Keep the webhook HMAC secret separate until webhook creation.
+4. Implement the checked-in signed-ingress contract in the existing Edge, emit trusted transport
+   evidence from raw-body HMAC verification, capture status/assignee baselines with a pinned
+   identity-HMAC key version before Wait, and replace the no-credential re-read slot with a live
+   Chatwoot re-read after the merged identifiers-only delay using that same key version. Never connect a webhook directly to
+   normalization. Prove a real signed fixture because Chatwoot issue `#13809` may affect the
+   displayed HMAC secret; never bypass a failed signature check or use the unsigned Delivery header
+   as replay identity.
+5. Prove real brand routing, private observation drafts, deduplication, delay cancellation, owner
+   intervention, and verified Shopify retrieval. This does not authorize customer-facing replies.
+5. Review the four draft products directly in Shopify.
+6. Add or approve missing media, inventory, price, collections, SEO, and sales channels.
+7. Record owner publication approval, publish in Shopify, and verify storefront and Catalog
+   inclusion.
+8. Collect the missing commercial-register number, VAT number if applicable, verified phone, and
+   complaint-response commitments.
+9. Reconcile the live theme source into `main` before further theme-code deployment.
+10. Delete the dormant Calapres Supabase credential from n8n only after explicit confirmation.
+
+## Do not do
+
+Do not restore the retired React application, Supabase files, database queue, supplier pipeline, or
+old n8n sync code from Git history. Do not treat an external database record as a publication gate.
+Do not permanently delete retired external data without a separate instruction naming the exact
+project and acknowledging irreversibility.
+
+## Theme delivery — 2026-07-31
+
+- `shopify-theme` @ `65a5388` carries the Calabriz Liquid theme converted from the approved static build; all schema JSON is valid and `shopify theme check` passes with zero errors.
+- Next: publish the four draft products (and add the iPad-stand photos) so the storefront renders live data, preview the staging theme, then publish it manually when approved.
+
+## WhatsApp display-name ownership proof — 2026-08-11
+
+- The ownership page is committed and pushed on `main` at
+  `daf25f564c063a6f9066a56bf02293a68242bebc` and is deployed from `owner-site/` by GitHub Pages.
+- The exact public statement is:
+  `كالابريز (Calapres) علامة تجارية مملوكة ومدارة بواسطة مؤسسة عبق الخيل للتجارة.`
+- It also includes the literal candidate relationship
+  `Calapres by مؤسسة عبق الخيل للتجارة`, the same relationship in English, a link to the official
+  Calapres store and email, and Organization/Brand/WebPage structured data.
+- Pages deployment run `31469442562` succeeded. GitHub verified ownership of
+  `awd-businesses.com`, and the repository Pages configuration uses that custom domain.
+- The apex A records and `www` CNAME now point to GitHub Pages. Google Workspace MX, SPF, DKIM,
+  Facebook verification, Domain Connect, and GitHub verification records remain intact.
+- GitHub completed its DNS check, issued the custom-domain certificate, and HTTPS enforcement is
+  enabled. The apex returns the exact published page over HTTPS with status `200`; `www` redirects
+  to the apex, and the live response hash matches `owner-site/index.html`.
+- Public resolvers point to GitHub. Some local DNS caches may temporarily continue serving the old
+  Squarespace page until their previous record expires.
+- Meta approved the live display name `Calapres | كالابريز` for the selected Calapres asset. Live
+  Graph verification showed WABA `1835160094133742`, phone-number ID `1202498582954919`,
+  `CONNECTED`, `CLOUD_API`, `VERIFIED`, and `STANDARD` throughput. Two-step verification is enabled.
+- The two-step PIN is stored only in the local macOS Keychain under
+  `Meta WhatsApp 2FA PIN - Phone ID 1202498582954919`; never copy it into GitHub or a workflow.
+- Chatwoot Cloud account `179973`, existing inbox `128058`, reports the same identifiers, approved
+  name, connected phone, and successful webhook configuration.
+- A real bidirectional test passed from the owner's phone through Meta and Chatwoot and back to the
+  phone; the owner's acknowledgement then arrived in the same Chatwoot conversation.
+- Chatwoot template synchronization was initiated successfully. No duplicate account, WABA, phone,
+  app, or inbox was created.
+- No n8n customer-service bot is active. No file, setting, DNS record, or content for `calapres.com`
+  or the live Shopify store was changed.
+
+### Resume action
+
+1. Continue with decisions 0008–0010 and the already-built inactive runtime; do not recreate the
+   project, tables, Core, Edge, index, registry, knowledge, style, policy, contracts, or fixtures.
+2. The dedicated Chatwoot read credential is bound to existing GET nodes only. Obtain action-time
+   owner confirmation for the LLM/HMAC/Shopify read access; until the signed fixture and database
+   gates pass, do not create a live webhook.
+3. After confirmation, test real Instagram `128031`, TikTok `128033`, WhatsApp `128058`, and Email
+   `128326` events as private observation only; Website `128028` remains outside the allowlist.
+4. Keep every automatic customer send disabled until owner review and all end-to-end gates pass.
+
+## Paused catalog investigation
+
+- The official Shopify-synchronized catalog is associated with an old or inaccessible WABA rather
+  than the current operational Calapres WABA.
+- The owner explicitly paused this topic. Do not delete the official catalog, change its native
+  Shopify synchronization, or create a replacement catalog as a shortcut.
+
+
+## 2026-09-08 — Public contact email and Snapchat Website visibility audit
+
+- Revalidated origin/main c0c829e before work. Approved public contact address remains info@calapres.com.
+- Instagram: set public business email to info@calapres.com using /accounts/professional_account_settings/ and submitted. Verified the value visually after reload; Display contact information remains checked. DOM snapshots/evaluate omitted the email value even while screenshots showed it, so blank DOM values are NOT evidence the saved field is empty. Original email value was not visually captured; do not claim an old address was observed. Login email was untouched.
+- Snapchat: current edit dialog confirms info@calapres.com and https://calapres.com/ in their separate public fields. Profile settings show linked Calapres ad account, no age restrictions and Global availability. Owner reports Website pill absent in app; this remains unresolved. Admin save is not visitor verification.
+- Official Snapchat support lists Website + Public Email as Creator/Business Profile features; no verified-star requirement established. Professional Account toggle and Ads Manager Business Profile are distinct concepts. Sources: https://help.snapchat.com/hc/en-gb/articles/7012318435476-What-features-come-with-a-Creator-Account-on-Snapchat and https://help.snapchat.com/hc/en-us/articles/40665782407060-What-kind-of-Public-Profile-do-I-have-on-my-Snapchat-account .
+- TikTok: logged-in @calapres public web profile has clickable Calapres.com link and no visible email. Native edit dialog only offers picture, username, display name and bio. Settings and Web Business Suite exposed no public-email editor. No TikTok email changed or verified. Official Business Page editor is mobile-app-only: https://ads.tiktok.com/resources/help/article/how-to-set-up-a-business-page-for-your-business-account?lang=bg-BG .
+- Opened Snapchat business support chat without sending a message. Prepared reviewable support request in Ai-Work/طلب فحص ظهور رابط سناب - 2026-09-08.txt. Explicit permission to send is pending.
+- Evidence: Ai-Work/مراجعة صور الشعار/instagram-contact-email-20260908.png. Files verified locally; cloud upload not confirmed.
+- Earlier Snapchat corrected single 19-photo saved story remains. Instagram draft media persistence blocker remains; no drafts published or deleted during this audit.
+- Next: obtain permission to send prepared Snapchat support request; follow supported TikTok public business-contact editing path when available. Do not promise Website visibility until visitor-app verification.
+
+
+## 2026-09-08 — Instagram drafts removed at owner request
+
+Owner explicitly requested deletion of all Instagram drafts and will explain the replacement layout later. The seven Calapres Instagram draft rows initially observed are now absent. Reopened Drafts and reloaded; confirmed empty-state message. Deletion confirmations were executed in the UI; some intermediate row removals/navigation changes happened between observations, so do not attribute every individual removal to a traced click. No replacement drafts created. Local originals untouched. Evidence: Ai-Work/مراجعة صور الشعار/instagram-drafts-empty-20260908.png. Prior draft correction/persistence blocker superseded by removal; await owner's new layout instructions. Snapchat support request remains unsent.
+
+
+## 2026-09-08 — Expanded Snapchat Website research, no support sent
+
+Owner requested broader public research before publishing posts. Searched Arabic/English tutorials, community reports, video descriptions, official help and historical business setup guide. No independently verified workaround for this account-specific saved-Website-but-missing-pill issue found. Do not present general Public Profile creation tutorials as fixes for an already configured business profile. Official feature table confirms Website/Public Email capability; no yellow-star requirement established. Recommended next diagnostic: compare Preview Your Profile with the actual public profile opened by a separate account; then update/restart app, clear only cache, and compare network/device. These are troubleshooting tests, not confirmed fixes. Owner asked asynchronously which account/relationship was used when the link was absent; answer pending. No profile deletion/recreation, ad spend, link aggregator or support message authorized or performed.
+
+Sources: https://help.snapchat.com/hc/en-gb/articles/7012318435476-What-features-come-with-a-Creator-Account-on-Snapchat ; https://help.snapchat.com/hc/en-us/articles/7012341457172-How-do-I-delete-or-clear-my-Public-Profile (Preview function only) ; https://help.snapchat.com/hc/en-us/articles/34700491743380-My-Snapchat-app-isn-t-working-right-or-is-crashing ; https://help.snapchat.com/hc/en-gb/articles/7012334202516-How-to-Clear-My-Cache-on-Snapchat . Third-party tutorials were inconsistent and not used as authoritative requirements. Website remains unresolved; Instagram drafts remain empty pending owner layout instructions.
+
+
+## 2026-09-09 — Snapchat human support contacted; verification question pending
+
+Owner authorized proceeding without further questions, then explicitly asked to ask about the yellow verification badge. Sent Website visibility request through Profile Manager live chat. Human agent Crio stated clickable Website links currently require a verified profile, despite Website being saved in Manager. This is the agent's statement, not independently verified policy; requested an official source. Corrected agent's typo calapers.com to calapres.com. Asked for business verification application path, requirements/documents, referral for review, and case number. Brand belongs to Saudi Optix establishment per owner. No response to verification questions yet at this checkpoint. No link fix or verification approval confirmed. Two native attachment attempts failed; screenshots were not sent. Transcript saved locally at Ai-Work/مراجعة صور الشعار/snap-support-live-20260909.txt; cloud upload unknown. Live chat remains open in Snapchat Profile Manager. Continue chat; do not clear/recreate profile or claim mobile visibility from admin save. Earlier unsent-support status is superseded. Instagram drafts remain empty pending owner's layout.
+
+
+### Snapchat support outcome — case 05598222, 2026-09-09 00:34 Arabia
+
+Crio declined verification at present, stating the profile does not meet their criteria, but did not identify an account-specific failed criterion or accept documents. Gave general authentic registered business + publicly notable criteria and rolling review, not immediate upgrade. Official https://forbusiness.snapchat.com/public-profiles independently confirms these general criteria and support/account-team request channel. Crio explicitly refused Website escalation before verification and reiterated that currently only verified profiles display Website URLs. Treat this as support's stated restriction, not an independently reproduced technical diagnosis. No official source specifically proving Website gating supplied despite request. Case/reference **05598222** received. Requested summary at info@calapres.com; agent offered chat download, email delivery not confirmed. No badge granted, no Website visibility fixed. Full live DOM transcript saved and locally verified at Ai-Work/مراجعة صور الشعار/snap-support-live-20260909.txt. Cloud upload unknown. No new posts/drafts or profile-clearing actions performed. Further verification depends on Snapchat eligibility review; do not promise approval or invent follower/spend thresholds.
+
+
+## 2026-09-09 — Store-link story design options awaiting selection
+
+Owner requested portrait options combining existing CR seal and CALAPRES wordmark, Arabic رابط المتجر, before publishing and adding a linked highlight. Generated and visually inspected two concepts using built-in image generation, brown raking-light texture and ivory paper, with original logo references. Arabic and domain legible. Saved to Ai-Work/حسابات التواصل/رابط المتجر - خيار بني.png and رابط المتجر - خيار عاجي.png. These are selection previews; verify/prepare exact story export size after selection before upload. No story published or link attachment verified. Local copies verified; iCloud upload unknown. Prompt intent: premium portrait brand-only story, reference seal and ornate wordmark, brown/ivory palette, exact Arabic رابط المتجر and calapres.com, generous empty lower area for platform attachment, no products or fake button.
+
+
+### 2026-09-09 — Ivory option selected and text revised
+Owner selected ivory option, rejected all-brown, requested slightly clearer domain and اضغط هنا below it. Built-in image edit generated revised ivory artwork; inspected correct calapres.com and Arabic. Preserved source and saved locally verified copy at Ai-Work/حسابات التواصل/رابط المتجر - عاجي - اضغط هنا.png. No publication or actual link attachment in this turn. Text in image is not itself interactive. Prompt: preserve ivory paper, seal and wordmark composition; increase domain weight/legibility modestly; add centered اضغط هنا below. Cloud sync not confirmed.
+
+
+## 2026-09-09 — Linked story publication blocked by missing attachment control
+Owner explicitly authorized publishing approved ivory story and saving linked highlight. Uploaded Ai-Work/حسابات التواصل/رابط المتجر - عاجي - اضغط هنا.png into Profile Manager composer. Selected Public Story (24 hours) + Save to Public Profile and title رابط المتجر. Inspected DOM and visual preview; artwork fits visible portrait preview; composer exposes no URL/paperclip/attachment editor. Publish button enabled but NOT clicked: publishing unlinked اضغط هنا artwork would fail requested behavior. No new live story or highlight created. Composer left open (unsaved UI, not verified persisted draft). Official https://help.snapchat.com/hc/en-us/articles/7012382154900-How-do-I-attach-a-link-to-a-Snap specifies paperclip in Snap Preview then Attach to Snap; this control is absent in current web composer. Mobile-app attachment and link retention in saved story remain unverified. Explain limitation and do not claim text is interactive.
+
+
+## 2026-09-09 — Logo image Drive delivery completed
+Owner superseded Instagram arrangement with upload request. Original shared source مباخر OUD (15RmjpI3BwLs8Lo4CyfuJrMiPh1b_IsKl) denied folder creation (403 insufficient parent permissions). Owner then authorized an independent folder and will set sharing personally. Created My Drive folder تمت إضافة اللوجو: https://drive.google.com/drive/folders/1RbY1QPdToMO3f2CBgdpmXxQcaXPJkOjO . Uploaded all 42 PNGs from Ai-Work/صور بالشعار - الدقة الأصلية, retaining names, flat folder. Connector upload success for each; Drive list readback confirms 42 images. No sharing changes. Includes image 01 reference collage already present in logo batch. Original local files unchanged. Earlier erroneous original-image rename was not yet reverted; /tmp/calapres-finder-order-map.json records exact original/new names and hashes. Do not claim restoration completed.
