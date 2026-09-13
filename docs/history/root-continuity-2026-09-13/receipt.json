@@ -1,0 +1,18 @@
+{
+  "source_commit": "226a58ef57fa6a6aca947f7116d0aa70d941334e",
+  "created": "2026-09-13",
+  "files": [
+    {
+      "source": "STATE.md",
+      "archive": "STATE.full-through-2026-09-11.md",
+      "bytes": 301749,
+      "sha256": "55c704754617eee3227931677db5f276939ffb47e096908162b4a2c91a18b163"
+    },
+    {
+      "source": "HANDOFF.md",
+      "archive": "HANDOFF.full-through-2026-09-11.md",
+      "bytes": 259776,
+      "sha256": "9db25a5f206e0ed328d5a671d27051f2d80cf576c58a80ff5755da32dcdb09cc"
+    }
+  ]
+}
