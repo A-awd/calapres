@@ -5,6 +5,24 @@ earlier and must be refreshed before operational action.
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## Chatwoot integration classification — 2026-09-14
+
+- [Documented and previously live-verified] Chatwoot is connected for Calapres; it is not a missing
+  integration. The canonical decisions record the existing Calapres account, Captain assistant,
+  WhatsApp, Instagram, and TikTok inbox attachments, and assignment automation. The old all-purpose
+  n8n responder remains unpublished.
+- [Documented and previously live-verified] Captain is the customer-facing responder. Its isolated
+  read-only Shopify order and product-link bridges were implemented separately. The automatic
+  paid-order WhatsApp workflow was later implemented and one owner canary reached Chatwoot with
+  `delivered` recorded; normal duplicate prevention stopped a repeat send.
+- [Current-live state not refreshed] These platform facts are dated. A launcher that cannot access
+  Chatwoot or n8n must report a monitoring-access gap, not `Chatwoot missing` or `disconnected`.
+- [Remaining operational proof] The next fresh production payment event and new-contact branch have
+  not been observed end to end. Physical external-channel delivery for every Captain channel and
+  the current platform configuration must not be inferred from Playground or historical evidence.
+- [Documentation-only] No Chatwoot, n8n, Shopify, Meta, credential, customer message, or production
+  setting was changed by this clarification.
+
 ## Confirmed
 
 - GitHub owns sanitized instructions, decisions, code and continuity. Shopify
@@ -42,8 +60,9 @@ Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
 - Refresh the live MDA partnership/publication state and purchase evidence
   across Shopify, GA4 and Snapchat.
-- Verify paid-order WhatsApp reuse and customer-message delivery before treating
-  those flows as production-ready.
+- Observe the next fresh production payment event and new-contact branch before treating that
+  transactional path as fully proven. Do not repeat the delivered owner canary or send a customer
+  message merely to manufacture evidence.
 - Inspect standalone OTO rules only after pickup/contact/package facts are
   available. Do not create a label, buy shipping or activate automation without
   the applicable authorization.

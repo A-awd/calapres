@@ -18,7 +18,29 @@ These instructions apply equally to Claude, Codex, ChatGPT, Hermes, and every fu
 - GitHub `main`: approved theme code, technical documentation, decisions, and sanitized handoffs.
 - Shopify: products, inventory, collections, customers, orders, markets, policies, and live store
   configuration.
+- Chatwoot: current Calapres inboxes, conversations, Captain configuration, assignments, labels,
+  and message delivery state. Repository records prove only their dated observation; refresh the
+  exact Calapres account before relying on current live state.
+- n8n: current publication, activation, credential binding, and execution state for the narrowly
+  approved Captain bridges and paid-order notification workflow. GitHub owns their approved source
+  and contracts but does not by itself prove deployment.
 - Approved Design Labs: visual direction until superseded by a recorded decision.
+
+For customer-service work, identify the exact Calapres Chatwoot account and inbox before reading or
+acting. Do not report Chatwoot as missing merely because an Easy Life reader or launcher credential
+is unavailable. Report those as monitoring-access gaps while preserving the verified project state.
+
+## Customer-service completion criteria
+
+- A connection check is complete only when the exact Calapres Chatwoot account, intended inbox,
+  Captain attachment, and observation time are verified read-only.
+- A Captain behavior check is complete only when its evidence type is named: Playground, Chatwoot
+  conversation, or physically observed external channel. One type does not prove another.
+- A transactional WhatsApp check is complete only when Shopify payment-event evidence, the exact
+  workflow execution, Chatwoot message state, and duplicate-prevention result agree. `accepted`,
+  `sent`, and `delivered` are distinct states.
+- Failure to access Chatwoot or n8n is a failed or unavailable check, not proof that the integration
+  is disconnected.
 
 ## Creative library and owner realism selection
 

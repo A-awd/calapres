@@ -4,6 +4,22 @@ Updated: 2026-09-13
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## Chatwoot routing checkpoint — 2026-09-14
+
+Chatwoot is an existing, project-owned operational system for Calapres, not an unconnected future
+source. Canonical decisions record Captain attached to the WhatsApp, Instagram, and TikTok inboxes,
+with the legacy all-purpose n8n responder unpublished. Two isolated read-only Captain bridges and
+the separately approved paid-order WhatsApp workflow are also recorded as implemented.
+
+The paid-order owner canary reached Chatwoot and was recorded as delivered, with a normal replay
+stopped before a second send. The unresolved proof is narrower: the next fresh production payment
+event and new-contact path remain unobserved end to end, and every dated Chatwoot/n8n configuration
+fact must be refreshed before current operational claims.
+
+If Easy Life lacks a Chatwoot reader or credential, report `monitoring unavailable`; do not convert
+that access limitation into `Chatwoot missing` or `disconnected`. No live platform was changed by
+this checkpoint.
+
 ## Resume here
 
 Read `README.md`, `AGENTS.md`, `STATE.md`, `DECISIONS.md`,
