@@ -1,0 +1,24 @@
+{
+  "layout": "app-trial",
+  "sections": {
+    "main": {
+      "type": "app-trial-product",
+      "blocks": {
+        "app": {
+          "type": "shopify://apps/customily-product-personalizer/blocks/main/38e5281a-51b4-4383-badc-af97d3fb7e7b",
+          "settings": {
+            "disable_atc_until_customily_loads": false,
+            "disable_atc_selector": "button[type='submit'][name='add']"
+          }
+        }
+      },
+      "block_order": [
+        "app"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

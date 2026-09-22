@@ -1,0 +1,21 @@
+{%- assign trial_variant = product.selected_or_first_available_variant -%}
+<main class="trial-product product" data-product-id="{{ product.id }}">
+  <div class="pd-media product__media-wrapper">
+    {{ product.featured_image | image_url: width: 1000 | image_tag: id: 'pdImg', class: 'product__media-image', loading: 'eager' }}
+  </div>
+  <div class="pd-info product__info-container">
+    <h1>{{ product.title | escape }}</h1>
+    <p>{{ trial_variant.price | money }}</p>
+    {% form 'product', product, id: 'pdForm', class: 'product-form', data-product-form: 'true' %}
+      <input type="hidden" name="id" value="{{ trial_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[مصدر التجربة]" value="{{ theme.name | escape }}">
+      {% for block in section.blocks %}{% render block %}{% endfor %}
+      <label class="trial-approval"><input type="checkbox" name="properties[موافقة التصميم]" value="أؤكد صحة الاسم والشكل الظاهر في المعاينة" required><span>أؤكد صحة الاسم والشكل الظاهر في المعاينة.</span></label>
+      <button type="submit" name="add" id="pdAdd" class="trial-submit product-form__submit">أضف إلى السلة</button>
+    {% endform %}
+  </div>
+</main>
+{% schema %}
+{"name":"تجربة تخصيص الاسم","settings":[],"blocks":[{"type":"@app"}]}
+{% endschema %}

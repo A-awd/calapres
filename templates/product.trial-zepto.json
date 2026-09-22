@@ -1,0 +1,23 @@
+{
+  "layout": "app-trial",
+  "sections": {
+    "main": {
+      "type": "app-trial-product",
+      "blocks": {
+        "app": {
+          "type": "shopify://apps/zepto-product-personalizer/blocks/product_personalizer_page/7411210d-7b32-4c09-9455-e129e3be4729",
+          "settings": {
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "app"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,31 @@
+<main class="comparison" dir="rtl">
+  <header class="comparison-intro">
+    <a href="{{ routes.root_url }}">كالابريز</a>
+    <p>تجربة تخصيص الاسم</p>
+    <h1>اختيار تصميم الاسم الأكريليك</h1>
+    <p>اكتب الاسم داخل كل نموذج وشاهد المعاينة، ثم قارن سهولة الاستخدام وشكل الكتابة.</p>
+    <nav aria-label="انتقل إلى نموذج الشركة">
+      <a href="#customily">Customily</a><a href="#zepto">Zepto</a><a href="#teeinblue">Teeinblue</a><a href="#cloudlift">Cloudlift</a>
+    </nav>
+  </header>
+  {% assign vendors = 'Customily|Zepto|Teeinblue|Cloudlift' | split: '|' %}
+  {% for vendor in vendors %}
+    <section class="vendor-card" id="{{ vendor | downcase }}" aria-labelledby="label-{{ forloop.index }}">
+      <div class="vendor-title"><h2 id="label-{{ forloop.index }}" dir="ltr">{{ vendor }}</h2><span>النموذج {{ forloop.index }}</span></div>
+      <iframe title="تجربة تخصيص الاسم — {{ vendor }}" src="{{ product.url }}?preview_theme_id={{ theme.id }}&amp;view=trial-{{ vendor | downcase }}" loading="lazy" height="1050" width="100%"></iframe>
+    </section>
+  {% endfor %}
+</main>
+<style>
+  html{scroll-behavior:smooth}.comparison{max-width:1160px;margin:auto;padding:28px 16px;background:#f5f1ea}
+  .comparison-intro{text-align:center;padding:18px 12px 30px}.comparison-intro>a{color:#513c29;font-size:25px;text-decoration:none;font-weight:bold}
+  .comparison-intro h1{font-size:30px}.comparison-intro nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .comparison-intro nav a{padding:9px 18px;border:1px solid #d8cbbb;border-radius:30px;color:#513c29;text-decoration:none;background:#fff}
+  .vendor-card{margin:0 0 30px;background:#fff;border:1px solid #ded4c6;border-radius:18px;overflow:hidden;scroll-margin-top:16px}
+  .vendor-title{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #eee6db}.vendor-title h2{font-size:25px;margin:0}.vendor-title span{color:#746453}
+  .vendor-card iframe{display:block;border:0;background:#fff;min-height:1050px}
+  @media(max-width:700px){.comparison{padding:12px 8px}.comparison-intro h1{font-size:25px}.vendor-card iframe{height:1400px}.vendor-title{padding:16px}}
+</style>
+{% schema %}
+{"name":"مقارنة تطبيقات النحت","settings":[]}
+{% endschema %}
