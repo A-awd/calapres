@@ -221,6 +221,10 @@ canary. No provider, funding or architecture decision changed during the documen
 
 - [0043 — Concise Arabic policies and free Saudi shipping](decisions/0043-concise-arabic-policies-free-saudi-shipping.md)
 
+- [0044 — Adopt a least-privilege Calapres operations-health MCP](decisions/0044-adopt-calapres-operations-health-mcp.md)
+  — add one owner-only read tool for sanitized Telegram/Chatwoot health; keep Easy Life MCP unchanged,
+  forbid n8n administration and all send/write authority, and require fresh approval before live deployment.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
