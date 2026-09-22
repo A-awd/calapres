@@ -5,6 +5,23 @@ earlier and must be refreshed before operational action.
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## Live Telegram owner-bridge diagnosis — 2026-09-22
+
+- [Live verified] n8n workflow `Owner Telegram Voice Bridge` (`0EQB4mv5NknrXsHM`) is published and
+  the Telegram trigger receives owner messages.
+- [Live verified] executions `52691` (2026-09-21 23:56:54) and `50456`
+  (2026-09-18 22:10:13) both reached `Ask Owner Agent From Text` and failed with
+  `Your Gateway credits have been depleted. Please top up to continue.`
+- [Live verified] n8n Cloud showed Gateway credits at zero. The failure occurs before the Telegram
+  reply node, so no reply is sent.
+- [Live verified] the workspace briefly showed `In progress` while applying n8n 2.41.0, then returned
+  `Online`. That restart explains temporary availability only; it does not explain the repeated
+  September 18/21 agent failures.
+- [No production mutation] No workflow, credential, model, message, credit balance, webhook, or
+  platform setting was changed. Recovery requires an owner choice between funding Gateway credits
+  or separately approving migration to a dedicated direct OpenAI credential; either path requires
+  a bounded canary before declaring Telegram restored.
+
 ## MCP-first operations health source — 2026-09-22
 
 - [Repository-confirmed] A separate, inactive Calapres operations-health MCP gateway source now
