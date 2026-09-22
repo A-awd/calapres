@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "workflow_name": "Calapres Operations Health MCP Gateway",
+  "source_path": "n8n/workflows/calapres-operations-health-mcp.template.json",
+  "purpose": "Expose one owner-only, read-only MCP tool for a sanitized Calapres operations-health snapshot without granting workflow management, customer messaging, commerce writes, or credential visibility.",
+  "release_state": "source_only_inactive",
+  "required_tools": [
+    "Get_Calapres_Operations_Health"
+  ],
+  "forbidden_capabilities": [
+    "workflow search",
+    "workflow edit",
+    "workflow activation",
+    "credential read",
+    "credential write",
+    "customer message send",
+    "Telegram send",
+    "Chatwoot write",
+    "Shopify write",
+    "advertising write",
+    "raw customer content",
+    "raw phone or email",
+    "token or webhook URL disclosure"
+  ],
+  "fixed_upstream": {
+    "method": "GET",
+    "path": "/webhook/calapres/operations-health",
+    "authentication": "dedicated HTTP header credential",
+    "response_schema": "n8n/schemas/calapres-operations-health-snapshot.schema.json"
+  },
+  "activation_gates": [
+    "Import as a new inactive workflow in the Calapres-owned n8n project.",
+    "Bind a dedicated OAuth credential that grants execute access to this workflow only.",
+    "Bind a separate health-reader header credential; never reuse Telegram, Chatwoot, Shopify, or n8n administrator credentials.",
+    "Deploy the health producer separately and verify it emits only the approved schema.",
+    "Verify exactly one exposed MCP tool named Get_Calapres_Operations_Health.",
+    "Verify success and failure executions store no payload data.",
+    "Run synthetic healthy, stale, degraded, unavailable, and redaction tests.",
+    "Obtain explicit owner approval before production activation or connector registration."
+  ],
+  "non_claims": [
+    "This source commit does not deploy or activate the workflow.",
+    "This source commit does not prove current Telegram, Chatwoot, Shopify, analytics, or advertising health.",
+    "UNKNOWN and monitoring_unavailable are valid outputs and must not be rewritten as disconnected."
+  ]
+}
