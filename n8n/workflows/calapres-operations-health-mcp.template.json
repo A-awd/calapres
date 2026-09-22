@@ -1,0 +1,97 @@
+{
+  "name": "Calapres Operations Health MCP Gateway",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "calapres-operations-health",
+        "authentication": "oauth2",
+        "options": {
+          "requireExecuteAccess": true,
+          "includeUserInOutput": false
+        }
+      },
+      "id": "calapres-health-mcp-trigger",
+      "name": "Calapres Operations Health MCP",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "__GENERATE_ON_IMPORT__",
+      "credentials": {
+        "n8nOAuth2Api": {
+          "id": "__BIND_DEDICATED_OAUTH_CREDENTIAL__",
+          "name": "__BIND_DEDICATED_OAUTH_CREDENTIAL__"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Read the sanitized Calapres operations health snapshot. Returns Telegram owner bridge state, Chatwoot monitoring state, observation timestamps, and bounded failure codes only. It cannot send messages, modify workflows, reveal credentials, or expose customer content.",
+        "method": "GET",
+        "url": "__N8N_BASE_URL__/webhook/calapres/operations-health",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": false,
+        "sendHeaders": false,
+        "sendBody": false,
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "get-calapres-operations-health",
+      "name": "Get_Calapres_Operations_Health",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__BIND_HEALTH_READER_HEADER_CREDENTIAL__",
+          "name": "__BIND_HEALTH_READER_HEADER_CREDENTIAL__"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Get_Calapres_Operations_Health": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calapres Operations Health MCP",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none"
+  },
+  "staticData": null,
+  "tags": [
+    "calapres",
+    "owner-only",
+    "read-only",
+    "health",
+    "mcp"
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-09-22T00:00:00.000Z",
+  "versionId": "__GENERATE_ON_IMPORT__",
+  "active": false
+}
