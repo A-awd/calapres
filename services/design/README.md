@@ -56,3 +56,12 @@ Before enabling generation, test the actual app proxy, durable assets, concurren
 budget exhaustion, reload/recovery, selecting the first image after all batches,
 and an order carrying the exact approved original. Synthetic ledger tests do not
 prove deployment, actual generation, Arabic quality, or completed-order receipt.
+
+## Source draft additions, 2026-09-23
+
+`security.mjs` and `provider.mjs` are unintegrated source drafts, syntax-checked
+only. They have not been deployed or tested against live provider requests.
+Security helpers follow Shopify app-proxy signature documentation; the provider
+uses the documented OpenAI Images generation endpoint with GPT Image 2 low.
+The HTTP service, immutable asset persistence and end-to-end receipt flow remain
+to be implemented. Owner explicitly postponed key setup until implementation ends.

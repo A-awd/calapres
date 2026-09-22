@@ -1,5 +1,37 @@
 # Calapres current state
 
+## Owner-directed Claude continuation — 2026-09-23
+
+Owner explicitly deferred all API-key setup: implement the remaining unpublished
+Shopify personalization first; bind the key and test paid generation last. Owner
+then requested continuation in the existing Claude Calapres research conversation:
+https://claude.ai/chat/f993608e-437c-40c8-bb98-a2692e03004b
+
+Fresh Shopify read reconfirmed exactly two themes: MAIN 166066389248 and
+UNPUBLISHED 166572294400. No theme mutation occurred during this continuation.
+Added source drafts only: services/design/security.mjs (proxy HMAC, exact Arabic
+name validation, signed receipts) and provider.mjs (direct OpenAI image adapter,
+low quality, three separate calls planned, nine layout prompts, no paid retries).
+Both passed syntax checks only. They are NOT integrated, deployed or behaviorally
+tested. Existing ledger/UI tests are from the previous checkpoint. No API request
+or paid image generation occurred. No key is saved in this repository.
+
+Remaining: implement HTTP endpoints and durable original storage, integrate
+ledger/worker/receipts, test invalid signatures/names, concurrency, restart, quotas,
+approval persistence, gallery restoration and upload/cart. Fix initial pending-job
+restoration in the frontend; deploy only changed files to backup. Arrange hosting
+and the dedicated Shopify app/proxy through available authorized access; report
+real access or paid-hosting blockers. Keep generation disabled until credentials,
+validated cost reservation and an explicit budget are configured. Do not claim
+that only the OpenAI key remains before hosting and Shopify proxy actually work.
+
+The browser-controlled OpenAI account created a key named Calapres Shopify Name
+Designs, but local-save confirmation did not approve any write. No plaintext was
+read or retained. The owner sees Codex on MacBook Air while this task runs on Mac
+mini; remote browser state must not be claimed visible on the owner's device. Do
+not repeat key-creation/confirmation flows; owner explicitly postponed this work.
+
+
 ## Latest personalization implementation — 2026-09-23
 
 - Owner now approved upload-or-generated-name services, no login, retained 3/6/9

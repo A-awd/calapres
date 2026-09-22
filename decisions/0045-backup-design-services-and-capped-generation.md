@@ -37,3 +37,12 @@ state observed; synthetic UI test verified 3/6/9 accumulation, first-item select
 approval reset and name reset. Ledger tests verified restart persistence, duplicate
 pending request reuse, cap across new sessions, failed-request reservation and
 zero-budget rejection. No real generated artwork or new completed test order.
+
+## 2026-09-23 continuation amendment
+
+Owner explicitly defers the credential workflow until the remaining implementation
+is prepared, and directs continuation in the existing Claude Calapres conversation.
+This overrides any credential-first workflow for this task. Keep paid generation
+disabled; preserve backup-only, no-price-change and no-publication boundaries.
+Direct OpenAI GPT Image 2 low is the current candidate, pending actual Arabic
+quality/cost validation. A prompt cannot guarantee exact spelling or uniqueness.
