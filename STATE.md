@@ -5,6 +5,20 @@ earlier and must be refreshed before operational action.
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## MCP-first operations health source — 2026-09-22
+
+- [Repository-confirmed] A separate, inactive Calapres operations-health MCP gateway source now
+  exposes exactly one read-only tool: `Get_Calapres_Operations_Health`.
+- [Repository-confirmed] Its closed schema permits sanitized Telegram owner-bridge health,
+  Chatwoot monitoring status, bounded timestamps/counts, and non-secret failure codes only.
+- [Not deployed] No n8n workflow, credential, webhook, connector, Telegram bridge, Chatwoot setting,
+  message, Shopify record, analytics property, or advertising account was changed.
+- [Current-live state unknown] The source does not establish whether Telegram currently works or
+  whether Chatwoot has unanswered conversations. Production import, a separate health producer,
+  dedicated credentials, activation, connector registration, and a live canary remain approval-gated.
+- [Next safe action] Review the source boundary, then obtain explicit owner approval for a bounded
+  inactive import and synthetic canary before any production activation.
+
 ## Chatwoot integration classification — 2026-09-14
 
 - [Documented and previously live-verified] Chatwoot is connected for Calapres; it is not a missing
