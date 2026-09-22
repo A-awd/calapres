@@ -105,3 +105,8 @@ action.
 - Basic constraint: custom apps containing Shopify Functions require Plus; a theme-only required checkbox is not server-side checkout enforcement. Any new backend/storage boundary remains a proposal, not an approved architecture change.
 - No app installation, theme/product/cart change, order, customer/vendor message, payment, or deployment occurred. No new recurring automation was created.
 - Next safe action: obtain the three intended design examples and manufacturing area/file requirements; then scope a bounded unpublished pilot. Do not infer permission to install a paid app or publish a theme from this research request.
+
+
+## Engraving app trials installed — 2026-09-22
+
+Owner explicitly approved all four installations and GitHub-based unpublished theme experiments. Shopify Installed apps now verifies Customily, Cloudlift LPO, Zepto and Teeinblue. Customily trial ends Oct 1, Teeinblue Oct 6, Zepto Oct 7; Cloudlift is installed with setup pending and no subscription trial date verified. No theme was published or edited in this installation step. Live theme is 166066389248 despite its “test” name. App-created global resources require an audit before preview activation; do not equate an unpublished theme with isolated app installation. See [trial evidence and next action](docs/research/2026-09-22-engraving-app-trials.md). Earlier manual-install blocker is resolved. Daily deadline follow-up is recorded as automation-2. Next: identify GitHub binding, prepare an unpublished experiment target, configure and compare the apps, then retain the proven winner and cancel three losers before trial renewal.
