@@ -4,6 +4,18 @@ Updated: 2026-09-13
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## MCP-first operations health checkpoint — 2026-09-22
+
+A source-only, inactive Calapres operations-health MCP gateway now exists. It exposes one fixed
+read-only tool and cannot manage n8n, send messages, modify commerce/ads, read credentials, or
+return customer content. The Easy Life MCP gateway was intentionally left unchanged.
+
+This is not a live repair or proof of current Telegram/Chatwoot state. Resume by reviewing decision
+0044, the gateway template, deployment manifest, schema, tests, and documentation. The next
+production step requires explicit owner approval: import inactive, bind dedicated least-privilege
+credentials, deploy the separate sanitized producer, run synthetic cases, verify exactly one tool,
+and only then decide whether to activate and register the connector.
+
 ## Chatwoot routing checkpoint — 2026-09-14
 
 Chatwoot is an existing, project-owned operational system for Calapres, not an unconnected future
