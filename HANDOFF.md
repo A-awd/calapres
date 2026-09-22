@@ -4,6 +4,18 @@ Updated: 2026-09-13
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.
 
+## Telegram owner-bridge live root cause — 2026-09-22
+
+The bridge is published and Telegram ingress works. Live executions `52691` and `50456` both fail
+at `Ask Owner Agent From Text` because n8n Gateway credits are depleted; the current credit balance
+was displayed as zero. The reply node is therefore never reached. The workspace also completed an
+n8n 2.41.0 restart and returned Online, but the same depleted-credit error predates that restart.
+
+No production setting was changed. Resume only after the owner chooses either Gateway funding or a
+separately approved dedicated direct OpenAI credential. Bind only the chosen model path, run one
+bounded owner text canary and one owner voice canary, and verify the Telegram reply before claiming
+recovery.
+
 ## MCP-first operations health checkpoint — 2026-09-22
 
 A source-only, inactive Calapres operations-health MCP gateway now exists. It exposes one fixed
