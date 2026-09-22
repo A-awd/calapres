@@ -39,6 +39,11 @@ and caps each conversation at 20 requests/day. It stores counters only; no promp
   because Shopify order events and reconciliation are a different ingress domain. It accepts only
   keyed fingerprints and opaque Shopify references, maps them to the exact 12-column live table
   contract, and performs no Data Table or Shopify write.
+- `workflows/calapres-operations-health-mcp.template.json` — a separate owner-only, inactive MCP
+  gateway source with one fixed read-only health tool. It calls only the authenticated sanitized
+  health endpoint, stores no execution payloads, and has no workflow-management, send, commerce,
+  advertising, credential-read, or customer-content capability. See decision 0044 and
+  `docs/calapres-operations-health-mcp.md`; production deployment remains unapproved.
 - `workflows/calapres-owner-review-desk-v1.ts` — a separate private, inactive owner-command
   validator. It binds the exact case, incident revision, owner, private-message fingerprint,
   nonce, and content digests, then emits only a lossless no-write preview. It has no public
