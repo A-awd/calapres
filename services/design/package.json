@@ -1,0 +1,13 @@
+{
+  "name": "calapres-design-pilot",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "cd ../.. && node --test services/design/ledger.test.mjs && node services/design/ui.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "29.1.1"
+  }
+}

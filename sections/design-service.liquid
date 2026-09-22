@@ -1,0 +1,126 @@
+{%- liquid
+  assign base_variant = product.selected_or_first_available_variant
+  assign upload_variant = base_variant
+  for variant in product.variants
+    if variant.title == 'نص الحفر فقط'
+      assign base_variant = variant
+    elsif variant.title == 'تصميم مرفق (+10 ر.س)'
+      assign upload_variant = variant
+    endif
+  endfor
+-%}
+<section class="design-service" dir="rtl" data-design-service data-endpoint="{{ section.settings.endpoint | escape }}">
+  <header><a href="{{ routes.root_url }}">كالابريز</a><span>تجربة التخصيص</span></header>
+  <div class="ds-product">
+    {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 700 }}" width="700" height="700" alt="{{ product.title | escape }}">{% endif %}
+    <div><p>تفاصيل تحمل اسمك</p><h1>{{ product.title }}</h1><p>اختر تصميمك وشاهده بوضوح قبل إضافته إلى السلة.</p></div>
+  </div>
+  {% form 'product', product, enctype: 'multipart/form-data', class: 'ds-form' %}
+    <h2>كيف تحب تخصّص مبخرك؟</h2>
+    <div class="ds-modes">
+      <label><input type="radio" name="properties[طريقة التخصيص]" value="تصميم مرفوع" data-mode="upload" checked><strong>أرفع تصميمي</strong><span>لدي صورة اسم أو شعار جاهز</span></label>
+      <label><input type="radio" name="properties[طريقة التخصيص]" value="تصميم اسم مولد" data-mode="generate"><strong>صمّم اسمي</strong><span>أكتب الاسم وأختار من التصاميم</span></label>
+    </div>
+    <input type="hidden" name="id" value="{{ upload_variant.id }}" data-variant data-upload-variant="{{ upload_variant.id }}" data-generate-variant="{{ base_variant.id }}" data-upload-available="{{ upload_variant.available }}" data-generate-available="{{ base_variant.available }}">
+    <p data-price-upload>سعر الخيار الحالي: {% render 'price-sar', cents: upload_variant.price %}</p>
+    <p data-price-generate hidden>سعر الخيار الحالي: {% render 'price-sar', cents: base_variant.price %}</p>
+    <fieldset data-upload-panel>
+      <legend>صورة التصميم أو الشعار</legend>
+      <label class="ds-upload">اختر صورة PNG أو JPG<input type="file" name="properties[تصميم الحفر]" accept="image/png,image/jpeg" required data-upload-file></label>
+      <small>حتى 5 ميجابايت. تظهر الصورة مستقلة لمراجعتها قبل الاعتماد.</small>
+      <input type="hidden" name="properties[اسم ملف التصميم]" data-file-name>
+    </fieldset>
+    <fieldset data-generate-panel hidden disabled>
+      <legend>الاسم الذي تريد تصميمه</legend>
+      <label>اكتب الاسم بدقة<input type="text" maxlength="40" autocomplete="off" dir="auto" data-name name="properties[نص الحفر]" placeholder="مثال: عبدالرحمن" required></label>
+      <p>تصميم من حروف الاسم ونقاطه فقط، دون تشكيل أو زخارف إضافية.</p>
+      <button type="button" data-generate>اعرض 3 تصاميم</button>
+      <p data-counter>حتى 9 تصاميم. تبقى جميع الخيارات هنا لتعود إليها.</p>
+      <div class="ds-gallery" role="group" aria-label="تصاميم الاسم" data-gallery></div>
+      <input type="hidden" name="properties[معرف التصميم]" data-design-id>
+      <input type="hidden" name="properties[نسخة التصميم]" data-design-version>
+      <input type="hidden" name="properties[تصميم الحفر]" data-design-url>
+      <input type="hidden" name="properties[_design_receipt]" data-receipt>
+    </fieldset>
+    <div class="ds-selected" data-preview hidden><h3>تصميمك المختار</h3><img data-preview-image width="500" height="350" alt="التصميم المختار للاعتماد"><p data-preview-caption></p></div>
+    <label class="ds-approval"><input type="checkbox" name="properties[اعتماد التصميم]" value="راجعت الاسم والتصميم الظاهر ووافقت عليه" required data-approval>راجعت الاسم والتصميم الظاهر، وأوافق على استخدام هذا التصميم في طلبي.</label>
+    <p role="status" aria-live="polite" data-status></p>
+    <button type="submit" class="ds-submit" disabled>اعتمد التصميم وأضف إلى السلة</button>
+    <noscript>يرجى تفعيل JavaScript لمعاينة التصميم واعتماده.</noscript>
+  {% endform %}
+</section>
+{% stylesheet %}
+.design-service{max-width:960px;margin:auto;padding:24px;color:#44271b;font-family:inherit;line-height:1.8}.design-service [hidden]{display:none!important}.design-service header{display:flex;justify-content:space-between;border-bottom:1px solid #44271b33;padding-bottom:16px}.design-service a{color:inherit}.ds-product{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;margin:24px 0}.ds-product>img{width:180px;height:180px;object-fit:contain;border-radius:16px}.design-service h1{font-size:24px}.design-service h2{font-size:22px}.ds-form{background:#fff9;padding:24px;border:1px solid #44271b33;border-radius:18px}.ds-modes{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ds-modes label{display:grid;grid-template-columns:24px 1fr;padding:18px;border:1px solid #44271b55;border-radius:12px;cursor:pointer}.ds-modes label:has(:checked){outline:2px solid #44271b;background:#dfd4c366}.ds-modes span{grid-column:2;font-size:13px}.design-service fieldset{border:0;padding:12px 0;margin:0;min-width:0}.design-service input[type=text],.ds-upload{display:block;padding:14px;width:100%;box-sizing:border-box;border:1px solid #44271b55;border-radius:8px;font:inherit;background:#fff}.ds-upload input{display:block;margin-top:12px;max-width:100%}.design-service button{font:inherit;cursor:pointer;padding:12px 18px;border:1px solid #44271b;border-radius:8px;background:transparent;color:inherit}.design-service button:disabled{opacity:.5;cursor:not-allowed}.ds-submit{width:100%;background:#44271b!important;color:#fff!important}.ds-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.ds-gallery button{padding:8px;background:#fff}.ds-gallery img{width:100%;aspect-ratio:1;object-fit:contain}.ds-gallery [aria-pressed=true]{outline:3px solid #44271b}.ds-selected{text-align:center;background:#fff;border:1px solid #44271b33;border-radius:12px;padding:12px;margin:18px 0}.ds-selected img{max-width:100%;height:250px;object-fit:contain}.ds-approval{display:flex;align-items:flex-start;gap:10px;margin:20px 0}.ds-approval input{margin-top:9px}.design-service :focus-visible{outline:3px solid #44271b;outline-offset:3px}.design-service [data-status]{min-height:24px}.design-service small{display:block}@media(max-width:600px){.design-service{padding:14px}.ds-form{padding:16px}.ds-product{grid-template-columns:110px 1fr;gap:12px}.ds-product>img{width:110px;height:130px}.ds-product h1{font-size:18px}.ds-modes{grid-template-columns:1fr}.ds-gallery{gap:7px}.ds-gallery button{padding:4px;font-size:12px}}
+{% endstylesheet %}
+{% javascript %}
+document.querySelectorAll('[data-design-service]').forEach(root => {
+  if(root.dataset.ready)return;
+  root.dataset.ready='true';
+  const $=s=>root.querySelector(s), form=$('form'), status=$('[data-status]'), approval=$('[data-approval]'), submit=$('[type=submit]');
+  const upload=$('[data-upload-file]'), name=$('[data-name]'), generate=$('[data-generate]'), gallery=$('[data-gallery]');
+  const endpoint=root.dataset.endpoint;
+  let mode='upload', selected=null, uploadUrl='', uploadReady=false, busy=false, version=0, designs=[], remaining=9, token='';
+  try{token=localStorage.getItem('calapres-design-session')||'';}catch{}
+  const message=t=>{status.textContent=t;};
+  const safeUrl=value=>{try{const u=new URL(value,location.origin);return u.protocol==='https:'&&(u.origin===location.origin||u.hostname==='cdn.shopify.com')?u.href:'';}catch{return '';}};
+  function gate(){submit.disabled=busy||!approval.checked||!(mode==='upload'?uploadReady:selected)||$('[data-variant]').dataset[mode+'Available']!=='true';generate.disabled=busy||!endpoint||remaining<3;}
+  function reset(){approval.checked=false;selected=null;$('[data-preview]').hidden=true;['id','version','url'].forEach(k=>$('[data-design-'+k+']').value='');$('[data-receipt]').value='';gallery.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));gate();}
+  function preview(src,caption){$('[data-preview-image]').src=src;$('[data-preview-caption]').textContent=caption;$('[data-preview]').hidden=false;}
+  function render(){
+    gallery.replaceChildren();
+    designs.filter(d=>d.name===name.value.trim()).forEach(d=>{
+      const b=document.createElement('button'),img=document.createElement('img'),label=document.createElement('span');
+      b.type='button';b.setAttribute('aria-pressed',String(selected?.id===d.id));img.src=d.url;img.alt='تصميم الاسم '+d.ordinal;label.textContent='التصميم '+d.ordinal;b.append(img,label);
+      b.addEventListener('click',()=>{reset();selected=d;$('[data-design-id]').value=d.id;$('[data-design-version]').value=d.version;$('[data-design-url]').value=d.url;$('[data-receipt]').value=d.receipt;preview(d.url,d.name+' — التصميم '+d.ordinal);render();gate();});gallery.append(b);
+    });
+    $('[data-counter]').textContent='المتبقي: '+remaining+' تصاميم. جميع خياراتك السابقة محفوظة.';
+    generate.textContent=designs.length?'اعرض 3 تصاميم أخرى':'اعرض 3 تصاميم';gate();
+  }
+  async function api(path,body){
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
+    try{const response=await fetch(endpoint+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...body,token}),signal:controller.signal});const data=await response.json();if(!response.ok)throw Error(data.message||'تعذر إكمال الطلب، حاول لاحقًا.');return data;}finally{clearTimeout(timer);}
+  }
+  function accept(data){
+    if(typeof data.token!=='string'||!Number.isInteger(data.remaining)||!Array.isArray(data.designs))throw Error('تعذر قراءة التصاميم.');
+    token=data.token;remaining=data.remaining;designs=data.designs.filter(d=>d.id&&d.receipt&&safeUrl(d.url)).map(d=>({...d,url:safeUrl(d.url)}));
+    try{localStorage.setItem('calapres-design-session',token);}catch{}
+    if(!name.value&&data.lastName)name.value=data.lastName;
+    render();
+  }
+  root.querySelectorAll('[data-mode]').forEach(r=>r.addEventListener('change',()=>{
+    version++;mode=r.dataset.mode;reset();
+    $('[data-upload-panel]').hidden=mode!=='upload';$('[data-upload-panel]').disabled=mode!=='upload';
+    $('[data-generate-panel]').hidden=mode!=='generate';$('[data-generate-panel]').disabled=mode!=='generate';
+    $('[data-variant]').value=$('[data-variant]').dataset[mode+"Variant"];$('[data-price-upload]').hidden=mode!=='upload';$('[data-price-generate]').hidden=mode!=='generate';
+    if(mode==='upload'&&uploadReady)preview(uploadUrl,$('[data-file-name]').value);
+    message(mode==='generate'&&!endpoint?'توليد الأسماء غير مفعّل بعد في نسخة التجربة. يمكنك تجربة رفع تصميمك الآن.':'');gate();
+  }));
+  upload.addEventListener('change',()=>{
+    version++;const revision=version;reset();uploadReady=false;upload.setCustomValidity('');$('[data-file-name]').value='';if(uploadUrl)URL.revokeObjectURL(uploadUrl);uploadUrl='';
+    const file=upload.files[0];if(!file){gate();return;}
+    if(!['image/png','image/jpeg'].includes(file.type)||!file.size||file.size>5*1024*1024){upload.value='';message('اختر صورة PNG أو JPG سليمة، حتى 5 ميجابايت.');gate();return;}
+    uploadUrl=URL.createObjectURL(file);const image=new Image();image.onload=()=>{if(revision!==version)return;uploadReady=true;$('[data-file-name]').value=file.name;preview(uploadUrl,file.name);message('راجع الصورة ثم اعتمدها.');gate();};image.onerror=()=>{if(revision!==version)return;upload.value='';message('تعذر قراءة الصورة. اختر صورة أخرى.');gate();};image.src=uploadUrl;
+  });
+  name.addEventListener('input',()=>{version++;reset();render();});approval.addEventListener('change',gate);
+  generate.addEventListener('click',async()=>{
+    if(busy||!endpoint||remaining<3||!name.reportValidity())return;
+    busy=true;gate();message('جارٍ تجهيز تصاميمك…');name.disabled=true;
+    try{let data=await api('/generate',{name:name.value.trim()});accept(data);for(let i=0;data.pending&&i<90;i++){await new Promise(resolve=>setTimeout(resolve,2000));data=await api('/session',{});accept(data);}message(data.pending?'التصاميم قيد التجهيز. ستجدها عند العودة للصفحة.':'اختر من جميع التصاميم المعروضة.');}
+    catch(error){message(error.name==='AbortError'?'تعذر تأكيد حالة التوليد. حدّث الصفحة لاستعادة الحالة قبل المحاولة.':error.message);}
+    finally{busy=false;name.disabled=false;gate();}
+  });
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();if(submit.disabled||!form.reportValidity())return;
+    const payload=new FormData(form);busy=true;gate();message('جارٍ حفظ التصميم وإضافة المبخرة…');
+    const controls=[...form.elements],disabled=controls.map(c=>c.disabled);controls.forEach(c=>c.disabled=true);
+    try{const response=await fetch(window.Shopify?.routes?.root?window.Shopify.routes.root+'cart/add.js':'/cart/add.js',{method:'POST',headers:{Accept:'application/json'},body:payload});const data=await response.json();if(!response.ok)throw Error(data.description||'تعذرت الإضافة.');if(!safeUrl(data.properties?.['تصميم الحفر']))throw Error('تعذر تأكيد مرفق التصميم. راجع السلة قبل إعادة الإضافة.');location.href='/cart';}
+    catch(error){message(error instanceof TypeError?'تعذر تأكيد الإضافة. راجع السلة قبل المحاولة مجددًا.':error.message);}
+    finally{controls.forEach((c,i)=>c.disabled=disabled[i]);busy=false;gate();}
+  });
+  gate();
+  if(endpoint){busy=true;gate();api('/session',{}).then(accept).catch(()=>message('تعذرت استعادة التصاميم الآن. يمكنك تجربة رفع صورة.')).finally(()=>{busy=false;gate();});}
+});
+{% endjavascript %}
+{% schema %}
+{"name":"خدمتا تخصيص التصميم","settings":[{"type":"text","id":"endpoint","label":"مسار خدمة التوليد المفعّلة","info":"يُترك فارغًا حتى تجهيز API وسقف الإنفاق. مثال: /apps/calapres-design"}],"presets":[{"name":"خدمتا تخصيص التصميم"}]}
+{% endschema %}

@@ -1,5 +1,23 @@
 # Calapres current state
 
+## Latest personalization implementation — 2026-09-23
+
+- Owner now approved upload-or-generated-name services, no login, retained 3/6/9
+  gallery and global spend cap. Explicitly deferred every price change; do not apply SAR 19.
+- Live backup 166572294400 now has `sections/design-service.liquid` and
+  `templates/product.design-service.json`; main remains 166066389248. No publication
+  or product template/price/variant mutation occurred.
+- Preview: https://calapres.com/products/مبخرة-كالابريز-الفاخرة-الأبيض?view=design-service&preview_theme_id=166572294400
+- Theme/UI checks passed. Generation visibly disabled because endpoint is blank.
+  Native upload UI/submission is implemented; new completed-order receipt is untested.
+- Tested source-only quota ledger lives in `services/design/`; no backend is hosted.
+  Synthetic checks prove accumulated gallery and persistent cap logic, not actual AI output.
+- Blockers: no exact spending cap response, dedicated provider credential or hosting
+  binding. Remaining work includes real provider adapter, app proxy authentication,
+  durable original-image delivery, Arabic/style quality and order receipt verification.
+- Resume with decision 0045; preserve existing current variant prices. Earlier
+  font-only/app-comparison plans are not the accepted customer experience.
+
 Updated: 2026-09-13. Latest live observations below are dated 2026-09-11 or
 earlier and must be refreshed before operational action.
 

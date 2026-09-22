@@ -1,5 +1,19 @@
 # Calapres handoff
 
+## Active task — design services, 2026-09-23
+
+Continue decision 0045 and `services/design/README.md`. The two-path UI is deployed
+only to backup 166572294400 at product view `design-service`; native upload uses
+the existing paid-upload variant. No price changes, publication or default product
+template reassignment. AI is deliberately unavailable in preview until a real
+backend is activated. The global reservation ledger is source-only and tested;
+the provider, app proxy, hosting, image storage and receipts are still unimplemented.
+Owner was asked for a numerical trial budget (20/50 SAR or keep disabled); no answer
+was received during this checkpoint. Do not confuse UI or synthetic tests with a
+live generation or manufacturing-ready design. Next: establish exact cap and
+dedicated provider access, finish/deploy backend, then run a bounded actual Arabic
+generation and exact-selection/order test. Main and prior trial files were preserved.
+
 Updated: 2026-09-13
 
 Canonical repository: `A-awd/calapres`. Approved branch: `main`.

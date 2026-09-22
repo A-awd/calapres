@@ -225,6 +225,11 @@ canary. No provider, funding or architecture decision changed during the documen
   — add one owner-only read tool for sanitized Telegram/Chatwoot health; keep Easy Life MCP unchanged,
   forbid n8n administration and all send/write authority, and require fresh approval before live deployment.
 
+- [0045 — Backup design services and capped generation](decisions/0045-backup-design-services-and-capped-generation.md)
+  — current owner authorizes the no-login, two-path personalization pilot; preserve prices,
+  retain all nine design choices, prepare a global spend cap, and keep paid generation disabled
+  until provider, hosting and the exact cap are configured.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
