@@ -1,0 +1,363 @@
+{
+ "mada": {
+  "pieces": [
+   "مد",
+   "ى"
+  ],
+  "designs": {
+   "1-stack": {
+    "font": "Amiri-Bold.ttf",
+    "shaped_text_codepoints": [
+     "U+0645",
+     "U+062F",
+     "U+0649"
+    ],
+    "check": {
+     "input": "مدى",
+     "letters_in_output_order": "مدى",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "glyph01535",
+       "glyph01714"
+      ],
+      [
+       "uni0649"
+      ]
+     ],
+     "pieces_reading_order": [
+      "مد",
+      "ى"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 0,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "dot_gate_final": {
+     "marks_checked": 0,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     true
+    ]
+   },
+   "2-sweep": {
+    "font": "ArefRuqaa-Bold.ttf",
+    "shaped_text_codepoints": [
+     "U+0645",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+062F",
+     "U+0649"
+    ],
+    "check": {
+     "input": "مدى",
+     "letters_in_output_order": "مدى",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "glyph00137",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "glyph00212"
+      ],
+      [
+       "uni0649"
+      ]
+     ],
+     "pieces_reading_order": [
+      "مــــــد",
+      "ى"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 0,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "dot_gate_final": {
+     "marks_checked": 0,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     true
+    ]
+   },
+   "3-emblem": {
+    "font": "ReemKufi[wght].ttf",
+    "shaped_text_codepoints": [
+     "U+0645",
+     "U+062F",
+     "U+0649"
+    ],
+    "check": {
+     "input": "مدى",
+     "letters_in_output_order": "مدى",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "dal-ar.fina",
+       "meem-ar.init"
+      ],
+      [
+       "alefMaksura-ar.isol"
+      ]
+     ],
+     "pieces_reading_order": [
+      "مد",
+      "ى"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 3,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "dot_gate_final": {
+     "marks_checked": 3,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     true
+    ]
+   }
+  }
+ },
+ "abdulrahman": {
+  "pieces": [
+   "عبد",
+   "ا",
+   "لر",
+   "حمن"
+  ],
+  "designs": {
+   "1-stack": {
+    "font": "Amiri-Bold.ttf",
+    "shaped_text_codepoints": [
+     "U+0639",
+     "U+0628",
+     "U+062F",
+     "U+0020",
+     "U+0627",
+     "U+0644",
+     "U+0631",
+     "U+062D",
+     "U+0645",
+     "U+0646"
+    ],
+    "check": {
+     "input": "عبد الرحمن",
+     "letters_in_output_order": "عبدالرحمن",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "glyph01535",
+       "glyph01509",
+       "glyph01421"
+      ],
+      [
+       "uni0627"
+      ],
+      [
+       "glyph03396",
+       "glyph03379"
+      ],
+      [
+       "glyph01719",
+       "glyph04344",
+       "glyph04326"
+      ]
+     ],
+     "pieces_reading_order": [
+      "عبد",
+      "ا",
+      "لر",
+      "حمن"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 2,
+     "all_marks_owned": false,
+     "failures": [
+      {
+       "ratio": 1.5,
+       "mark_of": "glyph01509",
+       "d_own": 174,
+       "nearest_other": "glyph03379",
+       "d_other": 116,
+       "ok": false,
+       "plain_ratio": 0.97
+      }
+     ]
+    },
+    "dot_gate_final": {
+     "marks_checked": 2,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     false,
+     false,
+     false,
+     true
+    ]
+   },
+   "2-sweep": {
+    "font": "ArefRuqaa-Bold.ttf",
+    "shaped_text_codepoints": [
+     "U+0639",
+     "U+0628",
+     "U+062F",
+     "U+0020",
+     "U+0627",
+     "U+0644",
+     "U+0631",
+     "U+062D",
+     "U+0645",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0640",
+     "U+0646"
+    ],
+    "check": {
+     "input": "عبد الرحمن",
+     "letters_in_output_order": "عبدالرحمن",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "glyph00137",
+       "glyph00124",
+       "glyph00215",
+       "glyph00149"
+      ],
+      [
+       "uni0627"
+      ],
+      [
+       "glyph00138",
+       "glyph00235"
+      ],
+      [
+       "glyph00164",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "uni0640",
+       "glyph00163",
+       "glyph00324"
+      ]
+     ],
+     "pieces_reading_order": [
+      "عبد",
+      "ا",
+      "لر",
+      "حمــــــن"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 1,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "dot_gate_final": {
+     "marks_checked": 1,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     true
+    ]
+   },
+   "3-emblem": {
+    "font": "ReemKufi[wght].ttf",
+    "shaped_text_codepoints": [
+     "U+0639",
+     "U+0628",
+     "U+062F",
+     "U+0020",
+     "U+0627",
+     "U+0644",
+     "U+0631",
+     "U+062D",
+     "U+0645",
+     "U+0646"
+    ],
+    "check": {
+     "input": "عبد الرحمن",
+     "letters_in_output_order": "عبدالرحمن",
+     "same_letters_same_order": true,
+     "notdef_glyphs": 0,
+     "glyph_names_by_piece": [
+      [
+       "dal-ar.fina",
+       "dotbelow-ar",
+       "behDotless-ar.medi",
+       "ain-ar.init"
+      ],
+      [
+       "alef-ar.isol"
+      ],
+      [
+       "reh-ar.fina",
+       "lam-ar.init"
+      ],
+      [
+       "dotabove-ar",
+       "noonghunna-ar.fina",
+       "meem-ar.medi",
+       "hah-ar.init"
+      ]
+     ],
+     "pieces_reading_order": [
+      "عبد",
+      "ا",
+      "لر",
+      "حمن"
+     ],
+     "empty_pieces": 0
+    },
+    "dot_gate_first_attempt": {
+     "marks_checked": 7,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "dot_gate_final": {
+     "marks_checked": 7,
+     "all_marks_owned": true,
+     "failures": []
+    },
+    "attempts": [
+     true
+    ]
+   }
+  }
+ }
+}

@@ -1,5 +1,15 @@
 # Calapres handoff
 
+## Claude evidence continuation and recovery cross-check — 2026-09-23 ~14:50 UTC
+
+Details: [evidence continuation](docs/research/2026-09-23-arabic-lettering-evidence-continuation.md).
+
+- Independent cross-check of recovery `78c8d07`: the research markdown and HTML recovered here from the old chat transcript are byte-identical to `main`; `main` `sections/design-service.liquid` and `templates/product.design-service.json` are MD5-identical to live backup `166572294400` (`3d7bd498…`, `0d8c9749…`). The deployed backend runtime was not compared (no Hostinger read access in this session).
+- Read-only: exactly two themes; MAIN `166066389248` last updated 2026-09-22 17:57Z.
+- Evidence: no app or model has tested proof of exact Arabic artistic lettering. Only Calapres tests: gpt-image-2 prompt-only (rejected) and a zero-cost local exact-letter skeleton (letters kept by construction, but permitted overlaps produced «الزحمن» and «عبل» misreadings; font-like). Automated reading cannot certify calligraphy (DuwatBench best exact match 0.42). Human approval stays mandatory.
+- Proposed, **not approved**: two-stage comparison, Nano Banana Pro then Seedream 5.0 Pro, each in prompt-only and exact-skeleton modes, 12 images per stage, 12 SAR cap.
+- Customily trial ends 2026-10-01 (per 2026-09-22 record); decide before then. No paid request, price, theme, server, subscription or credential change in this session.
+
 ## Recovery completed in isolated worktree — 2026-09-23
 
 The exact Claude source transfer patch and research attachments were downloaded
