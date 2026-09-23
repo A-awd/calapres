@@ -1,5 +1,15 @@
 # Calapres current state
 
+## Style-example pivot in source — 2026-09-23 (Claude, reviewed by Codex)
+
+Details: [style-example pivot brief and handoff](docs/handoffs/2026-09-23-style-examples-pivot.md) and [decision 0047](decisions/0047-style-examples-instead-of-live-generation.md).
+
+- Owner pivot: no on-page generation. Six curated «مثال» style examples; exact typed name; explicit "example only" acknowledgement; Calapres makes the artwork after the order. Upload path, variants and prices unchanged. No new app.
+- Patch B was applied to the backup section/template source, its JSDOM test, decision 0047 and zero-cost Arabic checks. The six example images are still missing; the source change is not yet deployed to theme `166572294400`.
+- The six example images are BLOCKED: font-derived candidates pass the spelling prefilter but look typeset and stacked ones read «لمثا». Placeholders ship; the fulfilment designer should supply six «مثال» examples to the brief's specification.
+- Patch A archives the superseded one-batch/quality-gate backend work; do not apply.
+- Recommended: set `GENERATION_ENABLED=false` on the running service until it is retired or reused.
+
 ## Claude evidence continuation and recovery cross-check — 2026-09-23 ~14:50 UTC
 
 Details: [evidence continuation](docs/research/2026-09-23-arabic-lettering-evidence-continuation.md).

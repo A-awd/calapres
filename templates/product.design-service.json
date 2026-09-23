@@ -12,9 +12,59 @@
   "sections": {
     "main": {
       "type": "design-service",
-      "settings": {
-        "endpoint": "/apps/calapres-design"
-      }
+      "blocks": {
+        "style-1": {
+          "type": "style",
+          "settings": {
+            "style_id": "S1",
+            "title": "متراكب"
+          }
+        },
+        "style-2": {
+          "type": "style",
+          "settings": {
+            "style_id": "S2",
+            "title": "أفقي ممتد"
+          }
+        },
+        "style-3": {
+          "type": "style",
+          "settings": {
+            "style_id": "S3",
+            "title": "دائري"
+          }
+        },
+        "style-4": {
+          "type": "style",
+          "settings": {
+            "style_id": "S4",
+            "title": "أسلوب ٤"
+          }
+        },
+        "style-5": {
+          "type": "style",
+          "settings": {
+            "style_id": "S5",
+            "title": "أسلوب ٥"
+          }
+        },
+        "style-6": {
+          "type": "style",
+          "settings": {
+            "style_id": "S6",
+            "title": "أسلوب ٦"
+          }
+        }
+      },
+      "block_order": [
+        "style-1",
+        "style-2",
+        "style-3",
+        "style-4",
+        "style-5",
+        "style-6"
+      ],
+      "settings": {}
     }
   },
   "order": [

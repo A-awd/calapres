@@ -1,217 +1,136 @@
-// Storefront behaviour of sections/design-service.liquid in JSDOM with a mocked endpoint.
-// Mocked designs are placeholders; nothing here is real generated artwork.
+// Storefront behaviour of sections/design-service.liquid (style-example picker, decision 0047) in JSDOM.
+// Liquid is resolved by a minimal stand-in for the few tags this section uses; Shopify's own theme check
+// must still validate the real Liquid at sync time. Example images are fixtures, not approved assets.
 const { JSDOM, VirtualConsole } = require('jsdom');
 const fs = require('fs'), assert = require('node:assert/strict');
 const source = fs.readFileSync('sections/design-service.liquid', 'utf8');
 const script = source.split('{% javascript %}')[1].split('{% endjavascript %}')[0];
-const template = source.split('{% stylesheet %}')[0].replace(/{% form[^%]*%}/, '<form>').replace('{% endform %}', '</form>')
-  .replace(/{{ (?:upload|base)_variant.available }}/g, 'true').replace(/{{ upload_variant.id }}/g, 'upload-id').replace(/{{ base_variant.id }}/g, 'base-id')
-  .replace(/{%[\s\S]*?%}/g, '').replace(/{{[\s\S]*?}}/g, '');
-const settle = (n = 3) => new Promise((r) => { const step = (k) => (k ? setImmediate(() => step(k - 1)) : r()); step(n); });
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-const design = (i, name) => ({ id: 'd' + i, name, url: 'https://example.test/apps/calapres-design/a/' + String(i).padStart(64, '0') + '.png', ordinal: i + 1, receipt: 'r1.' + i, version: 'p1-L' + (i % 9) });
+const ACK = 'أفهم أن الصورة مثال على الأسلوب بكلمة «مثال» وليست معاينة لاسمي، وأن كالابريز ستصمم اسمي كما كتبته بالأسلوب المختار بعد الطلب';
 
-const approvalFor = (id) => ({ ok: true, status: 200, json: async () => ({ token: 's1.tok', id, approval: 'a1.1790000000.' + 'ab'.repeat(32), approvedAt: 1790000000 }) });
-function page({ endpoint = '/apps/calapres-design', sessionReplies = [], onGenerate, onCart, storage, choice, onApprove = async (b) => approvalFor(b.id), sessionGate = null } = {}) {
-  const html = template.replace(/data-endpoint="[^"]*"/, `data-endpoint="${endpoint}"`);
-  const dom = new JSDOM(html, { url: 'https://example.test/products/x', runScripts: 'outside-only', virtualConsole: new VirtualConsole() });
+// Mirrors the Liquid inside styles:start/styles:end for a given block list.
+function cards(blocks) {
+  return blocks.map((b, i) => (b.image && b.id
+    ? `<label class="ds-style"><input type="radio" name="ds-style" value="${b.id}" data-style data-style-title="${b.title}" data-style-image="${b.image}"><img src="${b.image}" alt="مثال على أسلوب ${b.title} بكلمة «مثال»، وليس اسمك"><span class="ds-style-tag">مثال على الأسلوب</span><strong>${b.title}</strong></label>`
+    : `<div class="ds-style ds-style--empty" data-style-placeholder><span>مثال الأسلوب ${i + 1}</span><small>قيد التجهيز</small></div>`)).join('');
+}
+function render(blocks) {
+  const ready = blocks.filter((b) => b.image && b.id).length;
+  let html = source.split('{% stylesheet %}')[0];
+  html = html.replace(/{%- comment -%} styles:start {%- endcomment -%}[\s\S]*{%- comment -%} styles:end {%- endcomment -%}/, cards(blocks));
+  html = html.replace(/{% if ready_styles == 0 %} disabled{% endif %}/g, ready ? '' : ' disabled')
+    .replace(/{% if ready_styles == 0 %}([^{]*){% else %}([^{]*){% endif %}/g, (_, a, b) => (ready ? b : a));
+  return html.replace(/{% form[^%]*%}/, '<form>').replace('{% endform %}', '</form>')
+    .replace(/{{ (?:upload|base)_variant.available }}/g, 'true').replace(/{{ upload_variant.id }}/g, 'upload-id').replace(/{{ base_variant.id }}/g, 'base-id')
+    .replace(/{%-?[\s\S]*?-?%}/g, '').replace(/{{[\s\S]*?}}/g, '');
+}
+const settle = (n = 4) => new Promise((r) => { const step = (k) => (k ? setImmediate(() => step(k - 1)) : r()); step(n); });
+const IMG = (n) => `https://cdn.shopify.com/s/files/1/0000/style-${n}.png?v=1&width=1200`;
+const SIX = [1, 2, 3, 4, 5, 6].map((n) => ({ id: 'S' + n, title: 'أسلوب ' + n, image: IMG(n) }));
+
+function page(blocks = SIX, { onCart } = {}) {
+  const dom = new JSDOM(render(blocks), { url: 'https://calapres.com/products/x?view=design-service', runScripts: 'outside-only', virtualConsole: new VirtualConsole() });
   const w = dom.window, d = w.document, calls = [];
-  if (storage) w.localStorage.setItem('calapres-design-session', storage);
-  if (choice) w.localStorage.setItem('calapres-design-choice', choice);
-  w.AbortController = AbortController;
-  w.setTimeout = (fn, ms) => setTimeout(fn, Math.min(ms, 5)); w.clearTimeout = clearTimeout;
-  w.fetch = async (url, options) => {
-    calls.push({ url, options });
-    const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
-    if (url.endsWith('/session')) { if (sessionGate) { const g = sessionGate; sessionGate = null; await g; } return json(200, sessionReplies.length > 1 ? sessionReplies.shift() : sessionReplies[0]); }
-    if (url.endsWith('/generate')) return onGenerate(JSON.parse(options.body));
-    if (url.endsWith('/approve')) return onApprove(JSON.parse(options.body));
-    if (url.endsWith('cart/add.js')) return onCart(options.body);
-    throw new Error('unexpected ' + url);
-  };
+  w.fetch = async (url, options) => { calls.push({ url, options }); if (String(url).endsWith('cart/add.js')) return onCart(options.body); throw new Error('unexpected network call ' + url); };
   w.eval(script);
   return { w, d, calls, $: (s) => d.querySelector(s), $$: (s) => [...d.querySelectorAll(s)] };
 }
-const choose = (p, mode) => { const r = p.$(`[data-mode=${mode}]`); r.checked = true; r.dispatchEvent(new p.w.Event('change')); };
-const type = (p, v) => { p.$('[data-name]').value = v; p.$('[data-name]').dispatchEvent(new p.w.Event('input')); };
-const approve = async (p) => { const a = p.$('[data-approval]'); a.checked = true; a.dispatchEvent(new p.w.Event('change')); await settle(4); };
+const fire = (p, el, type) => el.dispatchEvent(new p.w.Event(type));
+const mode = (p, m) => { const r = p.$(`[data-mode=${m}]`); r.checked = true; fire(p, r, 'change'); };
+const type = (p, v) => { p.$('[data-name]').value = v; fire(p, p.$('[data-name]'), 'input'); };
+const pick = (p, i) => { const r = p.$$('[data-style]')[i]; r.checked = true; fire(p, r, 'change'); };
+const ack = (p) => { const a = p.$('[data-style-ack]'); a.checked = true; fire(p, a, 'change'); };
+const cartEcho = (body) => ({ ok: true, status: 200, json: async () => ({ properties: Object.fromEntries([...body.entries()].filter(([k]) => k.startsWith('properties[')).map(([k, v]) => [k.slice(11, -1), v])) }) });
 
 (async () => {
-  // 1. Accumulated 3/6/9 gallery, first choice after the ninth, approval resets, exact cart payload.
+  // 0. No generation, credits, counters, reset times or generate button anywhere in the section.
   {
-    const designs = []; let gens = 0, cartBody;
-    const reply = () => ({ token: 's1.tok', remaining: 9 - gens * 3, pending: false, lastName: 'عبدالرحمن', enabled: true, designs: [...designs] });
-    const p = page({ sessionReplies: [{ token: 's1.tok', remaining: 9, pending: false, lastName: '', enabled: true, designs: [] }],
-      onGenerate: async (b) => { assert.equal(b.token, 's1.tok'); gens++; for (let n = 0; n < 3; n++) designs.push(design(designs.length, b.name)); return { ok: true, status: 202, json: async () => reply() }; },
-      onCart: async (body) => { cartBody = body; return { ok: true, status: 200, json: async () => ({ properties: { 'تصميم الحفر': body.get('properties[تصميم الحفر]'), 'معرف التصميم': body.get('properties[معرف التصميم]') } }) }; } });
-    await settle(6);
-    choose(p, 'generate');
-    assert.equal(p.$('[data-variant]').value, 'base-id');
-    type(p, 'عبد الرحمن ٢');
-    p.$('[data-generate]').click(); await settle();
-    assert.equal(gens, 0, 'invalid name never reaches the endpoint'); assert.match(p.$('[data-status]').textContent, /بالحروف العربية فقط/);
-    type(p, '  عبدالرحمن ');
-    for (let i = 1; i <= 3; i++) { p.$('[data-generate]').click(); await settle(8); assert.equal(p.$$('[data-gallery] button').length, i * 3); }
-    assert.equal(p.$('[data-generate]').disabled, true, 'cap reached disables generation');
-    assert.deepEqual(p.$$('.ds-batch > p').map((x) => x.textContent), ['الدفعة 1', 'الدفعة 2', 'الدفعة 3'], 'nine designs grouped into three batches');
-    p.$$('[data-gallery] button')[0].click();
-    assert.equal(p.$('[data-design-id]').value, 'd0'); assert.equal(p.$('[data-name]').value, 'عبدالرحمن');
-    assert.equal(p.$('[data-preview-link]').hidden, false, 'enlarged standalone preview with full-size link');
-    await approve(p); assert.equal(p.$('[type=submit]').disabled, false);
-    assert.deepEqual(JSON.parse(p.calls.filter((c) => c.url.endsWith('/approve')).at(-1).options.body), { id: 'd0', token: 's1.tok' });
-    p.$$('[data-gallery] button')[8].click();
-    assert.equal(p.$('[data-approval]').checked, false, 'changing design clears approval'); assert.equal(p.$('[type=submit]').disabled, true);
-    assert.equal(p.$('[data-receipt]').value, '', 'approval receipt of the previous design is discarded');
-    p.$$('[data-gallery] button')[0].click(); await approve(p);
-    p.$('form').dispatchEvent(new p.w.Event('submit', { cancelable: true })); await settle(6);
+    const markup = source.split('{% schema %}')[0];
+    for (const bad of ['data-generate', '/generate', '/session', 'اعرض 3 تصاميم', 'المتبقي', '24 ساعة', 'حتى 9', 'الدفعة', 'رصيد', 'data-endpoint']) assert.ok(!markup.includes(bad), `section still contains «${bad}»`);
+    const schema = JSON.parse(source.split('{% schema %}')[1].split('{% endschema %}')[0]);
+    assert.equal(schema.max_blocks, 6); assert.deepEqual(schema.blocks.map((b) => b.type), ['style']);
+    const tpl = JSON.parse(fs.readFileSync('templates/product.design-service.json', 'utf8').replace(/^\/\*[\s\S]*?\*\//, ''));
+    const main = tpl.sections.main;
+    assert.deepEqual(main.block_order.map((k) => main.blocks[k].settings.style_id), ['S1', 'S2', 'S3', 'S4', 'S5', 'S6']);
+    assert.ok(main.block_order.every((k) => !main.blocks[k].settings.image), 'no unverified example image is shipped');
+    assert.deepEqual(main.settings, {}, 'no generation endpoint setting remains');
+  }
+  // 1. Happy path: exact typed name, one of six examples, explicit acknowledgement, exact cart properties.
+  {
+    let cartBody;
+    const p = page(SIX, { onCart: async (b) => { cartBody = b; return cartEcho(b); } });
+    await settle();
+    assert.equal(p.$('[data-mode=style]').disabled, false);
+    assert.equal(p.$$('[data-style]').length, 6); assert.equal(p.$$('[data-style-placeholder]').length, 0);
+    assert.ok(p.$$('.ds-style-tag').every((t) => t.textContent === 'مثال على الأسلوب'), 'every card is labelled as an example');
+    assert.match(p.$('.ds-note').textContent, /بكلمة «مثال» فقط، وليست معاينة لاسمك/);
+    mode(p, 'style');
+    assert.equal(p.$('[data-variant]').value, 'base-id', 'existing text-engraving variant and price; nothing repriced');
+    assert.equal(p.$('[data-price-style]').hidden, false); assert.equal(p.$('[data-price-upload]').hidden, true);
+    assert.equal(p.$('[type=submit]').disabled, true);
+    type(p, 'عبد  الرحمن ');
+    assert.equal(p.$('[data-name-echo]').hidden, false); assert.equal(p.$('[data-name-echo-text]').textContent, 'عبد الرحمن', 'the name is echoed as plain text, not as art');
+    pick(p, 2);
+    assert.equal(p.$('[data-style-id]').value, 'S3 — أسلوب 3'); assert.equal(p.$('[data-style-image-url]').value, IMG(3));
+    assert.equal(p.$('[type=submit]').disabled, true, 'acknowledgement required');
+    ack(p); assert.equal(p.$('[type=submit]').disabled, false);
+    pick(p, 4); assert.equal(p.$('[data-style-ack]').checked, false, 'changing the style asks for the acknowledgement again');
+    ack(p); type(p, 'عبد الرحمن'); assert.equal(p.$('[data-style-ack]').checked, false, 'changing the name asks again');
+    ack(p);
+    p.$('form').dispatchEvent(new p.w.Event('submit', { cancelable: true })); await settle(8);
     const props = Object.fromEntries([...cartBody.entries()].map(([k, v]) => [k, typeof v === 'string' ? v : '[file]']));
-    assert.deepEqual(props, { 'properties[طريقة التخصيص]': 'تصميم اسم مولد', id: 'base-id', 'properties[نص الحفر]': 'عبدالرحمن', 'properties[معرف التصميم]': 'd0',
-      'properties[نسخة التصميم]': 'p1-L0', 'properties[تصميم الحفر]': design(0).url, 'properties[_design_receipt]': 'a1.1790000000.' + 'ab'.repeat(32), 'properties[اعتماد التصميم]': 'راجعت الاسم والتصميم الظاهر ووافقت عليه' });
-    type(p, 'سارة');
-    assert.equal(p.$('[data-design-id]').value, ''); assert.equal(p.$$('[data-gallery] button').length, 0, 'gallery follows the typed name');
-    type(p, 'عبدالرحمن'); assert.equal(p.$$('[data-gallery] button').length, 9, 'earlier designs return with the same name');
-    choose(p, 'upload'); assert.equal(p.$('[data-approval]').checked, false); assert.equal(p.$('[data-variant]').value, 'upload-id');
+    assert.deepEqual(props, { 'properties[طريقة التخصيص]': 'اسم بأسلوب مختار', id: 'base-id', 'properties[نص الحفر]': 'عبد الرحمن',
+      'properties[أسلوب التصميم]': 'S5 — أسلوب 5', 'properties[_مثال الأسلوب]': IMG(5), 'properties[إقرار أسلوب التصميم]': ACK });
+    assert.equal(p.calls.length, 1, 'the only network call is Shopify cart/add.js');
+    assert.doesNotMatch(p.$('[data-status]').textContent, /تعذر/, 'the confirmed cart reply is accepted (JSDOM does not navigate to /cart)');
     p.w.close();
   }
-  // 2. Reload while a batch is pending: gallery restores and polling continues without a click.
+  // 2. Spelling is never rewritten: hamza, alif maqsura and taa marbuta are kept; marks, digits and Latin are refused.
   {
-    const p = page({ storage: 's1.saved', sessionReplies: [
-      { token: 's1.saved', remaining: 3, pending: true, lastName: 'نورة', enabled: true, designs: [0, 1, 2].map((i) => design(i, 'نورة')) },
-      { token: 's1.saved', remaining: 3, pending: true, lastName: 'نورة', enabled: true, designs: [0, 1, 2].map((i) => design(i, 'نورة')) },
-      { token: 's1.saved', remaining: 3, pending: false, lastName: 'نورة', enabled: true, designs: [0, 1, 2, 3, 4, 5].map((i) => design(i, 'نورة')) }] });
-    await wait(40); await settle(10);
-    choose(p, 'generate');
-    const sessionCalls = p.calls.filter((c) => c.url.endsWith('/session'));
-    assert.ok(sessionCalls.length >= 3, 'pending batch is polled after reload');
-    assert.equal(JSON.parse(sessionCalls[0].options.body).token, 's1.saved');
-    assert.equal(p.$('[data-name]').value, 'نورة'); assert.equal(p.$$('[data-gallery] button').length, 6);
-    assert.equal(p.$('[data-generate]').disabled, false);
+    const p = page(); await settle(); mode(p, 'style'); pick(p, 0);
+    for (const n of ['مدى', 'آلاء', 'رؤى', 'نورة', 'إيمان', 'عبدالإله']) { type(p, n); ack(p); assert.equal(p.$('[type=submit]').disabled, false, n); assert.equal(p.$('[data-name-echo-text]').textContent, n); }
+    for (const n of ['مُحَمَّد', 'محــمد', 'Noura', 'نورة 2', 'نورة!', 'ع'.repeat(31)]) {
+      type(p, n); ack(p);
+      assert.equal(p.$('[type=submit]').disabled, true, n); assert.equal(p.$('[data-style-ack]').checked, false, n);
+      assert.equal(p.$('[data-name-echo]').hidden, true, n);
+    }
     p.w.close();
   }
-  // 3. Server-reported disabled generation and blank endpoint keep the button off.
+  // 3. Missing example images: placeholders are shown and cannot be chosen; with none ready the style path is off.
   {
-    const p = page({ sessionReplies: [{ token: 's1.x', remaining: 9, pending: false, lastName: '', enabled: false, designs: [] }] });
-    await settle(6); choose(p, 'generate'); type(p, 'نورة');
-    assert.equal(p.$('[data-generate]').disabled, true);
-    const q = page({ endpoint: '' }); await settle(); choose(q, 'generate'); type(q, 'نورة');
-    assert.equal(q.$('[data-generate]').disabled, true); assert.equal(q.calls.length, 0, 'blank endpoint makes no network calls');
-    assert.match(q.$('[data-status]').textContent, /غير متاح/);
-    p.w.close(); q.w.close();
+    const partial = SIX.map((b, i) => (i < 2 ? b : { ...b, image: '' }));
+    const p = page(partial); await settle();
+    assert.equal(p.$$('[data-style]').length, 2); assert.equal(p.$$('[data-style-placeholder]').length, 4);
+    assert.ok(p.$$('[data-style-placeholder]').every((x) => /قيد التجهيز/.test(x.textContent)));
+    const none = page(SIX.map((b) => ({ ...b, image: '' }))); await settle();
+    assert.equal(none.$('[data-mode=style]').disabled, true); assert.match(none.$('[data-style-option]').textContent, /قيد التجهيز/);
+    mode(none, 'style'); assert.equal(none.$('[data-mode=upload]').checked, true, 'a disabled style path cannot be entered');
+    assert.equal(none.$('[type=submit]').disabled, true);
+    p.w.close(); none.w.close();
   }
-  // 4. Approval is server-confirmed: a failed or late (stale) approval never enables the cart.
+  // 4. An example whose image URL is not a Shopify/store https URL cannot be selected.
   {
-    let release; const gate = new Promise((r) => { release = r; });
-    const all = [0, 1, 2].map((i) => design(i, 'لمى'));
-    const p = page({ sessionReplies: [{ token: 's1.tok', remaining: 6, pending: false, lastName: 'لمى', enabled: true, designs: all }],
-      onApprove: async (b) => { if (b.id === 'd0') { await gate; return approvalFor('d0'); } return { ok: false, status: 503, json: async () => ({ message: 'تعذر الاعتماد' }) }; } });
-    await settle(6); choose(p, 'generate');
-    p.$$('[data-gallery] button')[0].click();
-    const a = p.$('[data-approval]'); a.checked = true; a.dispatchEvent(new p.w.Event('change')); await settle(2);
-    assert.equal(p.$('[type=submit]').disabled, true, 'no cart while approval is in flight');
-    p.$$('[data-gallery] button')[1].click();           // customer switches design before the reply
-    release(); await settle(6);
-    assert.equal(p.$('[data-receipt]').value, '', 'late approval for the old design is ignored');
-    assert.equal(p.$('[data-design-id]').value, 'd1'); assert.equal(p.$('[type=submit]').disabled, true);
-    await approve(p);                                    // d1 approval fails on the server
-    assert.equal(p.$('[data-approval]').checked, false); assert.equal(p.$('[type=submit]').disabled, true);
-    assert.match(p.$('[data-status]').textContent, /تعذر الاعتماد/);
+    const bad = [{ id: 'S1', title: 'x', image: 'http://evil.test/a.png' }, ...SIX.slice(1)];
+    const p = page(bad); await settle(); mode(p, 'style'); type(p, 'مدى'); pick(p, 0); ack(p);
+    assert.equal(p.$('[data-style-id]').value, ''); assert.equal(p.$('[type=submit]').disabled, true);
     p.w.close();
   }
-  // 5. Reload restores the saved choice (not the approval) and old designs stay selectable at zero quota.
+  // 5. Upload path unchanged: its own acknowledgement and variant; the style fields are not submitted.
   {
-    const all = [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => design(i, 'آلاء'));
-    const p = page({ storage: 's1.saved', choice: 'd4', sessionReplies: [{ token: 's1.saved', remaining: 0, pending: false, lastName: 'آلاء', enabled: true, designs: all }] });
-    await settle(8);
-    assert.equal(p.$('[data-mode=generate]').checked, true, 'returns to the name path');
-    assert.equal(p.$('[data-design-id]').value, 'd4'); assert.equal(p.$('[data-approval]').checked, false, 'approval is never restored');
-    assert.equal(p.$('[type=submit]').disabled, true); assert.equal(p.$('[data-generate]').disabled, true, 'no new batches at zero quota');
-    p.$$('[data-gallery] button')[0].click(); await approve(p);
-    assert.equal(p.$('[data-design-id]').value, 'd0'); assert.equal(p.$('[type=submit]').disabled, false, 'first design still selectable and approvable at zero quota');
+    const p = page(); await settle();
+    assert.equal(p.$('[data-mode=upload]').checked, true); assert.equal(p.$('[data-variant]').value, 'upload-id');
+    assert.equal(p.$('[data-style-panel]').disabled, true, 'style inputs are excluded from an upload order');
+    assert.equal(p.$('[data-upload-ack]').name, 'properties[اعتماد التصميم]');
+    mode(p, 'style'); assert.equal(p.$('[data-upload-panel]').disabled, true); mode(p, 'upload');
+    assert.equal(p.$('[type=submit]').textContent, 'اعتمد التصميم وأضف إلى السلة');
     p.w.close();
   }
-  // 6. A batch that ends with no design (released/failed on the server) is reported as a failure, never as a choice.
+  // 6. A cart reply that does not carry the exact name, style, example and acknowledgement is reported, not trusted.
   {
-    const EMPTY = 'تعذر إنشاء التصاميم. لم يصلنا أي تصميم؛ حاول لاحقاً أو ارفع تصميمك.';
-    let gens = 0;
-    const p = page({ sessionReplies: [
-      { token: 's1.e', remaining: 9, pending: false, lastName: '', enabled: true, designs: [] },
-      { token: 's1.e', remaining: 6, pending: true, lastName: 'نورة', enabled: true, designs: [] },
-      { token: 's1.e', remaining: 9, pending: false, lastName: 'نورة', enabled: true, designs: [] }],
-      onGenerate: async () => { gens++; return { ok: true, status: 202, json: async () => ({ token: 's1.e', remaining: 6, pending: true, lastName: 'نورة', enabled: true, designs: [] }) }; } });
-    await settle(6); choose(p, 'generate');
-    assert.equal(p.$('[data-status]').textContent, 'اكتب الاسم ثم اضغط «اعرض 3 تصاميم».', 'empty gallery guides the customer to enter a name');
-    assert.doesNotMatch(p.$('[data-counter]').textContent, /خياراتك السابقة|اختر/, 'no invitation to choose from an empty gallery');
-    type(p, 'نورة'); p.$('[data-generate]').click(); await wait(60); await settle(10);
-    assert.equal(gens, 1);
-    assert.equal(p.$('[data-status]').textContent, EMPTY, 'released batch shows the accurate failure');
-    assert.doesNotMatch(p.$('[data-status]').textContent + p.$('[data-counter]').textContent, /اختر من جميع التصاميم المعروضة/);
-    assert.equal(p.$$('[data-gallery] button').length, 0);
-    assert.equal(p.$('[data-generate]').disabled, false, 'progress stopped; the customer can retry or switch to upload');
-    assert.equal(p.$('[data-name]').disabled, false); assert.equal(p.$('[data-name]').value, 'نورة');
-    const polls = p.calls.filter((c) => c.url.endsWith('/session')).length; await wait(40); await settle(6);
-    assert.equal(p.calls.filter((c) => c.url.endsWith('/session')).length, polls, 'polling stopped');
+    const p = page(SIX, { onCart: async () => ({ ok: true, status: 200, json: async () => ({ properties: { 'نص الحفر': 'عبد الرحمن', 'أسلوب التصميم': 'S1 — أسلوب 1' } }) }) });
+    await settle(); mode(p, 'style'); type(p, 'عبد الرحمن'); pick(p, 0); ack(p);
+    p.$('form').dispatchEvent(new p.w.Event('submit', { cancelable: true })); await settle(8);
+    assert.match(p.$('[data-status]').textContent, /تعذر تأكيد تفاصيل التخصيص/);
     p.w.close();
   }
-  // 7. An empty batch keeps every earlier design and the current selection.
-  {
-    const old = [0, 1, 2].map((i) => design(i, 'لمى'));
-    const p = page({ storage: 's1.o', choice: 'd1', sessionReplies: [
-      { token: 's1.o', remaining: 6, pending: false, lastName: 'لمى', enabled: true, designs: old },
-      { token: 's1.o', remaining: 6, pending: false, lastName: 'لمى', enabled: true, designs: old }],
-      onGenerate: async () => ({ ok: true, status: 202, json: async () => ({ token: 's1.o', remaining: 3, pending: true, lastName: 'لمى', enabled: true, designs: old }) }) });
-    await settle(8);
-    assert.equal(p.$('[data-design-id]').value, 'd1', 'saved choice restored');
-    p.$('[data-generate]').click(); await wait(60); await settle(10);
-    assert.equal(p.$('[data-status]').textContent, 'تعذر إنشاء التصاميم. لم يصلنا أي تصميم؛ حاول لاحقاً أو ارفع تصميمك.');
-    assert.equal(p.$$('[data-gallery] button').length, 3, 'old designs kept');
-    assert.equal(p.$('[data-design-id]').value, 'd1', 'selection kept'); assert.equal(p.$('[data-preview]').hidden, false);
-    p.w.close();
-  }
-  // 8. A late session reply never overwrites what the customer typed or cleared, nor selects a saved design.
-  {
-    let release; const g = new Promise((r) => { release = r; });
-    const p = page({ storage: 's1.l', choice: 'd0', sessionGate: g, sessionReplies: [{ token: 's1.l', remaining: 6, pending: false, lastName: 'نورة', enabled: true, designs: [design(0, 'نورة')] }] });
-    choose(p, 'generate'); type(p, 'سارة');
-    release(); await settle(8);
-    assert.equal(p.$('[data-name]').value, 'سارة', 'typed name kept'); assert.equal(p.$('[data-design-id]').value, '', 'no late auto-selection');
-    const q = page({ storage: 's1.l', sessionGate: new Promise((r) => setTimeout(r, 10)), sessionReplies: [{ token: 's1.l', remaining: 6, pending: false, lastName: 'نورة', enabled: true, designs: [] }] });
-    choose(q, 'generate'); type(q, 'سارة'); type(q, '');
-    await wait(40); await settle(8);
-    assert.equal(q.$('[data-name]').value, '', 'a cleared name stays cleared');
-    p.w.close(); q.w.close();
-  }
-  // 9. A new name typed after the old selection was restored survives the whole batch; old designs stay reachable.
-  {
-    const old = [0, 1, 2].map((i) => design(i, 'عبدالرحمن')), neu = [3, 4, 5].map((i) => design(i, 'مدى'));
-    const p = page({ storage: 's1.r', choice: 'd1', sessionReplies: [
-      { token: 's1.r', remaining: 6, pending: false, lastName: 'عبدالرحمن', enabled: true, designs: old },
-      { token: 's1.r', remaining: 3, pending: true, lastName: 'مدى', enabled: true, designs: old },
-      { token: 's1.r', remaining: 3, pending: false, lastName: 'مدى', enabled: true, designs: [...old, ...neu] }],
-      onGenerate: async () => ({ ok: true, status: 202, json: async () => ({ token: 's1.r', remaining: 3, pending: true, lastName: 'مدى', enabled: true, designs: old }) }) });
-    await settle(8);
-    assert.equal(p.$('[data-design-id]').value, 'd1', 'initial load restores the saved choice');
-    type(p, 'مدى');
-    assert.equal(p.w.localStorage.getItem('calapres-design-choice'), null, 'editing the name drops the saved choice');
-    p.$('[data-generate]').click(); await wait(80); await settle(10);
-    assert.equal(p.$('[data-name]').value, 'مدى', 'the requested name is kept at completion');
-    assert.deepEqual(p.$$('[data-gallery] img').map((i) => i.src), neu.map((d) => d.url), 'the new designs are shown');
-    assert.equal(p.$('[data-design-id]').value, '', 'no old selection is resurrected');
-    type(p, 'عبدالرحمن'); assert.equal(p.$$('[data-gallery] button').length, 3, 'old designs remain accessible');
-    p.w.close();
-  }
-  // 10. Reload while a batch for a new name is pending: that name and its designs win over an older saved choice.
-  {
-    const old = [0, 1, 2].map((i) => design(i, 'عبدالرحمن')), neu = [3, 4, 5].map((i) => design(i, 'مدى'));
-    const p = page({ storage: 's1.r', choice: 'd1', sessionReplies: [
-      { token: 's1.r', remaining: 3, pending: true, lastName: 'مدى', enabled: true, designs: old },
-      { token: 's1.r', remaining: 3, pending: false, lastName: 'مدى', enabled: true, designs: [...old, ...neu] }] });
-    await wait(80); await settle(12);
-    assert.equal(p.$('[data-mode=generate]').checked, true);
-    assert.equal(p.$('[data-name]').value, 'مدى');
-    assert.deepEqual(p.$$('[data-gallery] img').map((i) => i.src), neu.map((d) => d.url));
-    assert.equal(p.$('[data-design-id]').value, '', 'older selection for another name is not restored');
-    type(p, 'عبدالرحمن'); assert.equal(p.$$('[data-gallery] button').length, 3);
-    p.w.close();
-  }
-  console.log('PASS: 3/6/9 accumulation in batches, first choice after ninth, server-confirmed approval (stale/failed replies ignored), approval resets, exact cart properties, name filter, invalid-name block, pending restore and choice restore after reload, zero-quota selection, disabled states, empty-batch failure keeps old designs and selection, late restore never overwrites typed input, requested name survives completion and reload-while-pending, saved choice dropped on edit');
+  console.log('PASS: no generation/credits/counters/generate button, six labelled examples, plain-text name echo, exact spelling kept (hamza, ى, ة), invalid names refused, acknowledgement required and reset on change, exact cart properties with style id and example URL, existing variants and prices, placeholders unselectable, style path off with no ready examples, unsafe example URL refused, upload path unchanged, unconfirmed cart reply reported');
 })().catch((e) => { console.error(e); process.exitCode = 1; });

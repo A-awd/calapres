@@ -237,6 +237,11 @@ canary. No provider, funding or architecture decision changed during the documen
   deduplicated order-line verification before manufacturing; generation stays off until app,
   host, key, prices and budget are configured.
 
+- [0047 — Style examples instead of live name generation](decisions/0047-style-examples-instead-of-live-generation.md)
+  — six curated «مثال» style examples, exact typed name, explicit "example only" acknowledgement,
+  artwork made by Calapres after the order; no on-page generation, credits or counters; backup
+  theme only, prices and upload path unchanged; supersedes the storefront parts of 0045 and 0046.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

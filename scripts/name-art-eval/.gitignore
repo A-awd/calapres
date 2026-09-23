@@ -1,0 +1,5 @@
+fonts/
+out/
+results/
+__pycache__/
+selftest-result.json

@@ -9,193 +9,155 @@
     endif
   endfor
 -%}
-<section class="design-service" dir="rtl" data-design-service data-endpoint="{{ section.settings.endpoint | escape }}">
+<section class="design-service" dir="rtl" data-design-service>
   <header><a href="{{ routes.root_url }}">كالابريز</a><span>تجربة التخصيص</span></header>
   <div class="ds-product">
     {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 700 }}" width="700" height="700" alt="{{ product.title | escape }}">{% endif %}
-    <div><p>تفاصيل تحمل اسمك</p><h1>{{ product.title }}</h1><p>اختر تصميمك وشاهده بوضوح قبل إضافته إلى السلة.</p></div>
+    <div><p>تفاصيل تحمل اسمك</p><h1>{{ product.title }}</h1><p>ارفع تصميمك الجاهز، أو اكتب اسمك واختر أسلوب الخط ليصمّمه فريق كالابريز بعد الطلب.</p></div>
   </div>
   {% form 'product', product, enctype: 'multipart/form-data', class: 'ds-form' %}
+    {%- liquid
+      assign ready_styles = 0
+      for block in section.blocks
+        if block.type == 'style' and block.settings.image != blank and block.settings.style_id != blank
+          assign ready_styles = ready_styles | plus: 1
+        endif
+      endfor
+    -%}
     <h2>كيف تحب تخصّص مبخرك؟</h2>
     <div class="ds-modes">
       <label><input type="radio" name="properties[طريقة التخصيص]" value="تصميم مرفوع" data-mode="upload" checked><strong>أرفع تصميمي</strong><span>لدي صورة اسم أو شعار جاهز</span></label>
-      <label><input type="radio" name="properties[طريقة التخصيص]" value="تصميم اسم مولد" data-mode="generate"><strong>صمّم اسمي</strong><span>أكتب الاسم وأختار من التصاميم</span></label>
+      <label data-style-option><input type="radio" name="properties[طريقة التخصيص]" value="اسم بأسلوب مختار" data-mode="style"{% if ready_styles == 0 %} disabled{% endif %}><strong>اختر أسلوباً لاسمي</strong><span>{% if ready_styles == 0 %}أمثلة الأساليب قيد التجهيز{% else %}أكتب اسمي وأختار أسلوب الخط{% endif %}</span></label>
     </div>
-    <input type="hidden" name="id" value="{{ upload_variant.id }}" data-variant data-upload-variant="{{ upload_variant.id }}" data-generate-variant="{{ base_variant.id }}" data-upload-available="{{ upload_variant.available }}" data-generate-available="{{ base_variant.available }}">
+    <input type="hidden" name="id" value="{{ upload_variant.id }}" data-variant data-upload-variant="{{ upload_variant.id }}" data-style-variant="{{ base_variant.id }}" data-upload-available="{{ upload_variant.available }}" data-style-available="{{ base_variant.available }}">
     <p data-price-upload>سعر الخيار الحالي: {% render 'price-sar', cents: upload_variant.price %}</p>
-    <p data-price-generate hidden>سعر الخيار الحالي: {% render 'price-sar', cents: base_variant.price %}</p>
+    <p data-price-style hidden>سعر الخيار الحالي: {% render 'price-sar', cents: base_variant.price %}</p>
     <fieldset data-upload-panel>
       <legend>صورة التصميم أو الشعار</legend>
       <label class="ds-upload">اختر صورة PNG أو JPG<input type="file" name="properties[تصميم الحفر]" accept="image/png,image/jpeg" required data-upload-file></label>
       <small>حتى 5 ميجابايت. تظهر الصورة مستقلة لمراجعتها قبل الاعتماد.</small>
       <input type="hidden" name="properties[اسم ملف التصميم]" data-file-name>
+      <label class="ds-approval"><input type="checkbox" name="properties[اعتماد التصميم]" value="راجعت الاسم والتصميم الظاهر ووافقت عليه" required data-upload-ack>راجعت الاسم والتصميم الظاهر، وأوافق على استخدام هذا التصميم في طلبي.</label>
     </fieldset>
-    <fieldset data-generate-panel hidden disabled>
-      <legend>الاسم الذي تريد تصميمه</legend>
-      <label>اكتب الاسم بدقة<input type="text" maxlength="40" autocomplete="off" dir="rtl" lang="ar" data-name name="properties[نص الحفر]" placeholder="مثال: عبدالرحمن" required></label>
-      <p>تصميم من حروف الاسم ونقاطه فقط، دون تشكيل أو زخارف إضافية. اكتب الاسم بالإملاء الذي تريده بالضبط (مع الهمزة إن وُجدت)، وراجع الحروف في التصميم قبل الاعتماد.</p>
-      <button type="button" data-generate>اعرض 3 تصاميم</button>
-      <p data-counter>حتى 9 تصاميم. تبقى جميع الخيارات هنا لتعود إليها.</p>
-      <div class="ds-gallery" role="group" aria-label="تصاميم الاسم" data-gallery></div>
-      <input type="hidden" name="properties[معرف التصميم]" data-design-id>
-      <input type="hidden" name="properties[نسخة التصميم]" data-design-version>
-      <input type="hidden" name="properties[تصميم الحفر]" data-design-url>
-      <input type="hidden" name="properties[_design_receipt]" data-receipt>
+    <fieldset data-style-panel hidden disabled>
+      <legend>اسمك وأسلوب الخط</legend>
+      <label>اكتب الاسم كما تريده بالضبط<input type="text" maxlength="40" autocomplete="off" dir="rtl" lang="ar" data-name name="properties[نص الحفر]" placeholder="اكتب اسمك هنا" required></label>
+      <small>نصمّم الاسم بحروفه ونقاطه وهمزاته كما كتبتها تماماً، دون تشكيل أو زخارف إضافية.</small>
+      <p class="ds-echo" data-name-echo hidden>الاسم الذي سنصمّمه: <bdi data-name-echo-text></bdi></p>
+      <p class="ds-note">الصور التالية أمثلة على أساليب الخط بكلمة «مثال» فقط، وليست معاينة لاسمك. بعد الطلب يصمّم فريق كالابريز اسمك بالأسلوب الذي تختاره، ويختلف التكوين النهائي بحسب حروف اسمك وطوله.</p>
+      <div class="ds-styles" role="radiogroup" aria-label="أمثلة أساليب الخط" data-styles>
+        {%- comment -%} styles:start {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'style' -%}{%- continue -%}{%- endif -%}
+          {%- if block.settings.image != blank and block.settings.style_id != blank -%}
+            <label class="ds-style" {{ block.shopify_attributes }}>
+              <input type="radio" name="ds-style" value="{{ block.settings.style_id | escape }}" data-style data-style-title="{{ block.settings.title | escape }}" data-style-image="https:{{ block.settings.image | image_url: width: 1200 }}">
+              <img src="{{ block.settings.image | image_url: width: 600 }}" width="600" height="600" loading="lazy" alt="مثال على أسلوب {{ block.settings.title | escape }} بكلمة «مثال»، وليس اسمك">
+              <span class="ds-style-tag">مثال على الأسلوب</span>
+              <strong>{{ block.settings.title | escape }}</strong>
+            </label>
+          {%- else -%}
+            <div class="ds-style ds-style--empty" data-style-placeholder {{ block.shopify_attributes }}><span>مثال الأسلوب {{ forloop.index }}</span><small>قيد التجهيز</small></div>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- comment -%} styles:end {%- endcomment -%}
+      </div>
+      <input type="hidden" name="properties[أسلوب التصميم]" data-style-id>
+      {%- # The example image URL stays on the order (admin, API, webhooks); as an underscore property it is hidden from the customer at checkout, so it cannot be mistaken for a preview of her name. -%}
+      <input type="hidden" name="properties[_مثال الأسلوب]" data-style-image-url>
+      <label class="ds-approval"><input type="checkbox" name="properties[إقرار أسلوب التصميم]" value="أفهم أن الصورة مثال على الأسلوب بكلمة «مثال» وليست معاينة لاسمي، وأن كالابريز ستصمم اسمي كما كتبته بالأسلوب المختار بعد الطلب" required data-style-ack>أفهم أن الصورة مثال على الأسلوب بكلمة «مثال» وليست معاينة لاسمي، وأن كالابريز ستصمم اسمي كما كتبته بالأسلوب المختار بعد الطلب.</label>
     </fieldset>
-    <div class="ds-selected" data-preview hidden><h3>تصميمك المختار</h3><img data-preview-image width="500" height="350" alt="التصميم المختار للاعتماد"><p data-preview-caption></p><a data-preview-link href="#" target="_blank" rel="noopener" hidden>عرض التصميم بالحجم الكامل</a></div>
-    <label class="ds-approval"><input type="checkbox" name="properties[اعتماد التصميم]" value="راجعت الاسم والتصميم الظاهر ووافقت عليه" required data-approval>راجعت الاسم والتصميم الظاهر، وأوافق على استخدام هذا التصميم في طلبي.</label>
+    <div class="ds-selected" data-preview hidden><h3>تصميمك المرفوع</h3><img data-preview-image width="500" height="350" alt="التصميم المرفوع للاعتماد"><p data-preview-caption></p></div>
     <p role="status" aria-live="polite" data-status></p>
     <button type="submit" class="ds-submit" disabled>اعتمد التصميم وأضف إلى السلة</button>
-    <noscript>يرجى تفعيل JavaScript لمعاينة التصميم واعتماده.</noscript>
+    <noscript>يرجى تفعيل JavaScript لإكمال التخصيص.</noscript>
   {% endform %}
 </section>
 {% stylesheet %}
-.design-service{max-width:960px;margin:auto;padding:24px;color:#44271b;font-family:inherit;line-height:1.8}.design-service [hidden]{display:none!important}.design-service header{display:flex;justify-content:space-between;border-bottom:1px solid #44271b33;padding-bottom:16px}.design-service a{color:inherit}.ds-product{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;margin:24px 0}.ds-product>img{width:180px;height:180px;object-fit:contain;border-radius:16px}.design-service h1{font-size:24px}.design-service h2{font-size:22px}.ds-form{background:#fff9;padding:24px;border:1px solid #44271b33;border-radius:18px}.ds-modes{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ds-modes label{display:grid;grid-template-columns:24px 1fr;padding:18px;border:1px solid #44271b55;border-radius:12px;cursor:pointer}.ds-modes label:has(:checked){outline:2px solid #44271b;background:#dfd4c366}.ds-modes span{grid-column:2;font-size:13px}.design-service fieldset{border:0;padding:12px 0;margin:0;min-width:0}.design-service input[type=text],.ds-upload{display:block;padding:14px;width:100%;box-sizing:border-box;border:1px solid #44271b55;border-radius:8px;font:inherit;background:#fff}.ds-upload input{display:block;margin-top:12px;max-width:100%}.design-service button{font:inherit;cursor:pointer;padding:12px 18px;border:1px solid #44271b;border-radius:8px;background:transparent;color:inherit}.design-service button:disabled{opacity:.5;cursor:not-allowed}.ds-submit{width:100%;background:#44271b!important;color:#fff!important}.ds-gallery{margin:18px 0}.ds-batch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}.ds-batch>p{grid-column:1/-1;margin:0;font-size:13px;opacity:.8}.ds-gallery button{padding:8px;background:#fff}.ds-gallery img{width:100%;aspect-ratio:1;object-fit:contain}.ds-gallery [aria-pressed=true]{outline:3px solid #44271b}.ds-selected{text-align:center;background:#fff;border:1px solid #44271b33;border-radius:12px;padding:12px;margin:18px 0}.ds-selected img{max-width:100%;height:260px;object-fit:contain}.ds-selected a{display:inline-block;margin-top:4px;font-size:14px}.ds-approval{display:flex;align-items:flex-start;gap:10px;margin:20px 0}.ds-approval input{margin-top:9px}.design-service :focus-visible{outline:3px solid #44271b;outline-offset:3px}.design-service [data-status]{min-height:24px}.design-service small{display:block}@media(max-width:600px){.design-service{padding:14px}.ds-form{padding:16px}.ds-product{grid-template-columns:110px 1fr;gap:12px}.ds-product>img{width:110px;height:130px}.ds-product h1{font-size:18px}.ds-modes{grid-template-columns:1fr}.ds-batch{gap:7px}.ds-gallery button{padding:4px;font-size:12px}}
+.design-service{max-width:960px;margin:auto;padding:24px;color:#44271b;font-family:inherit;line-height:1.8}.design-service [hidden]{display:none!important}.design-service header{display:flex;justify-content:space-between;border-bottom:1px solid #44271b33;padding-bottom:16px}.design-service a{color:inherit}.ds-product{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;margin:24px 0}.ds-product>img{width:180px;height:180px;object-fit:contain;border-radius:16px}.design-service h1{font-size:24px}.design-service h2{font-size:22px}.ds-form{background:#fff9;padding:24px;border:1px solid #44271b33;border-radius:18px}.ds-modes{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ds-modes label{display:grid;grid-template-columns:24px 1fr;padding:18px;border:1px solid #44271b55;border-radius:12px;cursor:pointer}.ds-modes label:has(:checked){outline:2px solid #44271b;background:#dfd4c366}.ds-modes span{grid-column:2;font-size:13px}.design-service fieldset{border:0;padding:12px 0;margin:0;min-width:0}.design-service input[type=text],.ds-upload{display:block;padding:14px;width:100%;box-sizing:border-box;border:1px solid #44271b55;border-radius:8px;font:inherit;background:#fff}.ds-upload input{display:block;margin-top:12px;max-width:100%}.design-service button{font:inherit;cursor:pointer;padding:12px 18px;border:1px solid #44271b;border-radius:8px;background:transparent;color:inherit}.design-service button:disabled{opacity:.5;cursor:not-allowed}.ds-submit{width:100%;background:#44271b!important;color:#fff!important}.ds-note{background:#f3eee6;border-radius:10px;padding:10px 14px;font-size:14px}.ds-echo{font-size:18px}.ds-echo bdi{font-weight:bold}.ds-styles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.ds-style{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border:1px solid #44271b55;border-radius:12px;background:#fff;cursor:pointer;text-align:center}.ds-style input{position:absolute;opacity:0;inset:0;cursor:pointer}.ds-style img{width:100%;aspect-ratio:1;object-fit:contain}.ds-style:has(:checked){outline:3px solid #44271b}.ds-style:has(:focus-visible){outline:3px solid #44271b;outline-offset:3px}.ds-style-tag{font-size:12px;background:#44271b;color:#fff;border-radius:20px;padding:0 10px}.ds-style--empty{cursor:default;justify-content:center;aspect-ratio:1;border-style:dashed;color:#44271b99}.ds-gallery{margin:18px 0}.ds-batch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}.ds-batch>p{grid-column:1/-1;margin:0;font-size:13px;opacity:.8}.ds-gallery button{padding:8px;background:#fff}.ds-gallery img{width:100%;aspect-ratio:1;object-fit:contain}.ds-gallery [aria-pressed=true]{outline:3px solid #44271b}.ds-selected{text-align:center;background:#fff;border:1px solid #44271b33;border-radius:12px;padding:12px;margin:18px 0}.ds-selected img{max-width:100%;height:260px;object-fit:contain}.ds-selected a{display:inline-block;margin-top:4px;font-size:14px}.ds-approval{display:flex;align-items:flex-start;gap:10px;margin:20px 0}.ds-approval input{margin-top:9px}.design-service :focus-visible{outline:3px solid #44271b;outline-offset:3px}.design-service [data-status]{min-height:24px}.design-service small{display:block}@media(max-width:600px){.ds-styles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.design-service{padding:14px}.ds-form{padding:16px}.ds-product{grid-template-columns:110px 1fr;gap:12px}.ds-product>img{width:110px;height:130px}.ds-product h1{font-size:18px}.ds-modes{grid-template-columns:1fr}.ds-batch{gap:7px}.ds-gallery button{padding:4px;font-size:12px}}
 {% endstylesheet %}
 {% javascript %}
+// Owner decision 0047: no on-page generation. The customer types her exact name and picks one of six
+// curated style EXAMPLES (each shows the word «مثال», never her name), then acknowledges that the
+// example is a style reference only. Calapres creates the real artwork after the order. No network
+// call is made except Shopify's own cart endpoint.
 document.querySelectorAll('[data-design-service]').forEach(root => {
   if(root.dataset.ready)return;
   root.dataset.ready='true';
-  const $=s=>root.querySelector(s), form=$('form'), status=$('[data-status]'), approval=$('[data-approval]'), submit=$('[type=submit]');
-  const upload=$('[data-upload-file]'), name=$('[data-name]'), generate=$('[data-generate]'), gallery=$('[data-gallery]');
-  const endpoint=root.dataset.endpoint, CHOICE='calapres-design-choice';
-  const START='اكتب الاسم ثم اضغط «اعرض 3 تصاميم».', EMPTY='تعذر إنشاء التصاميم. لم يصلنا أي تصميم؛ حاول لاحقاً أو ارفع تصميمك.';
-  // Same rule as the server: Arabic letters and single spaces only, up to 4 words / 30 letters. Spelling is never rewritten.
+  const $=s=>root.querySelector(s), form=$('form'), status=$('[data-status]'), submit=$('[type=submit]');
+  const upload=$('[data-upload-file]'), name=$('[data-name]'), uploadAck=$('[data-upload-ack]'), styleAck=$('[data-style-ack]');
+  // Same rule as the design service: Arabic letters and single spaces only, up to 4 words / 30 letters. Spelling is never rewritten.
   const NAME_RE=/^[ء-غف-ي]+(?: [ء-غف-ي]+){0,3}$/;
   const clean=v=>(v||'').normalize('NFC').trim().replace(/\s+/g,' ');
   const validName=v=>NAME_RE.test(v)&&[...v].length<=30;
-  let mode='upload', selected=null, approvedFor='', approving=false, touched=false, uploadUrl='', uploadReady=false, busy=false, polling=false, enabled=!!endpoint, version=0, designs=[], remaining=9, token='';
-  const store=(k,v)=>{try{v===null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch{}};
-  try{token=localStorage.getItem('calapres-design-session')||'';}catch{}
+  // Style examples and uploads live on Shopify's CDN (store domain, cdn.shopify.com or the myshopify domain).
+  const safeUrl=value=>{try{const u=new URL(value,location.origin);return u.protocol==='https:'&&(u.hostname===location.hostname||u.hostname==='cdn.shopify.com'||u.hostname.endsWith('.myshopify.com'))?u.href:'';}catch{return '';}};
+  let mode='upload', uploadUrl='', uploadReady=false, busy=false, version=0, style=null;
   const message=t=>{status.textContent=t;};
-  const safeUrl=value=>{try{const u=new URL(value,location.origin);return u.protocol==='https:'&&(u.origin===location.origin||u.hostname==='cdn.shopify.com')?u.href:'';}catch{return '';}};
+  const styleValue=s=>s.id+' — '+s.title;
   function gate(){
     const variant=$('[data-variant]').dataset[mode+'Available']==='true';
-    const ready=mode==='upload'?uploadReady:(selected&&selected.name===clean(name.value)&&approvedFor===selected.id&&!!$('[data-receipt]').value);
-    submit.disabled=busy||approving||!approval.checked||!ready||!variant;
-    generate.disabled=busy||polling||!enabled||remaining<3;
+    const ready=mode==='upload'?uploadReady&&uploadAck.checked:!!style&&validName(clean(name.value))&&styleAck.checked;
+    submit.disabled=busy||!ready||!variant;
   }
-  // Clears any selection and approval. Server approvals are per design: a new choice needs a new approval.
-  function reset(){approval.checked=false;selected=null;approvedFor='';$('[data-preview]').hidden=true;['id','version','url'].forEach(k=>$('[data-design-'+k+']').value='');$('[data-receipt]').value='';gallery.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));gate();}
-  function preview(src,caption,link){$('[data-preview-image]').src=src;$('[data-preview-caption]').textContent=caption;const a=$('[data-preview-link]');a.hidden=!link;if(link)a.href=src;$('[data-preview]').hidden=false;}
-  function choose(d){version++;reset();selected=d;$('[data-design-id]').value=d.id;$('[data-design-version]').value=d.version;$('[data-design-url]').value=d.url;name.value=d.name;store(CHOICE,d.id);preview(d.url,d.name+' — التصميم '+d.ordinal,true);render();message('راجع التصميم المكبّر، ثم أكّد الاعتماد.');gate();}
   function setMode(next){
     mode=next;root.querySelectorAll('[data-mode]').forEach(r=>{r.checked=r.dataset.mode===mode;});
     $('[data-upload-panel]').hidden=mode!=='upload';$('[data-upload-panel]').disabled=mode!=='upload';
-    $('[data-generate-panel]').hidden=mode!=='generate';$('[data-generate-panel]').disabled=mode!=='generate';
-    $('[data-variant]').value=$('[data-variant]').dataset[mode+"Variant"];$('[data-price-upload]').hidden=mode!=='upload';$('[data-price-generate]').hidden=mode!=='generate';
+    $('[data-style-panel]').hidden=mode!=='style';$('[data-style-panel]').disabled=mode!=='style';
+    $('[data-variant]').value=$('[data-variant]').dataset[mode+'Variant'];
+    $('[data-price-upload]').hidden=mode!=='upload';$('[data-price-style]').hidden=mode!=='style';
+    $('[data-preview]').hidden=mode!=='upload'||!uploadReady;
+    submit.textContent=mode==='upload'?'اعتمد التصميم وأضف إلى السلة':'أضف إلى السلة';
+    gate();
   }
-  function render(){
-    gallery.replaceChildren();
-    const current=clean(name.value), mine=designs.filter(d=>d.name===current);
-    for(let i=0;i<mine.length;i+=3){
-      const group=document.createElement('div'),title=document.createElement('p');group.className='ds-batch';title.textContent='الدفعة '+(i/3+1);group.append(title);
-      mine.slice(i,i+3).forEach(d=>{
-        const b=document.createElement('button'),img=document.createElement('img'),label=document.createElement('span');
-        b.type='button';b.setAttribute('aria-pressed',String(selected?.id===d.id));img.src=d.url;img.alt='تصميم الاسم '+d.ordinal;img.loading='lazy';label.textContent='التصميم '+d.ordinal;b.append(img,label);
-        b.addEventListener('click',()=>{if(mode!=='generate'||d.name!==clean(name.value))return;touched=true;choose(d);});group.append(b);
-      });
-      gallery.append(group);
-    }
-    const other=designs.filter(d=>d.name!==current).length;
-    $('[data-counter]').textContent=(enabled?'المتبقي: '+remaining+' تصاميم خلال 24 ساعة.':'توليد تصاميم جديدة غير متاح الآن.')+(designs.length?' جميع خياراتك السابقة محفوظة ويمكنك اختيار أي منها'+(other?' (ولديك '+other+' لأسماء أخرى؛ اكتب الاسم نفسه لعرضها).':'.'):(enabled?' اكتب الاسم لعرض أول 3 تصاميم.':''));
-    generate.textContent=mine.length?'اعرض 3 تصاميم أخرى':'اعرض 3 تصاميم';gate();
+  // The acknowledgement belongs to the exact name and style shown: changing either asks for it again.
+  function resetStyleAck(){styleAck.checked=false;}
+  function echo(){
+    const v=clean(name.value),ok=validName(v);
+    $('[data-name-echo]').hidden=!ok;$('[data-name-echo-text]').textContent=ok?v:'';
+    if(v&&!ok)message('اكتب الاسم بالحروف العربية فقط، بدون تشكيل أو أرقام أو رموز، وبحد أقصى 30 حرفاً.');else if(mode==='style')message('');
   }
-  async function api(path,body){
-    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
-    try{
-      const response=await fetch(endpoint+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...body,token}),signal:controller.signal});
-      let data;try{data=await response.json();}catch{throw Error('تعذر الاتصال بخدمة التصاميم الآن.');}
-      if(!response.ok)throw Error(data.message||'تعذر إكمال الطلب، حاول لاحقًا.');return data;
-    }finally{clearTimeout(timer);}
-  }
-  function accept(data){
-    if(typeof data.token!=='string'||!Number.isInteger(data.remaining)||!Array.isArray(data.designs))throw Error('تعذر قراءة التصاميم.');
-    token=data.token;remaining=data.remaining;enabled=!!endpoint&&data.enabled!==false;
-    designs=data.designs.filter(d=>d&&typeof d.id==='string'&&typeof d.name==='string'&&d.receipt&&d.version&&safeUrl(d.url)).map(d=>({...d,url:safeUrl(d.url)}));
-    if(selected&&!designs.some(d=>d.id===selected.id))reset();
-    store('calapres-design-session',token);
-    if(!touched&&!name.value&&data.lastName)name.value=data.lastName;
-    render();
-    return data;
-  }
-  // Initial load only, and only before the customer edits anything. A batch still being prepared wins: the
-  // page shows the name it was requested for and never an older saved selection for another name. Otherwise
-  // the saved choice is re-selected when it is still in this session's gallery. Approval is never restored.
-  function restore(data){
-    if(touched)return;
-    let saved='';try{saved=localStorage.getItem(CHOICE)||'';}catch{}
-    const d=designs.find(x=>x.id===saved);
-    if(data.pending){setMode('generate');if(data.lastName)name.value=data.lastName;render();if(d&&d.name===clean(name.value))choose(d);return;}
-    if(d){setMode('generate');name.value=d.name;render();choose(d);}
-  }
-  // Follows a reserved batch until it finishes; also used after reload when the server reports a pending batch.
-  // `before` holds the design ids that existed before this batch, so a batch that ends with no new design
-  // (released or failed on the server) is reported as a failure instead of inviting a choice. Older designs
-  // and the current selection are kept. The session API gives no provider detail, so none is shown.
-  async function follow(data,before){
-    if(polling)return data;
-    if(data.pending){
-      polling=true;gate();message('جارٍ تجهيز تصاميمك… قد يستغرق ذلك دقيقة.');
-      try{for(let i=0;data.pending&&i<90;i++){await new Promise(r=>setTimeout(r,2000));data=accept(await api('/session',{}));}}
-      finally{polling=false;gate();}
-      if(data.pending){message('التصاميم قيد التجهيز. ستجدها هنا عند العودة للصفحة.');return data;}
-    }
-    if(before)message(designs.some(d=>!before.has(d.id))?'اختر من جميع التصاميم المعروضة.':EMPTY);
-    return data;
-  }
-  root.querySelectorAll('[data-mode]').forEach(r=>r.addEventListener('change',()=>{
-    touched=true;version++;reset();store(CHOICE,null);setMode(r.dataset.mode);
-    if(mode==='upload'&&uploadReady)preview(uploadUrl,$('[data-file-name]').value,false);
-    message(mode!=='generate'?'':!enabled?'توليد تصاميم جديدة غير متاح الآن. يمكنك الاختيار من تصاميمك السابقة إن وُجدت، أو رفع تصميمك.':designs.length?'':START);render();
+  root.querySelectorAll('[data-mode]').forEach(r=>r.addEventListener('change',()=>{if(r.disabled){setMode('upload');return;}version++;setMode(r.dataset.mode);message('');}));
+  root.querySelectorAll('[data-style]').forEach(r=>r.addEventListener('change',()=>{
+    const image=safeUrl(r.dataset.styleImage);
+    if(!image||!r.value){r.checked=false;style=null;message('هذا المثال غير متاح الآن. اختر مثالاً آخر.');gate();return;}
+    style={id:r.value,title:r.dataset.styleTitle||r.value,image};
+    $('[data-style-id]').value=styleValue(style);$('[data-style-image-url]').value=image;
+    resetStyleAck();message('اخترت أسلوب «'+style.title+'». تذكّر أن الصورة مثال بكلمة «مثال» وليست اسمك.');gate();
   }));
+  name.addEventListener('input',()=>{resetStyleAck();echo();gate();});
+  name.addEventListener('blur',()=>{const v=clean(name.value);if(validName(v))name.value=v;echo();gate();});
+  styleAck.addEventListener('change',()=>{if(styleAck.checked&&(!style||!validName(clean(name.value)))){styleAck.checked=false;message('اكتب الاسم واختر أسلوباً أولاً.');}gate();});
+  uploadAck.addEventListener('change',gate);
   upload.addEventListener('change',()=>{
-    touched=true;version++;const revision=version;reset();uploadReady=false;upload.setCustomValidity('');$('[data-file-name]').value='';if(uploadUrl)URL.revokeObjectURL(uploadUrl);uploadUrl='';
+    version++;const revision=version;uploadReady=false;uploadAck.checked=false;$('[data-preview]').hidden=true;upload.setCustomValidity('');$('[data-file-name]').value='';if(uploadUrl)URL.revokeObjectURL(uploadUrl);uploadUrl='';
     const file=upload.files[0];if(!file){gate();return;}
     if(!['image/png','image/jpeg'].includes(file.type)||!file.size||file.size>5*1024*1024){upload.value='';message('اختر صورة PNG أو JPG سليمة، حتى 5 ميجابايت.');gate();return;}
-    uploadUrl=URL.createObjectURL(file);const image=new Image();image.onload=()=>{if(revision!==version)return;uploadReady=true;$('[data-file-name]').value=file.name;preview(uploadUrl,file.name,false);message('راجع الصورة ثم اعتمدها.');gate();};image.onerror=()=>{if(revision!==version)return;upload.value='';message('تعذر قراءة الصورة. اختر صورة أخرى.');gate();};image.src=uploadUrl;
-  });
-  name.addEventListener('input',()=>{touched=true;version++;reset();store(CHOICE,null);render();});
-  approval.addEventListener('change',async()=>{
-    if(mode!=='generate'||!approval.checked){if(mode==='generate'){approvedFor='';$('[data-receipt]').value='';}gate();return;}
-    if(!selected){approval.checked=false;gate();return;}
-    const target=selected.id,revision=version;approving=true;gate();message('جارٍ تسجيل اعتمادك لهذا التصميم…');
-    try{
-      const data=await api('/approve',{id:target});
-      if(revision!==version||selected?.id!==target||!approval.checked)return;
-      if(data.id!==target||!/^a1\.\d+\.[0-9a-f]{64}$/.test(data.approval||''))throw Error('تعذر تسجيل الاعتماد. حاول مجددًا.');
-      $('[data-receipt]').value=data.approval;approvedFor=target;message('تم تسجيل اعتمادك. يمكنك الآن الإضافة إلى السلة.');
-    }catch(error){if(revision===version){approval.checked=false;approvedFor='';$('[data-receipt]').value='';message(error.name==='AbortError'?'تعذر تسجيل الاعتماد الآن. حاول مجددًا.':error.message);}}
-    finally{approving=false;gate();}
-  });
-  generate.addEventListener('click',async()=>{
-    const value=clean(name.value);
-    if(busy||polling||!enabled||remaining<3)return;
-    if(!validName(value)){message('اكتب الاسم بالحروف العربية فقط، بدون تشكيل أو أرقام أو رموز، وبحد أقصى 30 حرفاً.');name.focus();return;}
-    touched=true;name.value=value;busy=true;gate();message('جارٍ حجز تصاميمك…');name.disabled=true;
-    const before=new Set(designs.map(d=>d.id));
-    try{const data=accept(await api('/generate',{name:value}));busy=false;await follow(data,before);}
-    catch(error){message(error.name==='AbortError'?'تعذر تأكيد حالة التوليد. حدّث الصفحة لاستعادة الحالة قبل المحاولة.':error.message);}
-    finally{busy=false;name.disabled=false;gate();}
+    uploadUrl=URL.createObjectURL(file);const image=new Image();
+    image.onload=()=>{if(revision!==version)return;uploadReady=true;$('[data-file-name]').value=file.name;$('[data-preview-image]').src=uploadUrl;$('[data-preview-caption]').textContent=file.name;$('[data-preview]').hidden=mode!=='upload';message('راجع الصورة ثم اعتمدها.');gate();};
+    image.onerror=()=>{if(revision!==version)return;upload.value='';message('تعذر قراءة الصورة. اختر صورة أخرى.');gate();};image.src=uploadUrl;
   });
   form.addEventListener('submit',async event=>{
-    event.preventDefault();if(submit.disabled||!form.reportValidity())return;
-    const expected=mode==='generate'?selected?.id:null;
-    const payload=new FormData(form);busy=true;gate();message('جارٍ حفظ التصميم وإضافة المبخرة…');
+    event.preventDefault();
+    if(mode==='style'){const v=clean(name.value);if(validName(v))name.value=v;}
+    if(submit.disabled||!form.reportValidity())return;
+    const expect=mode==='style'?{name:clean(name.value),style:styleValue(style),image:style.image}:null;
+    const payload=new FormData(form);payload.delete('ds-style');busy=true;gate();message('جارٍ إضافة المبخرة إلى السلة…');
     const controls=[...form.elements],disabled=controls.map(c=>c.disabled);controls.forEach(c=>c.disabled=true);
     try{
       const response=await fetch(window.Shopify?.routes?.root?window.Shopify.routes.root+'cart/add.js':'/cart/add.js',{method:'POST',headers:{Accept:'application/json'},body:payload});
       const data=await response.json();if(!response.ok)throw Error(data.description||'تعذرت الإضافة.');
-      if(!safeUrl(data.properties?.['تصميم الحفر'])||(expected&&data.properties?.['معرف التصميم']!==expected))throw Error('تعذر تأكيد مرفق التصميم. راجع السلة قبل إعادة الإضافة.');
+      const p=data.properties||{};
+      const ok=expect?p['نص الحفر']===expect.name&&p['أسلوب التصميم']===expect.style&&p['_مثال الأسلوب']===expect.image&&!!p['إقرار أسلوب التصميم']:!!safeUrl(p['تصميم الحفر']);
+      if(!ok)throw Error('تعذر تأكيد تفاصيل التخصيص في السلة. راجع السلة قبل إعادة الإضافة.');
       location.href=(window.Shopify?.routes?.root||'/')+'cart';
     }
     catch(error){message(error instanceof TypeError?'تعذر تأكيد الإضافة. راجع السلة قبل المحاولة مجددًا.':error.message);}
     finally{controls.forEach((c,i)=>c.disabled=disabled[i]);busy=false;gate();}
   });
-  gate();
-  if(endpoint){busy=true;gate();api('/session',{}).then(d=>{busy=false;const data=accept(d);restore(data);return follow(data,data.pending?new Set(designs.map(x=>x.id)):null);}).catch(()=>message('تعذرت استعادة التصاميم الآن. يمكنك تجربة رفع صورة.')).finally(()=>{busy=false;gate();});}
+  setMode('upload');
 });
 {% endjavascript %}
 {% schema %}
-{"name":"خدمتا تخصيص التصميم","settings":[{"type":"text","id":"endpoint","label":"مسار خدمة التوليد المفعّلة","info":"يُترك فارغًا حتى تجهيز API وسقف الإنفاق. مثال: /apps/calapres-design"}],"presets":[{"name":"خدمتا تخصيص التصميم"}]}
+{"name":"خدمتا تخصيص التصميم","max_blocks":6,"settings":[],"blocks":[{"type":"style","name":"مثال أسلوب","settings":[{"type":"text","id":"style_id","label":"معرّف الأسلوب","info":"مثل S1. لا تغيّره ولا تستبدل صورته بعد أول طلب؛ أضف معرّفاً جديداً بدلاً من ذلك.","default":"S1"},{"type":"text","id":"title","label":"اسم الأسلوب"},{"type":"image_picker","id":"image","label":"صورة المثال","info":"كلمة «مثال» فقط (م ث ا ل)، بعد التحقق من الإملاء والجودة. بدون صورة يظهر المكان «قيد التجهيز» ولا يمكن اختياره."}]}],"presets":[{"name":"خدمتا تخصيص التصميم"}]}
 {% endschema %}
