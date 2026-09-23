@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Verified deployed batch repair — 2026-09-23 01:24 UTC
+
+Owner pressed Deploy; Hostinger startup at 01:22:06.979Z verified the new 14-file
+runtime. Same budget, keys, persistent data and network settings retained.
+One subsequent live batch completed in 14.5 seconds with visible=3, refused=0,
+failed=0, screened=0, duplicate=0. Three new designs were visually verified in
+the backup gallery. Prior three designs remained; remaining quota changed from
+6 to3 as expected. This supersedes the pending-Deploy note below.
+
+Found a separate frontend issue: after changing names and generating, refresh
+restored the old approved name/selection and hid new results until name was typed
+again. Claude is fixing only that backup section with a focused regression.
+No new payment/order or publication. Source import from Claude still pending.
+
+
 ## Live generation and cart proof — 2026-09-23 01:07 UTC
 
 Pending owner Deploy: Claude source 72b8c22 prepared diagnostics, bounded 429-only
