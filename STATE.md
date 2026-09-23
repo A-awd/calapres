@@ -1,5 +1,11 @@
 # Calapres current state
 
+## Conversation reset checkpoint — 2026-09-23
+
+The full sanitized continuation is in [the name-design handoff](docs/handoffs/2026-09-23-name-design-chat-reset.md). Latest old-Claude research was read: no Shopify app was demonstrated to generate artistic Arabic names with exact letters; Cloudlift and Zakeke are candidate trials only, not accepted solutions. The owner rejected the current `مدى` designs because letters changed and results looked alike. The next objective is to preserve the missing Claude source/research attachments, then compare actual Arabic visual output before further implementation or spending.
+
+GitHub is still missing Claude's deployed source transfer patch (reported SHA-256 `764e98a06b1c055c0e9ec86586729f200924e0421d53dd0f86e40b47518f8d45`) and complete research attachments. Keep the old Claude chat and do not call this a safe-to-delete checkpoint yet. No production publication, price change, additional paid request, or completed-order proof occurred during this handoff.
+
 ## Verified deployed batch repair — 2026-09-23 01:24 UTC
 
 Frontend follow-up: Claude reports backup section saved and read back with MD5

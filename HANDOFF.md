@@ -1,5 +1,9 @@
 # Calapres handoff
 
+## New Codex/Claude conversation entry — 2026-09-23
+
+Read [the name-design chat-reset checkpoint](docs/handoffs/2026-09-23-name-design-chat-reset.md) and decision 0045. Verify current GitHub `main`, backup theme, Hostinger service, app trials and spending before action. Owner requires actual generated Arabic calligraphy with exact letters and three distinctly composed options per batch; no generic font fallback. The present images are not accepted. The old Claude chat still holds the source transfer patch and detailed research attachments, which failed to download/copy in this handoff. Recover and reconcile them first; do not delete the old chat or claim complete source backup. Published theme and prices remain unchanged; cart receipt is not a completed order.
+
 ## Verified deployed batch repair — 2026-09-23 01:24 UTC
 
 Frontend follow-up: Claude reports backup section saved and read back with MD5
