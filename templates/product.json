@@ -29,7 +29,7 @@
         "phrase_3": {
           "type": "phrase",
           "settings": {
-            "text": "الحمد لله على السلامة",
+            "text": "الحمدلله على السلامة",
             "category": "تهاني"
           }
         },
@@ -37,6 +37,13 @@
           "type": "phrase",
           "settings": {
             "text": "ألف مبروك",
+            "category": "تهاني"
+          }
+        },
+        "phrase_10": {
+          "type": "phrase",
+          "settings": {
+            "text": "منزل مبارك",
             "category": "تهاني"
           }
         },
@@ -57,7 +64,7 @@
         "phrase_7": {
           "type": "phrase",
           "settings": {
-            "text": "أعاد عيدكم",
+            "text": "عاد عيدكم",
             "category": "أعياد"
           }
         },
@@ -95,6 +102,7 @@
         "phrase_2",
         "phrase_3",
         "phrase_4",
+        "phrase_10",
         "phrase_5",
         "phrase_6",
         "phrase_7",
