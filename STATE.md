@@ -2,6 +2,14 @@
 
 ## Live generation and cart proof — 2026-09-23 01:07 UTC
 
+Pending owner Deploy: Claude source 72b8c22 prepared diagnostics, bounded 429-only
+retry, and per-image quota accounting. Codex verified all 14 shipped hashes and
+syntax, retained every existing environment setting and data bind mount. Prepared
+28,147-character compose in Hostinger editor; environment unchanged. Deployment
+NOT clicked, so these fixes are NOT live. Gallery and selection restoration after
+page navigation were independently verified. Latest transfer patch remains in
+Claude and must be imported before claiming GitHub source reconciliation.
+
 This observation supersedes earlier statements below that hosting/proxy/provider
 are unimplemented. Owner approved existing Hostinger VPS deployment and a SAR 20
 trial cap. Isolated calapres-design Docker service is running on VPS 1335184;
