@@ -2,6 +2,15 @@
 
 ## Verified deployed batch repair — 2026-09-23 01:24 UTC
 
+Frontend follow-up: Claude reports backup section saved and read back with MD5
+3d7bd498dffe4c357ceec14db8c91923 (source head373e118). Two focused UI
+regressions fail on old code and pass on new code, according to Claude. Codex
+reopened preview and verified the selected new-name design and all three images
+restored. No additional paid call was made after this frontend patch, so the
+pending-job reload scenario remains synthetic-test evidence only. Full source
+transfer patch SHA256764e98a06b1c055c0e9ec86586729f200924e0421d53dd0f86e40b47518f8d45
+is still in Claude, not imported into GitHub; base7997978.
+
 Owner pressed Deploy; Hostinger startup at 01:22:06.979Z verified the new 14-file
 runtime. Same budget, keys, persistent data and network settings retained.
 One subsequent live batch completed in 14.5 seconds with visible=3, refused=0,
