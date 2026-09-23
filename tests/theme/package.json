@@ -1,0 +1,12 @@
+{
+  "name": "calapres-theme-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node gift-card-addon.test.mjs"
+  },
+  "devDependencies": {
+    "liquidjs": "10.29.0",
+    "playwright-core": "1.63.0"
+  }
+}

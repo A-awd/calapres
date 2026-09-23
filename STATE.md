@@ -1,5 +1,13 @@
 # Calapres current state
 
+## Printed gift-card add-on draft — 2026-09-23 (Claude cloud session)
+
+Details: [gift-card draft handoff](docs/handoffs/2026-09-23-gift-card-add-on-draft.md) and [decision 0051](decisions/0051-printed-gift-card-add-on.md).
+
+- Draft on branch `claude/vigilant-thompson-azq78e` (draft PR), not merged, not uploaded to any theme. No Shopify write, price change or publication.
+- Optional physical A6 card, +19 SAR via a separate sellable product chosen in theme settings; hidden until that product exists. Totals 380/399/399/418. Card follows its burner in cart.
+- Next safe action: owner review; then the one-time admin setup in the handoff, backup-theme upload and preview before any publish decision.
+
 ## Style-example pivot in source — 2026-09-23 (Claude, reviewed by Codex)
 
 Details: [style-example pivot brief and handoff](docs/handoffs/2026-09-23-style-examples-pivot.md) and [decision 0047](decisions/0047-style-examples-instead-of-live-generation.md).

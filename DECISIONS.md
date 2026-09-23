@@ -242,6 +242,10 @@ canary. No provider, funding or architecture decision changed during the documen
   artwork made by Calapres after the order; no on-page generation, credits or counters; backup
   theme only, prices and upload path unchanged; supersedes the storefront parts of 0045 and 0046.
 
+- [0051 — Optional printed gift card as a separate sellable line](decisions/0051-printed-gift-card-add-on.md)
+  — draft: +19 SAR physical A6 card via its own Shopify product, independent of personalization,
+  colourway matched to the burner, linked to its burner line in cart; hidden until configured.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

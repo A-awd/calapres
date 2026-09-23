@@ -4,7 +4,10 @@
   card title/color split comes from the product title
   ("مبخرة كالابريز الفاخرة — الأبيض").
   Usage: {% render 'product-card', card_product: product, show_add: true %}
+  Products tagged "calapres-addon" (the printed gift card, decision 0051) are sold only
+  from a burner page and are never listed.
 {%- endcomment -%}
+{%- unless card_product.tags contains 'calapres-addon' -%}
 {%- liquid
   assign pc_parts = card_product.title | split: '—'
   assign pc_name = pc_parts | first | strip
@@ -41,3 +44,4 @@
     {%- endif -%}
   </div>
 </a>
+{%- endunless -%}

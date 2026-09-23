@@ -3,9 +3,10 @@
   drawer (not part of the static prototype's 7 pages), styled
   with the same design language. Quantities update through the
   native /cart form; the engraving line item property
-  "نص الحفر" is shown per line.
+  "نص الحفر" is shown per line. A printed gift card line (decision 0051)
+  shows its message, and its quantity box mirrors its linked burner.
 {%- endcomment -%}
-<section class="cart-page">
+<section class="cart-page" data-cart-page>
   <div class="wrap">
     <h1>سلّة التسوّق</h1>
     {%- if cart.item_count == 0 -%}
@@ -25,6 +26,11 @@
           assign ci_color = ci_parts | last | strip
         elsif item.variant.title != 'Default Title' and item.variant.title != 'نص الحفر فقط' and item.variant.title != 'تصميم مرفق (+10 ر.س)' and item.variant.title != 'بدون تخصيص' and item.variant.title != 'مع تخصيص'
           assign ci_color = item.variant.title
+        endif
+        assign ci_card_for = item.properties['_كرت إهداء لـ']
+        assign ci_card_link = item.properties['_كرت الإهداء']
+        if ci_card_for != blank
+          assign ci_color = ''
         endif
       -%}
       <div class="d-item">
@@ -57,9 +63,18 @@
           {%- if item.properties['ملاحظات التصميم'] != blank -%}
           <div class="di-eng" data-preserve-digits>ملاحظات التصميم: {{ item.properties['ملاحظات التصميم'] | escape }}</div>
           {%- endif -%}
+          {%- if ci_card_for != blank -%}
+          {%- if item.properties['لون الكرت'] != blank -%}<div class="di-eng">لون الكرت: {{ item.properties['لون الكرت'] | escape }}</div>{%- endif -%}
+          {%- if item.properties['للمبخرة'] != blank -%}<div class="di-eng">للمبخرة: {{ item.properties['للمبخرة'] | escape }}</div>{%- endif -%}
+          {%- if item.properties['إلى'] != blank -%}<div class="di-eng" data-preserve-digits>إلى: {{ item.properties['إلى'] | escape }}</div>{%- endif -%}
+          {%- if item.properties['رسالتك'] != blank -%}<div class="di-eng" data-preserve-digits style="white-space:pre-line">رسالتك: {{ item.properties['رسالتك'] | escape }}</div>{%- endif -%}
+          {%- if item.properties['من'] != blank -%}<div class="di-eng" data-preserve-digits>من: {{ item.properties['من'] | escape }}</div>{%- endif -%}
+          {%- endif -%}
           <div class="d-row">
             <span class="qty">
-              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" lang="en" dir="ltr" aria-label="الكمية">
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" lang="en" dir="ltr" aria-label="الكمية"
+                {%- if ci_card_for != blank %} readonly data-gift-for="{{ ci_card_for | escape }}"{% endif -%}
+                {%- if ci_card_link != blank %} data-gift-link="{{ ci_card_link | escape }}"{% endif %}>
             </span>
             <span class="di-price">{% render 'price-sar', cents: item.final_line_price %}</span>
           </div>
