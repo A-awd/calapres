@@ -20,10 +20,11 @@
         assign ci_parts = item.product.title | split: '—'
         assign ci_name = ci_parts | first | strip
         assign ci_color = ''
-        if item.variant.title != 'Default Title' and item.variant.title != 'نص الحفر فقط' and item.variant.title != 'تصميم مرفق (+10 ر.س)'
-          assign ci_color = item.variant.title
-        elsif ci_parts.size > 1
+        # Each colour is its own product; variant titles describe personalization, never colour.
+        if ci_parts.size > 1
           assign ci_color = ci_parts | last | strip
+        elsif item.variant.title != 'Default Title' and item.variant.title != 'نص الحفر فقط' and item.variant.title != 'تصميم مرفق (+10 ر.س)' and item.variant.title != 'بدون تخصيص' and item.variant.title != 'مع تخصيص'
+          assign ci_color = item.variant.title
         endif
       -%}
       <div class="d-item">
@@ -39,8 +40,11 @@
           {%- if ci_eng != blank -%}
           <div class="di-eng" data-preserve-digits>الحفر: «{{ ci_eng | escape }}»</div>
           {%- endif -%}
-          {%- if item.variant.title == 'نص الحفر فقط' or item.variant.title == 'تصميم مرفق (+10 ر.س)' -%}
-          <div class="di-eng">التخصيص: {{ item.variant.title | escape }}</div>
+          {%- if item.properties['طريقة التخصيص'] != blank -%}
+          <div class="di-eng">التخصيص: {{ item.properties['طريقة التخصيص'] | escape }}</div>
+          {%- endif -%}
+          {%- if item.properties['الشكل المطلوب'] != blank -%}
+          <div class="di-eng" data-preserve-digits>الشكل المطلوب: {{ item.properties['الشكل المطلوب'] | escape }}</div>
           {%- endif -%}
           {%- assign ci_design = item.properties['تصميم الحفر'] -%}
           {%- assign ci_design_parts = ci_design | split: '/' -%}

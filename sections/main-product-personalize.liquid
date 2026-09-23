@@ -1,0 +1,272 @@
+{%- comment -%}
+  Product page with the compact personalization selector (decisions 0049 and 0050):
+  «بدون» (default, plain variant) · صورة · نص · عبارة.
+  Text path: exact text plus a free description; Calapres chooses the composition.
+  Used only by templates/product.json; sections/main-product.liquid stays untouched.
+
+  Variant roles are found by SKU, not by title, so the final price change can
+  rename and reprice variants without breaking this page:
+    personalized = SKU containing "-DESIGN" (or a known personalized title)
+    plain        = the other variant
+  Every price shown comes from the live variant the form will submit, so the
+  page, the cart and checkout always agree.
+{%- endcomment -%}
+{%- liquid
+  assign cp_plain = nil
+  assign cp_custom = nil
+  for candidate in product.variants
+    if candidate.sku contains '-DESIGN' or candidate.title == 'تصميم مرفق (+10 ر.س)' or candidate.title == 'مع تخصيص'
+      if cp_custom == nil
+        assign cp_custom = candidate
+      endif
+    elsif cp_plain == nil
+      assign cp_plain = candidate
+    endif
+  endfor
+  if cp_plain == nil
+    assign cp_plain = product.selected_or_first_available_variant
+  endif
+  assign cp_addon = 0
+  if cp_custom
+    assign cp_addon = cp_custom.price | minus: cp_plain.price
+  endif
+  assign mp_parts = product.title | split: '—'
+  assign mp_name = mp_parts | first | strip
+  assign mp_price = cp_plain.price
+  assign mp_compare = cp_plain.compare_at_price
+  assign mp_save = 0
+  if mp_compare > mp_price
+    assign mp_save = mp_compare | minus: mp_price
+  endif
+  assign mp_image = cp_plain.image | default: product.featured_image
+-%}
+<main class="wrap">
+  <div class="pd">
+    <div class="pd-media">
+      <span class="tag" data-product-saving{% unless mp_save > 0 %} hidden{% endunless %}>وفّر {% render 'calapres-price', cents: mp_save %}</span>
+      {%- if mp_image -%}
+      <img id="pdImg" src="{{ mp_image | image_url: width: 1200, height: 1200, crop: 'bottom' }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
+      {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+    <div class="pd-info">
+      <p class="eyebrow">{{ mp_name }}</p>
+      <h1 id="pdTitle">{{ product.title }}</h1>
+      <div class="price"><b data-product-price>{% render 'calapres-price', cents: mp_price %}</b><s data-product-compare{% unless mp_save > 0 %} hidden{% endunless %}>{% render 'calapres-price', cents: mp_compare %}</s></div>
+      {%- if section.settings.line1 != blank -%}
+      <p class="pd-line">{{ section.settings.line1 }}</p>
+      {%- endif -%}
+      {%- if section.settings.line2 != blank -%}
+      <p class="pd-line">{{ section.settings.line2 }}</p>
+      {%- endif -%}
+
+      {% form 'product', product, id: 'pdForm', data-product-form: 'true', enctype: 'multipart/form-data' %}
+        <input type="hidden" name="id" value="{{ cp_plain.id }}" data-cp-variant
+          data-plain="{{ cp_plain.id }}" data-plain-price="{{ cp_plain.price }}" data-plain-compare="{{ cp_plain.compare_at_price | default: 0 }}" data-plain-available="{{ cp_plain.available }}"
+          {%- if cp_custom %} data-custom="{{ cp_custom.id }}" data-custom-price="{{ cp_custom.price }}" data-custom-compare="{{ cp_custom.compare_at_price | default: 0 }}" data-custom-available="{{ cp_custom.available }}"{% endif %}>
+        {%- if cp_custom -%}
+        <div class="cp" data-cp>
+          <p class="cp-head">التخصيص <span>اختياري{% if cp_addon > 0 %} · +{% render 'calapres-price', cents: cp_addon %}{% endif %}</span></p>
+          {%- comment -%}
+            Compact selector (decision 0050): «بدون» first and selected by default, then صورة / نص / عبارة.
+            The radios are not form fields (form="cp-no-submit"); only the open method's fieldset is submitted.
+          {%- endcomment -%}
+          <div class="cp-seg" role="radiogroup" aria-label="طريقة التخصيص">
+            <label class="cp-seg__opt is-on"><input type="radio" name="cp-choice" value="none" form="cp-no-submit" checked data-cp-choice><span class="cp-seg__t">بدون</span></label>
+            <label class="cp-seg__opt"><input type="radio" name="cp-choice" value="upload" form="cp-no-submit" data-cp-choice><span class="cp-seg__t">صورة</span><span class="cp-seg__tag">نوصي به</span></label>
+            <label class="cp-seg__opt"><input type="radio" name="cp-choice" value="text" form="cp-no-submit" data-cp-choice><span class="cp-seg__t">نص</span></label>
+            <label class="cp-seg__opt"><input type="radio" name="cp-choice" value="phrase" form="cp-no-submit" data-cp-choice><span class="cp-seg__t">عبارة</span></label>
+          </div>
+
+          <fieldset class="cp-panel" data-cp-panel="upload" hidden disabled>
+            <legend class="cp-sr">صورة</legend>
+            <input type="hidden" name="properties[طريقة التخصيص]" value="تصميم مرفق">
+            <p class="cp-lead">أرفق تصميمي أو الثيم الخاص بي</p>
+            <p class="cp-help">(نقبل جميع التصاميم والثيمات) · الصورة المرجعية تعطي أقرب نتيجة لما تريده.</p>
+            <label class="cp-file"><input type="file" name="properties[تصميم الحفر]" accept="image/jpeg,image/png" required data-cp-file><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><span>اختر صورة من جهازك</span></label>
+            <small class="cp-note">JPG أو PNG، حتى 5 ميجابايت</small>
+            <div class="cp-thumb" data-cp-thumb hidden><img data-cp-thumb-img alt="التصميم المرفق" width="96" height="96"><span data-cp-thumb-name data-preserve-digits></span><button type="button" class="cp-remove" data-cp-remove>إزالة</button></div>
+            <input type="hidden" name="properties[اسم ملف التصميم]" data-cp-file-name>
+          </fieldset>
+
+          <fieldset class="cp-panel" data-cp-panel="text" hidden disabled>
+            <legend class="cp-sr">نص</legend>
+            <input type="hidden" name="properties[طريقة التخصيص]" value="نص مكتوب">
+            {%- comment -%} Sent exactly as typed: no normalisation, trimming or autocorrect. dir="rtl" keeps empty placeholders on the right. {%- endcomment -%}
+            <label class="cp-label" for="cpText">النص المطلوب حفره <span>· اسم، حرف، رمز أو تاريخ</span></label>
+            <input class="cp-text" id="cpText" type="text" name="properties[نص الحفر]" maxlength="40" required dir="rtl" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="اكتبه كما تريده بالضبط" data-cp-text>
+            <label class="cp-label" for="cpDesc">اشرح لنا الشكل المطلوب <span>(اختياري)</span></label>
+            <textarea class="cp-text" id="cpDesc" name="properties[الشكل المطلوب]" rows="3" maxlength="300" dir="rtl" placeholder="مثال: اسمان معًا، تاريخ مناسبة، أو طريقة ترتيب النص" data-cp-desc></textarea>
+            <input type="hidden" name="properties[_مراجعة قبل الحفر]" data-cp-flag>
+          </fieldset>
+
+          <fieldset class="cp-panel" data-cp-panel="phrase" hidden disabled>
+            <legend class="cp-sr">عبارة</legend>
+            <input type="hidden" name="properties[طريقة التخصيص]" value="عبارة مناسبة">
+            <input type="hidden" name="properties[المناسبة]" data-cp-occasion>
+            {%- liquid
+              # Categories appear in the order of their first phrase; phrases keep their block order.
+              assign cp_cats = ''
+              for block in section.blocks
+                if block.type == 'phrase' and block.settings.text != blank and block.settings.category != blank
+                  assign cp_key = '|' | append: block.settings.category | append: '|'
+                  unless cp_cats contains cp_key
+                    assign cp_cats = cp_cats | append: cp_key
+                  endunless
+                endif
+              endfor
+              assign cp_cat_list = cp_cats | split: '|'
+            -%}
+            <div class="cp-groups" role="radiogroup" aria-label="العبارة">
+              {%- for cp_cat in cp_cat_list -%}
+                {%- if cp_cat == blank -%}{%- continue -%}{%- endif -%}
+              <div class="cp-group" role="group" aria-label="{{ cp_cat | escape }}">
+                <p class="cp-group-t">{{ cp_cat | escape }}</p>
+                <div class="cp-phrases">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type != 'phrase' or block.settings.text == blank or block.settings.category != cp_cat -%}{%- continue -%}{%- endif -%}
+                  <label class="cp-chip" {{ block.shopify_attributes }}><input type="radio" name="properties[نص الحفر]" value="{{ block.settings.text | escape }}" required data-cp-phrase data-category="{{ cp_cat | escape }}"><span>{{ block.settings.text | escape }}</span></label>
+                  {%- endfor -%}
+                </div>
+              </div>
+              {%- endfor -%}
+              {%- capture cp_loose -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type != 'phrase' or block.settings.text == blank or block.settings.category != blank -%}{%- continue -%}{%- endif -%}
+                  <label class="cp-chip" {{ block.shopify_attributes }}><input type="radio" name="properties[نص الحفر]" value="{{ block.settings.text | escape }}" required data-cp-phrase data-category=""><span>{{ block.settings.text | escape }}</span></label>
+                {%- endfor -%}
+              {%- endcapture -%}
+              {%- if cp_loose != blank -%}
+              <div class="cp-phrases">{{ cp_loose }}</div>
+              {%- endif -%}
+            </div>
+          </fieldset>
+
+          {%- comment -%}
+            One required confirmation, unchecked, directly before Add to Cart. Its wording follows the
+            chosen path (theme-editor settings, pending the final reviewed text). The order stores the
+            exact sentence shown. It confirms the customer's own inputs; it is not a waiver of rights.
+          {%- endcomment -%}
+          <fieldset class="cp-panel cp-consent" data-cp-consent hidden disabled
+            data-ack-upload="{{ section.settings.ack_upload | default: 'أؤكد أن الصورة التي أرفقتها هي المرجع المطلوب لحفر طلبي، وأن لي حق استخدامها.' | escape }}"
+            data-ack-text="{{ section.settings.ack_text | default: 'أؤكد صحة النص والوصف اللذين أدخلتهما، وأفهم أن كالابريز تختار التكوين الفني المناسب للحفر.' | escape }}"
+            data-ack-phrase="{{ section.settings.ack_phrase | default: 'أؤكد أن العبارة التي اخترتها هي المطلوبة للحفر كما هي.' | escape }}">
+            <legend class="cp-sr">الإقرار</legend>
+            <label class="cp-check"><input type="checkbox" name="properties[الإقرار]" value="" required data-cp-ack><span data-cp-ack-text></span></label>
+          </fieldset>
+        </div>
+        {%- endif -%}
+        <button class="btn-dark" id="pdAdd" type="submit"{% unless cp_plain.available %} disabled{% endunless %}>
+          {%- if cp_plain.available -%}
+          أضِف إلى السلّة — {% render 'calapres-price', cents: mp_price %}
+          {%- else -%}
+          غير متوفر حاليًا
+          {%- endif -%}
+        </button>
+        <p class="pd-design-status" data-product-status role="status" aria-live="polite"></p>
+      {% endform %}
+
+      <div class="pd-sticky-atc" data-sticky-atc aria-hidden="true">
+        <span class="pd-sticky-atc__summary">
+          <span>{{ product.title }}</span>
+          <b data-product-price>{% render 'calapres-price', cents: mp_price %}</b>
+        </span>
+        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless cp_plain.available %} disabled{% endunless %}>
+          {%- if cp_plain.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
+        </button>
+      </div>
+
+      {%- liquid
+        assign cp_qa = 0
+        for block in section.blocks
+          if block.type == 'qa'
+            assign cp_qa = cp_qa | plus: 1
+          endif
+        endfor
+      -%}
+      {%- if cp_qa > 0 -%}
+      <div class="acc" id="acc">
+        {%- for block in section.blocks -%}
+        {%- if block.type != 'qa' -%}{%- continue -%}{%- endif -%}
+        <div class="acc-item" {{ block.shopify_attributes }}>
+          <button class="acc-q" aria-expanded="false">{{ block.settings.question }} <span class="ic">+</span></button>
+          <div class="acc-a"><p>{{ block.settings.answer }}</p></div>
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</main>
+<script src="{{ 'calapres-personalize.js' | asset_url }}" defer></script>
+
+<style>
+.cp{margin:1.4rem 0 1rem;text-align:right}
+.cp-head{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .6rem;font-size:1rem;font-weight:500}.cp-head span{font-size:.8rem;font-weight:400;opacity:.78}
+.cp-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;border:1px solid var(--ink,#44271B);background:rgba(68,39,27,.35)}
+.cp-seg__opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;min-height:3.4rem;padding:.35rem .2rem;background:#fff;color:var(--ink,#44271B);cursor:pointer;text-align:center;line-height:1.25}
+.cp-seg__opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.cp-seg__t{font-size:15px;font-weight:500}.cp-seg__tag{font-size:12px;line-height:1.2;opacity:.85}
+.cp-seg__opt.is-on{background:var(--ink,#44271B);color:var(--ground,#DFD4C3)}
+.cp-seg__opt:has(:focus-visible){outline:2px solid var(--ink,#44271B);outline-offset:2px;z-index:1}
+.cp-panel{border:0;margin:.9rem 0 0;padding:0;min-width:0;display:grid;gap:.55rem;text-align:right}
+.cp-panel[hidden],.cp-thumb[hidden]{display:none!important}
+.cp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cp-lead{margin:0;font-size:.95rem;font-weight:600}
+.cp-help,.cp-note{margin:0;font-size:.8rem;opacity:.8}
+.cp-file{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:.6rem;min-height:3.2rem;padding:0 .9rem;border:1px dashed var(--control-line,#8A776C);background:#fff;font-size:.95rem;cursor:pointer}
+.cp-file input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.cp-file:has(:focus-visible){outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.cp-thumb{display:flex;align-items:center;gap:.6rem;font-size:.8rem;overflow-wrap:anywhere}.cp-thumb img{width:64px;height:64px;object-fit:contain;border:1px solid var(--line,#ddd);background:#fff}.cp-thumb span{flex:1;min-width:0}
+.cp-remove{flex-shrink:0;min-height:2.75rem;padding:0 .9rem;border:1px solid rgba(68,39,27,.45);background:#fff;font:inherit;font-size:.85rem;color:inherit;cursor:pointer}
+.cp-label{font-size:.85rem;font-weight:500;margin-bottom:-.3rem}.cp-label span{font-weight:400;opacity:.78}
+.cp-text{width:100%;box-sizing:border-box;border:1px solid var(--control-line,#8A776C);background:#fff;padding:.8rem 1rem;font:inherit;font-size:16px;color:inherit;direction:rtl;text-align:right}
+.cp-text::placeholder{color:rgba(68,39,27,.45);opacity:1;text-align:right}
+.cp-text:focus{outline:none;border-color:var(--ink,#44271B)}
+textarea.cp-text{resize:vertical;min-height:5.2rem;line-height:1.6}
+.cp-groups{display:grid;gap:.7rem}.cp-group{display:grid;gap:.35rem}.cp-group-t{font-size:.78rem;opacity:.78;margin:0}
+.cp-phrases{display:flex;flex-wrap:wrap;gap:.45rem}
+.cp-chip{position:relative;display:inline-flex;align-items:center;min-height:2.75rem;border:1px solid rgba(68,39,27,.45);background:#fff;padding:0 .8rem;font-size:.88rem;cursor:pointer;line-height:1.4}
+.cp-chip input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+.cp-chip:has(:checked){background:var(--ink,#44271B);color:var(--ground,#DFD4C3);border-color:var(--ink,#44271B)}
+.cp-chip:has(:focus-visible){outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.cp-check{display:flex;align-items:flex-start;gap:.6rem;padding:.75rem;border:1px solid rgba(68,39,27,.45);background:#fff;font-size:.88rem;line-height:1.65;text-align:right;cursor:pointer}.cp-check input{flex-shrink:0;width:20px;height:20px;margin:.15rem 0 0;accent-color:var(--ink,#44271B)}
+.cp-consent{margin:1rem 0 .75rem}
+.pd-design-status{font-size:14px;line-height:1.7}.pd-design-status:empty{display:none}
+[data-product-saving][hidden],[data-product-compare][hidden]{display:none!important}
+</style>
+
+{% schema %}
+{
+  "name": "صفحة المنتج مع التخصيص",
+  "settings": [
+    { "type": "text", "id": "line1", "label": "السطر الأول", "default": "مبخر أنيق" },
+    { "type": "text", "id": "line2", "label": "السطر الثاني", "default": "حفر الاسم أو الشعار" },
+    { "type": "header", "content": "الإقرار قبل زر الإضافة" },
+    { "type": "paragraph", "content": "إقرار واحد إلزامي وغير محدد مسبقًا، يتغير نصه حسب طريقة التخصيص ويُحفظ كما هو مع الطلب. يؤكد صحة مدخلات العميل فقط، ولا يُكتب كتنازل عن حقوقه في العيوب أو عدم المطابقة." },
+    { "type": "textarea", "id": "ack_upload", "label": "عند إرفاق تصميم", "default": "أؤكد أن الصورة التي أرفقتها هي المرجع المطلوب لحفر طلبي، وأن لي حق استخدامها." },
+    { "type": "textarea", "id": "ack_text", "label": "عند كتابة نص", "default": "أؤكد صحة النص والوصف اللذين أدخلتهما، وأفهم أن كالابريز تختار التكوين الفني المناسب للحفر." },
+    { "type": "textarea", "id": "ack_phrase", "label": "عند اختيار عبارة", "default": "أؤكد أن العبارة التي اخترتها هي المطلوبة للحفر كما هي." }
+  ],
+  "blocks": [
+    {
+      "type": "phrase",
+      "name": "عبارة",
+      "limit": 12,
+      "settings": [
+        { "type": "text", "id": "text", "label": "العبارة كما تُحفر" },
+        { "type": "text", "id": "category", "label": "الفئة", "info": "تُجمع العبارات تحت فئاتها بترتيب ظهورها، مثل تهاني أو أعياد أو ترحيب." }
+      ]
+    },
+    {
+      "type": "qa",
+      "name": "سؤال وجواب",
+      "settings": [
+        { "type": "text", "id": "question", "label": "السؤال", "default": "هل المبخرة مناسبة للإهداء؟" },
+        { "type": "textarea", "id": "answer", "label": "الجواب", "default": "نعم، المبخرة مناسبة للإهداء ويمكن تخصيصها بالحفر." }
+      ]
+    }
+  ]
+}
+{% endschema %}

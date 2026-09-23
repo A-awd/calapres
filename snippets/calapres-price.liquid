@@ -1,0 +1,24 @@
+{%- comment -%}
+  Product-page price (decision 0049). Same format as the shared snippets/price-sar.liquid
+  (Western digits + comma thousands separator + ر.س) but keeps halalas when present, so the
+  product page shows the exact variant price after the 399.99 cutover. The shared snippet is
+  left identical to the published theme.
+  e.g. 39000 -> 390 ر.س  /  39999 -> 399.99 ر.س  /  117000 -> 1,170 ر.س
+  Usage: {% render 'calapres-price', cents: variant.price %}
+{%- endcomment -%}
+{%- assign ps_cents = cents | default: 0 -%}
+{%- assign ps_whole = ps_cents | divided_by: 100 -%}
+{%- assign ps_frac = ps_cents | modulo: 100 -%}
+{%- if ps_whole >= 1000 -%}
+  {%- assign ps_th = ps_whole | divided_by: 1000 -%}
+  {%- assign ps_rem = ps_whole | modulo: 1000 | prepend: '00' -%}
+  {%- assign ps_rem = ps_rem | slice: -3, 3 -%}
+  {%- capture ps_num -%}{{ ps_th }},{{ ps_rem }}{%- endcapture -%}
+{%- else -%}
+  {%- capture ps_num -%}{{ ps_whole }}{%- endcapture -%}
+{%- endif -%}
+{%- if ps_frac > 0 -%}
+  {%- assign ps_frac_text = ps_frac | prepend: '0' | slice: -2, 2 -%}
+  {%- capture ps_num -%}{{ ps_num }}.{{ ps_frac_text }}{%- endcapture -%}
+{%- endif -%}
+{%- render 'arabic-digits', value: ps_num %} ر.س

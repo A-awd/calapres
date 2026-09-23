@@ -56,15 +56,13 @@ function renderBadge(){
   b.textContent=digits(cart.item_count);
 }
 
-/* "مبخرة كالابريز الفاخرة — الأبيض" -> name + color */
+/* "مبخرة كالابريز الفاخرة — الأبيض" -> name + color. Each colour is its own product, and its
+   variant titles describe personalization (old or new names), never the colour. */
+var PERSONALIZATION_TITLES=["نص الحفر فقط","تصميم مرفق (+10 ر.س)","بدون تخصيص","مع تخصيص"];
 function splitTitle(item){
-  var name=item.product_title||"",color="";
-  if(item.variant_title&&item.variant_title!=="Default Title"&&item.variant_title!=="نص الحفر فقط"&&item.variant_title!=="تصميم مرفق (+10 ر.س)"){
-    color=item.variant_title;
-  }else{
-    var parts=name.split("—");
-    if(parts.length>1){color=parts.pop().trim();name=parts.join("—").trim()}
-  }
+  var name=item.product_title||"",color="",parts=name.split("—");
+  if(parts.length>1){color=parts.pop().trim();name=parts.join("—").trim()}
+  else if(item.variant_title&&item.variant_title!=="Default Title"&&PERSONALIZATION_TITLES.indexOf(item.variant_title)===-1)color=item.variant_title;
   return{name:name,color:color};
 }
 
@@ -173,9 +171,10 @@ function safeDesignUrl(value){
 }
 function designDetails(item){
   var p=item.properties||{},url=safeDesignUrl(p["تصميم الحفر"]),html="";
-  if(item.variant_title==="نص الحفر فقط"||item.variant_title==="تصميم مرفق (+10 ر.س)"){
-    html+='<div class="di-eng">التخصيص: '+esc(item.variant_title)+'</div>';
-  }
+  /* The chosen method and the customer's own explanation come from the line's properties;
+     underscore properties (internal review flags) are never shown. */
+  if(p["طريقة التخصيص"])html+='<div class="di-eng">التخصيص: '+esc(p["طريقة التخصيص"])+'</div>';
+  if(p["الشكل المطلوب"])html+='<div class="di-eng" data-preserve-digits>الشكل المطلوب: '+esc(p["الشكل المطلوب"])+'</div>';
   if(url)html+='<div class="di-eng"><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">عرض التصميم المرفق ↗</a></div>';
   if(url&&p["اسم ملف التصميم"])html+='<div class="di-eng" data-preserve-digits>'+esc(p["اسم ملف التصميم"])+'</div>';
   if(p["ملاحظات التصميم"])html+='<div class="di-eng" data-preserve-digits>ملاحظات التصميم: '+esc(p["ملاحظات التصميم"])+'</div>';
