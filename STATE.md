@@ -1,5 +1,39 @@
 # Calapres current state
 
+## Live generation and cart proof — 2026-09-23 01:07 UTC
+
+This observation supersedes earlier statements below that hosting/proxy/provider
+are unimplemented. Owner approved existing Hostinger VPS deployment and a SAR 20
+trial cap. Isolated calapres-design Docker service is running on VPS 1335184;
+Shopify app proxy /apps/calapres-design is installed and works. No main-theme
+publication or product/price mutation was made. Backup remains 166572294400.
+
+Direct OpenAI gpt-image-2-2026-04-21 generation succeeded HTTP 200. The service key
+remains Restricted: Images Request plus List models Read. After model allow-list
+and key permission correction, real images appeared in backup product design-service.
+A temporary one-day All-permissions diagnostic key was revoked after the test.
+No credential is stored in this repository.
+
+Two live batches returned partial results: one image, then two images. Three
+actual images appeared in the retained gallery. Selection/approval/add-to-cart
+succeeded; cart drawer displayed the name and the selected durable design link.
+This proves cart retention only, NOT completed-order receipt or production readiness.
+No checkout/payment was performed. Provider failure details remain to be diagnosed;
+logs showed no image screening rejection for those batches.
+
+Claude is preparing bounded per-image diagnostics and accurate partial-batch quota
+handling in the existing research conversation. Keep main 166066389248 unchanged.
+Hostinger deployment remains owner-click only after the previous automation review
+denial; do not route around that denial. Preserve data, budget and prior designs.
+
+Source drift is explicit: Claude's latest reported UI source is cf4c84bc43fa2f0b2c11ce513641b30d6aa68655,
+not yet imported into GitHub. Deployed backup section reported MD5
+ed7fb826a176ede5e092aee1d1e32035; template 0d8c974971a8529e153641647940d09e.
+Local outputs/calapres-design.compact.compose.yaml holds the deployed credential-free
+compact runtime. Next: import verified final Claude patch, reconcile runtime,
+finish partial-batch repair, test retained gallery and order linkage without payment.
+
+
 ## Owner-directed Claude continuation — 2026-09-23
 
 Owner explicitly deferred all API-key setup: implement the remaining unpublished
