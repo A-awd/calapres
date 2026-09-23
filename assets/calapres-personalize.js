@@ -10,6 +10,9 @@
    wording follows the chosen path and the exact sentence shown is
    what the order stores. Any change to the inputs unticks it.
    Submission itself stays in the theme's calabriz-cart.js.
+   The optional printed gift card (decision 0051) is independent of
+   personalization: its price is added to the button total, and
+   form._calapresGift() hands its own cart line to calabriz-cart.js.
    ============================================================ */
 (function(){
 "use strict";
@@ -30,10 +33,51 @@ function reviewReasons(text,desc){
   return reasons.length?"تحقق قبل الحفر: "+reasons.join("، "):"";
 }
 
+/* Price of the gift card when it is ticked, else 0. */
+function giftExtra(form){
+  var gc=form.querySelector("[data-gc]"),toggle=gc&&gc.querySelector("[data-gc-toggle]");
+  return toggle&&toggle.checked?Number(gc.getAttribute("data-gc-price"))||0:0;
+}
+/* Button and sticky bar show what the cart will charge: burner variant + card. The product
+   price near the title keeps showing the burner alone. */
+function showTotal(form,price,available){
+  var submit=form.querySelector('[type="submit"]'),total=price+giftExtra(form);
+  submit.disabled=!available;submit.textContent=available?"أضِف إلى السلّة — "+money(total):"غير متوفر حاليًا";
+  document.querySelectorAll(".pd-sticky-atc [data-product-price]").forEach(function(el){el.textContent=money(total)});
+}
+
+function initGift(form){
+  var gc=form.querySelector("[data-gc]");if(!gc||gc.dataset.ready)return;gc.dataset.ready="true";
+  var toggle=gc.querySelector("[data-gc-toggle]"),fields=gc.querySelector("[data-gc-fields]");
+  var to=gc.querySelector("[data-gc-to]"),msg=gc.querySelector("[data-gc-msg]"),from=gc.querySelector("[data-gc-from]"),count=gc.querySelector("[data-gc-count]");
+  var variant=form.querySelector("[data-cp-variant]");
+  function refresh(){
+    if(typeof form._cpRefresh==="function")return form._cpRefresh();
+    var d=variant.dataset;showTotal(form,Number(d.plainPrice),d.plainAvailable==="true");
+  }
+  function validate(){
+    msg.setCustomValidity(msg.value.trim()?"":"اكتب رسالة الكرت.");
+    count.textContent=msg.value.length+" / 150";
+  }
+  toggle.addEventListener("change",function(){
+    fields.hidden=!toggle.checked;fields.disabled=!toggle.checked;refresh();
+  });
+  msg.addEventListener("input",validate);
+  validate();
+  /* The message is printed exactly as typed; only empty optional fields are left out. */
+  form._calapresGift=function(){
+    if(!toggle.checked)return null;
+    var p={"لون الكرت":gc.getAttribute("data-gc-tone"),"للمبخرة":gc.getAttribute("data-gc-for")};
+    if(to.value.trim())p["إلى"]=to.value;
+    p["رسالتك"]=msg.value;
+    if(from.value.trim())p["من"]=from.value;
+    return{id:Number(gc.getAttribute("data-gc-variant")),properties:p};
+  };
+}
+
 function init(form){
   var root=form.querySelector("[data-cp]");if(!root||root.dataset.ready)return;root.dataset.ready="true";
   var variant=form.querySelector("[data-cp-variant]"),status=form.querySelector("[data-product-status]");
-  var submit=form.querySelector('[type="submit"]');
   var file=root.querySelector("[data-cp-file]"),fileName=root.querySelector("[data-cp-file-name]");
   var thumb=root.querySelector("[data-cp-thumb]"),thumbImg=root.querySelector("[data-cp-thumb-img]"),thumbName=root.querySelector("[data-cp-thumb-name]"),remove=root.querySelector("[data-cp-remove]");
   var text=root.querySelector("[data-cp-text]"),desc=root.querySelector("[data-cp-desc]"),flag=root.querySelector("[data-cp-flag]");
@@ -44,6 +88,7 @@ function init(form){
   var active="",objectUrl="";
   var d=variant.dataset;
 
+  form._cpRefresh=showPrice;
   function role(){return active&&d.custom?"custom":"plain"}
   function showPrice(){
     var r=role(),price=Number(d[r+"Price"]),compare=Number(d[r+"Compare"])||0,available=d[r+"Available"]==="true";
@@ -52,7 +97,7 @@ function init(form){
     var compareEl=document.querySelector("[data-product-compare]"),saving=document.querySelector("[data-product-saving]");
     if(compareEl){compareEl.hidden=compare<=price;compareEl.textContent=money(compare)}
     if(saving){saving.hidden=compare<=price;saving.textContent="وفّر "+money(Math.max(0,compare-price))}
-    submit.disabled=!available;submit.textContent=available?"أضِف إلى السلّة — "+money(price):"غير متوفر حاليًا";
+    showTotal(form,price,available);
     document.querySelectorAll("[data-sticky-atc-submit]").forEach(function(el){el.disabled=!available;el.textContent=available?"أضِف إلى السلّة":"غير متوفر"});
   }
   /* The confirmation covers exactly what was entered, so any change asks for it again. */
@@ -123,6 +168,6 @@ function init(form){
   setChoice("none");
 }
 
-function boot(){document.querySelectorAll("[data-product-form]").forEach(init)}
+function boot(){document.querySelectorAll("[data-product-form]").forEach(function(form){init(form);initGift(form)})}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
 })();

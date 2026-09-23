@@ -10,6 +10,10 @@
     plain        = the other variant
   Every price shown comes from the live variant the form will submit, so the
   page, the cart and checkout always agree.
+
+  Optional printed gift card (decision 0051): a separate sellable product picked in
+  the section settings. Unset -> the row is not rendered. The Add to Cart button
+  shows burner + card; the title price stays the burner price.
 {%- endcomment -%}
 {%- liquid
   assign cp_plain = nil
@@ -39,7 +43,52 @@
     assign mp_save = mp_compare | minus: mp_price
   endif
   assign mp_image = cp_plain.image | default: product.featured_image
+
+  # Optional printed gift card (decision 0051). A separate sellable product chosen in the theme
+  # editor carries the +19 price; with no product chosen, or an unknown burner colour, the row is
+  # not rendered at all. The card colourway follows the burner: white -> ivory, beige -> sand,
+  # grey -> stone. A card variant whose SKU or title names the colourway is preferred.
+  assign gc_product = section.settings.gift_card_product
+  assign gc_is_self = false
+  if gc_product != blank and gc_product.id == product.id
+    assign gc_is_self = true
+  endif
+  assign gc_tone = ''
+  assign gc_code = ''
+  if cp_plain.sku contains '-WHT' or product.title contains 'الأبيض'
+    assign gc_tone = 'عاجي'
+    assign gc_code = '-IVR'
+  elsif cp_plain.sku contains '-BGE' or product.title contains 'البيج'
+    assign gc_tone = 'رملي'
+    assign gc_code = '-SND'
+  elsif cp_plain.sku contains '-GRY' or product.title contains 'الرمادي'
+    assign gc_tone = 'حجري'
+    assign gc_code = '-STN'
+  endif
+  assign gc_variant = nil
+  if gc_product != blank and gc_is_self == false and gc_tone != ''
+    for candidate in gc_product.variants
+      if candidate.available and gc_variant == nil
+        if candidate.sku contains gc_code or candidate.title == gc_tone
+          assign gc_variant = candidate
+        endif
+      endif
+    endfor
+    if gc_variant == nil and gc_product.first_available_variant
+      assign gc_variant = gc_product.first_available_variant
+    endif
+  endif
 -%}
+{%- if gc_is_self -%}
+{%- comment -%} The card is sold only with a burner, never on its own page. {%- endcomment -%}
+<main class="wrap">
+  <div class="gc-self">
+    <h1>{{ product.title }}</h1>
+    <p>يُضاف كرت الإهداء من صفحة المبخرة، ويوضع داخل علبتها.</p>
+    <a class="btn-dark" href="{{ routes.all_products_collection_url }}">تصفّح المباخر</a>
+  </div>
+</main>
+{%- else -%}
 <main class="wrap">
   <div class="pd">
     <div class="pd-media">
@@ -157,6 +206,27 @@
           </fieldset>
         </div>
         {%- endif -%}
+        {%- if gc_variant -%}
+        {%- comment -%}
+          Optional printed gift card (decision 0051), unchecked by default. Its inputs have no name,
+          so they never travel with the burner; calabriz-cart.js adds the card as its own line,
+          linked to this burner, after the burner is accepted.
+        {%- endcomment -%}
+        <div class="gc" data-gc data-gc-variant="{{ gc_variant.id }}" data-gc-price="{{ gc_variant.price }}" data-gc-tone="{{ gc_tone }}" data-gc-for="{{ product.title | escape }}">
+          <label class="gc-row"><input type="checkbox" data-gc-toggle><span>أضف كرت إهداء — {% render 'calapres-price', cents: gc_variant.price %}</span></label>
+          <fieldset class="gc-fields" data-gc-fields hidden disabled>
+            <legend class="cp-sr">كرت الإهداء</legend>
+            <p class="gc-note">كرت مطبوع بلون {{ gc_tone }} يوضع داخل علبة المبخرة.</p>
+            <label class="cp-label" for="gcTo">إلى <span>(اختياري)</span></label>
+            <input class="cp-text" id="gcTo" type="text" maxlength="40" dir="rtl" autocomplete="off" data-gc-to>
+            <label class="cp-label" for="gcMsg">رسالتك</label>
+            <textarea class="cp-text" id="gcMsg" rows="3" maxlength="150" required dir="rtl" placeholder="تُطبع على الكرت كما تكتبها" data-gc-msg></textarea>
+            <small class="gc-count" dir="ltr" data-gc-count data-preserve-digits>0 / 150</small>
+            <label class="cp-label" for="gcFrom">من <span>(اختياري)</span></label>
+            <input class="cp-text" id="gcFrom" type="text" maxlength="40" dir="rtl" autocomplete="off" data-gc-from>
+          </fieldset>
+        </div>
+        {%- endif -%}
         <button class="btn-dark" id="pdAdd" type="submit"{% unless cp_plain.available %} disabled{% endunless %}>
           {%- if cp_plain.available -%}
           أضِف إلى السلّة — {% render 'calapres-price', cents: mp_price %}
@@ -199,6 +269,7 @@
     </div>
   </div>
 </main>
+{%- endif -%}
 <script src="{{ 'calapres-personalize.js' | asset_url }}" defer></script>
 
 <style>
@@ -235,12 +306,23 @@ textarea.cp-text{resize:vertical;min-height:5.2rem;line-height:1.6}
 .cp-consent{margin:1rem 0 .75rem}
 .pd-design-status{font-size:14px;line-height:1.7}.pd-design-status:empty{display:none}
 [data-product-saving][hidden],[data-product-compare][hidden]{display:none!important}
+.gc{margin:0 0 1rem;text-align:right}
+.gc-row{display:flex;align-items:center;gap:.6rem;min-height:3rem;padding:0 .75rem;border:1px solid rgba(68,39,27,.45);background:#fff;font-size:.95rem;cursor:pointer}
+.gc-row input{flex-shrink:0;width:20px;height:20px;margin:0;accent-color:var(--ink,#44271B)}
+.gc-row:has(:checked){border-color:var(--ink,#44271B)}
+.gc-row:has(:focus-visible){outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.gc-fields{border:0;margin:.7rem 0 0;padding:0;min-width:0;display:grid;gap:.55rem;text-align:right}
+.gc-fields[hidden]{display:none!important}
+.gc-note{margin:0;font-size:.8rem;opacity:.8}
+.gc-count{margin-top:-.35rem;font-size:.75rem;opacity:.7;text-align:left}
+.gc-self{max-width:32rem;margin:3rem auto;text-align:center;display:grid;gap:1rem}
 </style>
 
 {% schema %}
 {
   "name": "صفحة المنتج مع التخصيص",
   "settings": [
+    { "type": "product", "id": "gift_card_product", "label": "منتج كرت الإهداء المطبوع", "info": "منتج مستقل بسعر الكرت (19 ر.س). اتركه فارغًا لإخفاء خيار الكرت. ليس بطاقة هدايا مسبقة الدفع." },
     { "type": "text", "id": "line1", "label": "السطر الأول", "default": "مبخر أنيق" },
     { "type": "text", "id": "line2", "label": "السطر الثاني", "default": "حفر الاسم أو الشعار" },
     { "type": "header", "content": "الإقرار قبل زر الإضافة" },

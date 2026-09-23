@@ -27,6 +27,10 @@ var digits=H.digits||H.ar||function(value){
 var fmt=H.fmt||function(n){return digits(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")+" ر.س"};
 var esc=H.esc||function(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
 var ENGRAVING_PROP="نص الحفر";
+/* Printed gift card (decision 0051): the burner line carries GIFT_LINK and its card line carries
+   GIFT_FOR with the same hidden value. Underscore properties stay on the order but are hidden at
+   checkout. The card always follows its burner: same quantity, removed with it. */
+var GIFT_LINK="_كرت الإهداء",GIFT_FOR="_كرت إهداء لـ";
 
 var cart=null,busy=false;
 
@@ -45,9 +49,32 @@ function request(url,payload){
   });
 }
 
+function giftUpdates(c){
+  var burners={},updates=null,removed=false;
+  c.items.forEach(function(it){var l=it.properties&&it.properties[GIFT_LINK];if(l)burners[l]=(burners[l]||0)+it.quantity});
+  c.items.forEach(function(it){
+    var l=it.properties&&it.properties[GIFT_FOR];if(!l)return;
+    var want=burners[l]||0;
+    if(it.quantity!==want){(updates=updates||{})[it.key]=want;if(!want)removed=true}
+  });
+  return updates&&{updates:updates,removed:removed};
+}
+/* Brings every card line back in step with its burner. On the server-rendered cart page the
+   page is reloaded so its form never submits stale quantities. */
+function reconcile(c){
+  var plan=giftUpdates(c);if(!plan)return Promise.resolve(c);
+  return request("/cart/update.js",{updates:plan.updates}).then(function(next){
+    if(plan.removed&&window.toast)window.toast("أُزيل كرت الإهداء مع المبخرة المرتبطة به");
+    if(document.querySelector("[data-cart-page]"))window.location.reload();
+    return next;
+  },function(){return c});
+}
+window.CALAPRES_GIFT_UPDATES=giftUpdates;
+
 function fetchCart(){
   return fetch("/cart.js",{headers:{Accept:"application/json"}})
     .then(function(r){return r.json()})
+    .then(reconcile)
     .then(function(c){cart=c;renderBadge();renderCart();return c});
 }
 
@@ -79,13 +106,15 @@ function renderCart(){
   cart.items.forEach(function(it,idx){
     var t=splitTitle(it);
     var eng=it.properties&&it.properties[ENGRAVING_PROP];
+    var card=!!(it.properties&&it.properties[GIFT_FOR]);
     html+='<div class="d-item">'+
       (it.image?'<img src="'+esc(it.image)+'" alt="">':'')+
       '<div class="di-info"><h4>'+esc(t.name)+'</h4>'+
-      (t.color?'<div class="di-color">اللون: '+esc(t.color)+'</div>':'')+
-      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+designDetails(it)+
+      (t.color&&!card?'<div class="di-color">اللون: '+esc(t.color)+'</div>':'')+
+      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+(card?giftDetails(it):designDetails(it))+
       '<div class="d-row"><span class="qty">'+
-      '<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+digits(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>'+
+      /* A card's quantity follows its burner, so it has no +/- of its own. */
+      (card?'<b>'+digits(it.quantity)+'</b>':'<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+digits(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>')+
       '</span><span class="di-price">'+money(it.final_line_price)+'</span></div>'+
       '<button class="di-remove" data-del="'+idx+'">إزالة</button></div></div>';
   });
@@ -122,6 +151,7 @@ window.addToCart=addToCart;
 function changeLine(line,quantity){
   if(busy)return;busy=true;
   request("/cart/change.js",{line:line,quantity:quantity})
+    .then(reconcile)
     .then(function(c){cart=c;renderBadge();renderCart()})
     .catch(function(e){window.toast&&window.toast(e.message||"تعذّر تحديث السلّة")})
     .then(function(){busy=false});
@@ -180,6 +210,20 @@ function designDetails(item){
   if(p["ملاحظات التصميم"])html+='<div class="di-eng" data-preserve-digits>ملاحظات التصميم: '+esc(p["ملاحظات التصميم"])+'</div>';
   return html;
 }
+function giftDetails(item){
+  var p=item.properties||{},html="";
+  if(p["لون الكرت"])html+='<div class="di-eng">لون الكرت: '+esc(p["لون الكرت"])+'</div>';
+  if(p["للمبخرة"])html+='<div class="di-eng">للمبخرة: '+esc(p["للمبخرة"])+'</div>';
+  if(p["إلى"])html+='<div class="di-eng" data-preserve-digits>إلى: '+esc(p["إلى"])+'</div>';
+  if(p["رسالتك"])html+='<div class="di-eng" data-preserve-digits style="white-space:pre-line">رسالتك: '+esc(p["رسالتك"])+'</div>';
+  if(p["من"])html+='<div class="di-eng" data-preserve-digits>من: '+esc(p["من"])+'</div>';
+  return html;
+}
+/* Cart page: a card's quantity box mirrors its burner's before the form is submitted. */
+document.addEventListener("input",function(e){
+  var l=e.target.getAttribute&&e.target.getAttribute("data-gift-link");if(!l)return;
+  document.querySelectorAll("[data-gift-for]").forEach(function(el){if(el.getAttribute("data-gift-for")===l)el.value=e.target.value});
+});
 function initDesignForm(){
   var form=document.querySelector("[data-product-form]");if(!form)return;
   var select=form.querySelector("[data-design-select]");if(!select)return;
@@ -237,23 +281,36 @@ function submitProduct(form){
     if((typeof entry[1]==="string"&&!entry[1].trim())||(entry[1] instanceof File&&!entry[1].size))payload.delete(entry[0]);
   });
   var hasDesign=payload.has("properties[تصميم الحفر]");
+  /* Optional printed card: linked to this burner through a shared hidden value. */
+  var gift=typeof form._calapresGift==="function"?form._calapresGift():null,link="",giftFailed=false;
+  if(gift){
+    link=Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+    payload.append("properties["+GIFT_LINK+"]",link);
+    gift.properties[GIFT_FOR]=link;
+  }
   var controls=Array.from(form.querySelectorAll("input,select,textarea,button"));
   var disabled=controls.map(function(el){return el.disabled});
   var sticky=Array.from(document.querySelectorAll("[data-sticky-atc-submit]")),stickyDisabled=sticky.map(function(el){return el.disabled});
   busy=true;controls.forEach(function(el){el.disabled=true});sticky.forEach(function(el){el.disabled=true});
   form.setAttribute("aria-busy","true");
-  if(status)status.textContent=hasDesign?"جارٍ رفع التصميم وإضافة المبخرة…":"جارٍ إضافة المبخرة…";
+  if(status)status.textContent=(hasDesign?"جارٍ رفع التصميم وإضافة المبخرة":"جارٍ إضافة المبخرة")+(gift?" وكرت الإهداء…":"…");
   var accepted=false;
   fetch("/cart/add.js",{method:"POST",headers:{"Accept":"application/json"},body:payload})
     .then(function(response){return response.json().then(function(data){
       if(!response.ok)throw new Error(data.description||data.message||"تعذرت الإضافة.");
       accepted=true;
-      if(hasDesign&&!(data.properties&&safeDesignUrl(data.properties["تصميم الحفر"]))){
-        throw new Error("أُضيفت المبخرة، لكن تعذر تأكيد مرفق التصميم. راجع السلة قبل الدفع؛ لا تعِد الإضافة.");
-      }
-      return fetchCart();
+      /* The card is added only after its burner is accepted, so a card is never left alone. */
+      return (gift?request("/cart/add.js",{id:gift.id,quantity:1,properties:gift.properties}).catch(function(){giftFailed=true}):Promise.resolve()).then(function(){
+        if(hasDesign&&!(data.properties&&safeDesignUrl(data.properties["تصميم الحفر"]))){
+          throw new Error("أُضيفت المبخرة، لكن تعذر تأكيد مرفق التصميم. راجع السلة قبل الدفع؛ لا تعِد الإضافة.");
+        }
+        return fetchCart();
+      });
     })})
-    .then(function(){if(status)status.textContent="أُضيفت المبخرة"+(hasDesign?" مع التصميم المرفق":"")+" إلى السلة.";window.toast&&window.toast("أُضيفت إلى سلّتك")})
+    .then(function(){
+      var message=giftFailed?"أُضيفت المبخرة، لكن تعذّرت إضافة كرت الإهداء. لإضافته احذف المبخرة من السلة ثم أعد الإضافة مع الكرت.":"أُضيفت المبخرة"+(hasDesign?" مع التصميم المرفق":"")+(gift?" وكرت الإهداء":"")+" إلى السلة.";
+      if(status)status.textContent=message;window.toast&&window.toast(giftFailed?message:"أُضيفت إلى سلّتك");
+    })
     .catch(function(error){
       var message=error.message;
       if(error instanceof TypeError)message=accepted?"أُضيفت المبخرة، وتعذر تحديث عرض السلة. افتح السلة قبل المحاولة مجددًا.":"تعذر تأكيد الإضافة. راجع السلة قبل المحاولة مجددًا.";
