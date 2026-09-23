@@ -1,0 +1,28 @@
+# Dedicated single-store app for the Calapres design service (custom distribution to unywbe-ub).
+# The same values can be entered by hand in the Dev Dashboard (Versions > Create a version); no CLI needed.
+# The client secret goes ONLY into the server environment as SHOPIFY_API_SECRET (Render > Environment).
+client_id = "<DEV-DASHBOARD-CLIENT-ID>"
+name = "Calapres Name Design"
+handle = "calapres-name-design"
+# Opening the app in the Shopify admin only shows the health JSON; the app has no admin UI.
+application_url = "https://<DESIGN-HOST>/healthz"
+embedded = false
+
+[access_scopes]
+# The only scope the storefront flow needs.
+scopes = "write_app_proxy"
+
+[app_proxy]
+url = "https://<DESIGN-HOST>/proxy"
+prefix = "apps"
+subpath = "calapres-design"
+
+[webhooks]
+api_version = "2026-07"
+
+# OPTIONAL, later: automatic order checking. It needs the extra scope read_orders AND Shopify's
+# protected-customer-data access for this app. Until then, production runs
+# `node verify-order.mjs <order.json> --export <dir>` on the order exported from the admin.
+# [[webhooks.subscriptions]]
+# topics = ["orders/create"]
+# uri = "/webhooks/orders-create"

@@ -8,12 +8,13 @@
   {{ content_for_header }}
   <style>
     *{box-sizing:border-box}body{margin:0;background:#fff;color:#35291f;font-family:Arial,sans-serif;line-height:1.7}
-    .trial-product{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:24px;max-width:1100px;margin:auto}
-    .pd-media,.pd-info{min-width:0}.pd-media>img{width:100%;height:auto;display:block;border-radius:12px}
+    .trial-product{max-width:760px;margin:auto;padding:16px}
+    .trial-head{display:flex;gap:14px;align-items:center;margin-bottom:12px}.trial-thumb{width:84px;height:84px;object-fit:cover;border-radius:10px;flex:none}
+    .trial-head h1{font-size:18px;margin:0}.trial-head p{margin:0;color:#6b5a48}
     h1{font-size:22px;margin:0 0 12px}input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select{max-width:100%;font:inherit}
-    .trial-approval{display:flex;gap:10px;align-items:flex-start;margin:22px 0}.trial-approval input{margin-top:8px}
+    .trial-approval{display:flex;gap:10px;align-items:flex-start;margin:22px 0 6px}.trial-approval input{margin-top:8px;width:20px;height:20px;flex:none}
+    .trial-reset{color:#a23b2a;font-size:14px;margin:0 0 10px}
     .trial-submit{width:100%;padding:14px;border:0;border-radius:8px;background:#553c29;color:white;font:inherit;cursor:pointer}
-    @media(max-width:700px){.trial-product{grid-template-columns:1fr;padding:16px}.pd-media{max-width:480px;margin:auto;width:100%}}
   </style>
 </head>
 <body>{{ content_for_layout }}</body>

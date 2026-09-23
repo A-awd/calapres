@@ -5,7 +5,8 @@
     "node": ">=24"
   },
   "scripts": {
-    "test": "cd ../.. && node --test services/design/ledger.test.mjs && node services/design/ui.test.cjs"
+    "start": "node server.mjs",
+    "test": "cd ../.. && node --test services/design/ledger.test.mjs services/design/service.test.mjs && node services/design/ui.test.cjs"
   },
   "devDependencies": {
     "jsdom": "29.1.1"

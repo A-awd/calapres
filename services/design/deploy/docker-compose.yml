@@ -1,0 +1,21 @@
+# One replica only: the SQLite ledger is the single budget authority and the service refuses to
+# run a second worker on the same volume. Secrets come from an env file that is never committed.
+services:
+  calapres-design:
+    build: ..
+    image: calapres-design:local
+    restart: unless-stopped
+    env_file: /etc/calapres-design/env
+    environment:
+      DATA_DIR: /data
+      HOST: 0.0.0.0
+      PORT: "8787"
+    volumes:
+      - calapres-design-data:/data
+    ports:
+      - "127.0.0.1:8787:8787"   # only the local reverse proxy (Caddy) reaches it
+    deploy:
+      replicas: 1
+    stop_grace_period: 15s
+volumes:
+  calapres-design-data: {}

@@ -1,0 +1,18 @@
+# TLS terminator in front of the service. Only the proxy path, webhook path and health check are
+# exposed. Caddy replaces X-Forwarded-For with its own peer (Shopify's egress), so the chain Shopify
+# sent is copied into X-Calapres-Client-Chain; set CLIENT_IP_HEADER=x-calapres-client-chain and
+# TRUSTED_PROXY_HOPS=0 in the service env. The service uses it only for soft per-IP rate limits.
+<DESIGN-HOST> {
+	@allowed path /proxy/* /webhooks/orders-create /healthz
+	handle @allowed {
+		request_body {
+			max_size 1MB
+		}
+		reverse_proxy 127.0.0.1:8787 {
+			header_up X-Calapres-Client-Chain {http.request.header.X-Forwarded-For}
+		}
+	}
+	handle {
+		respond 404
+	}
+}

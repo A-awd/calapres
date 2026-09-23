@@ -1,0 +1,24 @@
+[Unit]
+Description=Calapres design service (app proxy backend)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=calapres-design
+Group=calapres-design
+EnvironmentFile=/etc/calapres-design/env
+WorkingDirectory=/opt/calapres-design/services/design
+ExecStart=/usr/bin/node server.mjs
+Restart=on-failure
+RestartSec=5
+# One process only: the SQLite ledger is the single budget authority.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/calapres-design
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

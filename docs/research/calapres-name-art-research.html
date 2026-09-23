@@ -1,0 +1,402 @@
+<title>Calapres Name-Art Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Kufi+Arabic:wght@600;700&display=swap">
+<style>
+:root{
+  --ground:#F4F4F1; --surface:#FFFFFF; --ink:#1D1A17; --muted:#665E57; --rule:#DCD8D2;
+  --accent:#6E4127; --accent-soft:#F1E7E0;
+  --ok:#2E6A4E; --ok-soft:#E3F0E9; --warn:#8C5F0E; --warn-soft:#F6ECD8; --unk:#5E5B57; --unk-soft:#E9E7E4;
+  --bad:#99302B; --bad-soft:#F6E2E0;
+  --ar:"IBM Plex Sans Arabic","Noto Naskh Arabic",Tahoma,sans-serif;
+  --ar-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --en:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#141210; --surface:#1D1A17; --ink:#ECE7E1; --muted:#A59B91; --rule:#34302C;
+    --accent:#D39A72; --accent-soft:#2C221B;
+    --ok:#7CC39F; --ok-soft:#1B2A22; --warn:#E0B263; --warn-soft:#2D2415; --unk:#B3ADA6; --unk-soft:#282522;
+    --bad:#E8867F; --bad-soft:#321C1A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#141210; --surface:#1D1A17; --ink:#ECE7E1; --muted:#A59B91; --rule:#34302C;
+  --accent:#D39A72; --accent-soft:#2C221B;
+  --ok:#7CC39F; --ok-soft:#1B2A22; --warn:#E0B263; --warn-soft:#2D2415; --unk:#B3ADA6; --unk-soft:#282522;
+  --bad:#E8867F; --bad-soft:#321C1A;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--en);font-size:15px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:2px;word-break:break-word}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* Arabic owner summary */
+.ar{direction:rtl;text-align:right;font-family:var(--ar)}
+.en-line{direction:ltr;text-align:right;font-family:var(--en);font-weight:600;unicode-bidi:isolate}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:24px 20px;display:flex;flex-direction:column;gap:22px}
+.verdict{display:flex;flex-direction:column;gap:8px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.verdict .big{font-family:var(--ar-display);font-weight:700;font-size:clamp(24px,5.4vw,34px);line-height:1.35;color:var(--ink)}
+.verdict .sub{font-size:17px;color:var(--muted)}
+.chip{display:inline-block;font-family:var(--ar);font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--bad-soft);color:var(--bad);align-self:flex-start}
+.ar h2{font-family:var(--ar);font-size:18px;font-weight:600;color:var(--accent)}
+.ar ul,.ar ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.rank{display:grid;gap:10px;list-style:none;padding:0;margin:0}
+.rank li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--rule)}
+.rank li:first-child{border-top:0}
+.rank .n{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--accent);text-align:center;line-height:1.4}
+.rank .body{display:flex;flex-direction:column;gap:2px}
+.costs{display:grid;gap:8px}
+.cost{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:10px 12px;background:var(--ground);border-radius:4px}
+.cost .fig{font-family:var(--ar);font-weight:600;white-space:nowrap}
+.cost .who{grid-column:1/-1}
+.next{background:var(--accent-soft);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+
+/* English detail */
+section.en{display:flex;flex-direction:column;gap:14px}
+section.en h2{font-size:21px;font-weight:600;padding-top:6px;border-top:2px solid var(--ink)}
+section.en h3{font-size:16px;font-weight:600;margin-top:6px}
+section.en p,section.en li{max-width:68ch}
+section.en ul,section.en ol{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:4px}
+.arabic-inline{direction:rtl;font-family:var(--ar);font-size:20px;text-align:left;unicode-bidi:isolate}
+.tablebox{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--rule)}
+th{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.03em;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;min-width:1.6em;text-align:center;font-family:var(--mono);font-size:11.5px;font-weight:500;padding:0 5px;border-radius:3px;line-height:1.7}
+.tag.d{background:var(--ok-soft);color:var(--ok)}
+.tag.v{background:var(--warn-soft);color:var(--warn)}
+.tag.u{background:var(--unk-soft);color:var(--unk)}
+.tag.none{background:var(--bad-soft);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 12px;color:var(--muted);font-size:14px}
+.gates{display:grid;gap:10px}
+.gate{display:grid;grid-template-columns:56px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--rule)}
+.gate .id{font-family:var(--mono);font-weight:500;color:var(--accent)}
+.gate b{display:block}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.steps>li{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.steps .h{font-weight:600}
+.src{font-size:13px;color:var(--muted)}
+.src ul{padding-inline-start:18px}
+footer{font-size:12.5px;color:var(--muted);font-family:var(--mono)}
+@media (max-width:480px){
+  .summary{padding:18px 14px}
+  .gate{grid-template-columns:44px 1fr}
+}
+</style>
+
+<div class="wrap">
+
+<header style="display:flex;flex-direction:column;gap:8px">
+  <div class="eyebrow">Calapres · research only · 2026-09-23</div>
+  <h1 style="font-size:clamp(24px,4.6vw,32px);font-weight:600;line-height:1.25">Artistic Arabic name generation — evidence comparison</h1>
+  <div class="meta"><span>No installs</span><span>No paid generation</span><span>No vendor contact</span><span>No theme changes</span></div>
+</header>
+
+<!-- Arabic owner summary: every line is either pure Arabic or a standalone English name -->
+<article class="summary ar" aria-label="ملخص القرار">
+  <div class="verdict">
+    <span class="chip">الحكم</span>
+    <p class="big">لا يوجد تطابق موثّق، لكن ذلك ليس مستحيلاً.</p>
+    <p class="sub">لم أجد تطبيقاً جاهزاً يثبت بالدليل أنه يولّد تصاميم فنية لأسماء عربية بحروف صحيحة.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h2>لماذا</h2>
+    <ul>
+      <li>كل تطبيق فحصته إما يكتب الاسم بخطوط جاهزة، أو يولّد صوراً عامة بنماذج لا تذكر العربية في وثائقها.</li>
+      <li>لم أجد أي مثال رسمي منشور لاسم عربي مولَّد داخل أي تطبيق.</li>
+      <li>التطبيق لا يكون أدق من النموذج الذي يستخدمه، لذلك خطأ «مدى» الذي ظهر مثل «م م ى» قد يتكرر داخل أي تطبيق.</li>
+      <li>أقوى ادعاءات رسمية للعربية جاءت من نموذجين خارج متجر التطبيقات، ولم أختبرها.</li>
+      <li>لم أجرّب أي عرض تجريبي، لأن هذه الجلسة بلا متصفح تفاعلي، والعروض تحتاج متصفحاً أو رفع صورة أو حساباً.</li>
+    </ul>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <h2>الترتيب المقترح للتجارب</h2>
+    <ol class="rank">
+      <li><span class="n">١</span><div class="body">
+        <p>مقارنة صغيرة بين النماذج نفسها قبل أي تطبيق: اسمان فقط، مع صورة مرجعية للحروف الصحيحة، والحكم بعين المالك.</p>
+        <p style="color:var(--muted)">هذه تحسم أصل المشكلة، ونتيجتها تنفع أي منصة.</p>
+      </div></li>
+      <li><span class="n">٢</span><div class="body">
+        <p>إضافة الذكاء الاصطناعي في تطبيق مثبت عندك مسبقاً، وهي الأرخص بين التطبيقات:</p>
+        <p class="en-line">Cloudlift Live Product Options</p>
+      </div></li>
+      <li><span class="n">٣</span><div class="body">
+        <p>تطبيق يولّد حتى أربع صور لكل طلب ويختار العميل منها، لكنه الأغلى، ونبدأ بعرضه المجاني:</p>
+        <p class="en-line">Zakeke</p>
+      </div></li>
+    </ol>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h2>التكلفة لكل ١٠٠ تصميم</h2>
+    <p style="color:var(--muted)">بالريال، مقربة للأعلى، بدون ضرائب، على سعر ٣٫٧٥ ريال للدولار.</p>
+    <div class="costs">
+      <div class="cost"><span>النموذج الحالي</span><span class="fig">حتى ٢٥ ريالاً</span><span class="who" style="color:var(--muted)">سقف محجوز، بلا اشتراك جديد.</span></div>
+      <div class="cost"><span>التطبيق المثبت المقترح</span><span class="fig">٤ – ٢٧ ريالاً</span><span class="who" style="color:var(--muted)">مع اشتراك شهري ثابت من ٦٨ إلى ٧٢ ريالاً.</span></div>
+      <div class="cost"><span>التطبيق الثالث</span><span class="fig">٣٨ – ٤٥ ريالاً</span><span class="who" style="color:var(--muted)">مع اشتراك ٢٦٣ ريالاً شهرياً ورسم ١٫٩٪ على الطلبات.</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <h2>بوابات القبول</h2>
+    <p>حروف صحيحة يمكن التعرف عليها، ثلاثة تكوينات مختلفة فعلاً، تسعة اختيارات ظاهرة قابلة للاسترجاع، الأصل المختار مرفق بالطلب، تكلفة محدودة، وزمن انتظار مقبول.</p>
+  </div>
+
+  <div class="next">
+    <h2>الخطوة التالية</h2>
+    <p>تجربة مقارنة مغلقة بسقف ١٥ ريالاً، دون أي تعديل على المتجر، وتحتاج موافقتك قبل أي طلب مدفوع.</p>
+    <p>لا تنفيذ قبل أن ترى النتائج.</p>
+  </div>
+</article>
+
+<div class="legend" aria-label="Evidence labels">
+  <span><span class="tag d">D</span> demonstrated (seen directly)</span>
+  <span><span class="tag v">V</span> vendor claim (official listing or docs)</span>
+  <span><span class="tag u">U</span> unknown</span>
+</div>
+
+<section class="en">
+  <h2>1 · What was checked, and what was not</h2>
+  <ul>
+    <li>Four research passes read official App Store listings, vendor help centres, pricing pages and provider docs on 2026-09-23.</li>
+    <li>Installed candidates first (Customily, Teeinblue, Cloudlift, Zepto), then other shopper-facing AI apps, Arabic calligraphy tools and direct image providers.</li>
+    <li><b>No vendor demo was exercised.</b> This session has no interactive browser. The page reader does not run JavaScript, and every personalizer demo checked renders in JavaScript. Teeinblue's AI demo needs a photo upload; several Arabic tools need sign-up. Shell access to vendor sites is blocked by the workspace allowlist.</li>
+    <li>So <b>no real output for the two test names exists here</b>, and no mockup is presented as output.</li>
+    <li>Existing trials were not changed.</li>
+  </ul>
+  <p>Test names (owner-specified):</p>
+  <p class="arabic-inline">مدى — عبد الرحمن</p>
+
+  <h3>Artistic benchmark</h3>
+  <p>The designer reference photo attached in this conversation was inspected. It shows one short name in three compositions: a compact stacked, interlaced block; a horizontal composition with one tall vertical stroke and a sweeping tail; and a looped composition wrapped around a curve. All use one heavy black stroke, calligraphic letterforms and a white ground, with no tashkeel, frames or ornaments. They differ in composition, not only in font — that is the bar for "three genuinely different designs".</p>
+</section>
+
+<section class="en">
+  <h2>2 · Classification</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>Class</th><th>Meaning</th><th>Candidates</th></tr></thead>
+    <tbody>
+      <tr><td>a</td><td>Text-font preview</td><td>Zepto; the text tools of Customily, Teeinblue, Cloudlift, Zakeke</td></tr>
+      <tr><td>b</td><td>Templated personalization</td><td>Zepto, Customily, Teeinblue, Cloudlift, Zakeke</td></tr>
+      <tr><td>c</td><td>Merchant-only AI artwork</td><td>Customily AI mockups, Printify AI generator, Personalify and others</td></tr>
+      <tr><td>d</td><td>Shopper-triggered generation</td><td>Customily, Cloudlift AI extension, Zakeke, FramoAI, PODai, Qstomizer, SnapArt, BrandLift. Photo-only: Teeinblue, Autopictura and others</td></tr>
+      <tr><td>e</td><td>Verified Arabic artistic-name generation</td><td><span class="tag none">None found</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Classes a and b do not answer the request. Class d only means the shopper can trigger a generic model; it says nothing about Arabic letter accuracy.</p>
+</section>
+
+<section class="en">
+  <h2>3 · Installed candidates</h2>
+
+  <h3>Cloudlift Live Product Options — a/b, plus d via a paid AI extension</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>Check</th><th>Finding</th><th>Label</th></tr></thead>
+    <tbody>
+      <tr><td>Shopper generation</td><td>Shoppers "generate new images, or upload their own images to be edited"</td><td><span class="tag v">V</span></td></tr>
+      <tr><td>What generates</td><td>Unnamed "most recent AI image models"; on failure retries the next model, "then with cheaper models"</td><td><span class="tag v">V</span> model <span class="tag u">U</span></td></tr>
+      <tr><td>Prompt control</td><td>Merchant template with a name placeholder; hidden "AI styles" presets shown as cards; prompt visible in the browser console</td><td><span class="tag v">V</span></td></tr>
+      <tr><td>Negative prompt / reference</td><td>Negative prompt not documented; editing an uploaded image exists</td><td><span class="tag u">U</span> / <span class="tag v">V</span></td></tr>
+      <tr><td>Outputs per request, history</td><td>Not documented</td><td><span class="tag u">U</span></td></tr>
+      <tr><td>Arabic / RTL / shaping</td><td>Not mentioned anywhere</td><td><span class="tag u">U</span></td></tr>
+      <tr><td>Order file</td><td>Full-resolution preview as an <code>_original</code> link on the order line; Export extension renders PDF/PNG at order creation, up to 4000 px</td><td><span class="tag v">V</span></td></tr>
+      <tr><td>Limits / spend</td><td>5 requests/min and 60/h per user; pre-bought credits; no merchant spend cap documented</td><td><span class="tag v">V</span> / <span class="tag u">U</span></td></tr>
+      <tr><td>Basic plan / theme isolation / mobile</td><td>No plan restriction stated; single-theme isolation and mobile behaviour not documented</td><td><span class="tag u">U</span></td></tr>
+      <tr><td>Store state</td><td>Installed; setup pending; trial not verified (2026-09-22 record)</td><td><span class="tag d">D</span> by Codex</td></tr>
+    </tbody>
+  </table></div>
+  <p>Pricing <span class="tag v">V</span>: Startup 9 USD (100 orders/mo), Basic 19, Pro 29, Unlimited 49. AI extension "+ 9 USD/month" on the vendor page, 10 USD on its demo product page (conflict). Extensions are prorated with no trial. 100 credits = 1 USD; 1–7 credits per image; 1,000 free credits once.</p>
+
+  <h3>Customily — d for generic images; text is a/b</h3>
+  <ul>
+    <li>"Text to image with OpenAI": shopper edits a default prompt and generates <span class="tag v">V</span>. DALL·E 3 via the merchant's own key (2024 post) <span class="tag v">V</span>; current availability not verified.</li>
+    <li>Outputs per request, history, negative prompt <span class="tag u">U</span>. Arabic, RTL, shaping <span class="tag u">U</span>; app languages exclude Arabic.</li>
+    <li>Order shows preview and production-file links (PDF, AI, PNG, JPG, EPS, DXF) <span class="tag v">V</span>; retention <span class="tag u">U</span>.</li>
+    <li>Shopify approval showed a 10,000 USD usage cap that could not be lowered <span class="tag d">D</span> by Codex. Trial ends 2026-10-01.</li>
+    <li>49 USD/month + 1 USD per personalized item (first 100/month), falling to 0.10 USD <span class="tag v">V</span>.</li>
+  </ul>
+
+  <h3>Teeinblue — d, photo-to-image only</h3>
+  <ul>
+    <li>"Gen AI Effect" transforms an uploaded photo with a merchant prompt; GPT Image, Flux Kontext, Gemini <span class="tag v">V</span>. No text-to-image found.</li>
+    <li><code>_customization_image</code> on the order line <span class="tag v">V</span>. About 1024–1536 px; 10–16 s per generation <span class="tag v">V</span>.</li>
+    <li>Providers may block "religious content" <span class="tag v">V</span> — a risk for names with religious words. Arabic <span class="tag u">U</span>.</li>
+    <li>49 USD/month; no fee for first 100 orders/month; trial ends 2026-10-06.</li>
+  </ul>
+
+  <h3>Zepto Product Personalizer — a/b only</h3>
+  <ul>
+    <li>No AI found. Custom fonts and effects; RTL/Arabic not mentioned <span class="tag u">U</span>.</li>
+    <li>Order files converted to webp on the Shopify CDN; known conflicts with drawer carts and sticky add-to-cart <span class="tag v">V</span>.</li>
+    <li>9.99–49.99 USD/month; trial ends 2026-10-07.</li>
+  </ul>
+</section>
+
+<section class="en">
+  <h2>4 · Other Shopify apps with shopper-triggered generation</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>App</th><th>Shopper gets</th><th>Model</th><th>Outputs / pick</th><th>Order file</th><th>Arabic</th><th>Rating</th></tr></thead>
+    <tbody>
+      <tr><td>Zakeke</td><td>AI Image Generator (styles, Logos mode), AI Design Generator</td><td><span class="tag u">U</span></td><td>Merchant sets 1–4; shopper picks one <span class="tag v">V</span></td><td>Print-file pipeline <span class="tag v">V</span></td><td>RTL in non-AI text tool only <span class="tag v">V</span>; AI <span class="tag u">U</span></td><td>4.7 (99)</td></tr>
+      <tr><td>FramoAI</td><td>Prompt + style; variations</td><td>GPT Image 1 or own OpenAI / fal.ai key <span class="tag v">V</span></td><td><span class="tag u">U</span></td><td>"linked to the order" <span class="tag v">V</span></td><td><span class="tag u">U</span></td><td>0 reviews</td></tr>
+      <tr><td>PODai</td><td>Image, text or combined modes</td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td>1 review</td></tr>
+      <tr><td>Qstomizer</td><td>Text-to-image</td><td>SDXL <span class="tag v">V</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td>4.7 (116)</td></tr>
+      <tr><td>SnapArt</td><td>Prompt to image</td><td>SDXL <span class="tag v">V</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td>1 review</td></tr>
+      <tr><td>BrandLift</td><td>"AI image generation"</td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td><span class="tag v">V</span></td><td><span class="tag u">U</span></td><td>0 reviews</td></tr>
+    </tbody>
+  </table></div>
+  <p>No app here shows an Arabic output sample. Photo-only generators (Autopictura, Podtrait, ARTIFY, CPrint-ai) do not accept a typed name. InkyBay, Kickflip, Gelato, Printful's tool and Customer's Canvas showed no AI.</p>
+</section>
+
+<section class="en">
+  <h2>5 · Arabic calligraphy tools outside Shopify</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>Tool</th><th>Engine</th><th>API</th><th>Letter-accuracy claim</th></tr></thead>
+    <tbody>
+      <tr><td>calligraphy-generator.com</td><td>Font engine (Diwani, Thuluth)</td><td>Yes; 100/mo free, 19 USD per 1,000</td><td>Deterministic font output; licence <span class="tag u">U</span></td></tr>
+      <tr><td>arabicdesign.ai</td><td>AI, undisclosed</td><td>No</td><td>"up to 95%" text preservation <span class="tag v">V</span></td></tr>
+      <tr><td>namedesignai.com</td><td>AI, undisclosed</td><td><span class="tag u">U</span></td><td>None; 8 style previews</td></tr>
+      <tr><td>andalusi.app</td><td>Own AI, classical script</td><td>No (mobile app)</td><td>None</td></tr>
+      <tr><td>NightCafe</td><td>General models</td><td>No</td><td>Warns complex scripts may not render perfectly</td></tr>
+    </tbody>
+  </table></div>
+  <p>None has a Shopify integration. The font engine is deterministic but is font switching, which the owner rejected as the product; it is still useful as a correct reference image for an AI restyle.</p>
+</section>
+
+<section class="en">
+  <h2>6 · Direct providers (official evidence only)</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>Model</th><th>Arabic evidence</th><th>Reference input</th><th>Price</th></tr></thead>
+    <tbody>
+      <tr><td>OpenAI gpt-image-2 (current prototype)</td><td>No language claim on model page; one launch poster includes Arabic; guide: "can still struggle with precise text placement and clarity"</td><td>Up to 16 inputs; prompt-based masks are approximate</td><td class="num">2.50 / 4 / 15 USD per 1M tokens (text in / image in / image out), read 2026-09-23</td></tr>
+      <tr><td>OpenAI gpt-image-2.5 (2026-09-08)</td><td>No Arabic claim found</td><td>As above</td><td class="num">5 / 8 / 30 USD per 1M</td></tr>
+      <tr><td>Gemini 3.1 Flash Image / 3 Pro Image</td><td>Firebase docs list ar-EG for text inside images; DeepMind warns of spelling errors</td><td>3.1 Flash: up to 10 object refs</td><td class="num">0.067 / 0.0336 (Lite) / 0.134 (Pro) USD</td></tr>
+      <tr><td>Gemini 2.5 Flash Image</td><td>Text in images "only English"; DeepMind: often "100% failure" on Arabic</td><td>—</td><td>—</td></tr>
+      <tr><td>Seedream 5.0 Pro</td><td>Claims correct right-to-left cursive Arabic; admits "room to improve"</td><td>Editing</td><td><span class="tag u">U</span></td></tr>
+      <tr><td>Ideogram</td><td>Docs: non-Latin scripts "often produce unpredictable results"</td><td><span class="tag u">U</span></td><td class="num">0.03–0.10 USD</td></tr>
+      <tr><td>Recraft, FLUX.2, Qwen-Image</td><td>No Arabic text-in-image claim found</td><td>Yes</td><td class="num">0.03–0.04 USD</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">All rows are vendor claims. No model has demonstrated Arabic letter accuracy in this project. AGENTS.md restricts Calapres creative image work to Magnific; the design service's OpenAI provider was approved separately (decision 0046). Any new provider needs an explicit owner decision. Whether Magnific exposes Gemini or Seedream is unknown.</p>
+</section>
+
+<section class="en">
+  <h2>7 · Can letter fidelity be improved? Honest limits</h2>
+  <ol>
+    <li><b>Stronger instructions.</b> Spell letters one by one, state the count, forbid extra letters, marks and tashkeel. Helps; guarantees nothing.</li>
+    <li><b>Reference image.</b> Render the exact name correctly shaped and pass it as an input image, asking the model to recompose the same letters. This gives the true letter skeleton. OpenAI masks are approximate and gpt-image-2 ignores <code>input_fidelity</code>; Gemini 3.1 Flash takes up to 10 object references. Effect on Arabic accuracy <span class="tag u">U</span> until tested.</li>
+    <li><b>Separate Arabic check.</b> Google Vision reads printed Arabic, not handwriting (about 1.50 USD per 1,000 after 1,000 free a month). Azure Read: printed only. AWS Textract: no Arabic. Tesseract, EasyOCR and Qari-OCR: printed only. None claims calligraphy. A vision-language checker's accuracy on interlaced calligraphy is <span class="tag u">U</span>. Any checker must first be measured on a labelled in-house set that includes known failures; each rejected image is still paid for, raising cost per visible design and adding latency.</li>
+    <li><b>Human check before production</b> stays necessary whatever the model.</li>
+  </ol>
+  <p>A bespoke vector composition engine is possible but is a large project, not a quick guarantee. Not recommended now.</p>
+</section>
+
+<section class="en">
+  <h2>8 · Cost normalized to 100 designs</h2>
+  <p class="src">100 designs = 100 generated images at about 1024 px, standard tier, no retries. 1 USD = 3.75 SAR (SAMA peg). SAR rounded up. Taxes excluded; Saudi VAT may apply to app charges. Monthly fees shown separately.</p>
+  <div class="tablebox"><table>
+    <thead><tr><th>Option</th><th>Generation / 100</th><th>Fixed / month</th><th>Per order</th></tr></thead>
+    <tbody>
+      <tr><td>Current prototype, gpt-image-2 low</td><td class="num">≤ 25 SAR (6.55 USD) reserved ceiling</td><td class="num">0 new</td><td class="num">0</td></tr>
+      <tr><td>Gemini 3.1 Flash Image</td><td class="num">26 SAR (6.70 USD)</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr><td>Gemini 3.1 Flash-Lite Image</td><td class="num">13 SAR (3.36 USD)</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr><td>Gemini 3 Pro Image</td><td class="num">51 SAR (13.40 USD)</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr><td>Seedream 5.0 Pro</td><td><span class="tag u">U</span></td><td><span class="tag u">U</span></td><td class="num">0</td></tr>
+      <tr><td>Cloudlift AI extension</td><td class="num">4–27 SAR (1–7 USD); 1,000 free credits once</td><td class="num">68–72 SAR (18–19 USD)</td><td>Plan order caps</td></tr>
+      <tr><td>Zakeke AI</td><td class="num">38 SAR images / 45 SAR logos (10–12 USD); min. pack 188 SAR (50 USD)</td><td class="num">263 SAR (69.90 USD)</td><td class="num">1.9%</td></tr>
+      <tr><td>FramoAI</td><td class="num">38 SAR (9.99 USD plan, 100 generations)</td><td>Included</td><td><span class="tag u">U</span></td></tr>
+      <tr><td>Customily + own OpenAI key</td><td>Provider cost (not re-verified)</td><td class="num">184 SAR (49 USD)</td><td class="num">4 SAR (1 USD) per item</td></tr>
+      <tr><td>Teeinblue (photo only; not fit)</td><td class="num">16 SAR (4.20 USD)</td><td class="num">184 SAR (49 USD)</td><td class="num">0 first 100/mo</td></tr>
+      <tr><td>Font engine as reference renderer</td><td class="num">8 SAR (1.90 USD); 100/mo free</td><td>Plan-dependent</td><td class="num">0</td></tr>
+      <tr><td>OCR check</td><td class="num">1 SAR (0.15 USD); 1,000/mo free</td><td class="num">0</td><td class="num">0</td></tr>
+    </tbody>
+  </table></div>
+  <p>Illustrative first month, 100 designs and 10 personalized orders at 390 SAR: current prototype ≤ 25 SAR; Cloudlift 72–98 SAR (free credits may cover generation); Zakeke about 524 SAR (plan plus minimum credit pack, plus 75 SAR fees); Customily 222 SAR plus model cost.</p>
+  <p class="note">Not a cheapness ranking: the options differ in quality, control and evidence, and none has passed the letter gate.</p>
+</section>
+
+<section class="en">
+  <h2>9 · Ranking: three candidates worth a real trial</h2>
+  <ol class="steps">
+    <li><span class="h">1 · Model bake-off with a reference image (not an app)</span>
+      <span>The failure the owner saw is letter accuracy. Every app delegates to a general model and none documents Arabic. A bake-off answers the real question for a few riyals and applies to any host.</span>
+      <span class="src">Compares gpt-image-2 text-only (baseline), gpt-image-2 with reference, Gemini 3.1 Flash Image with reference (only official Arabic text-in-image listing), and Seedream 5.0 Pro if reachable without a new commercial commitment.</span></li>
+    <li><span class="h">2 · Cloudlift Live Product Options AI extension</span>
+      <span>Installed; documented shopper text-to-image with name placeholder and style presets; order-line file link; cheapest app route with 1,000 free credits.</span>
+      <span class="src">Risks: unnamed model with fallback to cheaper models; three outputs per request and history unknown; extension prorated at 9–10 USD with no trial.</span></li>
+    <li><span class="h">3 · Zakeke</span>
+      <span>Only app documenting N images per prompt with the shopper choosing one; Logos mode; mature listing; only Arabic/RTL evidence (text tool only).</span>
+      <span class="src">Risks: most expensive; model unknown. Start with its public demo before any install.</span></li>
+  </ol>
+  <p>Reserve: FramoAI — its own-key plan could host a bake-off winner, but it has no reviews yet. Not recommended here: Customily (DALL·E 3, no Arabic docs, uncappable 10,000 USD usage cap), Teeinblue (photo only), Zepto (no AI), Qstomizer and SnapArt (SDXL).</p>
+</section>
+
+<section class="en">
+  <h2>10 · Acceptance gates</h2>
+  <div class="gates">
+    <div class="gate"><span class="id">G1</span><div><b>Exact letters</b>Owner grades each image: same letters, order and count; correct joins; essential dots; original hamza; no extra letters, marks, tashkeel or frames. Pass: ≥ 2 of 3 in every batch and ≥ 5 of 6 per name.</div></div>
+    <div class="gate"><span class="id">G2</span><div><b>Three distinct layouts</b>Three different composition families per batch, comparable to the benchmark's compact, horizontal and looped designs.</div></div>
+    <div class="gate"><span class="id">G3</span><div><b>Nine visible choices</b>Three batches yield 9 visible designs; failed or blocked images do not consume them; all 9 selectable after reload and return.</div></div>
+    <div class="gate"><span class="id">G4</span><div><b>Chosen original on the order</b>Authorized test order carries a durable link to the exact file; SHA-256 matches; link works after 7 days.</div></div>
+    <div class="gate"><span class="id">G5</span><div><b>Bounded cost</b>Server-side SAR ceiling per day and in total; measured cost per 100 visible designs ≤ owner target (suggested 30 SAR); no open-ended vendor usage cap.</div></div>
+    <div class="gate"><span class="id">G6</span><div><b>Usable latency</b>p90 ≤ 30 s to show 3 designs on a phone over mobile data across ≥ 5 batches; page stays usable.</div></div>
+  </div>
+  <p class="note">Current prototype: G3–G6 plumbing demonstrated (proxy, storage, cart, one 3-image batch in 14.5 s, retained designs, durable cart URL). G1–G2 not met (owner rejected output). G4 completed-order proof pending. G3 quota counts possibly billed images, not 9 visible designs. The 8-images-in-two-batches report is unexplained.</p>
+</section>
+
+<section class="en">
+  <h2>11 · Recommended next trial</h2>
+  <ol class="steps">
+    <li><span class="h">Step 0 · Free public demos (needs a browser session, e.g. Codex)</span>
+      <span>Only the two test names. No sign-up, payment or account change. Save real screenshots; where a demo needs an account or payment, record that reason and stop.</span>
+      <span class="src">store.zakeke.com · framo-ai.myshopify.com · cloudlift.app AI extension page · customily.myshopify.com/collections/meta-ai-filters · namedesignai.com/arabic-calligraphy</span></li>
+    <li><span class="h">Step 1 · Closed model bake-off — paid, owner authorization, ceiling 15 SAR, no Shopify change</span>
+      <span>Four configurations from section 9; each 2 names × 3 styles = 6 images; 24 in total. Estimated under 4 SAR for the two OpenAI configurations and about 2 SAR for Gemini; Seedream unknown. The existing restricted OpenAI key may cover the first two (edit endpoint unknown until tried); Gemini and Seedream need new API access, or Magnific if it exposes them. Record prompt, model, settings, inputs, output and cost per decision 0038 — one pilot, at most one targeted correction. Owner grades G1 and G2.</span></li>
+    <li><span class="h">Step 2 · Only if a configuration passes G1 and G2</span>
+      <span>Choose the host on G3–G6 evidence: Cloudlift AI (installed), the existing prototype, or Zakeke. If nothing passes for both names, stop paid iteration and report back; build no more integration.</span></li>
+  </ol>
+  <p><b>Owner decisions needed before Step 1:</b> authorize up to 15 SAR of test generation; allow Gemini and optionally Seedream access, or confirm Magnific as the route; decide on the Customily trial before 2026-10-01 (nothing was cancelled).</p>
+</section>
+
+<section class="en">
+  <h2>12 · Repository state</h2>
+  <ul>
+    <li>Canonical <code>main</code> fetched 2026-09-23: <code>02ed548</code> (docs-only).</li>
+    <li>Claude transfer head <code>373e118</code> (base <code>7997978</code>) still not imported; reconciliation must preserve <code>02ed548</code> and anything newer.</li>
+    <li>This report is a separate docs-only change on <code>02ed548</code>: <code>docs/research/2026-09-23-arabic-name-generation-comparison.md</code>.</li>
+  </ul>
+</section>
+
+<section class="en src">
+  <h2 style="font-size:17px">Sources</h2>
+  <ul>
+    <li><a href="https://docs.cloudlift.app/article/221-ai-image">Cloudlift — AI image</a> · <a href="https://www.cloudlift.app/pages/app-live-product-options">LPO page</a> · <a href="https://www.cloudlift.app/products/live-product-options-ai-extension">AI extension</a> · <a href="https://docs.cloudlift.app/article/97-how-can-i-save-an-original-print-file-of-the-live-preview">original print file</a> · <a href="https://docs.cloudlift.app/article/165-export">Export</a> · <a href="https://docs.cloudlift.app/article/166-app-extensions-options">extensions billing</a> · <a href="https://apps.shopify.com/live-product-options">listing</a></li>
+    <li><a href="https://help.customily.com/articles/8302778120-image-placeholder">Customily — image placeholder</a> · <a href="https://www.customily.com/post/how-to-integrate-customily-product-personalizer-with-open-ai-s-dall-e-3">DALL·E 3 post</a> · <a href="https://help.customily.com/articles/2111674173-text-box">text box</a> · <a href="https://help.customily.com/hc/en-us/articles/15743483961499">order files</a> · <a href="https://www.customily.com/pricing">pricing</a> · <a href="https://apps.shopify.com/customily-product-personalizer">listing</a></li>
+    <li><a href="https://support.teeinblue.com/en/article/how-to-use-gen-ai-effect-feature-to-create-custom-image-effects-l8mqej/">Teeinblue — Gen AI Effect</a> · <a href="https://support.teeinblue.com/en/article/gen-ai-effect-faqs-1t47d9o/">FAQ</a> · <a href="https://support.teeinblue.com/en/article/comparison-between-each-gen-ai-effect-models-177tevn/">model costs</a> · <a href="https://teeinblue.com/pages/pricing">pricing</a></li>
+    <li><a href="https://apps.shopify.com/product-personalizer">Zepto — listing</a> · <a href="https://productpersonalizer.com/docs/text-element-related-features/">text features</a> · <a href="https://productpersonalizer.com/docs/personalization-customization-customers-options-missing-in-order/">known conflicts</a></li>
+    <li><a href="https://apps.shopify.com/zakeke-interactive-product-designer">Zakeke — listing</a> · <a href="https://zakeke.zendesk.com/hc/en-us/articles/23868482378524-AI-Image-Generator-Editor">AI Image Generator</a> · <a href="https://zakeke.zendesk.com/hc/en-us/articles/24190036352924-AI-Design-Generator">AI Design Generator</a> · <a href="https://zakeke.zendesk.com/hc/en-us/articles/360013488299-Are-RTL-and-Asian-languages-supported">RTL support</a></li>
+    <li><a href="https://apps.shopify.com/framo-ai">FramoAI</a> · <a href="https://apps.shopify.com/podai-1">PODai</a> · <a href="https://apps.shopify.com/qstomizer">Qstomizer</a> · <a href="https://apps.shopify.com/snapart-customizer">SnapArt</a> · <a href="https://apps.shopify.com/live-designer">BrandLift</a></li>
+    <li><a href="https://calligraphy-generator.com/arabic">calligraphy-generator.com</a> · <a href="https://arabicdesign.ai/en">arabicdesign.ai</a> · <a href="https://www.namedesignai.com/arabic-calligraphy">namedesignai.com</a> · <a href="https://andalusi.app/en/features/arabic-calligraphy">andalusi.app</a> · <a href="https://creator.nightcafe.studio/tools/arabic-calligraphy-generator">NightCafe</a></li>
+    <li><a href="https://developers.openai.com/api/docs/models/gpt-image-2">OpenAI gpt-image-2</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI pricing</a> · <a href="https://openai.com/index/introducing-chatgpt-images-2-0">Images 2.0 launch</a></li>
+    <li><a href="https://firebase.google.com/docs/ai-logic/generate-images-gemini">Gemini image languages</a> · <a href="https://deepmind.google/models/gemini-image/pro">Gemini 3 Pro Image</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini pricing</a></li>
+    <li><a href="https://seed.bytedance.com/en/blog/beyond-generation-it-understands-design-introducing-seedream-5-0-pro">Seedream 5.0 Pro</a></li>
+    <li><a href="https://docs.cloud.google.com/vision/docs/languages">Google Vision OCR languages</a></li>
+    <li><a href="https://www.sama.gov.sa/en-US/MediaCenter/News/Pages/news-557.aspx">SAMA — 3.75 SAR/USD</a></li>
+  </ul>
+</section>
+
+<footer>Prepared by Claude, 2026-09-23. Research only; figures are vendor claims unless marked D.</footer>
+</div>

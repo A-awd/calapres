@@ -1,5 +1,33 @@
 # Calapres current state
 
+## Source recovery and live read-only check — 2026-09-23 14:30 UTC
+
+Recovered `calapres-transfer.patch` from the original Claude chat. Its SHA-256 is
+`764e98a06b1c055c0e9ec86586729f200924e0421d53dd0f86e40b47518f8d45`,
+matching the recorded checksum. Applied its source changes and Claude's research
+patch to a clean worktree based on GitHub `main` `3066162`, without force push.
+The recovered Markdown report matches the separately downloaded document byte for
+byte; its HTML presentation is preserved in `docs/research/`. No credential values
+were found in the imported files by the targeted secret scan. Backend tests passed
+36/36 and the UI regression suite passed after installing locked dependencies.
+
+Shopify currently has exactly two themes: primary `166066389248` published and
+backup `166572294400` unpublished. Product `9575273300224` still has the default
+template and variants at 390 and 400 SAR. Shopify's app settings show Customily,
+Zepto and Teeinblue installed with a `Free trial` label, plus Live Product Options
+and Calapres Name Design installed; exact trial expiry and subscription charges
+were not verified. Service `/healthz` and app-proxy `/ping` each returned HTTP 200
+and `generation:true`; this is a health/configuration signal, not a spend-ledger
+or output-quality check. The backup preview displayed stored name designs and zero
+remaining designs for this browser session in the 24-hour window. No paid image,
+cart action, order, publication, deployment or price change was requested here.
+
+The current `مدى` art remains rejected. See the fresh evaluation note at
+`docs/research/2026-09-23-name-art-evaluation-gate.md`. Do not make a shopper-facing
+quality claim or another paid attempt until exact Arabic letters and materially
+different compositions are demonstrated on the benchmark names. Completed-order
+retention and the running service's spend ledger remain unverified.
+
 ## Conversation reset checkpoint — 2026-09-23
 
 The full sanitized continuation is in [the name-design handoff](docs/handoffs/2026-09-23-name-design-chat-reset.md). Latest old-Claude research was read: no Shopify app was demonstrated to generate artistic Arabic names with exact letters; Cloudlift and Zakeke are candidate trials only, not accepted solutions. The owner rejected the current `مدى` designs because letters changed and results looked alike. The next objective is to preserve the missing Claude source/research attachments, then compare actual Arabic visual output before further implementation or spending.
@@ -71,6 +99,247 @@ Local outputs/calapres-design.compact.compose.yaml holds the deployed credential
 compact runtime. Next: import verified final Claude patch, reconcile runtime,
 finish partial-batch repair, test retained gallery and order linkage without payment.
 
+
+## Claude — name kept through batch completion, backup only, 2026-09-23 04:30
+
+- Defect: with a saved choice for "عبدالرحمن", a session restore while a "مدى" batch was pending
+  re-selected "عبدالرحمن". The new designs stayed hidden until the name was typed again.
+  - The saved choice also survived name edits.
+  - Reproduced in JSDOM: a reload while the batch was pending.
+- Fix, in `sections/design-service.liquid` only:
+  - The saved choice is restored only on an untouched initial load.
+  - A pending batch shows its own requested name.
+  - Editing the name or switching mode drops the saved choice.
+  - Completion never assigns the name.
+  - Old designs stay reachable by their name.
+- Tests: UI scenarios 9 and 10 fail on the previous section and pass now. The 36 backend tests
+  pass. No backend change.
+- Deployed only to backup 166572294400. Read back `sections/design-service.liquid` MD5
+  3d7bd498dffe4c357ceec14db8c91923, equal to the repo.
+- Unchanged: template 0d8c9749…, main settings_data cc9d382e…, two themes, product template
+  suffix null, prices 390/400.
+
+## Claude — partial-batch diagnosis and fix (not deployed), 2026-09-23 04:20
+
+- Evidence and root cause, from the code plus the owner's observations:
+  - Live batches: job 5890d35c returned 1 of 3 images; job 827c78b6 returned 2 of 3.
+  - The logs held no `design_rejected` event. In the deployed worker, the only drop path that is
+    not logged is a provider-call error. Those errors are recorded only in the private SQLite
+    `calls` table, with their internal code.
+  - So the 3 missing images were provider-call failures. Their exact codes are in that table and
+    are not yet read.
+  - Job 827c78b6 took 49 s. That matches the service's own 5 images/min limiter (the third call
+    waited for job 5890d35c's window). It is not by itself evidence of a provider rate limit.
+- Quota defect: the ledger counted batches, so 3 visible designs used 6 of the 9.
+- Fix (source only; nothing deployed):
+  - `provider.mjs` keeps the provider's short error code (never the message) and `retry-after`.
+  - `worker.mjs`:
+    - logs `call_failed {job, slot, code, providerCode, billed}`;
+    - records `visible`, `screen:<reason>`, `duplicate` or `<code>:<providerCode>` per slot;
+    - `job_done` gains per-category counts;
+    - retries only HTTP 429, at most twice, within the queue deadline.
+  - `ledger.mjs`: the quota counts possibly billed images (9 per session per 24 h, whole batches of
+    3). Certain refusals are free. Pending, interrupted or unrecorded batches count 3.
+  - `maintenance.mjs calls [N]` gives per-slot outcomes without names.
+  - Screening is unchanged. The pinned model, prices, 20 SAR budget and theme are unchanged.
+- Tests: 36 backend tests plus the UI suite pass. The same 36 also pass on the shipped
+  (comment-stripped) runtime.
+- Compact compose (repo builder): 27 934 characters. It keeps the project name, the
+  `calapres-runtime` volume, the `calapres-design-net` network and `/opt/calapres-design/data`.
+  - The data mount must equal the running project's before the owner replaces the compose.
+    Otherwise the ledger and the 20 SAR spend record would start empty.
+- Remaining manual action: the owner deploys it in hPanel (the automatic review denied it before).
+  Then run one batch and read `call_failed` and `job_done` in the logs.
+
+## Claude — storefront empty-batch fix, backup only, 2026-09-23 03:58
+
+- Live context reported by Codex; not re-verified by Claude:
+  - Generation is enabled: budget 5 333 333 µUSD (20 SAR), key restricted to Images.
+  - Every live job so far ended released with `visible=0`.
+  - Direct OpenAI calls return 403 `model_not_found` for `gpt-image-2-2026-04-21` and for the
+    alias, even after the project allowlist was edited. **Unresolved.**
+  - No model switch, no redeploy, no extra paid calls.
+- Fixed in `sections/design-service.liquid`:
+  1. An empty gallery guides the customer ("اكتب الاسم ثم اضغط «اعرض 3 تصاميم».", i.e. type the
+     name, then press "show 3 designs") and never invites a choice.
+  2. A batch that ends with no new design shows "تعذر إنشاء التصاميم. لم يصلنا أي تصميم؛ حاول
+     لاحقاً أو ارفع تصميمك." ("the designs could not be created; no design reached us; try later or
+     upload your design"). Progress stops, and older designs and the selection are kept.
+  3. A late session reply never overwrites or re-fills a name the customer typed or cleared.
+  - No provider detail is shown, because the session API has none.
+- Tests:
+  - The UI suite gained three regression scenarios: empty completion, keeping older designs and
+    the selection, and late restore. They fail on the previous section and pass now.
+  - 35 backend tests pass.
+- Deployed **only** to backup 166572294400: `sections/design-service.liquid`, read-back MD5
+  ed7fb826a176ede5e092aee1d1e32035, equal to the repo.
+- Unchanged:
+  - template 0d8c9749… with the endpoint `/apps/calapres-design`;
+  - main theme settings_data cc9d382e…;
+  - two themes;
+  - product template suffix null;
+  - prices 390/400.
+- Backend follow-up, prepared as a design only and not implemented or deployed:
+  - Add to the `/session` contract a `lastBatch: {state, visible, code}`, with `code` from a
+    fixed safe set: `PROVIDER_UNAVAILABLE` when all calls were refused unbilled, `SCREENED_OUT`,
+    or `FAILED`.
+  - The storefront would then map the code to Arabic text. It would never pass provider messages
+    through.
+
+## Claude continuation — Shopify integration live, backup connected, 2026-09-23 03:40
+
+- The app `Calapres Name Design` (426882269185) was created by Codex in the Dev Dashboard:
+  - version `calapres-design-proxy-1`;
+  - scope `write_app_proxy` only;
+  - proxy `apps/calapres-design` → `https://calapres-design.srv1335184.hstgr.cloud/proxy`;
+  - installed on the store.
+  - Its secret is only in the Docker Manager environment.
+- Verified by Claude:
+  - `https://calapres.com/apps/calapres-design/ping` → 200 `{"ok":true,"proxied":true,"generation":false}`.
+- Verified by Codex:
+  - backend `/healthz` → `proxy:true`, `generation:false`.
+- Backup theme 166572294400 only:
+  - `templates/product.design-service.json` now has `settings.endpoint = "/apps/calapres-design"`.
+  - Read back MD5 0d8c974971a8529e153641647940d09e; the rest of the file is unchanged. The repo
+    copy is identical.
+- Unchanged:
+  - primary theme settings_data cc9d382e…;
+  - two themes;
+  - product template suffix null;
+  - prices 390/400;
+  - section ec8d5d29….
+- Not done:
+  - the live browser check of the preview (robots.txt blocks it here);
+  - OpenAI activation (last);
+  - the real Arabic test;
+  - the order test, including the absolute order image URL.
+- Generation stays false, and the budget stays 0.
+
+## Claude continuation — hosting live, Shopify app pending, 2026-09-23 03:35
+
+- **Deployed and verified by Codex** on the existing Hostinger VPS 1335184:
+  - The owner pressed Deploy in hPanel for project `calapres-design`, using Codex's compact
+    compose (26 879 characters; the Hostinger limit is 32 768).
+  - The main container is running; init exited as expected.
+  - `GET https://calapres-design.srv1335184.hstgr.cloud/healthz` returned 200
+    `{"ok":true,"proxy":false,"generation":false}`, with no TLS bypass.
+  - n8n and traefik are still running. Traefik config was unchanged; the project owns the
+    `calapres-design-net` bridge.
+  - This workspace cannot reach the VPS itself, so Claude has not re-checked it.
+- Repo: `deploy/hostinger/build-compose.mjs` now builds an equivalent compact compose (32 222
+  characters). The same 35 backend tests plus the UI suite pass. The old oversized builder output
+  is withdrawn. The deployed file itself should be committed by Codex.
+- **Not done:**
+  - Dev Dashboard app and App Proxy. `/apps/calapres-design/ping` returns 404.
+  - Backup theme endpoint, still blank.
+  - The OpenAI step (last).
+  - Any generation or order test.
+- Store re-read 03:35:
+  - two themes;
+  - primary settings_data cc9d382e…;
+  - backup section ec8d5d29…;
+  - backup template c63e7e65… with empty settings;
+  - product template suffix null;
+  - prices 390/400.
+
+## Claude continuation — Hostinger deployment attempt, 2026-09-23 03:05
+
+- The owner chose the existing Hostinger VPS (no Render purchase).
+- Hostinger connector, live read: `KVM 4` active, next billing 2026-10-22. No VPS read tools are
+  exposed.
+- Prepared and verified locally (commits after 1610165):
+  - Hostinger compose builder: isolated project, integrity-checked init, resource limits, no
+    ports.
+  - Server-generated service secret.
+  - Closed proxy until the app secret exists.
+  - Tests: 34 backend tests plus the UI suite. The same suite passes on the minified shipped
+    bytes, and the exact shipped code and env ran locally.
+- **The deploy call was blocked by this session's permission classifier. Nothing is deployed and
+  the VPS is unchanged.** n8n and traefik were not touched.
+- Unverifiable from here: the workspace and web fetch cannot reach the VPS. Live checks go
+  through the Shopify proxy (`/apps/calapres-design/ping`) once the app exists.
+- Theme unchanged:
+  - backup section MD5 ec8d5d29…, endpoint blank;
+  - two themes;
+  - primary settings_data cc9d382e…;
+  - prices 390/400.
+- Next: see READINESS "Smallest unblock". Deploy first, then the Dev Dashboard app, then the
+  agent verifies and connects the backup theme only.
+
+## Claude continuation — host and app preparation, 2026-09-23 02:40
+
+- Status by layer: `services/design/READINESS.md` (implemented, locally tested, deployed, live,
+  blocked). **Nothing is deployed. There is no app, and no live proxy.**
+- Added:
+  - `services/design/deploy/render.yaml`: Starter + 1 GB disk, Frankfurt, generation off, budget 0.
+  - `REQUIRE_MOUNTED_DATA_DIR` guard: the service refuses disposable storage.
+  - Signed-only `GET /proxy/ping` for the live proxy check.
+  - A one-time `proxy_client_chain` log line, to confirm `TRUSTED_PROXY_HOPS`.
+  - App scope reduced to `write_app_proxy`; the order webhook is optional.
+  - Exact Dev Dashboard field values in the README Deploy section.
+- Tests: 33 backend tests plus the UI suite pass. The Render build and start were simulated with
+  the Blueprint's exact environment.
+- Live, read-only, 02:35:
+  - exactly two themes;
+  - primary settings_data MD5 cc9d382e…, unchanged;
+  - backup `sections/design-service.liquid` MD5 ec8d5d29…, equal to the repo, endpoint blank;
+  - product template suffix null;
+  - variants 390.00 and 400.00.
+  - The storefront is reachable via WebFetch. `/apps/calapres-design/ping` is 404 today, as
+    expected with no app.
+- Next, in order (details in READINESS):
+  1. Import the delivery bundle via Codex.
+  2. Owner approves Render at about 28 SAR/month, enables Render in this chat, and creates the
+     Blueprint.
+  3. Owner creates and installs the Dev Dashboard app.
+  4. Agent verifies live and connects the backup endpoint.
+
+## Claude implementation checkpoint — design service, 2026-09-23 (audit pass)
+
+- Source `services/design/` (decision 0046, audit amendment):
+  - app-proxy HMAC and signed sessions;
+  - reserve-then-settle budget, with recorded overshoot and a halt switch;
+  - single-worker lease;
+  - queue deadline;
+  - server-confirmed approval receipts;
+  - webhook HMAC, topic and delivery dedupe;
+  - write-once SHA-256 originals;
+  - maintenance CLI (status, backup, prune, halt, resume);
+  - Dockerfile, compose, systemd and Caddy templates.
+- Tests (Node 24.21, fake provider only): 32 backend tests plus the JSDOM storefront suite pass.
+  The real `server.mjs` was started with generation disabled, a second instance was refused, and
+  the Docker file set was started. These prove plumbing, never Arabic quality.
+- Cost wording corrected. The budget is a reservation policy, not a provider invoice cap. No
+  designs-per-budget number is claimed. Prices and the per-image ceiling stay unverified until
+  activation.
+- Theme: only `sections/design-service.liquid` changed on backup 166572294400. Its MD5
+  ec8d5d291e54c0b961ed86eb2f6db343 equals the repo copy.
+  - Added: server-confirmed approval, choice restore after reload (the approval is never
+    restored), batch grouping for 9 designs, and a full-size preview link.
+  - The endpoint is still blank.
+  - Checked in Chromium at 390 px using labelled placeholder tiles.
+- Verified unchanged: exactly two themes; primary settings_data MD5 cc9d382e…, with
+  product.json and main-product dated 2026-09-09; product 9575273300224 template suffix null;
+  variants 390.00 and 400.00 SAR.
+- Blocked, with exact actions in `services/design/READINESS.md`:
+  - No accessible host. The VPS is unreachable. Catalyst has no organization. Render and Vercel
+    are not enabled in this chat, and Render needs a paid disk.
+  - Dev Dashboard app and App Proxy.
+  - GitHub push, which the session proxy refuses.
+- The superseded font-reference experiment is preserved locally on branch
+  `preserve/font-reference-20260922` (commits f23d88b, a4f1341). Its files remain on the backup
+  theme only.
+- Re-checked 2026-09-23 02:20:
+  - Push is still 403.
+  - Catalyst has no organization.
+  - Render, Cloudflare, Vercel and Neon are connected to the account but not enabled in this chat.
+  - No tool can create a Shopify app.
+  - Nothing was deployed.
+  - Cost and timeout wording was tightened: a dispatched request that times out may still be
+    billed, and provider limits are not verified hard caps.
+- Next safe action: the owner provides a host (VPS access or an approved Render service) and the
+  Dev Dashboard app. Then run `README.md` deploy steps 1–6 with generation off. The key, prices,
+  ceiling, budget and provider-side limit come last.
 
 ## Owner-directed Claude continuation — 2026-09-23
 

@@ -230,6 +230,13 @@ canary. No provider, funding or architecture decision changed during the documen
   retain all nine design choices, prepare a global spend cap, and keep paid generation disabled
   until provider, hosting and the exact cap are configured.
 
+- [0046 — Design-service backend boundaries](decisions/0046-design-service-backend-boundaries.md)
+  — app-proxy-only single-node service with a single-worker lease, signed sessions,
+  server-confirmed approval receipts, a reservation budget (a policy, not an invoice cap) with
+  recorded overshoot and halt, no replay of possibly billed calls, write-once originals, and
+  deduplicated order-line verification before manufacturing; generation stays off until app,
+  host, key, prices and budget are configured.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)
