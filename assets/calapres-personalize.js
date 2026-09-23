@@ -56,7 +56,11 @@ function init(form){
     document.querySelectorAll("[data-sticky-atc-submit]").forEach(function(el){el.disabled=!available;el.textContent=available?"أضِف إلى السلّة":"غير متوفر"});
   }
   /* The confirmation covers exactly what was entered, so any change asks for it again. */
-  function resetAck(){ack.checked=false}
+  function updateAckValidity(){
+    ack.setCustomValidity(ack.checked?"":"يجب الموافقة على الشروط والأحكام.");
+  }
+  function resetAck(){ack.checked=false;updateAckValidity()}
+  ack.addEventListener("change",updateAckValidity);
   function showConsent(){
     var wording=active?consent.getAttribute("data-ack-"+active)||"":"";
     consent.hidden=!active;consent.disabled=!active;ack.value=wording;ackText.textContent=wording;resetAck();
