@@ -2,7 +2,7 @@
 
 ## Captain reply audit — 2026-09-24
 
-Live Chatwoot review found same-minute Captain replies, long and repetitive deadline answers, and a saved rule that keeps Captain replying even after an explicit request for a person. A concise-reply guideline was tightened and read back, but a private retest still added an unnecessary follow-up question; there is no verified one- or two-minute delay. The interim automation and handoff choices await the owner. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md).
+Live Chatwoot review found same-minute Captain replies and long, repetitive deadline answers. The owner requested extremely short answers with one useful question only when needed. Two live guidelines were saved and read back; after refinement, a private event-date test returned a 60-character answer without date conversion or an order-number request. This is not a hard output limit or proof of real-channel behavior. Captain still has no verified one- or two-minute send delay, and no responder routing was changed. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md).
 
 ## Current Shopify product page and gift card — 2026-09-24
 

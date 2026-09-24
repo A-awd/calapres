@@ -2,7 +2,7 @@
 
 ## Resume Captain reply correction — 2026-09-24
 
-Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and decision 0031. The owner is deciding whether to stop automatic replies until a real 60–120-second delay is available and whether explicit requests for a person should trigger handoff. The reply-length guideline was tightened in live Chatwoot and read back; a private test improved length but did not eliminate an unnecessary question. Do not claim response delay or a complete behavior fix from that test. No customer message was sent.
+Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and decision 0031. The owner requires extremely short replies and a real one- or two-minute delay. Two live guidelines were saved and read back; a refined private test returned a 60-character answer with one useful question, without date conversion or an order-number request. Captain remains connected and direct sending is still immediate; no responder routing changed. Do not claim real delay or a complete behavior fix from this private test. No customer message was sent. The prior human-handoff policy was not changed.
 
 ## Resume current Shopify product-page work — 2026-09-24
 
