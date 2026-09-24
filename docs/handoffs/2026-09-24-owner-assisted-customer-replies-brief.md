@@ -1,0 +1,32 @@
+# Owner-assisted customer replies — implementation brief (2026-09-24)
+
+Status: design brief only. No customer-send workflow, Telegram alert, Chatwoot routing change, or Captain handoff was activated. Current operational facts require a fresh check before implementation.
+
+## Owner outcome
+
+Captain should behave as a sales and service assistant: ask the minimum useful question, avoid discouraging a buyer with an early delivery verdict, and ask Abdulrahman privately when a nonstandard request needs a business decision. After he answers, the service should answer the customer in the same Chatwoot conversation using that answer. The previously requested 60–120-second delay after the last customer message remains part of this outcome.
+
+Example: `عندي مناسبة الجمعة، توصل المبخرة؟` -> `لأي مدينة التوصيل؟` -> after the city, `تبغينها بحفر اسم/شعار ولا بدون؟` -> once details are known, obtain an actual feasibility decision from the owner if standard verified policy cannot answer it. Do not assert a date, deny the sale, or promise expedited delivery without that decision.
+
+## Current evidence and constraints
+
+- Live Captain `2187` has a saved guideline for the first two questions. A private three-turn Playground test returned those two short questions, then answered from its 14-day FAQ and effectively rejected the Friday possibility. This proves the owner-review step is missing; prompt text alone did not provide it.
+- The active Chatwoot scenario only classifies priority. Its `تحويل محدود لخدمة العملاء` scenario is disabled. The current guideline/guardrail forbids broad handoff under decision 0031. Narrow owner review of exceptional delivery and genuinely unknown cases is a new owner instruction, but should be implemented as a bounded path rather than enabling broad Handoff.
+- Live n8n `Owner Telegram Voice Bridge` `0EQB4mv5NknrXsHM` is published; its September 23 executions include successful owner replies. Its current branches take owner text/voice through `سكرتيرة عبدالرحمن`; no observed branch correlates a customer case, collects the owner's case decision, or writes back to Chatwoot. Preserve its sole Telegram webhook ownership and owner numeric allowlist.
+- Chatwoot custom tools can call an HTTPS endpoint with conversation metadata but have a 30-second timeout; they cannot synchronously wait for a human answer. Chatwoot Agent Bots can receive events and send through Chatwoot APIs. Source: official Chatwoot guides on custom tools and Agent Bots. The existing `Calapres | Owner Review Desk v1` in this repository is an inactive no-write preview, not a working customer-return path.
+- Captain still sends immediately. A reliable 60–120-second wait after the last inbound message needs a single external response controller; simply adding a prompt, tool, or a second bot risks immediate/duplicate replies.
+
+## Build contract for Claude
+
+1. Inventory the live Captain, Chatwoot webhooks/Agent Bot capability, n8n workflows, Telegram bridge, credentials and current owner-review drafts. Reconcile this brief with latest `main` and verified production state before coding. Do not interrupt the published owner bridge or customer inboxes during preparation.
+2. Implement the customer response controller in an unpublished, isolated path. Debounce for 60–120 seconds after the latest inbound customer message, coalesce bursts, and re-read the conversation before every send. One controller must own each customer response; Captain direct sending must be suppressed only at the controlled cutover, after rollback is prepared.
+3. Define a small set of owner-review triggers: special arrival deadline or rush request beyond verified policy; unusual customization or discount request; unclear or conflicting policy; sensitive account/order action; unresolved complaint; low-confidence answer after one useful clarification. Routine grounded questions stay automatic. Avoid alerting for every vague message or repeated duplicate.
+4. When triggered, create one case keyed to account, conversation, customer-message revision and reason. Save only the minimum sanitized summary and case reference. Ask the owner through the existing Telegram bot with the key facts, the exact decision needed, and a link/reference to the Chatwoot conversation. Do not include unnecessary customer identity or contact details. Obtain an explicit case-bound answer from the verified owner Telegram identity; text and voice may be supported if they pass the same verification.
+5. Keep the customer conversation pending while the owner decides. If a holding message is needed, send it only after the owner-alert write succeeded, use one short natural line, and avoid claiming a decision was made. On no owner response or delivery failure, alert the team and stop automated factual replies; do not silently let Captain improvise.
+6. On owner answer, check the case is still current, the owner is authorized, and the instruction applies to this customer only unless separately approved as reusable knowledge. Re-read the latest conversation, detect newer customer or staff messages, and prepare one concise customer reply grounded in the owner's actual answer. Enforce idempotent single send and a clear audit record. Never treat the owner's answer as permission for a refund, discount, shipping purchase, or other separate business action unless explicitly authorized for that case.
+7. Keep existing Chatwoot and Shopify read-only tool facts grounded. Apply a hard server-side output policy for routine replies (one short message, one question if needed, no date conversion or unsupported promise). Do not rely on prompt compliance alone.
+8. Test the three-turn event example, a case that genuinely requires owner review, owner text/voice answer, duplicate webhook, new customer message during review, staff takeover, owner timeout, failed Telegram delivery, and rollback. Use synthetic/private tests first; no real customer message or production activation during preparation. Record exact observed state and remaining gates before requesting final cutover approval.
+
+## Acceptance
+
+The system is ready for owner approval only when a synthetic exceptional case reaches his Telegram bot exactly once, his case-bound answer returns to the same Chatwoot conversation exactly once, no unverified delivery promise is made, routine replies wait 60–120 seconds after the last inbound message, and a tested rollback restores manual handling without duplicate responders. Private Playground text behavior alone does not satisfy this acceptance.

@@ -2,7 +2,7 @@
 
 ## Captain reply audit — 2026-09-24
 
-Live Chatwoot review found same-minute Captain replies and long, repetitive deadline answers. The owner requested extremely short answers with one useful question only when needed. Two live guidelines were saved and read back; after refinement, a private event-date test returned a 60-character answer without date conversion or an order-number request. This is not a hard output limit or proof of real-channel behavior. Captain still has no verified one- or two-minute send delay, and no responder routing was changed. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md).
+Live Chatwoot review found same-minute Captain replies and long, repetitive deadline answers. The owner then clarified that Captain should first ask useful short questions and privately consult him before answering a nonstandard case. The live event-date guideline now asks for delivery city, then engraving choice. A private test passed those two steps but Captain still gave its own 14-day verdict afterward; the owner-review loop and one- or two-minute delay do not exist yet. No responder routing changed. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and [owner-assisted reply brief](docs/handoffs/2026-09-24-owner-assisted-customer-replies-brief.md).
 
 ## Current Shopify product page and gift card — 2026-09-24
 

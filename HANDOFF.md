@@ -2,7 +2,7 @@
 
 ## Resume Captain reply correction — 2026-09-24
 
-Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and decision 0031. The owner requires extremely short replies and a real one- or two-minute delay. Two live guidelines were saved and read back; a refined private test returned a 60-character answer with one useful question, without date conversion or an order-number request. Captain remains connected and direct sending is still immediate; no responder routing changed. Do not claim real delay or a complete behavior fix from this private test. No customer message was sent. The prior human-handoff policy was not changed.
+Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md), [the owner-assisted reply brief](docs/handoffs/2026-09-24-owner-assisted-customer-replies-brief.md), and decision 0031. The owner now wants concise questions first, then a private owner decision for unusual cases and a response back to the same customer; he also requires a real one- or two-minute delay. Live Captain's event-date guideline was corrected and privately tested through city and engraving questions, but Captain still gave its own 14-day verdict after those details. The owner-review loop and delay are not implemented. Current owner Telegram bridge is published and recently ran successfully, but has no Chatwoot case/return branch. Captain remains connected; no customer message, owner alert, or routing change was made. Do not claim the full behavior is live.
 
 ## Resume current Shopify product-page work — 2026-09-24
 
