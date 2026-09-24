@@ -1,5 +1,9 @@
 # Calapres current state
 
+## Captain reply audit — 2026-09-24
+
+Live Chatwoot review found same-minute Captain replies, long and repetitive deadline answers, and a saved rule that keeps Captain replying even after an explicit request for a person. A concise-reply guideline was tightened and read back, but a private retest still added an unnecessary follow-up question; there is no verified one- or two-minute delay. The interim automation and handoff choices await the owner. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md).
+
 ## Current Shopify product page and gift card — 2026-09-24
 
 The owner accepted the current live product page and rejected the later smaller mobile card

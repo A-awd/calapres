@@ -1,5 +1,9 @@
 # Calapres handoff
 
+## Resume Captain reply correction — 2026-09-24
+
+Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and decision 0031. The owner is deciding whether to stop automatic replies until a real 60–120-second delay is available and whether explicit requests for a person should trigger handoff. The reply-length guideline was tightened in live Chatwoot and read back; a private test improved length but did not eliminate an unnecessary question. Do not claim response delay or a complete behavior fix from that test. No customer message was sent.
+
 ## Resume current Shopify product-page work — 2026-09-24
 
 Read [the dated live product-page and gift-card checkpoint](docs/handoffs/2026-09-24-product-page-gift-card-live-checkpoint.md)
