@@ -47,17 +47,19 @@ function init(form){
   function role(){return active&&d.custom?"custom":"plain"}
   function showPrice(){
     var r=role(),price=Number(d[r+"Price"]),compare=Number(d[r+"Compare"])||0,available=d[r+"Available"]==="true";
+    /* A chosen add-on (the greeting card) counts in Add to Cart and the sticky bar; the price line stays the burner's. */
+    var extra=Number(form.getAttribute("data-addon-cents"))||0;
     variant.value=d[r];
-    document.querySelectorAll("[data-product-price]").forEach(function(el){el.textContent=money(price)});
+    document.querySelectorAll("[data-product-price]").forEach(function(el){el.textContent=money(el.closest("[data-sticky-atc]")?price+extra:price)});
     var compareEl=document.querySelector("[data-product-compare]"),saving=document.querySelector("[data-product-saving]");
     if(compareEl){compareEl.hidden=compare<=price;compareEl.textContent=money(compare)}
     if(saving){saving.hidden=compare<=price;saving.textContent="وفّر "+money(Math.max(0,compare-price))}
-    submit.disabled=!available;submit.textContent=available?"أضِف إلى السلّة — "+money(price):"غير متوفر حاليًا";
+    submit.disabled=!available;submit.textContent=available?"أضِف إلى السلّة — "+money(price+extra):"غير متوفر حاليًا";
     document.querySelectorAll("[data-sticky-atc-submit]").forEach(function(el){el.disabled=!available;el.textContent=available?"أضِف إلى السلّة":"غير متوفر"});
   }
   /* The confirmation covers exactly what was entered, so any change asks for it again. */
   function updateAckValidity(){
-    ack.setCustomValidity(ack.checked?"":"يجب الموافقة على الشروط والأحكام.");
+    ack.setCustomValidity(ack.checked?"":"يجب الموافقة على الشرط.");
   }
   function resetAck(){ack.checked=false;updateAckValidity()}
   ack.addEventListener("change",updateAckValidity);
@@ -70,7 +72,7 @@ function init(form){
     text.value="";desc.value="";
     clearFile();file.value="";file.setCustomValidity("");
     root.querySelectorAll("[data-cp-phrase]").forEach(function(r){r.checked=false});
-    occasion.value="";
+    lastPhrase=null;occasion.value="";
     update();
   }
   function setChoice(next){
@@ -115,11 +117,28 @@ function init(form){
   desc.addEventListener("input",function(){update();resetAck()});
   update();
 
-  /* The chosen phrase's category is kept on the order as the occasion. */
+  /* The chosen phrase's category is kept on the order as the occasion.
+     Each phrase is a toggle: tapping (or Space on) the phrase that is already selected deselects it
+     and returns to «بدون» — plain variant, nothing kept — exactly as if «بدون» had been chosen. */
+  var lastPhrase=null;
+  function deselectPhrase(){
+    var none=choices.filter(function(c){return c.value==="none"})[0];
+    setChoice("none");
+    if(none)none.focus({preventScroll:true});
+  }
   root.querySelectorAll("[data-cp-phrase]").forEach(function(r){
-    r.addEventListener("change",function(){if(r.checked){occasion.value=r.getAttribute("data-category")||"";resetAck()}});
+    r.addEventListener("click",function(){
+      if(r!==lastPhrase){if(r.checked)lastPhrase=r;return}
+      deselectPhrase();
+    });
+    /* Browsers ignore Space on a radio that is already checked, so the keyboard toggle is handled here. */
+    r.addEventListener("keydown",function(e){
+      if((e.key===" "||e.key==="Spacebar")&&r.checked&&r===lastPhrase){e.preventDefault();deselectPhrase()}
+    });
+    r.addEventListener("change",function(){if(r.checked){lastPhrase=r;occasion.value=r.getAttribute("data-category")||"";resetAck()}});
   });
 
+  form.calapresShowPrice=showPrice;
   setChoice("none");
 }
 

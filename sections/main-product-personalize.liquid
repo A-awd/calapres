@@ -45,7 +45,11 @@
     <div class="pd-media">
       <span class="tag" data-product-saving{% unless mp_save > 0 %} hidden{% endunless %}>وفّر {% render 'calapres-price', cents: mp_save %}</span>
       {%- if mp_image -%}
+      {%- comment -%} Tapping the photo opens the viewer below with the original product image. {%- endcomment -%}
+      <button type="button" class="pd-zoom" data-zoom-open data-zoom-start="{{ mp_image.id }}" aria-haspopup="dialog" aria-label="عرض الصورة مكبّرة">
       <img id="pdImg" src="{{ mp_image | image_url: width: 1200, height: 1200, crop: 'bottom' }}" alt="{{ mp_image.alt | default: product.title | escape }}" width="1200" height="1200">
+      </button>
+      <span class="pd-zoom__hint" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg></span>
       {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}
       {%- endif -%}
@@ -143,6 +147,11 @@
             </div>
           </fieldset>
 
+          {%- comment -%} The optional greeting card sits after the methods, so the confirmation stays last. {%- endcomment -%}
+          {%- if section.settings.gift_card_product != blank -%}
+          {%- render 'calapres-gift-card', card_product: section.settings.gift_card_product, product: product -%}
+          {%- endif -%}
+
           {%- comment -%}
             One required confirmation, unchecked, directly before Add to Cart. Its wording follows the
             chosen path (theme-editor settings, pending the final reviewed text). The order stores the
@@ -156,6 +165,8 @@
             <label class="cp-check"><input type="checkbox" name="properties[الإقرار]" value="" required data-cp-ack><span data-cp-ack-text></span></label>
           </fieldset>
         </div>
+        {%- elsif section.settings.gift_card_product != blank -%}
+        {%- render 'calapres-gift-card', card_product: section.settings.gift_card_product, product: product -%}
         {%- endif -%}
         <button class="btn-dark" id="pdAdd" type="submit"{% unless cp_plain.available %} disabled{% endunless %}>
           {%- if cp_plain.available -%}
@@ -166,16 +177,11 @@
         </button>
         <p class="pd-design-status" data-product-status role="status" aria-live="polite"></p>
       {% endform %}
-
-      <div class="pd-sticky-atc" data-sticky-atc aria-hidden="true">
-        <span class="pd-sticky-atc__summary">
-          <span>{{ product.title }}</span>
-          <b data-product-price>{% render 'calapres-price', cents: mp_price %}</b>
-        </span>
-        <button type="button" class="btn-dark" data-sticky-atc-submit{% unless cp_plain.available %} disabled{% endunless %}>
-          {%- if cp_plain.available -%}أضِف إلى السلّة{%- else -%}غير متوفر{%- endif -%}
-        </button>
-      </div>
+      {%- comment -%}
+        No floating purchase bar (owner, 2026-09-24): it covered the newsletter, the footer and the
+        iPhone browser controls. The Add to Cart button in the form is the only purchase action;
+        calabriz.js skips its sticky-bar logic when the bar is absent.
+      {%- endcomment -%}
 
       {%- liquid
         assign cp_qa = 0
@@ -199,6 +205,30 @@
     </div>
   </div>
 </main>
+{%- if mp_image -%}
+{%- comment -%}
+  Product photo viewer: the product's own images at their original uploaded size, loaded only when opened.
+  Zoom by double-tap, pinch, the «تكبير» button, a mouse click or +/−; drag to move; «إغلاق», Escape or a
+  click outside the photo closes. More than one product image adds previous/next, swipe and arrow keys.
+{%- endcomment -%}
+<dialog class="pz" data-zoom aria-label="صورة المنتج">
+  <div class="pz-stage" data-zoom-stage dir="ltr"><div class="pz-canvas"><img class="pz-img" data-zoom-img alt="" width="{{ mp_image.width }}" height="{{ mp_image.height }}" draggable="false"></div></div>
+  <div class="pz-bar">
+    <button type="button" class="pz-btn" data-zoom-close>إغلاق <span aria-hidden="true">✕</span></button>
+    <span class="pz-count" data-zoom-count dir="ltr" hidden></span>
+    <button type="button" class="pz-btn" data-zoom-toggle aria-pressed="false">تكبير</button>
+  </div>
+  <button type="button" class="pz-nav pz-prev" data-zoom-prev aria-label="الصورة السابقة" hidden><span aria-hidden="true">›</span></button>
+  <button type="button" class="pz-nav pz-next" data-zoom-next aria-label="الصورة التالية" hidden><span aria-hidden="true">‹</span></button>
+  <p class="pz-help"><span class="pz-help--touch">المس الصورة مرتين أو باعد بإصبعين للتكبير</span><span class="pz-help--mouse">انقر على الصورة للتكبير</span></p>
+  <div hidden data-zoom-list>
+    {%- for img in product.images -%}
+    <span data-id="{{ img.id }}" data-src="{{ img | image_url: width: img.width | escape }}" data-w="{{ img.width }}" data-h="{{ img.height }}" data-alt="{{ img.alt | default: product.title | escape }}"></span>
+    {%- endfor -%}
+  </div>
+</dialog>
+<script src="{{ 'calapres-media-zoom.js' | asset_url }}" defer></script>
+{%- endif -%}
 <script src="{{ 'calapres-personalize.js' | asset_url }}" defer></script>
 
 <style>
@@ -235,6 +265,30 @@ textarea.cp-text{resize:vertical;min-height:5.2rem;line-height:1.6}
 .cp-consent{margin:1rem 0 .75rem}
 .pd-design-status{font-size:14px;line-height:1.7}.pd-design-status:empty{display:none}
 [data-product-saving][hidden],[data-product-compare][hidden]{display:none!important}
+.pd-zoom{display:block;width:100%;padding:0;margin:0;border:0;background:none;cursor:zoom-in;-webkit-tap-highlight-color:transparent}
+.pd-zoom:focus-visible{outline:2px solid var(--ink,#44271B);outline-offset:-4px}
+.pd-media .tag{pointer-events:none}
+.pd-zoom__hint{position:absolute;left:.75rem;bottom:.75rem;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;background:rgba(255,255,255,.85);color:var(--ink,#44271B);box-shadow:0 1px 4px rgba(0,0,0,.16);pointer-events:none}
+.pz{position:fixed;inset:0;z-index:1000;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#fff;color:var(--ink,#44271B);overflow:hidden}
+.pz:not([open]){display:none}
+.pz::backdrop{background:#fff}
+html.pz-lock,html.pz-lock body{overflow:hidden}
+.pz-stage{position:absolute;inset:3.75rem 0 2.75rem;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;scrollbar-width:none}
+.pz-stage::-webkit-scrollbar{display:none}
+.pz-canvas{display:flex;align-items:center;justify-content:center;width:max-content;height:max-content;min-width:100%;min-height:100%}
+.pz-img{display:block;max-width:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;cursor:zoom-in}
+.pz.is-zoomed .pz-img{cursor:grab}
+.pz-bar{position:absolute;top:0;right:0;left:0;display:flex;align-items:center;justify-content:space-between;gap:.75rem;height:3.75rem;padding:0 .75rem;direction:rtl;background:rgba(255,255,255,.92);border-bottom:1px solid rgba(68,39,27,.12)}
+.pz-btn{min-width:5.5rem;min-height:2.75rem;padding:0 .9rem;border:1px solid rgba(68,39,27,.45);background:#fff;color:inherit;font:inherit;font-size:15px;line-height:1;cursor:pointer}
+.pz-btn[aria-pressed="true"]{background:var(--ink,#44271B);color:var(--ground,#DFD4C3)}
+.pz-count{font-size:14px;opacity:.85}
+.pz-nav{position:absolute;top:50%;display:grid;place-items:center;width:2.75rem;height:2.75rem;margin-top:-1.375rem;border:1px solid rgba(68,39,27,.45);background:rgba(255,255,255,.9);color:inherit;font-size:1.6rem;line-height:1;cursor:pointer}
+.pz-prev{right:.5rem}.pz-next{left:.5rem}
+.pz-nav[hidden],.pz-count[hidden]{display:none}
+.pz-btn:focus-visible,.pz-nav:focus-visible{outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.pz-help{position:absolute;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;height:2.75rem;margin:0;padding:0 1rem;font-size:13px;opacity:.78;text-align:center}
+.pz-help--mouse{display:none}
+@media (hover:hover) and (pointer:fine){.pz-help--touch{display:none}.pz-help--mouse{display:inline}}
 </style>
 
 {% schema %}
@@ -247,7 +301,9 @@ textarea.cp-text{resize:vertical;min-height:5.2rem;line-height:1.6}
     { "type": "paragraph", "content": "إقرار واحد إلزامي وغير محدد مسبقًا، يتغير نصه حسب طريقة التخصيص ويُحفظ كما هو مع الطلب. يؤكد صحة مدخلات العميل فقط، ولا يُكتب كتنازل عن حقوقه في العيوب أو عدم المطابقة." },
     { "type": "textarea", "id": "ack_upload", "label": "عند إرفاق تصميم", "default": "أؤكد أن الصورة التي أرفقتها هي المرجع المطلوب لحفر طلبي، وأن لي حق استخدامها." },
     { "type": "textarea", "id": "ack_text", "label": "عند كتابة نص", "default": "أؤكد صحة النص والوصف اللذين أدخلتهما، وأفهم أن كالابريز تختار التكوين الفني المناسب للحفر." },
-    { "type": "textarea", "id": "ack_phrase", "label": "عند اختيار عبارة", "default": "أؤكد أن العبارة التي اخترتها هي المطلوبة للحفر كما هي." }
+    { "type": "textarea", "id": "ack_phrase", "label": "عند اختيار عبارة", "default": "أؤكد أن العبارة التي اخترتها هي المطلوبة للحفر كما هي." },
+    { "type": "header", "content": "كرت الإهداء" },
+    { "type": "product", "id": "gift_card_product", "label": "منتج كرت الإهداء", "info": "منتج فعلي مطبوع (ليس بطاقة هدية Shopify). يظهر خيار «أضف كرت إهداء» فقط عند اختياره وتوفّره." }
   ],
   "blocks": [
     {

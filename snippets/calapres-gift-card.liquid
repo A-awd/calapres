@@ -1,0 +1,102 @@
+{%- comment -%}
+  Printed greeting card add-on (A6, printed on card stock — never engraved on the burner).
+  A separate physical product (not a Shopify gift card) chosen in the section setting; added to the
+  cart after the burner by calabriz-cart.js with its own properties: إلى, رسالتك, من, and the hidden
+  _لون الكرت / _مع المبخرة. The colourway follows the burner in the product title; the customer does
+  not pick it. The inputs carry no name, so nothing here is ever sent with the burner itself.
+  Accepts: card_product (product), product (the burner).
+{%- endcomment -%}
+{%- assign gc_variant = card_product.selected_or_first_available_variant -%}
+{%- if card_product and gc_variant and gc_variant.available -%}
+{%- liquid
+  assign gc_cw = 'ivory'
+  assign gc_name = 'عاجي لؤلؤي'
+  assign gc_vars = '--gc-paper:#EFE8DC;--gc-ink:#44271B;--gc-soft:rgba(68,39,27,.74);--gc-grain-op:.26;'
+  if product.title contains 'البيج'
+    assign gc_cw = 'sand'
+    assign gc_name = 'رملي دافئ'
+    assign gc_vars = '--gc-paper:#D2C2AB;--gc-ink:#3A2618;--gc-soft:rgba(58,38,24,.78);--gc-grain-op:.34;'
+  elsif product.title contains 'الرمادي'
+    assign gc_cw = 'stone'
+    assign gc_name = 'حجري دافئ'
+    assign gc_vars = '--gc-paper:#C8C4BD;--gc-ink:#2B2927;--gc-soft:rgba(43,41,39,.78);--gc-grain-op:.36;'
+  endif
+  assign gc_surface = 'calapres-card-surface-' | append: gc_cw | append: '.svg' | asset_url
+  assign gc_grain = 'calapres-card-grain-' | append: gc_cw | append: '.png' | asset_url
+-%}
+<div class="gc" data-gc data-gc-variant="{{ gc_variant.id }}" data-gc-price="{{ gc_variant.price }}" data-gc-colour="{{ gc_name }}" data-gc-burner="{{ product.title | escape }}"
+  style="{{ gc_vars }}--gc-surface:url('{{ gc_surface }}');--gc-grain:url('{{ gc_grain }}');--gc-mono:url('{{ 'calapres-card-monogram.png' | asset_url }}');--gc-word:url('{{ 'calapres-wordmark.png' | asset_url }}')">
+  <label class="gc-row">
+    <input type="checkbox" data-gc-on aria-controls="gcBody">
+    <span class="gc-row__t">أضف كرت إهداء <span>— {% render 'calapres-price', cents: gc_variant.price %}</span></span>
+    <span class="gc-card gc-card--thumb" aria-hidden="true"><span class="gc-face"><span class="gc-logo gc-logo--mono"></span><span class="gc-logo gc-logo--word"></span></span></span>
+  </label>
+  <fieldset class="gc-body" id="gcBody" data-gc-body hidden disabled>
+    <legend class="cp-sr">كرت الإهداء</legend>
+    <div class="gc-preview">
+      <div class="gc-stage"><div class="gc-flip" data-gc-flip role="img" aria-label="معاينة كرت الإهداء">
+        <div class="gc-card gc-face gc-face--back">
+          <span class="gc-grain"></span><span class="gc-logo gc-logo--small"></span>
+          <span class="gc-block gc-block--to" data-gc-to-block hidden><span class="gc-lab">إلى</span><span class="gc-name" data-gc-out="to"></span></span>
+          <span class="gc-msg"><span class="gc-msg__t is-hint" data-gc-out="msg">رسالتك تظهر هنا</span></span>
+          <span class="gc-block gc-block--from" data-gc-from-block hidden><span class="gc-lab">من</span><span class="gc-name" data-gc-out="from"></span></span>
+        </div>
+        <div class="gc-card gc-face gc-face--front">
+          <span class="gc-grain"></span><span class="gc-logo gc-logo--mono"></span><span class="gc-logo gc-logo--word"></span>
+        </div>
+      </div></div>
+      <div class="gc-tabs" role="group" aria-label="وجه الكرت">
+        <button type="button" data-gc-side="back" aria-pressed="true">الظهر</button><button type="button" data-gc-side="front" aria-pressed="false">الوجه</button>
+      </div>
+      <p class="gc-note">ألوان الشاشة وملمس الطباعة قد يختلفان قليلًا عن الكرت المطبوع.</p>
+    </div>
+    <label class="cp-label" for="gcTo">إلى <span>(اختياري)</span></label>
+    <input class="cp-text" id="gcTo" type="text" maxlength="40" dir="rtl" autocomplete="off" data-gc-in="to">
+    <span class="gc-lh"><label class="cp-label" for="gcMsg">رسالتك</label><span class="gc-count" data-gc-count dir="ltr">0 / 150</span></span>
+    <textarea class="cp-text" id="gcMsg" rows="3" maxlength="150" dir="rtl" placeholder="تُطبع على الكرت كما تكتبها" data-gc-in="msg"></textarea>
+    <label class="cp-label" for="gcFrom">من <span>(اختياري)</span></label>
+    <input class="cp-text" id="gcFrom" type="text" maxlength="40" dir="rtl" autocomplete="off" data-gc-in="from">
+  </fieldset>
+</div>
+<style>
+.gc{margin:1rem 0;text-align:right}.cp .gc{margin:.9rem 0 0}
+.gc-row{display:flex;align-items:center;gap:.75rem;min-height:3.6rem;padding:.5rem .9rem;border:1px solid rgba(68,39,27,.45);background:#fff;cursor:pointer}
+.gc-row:has(input:checked){border-color:var(--ink,#44271B);box-shadow:inset 0 0 0 1px var(--ink,#44271B)}
+.gc-row:has(:focus-visible){outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.gc-row input{flex-shrink:0;width:20px;height:20px;margin:0;accent-color:var(--ink,#44271B)}
+.gc-row__t{flex-grow:1;font-size:15px;font-weight:500;line-height:1.4}.gc-row__t>span{font-weight:400;opacity:.8;white-space:nowrap}
+.gc-body{border:0;margin:.8rem 0 0;padding:0;min-width:0;display:grid;gap:.55rem}
+.gc-body[hidden]{display:none!important}
+.gc-preview{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:.4rem 0 .2rem}
+.gc-card{--mm:2.6667px;position:relative;display:block;width:calc(105*var(--mm));height:calc(148*var(--mm));color:var(--gc-ink)}
+.gc-card--thumb{--mm:.4px;flex-shrink:0;box-shadow:0 1px 3px rgba(40,30,20,.2)}
+.gc-face{position:absolute;inset:0;display:block;overflow:hidden;background:var(--gc-paper) var(--gc-surface) center/100% 100% no-repeat;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.gc-flip .gc-face{box-shadow:0 1px 2px rgba(40,30,20,.12),0 12px 30px rgba(40,30,20,.18)}
+.gc-grain{position:absolute;inset:0;background-image:var(--gc-grain);background-size:calc(21*var(--mm)) calc(21*var(--mm));mix-blend-mode:soft-light;opacity:var(--gc-grain-op);pointer-events:none}
+.gc-logo{position:absolute;background:var(--gc-ink);-webkit-mask:var(--gc-mono) center/100% 100% no-repeat;mask:var(--gc-mono) center/100% 100% no-repeat}
+.gc-logo--mono{left:calc(37.571*var(--mm));top:calc(36*var(--mm));width:calc(29.857*var(--mm));height:calc(38*var(--mm))}
+.gc-logo--small{left:calc(48.571*var(--mm));top:calc(15.5*var(--mm));width:calc(7.857*var(--mm));height:calc(10*var(--mm))}
+.gc-logo--word{left:calc(30.5*var(--mm));top:calc(95*var(--mm));width:calc(44*var(--mm));height:calc(6.2*var(--mm));-webkit-mask:var(--gc-word) 0 100%/100% 125% no-repeat;mask:var(--gc-word) 0 100%/100% 125% no-repeat}
+.gc-stage{perspective:1200px}
+.gc-flip{position:relative;width:calc(105*2.6667px);height:calc(148*2.6667px);transform-style:preserve-3d;transition:transform .5s ease;cursor:pointer}
+.gc-flip.is-front{transform:rotateY(180deg)}
+.gc-face--front{transform:rotateY(180deg)}
+.gc-block{position:absolute;left:calc(14.5*var(--mm));width:calc(76*var(--mm));display:flex;flex-direction:column;align-items:center;gap:calc(1*var(--mm));direction:rtl;text-align:center}
+.gc-block[hidden]{display:none}
+.gc-block--to{top:calc(37.5*var(--mm))}.gc-block--from{top:calc(107.5*var(--mm))}
+.gc-lab{font-family:Rubik,sans-serif;font-size:calc(2.822*var(--mm));line-height:1.2;color:var(--gc-soft)}
+.gc-name{font-family:Amiri,'Noto Naskh Arabic',serif;font-weight:700;font-size:calc(4.586*var(--mm));line-height:1.35;overflow-wrap:anywhere}
+.gc-msg{position:absolute;left:calc(14.5*var(--mm));top:calc(50.5*var(--mm));width:calc(76*var(--mm));height:calc(54*var(--mm));display:flex;align-items:center;justify-content:center;direction:rtl}
+.gc-msg__t{font-family:Amiri,'Noto Naskh Arabic',serif;font-size:calc(4.939*var(--mm));line-height:1.85;text-align:center;text-wrap:balance;white-space:pre-line;overflow-wrap:anywhere}
+.gc-msg__t.is-hint{opacity:.42}
+.gc-tabs{display:flex;border:1px solid rgba(68,39,27,.45)}
+.gc-tabs button{min-width:5.5rem;min-height:2.6rem;padding:0 .9rem;background:#fff;color:var(--ink,#44271B);font:inherit;font-size:14px}
+.gc-tabs button[aria-pressed="true"]{background:var(--ink,#44271B);color:var(--ground,#DFD4C3)}
+.gc-tabs button:focus-visible{outline:2px solid var(--ink,#44271B);outline-offset:2px}
+.gc-note{margin:0;font-size:.8rem;line-height:1.6;opacity:.8;text-align:center}
+.gc-lh{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;margin-bottom:-.3rem}.gc-lh .cp-label{margin:0}
+.gc-count{font-size:12px;opacity:.72}
+@media (prefers-reduced-motion:reduce){.gc-flip{transition:none}}
+</style>
+<script src="{{ 'calapres-gift-card.js' | asset_url }}" defer></script>
+{%- endif -%}

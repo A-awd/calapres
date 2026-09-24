@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Resume current Shopify product-page work — 2026-09-24
+
+Read [the dated live product-page and gift-card checkpoint](docs/handoffs/2026-09-24-product-page-gift-card-live-checkpoint.md)
+and [decision 0048](decisions/0048-compact-personalization-and-physical-gift-card.md). Verify
+latest GitHub `main` and Shopify theme roles first. At the last live read, the accepted theme
+`166625181952` was MAIN and `166623314176` was the only backup. The owner's rejected mobile-card
+draft `166628622592` was deleted without publication. Do not restore it or reinterpret its
+simulated-keyboard tests as owner approval. Older status and rollback details below are historical.
+
+The owner prefers future coding/design delegated to Claude using a clear English brief; Codex
+relays and verifies rather than interrupting active Claude work with new prompts. Preserve the
+current preferred storefront and the two-theme workflow. The card-writing visibility concern
+remains open for a separately reviewed visual proposal. Completed-order card property receipt,
+cart thumbnail, and print production were not fully verified in this continuation.
+
 ## Style-example pivot in source — 2026-09-23 (Claude, reviewed by Codex)
 
 Details: [style-example pivot brief and handoff](docs/handoffs/2026-09-23-style-examples-pivot.md) and [decision 0047](decisions/0047-style-examples-instead-of-live-generation.md).

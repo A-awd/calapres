@@ -1,5 +1,26 @@
 # Calapres current state
 
+## Current Shopify product page and gift card — 2026-09-24
+
+The owner accepted the current live product page and rejected the later smaller mobile card
+preview. Shopify's read-only theme query after the rejected draft was deleted showed exactly two
+themes: MAIN `166625181952` (`Calapres — تبديل العبارة وتكبير الصورة 2026-09-24`) and unpublished
+rollback `166623314176` (`Calapres — تصحيح العبارات 2026-09-24`). The rejected draft
+`166628622592` was never published and is gone. Older theme IDs and role claims below are dated
+history. Do not republish the rejected design.
+
+The live burner page has RTL paths `بدون`, recommended `صورة`, `نص` with optional explanation, and
+`عبارة`; an optional three-color physical gift card; required engraving consent; phrase
+deselection on a second tap; product-image zoom; and no floating mobile purchase bar. Base burner
+price is SAR 380, customization adds SAR 19, and the card adds SAR 19. These are dated live UI and
+Shopify observations, not proof of completed-order payload or manufacturing readiness. The phone
+card-visibility concern remains open because the owner's proposed compact preview was rejected.
+
+Canonical source has been reconciled from the live theme in a scoped checkpoint. See
+[the product-page and gift-card handoff](docs/handoffs/2026-09-24-product-page-gift-card-live-checkpoint.md)
+and [decision 0048](decisions/0048-compact-personalization-and-physical-gift-card.md). Continue
+from the current published theme, not the superseded style-example experiment.
+
 ## Style-example pivot in source — 2026-09-23 (Claude, reviewed by Codex)
 
 Details: [style-example pivot brief and handoff](docs/handoffs/2026-09-23-style-examples-pivot.md) and [decision 0047](decisions/0047-style-examples-instead-of-live-generation.md).

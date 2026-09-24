@@ -83,7 +83,7 @@ function renderCart(){
       (it.image?'<img src="'+esc(it.image)+'" alt="">':'')+
       '<div class="di-info"><h4>'+esc(t.name)+'</h4>'+
       (t.color?'<div class="di-color">اللون: '+esc(t.color)+'</div>':'')+
-      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+designDetails(it)+
+      (eng?'<div class="di-eng" data-preserve-digits>الحفر: «'+esc(eng)+'»</div>':'')+designDetails(it)+cardDetails(it)+
       '<div class="d-row"><span class="qty">'+
       '<button data-dec="'+idx+'" aria-label="إنقاص">−</button><b>'+digits(it.quantity)+'</b><button data-inc="'+idx+'" aria-label="زيادة">+</button>'+
       '</span><span class="di-price">'+money(it.final_line_price)+'</span></div>'+
@@ -180,6 +180,15 @@ function designDetails(item){
   if(p["ملاحظات التصميم"])html+='<div class="di-eng" data-preserve-digits>ملاحظات التصميم: '+esc(p["ملاحظات التصميم"])+'</div>';
   return html;
 }
+/* Greeting card line: the printed wording, exactly as ordered. */
+function cardDetails(item){
+  var p=item.properties||{},html="";
+  if(!p["رسالتك"])return html;
+  if(p["إلى"])html+='<div class="di-eng" data-preserve-digits>إلى: '+esc(p["إلى"])+'</div>';
+  html+='<div class="di-eng" data-preserve-digits>الرسالة: «'+esc(p["رسالتك"])+'»</div>';
+  if(p["من"])html+='<div class="di-eng" data-preserve-digits>من: '+esc(p["من"])+'</div>';
+  return html;
+}
 function initDesignForm(){
   var form=document.querySelector("[data-product-form]");if(!form)return;
   var select=form.querySelector("[data-design-select]");if(!select)return;
@@ -237,12 +246,14 @@ function submitProduct(form){
     if((typeof entry[1]==="string"&&!entry[1].trim())||(entry[1] instanceof File&&!entry[1].size))payload.delete(entry[0]);
   });
   var hasDesign=payload.has("properties[تصميم الحفر]");
+  /* The greeting card is its own product, added right after the burner (see calapres-gift-card.js). */
+  var card=typeof form.calapresCard==="function"?form.calapresCard():null,cardAdded=false,cardFailed=false;
   var controls=Array.from(form.querySelectorAll("input,select,textarea,button"));
   var disabled=controls.map(function(el){return el.disabled});
   var sticky=Array.from(document.querySelectorAll("[data-sticky-atc-submit]")),stickyDisabled=sticky.map(function(el){return el.disabled});
   busy=true;controls.forEach(function(el){el.disabled=true});sticky.forEach(function(el){el.disabled=true});
   form.setAttribute("aria-busy","true");
-  if(status)status.textContent=hasDesign?"جارٍ رفع التصميم وإضافة المبخرة…":"جارٍ إضافة المبخرة…";
+  if(status)status.textContent=(hasDesign?"جارٍ رفع التصميم وإضافة المبخرة":"جارٍ إضافة المبخرة")+(card?" وكرت الإهداء…":"…");
   var accepted=false;
   fetch("/cart/add.js",{method:"POST",headers:{"Accept":"application/json"},body:payload})
     .then(function(response){return response.json().then(function(data){
@@ -251,9 +262,13 @@ function submitProduct(form){
       if(hasDesign&&!(data.properties&&safeDesignUrl(data.properties["تصميم الحفر"]))){
         throw new Error("أُضيفت المبخرة، لكن تعذر تأكيد مرفق التصميم. راجع السلة قبل الدفع؛ لا تعِد الإضافة.");
       }
-      return fetchCart();
+      if(!card)return fetchCart();
+      return request("/cart/add.js",{items:[card]}).then(function(){cardAdded=true},function(){cardFailed=true}).then(fetchCart);
     })})
-    .then(function(){if(status)status.textContent="أُضيفت المبخرة"+(hasDesign?" مع التصميم المرفق":"")+" إلى السلة.";window.toast&&window.toast("أُضيفت إلى سلّتك")})
+    .then(function(){
+      var message=cardFailed?"أُضيفت المبخرة، وتعذّرت إضافة كرت الإهداء. راجع السلة قبل الدفع.":"أُضيفت المبخرة"+(hasDesign?" مع التصميم المرفق":"")+(cardAdded?" وكرت الإهداء":"")+" إلى السلة.";
+      if(status)status.textContent=message;window.toast&&window.toast(cardFailed?"تعذّرت إضافة كرت الإهداء.":"أُضيفت إلى سلّتك");
+    })
     .catch(function(error){
       var message=error.message;
       if(error instanceof TypeError)message=accepted?"أُضيفت المبخرة، وتعذر تحديث عرض السلة. افتح السلة قبل المحاولة مجددًا.":"تعذر تأكيد الإضافة. راجع السلة قبل المحاولة مجددًا.";

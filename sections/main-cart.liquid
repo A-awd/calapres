@@ -57,6 +57,11 @@
           {%- if item.properties['ملاحظات التصميم'] != blank -%}
           <div class="di-eng" data-preserve-digits>ملاحظات التصميم: {{ item.properties['ملاحظات التصميم'] | escape }}</div>
           {%- endif -%}
+          {%- if item.properties['رسالتك'] != blank -%}
+          {%- if item.properties['إلى'] != blank -%}<div class="di-eng" data-preserve-digits>إلى: {{ item.properties['إلى'] | escape }}</div>{%- endif -%}
+          <div class="di-eng" data-preserve-digits>الرسالة: «{{ item.properties['رسالتك'] | escape }}»</div>
+          {%- if item.properties['من'] != blank -%}<div class="di-eng" data-preserve-digits>من: {{ item.properties['من'] | escape }}</div>{%- endif -%}
+          {%- endif -%}
           <div class="d-row">
             <span class="qty">
               <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" lang="en" dir="ltr" aria-label="الكمية">

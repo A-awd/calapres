@@ -1,5 +1,8 @@
 # Product personalization cutover — 2026-09-24
 
+> Historical cutover record. For current theme roles, gift-card implementation, and the rejected
+> later mobile-card draft, read [the later live checkpoint](2026-09-24-product-page-gift-card-live-checkpoint.md).
+
 The published Shopify theme is **Calapres — تصحيح العبارات 2026-09-24** (theme ID 166623314176). It was duplicated from the previously published **Calapres — تصحيح رسالة الإقرار 2026-09-24** (166623117568) and differs only in `templates/product.json`. The previously published **Calapres — تخصيص المنتج 2026-09-23** (166620201216), the older **Calapres — أساسي** (166066389248), and draft **Calapres — احتياط** (166572294400) were not deleted.
 
 The phrase list now has ten entries: `الحمدلله على السلامة` has no space inside the first word, `عاد عيدكم` starts with `ع`, and `منزل مبارك` was added to the congratulations category. Shopify showed only three products in this store, white, beige and grey burners; all three use the default product template (`templateSuffix: null`), so this one template edit applies to all three.

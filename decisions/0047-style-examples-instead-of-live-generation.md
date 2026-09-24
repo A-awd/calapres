@@ -1,5 +1,9 @@
 # 0047 — Style examples instead of live name generation
 
+> Historical source-only experiment. Its six-example storefront path was superseded on
+> 2026-09-24 by [decision 0048](0048-compact-personalization-and-physical-gift-card.md).
+> It is not part of the current published product page.
+
 Date: 2026-09-23. Owner direction relayed in the Claude continuation. Supersedes the storefront
 parts of decisions 0045 and 0046; their backend decisions stay recorded but the storefront no
 longer uses the design service.

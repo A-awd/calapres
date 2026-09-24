@@ -138,6 +138,23 @@
       },
       "general": {
         "pay_now_button_label": "ادفع الآن"
+      },
+      "marketing": {
+        "accept_marketing_checkbox_label": "أوافق على استقبال الخصومات والعروض عبر البريد الإلكتروني"
+      },
+      "shop_policies": {
+        "refund_policy": "سياسة الاسترجاع",
+        "shipping_policy": "سياسة الشحن"
+      },
+      "order_summary": {
+        "shipping_policy_link": "سياسة الشحن"
+      }
+    }
+  },
+  "customer_accounts": {
+    "order_details": {
+      "returns": {
+        "return_and_refund_modal_header": "سياسة الاسترجاع"
       }
     }
   }
