@@ -248,6 +248,11 @@ canary. No provider, funding or architecture decision changed during the documen
   physical gift card as a separate paid item; two-theme release and rollback discipline. The
   later small mobile card preview was rejected and never published.
 
+- [0049 — Route occasion deadlines to staff without an autonomous verdict](decisions/0049-captain-occasion-deadline-handoff.md)
+  — preserve the within-14-days meaning; collect missing details then use native staff handoff;
+  prohibit independent deadline refusal/guarantee and stop after staff takeover; live action effects
+  remain unverified after conversation-less Playground failures.
+
 ## Superseded decisions
 
 - [0005 — Agentic discovery cannot bypass catalog governance](decisions/0005-agentic-catalog-governance.md)

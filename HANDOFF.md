@@ -1,5 +1,22 @@
 # Calapres handoff
 
+## Occasion-deadline routing live — 2026-10-22
+
+Owner-approved native Captain delta: the delivery FAQ now preserves **within 14 days**, and enabled
+scenario `2203` collects only missing city/customization/deadline before native staff handoff,
+without an autonomous refusal or guarantee. Two response guidelines and one guardrail are aligned,
+including silence after staff takeover. No customer message, Shopify/Meta/n8n change or new service.
+
+Two private Playground cases passed question selection and neutral wording. Both selected the new
+scenario and attempted note/label/handoff, but those native effects returned **Conversation not
+found** without a live Playground conversation. Do not claim a successful live handoff. The earlier
+real conversation separately proves the existing Open-after-agent-reply takeover behavior.
+
+Next: inspect the next natural occasion conversation for actual note, intervention label, Open
+handoff and silence after staff takeover. Do not manufacture external traffic. The old Telegram
+owner-review loop and delay remain outside this change. See [execution and limits](docs/handoffs/2026-10-22-captain-occasion-handoff.md)
+and [decision 0049](decisions/0049-captain-occasion-deadline-handoff.md).
+
 ## Resume Captain reply correction — 2026-09-24
 
 Read [the dated Captain reply audit](docs/handoffs/2026-09-24-captain-reply-audit.md), [the owner-assisted reply brief](docs/handoffs/2026-09-24-owner-assisted-customer-replies-brief.md), and decision 0031. The owner now wants concise questions first, then a private owner decision for unusual cases and a response back to the same customer; he also requires a real one- or two-minute delay. Live Captain's event-date guideline was corrected and privately tested through city and engraving questions, but Captain still gave its own 14-day verdict after those details. The owner-review loop and delay are not implemented. Current owner Telegram bridge is published and recently ran successfully, but has no Chatwoot case/return branch. Captain remains connected; no customer message, owner alert, or routing change was made. Do not claim the full behavior is live.

@@ -1,5 +1,22 @@
 # Calapres current state
 
+## Occasion-deadline routing live — 2026-10-22
+
+Owner-approved native Captain delta: the delivery FAQ now preserves **within 14 days**, and enabled
+scenario `2203` collects only missing city/customization/deadline before native staff handoff,
+without an autonomous refusal or guarantee. Two response guidelines and one guardrail are aligned,
+including silence after staff takeover. No customer message, Shopify/Meta/n8n change or new service.
+
+Two private Playground cases passed question selection and neutral wording. Both selected the new
+scenario and attempted note/label/handoff, but those native effects returned **Conversation not
+found** without a live Playground conversation. Do not claim a successful live handoff. The earlier
+real conversation separately proves the existing Open-after-agent-reply takeover behavior.
+
+Next: inspect the next natural occasion conversation for actual note, intervention label, Open
+handoff and silence after staff takeover. Do not manufacture external traffic. The old Telegram
+owner-review loop and delay remain outside this change. See [execution and limits](docs/handoffs/2026-10-22-captain-occasion-handoff.md)
+and [decision 0049](decisions/0049-captain-occasion-deadline-handoff.md).
+
 ## Captain reply audit — 2026-09-24
 
 Live Chatwoot review found same-minute Captain replies and long, repetitive deadline answers. The owner then clarified that Captain should first ask useful short questions and privately consult him before answering a nonstandard case. The live event-date guideline now asks for delivery city, then engraving choice. A private test passed those two steps but Captain still gave its own 14-day verdict afterward; the owner-review loop and one- or two-minute delay do not exist yet. No responder routing changed. See [the dated Captain audit](docs/handoffs/2026-09-24-captain-reply-audit.md) and [owner-assisted reply brief](docs/handoffs/2026-09-24-owner-assisted-customer-replies-brief.md).
