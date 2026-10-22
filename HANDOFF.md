@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Real isolated handoff and staff takeover passed — 2026-10-22
+
+The owner authorized a real test without customer sends. Real website test inbox `149093` proved
+scenario `2203` collected missing details, wrote the private summary, added `يحتاج-تدخل`, changed
+test conversation `38` to Open and assigned the existing service agent. In independent test `39`,
+native Take over interrupted Captain before details were complete. After a staff reply and a new
+visitor message supplying the remaining details, Captain stayed silent during a 44-second observed
+window, before test disconnection. This resolves the earlier Playground-only handoff limitation.
+
+Test inbox was then disconnected from Captain; the original three production connections remain.
+Both synthetic conversations are resolved and retained as evidence. No real customer or external
+social-channel message was sent. This is native Chatwoot web-conversation proof, not proof of
+external WhatsApp delivery or an already-in-flight interruption race. See
+[real acceptance and cleanup](docs/handoffs/2026-10-22-captain-live-isolated-acceptance.md).
+
 ## Occasion-deadline routing live — 2026-10-22
 
 Owner-approved native Captain delta: the delivery FAQ now preserves **within 14 days**, and enabled

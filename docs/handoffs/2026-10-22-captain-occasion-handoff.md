@@ -1,6 +1,6 @@
 # Captain occasion-deadline handoff — 2026-10-22
 
-Status: live configuration saved and read back; private Playground behavior verified. Real-conversation execution of the new handoff scenario remains unverified.
+Status: live configuration saved and real isolated website-conversation acceptance passed. See [the subsequent actual handoff and takeover test](2026-10-22-captain-live-isolated-acceptance.md). Earlier Playground limits below remain as historical evidence.
 
 ## Owner authorization and scope
 
