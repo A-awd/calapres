@@ -1,5 +1,7 @@
 # Onwan free pilot — 2026-10-23
 
+> Historical Free-stage record. Growth was later authorized and retained; the Free-only authorization and pending-trial statements below are superseded. Read the [consolidated experiment register](2026-10-23-national-address-experiment-register.md) first for the current verdict and no-repeat rule.
+
 ## Explicit owner authorization
 
 The owner approved installing Onwan on the existing Calapres store on its Free plan to inspect settings and test with synthetic data. The reviewed authorization disclosed access to customer names, contacts, addresses and device/activity data; customer edits; product reads; last60days order edits; checkout edits; and owner information. The owner did not approve a paid plan/trial, customer reminders or shipments.

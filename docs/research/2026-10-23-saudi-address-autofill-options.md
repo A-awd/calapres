@@ -1,5 +1,7 @@
 # Saudi short-address autofill — research checkpoint, 2026-10-23
 
+> Historical initial research. Later live tests refined the Basic/Growth findings. The owner subsequently rejected custom backends and external middleware for this address path; the conditional Direct API proposal below is not an active next action. Read the [consolidated experiment register](2026-10-23-national-address-experiment-register.md) first for the current verdict and no-repeat rule.
+
 ## Owner outcome
 
 Keep OTO. Buyers should enter their Saudi short address once, receive a full verified shipping address, and place an order that staff can ship without asking for address corrections. Contact should be exceptional. This is address-quality work, not a new carrier-platform selection.

@@ -1,5 +1,29 @@
 # Calapres handoff
 
+## Consolidated address experiments and conclusion review — 2026-10-23
+
+Start address work with the [experiment register](docs/research/2026-10-23-national-address-experiment-register.md).
+It inventories research, demos, actual tests, unsuccessful bounded actions, rejected proposals,
+cleanup and untested gates. The owner explicitly requested preserving these to prevent repetition.
+Do not repeat completed tests or the same Sync action without a concrete changed condition.
+Older Free/pending-trial and cleanup-pending statements are historical and superseded by this
+register, decision0050 and the later verified observations. The actual1010 report's stale cleanup
+opening was corrected against its existing native cleanup evidence; no new store test was run.
+
+The sound conclusion is limited: actual postorder Onwan→Shopify persistence passed; native OTO
+partially updated/misassigned fields, so full automation is not accepted. This is not proof that no
+official OTO solution exists or that any app/plan is the best. Initial import and post-import update
+remain distinct; the original pre-checkout cart was not completed; only one positive public code
+was tested; synthetic contacts were absent; carrier payload/label/wallet/tracking remain untested.
+
+Next: identify a supported official field contract/refresh correction, then one targeted genuine
+app-origin acceptance test after that concrete change. No speculative upgrade, n8n or external
+middleware. Retain Growth per latest owner instruction; do not cancel automatically. Existing
+customer messaging, auto-shipment and live-publication boundaries remain unchanged.
+
+Private visual evidence and hash index are saved in the verified project Ai-Work research folder;
+local iCloud placement does not establish cloud upload. GitHub contains sanitized findings only.
+
 ## Actual Onwan write passed; native OTO mapping remains blocked — 2026-10-23
 
 An actual customer-facing Onwan block updated the unpaid synthetic order1010 from a dummy

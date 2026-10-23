@@ -1,6 +1,6 @@
 # Actual Onwan order-address pilot — 2026-10-23
 
-Status: real postorder Onwan→Shopify address write passed; the same OTO order still has a partial, incorrectly mapped address after a selected-order synchronization attempt. No explicit synchronization success was captured. Synthetic cleanup is pending. The owner requires a native Shopify–OTO solution and rejected external middleware. No production adoption or completed original pre-checkout chain is claimed.
+Status: real postorder Onwan→Shopify address write passed; the same OTO order still has a partial, incorrectly mapped address after a selected-order synchronization attempt. No explicit synchronization success was captured. Synthetic cancellation/archive and one-item restock are verified; customer notification was unchecked. The owner requires a native Shopify–OTO solution and rejected external middleware. No production adoption or completed original pre-checkout chain is claimed.
 
 ## Scope and isolation
 

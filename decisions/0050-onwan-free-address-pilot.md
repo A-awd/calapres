@@ -107,3 +107,23 @@ later instructed; do not downgrade automatically. Draft checkout profile remains
 pre-checkout activation and messages off, and OTO shipment creation manual. Acceptance requires
 one genuine app-origin update to produce correct original code and full address in OTO.
 See [actual-order evidence](../docs/research/2026-10-23-onwan-actual-order-pilot.md).
+
+
+## Owner-required experiment preservation and quality review — 2026-10-23
+
+The owner requires saving every recorded address experiment to prevent repeated work. The
+[consolidated experiment register](../docs/research/2026-10-23-national-address-experiment-register.md)
+is now the first read. It preserves provenance for demos, pre-checkout tests, manually constructed
+fixtures, genuine postorder1010 writes, native settings/Sync checks, AI-documentation limits,
+rejected middleware and verified synthetic cleanup. Historical reports are retained with clear
+supersession notices; the stale1010 cleanup-pending opening is corrected.
+
+The bounded conclusion is accepted as an evidence review, not a production solution or an
+exhaustive best-app verdict. Do not infer no official OTO solution, a paid-tier requirement or
+carrier failure. Initial import versus later update, missing synthetic contacts, one positive
+sample, accelerated checkout and absent carrier payload/label remain explicit limits.
+
+No store tests or changes were repeated for this review. Resume only on a concrete supported
+native correction, then run one targeted test of that change. Preserve Growth and existing
+no-customer-message/no-shipment/no-live-publication constraints. External middleware remains
+rejected for addresses. Do not revive the old API proposal from historical research.

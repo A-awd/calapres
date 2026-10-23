@@ -269,3 +269,6 @@ policy changes.
 
 
 Address checkpoint (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) now records actual postorder Onwan persistence, the native OTO partial-update/mapping failure, completed synthetic cleanup, and the owner's explicit rejection of n8n/external middleware for addresses. Keep Growth; native connector correction is the remaining gate. No new access or integration was created.
+
+
+Experiment-preservation amendment (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) and the [consolidated address experiment register](docs/research/2026-10-23-national-address-experiment-register.md) are the first read for future address work. Preserve test provenance; repeat only after a stated material change. Current findings are a bounded diagnosis, not optimal-solution or carrier acceptance.

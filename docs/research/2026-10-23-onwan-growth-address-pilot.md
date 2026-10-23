@@ -1,5 +1,7 @@
 # Onwan Growth address pilot — 2026-10-23
 
+> Historical pre-checkout and administrative1008/1009 record. Genuine app-origin postorder1010 was tested later; do not treat the compatibility fixtures as completed storefront checkout. Read the [consolidated experiment register](2026-10-23-national-address-experiment-register.md) first for the current verdict and no-repeat rule.
+
 Status: partial live verification. Correct Calapres OTO access now confirms dedicated short-code import, but the second compatibility fixture exposed an incorrect building-number mapping. No production adoption or complete automatic acceptance is claimed.
 
 ## Authorization and commercial chronology
