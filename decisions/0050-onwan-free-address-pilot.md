@@ -79,3 +79,31 @@ integration article only (150000202278). No email/ticket was submitted. No real 
 Both synthetic1008 and1009 are cancelled/archived, each item restocked, notifications unchecked,
 paid0, no shipping/fulfillment or live theme publication. Keep Growth under the owner's later
 instruction; do not cancel automatically. Require supported correct mapping before adoption.
+
+
+## Actual app write and native-only boundary — 2026-10-23
+
+The owner requested a real Onwan→Shopify→OTO test without manual address insertion,
+customer messages or shipments. Actual postorder1010 capture succeeded from the app's public
+short-code lookup in unpublished checkout profile8221688064. Native Shopify fields and timeline
+prove the app wrote the complete address and original code. This is stronger evidence than the
+earlier administrative1009 fixture, but does not complete the original pre-checkout cart.
+
+OTO40695499 partially updated and misassigned native address2 as building number, retaining an
+old detailed address and leaving dedicated short-code/postcode fields empty. A bounded native
+sync attempt did not repair the later readback. Native bulk edit and connected-channel advanced
+settings did not expose an address refresh/mapping fix. commentKeys remains undocumented. The
+in-app AI could not document a supported correction; no email/ticket/human escalation requested.
+
+The owner expressly rejected n8n and all external middleware for this address integration.
+Only the official Shopify–OTO connector is in scope. No new channel, API key, persistent access,
+credential or workflow was created. The offline adapter is an abandoned proposal, not adopted
+code or a permission to deploy. This does not retire separately approved existing support work.
+No Shopify/OTO upgrade is justified by the evidence; a paid feature is not a proven repair.
+
+Order1010 is cancelled/archived with one item restocked and notifications unchecked; paid0,
+no fulfillment/label/shipment or customer messages. Preserve the audit trail. Keep Growth as
+later instructed; do not downgrade automatically. Draft checkout profile remains unpublished,
+pre-checkout activation and messages off, and OTO shipment creation manual. Acceptance requires
+one genuine app-origin update to produce correct original code and full address in OTO.
+See [actual-order evidence](../docs/research/2026-10-23-onwan-actual-order-pilot.md).

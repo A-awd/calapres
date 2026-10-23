@@ -266,3 +266,6 @@ canary. No provider, funding or architecture decision changed during the documen
 
 Add a numbered decision when scope, architecture, security posture, source authority, or operating
 policy changes.
+
+
+Address checkpoint (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) now records actual postorder Onwan persistence, the native OTO partial-update/mapping failure, completed synthetic cleanup, and the owner's explicit rejection of n8n/external middleware for addresses. Keep Growth; native connector correction is the remaining gate. No new access or integration was created.

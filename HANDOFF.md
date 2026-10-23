@@ -1,5 +1,40 @@
 # Calapres handoff
 
+## Actual Onwan write passed; native OTO mapping remains blocked — 2026-10-23
+
+An actual customer-facing Onwan block updated the unpaid synthetic order1010 from a dummy
+address to the publisher's public sample address, in an unpublished checkout-profile context.
+Onwan resolved RCTB4359 and wrote native address1=4359 Abi Al Karam,
+address2=RCTB4359, Al Dhubbat Dist., city RIYADH, postcode12627,
+national_address_short and the verified tag. The native timeline attributes the address update
+to Onwan. This proves real postorder app-to-Shopify persistence on Basic; it does not prove
+completion of the original pre-checkout cart.
+
+The same OTO order40695499 partially changed: street received address1 and building number
+received the entire address2 incorrectly. Detailed address retained the old test placeholder;
+dedicated short-code and postcode fields remained empty. A selected1010 synchronization
+attempt did not repair the subsequent full readback; no explicit sync success was captured.
+Bulk Update only exposed brand/reference fields and was cancelled. Existing connection has
+Pull and Webhook enabled and exposes no visible address mapping. commentKeys is undocumented;
+do not guess its meaning or change global settings. OTO's in-app AI also could not document a
+native mapping/refresh setting; this does not prove an internal OTO remedy is unavailable.
+
+Owner explicitly rejected n8n and all external middleware for this address path. No API key,
+channel, credential or workflow was created. Do not revive the abandoned local adapter proposal.
+Existing unrelated support architecture is not changed by this address-specific boundary.
+
+Synthetic1010 is cancelled/archived, paid0, and its single item restocked; customer notification
+was unchecked. No customer messages, payment, shipment, fulfillment or live publication occurred.
+Draft checkout profile8221688064 remains unpublished; active checkout and live theme untouched.
+Keep Growth under the later owner instruction; do not cancel renewal. Capture messages/OTP and
+OTO auto-shipment remain off. No Flow automation or upgrade was adopted.
+
+Next gate: a supported correction in the official Shopify–OTO connector, then one genuine
+Onwan-origin update with correct full address and original code in OTO. Do not report the
+complete path as working or ask for custom middleware credentials.
+See [actual-order pilot](docs/research/2026-10-23-onwan-actual-order-pilot.md) and
+[decision0050](decisions/0050-onwan-free-address-pilot.md).
+
 ## OTO code ingress confirmed; structured address mapping needs correction — 2026-10-23
 
 The owner opened the correct Calapres OTO merchant. Recipient views show public sample RCTB4359
