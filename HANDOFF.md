@@ -1,5 +1,32 @@
 # Calapres handoff
 
+## Onwan real lookup and partial OTO ingress — 2026-10-23
+
+Later owner authorization activated Growth and subsequently retained renewal conditionally on correct
+OTO transfer. This supersedes the earlier return-to-Free direction. Initial downgrade occurred before
+the correction; restoration was approved with a seven-day trial untilOct30, then approximately SAR109
+per30days beforetax/FX. Restored/native final billing readback remains pending; do not cancel again
+under the old instruction or claim a currentFree state.
+
+An unpublished copy167831535872 of live166625181952 rendered the short-code-only popup. Invalid
+ZZZZ0000 was rejected and public RCTB4359 resolved. Confirm populated original Shopify address,
+city and postal fields while preserving both personalized cartlines. Original shortcode/additionalnumber
+persistence was not visible. Precheckout/embed were then disabled in the test copy; live theme unchanged.
+
+A separate no-contact, unpaid syntheticorder1008 (Shopify7263773098240) was created fromD1 with one
+real catalogvariant and an explicit no-execute/no-ship/no-send note. Onwan marked the samplecodeVerified
+and wrote national_address_short. The embeddedOTO app imported this exactorder as40693127 with no
+shipment. Full recipientfields are not available in that limitedUI. StandaloneOTO is historicalOleel,
+not the linkedCalapres merchant; owner was asked to open the correct existing account. MissingData
+is not an address-failure verdict because testcontacts are intentionallyblank.
+
+Next: inspect full recipientaddress+dedicatedshortcode in the correct CalapresOTO account, verify restored
+Growth/native renewal, then cancel/restock only syntheticorder1008 with notificationsoff. Do not claim
+full end-to-endacceptance from these split tests or send any message/label/payment. OTO auto-create
+and discountedcheckout rates remainoff; current shipping/payment/customeraccount behavior unchanged.
+See [pilot evidence](docs/research/2026-10-23-onwan-growth-address-pilot.md) and
+[decision0050](decisions/0050-onwan-free-address-pilot.md).
+
 ## Onwan Free installation inspected — 2026-10-23
 
 The owner explicitly approved Onwan Free installation after its customer/order/checkout permissions

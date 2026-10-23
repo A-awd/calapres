@@ -253,7 +253,7 @@ canary. No provider, funding or architecture decision changed during the documen
   prohibit independent deadline refusal/guarantee and stop after staff takeover; live action effects
   remain unverified after conversation-less Playground failures.
 
-- [0050 — Bounded Onwan Free address investigation](decisions/0050-onwan-free-address-pilot.md)
+- [0050 — Bounded Onwan address investigation, later Growth trial and conditional retention](decisions/0050-onwan-free-address-pilot.md)
   — owner-approved Free installation and synthetic investigation only; no paid trial, reminders,
   storefront activation or shipment. Pre-checkout is gated by the app's Growth plan; the complete
   native-address-to-OTO workflow remains unproved.
