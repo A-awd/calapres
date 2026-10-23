@@ -57,3 +57,7 @@ No paid label test was performed in this audit. Actual pickup/contact and packag
 - https://icarry.com/ar/terms-conditions
 
 Private source observations and billing evidence remain local, with no customer, order, invoice-access token or credential committed.
+
+## Validation record
+
+The documentation checkpoint fffba31941cc40a8b87c534224abe3dd600453c5 passed Shopify-native architecture guard and Shopify theme check. The separate customer-service release-lock job failed on two unlocked operations-health files and a release digest mismatch. The same customer-service check was already failing on the unchanged parent d4f8e100e50e7b56a59fb0aef42c4afb08829643. This shipping audit changed documentation only and did not modify those source or release-lock files. Preserve this as an existing customer-service validation issue; do not regenerate its immutable release lock or expand this shipping task into that system.
