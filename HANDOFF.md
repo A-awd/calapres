@@ -1,36 +1,42 @@
 # Calapres handoff
 
-## Onwan lookup passed; full OTO fields await the correct merchant — 2026-10-23
+## OTO code ingress confirmed; structured address mapping needs correction — 2026-10-23
 
-The owner approved Growth testing and later reversed the return-to-Free instruction, retaining
-renewal conditionally on correct OTO transfer. After an initial authorized downgrade, Growth was
-restored: Onwan Billing shows Current plan, and Shopify native app details show Free trial with
-USD29/month plus optional usage after the trial. Approval showed October30 as trial end and first
-recurring date, approximately SAR109 per30days before tax/FX. Do not cancel under the old instruction.
+The owner opened the correct Calapres OTO merchant. Recipient views show public sample RCTB4359
+in the dedicated short-address field for both unpaid administrative fixtures1008 and1009.
+Order1008 (OTO40693127) contained only the code as native address1, so its lack of full address
+cannot establish loss of Onwan's checkout prefill.
 
-Only an unpublished copy167831535872 of live theme166625181952 received the test embed. A syntactically valid but invalid
-building code was rejected; public RCTB4359 resolved and populated original Shopify address, city
-and postal fields on Basic while retaining both personalized cart lines. Original short-code and
-additional-number persistence in that precheckout path remains unproved. The temporary precheckout
-setting and copied embed were disabled again; the live theme was not changed or published.
+A second bounded fixture1009 (Shopify7263822938368, DraftD2/1265510711552) manually used the
+actual prefill values: address1=4359, Abi Al Karam, Al Dhubbat; city=Riyadh; postalCode12627,
+plus a deliberate address2=RCTB4359 compatibility probe. Onwan wrote national_address_short
+and the verified tag. OTO automatically retained all source address text and recognized the code,
+but building-number became RCTB4359, structured postal-code and region stayed blank.
+This is a field-mapping defect for this supplied pattern, not a passed original storefront checkout.
+No configurable address mapping was found in the inspected Shopify channel/Advanced settings;
+the read-only edit panel was cancelled without saving. The owner directed use of OTO's in-app AI conversation, not email/human ticket. The exact synthetic
+field-mapping example was sent there with instructions not to change data or create a shipment;
+the assistant replied that its official sources do not document field mapping, its data source
+for national_address_short, or a reliable correction. It linked only the general Shopify integration
+article150000202278. This is an AI knowledge limitation, not proof that OTO has no internal mapping.
+No email/ticket was submitted and no support-driven change was applied.
 
-A separate unpaid administrative test order1008 (Shopify7263773098240) used one real product and an
-obvious synthetic customer with no email/phone. Onwan marked RCTB4359 Verified, saved
-national_address_short=RCTB4359 in Additional details, and added onwan-address-verified. The connected
-OTO app imported this exact order as40693127, without a shipment. Full recipient fields are not
-exposed in its limited Shopify UI. Standalone OTO is historical Oleel, not the linked Calapres merchant;
-the owner was asked to open the correct existing account. Missing Data is not an address verdict
-because contact fields were deliberately empty.
+Earlier real Onwan popup tests on Basic rejected the bad code and populated native street/address,
+city and postcode while preserving personalization. Checkout stopped before payment; no completed
+storefront order proves original code/additional-number persistence or the entire automatic chain.
+Do not conflate these split tests or manual source-address construction with full acceptance.
 
-Synthetic1008 was cancelled and archived, with one item restocked and customer notification unchecked.
-Its audit record remains available. Growth is retained, capture emails and WhatsApp consent/reminders
-remain off, and OTO auto-create shipments/discounted checkout rates remain off. No payment, label,
-shipment or production publication was made. Do not infer full checkout-to-OTO acceptance from split
-tests or use the wrong OTO tenant as proof.
+Both synthetic1008 and1009 are cancelled/archived with one item each restocked and customer
+notification unchecked. No customer contact details, customer messages, payment, fulfillment or shipping label were
+used. The separately authorized vendor AI query contains only synthetic/public test data. Audit records remain. Growth is retained per the owner's later instruction: free trial until
+Oct30, then approximately SAR109/30days before tax/FX (source USD29), optional usage unused.
+The old return-to-Free instruction is superseded. Capture email/WhatsApp/OTP remain unused/off;
+precheckout and the unpublished embed are off; live theme166625181952 was not published/changed.
+OTO auto-create shipments remains off under manual label release.
 
-Next: open the existing Calapres OTO account and inspect recipient address plus the dedicated short
-code for record40693127; preserve the cancelled synthetic audit record. See
-[pilot evidence](docs/research/2026-10-23-onwan-growth-address-pilot.md) and
+Next: supported field-mapping correction and proof that original precheckout code persists to OTO,
+then one proportionate acceptance check. No production activation or paid label is authorized.
+See [pilot evidence](docs/research/2026-10-23-onwan-growth-address-pilot.md) and
 [decision0050](decisions/0050-onwan-free-address-pilot.md).
 
 ## Onwan Free installation inspected — 2026-10-23

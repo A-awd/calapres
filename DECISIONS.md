@@ -254,9 +254,10 @@ canary. No provider, funding or architecture decision changed during the documen
   remain unverified after conversation-less Playground failures.
 
 - [0050 — Bounded Onwan address investigation, later Growth trial and conditional retention](decisions/0050-onwan-free-address-pilot.md)
-  — owner-approved Free installation and synthetic investigation only; no paid trial, reminders,
-  storefront activation or shipment. Pre-checkout is gated by the app's Growth plan; the complete
-  native-address-to-OTO workflow remains unproved.
+  — owner approved Growth testing and later retained renewal. Real Basic prefill and dedicated
+  OTO short-code ingress passed in split tests; full-address compatibility fixture exposed wrong
+  building/empty structured postcode. Both unpaid fixtures cancelled/restocked without notification.
+  Production activation, full automatic acceptance and a paid label remain unapproved/unproved.
 
 ## Superseded decisions
 

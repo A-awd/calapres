@@ -62,3 +62,20 @@ Public invalid/valid sample tests and actual native addressprefill passed for ba
 Keep messages, shipments and livepublicationoff. Afterinspection cancel/restock only the syntheticorder with notifications off. Do not silently cancelGrowthagain or adopt a production solution before fullmapping is proven. See the detailed executedpilotreport.
 
 Final commercial/cleanupreadback: OnwanBilling verifies restoredGrowthCurrentplan; nativeShopifyappdetails shows Freetrial andUSD29/month+usage aftertrial. Synthetic1008 cancelled/archivedand1itemrestocked,customernotificationunchecked. KeepGrowthperlatestinstruction whilecorrectCalapresOTOaccess is pending.
+
+
+## Correct Calapres OTO field readback — 2026-10-23
+
+Owner opened the correct existing merchant. Dedicated short-code RCTB4359 is confirmed in OTO1008.
+That fixture had code-only native input, so no full-address failure can be inferred from it.
+A second administrative unpaid fixture1009 manually supplied the actual native prefill address
+and postcode plus a deliberate code-in-address2 probe. OTO retained complete composite text and
+dedicated code, but building-number incorrectly became the code and structured postcode stayed
+blank. Existing channel/Advanced settings exposed no address-mapping control; inspection cancelled
+without saving. Full automatic storefront-to-OTO acceptance remains unproved. The owner authorized the
+in-app OTO AI conversation and rejected email/ticket handling. The synthetic field example was
+sent there. The AI could not document the mapping or correction and linked the general Shopify
+integration article only (150000202278). No email/ticket was submitted. No real customer data was shared.
+Both synthetic1008 and1009 are cancelled/archived, each item restocked, notifications unchecked,
+paid0, no shipping/fulfillment or live theme publication. Keep Growth under the owner's later
+instruction; do not cancel automatically. Require supported correct mapping before adoption.
