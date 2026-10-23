@@ -1,5 +1,25 @@
 # Calapres handoff
 
+## Shipping wallet and short-address audit — 2026-10-23
+
+The owner clarified that a Saudi contracting entity and Saudi invoices are sufficient;
+wholly Saudi share ownership is not required. Prepaid wallet billing, broad ready carrier
+choice, a ready Shopify integration and the short address printed on the carrier label
+are the acceptance criteria. OTO remains the leading candidate and the bridge adopted
+under decision0030; no alternative was installed or purchased.
+
+Read-only Shopify inspection confirmed the existing OTO switches remain off. That is
+consistent with the September9 decision to release labels only after physical readiness,
+not a defect to fix by enabling auto-label creation. The checkout's national-address
+wording is the first-address-line label. A bounded existing-order sample lacked a short
+code in both shipping address lines; universal collection, field transfer and actual
+carrier-label printing therefore remain unverified. No live setting or order changed.
+
+Next: define short-code collection/validation and verify Shopify-to-OTO transfer, then
+perform an exactly authorized carrier-label test only after readiness, pickup and package
+facts are confirmed. Preserve prepaid-only orders, manual label release and current
+customer shipping rates. See [the audit](docs/research/2026-10-23-shipping-wallet-national-address-audit.md).
+
 ## Real isolated handoff and staff takeover passed — 2026-10-22
 
 The owner authorized a real test without customer sends. Real website test inbox `149093` proved
