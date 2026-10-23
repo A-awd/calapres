@@ -1,5 +1,20 @@
 # Calapres current state
 
+## Onwan Free installation inspected — 2026-10-23
+
+The owner explicitly approved Onwan Free installation after its customer/order/checkout permissions
+were reviewed. Installation completed; authenticated Billing shows Free as Current plan and the
+home usage was0/25. All Features are Not active. Reloaded Settings verifies capture emails,
+WhatsApp consent/reminders and pre-checkout activation off. No theme embed, checkout block,
+past-order import, synthetic order, real address rewrite, paid trial, message or shipment was created.
+
+The intended pre-checkout enable control is disabled and requires Onwan Growth. Its authenticated
+price is approximately SAR109 per30days before tax/FX, with a7daytrial. Separate owner approval
+for that trial is pending; do not choose or accept a paid plan under the Free-only authorization.
+A static preview and advertised verification do not establish native full-address fill or OTO ingress.
+Keep OTO manual label release. See [decision0050](decisions/0050-onwan-free-address-pilot.md) and
+[the executed free-plan investigation](docs/research/2026-10-23-onwan-free-address-pilot.md).
+
 ## Saudi address autofill investigation — 2026-10-23
 
 Owner now prefers to retain OTO and prevent address-related customer follow-up. Live Plan details
