@@ -1,5 +1,18 @@
 # Calapres current state
 
+## Saudi address autofill investigation — 2026-10-23
+
+Owner now prefers to retain OTO and prevent address-related customer follow-up. Live Plan details
+confirms Basic. Public sample lookup successfully populated full address fields in Saudi Address Pro's
+demo, but this is not Shopify/OTO/carrier acceptance. Onwan is the first ready-app pilot candidate with
+current customer accounts; its Basic prefill stage and OTO mapping remain unproved. Zoketo advertises
+Basic prefill but has a legacy-account compatibility restriction. No app/account/trial was installed.
+
+Do not enable shipment auto-create, buy Plus, expose customer data, or rebuild personalized carts
+with a simple variant/quantity permalink. Prepare a bounded synthetic app trial only with exact
+permission/subscription approval; require preserved customization, accelerated-checkout coverage,
+correct native shipping address and OTO short-code ingestion. See [the evidence and options](docs/research/2026-10-23-saudi-address-autofill-options.md).
+
 ## Shipping wallet and short-address audit — 2026-10-23
 
 The owner clarified that a Saudi contracting entity and Saudi invoices are sufficient;
