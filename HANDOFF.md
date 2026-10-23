@@ -1,5 +1,36 @@
 # Calapres handoff
 
+## Official address follow-up: vendor modification possible; OTO specialist unavailable — 2026-10-23
+
+Read the [experiment register](docs/research/2026-10-23-national-address-experiment-register.md)
+and [official follow-up](docs/research/2026-10-23-native-address-official-followup.md) first.
+No prior order/address experiment was repeated and no new synthetic order was created.
+
+With explicit owner approval, the operator used Onwan's official in-app vendor chat.
+The vendor clarified its ready integration is with Shopify only, not OTO. It expressed willingness
+to change the output if OTO specifies its required format, and confirmed this needs a vendor-side
+app modification rather than a merchant setting. No exact format, release, test, price or inclusion
+in Growth support is confirmed. The final scope/cost question is still awaiting the vendor.
+Do not describe the app as having a ready OTO connector or the proposed modification as deployed.
+
+The owner then explicitly approved requesting a human OTO technical specialist through the
+existing chat only. The message was sent with public synthetic fields. The AI confirmed no
+specialist is currently available outside Saudi support hours and could not guarantee leaving
+the conversation in a pending queue. No human handoff, queued case or official correction exists.
+The current English support article lists Sunday–Thursday09:00–18:00 Riyadh, Friday/Saturday off;
+do not promise a guaranteed appointment or silently switch to email/tickets/WhatsApp.
+
+New bounded read-only leads: no Shopify validator artifact was visible in the inspected channel
+guide (the documented download is WooCommerce-specific); the available integration-log filter1010
+returned no entry; available feature/add-on views exposed no supported mapping fix. No channel
+reconnect, key, credential, upgrade, activation, message-to-customer, shipment or live publication.
+Keep Growth and the native-only/no-n8n boundary. Existing synthetic cleanup remains complete.
+
+Next: obtain OTO's supported source-field/update contract through the approved chat during
+available hours, clarify the vendor's scope/cost, then test one concrete official change from the
+app itself. No change means no repeat fixture or blind Sync. Existing approvals cover ongoing
+technical clarification in these same chats, not paid work, new access or a general deployment.
+
 ## Consolidated address experiments and conclusion review — 2026-10-23
 
 Start address work with the [experiment register](docs/research/2026-10-23-national-address-experiment-register.md).

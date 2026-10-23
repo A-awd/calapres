@@ -127,3 +127,26 @@ No store tests or changes were repeated for this review. Resume only on a concre
 native correction, then run one targeted test of that change. Preserve Growth and existing
 no-customer-message/no-shipment/no-live-publication constraints. External middleware remains
 rejected for addresses. Do not revive the old API proposal from historical research.
+
+
+## Official vendor conversations and unavailable specialist — 2026-10-23
+
+The owner separately and explicitly approved sending the technical question through Onwan's
+in-app vendor chat, and subsequently approved requesting a human OTO integration specialist
+through the existing OTO chat. These approvals persist for the same bounded public-synthetic
+technical clarification. They do not authorize emails/tickets/other channels, customer data,
+new credentials/access, upgrades, paid custom work or a general production deployment.
+
+Onwan's vendor clarified its existing ready integration is with Shopify only. It can modify
+output if OTO specifies a needed format, but that requires an app-side change. Whether this is
+included Growth support or additional paid development, and the exact field contract, remain
+unanswered. No modification or ready OTO connector is confirmed.
+
+OTO's assistant confirmed no human specialist was available outside current Saudi working hours,
+and could not guarantee a pending chat queue. The human-transfer request was sent, but no handoff
+or accepted case is claimed. No unauthorized channel fallback or repeated synthetic test occurred.
+
+Preserve the [official follow-up](../docs/research/2026-10-23-native-address-official-followup.md).
+Next gate is a supported OTO source-field/update contract plus a scoped vendor change, followed
+by one targeted real app-origin acceptance test. Keep Growth and native-only/manual-shipment
+boundaries. Do not guess source-field names or revive n8n/custom middleware from old drafts.

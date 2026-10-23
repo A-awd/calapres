@@ -272,3 +272,6 @@ Address checkpoint (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.
 
 
 Experiment-preservation amendment (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) and the [consolidated address experiment register](docs/research/2026-10-23-national-address-experiment-register.md) are the first read for future address work. Preserve test provenance; repeat only after a stated material change. Current findings are a bounded diagnosis, not optimal-solution or carrier acceptance.
+
+
+Official address follow-up (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) records owner-approved technical chats with Onwan and OTO, the vendor-side modification proposal, and the unavailable OTO specialist. The [follow-up report](docs/research/2026-10-23-native-address-official-followup.md) preserves exact unresolved scope/format gates; no new test, paid development or production change was accepted.
