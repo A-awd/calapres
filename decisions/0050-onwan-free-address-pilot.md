@@ -187,3 +187,19 @@ and [precise request](../docs/research/2026-10-24-oto-native-field-request.md) t
 approved chat when staffed, without another permission round for the same bounded purpose.
 No automatic monitor or scheduled wakeup was created. Keep test provenance and all original
 native-only/no-customer-message/no-shipment boundaries.
+
+## Explicit OTO email channel amendment — 2026-10-24
+
+The owner now explicitly requests switching OTO communication to email, preparing and sending
+the same bounded technical request. This supersedes prior OTO chat-only/no-email restrictions
+for this purpose. The operator sent one technical email from Calapres to OTO's published support
+address, verified by Gmail's sent confirmation and sent-copy readback. No Mwwared CC, attachment,
+customer data, new access, fee or store action. No duplicate send or repeated address fixture.
+
+The requested specialist/reference and actual native Shopify field/update specification remain
+pending; sending is not a confirmed accepted case or delivered correction. Continue by reading
+the response and relaying confirmed requirements through the already authorized Mwwared app
+chat for its identified SAR0-additional modification, then one targeted genuine app-origin test
+after a concrete change. Preserve Growth and all native-only/no-messages/no-shipments boundaries.
+This does not authorize other recipients/channels, paid custom work or new credentials.
+See [email escalation evidence](../docs/research/2026-10-24-oto-email-escalation.md).

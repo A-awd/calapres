@@ -1,5 +1,24 @@
 # Calapres current state
 
+## Owner-authorized OTO technical email sent — 2026-10-24
+
+The owner explicitly switched OTO communication to email and requested sending. This supersedes
+the earlier OTO chat-only restriction for the same bounded address task. One message was sent
+from the Calapres business mailbox to official `support@tryoto.com` at 10:11 Riyadh, verified by
+Gmail's sent confirmation and the sent copy's sender, recipient, subject and body. No Mwwared CC,
+attachments, customer data, new access, paid work or store change. No prior experiment was repeated.
+
+The email requests a connector specialist/reference, exact native Shopify source fields/formats,
+first-import and later-update behavior, and any supported correction on the existing channel. It
+states Mwwared's confirmed SAR0-additional correction offer and uses public synthetic evidence.
+No reply, reference, human assignment, supported contract or fix was observed at this checkpoint.
+Next: read the actual response, relay confirmed requirements through Mwwared's approved app chat,
+then test one concrete supported change. Keep Growth and native-only/no-messages/no-shipments.
+No automatic follow-up was scheduled. [Email evidence summary](docs/research/2026-10-24-oto-email-escalation.md).
+
+Earlier chat-only and no-email statements below are historical observations, superseded by this
+explicit owner channel change; they do not prohibit the now-authorized OTO email follow-up.
+
 ## Native contract request cannot reach an OTO specialist yet — 2026-10-24
 
 The owner explicitly authorized obtaining OTO's native Shopify field specification through chat,

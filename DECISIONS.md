@@ -281,3 +281,10 @@ Vendor confirmation (2026-10-24): [0050](decisions/0050-onwan-free-address-pilot
 
 
 Native field-contract sequence (2026-10-24): [0050](decisions/0050-onwan-free-address-pilot.md) records express authorization to obtain and relay the actual native contract, request the identified free correction and then test. [Current attempt](docs/research/2026-10-24-oto-field-contract-attempt.md) is blocked by unavailable specialist and inability to register a follow-up; no contract, implementation or test is claimed.
+
+
+OTO email amendment (2026-10-24): the owner explicitly replaced the OTO chat-only restriction
+with email for the same technical request. [0050](decisions/0050-onwan-free-address-pilot.md)
+and the [verified send summary](docs/research/2026-10-24-oto-email-escalation.md) record one
+sent email to official support, awaiting a native field/update contract. No customer data,
+Mwwared CC, new access, store change or repeated test; the existing native-only limits remain.
