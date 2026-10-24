@@ -1,5 +1,23 @@
 # Calapres handoff
 
+## Mwwared confirms no extra modification charge; OTO specification pending — 2026-10-24
+
+Read [the vendor email confirmation](docs/research/2026-10-24-mwwared-email-confirmation.md).
+The owner asked to read Mwwared's replies. Authenticated Calapres mail readback of the direct
+reply and chat transcript confirms the requested modification costs SAR0 additional. Growth's
+existing subscription is separate. The earlier cost-pending state is superseded for this request.
+
+The vendor asks us to obtain OTO's required method/data format, which it will prepare. It clarified
+that OTO pulls data from Shopify rather than Onwan sending directly to OTO. Exact field mapping,
+import/update behavior, deployed correction and complete acceptance remain unproved.
+
+No email response or other send, new access, subscription change or repeated order test occurred.
+Raw reply/transcript evidence is private in the project Ai-Work research archive dated2026-10-24.
+The existing approvals remain chat-only for the same bounded technical clarification. Next: obtain
+OTO's field/update specification, have Mwwared prepare the zero-additional-charge correction,
+then one targeted app-origin acceptance test. Preserve Growth/native-only/no-customer-message/
+no-shipment boundaries; do not revive n8n, guess fields or repeat a fixture without a new change.
+
 ## Official address follow-up: vendor modification possible; OTO specialist unavailable — 2026-10-23
 
 Read the [experiment register](docs/research/2026-10-23-national-address-experiment-register.md)

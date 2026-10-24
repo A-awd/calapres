@@ -150,3 +150,20 @@ Preserve the [official follow-up](../docs/research/2026-10-23-native-address-off
 Next gate is a supported OTO source-field/update contract plus a scoped vendor change, followed
 by one targeted real app-origin acceptance test. Keep Growth and native-only/manual-shipment
 boundaries. Do not guess source-field names or revive n8n/custom middleware from old drafts.
+
+
+## Vendor cost confirmation read in email — 2026-10-24
+
+The owner asked to read Mwwared's replies. The direct vendor email and matching chat transcript
+confirm no additional amount for the specific requested address-compatibility modification
+(SAR0 additional). Growth subscription terms remain distinct. This supersedes only the former
+cost-pending observation; it is not acceptance of broader custom work, a deployment or a passed
+end-to-end test.
+
+The vendor requires OTO's method/data format before preparing it, and clarified OTO pulls data
+from Shopify. Obtain the supported field/update specification through the already approved chat,
+then convey the bounded public specification to Mwwared through its approved chat. Receiving an
+email or its reply footer does not authorize sending an email. No email response, configuration,
+access change, new order, customer message or shipment occurred during this read-only review.
+
+See [the sanitized mail confirmation](../docs/research/2026-10-24-mwwared-email-confirmation.md).

@@ -1,5 +1,7 @@
 # Official address integration follow-up — 2026-10-23
 
+> Later update2026-10-24: the [vendor email confirmation](2026-10-24-mwwared-email-confirmation.md) establishes no additional charge for the requested modification. Cost-pending statements below preserve the earlier checkpoint; the technical field contract and tested correction are still pending.
+
 Status: Onwan clarified its ready integration is with Shopify only; the owner approved a narrowly scoped request for an OTO technical specialist through the existing chat. A concrete supported fix or field contract has not yet been supplied. No new order/address test was repeated and no production setting was saved.
 
 ## Why this work is new

@@ -275,3 +275,6 @@ Experiment-preservation amendment (2026-10-23): [0050](decisions/0050-onwan-free
 
 
 Official address follow-up (2026-10-23): [0050](decisions/0050-onwan-free-address-pilot.md) records owner-approved technical chats with Onwan and OTO, the vendor-side modification proposal, and the unavailable OTO specialist. The [follow-up report](docs/research/2026-10-23-native-address-official-followup.md) preserves exact unresolved scope/format gates; no new test, paid development or production change was accepted.
+
+
+Vendor confirmation (2026-10-24): [0050](decisions/0050-onwan-free-address-pilot.md) now records Mwwared's no-additional-charge statement for the requested compatibility modification. [Mail evidence summary](docs/research/2026-10-24-mwwared-email-confirmation.md). OTO's field specification and actual correction remain pending; no test was repeated or email sent.
