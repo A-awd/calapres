@@ -1,5 +1,29 @@
 # Calapres current state
 
+## Native contract request cannot reach an OTO specialist yet — 2026-10-24
+
+The owner explicitly authorized obtaining OTO's native Shopify field specification through chat,
+relaying it to Mwwared for the SAR0-additional modification, and testing the corrected actual
+Onwan→Shopify→OTO path. Preserve no-customer-message/no-shipment/no-middleware boundaries.
+
+Fresh authenticated chat inspection confirms the old conversation was closed with no escalation
+or open follow-up. A new direct specialist request was sent. The assistant confirmed no specialist
+is available and, after an explicit registration request, said it cannot register or confirm a
+follow-up and has no reference. No native field contract, human handoff or queue exists.
+Do not tell the owner the request is registered, a specialist is working on it, or fields were sent
+to Mwwared. The exact technical request is prepared and preserved, not an approved specification.
+
+The official current schedule and live assistant agree on Sunday–Thursday09:00–18:00 Riyadh,
+Friday/Saturday off. Next normal staffed period after Saturday24October is Sunday25October09:00;
+this is not an appointment. No unattended monitor or scheduled follow-up was created.
+
+No new order/address test, configuration, access, key, paid work, customer send or shipment.
+Resume the same bounded chat when staffed, obtain exact Shopify source paths/formats plus
+first-import/update behavior, relay real requirements, then test the actual vendor correction once.
+Do not substitute generic createOrder API names or guess output formatting.
+See [attempt status](docs/research/2026-10-24-oto-field-contract-attempt.md) and
+[prepared request](docs/research/2026-10-24-oto-native-field-request.md).
+
 ## Mwwared confirms no extra modification charge; OTO specification pending — 2026-10-24
 
 Read [the vendor email confirmation](docs/research/2026-10-24-mwwared-email-confirmation.md).

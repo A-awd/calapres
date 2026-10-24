@@ -167,3 +167,23 @@ email or its reply footer does not authorize sending an email. No email response
 access change, new order, customer message or shipment occurred during this read-only review.
 
 See [the sanitized mail confirmation](../docs/research/2026-10-24-mwwared-email-confirmation.md).
+
+
+## Explicit free-correction sequence and current external blocker — 2026-10-24
+
+The owner now expressly authorizes obtaining OTO's source-field/format contract via chat,
+relaying the actual requirements to Mwwared for the confirmed SAR0-additional modification,
+and testing the real app→Shopify→OTO path afterward. This replaces the earlier clarification-only
+scope for the identified bounded free correction and test. No extra paid work, new key/access,
+external bridge, general storefront activation, customer send or shipment is authorized.
+
+A new direct specialist request and explicit follow-up registration request were sent through
+OTO chat. The assistant confirmed inability to transfer, register a follow-up or give a reference
+outside current staffed hours. The old request is closed, not pending. No contract was obtained,
+so none was passed off as approved to Mwwared, and no correction or test was performed.
+
+Use the [preserved attempt status](../docs/research/2026-10-24-oto-field-contract-attempt.md)
+and [precise request](../docs/research/2026-10-24-oto-native-field-request.md) to resume in the same
+approved chat when staffed, without another permission round for the same bounded purpose.
+No automatic monitor or scheduled wakeup was created. Keep test provenance and all original
+native-only/no-customer-message/no-shipment boundaries.

@@ -278,3 +278,6 @@ Official address follow-up (2026-10-23): [0050](decisions/0050-onwan-free-addres
 
 
 Vendor confirmation (2026-10-24): [0050](decisions/0050-onwan-free-address-pilot.md) now records Mwwared's no-additional-charge statement for the requested compatibility modification. [Mail evidence summary](docs/research/2026-10-24-mwwared-email-confirmation.md). OTO's field specification and actual correction remain pending; no test was repeated or email sent.
+
+
+Native field-contract sequence (2026-10-24): [0050](decisions/0050-onwan-free-address-pilot.md) records express authorization to obtain and relay the actual native contract, request the identified free correction and then test. [Current attempt](docs/research/2026-10-24-oto-field-contract-attempt.md) is blocked by unavailable specialist and inability to register a follow-up; no contract, implementation or test is claimed.
