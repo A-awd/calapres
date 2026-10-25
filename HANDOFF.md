@@ -1,5 +1,25 @@
 # Calapres handoff
 
+## OTO replied; complete evidence reply awaits owner approval — 2026-10-25
+
+Authenticated Calapres mail review confirms a human OTO Customer Support reply today at12:59
+Riyadh requesting Shopify/OTO field screenshots for technical review. No native specification,
+fix, confirmed case reference or integration-engineer assignment was supplied. Mwwared's latest
+direct reply remains23October19:24: it awaits OTO's required format and confirms SAR0 additional
+for the identified correction. No newer vendor change was observed in the reviewed mailbox scope.
+
+The owner's latest instruction is to show complete proposed replies and obtain approval before
+sending. A complete OTO reply plus three fresh synthetic-only screenshots is prepared privately,
+not sent or uploaded. No redundant Mwwared message is recommended until actual OTO requirements.
+Read [the review and proposed next step](docs/research/2026-10-25-oto-reply-evidence-review.md).
+
+The screenshots are fresh read-only inspection of the preserved canceled fixture, justified by
+OTO's request; no test or Sync was repeated. Shopify shipping/short code remain complete; OTO's
+wrong building, empty code/postcode and old composite address remain. Billing still has the old
+synthetic placeholder, raising a source-selection question without establishing root cause.
+Keep Growth/native-only/no-customer-message/no-shipment/no-new-access boundaries. Next: owner
+approval of the exact OTO reply and three attachments, then one verified send in the existing thread.
+
 ## Owner-authorized OTO technical email sent — 2026-10-24
 
 The owner explicitly switched OTO communication to email and requested sending. This supersedes

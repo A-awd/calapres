@@ -288,3 +288,10 @@ with email for the same technical request. [0050](decisions/0050-onwan-free-addr
 and the [verified send summary](docs/research/2026-10-24-oto-email-escalation.md) record one
 sent email to official support, awaiting a native field/update contract. No customer data,
 Mwwared CC, new access, store change or repeated test; the existing native-only limits remain.
+
+
+Complete reply review (2026-10-25): [0050](decisions/0050-onwan-free-address-pilot.md) records
+the owner's requirement for complete proposed company correspondence and approval before the
+next send. [OTO response and prepared evidence](docs/research/2026-10-25-oto-reply-evidence-review.md)
+confirms a human screenshot request, a fresh synthetic-only readback and an unsent comprehensive
+reply. Native source/update requirements and a supported correction remain pending.

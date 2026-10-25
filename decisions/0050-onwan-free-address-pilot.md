@@ -203,3 +203,21 @@ chat for its identified SAR0-additional modification, then one targeted genuine 
 after a concrete change. Preserve Growth and all native-only/no-messages/no-shipments boundaries.
 This does not authorize other recipients/channels, paid custom work or new credentials.
 See [email escalation evidence](../docs/research/2026-10-24-oto-email-escalation.md).
+
+## Complete company reply review and evidence preparation — 2026-10-25
+
+The owner requires complete, clear proposed company replies and approval before further sending
+in this matter, to reduce repeated correspondence. This later instruction gates the next OTO
+reply and attachment transmission even though the original technical email was authorized.
+
+OTO's human support reply requests screenshots; Mwwared still awaits the native specification
+and its identified correction remains SAR0 additional. Three fresh screenshots of the preserved
+synthetic fixture were prepared read-only in response. No new test, Sync, data/configuration
+change or outbound reply occurred. The source-selection question raised by the old billing
+placeholder is a hypothesis, not a proven cause. No supported correction has been delivered.
+
+Recommend one complete OTO reply with the evidence and concrete native contract/update request,
+after owner approval. Defer a redundant Mwwared message until actual requirements are available;
+then present its complete implementation request before sending. Preserve Growth and all existing
+native-only/no-customer-message/no-shipment/no-new-access limits. See the
+[reply/evidence review](../docs/research/2026-10-25-oto-reply-evidence-review.md).
