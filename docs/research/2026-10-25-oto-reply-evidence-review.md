@@ -1,5 +1,27 @@
 # OTO reply and prepared evidence — 2026-10-25
 
+## Later owner approval and verified dispatch — 2026-10-25, 13:52 Riyadh
+
+The owner explicitly approved sending the complete displayed reply and the three proposed
+images in the same email conversation, with dispatch verification. This supersedes the
+approval-pending status in the earlier review below for this specific message and image set.
+
+One reply was sent from the authenticated Calapres business mailbox to official OTO support
+only, inside the existing conversation. The sent message showed the correct sender, single
+recipient, subject, timestamp13:52 Riyadh, full approved body and exactly three image attachments.
+The body was compared in full with the approved draft after normalizing whitespace; all approved
+content was present. Image filenames, sizes and hashes matched the private approval manifest
+before upload, and all three completed attachments were visible before send and in the sent copy.
+No duplicate send, CC, unrelated file, customer record or credential was transmitted.
+
+Private sender/recipient details, the reviewed body, approval manifest, file hashes, sent-copy
+readback and two screenshots preserve the audit trail. No store test, Sync, edit/save, new order,
+configuration, access, payment or shipment occurred. No Mwwared message or monitor was created.
+
+Await OTO's actual technical response. Sending evidence is not a field specification, confirmed
+engineer assignment, correction or completed address acceptance. Future company replies still
+require showing the owner their complete text and proposed attachments before sending.
+
 ## Scope and owner instruction
 
 The owner requested checking company replies, recommending a solution, and showing complete,

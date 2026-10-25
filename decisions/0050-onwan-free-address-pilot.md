@@ -221,3 +221,16 @@ after owner approval. Defer a redundant Mwwared message until actual requirement
 then present its complete implementation request before sending. Preserve Growth and all existing
 native-only/no-customer-message/no-shipment/no-new-access limits. See the
 [reply/evidence review](../docs/research/2026-10-25-oto-reply-evidence-review.md).
+
+## Approval executed: same-thread reply and three images — 2026-10-25
+
+The owner explicitly approved sending the complete proposed OTO reply with the three displayed
+synthetic-only screenshots in the existing email conversation and requested send verification.
+That one reply was sent and verified at13:52 Riyadh: full approved body, correct business sender,
+single OTO-support recipient, same thread and all three filenames. There was no CC, duplicate
+send or unrelated attachment. The prior approval-pending status is superseded for this send only.
+
+This grants no blanket authority for future replies or new changes. Present the next complete
+proposed company reply and attachments for owner review. The native field specification, actual
+correction and targeted acceptance remain pending; no new store test or other operation occurred.
+All Growth/native-only/no-customer-message/no-shipment/no-new-access limits remain active.

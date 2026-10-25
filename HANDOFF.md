@@ -1,5 +1,22 @@
 # Calapres handoff
 
+## Approved complete OTO reply and three images sent — 2026-10-25
+
+The owner explicitly approved the complete displayed reply, three proposed images and sending
+inside the existing OTO email conversation. One reply was sent at13:52 Riyadh from the Calapres
+business mailbox to `support@tryoto.com` only. The sent message's sender, recipient, timestamp,
+same-thread context, full approved body and exactly three approved attachment names were verified.
+The body matched the approved text with whitespace normalized; file hashes matched the approval
+manifest before upload. No duplicate send, CC or other attachment. Private evidence is preserved.
+
+The previous approval-pending entry below is historical and superseded by this verified dispatch.
+No new technical reply, field contract, correction or integration-engineer assignment is claimed.
+Next: inspect OTO's actual response, then show the next complete proposed company reply for owner
+review. Convey concrete accepted requirements to Mwwared only after receipt. No redundant Mwwared
+message, store test/Sync, configuration, access, payment, customer send or shipment occurred.
+Keep Growth and native-only boundaries. No automatic follow-up was scheduled.
+See [the review and dispatch addendum](docs/research/2026-10-25-oto-reply-evidence-review.md).
+
 ## OTO replied; complete evidence reply awaits owner approval — 2026-10-25
 
 Authenticated Calapres mail review confirms a human OTO Customer Support reply today at12:59

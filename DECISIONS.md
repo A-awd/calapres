@@ -295,3 +295,10 @@ the owner's requirement for complete proposed company correspondence and approva
 next send. [OTO response and prepared evidence](docs/research/2026-10-25-oto-reply-evidence-review.md)
 confirms a human screenshot request, a fresh synthetic-only readback and an unsent comprehensive
 reply. Native source/update requirements and a supported correction remain pending.
+
+
+Approved evidence reply sent (2026-10-25): the owner explicitly approved the complete OTO reply
+and three screenshots. [0050](decisions/0050-onwan-free-address-pilot.md) and the
+[verified dispatch addendum](docs/research/2026-10-25-oto-reply-evidence-review.md) record one
+same-thread send at13:52 Riyadh with full-body and three-attachment readback. This is dispatch,
+not a correction or acceptance; future replies retain the owner's complete-review gate.
