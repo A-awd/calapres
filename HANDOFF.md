@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Same-page order-age research — 2026-10-26
+
+Owner requested apps/methods that add age inside the original Orders table. No ready-made
+same-page age-column product was verified. Official native extension targets do not expose
+custom Orders columns. Orderline explicitly uses a separate screen; Better Admin/Power-Up
+list local enhancements but do not document age. A custom browser content script can potentially
+modify the same page locally, subject to actual full timestamp and compatibility testing.
+This is a development proposal, not implemented/verified operation, not a shared store setting
+or Shopify mobile feature. IAB tab binding was stale and old browser inventory empty; no external
+browser/new tab/extension installation/access expansion was attempted. Existing flows/view remain
+unchanged. No owner approval for extension development/installation is inferred from research.
+See [evidence and boundaries](docs/research/2026-10-26-native-orders-age-column.md).
+Next only upon owner direction: prepare a bounded local extension design and verify timestamp/
+browser support before promising same-page operation; preserve one-IAB/no-browser-switch rules.
+
 ## Native review/follow-up and undelivered view activated — 2026-10-26
 
 Owner explicitly authorized application. Native Flow now has two new Active workflows:
