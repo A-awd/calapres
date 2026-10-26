@@ -1,5 +1,19 @@
 # Calapres handoff
 
+## Owner-approved paid-order deletion request sent to Shopify Support — 2026-10-26
+
+Owner explicitly approved sending the complete reviewed Arabic draft. Sent it once in the
+authenticated Calapres Shopify Help conversation; message appeared in conversation history and
+composer cleared. The request names #1001–#1003, explains owner payment tests and requests
+internal review of actual Admin/report deletion with required transaction records retained.
+It expressly prohibits refunds/cancellation/order changes without separate approval.
+Clicked Connect to route to a human advisor. Current UI says Connecting with an Advisor;
+only an automated Arabic acknowledgment is visible. No human decision, ticket/reference,
+accepted engineering escalation, exception or deletion is proved. The earlier unsent-draft
+checkpoint is historical and superseded by this verified dispatch. Next: read actual advisor
+reply in this same conversation; do not duplicate the send or assume deletion is possible.
+
+
 ## Paid-order deletion research; support draft awaits approval — 2026-10-26
 
 Owner again requested actual deletion of #1001–#1003. Refreshed official REST Order,
