@@ -1,5 +1,17 @@
 # Calapres handoff
 
+## Selected experimental orders hidden from working view — 2026-10-26
+
+Owner selected six orders and explicitly accepted hiding as the outcome. Verified selection:
+#1001, #1002, #1003, #1008, #1009 and #1010. Applied existing `تجريبي` tag to those six
+only (first three already had it). Saved Shopify order view `الطلبات الفعلية`, ID1599012307200,
+with query `-tag:تجريبي`. Reload proved only #1004–#1007 are present. The filter is a saved
+view, not permanent deletion or a global removal from All/reports. No refund, cancellation,
+fulfillment, deletion, customer send or payment change was performed. Selected test records
+and earlier OTO/address evidence remain recoverable. Next: use this saved view for daily work;
+newly tagged experimental orders are excluded by its filter.
+
+
 ## Captain temporarily paused by owner — 2026-10-26
 
 The owner explicitly requested a temporary stop of Chatwoot Captain. In authenticated Calapres
