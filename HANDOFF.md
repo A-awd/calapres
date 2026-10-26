@@ -1,5 +1,30 @@
 # Calapres handoff
 
+## Private-courier deliveries recorded; Shopify deletion refusal confirmed — 2026-10-26
+
+Owner reported #1004 and #1005 were already delivered by private courier without labels and
+explicitly authorized recording this. Updated each native Shopify fulfillment manually with
+empty tracking and Notify customer unchecked, then Mark as delivered. Verified each now shows
+Paid / Fulfilled / Delivered and auto-Archived, with internal timeline comment stating previous
+private-courier delivery, no tracking/label, owner confirmation, and unknown actual delivery date.
+Shopify records the administrative update date as 2026-10-26; this is not evidence of the original
+physical delivery date. No shipping label, payment/refund, or shipping-confirmation send requested.
+#1004 fulfillment6570004611328; no invented tracking or carrier delivery event. #1005 separately
+verified delivered plus saved comment. A transient timeout while posting #1004 comment was
+resolved by checking absence, retaining the draft, posting once and verifying one saved comment.
+Onwan also reacted on the live orders; no Onwan settings were changed.
+
+Owner also explicitly requested replying to Shopify Support. Human advisor Yan confirmed all
+#1001–#1003 used a live gateway and cannot be permanently deleted from admin/reports, with no
+exception at any support level. He called it a platform restriction and offered cancellation
+without refund plus archive, or archive alone. Those alternatives were NOT applied. Replied
+once acknowledging confirmation, requesting all three remain unchanged, asking for case/chat
+reference and logging product feedback. Verified outbound reply; no reference or feedback
+registration confirmed yet. Earlier possible-support-exception ideas are superseded by this
+human confirmation. No cancellation/refund on #1001–#1003. Next: read actual reference if Yan
+replies; do not repeat deletion attempts or recreate the deleted address fixtures.
+
+
 ## Yan clarification answered under owner instruction — 2026-10-26
 
 Shopify advisor Yan asked whether two owner test orders should be removed without refunds,
