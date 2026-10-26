@@ -1,5 +1,16 @@
 # Calapres current state
 
+## Yan clarification answered under owner instruction — 2026-10-26
+
+Shopify advisor Yan asked whether two owner test orders should be removed without refunds,
+then checked whether the owner was present. Owner explicitly instructed reply. Sent one English
+clarification naming THREE orders #1001, #1002 and #1003; requested permanent Admin/report
+removal and review of any internal exception while retaining mandatory payment/tax records.
+No refund/cancellation/other order modification was requested or authorized. Verified the complete
+outbound text in chat and cleared composer. No substantive decision or technical escalation yet.
+Next: read Yan's actual answer in the same live Shopify Help chat; do not resend or assume success.
+
+
 ## Owner-approved paid-order deletion request sent to Shopify Support — 2026-10-26
 
 Owner explicitly approved sending the complete reviewed Arabic draft. Sent it once in the
