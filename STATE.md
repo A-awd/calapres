@@ -1,5 +1,20 @@
 # Calapres current state
 
+## Paid-order deletion research; support draft awaits approval — 2026-10-26
+
+Owner again requested actual deletion of #1001–#1003. Refreshed official REST Order,
+GraphQL orderDelete and deletion-guide evidence: an order that interacted with an online
+payment gateway cannot be deleted by the documented interface/API. No documented support
+exception was found; cancellation/refund is not a proved route and was not attempted.
+Opened authenticated Shopify Help on the Calapres account. Its human-chat surface showed
+Waiting in queue and an initial automated greeting. Prepared an Arabic draft asking the
+internal orders team to review possible official deletion/correction with required payment
+records retained. The text is only in the message composer, NOT sent. No human answer,
+case reference, accepted escalation or deletion exception is confirmed. No order or financial
+change. Next: obtain owner approval for the exact draft before sending to Shopify Support;
+then report the actual answer without promising an unsupported exception.
+
+
 ## Three address test orders permanently deleted from Shopify Admin — 2026-10-26
 
 After showing the irreversible deletion warning and explicitly naming #1008, #1009 and #1010,
