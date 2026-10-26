@@ -1,5 +1,27 @@
 # Calapres current state
 
+## Shopify Flow / OTO tracking research and work-queue limits — 2026-10-26
+
+Read-only research plus native Orders/View actions inspection; no new Flow, saved view,
+shipping label, customer message, app or permission change. OTO has an official native Shopify
+connector, but this store's tracking/status writeback remains unproved. Check existing shipment
+and connector Status mapping/Integration Logs before claiming Delivered sync. Keep manual
+label release after physical readiness and the pending native address-contract boundaries.
+
+Proposed phased workflows: paid-order review, one delayed internal follow-up, daily urgency
+queue, cautiously gated fulfillment, proven carrier delivery update, error alert, low stock,
+risk review and recorded returns. Current Flow trigger catalog has no native order-metafield-
+updated trigger; approval selection alone is not immediate automation. Error alerts deduplicate
+once per workflow version/30days and do not prove business delivery.
+
+Saved undelivered view is supported; All remains the documented default. Inspected All and
+custom view action menus expose no Set as default/pin action. Direct saved-view link is a usable
+entry, not a changed Orders-sidebar default. Unfulfilled and Open/Archived are not substitutes
+for delivery status; retain unknown/in-transit and validate split shipments before excluding.
+See [research and proposed priorities](docs/research/2026-10-26-shopify-flow-oto-order-queues.md).
+Next: implement only upon owner direction; validate OTO writeback with an existing shipment,
+then build the real undelivered queue without new label/customer sends or repeated fixtures.
+
 ## Native order operations fields added and verified — 2026-10-26
 
 Owner explicitly approved all five proposed order-page improvement groups, starting with
