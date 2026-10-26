@@ -1,5 +1,37 @@
 # Calapres current state
 
+## Native review/follow-up and undelivered view activated — 2026-10-26
+
+Owner explicitly authorized application. Native Flow now has two new Active workflows:
+`كالابريز — مراجعة الطلب المدفوع ومتابعته بعد 24 ساعة` (01a179a9-a15f-7924-9ff2-6b64eca6f2c3)
+and `كالابريز — تنبيه تعطل الأتمتة` (01a179a4-9d74-78c3-9b5a-36da89df2baf).
+The first excludes native/owner-tagged tests and canceled orders, adds a review tag, sends an
+internal store-mailbox alert, defaults empty approval while preserving existing value, waits24h
+then alerts once if still paid/noncanceled/unfulfilled. No customer-send, shipment/payment action
+or historical live replay. Error alert is native Admin with once/version/30-day deduplication.
+Existing marketing workflows unchanged. An unused official logistics-template draft remains
+Inactive and is named `مسودة غير مستخدمة — لا تفعّل`; do not activate it.
+
+Native simulation: real-order eligibility true; tagged owner-test false; empty approval default
+and nonempty review preservation previewed; numeric order link/recipient rendered correctly;
+follow-up true for unfulfilled paid order and false for completed order. These are simulation
+results, not actual inbox receipt or a completed24-hour run. Both new workflow Active states
+were independently read back in the reopened list.
+
+Saved view `الطلبات التي لم تُسلّم`, ID1599521751296, excludes native Delivered/Canceled and
+تجريبي, retaining unknown delivery state; two real unfulfilled records shown. Existing views
+preserved, Orders sidebar default unchanged. It relies on accurate native delivery status.
+
+Read-only OTO: import observed;7 pending,0 awaiting pickup/in transit/on hold/delivered/returned;
+3 canceled fixtures remain, total10. Both current real unfulfilled records Assigned to Warehouse,
+no tracking links. Auto-create shipments and checkout rates remain Off. Store mailbox verified.
+No mapping control in inspected embedded settings. Tracking/Delivered writeback cannot be proved
+without an existing genuine shipment; no label, Sync, funds, account change or message was made.
+Next: observe the first separately approved real shipment and compare its tracking/event writeback,
+without issuing duplicate labels. Keep native address-contract ticket308330 separate.
+[Decision0052](decisions/0052-native-shopify-review-followup-and-queues.md),
+[exact settings, tests and rollback](docs/operations/shopify-flow-order-review.md).
+
 ## Shopify Flow / OTO tracking research and work-queue limits — 2026-10-26
 
 Read-only research plus native Orders/View actions inspection; no new Flow, saved view,

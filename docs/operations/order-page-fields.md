@@ -65,3 +65,11 @@ fields. No local source checkout was reset or cleaned. Remote docs were publishe
 against current main, preserving unrelated newer continuity and existing history.
 
 Official reference: https://help.shopify.com/en/manual/custom-data/metafields/pinning-metafield-definitions
+
+## Native automation amendment — 2026-10-26
+
+[Decision0052](../../decisions/0052-native-shopify-review-followup-and-queues.md) adds a native
+Order paid workflow that defaults empty approval to بحاجة إلى مراجعة and preserves nonempty
+approval. Other fields remain staff-maintained. Internal review/follow-up emails are separate
+Flow actions; fields do not themselves block fulfillment or synchronize OTO. See the
+[exact operational guide](shopify-flow-order-review.md).

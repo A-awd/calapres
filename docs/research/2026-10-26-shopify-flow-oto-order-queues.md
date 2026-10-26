@@ -1,5 +1,7 @@
 # Shopify Flow and OTO tracking research — 2026-10-26
 
+Implementation update: the owner later authorized application; see [Decision0052](../../decisions/0052-native-shopify-review-followup-and-queues.md) and the [verified native configuration](../operations/shopify-flow-order-review.md). The research-only state below is historical.
+
 Status: researched proposals and read-only Admin inspection. No new Flow, view, shipping,
 label, notification, customer message, app, paid feature or permission was configured.
 
