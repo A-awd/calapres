@@ -302,3 +302,9 @@ and three screenshots. [0050](decisions/0050-onwan-free-address-pilot.md) and th
 [verified dispatch addendum](docs/research/2026-10-25-oto-reply-evidence-review.md) record one
 same-thread send at13:52 Riyadh with full-body and three-attachment readback. This is dispatch,
 not a correction or acceptance; future replies retain the owner's complete-review gate.
+
+
+OTO case acknowledgment (2026-10-26): [0050](decisions/0050-onwan-free-address-pilot.md) and
+the [reply evidence](docs/research/2026-10-26-oto-ticket-308330-acknowledgment.md) record confirmed
+ticket308330 and evidence receipt, with technical escalation announced. Specifications, ETA,
+correction and completed handoff remain pending; no new reply or test was performed.

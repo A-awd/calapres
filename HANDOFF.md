@@ -1,5 +1,18 @@
 # Calapres handoff
 
+## OTO ticket308330 confirmed; specifications pending — 2026-10-26
+
+Authenticated email received today at08:46 Riyadh acknowledges the comparison images/details
+and explicitly confirms ticket308330. OTO says it will refer the case to its Shopify connector
+technical team, including shipping/billing sources, short-code support and post-import updates.
+It will provide specifications, steps and an expected duration after technical confirmation,
+before retesting or general changes. A completed technical handoff, specification, ETA and fix
+are not yet proved. [Acknowledgment evidence](docs/research/2026-10-26-oto-ticket-308330-acknowledgment.md).
+
+No outbound message or store test/Sync/change occurred. Next: inspect the actual technical
+response and show any further complete reply for owner approval. Keep Growth and native-only/
+no-customer-message/no-shipment/no-new-access boundaries; no automatic monitoring was created.
+
 ## Approved complete OTO reply and three images sent — 2026-10-25
 
 The owner explicitly approved the complete displayed reply, three proposed images and sending

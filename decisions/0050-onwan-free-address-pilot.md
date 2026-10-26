@@ -234,3 +234,12 @@ This grants no blanket authority for future replies or new changes. Present the 
 proposed company reply and attachments for owner review. The native field specification, actual
 correction and targeted acceptance remain pending; no new store test or other operation occurred.
 All Growth/native-only/no-customer-message/no-shipment/no-new-access limits remain active.
+
+## Ticket acknowledgment, without a technical correction — 2026-10-26
+
+OTO's authenticated08:46 reply confirms receipt and ticket308330 and announces referral to
+its Shopify connector technical team. It promises the native source/update specifications,
+steps and expected duration after confirmation. This proves a registered case and evidence
+receipt, not completed handoff/assignment, specifications, ETA or a fix. No send or test occurred.
+Preserve the [acknowledgment](../docs/research/2026-10-26-oto-ticket-308330-acknowledgment.md)
+and the existing complete-owner-review, Growth and native-only boundaries.
