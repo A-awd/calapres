@@ -25,6 +25,8 @@ canary. No provider, funding or architecture decision changed during the documen
 
 ## Active decisions
 
+- [0051 — Native Shopify order operations fields](decisions/0051-native-order-operations-fields.md) — twelve globally pinned internal fields; manual staff workflow.
+
 - [0001 — Adopt the One Brain repository foundation](decisions/0001-one-brain-foundation.md)
 - [0002 — Retire Nawadir Dior and adopt an owner-curated catalog](decisions/0002-retire-nawadir-dior.md)
   — supplier retirement remains permanent; its former database architecture is superseded by

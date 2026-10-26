@@ -1,5 +1,32 @@
 # Calapres current state
 
+## Native order operations fields added and verified — 2026-10-26
+
+Owner explicitly approved all five proposed order-page improvement groups, starting with
+customization approval. Created twelve merchant-owned ORDER metafield definitions under
+`calapres`, pinned them globally and reordered approval/text/design first, then production,
+occasion/promised dates, delivery details and gift preparation. Reloaded definitions confirms
+all twelve; real order #1007 and a second existing order #1006 display all twelve in that order.
+No app, fee, storefront/theme change, new order, customer send, shipping or payment action.
+Storefront API access was turned off on the internal fields; Customer Account API remains No access.
+
+Started actual customization review on #1007 with `بحاجة إلى مراجعة` and copied its original
+requested engraving text into the requested-text field. Added one internal comment explaining
+the variant/request discrepancy. Original variant, line-item properties, price, payment and
+fulfillment state were preserved. Reload readback confirms status and text persist. No approval,
+occasion/deadline, design image, gift instruction, courier identity or delivery date was invented.
+All other new values remain empty. Definitions expose editable fields across existing/future
+orders; they do not auto-populate or enforce an approval/production gate. Production and delivery
+fields are internal manual tracking and remain separate from Shopify fulfillment/delivery status.
+The approval, production and delivery-method definitions support order-list filtering (three of
+five supported definitions). No automatic messages, booking, label creation, CRM/n8n or Captain
+changes. [Decision0051](decisions/0051-native-order-operations-fields.md) and
+[staff guide/schema](docs/operations/order-page-fields.md).
+
+Next: staff verify actual customization agreement, attach final image and record genuine approval;
+fill other fields only from verified information. Any automation or enforcement is separate work.
+
+
 ## Private-courier deliveries recorded; Shopify deletion refusal confirmed — 2026-10-26
 
 Owner reported #1004 and #1005 were already delivered by private courier without labels and
