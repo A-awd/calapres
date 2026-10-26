@@ -1,5 +1,30 @@
 # Calapres handoff
 
+## Explicit closing Handoff — source reviewed, required design originals missing — 2026-10-26
+
+The owner explicitly requested Handoff. Actual current Codex source1–15799 was reviewed
+chronologically, including material actions/failures/corrections; compactions/memory only indexed
+it. No current-source message interval was unavailable. The predecessor conversation is outside
+this source boundary. Current display title remains unknown; no title was invented or chat changed.
+[Detailed semantic record](docs/handoffs/2026-10-26-customer-service-shopify-packaging-closeout.md)
+and [coverage/originals ledger](docs/handoffs/2026-10-26-customer-service-shopify-packaging-evidence.md).
+
+Current operating truth: Captain stays paused;12native internal order fields,2Active native Flow
+workflows and undelivered view1599521751296 remain saved. Flow tests are simulation, not actual
+email receipt/24h completion. OTO import observed, tracking/Delivered writeback unproved; no label.
+Paid tests1001–1003 remain; support rejected deletion, no refund/cancel workaround.1008–1010
+were removed only from Admin. Latest order-age same-page research remains unbuilt/unapproved;
+IAB extension compatibility unknown. Preserve existing implementation and one-IAB/no-switch rules.
+
+Exact received images and linked evidence/prompt are independently retained in the approved
+private Ai-Work/التسليم/2026-10-26-shopify-support-handoff folder, with byte/hash readback.
+Required-originals gate still fails: latest corrected logo-bearing six-page gift-card PDF and
+unique external design PDF/vector originals have no independent retained copies. Screenshots
+are not those originals; morning logo-free ZIP and wrong two-page ivory PDF are superseded.
+Retain the chat. Repair by recovering actual originals through approved access and verifying files;
+no external chat navigation/recreation was performed during closing. No new live task, app,
+extension, permission, payment, label, message or Easy Life run is authorized by this Handoff.
+
 ## Same-page order-age research — 2026-10-26
 
 Owner requested apps/methods that add age inside the original Orders table. No ready-made
