@@ -1,5 +1,17 @@
 # Calapres current state
 
+## Captain temporarily paused by owner — 2026-10-26
+
+The owner explicitly requested a temporary stop of Chatwoot Captain. In authenticated Calapres
+account 179973, disconnected assistant 2187 from WhatsApp inbox 128058, TikTok inbox 128033,
+and Instagram inbox 128031. After reloading its Connected Inboxes page, the UI showed
+**No Connected Inboxes**. This is a reversible assistant attachment change; the assistant,
+knowledge, scenarios and channel inboxes were preserved. No customer messages were sent.
+No n8n, Shopify or notification settings were changed. Previously recorded active attachment
+states below are historical and superseded by this pause. Do not reconnect automatically.
+Next: manual staff follow-up; restore these three attachments only on fresh owner instruction.
+
+
 ## OTO ticket308330 confirmed; specifications pending — 2026-10-26
 
 Authenticated email received today at08:46 Riyadh acknowledges the comparison images/details
