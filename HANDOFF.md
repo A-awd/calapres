@@ -7,9 +7,11 @@ authenticated Calapres Shopify Help conversation; message appeared in conversati
 composer cleared. The request names #1001–#1003, explains owner payment tests and requests
 internal review of actual Admin/report deletion with required transaction records retained.
 It expressly prohibits refunds/cancellation/order changes without separate approval.
-Clicked Connect to route to a human advisor. Current UI says Connecting with an Advisor;
-only an automated Arabic acknowledgment is visible. No human decision, ticket/reference,
-accepted engineering escalation, exception or deletion is proved. The earlier unsent-draft
+Clicked Connect to route to a human advisor. The UI then showed Chat with Yan / Live,
+an explicit Support Advisor joined event and Yan's Shopify support greeting. The approved
+request is visible in the same chat. No substantive human decision, ticket/reference,
+accepted engineering escalation, exception or deletion is proved. Proof screenshot saved
+locally as shopify-deletion-request-sent.png. The earlier unsent-draft
 checkpoint is historical and superseded by this verified dispatch. Next: read actual advisor
 reply in this same conversation; do not duplicate the send or assume deletion is possible.
 
