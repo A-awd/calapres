@@ -1,5 +1,21 @@
 # Calapres current state
 
+## Three address test orders permanently deleted from Shopify Admin — 2026-10-26
+
+After showing the irreversible deletion warning and explicitly naming #1008, #1009 and #1010,
+the owner confirmed. Deleted these three canceled, archived, zero-paid draft-origin orders
+through each native Delete order confirmation. Final unfiltered Orders list contains exactly
+seven orders #1001–#1007; #1008–#1010 are absent. No customer notification, payment, refund,
+shipment or fulfillment action occurred. #1001–#1003 remain because their real-payment order
+type is not deletable under Shopify's documented rules. The prior six-order hiding checkpoint
+is historical: only the three older tagged orders remain in the saved-view exclusion.
+Shopify's native warning explicitly says an internal tax record is retained; this is irreversible
+Admin deletion, not erasure of all Shopify databases or third-party OTO copies. Existing private
+and sanitized address-test evidence remains historical; do not repeat deleted fixtures by default.
+Next: do not promise deletion of the remaining paid orders; any Shopify support exception
+requires confirmation from Shopify, not an app/API bypass claim.
+
+
 ## Selected experimental orders hidden from working view — 2026-10-26
 
 Owner selected six orders and explicitly accepted hiding as the outcome. Verified selection:
