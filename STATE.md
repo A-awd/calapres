@@ -1,5 +1,39 @@
 # Calapres current state
 
+## Old Ads cart signal: latency plausible, send failure not established — 2026-10-27
+
+Owner requested diagnosis without retesting or advertising. Official Google guidance gives a
+3–24-hour conversion-reporting window; it is not a verified last-event-signal refresh SLA.
+At16:48:11 Riyadh only17min29sec had elapsed since the existing16:30:42 add, and the later
+16:54:03 clock was23min21sec after it. A direct-navigation diagnostic without a qualifying ad
+interaction may not appear as an attributed Ads conversion. The conditional ten-minute
+high-volume/Unverified guidance and48-hour new-action guidance do not establish deadlines
+for this single event on the pre-existing8August manual action.
+
+Independent Ads Manage -> View event snippet readback confirmed exact send_to
+AW-10837488053/KORbCLqxk94cELXj268o matches the native published destination. The snippet
+generator's default Page-load option is an installation example, not a saved broad URL rule.
+Nothing was installed or saved. Current Shopify Google pixel shows Server + Web / Data Always
+On; Google & YouTube overview has three Active connections, six Approved offers and no visible
+tracking connection/migration warning. Current cookie-banner selection is31 European regions;
+Saudi Arabia was unselected. The region dialog was cancelled. These are current configuration
+observations, not the prior session's consent or a transport receipt; historical Saudi-banner
+notes must not be promoted into a current blocking diagnosis.
+
+No wrong-label, disabled-pixel or disconnected-app cause was observed. Reporting latency remains
+plausible, but the specific cause of the old23October signal is unresolved. No historical
+collector request/response is retained; the browser console buffer held current Help UI errors,
+not prior storefront transport evidence. Actual send failure is neither established nor ruled
+out, and exact Ads receipt/count-once flags remain false. Do not claim waiting status or a zero
+attributed report proves loss, and do not infer double sending from Server + Web capability.
+
+[Diagnosis, current readback and official sources](docs/research/2026-10-27-google-ads-cart-signal-diagnosis.md).
+A later requested read-only checkpoint after28October16:30:42 Riyadh is reasonable after24hours,
+not a promise of a refreshed signal, an attributed count or a per-hit ledger. No automatic
+monitor, test, ad activation/click, storefront visit, goal/source/count change, consent change,
+installation or permission action was performed. Captain remains paused and Easy Life stopped.
+All prior event-only correction evidence, historical ambiguity and newer work remain preserved.
+
 ## Latest cart-add Ads receipt remains unconfirmed — 2026-10-27
 
 Owner requested a fresh read-only Ads check of the latest native add at16:30:42 Riyadh, with no
