@@ -25,6 +25,8 @@ canary. No provider, funding or architecture decision changed during the documen
 
 ## Active decisions
 
+- [0053 — Native returning-customer classification](decisions/0053-native-returning-customer-classification.md) — activated internal tags/notice; required product-form fields verified, idea 1 omitted; positive execution and actual mail remain unverified.
+
 - [0052 — Native Shopify review, follow-up and order queue](decisions/0052-native-shopify-review-followup-and-queues.md) — active internal-only Flow, saved undelivered view and bounded OTO verification.
 
 - [0051 — Native Shopify order operations fields](decisions/0051-native-order-operations-fields.md) — twelve globally pinned internal fields; manual staff workflow.

@@ -1,5 +1,36 @@
 # Calapres handoff
 
+## Required fields confirmed; returning-customer Flow activated — 2026-10-27
+
+Owner selected idea 5 and dropped missing-data idea 1 after checking the published form.
+Empty and whitespace-only engraving text and selected physical-card messages were blocked;
+the existing cart was preserved and no storefront edit, order or checkout was needed.
+This is observed product-form validation, not a universal server-validation claim.
+
+Native `كالابريز — تمييز العميل العائد` is now **Active** (workflow
+`01a17ccd-e467-77c0-86c1-30d8de633825`, saved version `01M5YDR47RQXJ1QV73W3ASAYJW`).
+Order paid -> eligible customer/non-test/non-cancelled/not already tagged -> query at most two
+same-customer paid/partially-refunded orders excluding cancelled/native tests/`تجريبي` -> count >= 2
+-> customer tag `عميل-عائد` -> current-order tag `عميل-عائد` -> internal store-mailbox notice.
+No customer send, reward, finance, shipment or historical replay. The marker is not an atomic
+exactly-once delivery guarantee; review failures manually, especially email failure after tagging.
+
+Native simulations verified one real purchase stays below threshold and the tagged owner test
+is excluded. No action/email was executed by those simulations. First natural qualifying repeat
+execution, actual tag writes and actual mailbox receipt remain unverified. Reopened list: six
+entries, this new Active flow plus four prior Active flows and the unused Inactive draft.
+Captain stays paused, OTO and existing operational fields/flows remain unchanged.
+
+[Decision 0053](decisions/0053-native-returning-customer-classification.md),
+[configuration, evidence and rollback](docs/operations/shopify-flow-returning-customer.md) and
+[declarative contract](docs/operations/shopify-flow-returning-customer.contract.json).
+Private activation proof/field-check receipt are retained under verified Ai-Work/التسليم/
+2026-10-27-returning-customer-flow; no customer identifiers or screenshots are published here.
+Next: observe the first naturally occurring eligible repeat purchase and separately confirm
+internal-mail receipt; do not recreate tests or replay old orders to force evidence.
+This supersedes the earlier research-only selection status for ideas 1 and 5 only.
+
+
 ## Published Flow ideas — research only — 2026-10-27
 
 Owner requested research/explanation only; no workflow/template was created, imported, changed or

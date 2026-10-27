@@ -1,0 +1,163 @@
+{
+  "recordType": "sanitized-declarative-workflow-contract",
+  "schemaVersion": 1,
+  "nativeShopifyExport": false,
+  "importableWorkflow": false,
+  "observedDate": "2026-10-27",
+  "timeZone": "Asia/Riyadh",
+  "sourceBaseline": {
+    "repository": "A-awd/calapres",
+    "ref": "main",
+    "commit": "7a59d3a21efe7a3e147a18d7ea02610858af9f52",
+    "globalRepository": "A-awd/ai-operating-system",
+    "globalCommitAbbreviation": "d152dde"
+  },
+  "workflow": {
+    "name": "كالابريز — تمييز العميل العائد",
+    "id": "01a17ccd-e467-77c0-86c1-30d8de633825",
+    "version": "01M5YDR47RQXJ1QV73W3ASAYJW",
+    "activationEvidence": [
+      "native-workflow-turned-on-confirmation",
+      "editor-turn-off-workflow-control-readback"
+    ],
+    "runtime": "native-shopify-flow",
+    "aiInRuntime": false,
+    "n8nInRuntime": false,
+    "linearSteps": [
+      {
+        "position": 1,
+        "type": "Order paid"
+      },
+      {
+        "position": 2,
+        "type": "Condition",
+        "match": "all",
+        "conditions": {
+          "order.test": false,
+          "order.cancelledAt": "does-not-exist",
+          "order.customer.id": "not-empty",
+          "order.tagsMustContainNone": [
+            "تجريبي",
+            "عميل-عائد"
+          ]
+        },
+        "falseBranch": "no-action"
+      },
+      {
+        "position": 3,
+        "type": "Get order data",
+        "maximumResults": 2,
+        "sort": {
+          "field": "created_at",
+          "direction": "DESC"
+        },
+        "queryTemplate": "customer_id:{{ order.customer.legacyResourceId }} AND (financial_status:paid OR financial_status:partially_refunded) AND -status:cancelled AND tag_not:\"تجريبي\" AND test:false"
+      },
+      {
+        "position": 4,
+        "type": "Count",
+        "input": "get-order-data-result-list"
+      },
+      {
+        "position": 5,
+        "type": "Condition",
+        "operator": "greater-than-or-equal",
+        "value": 2,
+        "nativeDisplayValue": "2.0",
+        "falseBranch": "no-action"
+      },
+      {
+        "position": 6,
+        "type": "Add customer tags",
+        "target": "trigger-order-customer-id",
+        "tags": [
+          "عميل-عائد"
+        ],
+        "preserveOtherTags": true
+      },
+      {
+        "position": 7,
+        "type": "Add order tags",
+        "target": "trigger-order-id",
+        "tags": [
+          "عميل-عائد"
+        ],
+        "preserveOtherTags": true
+      },
+      {
+        "position": 8,
+        "type": "Send internal email",
+        "recipient": "info@calapres.com",
+        "subjectTemplate": "كالابريز | عميل عائد — {{ order.name }}",
+        "bodyTextTemplate": "تم تسجيل عملية شراء متكررة حقيقية للطلب {{ order.name }}.\n\nعرض الطلب: https://admin.shopify.com/store/unywbe-ub/orders/{{ order.legacyResourceId }}",
+        "bodyWhitespacePreservationVerified": false
+      }
+    ]
+  },
+  "acceptance": {
+    "simulationActionsExecuted": false,
+    "cases": [
+      {
+        "case": "genuine-first-purchase-snapshot",
+        "eligibility": true,
+        "queryCustomerIdRenderedNumeric": true,
+        "ordersReturned": 1,
+        "count": 1,
+        "thresholdCondition": false
+      },
+      {
+        "case": "owner-fixture-with-experimental-tag",
+        "eligibility": false
+      }
+    ],
+    "positiveRepeatPurchaseCaseAvailable": false,
+    "productionTagWritesVerified": false,
+    "actualInternalEmailReceiptVerified": false,
+    "historicalOrdersReplayed": false,
+    "newOrdersCreated": false
+  },
+  "requiredFieldCheck": {
+    "scope": "published-white-product-ordinary-add-to-cart-form",
+    "engravingTextEmptyBlocked": true,
+    "engravingTextWhitespaceOnlyBlocked": true,
+    "engravingAcknowledgementCheckedDuringTextTests": true,
+    "selectedCardMessageEmptyBlocked": true,
+    "selectedCardMessageWhitespaceOnlyBlocked": true,
+    "existingCartCountBeforeAndAfter": 1,
+    "newCartItemsCreated": false,
+    "themeChanged": false,
+    "missingDataFlowIdea1Created": false,
+    "missingDataFlowIdea1SelectedRoadmapStatus": "removed-by-owner-direction-after-existing-form-enforcement-confirmed",
+    "universalServerValidationClaimed": false,
+    "conditionalQuickAddSourceGapReproduced": false
+  },
+  "recovery": {
+    "rollback": "turn-off-only-this-workflow",
+    "existingTagsAutomaticallyRemovedByRollback": false,
+    "orderMarkerWrittenBeforeEmail": true,
+    "emailFailure": "manual-execution-review-no-automatic-historical-replay",
+    "atomicExactlyOnceGuarantee": false
+  },
+  "preservedScope": [
+    "captain-paused",
+    "oto-configuration",
+    "pre-existing-active-flows",
+    "unused-inactive-draft",
+    "staff-entered-operations-fields",
+    "original-line-item-personalization"
+  ],
+  "finalWorkflowListReadback": {
+    "totalEntries": 6,
+    "newWorkflowStatus": "Active",
+    "newWorkflowRecentRunDisplay": "Not recently run",
+    "newWorkflowAuthoringMetadataTag": "sidekick",
+    "existingActiveWorkflowsPreserved": 4,
+    "unusedDraftStatus": "Inactive",
+    "extraDuplicateWorkflowCreated": false
+  },
+  "nativeExportAttempt": "download-timed-out-no-export-file-claimed",
+  "customerFacingMessageAdded": false,
+  "discountOrRewardAdded": false,
+  "financialOrShipmentActionAdded": false,
+  "nextEvidence": "first-natural-qualifying-repeat-purchase-execution-and-separate-internal-mailbox-receipt"
+}

@@ -1,5 +1,18 @@
 # Published Shopify Flow ideas for Calapres — research only
 
+## Applied follow-up — 2026-10-27
+
+The owner subsequently selected idea 5 and asked to omit idea 1 if the storefront already
+required engraving text/card messages. Live empty/whitespace checks confirmed product-form
+validation; no theme change or missing-data workflow was needed. Idea 5 is now an Active native
+returning-customer tagging/internal-notice flow. Native negative simulations passed; positive
+production execution and actual mailbox receipt remain unverified. See
+[the current implementation and limits](../operations/shopify-flow-returning-customer.md) and
+[decision 0053](../../decisions/0053-native-returning-customer-classification.md).
+The research below is preserved as the earlier record; its no-selection/no-change statements
+apply to that research phase. Ideas 2–4 remain proposals, not approvals or saved workflows.
+
+
 27 October 2026, Asia/Riyadh. Owner requested published workflows/templates, an explanation of
 practical benefits and a recommendation; explicitly prohibited applying them. Baseline main:
 `ad3d525d964872516196af6f6d7917c8f230beb2`. Global launcher/routing remained unchanged at verified
