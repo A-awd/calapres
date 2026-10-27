@@ -1,5 +1,46 @@
 # Calapres current state
 
+## Metricool prepared for Calapres content and analysis — 2026-10-27
+
+Owner requested useful existing-plan Metricool configuration for Calapres and selected both
+content preparation and analysis as the priority. General, Facebook and Instagram caption
+instructions were saved and independently verified byte-exact after reload; the suitable
+existing TikTok instructions were preserved. The brand identity, CR seal, engagement ratio100
+and Asia/Riyadh planner timezone were not changed. Owner-review language is prompt guidance,
+not a newly enforced publication-approval mechanism.
+
+Three text ideas were saved in native Posts library for the product, personalization and bridal
+gifts. Each has an internal note identifying the required original asset and owner review.
+Fresh reload and a later return both showed three In progress items; assignment remained
+Unassigned, networks blank, no media attached and no publication date/schedule. These are
+private preparation ideas, not approved or publication-ready visual posts. No review/send or
+publishing action was performed, and the historical MCP five-read allowlist was not expanded.
+
+Saved a reusable Calapres — Content & Performance report template with Summary, Facebook,
+Instagram, TikTok, Google Ads and TikTok Ads; unconnected sections were excluded. The first
+two chart colors use44271B/DFD4C3 and the title identifies Calapres. Native Metricool logo and
+default backgrounds remain; this is not a full custom-branded/white-label report. A later fresh
+Reports view retained the template selection and monthly email delivery off. The original
+English PDF for27September–26October was generated, downloaded unchanged and reviewed as an
+eight-page native artifact; Arabic is not available in the inspected native export languages.
+
+Private analytics and an Arabic interpretation are stored only under verified Ai-Work/التسليم/
+2026-10-27-metricool-configuration with the native PDF, exact AI before/after record, three
+caption/asset briefs, screenshot and readback receipt. The report suggests an audience/target
+geography mismatch and no new content in the period; it does not prove fake followers,
+conversion receipt, sales or subscription ROI. Do not publish raw account analytics, report URLs,
+financial details or private assets in GitHub.
+
+[Decision0056](decisions/0056-calapres-metricool-content-and-analysis-setup.md),
+[applied configuration and recovery](docs/operations/metricool-content-and-analysis-setup.md),
+[declarative contract](docs/operations/metricool-content-and-analysis-setup.contract.json).
+Next content work is selection of actual approved original media and owner review of the three
+text/visual pairs before any scheduling. Platform-specific tagged links can be prepared then
+for measurement in the existing GA4/Shopify setup; no new website pixel was installed.
+Billing/renewal, paid add-ons, other brands, OAuth permissions/connections, LinkedIn reconnect,
+new tracking, customer/staff messages, campaigns and automatic publication remain unchanged.
+Captain stays paused; Easy Life stays stopped. One existing working in-app tab only was reused.
+
 ## Metricool subscription fit reviewed; no billing change — 2026-10-27
 
 Owner asked about the value of the existing Metricool subscription. Authenticated billing was

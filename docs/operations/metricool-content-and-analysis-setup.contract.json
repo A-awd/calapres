@@ -1,0 +1,183 @@
+{
+  "recordType": "sanitized-declarative-Calapres-Metricool-content-and-analysis-setup",
+  "schemaVersion": 1,
+  "nativeExport": false,
+  "nativeImportable": false,
+  "universalRestorationFile": false,
+  "date": "2026-10-27",
+  "timeZone": "Asia/Riyadh",
+  "recordStatus": "applied-reopened-private-planning-items-and-native-report-verified",
+  "sourceBaseline": {
+    "repository": "A-awd/calapres",
+    "ref": "main",
+    "commit": "73611bdc32de3fcad66d2e33bc8efec0f394591f",
+    "globalCommit": "d152dde8204a9c5666afe696066882decac3f75f",
+    "decision0056AvailabilityVerified": true
+  },
+  "authority": {
+    "freshOwnerPriority": "content preparation and analysis together",
+    "scope": "Calapres native UI within existing service",
+    "decision0036McpAllowlistChanged": false,
+    "mcpReadCapabilityCount": 5,
+    "mcpWriteOrPublishExpanded": false
+  },
+  "preservedIdentity": {
+    "brandIdentityPreserved": true,
+    "crSealPreserved": true,
+    "engagementRatio": 100,
+    "timeZone": "Asia/Riyadh",
+    "otherBrandsChanged": false
+  },
+  "connections": {
+    "linkedInReconnectObserved": true,
+    "linkedInReconnectAttempted": false,
+    "newConnectionOrScopeGranted": false,
+    "unconnectedSurfacesConnectedForReport": false,
+    "observedConnected": [
+      "Facebook",
+      "Instagram",
+      "TikTok Business",
+      "Google Ads",
+      "TikTok Ads"
+    ]
+  },
+  "aiCaptionInstructions": {
+    "main": {
+      "text": "Create unpublished social captions only for Calapres (كالابريز), a Saudi brand of personalized incense burners and gifts. Describe the burner as one elegant incense burner (مبخر أنيق); never imply a set, stand, oud box or included props. Mention name or logo personalization only from the supplied brief. Never mention, imitate or mix any other brand, including Roobela. Write natural, polished Saudi Arabic unless another language is requested. Be concise and respectful, with one clear call to action and at most two tasteful emojis. Use https://calapres.com only when a link is requested. Never invent prices, discounts, stock, delivery promises, materials, features, customer quotes, dates, offers or certification. Omit unprovided facts; examples are not manufacturing promises. Output captions only: no inbox replies, customer-service responses or direct messages. Require owner review before publication. Do not generate images.",
+      "charCount": 935,
+      "saved": true,
+      "freshReloadExactMatch": true
+    },
+    "facebook": {
+      "text": "Write a concise Facebook caption for Calapres in natural Saudi Arabic. Use a clear opening and short paragraphs. Explain only the product, personalization or occasion supplied in the brief, then one clear CTA. Be warm and respectful; avoid exaggerated claims, clickbait, ALL CAPS and pressure tactics. Use at most two emojis and 1–3 relevant hashtags when useful. Do not invent offers, facts, testimonials or certification. Captions only; no inbox replies or direct messages.",
+      "charCount": 475,
+      "saved": true,
+      "freshReloadExactMatch": true
+    },
+    "instagram": {
+      "text": "Write an Instagram caption for Calapres in natural Saudi Arabic. Start with a short hook rooted in the supplied visual or brief. Use brief readable lines about the supplied product, personalization or gift occasion, then one clear CTA. Be refined and warm. Use at most two emojis and 2–4 directly relevant hashtags when useful. Do not imply included props, a set, testimonials, offers or facts not supplied. Captions only; no inbox replies or direct messages.",
+      "charCount": 459,
+      "saved": true,
+      "freshReloadExactMatch": true
+    },
+    "tiktok": {
+      "changed": false,
+      "freshReloadExactOriginalMatch": true,
+      "originalValueRetainedPrivately": true
+    },
+    "maxCharsPerInspectedField": 1000,
+    "imageGenerationPerformed": false,
+    "sampleCaptionGenerationPerformedAsTest": false,
+    "beforeValuesRetainedPrivately": true,
+    "promptGuidanceOnly": true,
+    "technicalPublicationApprovalEnforcementChanged": false,
+    "exactPrivateBeforeBaselineRetainedByExecutingParent": true
+  },
+  "postsLibrary": {
+    "itemCount": 3,
+    "internalPillars": [
+      "المبخر",
+      "التخصيص",
+      "هدايا العروس"
+    ],
+    "nativeStatus": "In progress",
+    "freshReopenConfirmedItemCount": 3,
+    "assignment": "Unassigned",
+    "networkFieldsBlank": true,
+    "dateFieldsBlank": true,
+    "mediaAttached": false,
+    "scheduledAt": null,
+    "publicationApproved": false,
+    "publicationPerformed": false,
+    "staffReviewRequestSent": false,
+    "internalReviewNotesSavedCount": 3,
+    "reviewNotesPurpose": "missing original assets and owner review required",
+    "fullDraftTextRetainedPrivately": true,
+    "nativeContentObjectIdentifiersCaptured": false,
+    "locateExistingItemsByExactPrivateCaptionBeforeFurtherWork": true
+  },
+  "reportTemplate": {
+    "name": "Calapres — Content & Performance",
+    "nativeSaveNoticeObserved": true,
+    "freshReportsReopenSelectedSameTemplate": true,
+    "title": "Calapres | Content & Performance",
+    "selectedSections": [
+      "Summary",
+      "Facebook",
+      "Instagram",
+      "TikTok",
+      "Google Ads",
+      "TikTok Ads"
+    ],
+    "selectedSectionCount": 6,
+    "unconnectedSectionsUncheckedCount": 10,
+    "firstTwoColors": [
+      "#44271B",
+      "#DFD4C3"
+    ],
+    "defaultMetricoolLogoRetained": true,
+    "defaultCoverBodyPresentationRetained": true,
+    "customCrLogoApplied": false,
+    "fullCustomBrandingClaimed": false,
+    "monthlyEmailCheckboxValue": 0,
+    "monthlyEmailFreshReadbackVerified": true,
+    "reportEmailOrOtherRecipientDeliveryCreated": false
+  },
+  "nativeReport": {
+    "periodStart": "2026-09-27",
+    "periodEnd": "2026-10-26",
+    "language": "English",
+    "arabicOfferedInInspectedLanguageChoices": false,
+    "generationWasInitiallyInProgress": true,
+    "serverReadyStatusObserved": true,
+    "originalPdfDownloadedUnchanged": true,
+    "privateAiWorkRelativeFolder": "التسليم/2026-10-27-metricool-configuration",
+    "nativeIabPdfViewerRendered": false,
+    "fallback": "ordinary download of exact already-observed provider artifact link; no authentication/profile API",
+    "externalBrowserUsed": false,
+    "extraWorkingTabCreated": false,
+    "pageCount": 8,
+    "pdfKitTextInspected": true,
+    "relevantPagesVisuallyInspected": true,
+    "titlePeriodColorsVerified": true,
+    "localFileAccessReadbackVerified": true,
+    "separateIcloudServerSyncVerified": false,
+    "nativePdfTranslatedOrReplaced": false,
+    "artifactUrlAndIdentifiersPrivate": true,
+    "analyticsMetricsAndAudienceCountsPrivate": true,
+    "roiSalesFollowerAuthenticityOrPurchaseAttributionProved": false,
+    "visuallyReviewedPages": [
+      1,
+      6,
+      7
+    ],
+    "originalFileHashRetainedPrivately": true,
+    "separateArabicOwnerAnalysisRetainedPrivately": true
+  },
+  "protectedScope": {
+    "paidAddonActivated": false,
+    "billingOrAutoRenewalChanged": false,
+    "newTrackingPixel": false,
+    "oauthOrPermissionExpanded": false,
+    "postScheduledOrPublished": false,
+    "customerOrStaffMessageSent": false,
+    "adsActivated": false,
+    "captainResumed": false,
+    "easyLifeRun": false,
+    "newAutomationMonitorReminderOrRecurringReportCreated": false
+  },
+  "nextAction": {
+    "selectAndReviewActualOwnerOriginalAssets": true,
+    "reviewExactFinalCaptionAssetVersionBeforePublication": true,
+    "laterPublicationRequiresExplicitDestinationAndTimingApproval": true,
+    "automaticPublicationAuthorized": false
+  },
+  "recovery": {
+    "readCurrentStateBeforeRollback": true,
+    "restoreChangedAiFieldsFromPrivateBeforeValuesOnlyIfRequired": true,
+    "preserveTikTokAndUnrelatedState": true,
+    "retainPrivateItemsTemplateOriginalReport": true,
+    "automaticDeletionOrDisconnection": false
+  },
+  "finalReadbackPending": false
+}

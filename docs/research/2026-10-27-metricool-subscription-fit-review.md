@@ -1,5 +1,14 @@
 # Metricool subscription fit — Calapres scope only
 
+## Later owner-authorized preparation — 2026-10-27
+
+The subsequent [content and analysis setup](../operations/metricool-content-and-analysis-setup.md)
+implements useful Calapres-only configuration under a fresh owner instruction. Three AI fields,
+three unscheduled text library ideas and a native report template/export are now saved and
+verified. This does not change the shared subscription, grant publishing authority, expand the
+MCP allowlist or establish subscription ROI. The earlier fit-review observations below remain
+dated evidence; the native library is no longer empty following this intentional preparation.
+
 Observed2026-10-27. The owner questioned the benefit of an existing account-wide paid Metricool
 subscription. This note preserves only the Calapres integration/use implications. Private billing,
 account, portfolio and payment evidence is excluded. Other brands were not audited in this review.

@@ -31,6 +31,8 @@ canary. No provider, funding or architecture decision changed during the documen
 
 ## Active decisions
 
+- [0056 — Calapres Metricool content and analysis setup](decisions/0056-calapres-metricool-content-and-analysis-setup.md) — saved brand-specific AI instructions, three unscheduled library ideas and native reporting; no publishing, sending, account-wide billing/permissions change or MCP write expansion.
+
 - [0055 — Event-only Google Ads cart conversion](decisions/0055-event-only-google-cart-conversion.md) — sole native manual-event action7713642682; old broad Page-load action954369731 recoverably Removed; fresh mapping/status/published label and bounded one-add test verified; actual Ads receipt/count-once remains unproven.
 
 - [0054 — Native Google add-to-cart migration and Calapres domains](decisions/0054-native-google-cart-migration-and-domains.md) — one linked cart destination, two exact domain rules, migration warning absent and bounded native add test passed; existing native app retained.
