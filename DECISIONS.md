@@ -1,6 +1,12 @@
 
 # Decision Index
 
+OTO follow-up coverage correction (2026-10-27): [0050](decisions/0050-onwan-free-address-pilot.md)
+and the [separate-message evidence](docs/research/2026-10-27-oto-separate-starred-reply-correction.md)
+preserve the owner-identified13:57 reply, references308330/125612 with unknown relationship, and
+the requirement to inspect mailbox-wide newer conversations. No specification, repair or new
+send/test is claimed. The prior old-thread-only no-reply conclusion is superseded.
+
 Durable Calapres decisions live in the `decisions` directory. GitHub `main` is the authoritative
 decision record.
 

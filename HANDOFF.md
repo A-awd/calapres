@@ -1,5 +1,18 @@
 # Calapres handoff
 
+## Corrected OTO reply coverage: separate13:57 message — 2026-10-27
+
+The owner identified a starred OTO email received today at13:57 Riyadh in a separate Re-prefixed
+conversation. Authenticated inbox/message details confirm it; the earlier no-new-reply claim
+checked only the old thread and was incomplete. The new full reply repeats the acknowledgment,
+not an accepted specification, repair or ETA. Body reference308330 and footer ticket125612 are
+both preserved; their relationship is unconfirmed. [Correction and evidence](docs/research/2026-10-27-oto-separate-starred-reply-correction.md).
+
+Future authorized checks must search the mailbox/sender/subject/references and inspect new
+separate conversations, rather than infer global absence from the old thread. No automatic
+monitoring, outbound message or repeated test was created. Await actual native specifications;
+keep Growth, native-only boundaries and owner approval of complete future company replies.
+
 ## Native Google cart migration and exact domains applied — 2026-10-27
 
 Owner explicitly authorized the remaining add-to-cart migration, the two domains and overlap

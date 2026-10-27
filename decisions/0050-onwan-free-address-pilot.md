@@ -6,6 +6,13 @@ Status: owner-approved Free installation executed; production adoption and end-t
 
 ## Authorization and purpose
 
+Latest reply-check correction (2026-10-27): a separately grouped starred OTO message at13:57
+was missed by checking only the old thread. Future authorized checks must search the verified
+mailbox by sender/subject/references and inspect all newer conversations before reporting absence.
+Body case308330 and footer reference125612 are preserved without assuming their relationship.
+No technical specification or repair is present, no reply/test was sent/run, and existing
+owner-review/native-only boundaries remain. See the [coverage correction](../docs/research/2026-10-27-oto-separate-starred-reply-correction.md).
+
 The owner explicitly approved installing Onwan on Calapres's existing Shopify Basic store on the Free plan, after reviewing its customer/order/checkout access. The purpose is to test genuine Saudi short-address verification, complete native shipping-address fill, and transfer of the address and original code to the existing OTO shipping bridge.
 
 ## Boundaries
