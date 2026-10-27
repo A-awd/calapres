@@ -25,6 +25,8 @@ canary. No provider, funding or architecture decision changed during the documen
 
 ## Active decisions
 
+- [0054 — Native Google add-to-cart migration and Calapres domains](decisions/0054-native-google-cart-migration-and-domains.md) — one linked cart destination, two exact domain rules, migration warning absent and bounded native add test passed; existing native app retained.
+
 - [0053 — Native returning-customer classification](decisions/0053-native-returning-customer-classification.md) — activated internal tags/notice; required product-form fields verified, idea 1 omitted; positive execution and actual mail remain unverified.
 
 - [0052 — Native Shopify review, follow-up and order queue](decisions/0052-native-shopify-review-followup-and-queues.md) — active internal-only Flow, saved undelivered view and bounded OTO verification.

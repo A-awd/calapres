@@ -1,5 +1,36 @@
 # Calapres current state
 
+## Native Google cart migration and exact domains applied — 2026-10-27
+
+Owner explicitly authorized the remaining add-to-cart migration, the two domains and overlap
+prevention while preserving Google & YouTube and prohibiting old GTM installation. Migrated the
+existing AW-10837488053/f2qDCMONiscDELXj268o action. Migration initially added a second native
+cart destination; corrected Added to cart to the single existing linked Arabic action, with no
+additional custom destination. Fresh settings readback preserves the other six event mappings.
+
+Exactly matches rules for calapres.com and unywbe-ub.myshopify.com were saved and verified after
+fresh reload/reopen. Overview no longer showed the migration warning/button, with all three
+native connections Active and all six offers Approved. Last explicit wizard view was2/3 with
+No tags to migrate; no manual OK/Complete or3/3 receipt is claimed.
+
+Published native pixel-manager configuration exposed one Ads add-to-cart label plus the separate
+GA4 destination. One bounded native Google Pixel Helper test produced one product_added_to_cart
+for one plain-product addition; the owner's pre-existing cart quantity was restored to one.
+No checkout/order/payment, historical replay or manual tracking event. Actual Google Ads receipt,
+provider transport deduplication and purchase attribution remain separate/unverified evidence.
+No broad zero-duplication guarantee is inferred from five loader nodes or a bounded native test.
+
+[Decision0054](decisions/0054-native-google-cart-migration-and-domains.md),
+[exact configuration, acceptance and recovery](docs/operations/google-native-cart-migration-and-domains.md),
+[declarative contract](docs/operations/google-native-cart-migration-and-domains.contract.json).
+Private readback screenshots and receipt are retained under verified Ai-Work/التسليم/
+2026-10-27-google-tag-migration. Existing app permissions/connections, native capture-phase cart
+fix, legacy GTM, Captain pause, Flows, OTO and media remain intact. One working IAB tab only;
+the owner's other tab was untouched. No code, campaigns, privacy permissions or templates changed.
+Next evidence, if needed, is ordinary provider receipt during natural use; do not repeat the
+completed add test or generate a purchase merely to obtain another checkpoint.
+
+
 ## Google services and legacy GTM — read-only audit — 2026-10-27
 
 Live Google & YouTube settings confirmed the business account and Merchant/Ads/GA4 connections.

@@ -1,5 +1,18 @@
 # Google services, native tags and legacy Tag Manager — read-only audit
 
+## Authorized follow-up applied — 2026-10-27
+
+The owner subsequently authorized migration of the one remaining cart action, the two domain
+rules and duplication prevention. The native saved correction now has one linked Ads cart action,
+two verified Exactly matches rules, and no migration banner on reopened Overview. One new native
+Pixel Helper add test produced one add event; the pre-existing owner cart was restored. Existing
+Google & YouTube connections remain; old GTM was not installed. See the
+[implementation and evidence limits](../operations/google-native-cart-migration-and-domains.md)
+and [decision0054](../../decisions/0054-native-google-cart-migration-and-domains.md).
+This supersedes the read-only/unchanged next-action boundary below for these selected changes;
+the original audit remains dated history, not the current saved mapping/domain state.
+
+
 Observed 2026-10-27, Asia/Riyadh. The owner requested reading the Google & YouTube channel,
 its warning, Product Studio and suggestions, identifying the connected accounts, and checking
 whether the existing Google Tag Manager setup was connected. This was an inspection, not an
