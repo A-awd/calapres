@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Native Orders age feasibility continuation — 2026-10-27
+
+Owner requested read-only inspection, without development or extension installation. One Codex
+in-app tab verified actual native Orders/date markup and order-details display, then returned to
+Orders. No supported persistent age-column route was established in the exposed in-app browser
+capabilities. Date cells lacked a complete timestamp; details supplied date/hour/minute text but
+not a verified exact canonical `createdAt`/zone. Do not equate displayed processing date with
+creation time or unrelated page-history timestamps. [Evidence and next boundaries](docs/research/2026-10-26-native-orders-age-column.md#bounded-codex-in-app-feasibility-check--2026-10-27).
+
+No implementation/install/browser switch or live changes are approved. If the owner later selects
+further work, assess existing authorized read-only `createdAt` access separately from a supported
+same-page rendering mechanism; neither credential expansion nor custom script execution follows
+from this review. Preserve Captain's pause and the saved fields/Flows/view. Do not repeat finished
+app research or acceptance tests. The original print-file recovery remains complete.
+
 ## Closing Handoff repaired — original print files recovered — 2026-10-27
 
 Owner explicitly authorized reopening the existingClaudeconversation and saving original files.

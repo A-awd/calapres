@@ -1,5 +1,16 @@
 # Calapres current state
 
+## Native Orders age — bounded in-app feasibility check — 2026-10-27
+
+Read-only inspection in one Codex in-app tab found no supported verified persistent-column route
+in the exposed browser capabilities; arbitrary extension installation remains unproved. Native
+Orders date cells exposed localized text without a complete timestamp. Order details exposed a
+full displayed date/hour/minute, but canonical exact `createdAt` and its zone were not verified;
+`processedAt` may differ. [Result and limits](docs/research/2026-10-26-native-orders-age-column.md#bounded-codex-in-app-feasibility-check--2026-10-27).
+No development, installation, DOM injection, API credential/scope change, live operational write or
+repeated historical test. Same-page rendering and canonical timestamp-read remain separate gates;
+no implementation is approved. Preserve existing operating state and the diverged local checkout.
+
 ## Closing Handoff repaired — original print files recovered — 2026-10-27
 
 Owner explicitly authorized reopening the existingClaudeconversation and saving original files.
