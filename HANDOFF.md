@@ -1,5 +1,29 @@
 # Calapres handoff
 
+## Latest cart-add Ads receipt remains unconfirmed — 2026-10-27
+
+Owner requested a fresh read-only Ads check of the latest native add at16:30:42 Riyadh, with no
+retest or ad activation. Refreshed the correct existing manual action7713642682 and explicitly
+selected Today27October2026 so reporting included the test day. The action remained Enabled,
+Secondary, Count Every and excluded from the account-default goal; All conversions remained0.
+Its exact status popover still showed last event signal23October2026 at5:56PM, rather than a
+new27October signal. Ads display timezone was not independently established in this check; the
+older date is nevertheless earlier than the test day. Old wrong action954369731 stayed Removed.
+
+This is no positive Ads receipt/count-once evidence for the latest add. It also does not prove
+that the event was lost: last-signal status and attributed All conversions are not a raw per-hit
+ledger. Keep actual Ads per-hit receipt and exact-once attribution flags false, while retaining
+the previously verified native one-add result and event-only correction. No source/count/goal,
+tag, campaign, budget or permission setting was saved, and no storefront test, ad click,
+checkout, order or purchase was performed. No future activity or reporting time is promised.
+
+[Fresh readback and limits](docs/research/2026-10-27-google-ads-latest-cart-receipt-check.md).
+Private native screenshot/readback receipt are saved and read back under verified Ai-Work/
+التسليم/2026-10-27-google-ads-latest-cart-receipt-check. The earlier correction and all newer
+project work remain preserved. A later authorized read-only status check or ordinary genuine
+activity may provide newer evidence; do not generate a new test or activate advertising to
+force report counts. Captain remains paused; Easy Life remains stopped.
+
 ## Google Ads cart source corrected to the native event — 2026-10-27
 
 Owner-authorized correction is applied and independently reopened. The sole native Google &
