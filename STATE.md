@@ -1,5 +1,29 @@
 # Calapres current state
 
+## Google Ads cart receipt check — specific test remains unproven — 2026-10-27
+
+Read-only inspection of Ads action954369731 found a recent event signal at27October14:10,
+matching the minute of the existing page view14:10:25 and cart add14:10:46. It does not uniquely
+identify the cart add. The former Google Shopping App Add To Cart action last showed23October
+17:56. Today27October displayed0 All conversions for both. Both are Secondary, Count Every,
+and excluded from the account-default goal; no counting/goal/source setting was changed.
+
+A material additional configuration concern was observed: the migrated existing action represents
+Page load / URL begins with calapres.com, with an empty suffix in the inspected rule. The native
+single-destination mapping does not exclude this independent URL path. Runtime overlap or a
+particular duplicate conversion was not established. Diagnostics/Webpages exposed no per-hit
+ledger that can prove this exact add arrived/counts once. Keep Ads-receipt/provider-dedup flags
+false while retaining the verified native one-add result, saved domains and migration outcome.
+
+[Inside-Ads evidence and precise limits](docs/research/2026-10-27-google-ads-cart-receipt-check.md).
+Only the reporting date/pagination/navigation view changed; no extra cart test, order, purchase,
+ad activation, rule Save, Count/Primary/Secondary toggle, goal/campaign or permission change.
+The event panel was cancelled without field edits. Existing Google & YouTube and legacy GTM
+remain preserved. Newer main's OTO reply-coverage correction is retained unchanged.
+Next bounded work is a precise review/correction of the broad URL rule and its recovery path;
+do not manufacture attribution, repeat the add or switch Count to One merely to reassure.
+
+
 ## Corrected OTO reply coverage: separate13:57 message — 2026-10-27
 
 The owner identified a starred OTO email received today at13:57 Riyadh in a separate Re-prefixed

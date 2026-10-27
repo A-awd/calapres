@@ -1,5 +1,15 @@
 # Native Google add-to-cart migration and Calapres domains
 
+## Later Ads-side read-only evidence — 2026-10-27
+
+[Follow-up inspection](../research/2026-10-27-google-ads-cart-receipt-check.md) observed a recent
+Ads signal at14:10 but could not distinguish the14:10:25 page view from the14:10:46 cart add.
+It also exposed an independent broad Page load/URL-prefix rule on the same action. This does
+not invalidate the native one-event/one-destination test below, but it prevents interpreting
+that bounded test as complete Ads-side deduplication. Specific-test Ads receipt/count-once
+remain unverified; no Ads source/counting setting was changed in the follow-up.
+
+
 Applied and independently read back on 2026-10-27, Asia/Riyadh. The authorized native mapping,
 domain configuration and bounded add-to-cart acceptance check passed. Reopened Overview no
 longer showed the migration warning. No 3/3 wizard receipt or actual Ads conversion receipt is
