@@ -1,5 +1,35 @@
 # Calapres current state
 
+## Google services and legacy GTM — read-only audit — 2026-10-27
+
+Live Google & YouTube settings confirmed the business account and Merchant/Ads/GA4 connections.
+Merchant Center independently showed six approved offers, no limited/disapproved/pending offers;
+GA4 showed recent nonzero activity. Native installed Google tags and the Google app pixel are
+present. These do not prove purchase acceptance, deduplication or attributed Google Ads conversions.
+Ads connection is Active, but its direct banner says no ads are serving (campaigns/ad groups
+paused or removed); do not infer current spend from its old overview date range.
+
+Legacy GTM-PX2N44V exists with version 3 Live (8 August 2026), 11 tags and no pending changes,
+but diagnostics say No Recent Data / never detected. Its GA4/Ads destinations overlap the native
+app's destinations. Do not reinstall/publish it on the strength of an Install button, or claim
+that the whole Google setup is absent. Public homepage DOM has native Google IDs and no observed
+legacy GTM ID; this is not complete cross-frame/network event proof.
+
+The live migration wizard is 1/3 complete and offers one old Ads add-to-cart action, not a proven
+purchase fix. No migration checkbox or submit action was used. The current Ads Google tag also
+reports suggested cross-domain configuration for the two Calapres domains; no domain was accepted,
+removed or saved. Product Studio is an optional free image tool, not a warning; no use or image
+change. Magnific-only media direction remains. Curated suggestions are general, not disapprovals;
+GTIN requires an assigned correct identifier and must not be invented.
+
+[Accounts, exact candidates, diagnostics and boundaries](docs/research/2026-10-27-google-services-and-gtm-audit.md).
+Only one working Codex in-app tab was reused; the owner's second tab was left untouched.
+No configuration, campaign, data access, tag installation/deletion/migration, template update,
+GTM Preview/Submit, purchase, customer message or shipping action. Captain and all Flows preserved.
+Next only on owner selection: review the exact add-to-cart migration/domain configuration and
+prepare acceptance/rollback before a change; inspect proven duplicate paths before any removal.
+
+
 ## Required fields confirmed; returning-customer Flow activated — 2026-10-27
 
 Owner selected idea 5 and dropped missing-data idea 1 after checking the published form.
