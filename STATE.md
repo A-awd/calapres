@@ -1,5 +1,16 @@
 # Calapres current state
 
+## Published Flow ideas — research only — 2026-10-27
+
+Owner requested research/explanation only; no workflow/template was created, imported, changed or
+run. Native list readback confirmed current four Active flows and the unused Inactive draft.
+[Published ideas and Calapres fit](docs/research/2026-10-27-shopify-flow-published-ideas.md) prioritizes
+structured engraving/card completeness in existing review, a custom-order cancellation stop-work
+notice, a single daily priorities digest, low-stock threshold alerts and internal returning-customer
+recognition. These are recommendations/adaptations, not selected implementation or proven delivery.
+Shipping-event/review automation remains conditional on actual OTO events; hold/release and payment
+variants have separate risks. Preserve current flows, Captain pause and all existing boundaries.
+
 ## Orders daily focus and TikTok preview correction — 2026-10-27
 
 Read-only review selected existing undelivered view1599521751296 and verified its not-Delivered,
