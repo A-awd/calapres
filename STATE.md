@@ -1,5 +1,26 @@
 # Calapres current state
 
+## Closing Handoff repaired — original print files recovered — 2026-10-27
+
+Owner explicitly authorized reopening the existingClaudeconversation and saving original files.
+Recovered23originals unchanged (11uniquePDFs,3ZIPs,2HTMLtemplates,7PNGs) plus41verified extracted
+archive members into approved privateAi-Work/التسليم/2026-10-26-shopify-support-handoff/
+أصول الطباعة - استرجاع 2026-10-27. Byte/hashreadback passed. Current six-page three-colour card
+has logos on all6pages,105×148mmtrim and3mmbleed; wrong/missing-logo/older versions are separate.
+All required originals and previous handoff evidence showed cloud upload complete. Four redundant
+new image/manifest copies were temporarily pending, then their targeted follow-up passed as well:
+all199checked private files uploaded with no error. No unique original is missing.
+[Recovery, inventory, limits and source coverage](docs/handoffs/2026-10-27-print-originals-recovery.md).
+This supersedes the26October missing-originals gate; the dated history below remains preserved.
+Current source title remains unknown/cosmetic. No chat was created/renamed/deleted or messaged.
+
+Preserve26October operating evidence: Captain paused,12native fields,2Flowconfigurations and
+savedundeliveredview; simulation does not prove actual email/24hdelivery. OTOwriteback unproved,
+no label; paid owner tests remain, support rejected deletion. Same-page age extension remains
+unbuilt/unapproved; no external browser. Packaging files are retained concepts, not factory dielines.
+No store/customer/runtime change in this recovery. Resume from latest sources and owner's next
+direction; do not recreate completed work, install extensions or issue shipments automatically.
+
 ## Explicit closing Handoff — source reviewed, required design originals missing — 2026-10-26
 
 The owner explicitly requested Handoff. Actual current Codex source1–15799 was reviewed

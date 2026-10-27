@@ -1,5 +1,13 @@
 # Calapres — customer service, packaging and Shopify closing handoff
 
+## Current result — originals recovered on27October2026
+
+The owner explicitly authorized opening the existing Claude conversation for original-file recovery.
+All required print/design originals were retrieved unchanged and independently retained/read back;
+see [the verified recovery and current preservation result](2026-10-27-print-originals-recovery.md).
+The26October missing-originals/unsafe result below is historical and superseded. Production
+acceptance and other unfinished project work remain separate from preservation readiness.
+
 Explicit owner-requested closing preservation, 2026-10-26 (Asia/Riyadh).
 This is a detailed sanitized semantic record, not a raw transcript, a fresh live-system audit,
 or authorization to execute its backlog. Exact current source display title / `continuation_chat_title`:

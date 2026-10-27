@@ -1,5 +1,13 @@
 # Calapres closing handoff — evidence and retention ledger
 
+## Current result — originals recovered on27October2026
+
+The owner explicitly authorized opening the existing Claude conversation for original-file recovery.
+All required print/design originals were retrieved unchanged and independently retained/read back;
+see [the verified recovery and current preservation result](2026-10-27-print-originals-recovery.md).
+The26October missing-originals/unsafe result below is historical and superseded. Production
+acceptance and other unfinished project work remain separate from preservation readiness.
+
 2026-10-26. Companion to [the detailed source record](2026-10-26-customer-service-shopify-packaging-closeout.md).
 No customer screenshots, raw conversations, tokens or order exports are in this GitHub record.
 All private files use the already approved project storage organization; no new service/account
