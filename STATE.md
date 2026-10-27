@@ -1,5 +1,31 @@
 # Calapres current state
 
+## Metricool subscription fit reviewed; no billing change — 2026-10-27
+
+Owner asked about the value of the existing Metricool subscription. Authenticated billing was
+read privately and confirmed that it is an account shared across multiple brands, rather than
+a Calapres-only purchase. Financial details and payment identifiers are excluded from this
+repository. The private readback receipt is saved under verified Ai-Work/التسليم/
+2026-10-27-metricool-fit-review; it is a review for the owner, not allocation of the shared bill
+to Calapres. No retired marketing project or new financial record was activated.
+
+Current Calapres planner List for28September–27October displayed no scheduled posts; this is
+bounded to that brand/view/date range and does not audit the other brands or all-time usage.
+The historical decision0036 integration permits five read operations and excludes publishing
+and writes. Connectivity alone is not evidence of a running content/marketing workflow.
+
+Official Metricool plan documentation reserves API access for Advanced, while Starter lacks
+it and Free supports one brand. A downgrade could therefore remove the current read integration's
+API eligibility; it must not be treated as a price-only change. Cancellation/downgrade guidance
+was read, but no plan, renewal, payment, connection, permission or content change was submitted.
+The next action is the owner's choice between retaining a defined multi-brand/API use, reducing
+plan scope or stopping paid renewal. Do not cancel an account-wide subscription by treating it
+as exclusive to Calapres or enable publishing merely to justify an existing cost.
+
+[Sanitized fit review and plan-impact references](docs/research/2026-10-27-metricool-subscription-fit-review.md).
+Captain remains paused and Easy Life stopped; no customer send, post, campaign or automation
+was created. One existing Codex in-app working tab was reused; the owner's other tab was untouched.
+
 ## Old Ads cart signal: latency plausible, send failure not established — 2026-10-27
 
 Owner requested diagnosis without retesting or advertising. Official Google guidance gives a
