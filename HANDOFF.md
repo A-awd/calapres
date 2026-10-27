@@ -1,5 +1,16 @@
 # Calapres handoff
 
+## Orders daily focus and TikTok preview correction — 2026-10-27
+
+Read-only review selected existing undelivered view1599521751296 and verified its not-Delivered,
+not-Canceled and not-تجريبي filters; view/layout/order settings were not changed. Use this saved
+view for daily focus; Orders sidebar All was not replaced. No native documented per-row/order-number
+colour control was found. TikTok was an unpinned Preview with Pin to page for all staff available;
+it disappeared on navigation, matching official preview behavior. Previous one-time-setup wording
+must not be read as completed global pinning or proof of TikTok data in every order.
+[Evidence and boundaries](docs/research/2026-10-27-orders-focus-and-tiktok-block-preview.md).
+Preserve Captain's pause, fields/Flows, history and OTO writeback limits. No pin/install or test replay.
+
 ## Native Orders age feasibility continuation — 2026-10-27
 
 Owner requested read-only inspection, without development or extension installation. One Codex
