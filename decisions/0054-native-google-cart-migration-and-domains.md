@@ -1,5 +1,14 @@
 # 0054 — Native Google add-to-cart migration and Calapres domains
 
+## Cart-source amendment — decision0055, 2026-10-27
+
+[Decision0055](0055-event-only-google-cart-conversion.md) supersedes this decision's cart
+conversion destination/source choice. The old Arabic broad Page-load action954369731 is
+recoverably Removed, and native Added to cart now selects only the pre-existing manual-event
+Google Shopping App Add To Cart action7713642682. Native connections, tags, exact domain rules,
+prior migration outcome and dated evidence remain preserved. See the new decision for reopened
+acceptance, published label, bounded one-add test, provider-evidence limits and targeted recovery.
+
 Date: 2026-10-27. Status: accepted and applied; saved configuration and bounded native
 add-to-cart acceptance verified. Actual provider receipt/purchase attribution remain separate,
 unverified evidence.

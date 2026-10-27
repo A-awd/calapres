@@ -1,0 +1,156 @@
+{
+  "recordType": "sanitized-declarative-google-cart-event-only-correction",
+  "schemaVersion": 1,
+  "nativeExport": false,
+  "importableRestorationFile": false,
+  "date": "2026-10-27",
+  "timeZone": "Asia/Riyadh",
+  "recordStatus": "accepted-applied-and-reopened-bounded-native-acceptance-verified",
+  "sourceBaseline": {
+    "repository": "A-awd/calapres",
+    "ref": "main",
+    "commit": "2c3dad0120ccf50742c5193f7698813a494163f2",
+    "globalCommit": "d152dde8204a9c5666afe696066882decac3f75f"
+  },
+  "scope": {
+    "nativeGoogleYouTubePreserved": true,
+    "legacyGtmReinstalled": false,
+    "newAdsActionCreated": false,
+    "manualGtagOrCustomPixelAdded": false,
+    "campaignActivated": false,
+    "newOrderOrTestPurchase": false,
+    "countOrGoalSettingsChanged": false,
+    "historicalEventReplayed": false
+  },
+  "oldBroadAction": {
+    "id": "954369731",
+    "name": "إضافة إلى سلة التسوّق (https://calapres.com)",
+    "tagAndLabel": "AW-10837488053/f2qDCMONiscDELXj268o",
+    "sourceBefore": "Page load; URL begins with calapres.com/; empty suffix",
+    "eventTypeInputReadOnly": true,
+    "beforeStatus": "Enabled",
+    "nativeRemoveSubmitted": true,
+    "selectedActionCount": 1,
+    "selectedIdentityVerified": "954369731",
+    "afterStatus": "Removed",
+    "afterTrackingStatus": "Removed",
+    "archiveServerReadbackVerified": true,
+    "freshReloadArchivePersistenceVerified": true,
+    "archiveFinalReadbackVerified": true,
+    "historicalRowRetained": true,
+    "allStatusActionCountAfterArchive": 21,
+    "hardDeleted": false,
+    "historicalRuleTextPhysicalErasureClaimed": false
+  },
+  "existingEventOnlyAction": {
+    "id": "7713642682",
+    "name": "Google Shopping App Add To Cart",
+    "created": "2026-08-08",
+    "createdByThisChange": false,
+    "statusReadBack": "Enabled",
+    "freshStatusReadbackVerified": true,
+    "dataSource": "Calapress; manually configured event",
+    "pageLoadEventRowObserved": false,
+    "optimization": "Secondary",
+    "count": "Every",
+    "accountDefaultGoalIncluded": false,
+    "conversionTagAndLabel": "AW-10837488053/KORbCLqxk94cELXj268o",
+    "conversionLabelIndependentlyReadBack": true,
+    "conversionLabelEvidence": "published-native-pixel-manager-add_to_cart-configuration",
+    "freshAdsDetailTrackingStatus": "Waiting for conversions"
+  },
+  "nativeMapping": {
+    "shopifyEvent": "Added to cart",
+    "beforeSoleDestinationActionId": "954369731",
+    "afterSoleDestinationActionId": "7713642682",
+    "afterSoleDestinationName": "Google Shopping App Add To Cart",
+    "additionalCustomIdLabelEnabled": false,
+    "rowSaveSubmitted": true,
+    "dialogSaveSubmitted": true,
+    "dialogClosedAfterSave": true,
+    "freshReopenReadbackVerified": true,
+    "freshEditReadbackSelectedActionCorrect": true,
+    "freshEditCustomIdLabelCheckboxValue": 0,
+    "freshUnchangedEditSaveDisabled": true,
+    "freshEditCancelledWithoutFurtherMutation": true,
+    "otherSixMappingsVerifiedUnchanged": true,
+    "publishedNativeAdsLabelCount": 1,
+    "publishedNativeDestinations": [
+      "G-3YZFD1XGVL",
+      "AW-10837488053/KORbCLqxk94cELXj268o"
+    ],
+    "oldConversionLabelAbsentInInspectedPublishedScriptText": true,
+    "legacyGtmAbsentInInspectedPublishedPage": true,
+    "allPagesFramesWorkersAbsenceClaimed": false
+  },
+  "preservedConnections": {
+    "freshSettingsReadbackVerified": true,
+    "merchantCenter": "582442539",
+    "googleAdsCustomer": "3301213892",
+    "ga4Measurement": "G-3YZFD1XGVL",
+    "googleTagIds": [
+      "AW-10837488053",
+      "G-3YZFD1XGVL",
+      "GT-P3NC2SXW"
+    ],
+    "conversionMeasurement": "On",
+    "enhancedConversions": "On",
+    "customerMatch": "Off",
+    "freshGoogleTagsDialogReadbackVerified": true,
+    "merchantTagDestination": "MC-QEZTVYYNZQ"
+  },
+  "domains": {
+    "rules": [
+      {
+        "value": "calapres.com",
+        "match": "Exactly matches"
+      },
+      {
+        "value": "unywbe-ub.myshopify.com",
+        "match": "Exactly matches"
+      }
+    ],
+    "changedByThisCorrection": false,
+    "priorSavedReadbackPreserved": true
+  },
+  "acceptance": {
+    "historicalNativeCartCaptureFixPreserved": true,
+    "priorOneNativeAddTestPreservedAsDatedEvidence": true,
+    "oldSpecificAddAdsReceiptVerified": false,
+    "oldSpecificTestCountedExactlyOnceVerified": false,
+    "postChangeNewNativeAddTestPerformed": true,
+    "nativeDiagnostic": "Google & YouTube Pixel Helper",
+    "sameWorkingTabUsed": true,
+    "plainProductWithoutCard": true,
+    "baselineNativeEvents": [
+      "page_viewed",
+      "product_viewed"
+    ],
+    "baselineEventTimeRiyadh": "16:30:21",
+    "nativeEventCountBefore": 2,
+    "singleAddPress": true,
+    "nativeAddEventTimeRiyadh": "16:30:42",
+    "productAddedToCartEventsForSingleAdd": 1,
+    "nativeEventCountAfterAdd": 3,
+    "cartQuantityBefore": 1,
+    "cartQuantityAfterAdd": 2,
+    "targetedRemovalTimeRiyadh": "16:33:43",
+    "nativeRemovalEventCount": 1,
+    "nativeEventCountAfterTargetedRemoval": 4,
+    "cartQuantityRestored": 1,
+    "existingOwnerCartPreserved": true,
+    "noCheckoutOrderPaymentOrPurchase": true,
+    "actualPostChangeAdsPerHitReceiptVerified": false,
+    "exactProviderCountOnceVerified": false,
+    "universalProviderDeduplicationGuaranteed": false
+  },
+  "recovery": {
+    "oldActionNormalRecovery": "All filter -> Enabled; exact old action only",
+    "recoveryGuidanceVerifiedByExecutingParent": true,
+    "recoveryGuidanceUrl": "https://support.google.com/google-ads/answer/10918269?hl=en",
+    "restoreOldSoleNativeMappingOnlyIfRequired": true,
+    "reactivationRestoresKnownPageLoadRisk": true,
+    "wholeTagAccountNativeAppOrGtmDeletion": false
+  },
+  "finalReadbackPending": false
+}

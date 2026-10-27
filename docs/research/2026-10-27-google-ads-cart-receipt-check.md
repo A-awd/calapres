@@ -1,5 +1,15 @@
 # Google Ads cart-test receipt and counting — read-only follow-up
 
+## Later authorized correction — 2026-10-27
+
+This read-only finding was followed by the separately authorized and applied
+[event-only cart correction](../operations/google-cart-event-only-correction.md), decision0055.
+The incorrect broad Page-load action954369731 is now recoverably Removed; the sole native cart
+destination is the existing manual-event action7713642682. Fresh settings/status/published-label
+readback and one new bounded native-add check passed. The earlier ambiguous14:10 signal remains
+ambiguous, and no exact Ads provider receipt or attributed-count guarantee has been established.
+The read-only observations below are retained as historical evidence, not the current mapping.
+
 Observed 2026-10-27, Asia/Riyadh. The owner requested checking inside Google Ads whether the
 already completed cart-add test arrived and was counted once, without activating advertising,
 creating an order, making a test purchase or repeating the cart test. This inspection made no

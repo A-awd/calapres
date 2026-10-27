@@ -1,5 +1,40 @@
 # Calapres handoff
 
+## Google Ads cart source corrected to the native event — 2026-10-27
+
+Owner-authorized correction is applied and independently reopened. The sole native Google &
+YouTube Added to cart destination is the pre-existing Google Shopping App Add To Cart action
+7713642682, whose Ads source is a manually configured event. The incorrect broad Page-load
+Arabic action954369731 is now recoverably Removed; fresh Ads reload retained its historical row
+and showed the manual replacement Enabled. No new action, Count/goal/attribution change or
+history deletion was used. This supersedes only0054's prior cart destination/source choice.
+
+Fresh Shopify settings reopening verified the single linked-account destination, additional
+custom ID/label unchecked, all six other mappings unchanged, and existing Merchant/Ads/GA4
+connections, Google tags, measurement and Enhanced conversions retained. The published native
+add_to_cart configuration now exposes exactly one Ads label AW-10837488053/KORbCLqxk94cELXj268o
+plus the separate GA4 destination; the old f2qDCMONiscDELXj268o label and legacy GTM container
+were absent from inspected script text. The two previously saved exact domain rules were not
+changed. Legacy GTM was not installed or activated.
+
+A bounded post-change native Google & YouTube Pixel Helper check recorded only page_viewed and
+product_viewed at16:30:21 Riyadh, then exactly one product_added_to_cart after one actual button
+press at16:30:42. The original plain-product cart quantity was restored to one; removal appeared
+at16:33:43. No checkout, order, purchase, ad activation or synthetic tracking call was performed.
+This establishes the tested native event and configured path, not an individual Ads transport
+receipt or attributed count-once guarantee. The fresh manual Ads detail still displayed waiting
+for conversions; exact Ads receipt and provider deduplication remain unverified.
+
+[Decision0055](decisions/0055-event-only-google-cart-conversion.md),
+[configuration, acceptance and bounded recovery](docs/operations/google-cart-event-only-correction.md),
+[declarative contract](docs/operations/google-cart-event-only-correction.contract.json).
+Private screenshots and readback receipt are saved and read back under verified Ai-Work/
+التسليم/2026-10-27-google-cart-event-only-correction. Existing Captain pause, Flows, OTO correction,
+private print originals and all unrelated work remain intact. One working Codex in-app tab was
+reused; the owner's other tab remained untouched. Next useful evidence is ordinary genuine
+Ads tag activity/reporting; do not create an order, activate ads, replay events, switch Count to
+One or repeat acceptance merely to force a number into a report.
+
 ## Google Ads cart receipt check — specific test remains unproven — 2026-10-27
 
 Read-only inspection of Ads action954369731 found a recent event signal at27October14:10,

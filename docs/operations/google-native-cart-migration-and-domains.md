@@ -1,5 +1,15 @@
 # Native Google add-to-cart migration and Calapres domains
 
+## Superseded cart source choice — corrective follow-up, 2026-10-27
+
+The subsequent owner-authorized [event-only correction](google-cart-event-only-correction.md)
+replaced the cart mapping below with the existing manually configured action7713642682 and
+recoverably archived the incorrect broad Page-load action954369731. Fresh Ads/Shopify readback,
+the new published single Ads label and one bounded native-add test are recorded in decision0055.
+The historical migration/domain/test facts below remain dated evidence; do not restore the old
+cart mapping automatically. Existing native connections, Google tags and exact domains remain
+preserved. Actual Ads per-hit receipt/count-once is still not established.
+
 ## Later Ads-side read-only evidence — 2026-10-27
 
 [Follow-up inspection](../research/2026-10-27-google-ads-cart-receipt-check.md) observed a recent
