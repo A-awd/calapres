@@ -1,5 +1,42 @@
 # Calapres current state
 
+## Native marketing report availability checked read-only — 2026-10-29
+
+Owner requested actual account availability and how to compare Shopify reporting with Metricool,
+without changing settings. Authenticated native Growth → Attribution exposes populated Performance
+and Path to purchase views. The date filter was set to 27 September–26 October 2026, the same calendar
+period as the existing private Metricool PDF; Shopify timezone was not independently verified and
+this is not a fresh Metricool audit. Current model is Last non-direct click with a visible 30-day window; the menu also exposes Last click, First click,
+Any click and Linear. All/Marketing/Paid/Organic controls and channel/campaign breakdowns are visible.
+
+Ad spend/ROAS/CPA/CAC columns displayed unavailable marks in the inspected period, so populated
+paid reporting or complete cost ingestion is not established. Several Unknown traffic rows have
+no diagnosed cause. Path summaries are available, but small-sample/test-order limits prevent a
+trustworthy customer-funnel or marketing-success conclusion. Owner-paid experimental orders were
+not globally removed from reports by the daily-work Orders view. Social clicks, store sessions,
+attributed orders and provider event receipts remain distinct evidence; cross-platform attributed
+revenue must not be summed as real total revenue or subscription ROI.
+
+The full performance_by_marketing_channel report opened; Export/Print and Add dimension controls
+were visible. Its combined-dataset dimension menu did not verify UTM dimensions. A native query
+warning dates changed session/search calculations to 21 September 2026; the comparison period spans
+that change. The Sessions KPI explicitly filters human sessions while the channel table query
+does not have the same filter; do not sum/equate those views or infer a marketing-only decrease.
+
+Later Reports-library navigation was blank, reload timed out and browser runtime recovery reused
+the sole IAB tab. Final Growth/Attribution return displayed 504 Gateway Time-out / nginx. This bounded
+service failure blocks further library/UTM inspection, not access eligibility or a tracking diagnosis.
+
+Full-report built-in date filtering showed unsaved query changes; Save as was not used and no
+report/configuration was saved. No campaign, connection, pixel, permission, privacy, billing,
+content, send, purchase or order change occurred. Captain remains paused; Easy Life remains stopped.
+Private metrics/evidence stay outside GitHub. [Availability, limits and paired-review use](docs/research/2026-10-29-marketing-reports-live-availability.md).
+Next safe action once available: read-only existing acquisition/UTM reporting and timezone check,
+matched-period comparison with calculation/filter limits, and separation of test records before
+sales conclusions. Agree future UTM names with approved content; this cannot repair historical
+attribution and does not authorize settings changes, publishing or new tracking infrastructure.
+
+
 ## Onwan renewal reviewed; no cancellation performed — 2026-10-29
 
 Authenticated native Shopify confirms the Growth trial ends30October, then approximately SAR109
