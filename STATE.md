@@ -1,5 +1,20 @@
 # Calapres current state
 
+## Address alternatives researched; no replacement adopted — 2026-10-29
+
+Onwan is not compulsory. Current primary sources confirm Enwany and Saudi Address Pro as
+alternatives with different capabilities, but no reviewed source proves the complete current
+Basic→full address→correct OTO structured fields/update path. Enwany's publisher lists OTO and
+all-plan support, but derives a code from an existing address after order creation. Saudi Address
+Pro advertises code-first SPL autofill, while Basic applicability and OTO mapping remain unproved.
+Zoketo's older address article is not enough to overcome current feature/account compatibility
+uncertainty. Do not treat another app listing or a paid upgrade as a tested connector repair.
+
+[Candidate evidence and limits](docs/research/2026-10-29-onwan-alternatives-assessment.md).
+Keep Onwan Free and paid renewal stopped. No install, plan change, send, new account/access,
+customer-account switch, fixture, Sync, label or shipment occurred. Prior company replies remain
+proposed and unsent. Next gate is a supported customer journey and OTO mapping, not a blind retest.
+
 ## Vendor replies checked; full proposals await owner approval — 2026-10-29
 
 Read-only search across the verified mailbox, including separate conversations and spam/trash,
