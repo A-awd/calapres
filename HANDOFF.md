@@ -1,5 +1,20 @@
 # Calapres handoff
 
+## Vendor replies checked; full proposals await owner approval — 2026-10-29
+
+Read-only search across the verified mailbox, including separate conversations and spam/trash,
+from22October returned four relevant threads. Latest OTO reply remains27October13:57 Riyadh;
+Mwwared direct reply remains23October19:24 plus its20:22 transcript. Current full bodies/headers
+confirm no new field specification, correction or firm ETA. OTO promises review; Mwwared's
+identified SAR0-extra modification awaits OTO requirements. Do not infer inability to repair.
+
+Prepared complete unsent Arabic proposals: technical escalation in the latest OTO email thread,
+and a coordination/format/cost/Free-plan clarification in Mwwared's existing in-app chat. No CC,
+new attachments, send, direct vendor introduction or access grant occurred. The owner must approve
+each full message and destination before dispatch. Keep Onwan Free/paid renewal stopped and all
+native-only/no-customer-message/no-shipment boundaries. No repeated fixture or Sync.
+[Scope, conclusion and approval gate](docs/research/2026-10-29-vendor-replies-and-proposed-escalation.md).
+
 ## Metricool renewal review blocked by browser access — 2026-10-29
 
 Owner asked about the next bill and whether cancellation would prevent the upcoming charge;
