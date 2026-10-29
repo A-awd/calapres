@@ -1,5 +1,17 @@
 # Calapres handoff
 
+## Onwan renewal reviewed; no cancellation performed — 2026-10-29
+
+Authenticated native Shopify confirms the Growth trial ends30October, then approximately SAR109
+per30days before tax/FX and plus usage. No Onwan line is present in the upcoming bill inspected;
+no cancellation penalty is displayed in the reviewed views. Onwan offers a SAR0 Free plan with
+limited/manual features. These observations are not a vendor waiver of any possible past charges.
+Recommend Free before renewal while the official address correction remains pending, but await
+an explicit owner decision: the previous keep-Growth instruction has not been silently reversed.
+No billing change, uninstall, vendor/customer message, retest, Sync or shipment occurred.
+[Billing evidence and next gate](docs/research/2026-10-29-onwan-renewal-review.md).
+After approval verify native Shopify renewal/subscription state, not only the app's Free badge.
+
 ## Metricool prepared for Calapres content and analysis — 2026-10-27
 
 Owner requested useful existing-plan Metricool configuration for Calapres and selected both
