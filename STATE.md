@@ -1,5 +1,21 @@
 # Calapres current state
 
+## Independent address routes investigated; no architecture adopted — 2026-10-29
+
+The owner asked for a correct method even without relying on current vendors. SPL officially
+provides short-code address lookup. A merchant-owned pre-checkout app could use SPL and Shopify's
+prefill capabilities, but a secure app backend and independent shipping mapping require new
+architecture/access/commercial approval; a public theme cannot safely hold the secret key.
+Cart personalization and accelerated paths are unaccepted, so no drop-in code is claimed.
+
+New alternative: Shopify-hosted Flow on Grow+ supports HTTP responses, parsing, stored Secrets
+and orderUpdate. It can support post-order address correction without Onwan/n8n/private server,
+but does not prefill checkout for the customer. Exact OTO auth/cross-channel access/orderId and
+late-update behavior remain unproved; an upgrade alone is not a fix. No credentials, plan,
+channel, server, app, send, test/Sync or shipment was created/changed.
+[Independent route evidence and gates](docs/research/2026-10-29-independent-address-routes.md).
+Keep Onwan Free/renewal off and existing constraints; proposed company messages remain unsent.
+
 ## Address alternatives researched; no replacement adopted — 2026-10-29
 
 Onwan is not compulsory. Current primary sources confirm Enwany and Saudi Address Pro as
