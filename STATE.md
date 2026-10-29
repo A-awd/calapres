@@ -1,5 +1,27 @@
 # Calapres current state
 
+## Metricool renewal review blocked by browser access — 2026-10-29
+
+Owner asked about the next bill and whether cancellation would prevent the upcoming charge;
+no cancellation or subscription change was authorized. Current Codex in-app inventory had no
+tabs, and two single-tab attempts to open the known native plan page timed out on webview
+attachment. Troubleshooting was read; no external browser or service/API fallback was used.
+Fresh live plan, renewal, pending-charge and cancellation fields remain unverified.
+
+The private 27 October receipt was actually reopened from verified Ai-Work and is explicitly
+dated evidence, not a fresh billing readback. Previously inspected official policy described
+end-of-cycle cancellation/downgrade and benefits through that boundary; it is not a cancellation
+receipt, refund promise, no-debt guarantee or proof renewal is stopped. Exact billing figures,
+renewal date, account identifiers and portfolio details stay private.
+
+Metricool is shared across brands; preserve all content and the existing Calapres library/report.
+A lower plan can affect API eligibility and brand capacity. No plan, renewal, payment, access,
+content, send or scheduling change occurred. Captain remains paused and Easy Life stopped.
+[Access limit, evidence and next gate](docs/research/2026-10-29-metricool-renewal-readback-blocked.md).
+Next: restore IAB access and read actual native billing/terms. Only after explicit owner choice,
+perform the exact account-wide cancellation and verify final renewal status before claiming
+a future charge is prevented. Preserve the separately completed Onwan Free change.
+
 ## Onwan returned to Free; paid renewal stopped — 2026-10-29
 
 The owner explicitly approved returning Onwan to Free now, keeping the app installed, and checking
