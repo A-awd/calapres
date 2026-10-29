@@ -1,5 +1,23 @@
 # Calapres handoff
 
+## Onwan returned to Free; paid renewal stopped — 2026-10-29
+
+The owner explicitly approved returning Onwan to Free now, keeping the app installed, and checking
+Shopify renewal and outstanding charges. Select Free was applied once. Onwan subsequently shows
+Free Plan with the25-order allowance; it remains installed and accessible. Native Shopify app
+billing now reads `Plan expires Oct 30`, replacing the prior auto-renewing free-trial wording.
+The native Plan page no longer displays Onwan in recent paid subscriptions. The previous Growth
+period is scheduled to end30October; do not claim that date has already passed.
+
+The post-change upcoming bill shows no Onwan charge line; only separate transaction fees are
+present. This confirms no outstanding Onwan charge is visible in the inspected bill, not that the
+whole Shopify bill is zero or that all possible unposted usage has been audited. No payment,
+uninstall, new access, vendor/customer message, address retest, Sync or shipment occurred.
+This explicit owner instruction supersedes the historical keep-Growth direction in0050.
+[Executed billing evidence](docs/research/2026-10-29-onwan-renewal-review.md#owner-approved-free-downgrade-executed).
+Keep Free while awaiting a supported native address correction; any future paid plan needs a new
+owner decision. Preserve the original experiments and existing no-middleware boundaries.
+
 ## Native marketing report availability checked read-only — 2026-10-29
 
 Owner requested actual account availability and how to compare Shopify reporting with Metricool,

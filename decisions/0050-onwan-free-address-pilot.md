@@ -4,6 +4,22 @@ Date: 2026-10-23
 
 Status: owner-approved Free installation executed; production adoption and end-to-end acceptance not approved or established
 
+## Current commercial direction — owner-approved Free restoration, 2026-10-29
+
+The owner explicitly instructed returning Onwan to Free immediately, keeping it installed, and
+checking native Shopify renewal and outstanding charges. This latest instruction supersedes all
+historical keep-Growth/no-downgrade instructions below; preserve those as dated history only.
+
+Executed: Select Free once, followed by Onwan Free Plan readback and native Shopify
+`Plan expires Oct 30`. The native Plan page no longer lists Onwan recent subscriptions. Paid
+renewal is stopped, with the former period ending30October. App remains installed. The inspected
+post-change upcoming bill has no Onwan charge line; unrelated transaction fees remain separate.
+No refund, waiver of unknown charges or future free trial is promised. No uninstall, payment,
+new access, messages, address test/Sync or shipment occurred. Keep Free pending a separately
+approved paid-plan decision after a supported native correction is ready to test.
+
+See [the executed renewal review](../docs/research/2026-10-29-onwan-renewal-review.md#owner-approved-free-downgrade-executed).
+
 ## Authorization and purpose
 
 Latest reply-check correction (2026-10-27): a separately grouped starred OTO message at13:57

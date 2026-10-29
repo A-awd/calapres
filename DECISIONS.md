@@ -1,6 +1,11 @@
 
 # Decision Index
 
+Onwan commercial direction updated (2026-10-29): [0050](decisions/0050-onwan-free-address-pilot.md)
+records the owner-approved return to Free, retained installation, verified native paid-renewal stop,
+and no Onwan charge line in the inspected upcoming bill. This supersedes historical keep-Growth
+instructions only; no integration acceptance, new payment or shipment is implied.
+
 OTO follow-up coverage correction (2026-10-27): [0050](decisions/0050-onwan-free-address-pilot.md)
 and the [separate-message evidence](docs/research/2026-10-27-oto-separate-starred-reply-correction.md)
 preserve the owner-identified13:57 reply, references308330/125612 with unknown relationship, and
