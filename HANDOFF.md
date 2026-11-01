@@ -1,5 +1,15 @@
 # Calapres handoff
 
+## Official connectivity research and live diagnostic — 2026-11-01
+
+Owner requests the correct root remedy, without substituting remote desktop or claiming a 100% guarantee. Official Remote connections and troubleshooting docs reviewed. Both desktop/mobile should be current; host must remain awake/online and Remote Control enabled. Signing out disables Remote Control without removing pairings. For a stuck terminal, reopen its panel first; restart the desktop app only after active chats finish. Do not reset pairings, delete profiles or change networking speculatively.
+
+The desktop-bundled CLI is 0.166.0-alpha.5.1. Its supported `doctor --network-only` succeeded: config loaded, no proxy environment, provider HTTP reachable, Responses WebSocket upgraded successfully (HTTP 101). Full read-only doctor: 21 OK, zero failed checks; desktop app-server initialized, installation and databases healthy. Thread inventory warnings (missing DB entries / duplicates) are not proven connectivity causes; no cleanup attempted. Ephemeral background-server idle is not proof of a broken desktop host. These are current checks, not proof that an intermittent outage is permanently fixed.
+
+Previously corrected computer-use executable path remains the only demonstrated repaired defect. No app restart/update, pairing change, security change or external diagnostic upload performed. Native desktop-app UI control remains denied by tool safety; do not bypass. Next practical action: check for desktop/mobile updates, then fully quit/reopen the desktop app after active work ends, and verify the existing phone connection plus browser and terminal. If the prolonged outage returns, correlate its exact timestamp and error with app logs and use official feedback/support; do not promise a permanent fix without that evidence.
+
+Sources: https://learn.chatgpt.com/docs/remote-connections ; https://learn.chatgpt.com/docs/reference/troubleshooting ; https://learn.chatgpt.com/docs/changelog
+
 ## Owner correction: root connectivity diagnosis, not remote-desktop substitution — 2026-11-01
 
 Owner explicitly paused phone remote-desktop setup: investigate why Codex host/browser/terminal
