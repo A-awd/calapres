@@ -81,3 +81,29 @@ The private image was copied unchanged and hash-verified in the project's access
 handoff folder `2026-11-01-fastlo-oto-comparison`, alongside source JSON and the Arabic owner
 report. This proves local file readback, not another-device synchronization. Keep private offer
 amounts and raw account billing/customer details out of GitHub.
+
+## Fee-scenario calculation refreshed — 2026-11-01
+
+Owner requested Aramex wallet versus supplied Fastlo contract across monthly subscription,
+volume, coverage and weight scenarios. Live account pricing confirmed Free can buy OTO-rate
+labels without a paid subscription. Own-contract bridge requires Launch+. Current MONTHLY
+Launch selectors: 50 own-contract shipments for SAR59 (overage1.80 each), 100 for SAR99
+(overage1.50), 250 for SAR139 (overage0.90). Growth250 SAR279 overage1.70; Pro1000
+SAR1599 overage2.40. OTO-rate shipments are shown unlimited, separate from own-contract quota.
+Changing selectors was quote preview only; no upgrade button or checkout used.
+
+Aramex synthetic Riyadh-to-Riyadh prepaid5kg/20cm-cube quote: Free20.33, Launch19.26,
+Growth18.19. Branch-only services14/13/12 are separate and must not be substituted for
+the ordinary service in the carrier comparison. No Pro wallet rate was established.
+No intercity Aramex quote is claimed.
+
+Private report and exact-source JSON saved in accessible iCloud folder
+2026-11-01-fastlo-oto-comparison. Calculated volume50/100/250 scenarios including suitable
+Launch tiers for Fastlo, mixed wallet/own-contract usage with ONE subscription, and own-
+contract overage. Source Fastlo quote amounts remain private. Ceil display applies only after
+exact arithmetic, not before multiplication. No definitive VAT-normalized winner: Fastlo
+quote excludes VAT; OTO subscription/label tax basis remains unverified. Official finance
+FAQ notes VAT at funding and possible extra weight/remote-area charges, but did not establish
+quote tax basis. No COD cost added to prepaid Calapres scenarios. Aramex return/extra-weight
+tariffs unverified. Subscription is software/bridge allowance, not included freight credit.
+No purchase, funding, label, order, integration, settings change or send occurred.

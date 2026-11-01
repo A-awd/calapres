@@ -1,5 +1,15 @@
 # Calapres handoff
 
+## Shipping fee scenarios verified and calculated — 2026-11-01
+
+Aramex OTO wallet can use Free; a paid subscription is not mandatory for that route.
+Fastlo own-contract bridge needs Launch+. Verified monthly Launch50/100/250 tiers and
+separate overage; OTO-rate labels are unlimited per plan table. Private exact-source and
+rounded volume/mixed-carrier scenarios saved in existing iCloud shipping comparison folder.
+Do not publish private Fastlo commercial rates or claim a final VAT-normalized winner.
+[Pricing evidence and limits](docs/research/2026-11-01-fastlo-own-contract-versus-oto-wallet.md).
+No subscription, wallet funding, shipment or order executed.
+
 ## Customer-choice carrier requirement inspected live — 2026-11-01
 
 Owner requires visible carrier-brand choice at checkout. Live Shopify plan: Basic; General
