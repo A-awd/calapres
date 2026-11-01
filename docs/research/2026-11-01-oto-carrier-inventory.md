@@ -1,0 +1,457 @@
+# OTO carrier inventory — 2026-11-01
+
+Read-only live account inspection via one Codex in-app tab. No shipment, subscription,
+connection, payment, credentials or vendor message was submitted.
+
+The merchant-own-contract Shipping Partners catalog rendered 433 cards with no search or
+country/service filter. These are integration entries, including older versions, repeated names,
+fulfillment services and providers in different countries; not 433 distinct Saudi wallet carriers.
+Full observed labels follow below unchanged.
+
+The price calculator for synthetic Riyadh→Riyadh prepaid 5kg, 20×20×20cm returned 21 service rows
+across 15 carrier brands: Aymakan (standard, Cold, Lockers), SMSA (standard, branch), RedBox,
+Aramex (standard, branch, heavy), J&T, SPL branch, SS Logistics, Road Link, Sent (standard,
+same-day), Shipa, Adwar cold, Naqel, UPS, Mrsool, Flow. Carrier filter matched these 21 rows.
+This is the complete observed route-specific result, not every route/country's OTO-rate offer.
+Fastlo was in the own-contract catalog, absent from this wallet result. Plan previews had
+already been checked separately; no subscription is needed merely to preview prices.
+
+Fastlo detail from the prior click finished navigating by this turn: credential form requested
+merchant carrier API key and offered Test connection, with Launch+ banner. No key was entered,
+no test was performed. This clarifies the earlier immediate snapshot that had not yet navigated.
+
+## Full own-contract catalog labels
+
+- Logistiq
+- Shipa Delivery V2
+- جي أند تي
+- JD Express
+- أرامكس
+- Starlinks
+- سمسا
+- AJEX Logistics
+- أي مكان
+- Tam
+- Naqel
+- Al-Shrouq Express
+- SPL (New)
+- Al Shouroq express
+- Labaih
+- Barq
+- Movely Express
+- RedBox
+- Extra (Shipsy)
+- SPL
+- أي مايل
+- مرسول
+- Yamamah Express Logestechs
+- Sahab Logistics
+- GFS Express
+- Delex (Logestechs)
+- Deliver Now Logistics
+- UniEx
+- يو بي إس
+- Mr. Mandoob
+- TD Logistics
+- Fastlo
+- Dash Delivery
+- Flowpl
+- Dal
+- Wepik Express
+- Hoko
+- Prolo Logistics
+- Flow Express
+- Madar Express
+- Cloud Shelf
+- NFD
+- Leajlak
+- Mijet
+- Nawel
+- Adwar Logistics (Logestechs)
+- DHL
+- رود لنك لوجستيك
+- سينت
+- Delybell New
+- Lynq
+- ATAQ Express
+- Drb Express
+- Shipstation
+- AtUrHome
+- iMile Fulfillment
+- My Shipment by Jahez
+- SMSA Fulfillment
+- Torod Point
+- C4D
+- Leo Delivery
+- Easy Delivery
+- أس أس لوجستك
+- Transcorp
+- EMX
+- Asyad
+- Starlinks (OLD)
+- Shdh
+- Storage X
+- Marsal
+- Safy Mile
+- Jeeny
+- كريم
+- BTC Logistics
+- ثابت
+- skydu
+- Nashmi
+- Zajex
+- Yeswa
+- Alshrouq Multipickup
+- Ajeek
+- Saee
+- LastPoint
+- VAAL
+- Beez
+- Ajwaa Afaq
+- Rabel Express
+- Zajil
+- Tamex
+- Mkhdoom
+- Saudi Salam Logistics
+- Awssal
+- Road logistics
+- Shipox
+- Safe Arrival
+- Mlc Go
+- Naql Express
+- WeDeliver
+- Deliverist
+- Esnad Express
+- Emdad
+- BlueSky Express
+- Kwick Box
+- Cloud Express
+- Mahmool
+- Wadha
+- Swift
+- Salasa
+- Beone
+- nGage
+- Safe Box
+- Ontime Express
+- Last Step
+- Mosool
+- Alma Express
+- Moovo Express
+- Modern Support
+- Ship Hero
+- Weenk App
+- Alam alkon
+- Ejack
+- Eva Express
+- Moments Logistics Service
+- Jones International Transportation Co.
+- Shuttle
+- Postagexp
+- Coldt
+- Way Express
+- Tawsela
+- S:Mile
+- Skip Express
+- Boxed Up
+- Najiz Express
+- uTrac
+- Tasawuq
+- Hiblocks
+- Atheryoun Express
+- Nord Logistics
+- Awfar Express
+- JFL Express
+- Ajalogistic
+- Syaal
+- Ajoul
+- Sahab Express
+- MajEx Express
+- SMI Express
+- Gawamen
+- QLS Express
+- XTurbo
+- Lafasta
+- Send
+- Araba Shipping Service
+- Galaxy Delivery
+- Sarokh
+- AHOY
+- 4PL
+- SMB Express
+- GLT Express
+- Collect+
+- NYAZIK Logistics
+- 4U Logistics
+- Anwan Express
+- USPS
+- Kasib Express
+- R2 Express
+- Onway
+- The Arrow
+- Dal Fulfillment
+- PostaPlus
+- Flow Business - Flow LTD
+- Waslnee
+- Esal Parcel Transport Company
+- SWEX Express
+- Tard Delivery
+- Mowasalt
+- Horizon Speed
+- 4U Express
+- Genac
+- Fawran Logistics
+- Lafasta V4
+- MATP Logistics
+- Best One
+- Roz Express
+- Happiness Gem
+- Shipa Fulfillment
+- Logistic Care
+- Runner
+- Naseem Cold Delivery
+- Flexe Express
+- ReceiveHere
+- Tabex
+- SLD (Saudi Logistics and Delivery)
+- Hawa Logistics
+- IntercityXpress
+- Yamamah Express
+- Sundouq
+- Boxex Express
+- DOS Express
+- Motqen
+- FULLex
+- Holol Al Diar
+- Sor3a Express
+- Nizar Logistics
+- Rabbit Delivery
+- Deliverist
+- Fast Move Express
+- Barig Logistics
+- Miles Speed
+- Placer
+- Postage Fulfillment
+- Sahm
+- Al Hajer Logistics
+- 3speeds
+- Al Saif Express
+- Macm
+- Omni Llama
+- Quick Silver
+- Reverse Delivery
+- MQ Express
+- Dal Cross City
+- PTL Logistics
+- Jana Express
+- Fazaah Logistics
+- Beone Lastmile
+- Shipco Transport
+- Premium Shipping
+- Falcon Express
+- Mina Excellence
+- Altariq App
+- Bosta
+- Beone Fulfillment V2
+- Flexible
+- Roban AlQiadah
+- Artz Logistic Services
+- Sada Logistics
+- Golden Arrow
+- Gulf Palm
+- Linkers Express
+- RGS
+- One Minute
+- Tard (Logestechs)
+- Delivery Zone
+- Karva
+- Shgardi
+- HPS
+- LubEx
+- Cainiao
+- ATL Logistics
+- Marjana Al Sahel
+- Nawader Logistics
+- Baraa Fast
+- Mawal Logistics
+- Yasoub Logistics
+- Al Madaen
+- Tirhal Express
+- Emx Delivery
+- One8
+- Pack Go
+- SAB Express New
+- Quick Silver
+- Quick Silver Bullet
+- Immediately Delivery
+- Four Destinations
+- Speed SA
+- Shaghaf
+- Rafah
+- GBE Investing
+- Etesal
+- Al Masar Al Marin
+- Box Logistics
+- Roads Runner
+- Ship Flow
+- Darbak Wasl
+- GPL Fulfillment
+- HBOB
+- Lalamove
+- AH Express
+- Run-X Logistics
+- Walim
+- Edex Express
+- Time Tasks Logistics
+- Eagle
+- Modern Tracks
+- Wateen El Emdad
+- Mawqi AlMasar
+- Navix
+- Starlinks Fulfillment
+- Ryada Logi
+- One Trip
+- دعم التوصيل
+- Locate
+- Extend Express
+- Fast Log
+- ACS
+- Yurtiçi Kargo
+- Dazz
+- Aras Kargo
+- HepsiJet
+- Tawzea Logistics
+- كويك اب
+- Thuwaini Logistics
+- Supermile
+- Jeebly
+- GWC Logistics
+- Khuzama Logistics
+- InExpress
+- ICP
+- PTT Kargo
+- Emirates Post
+- Beebolt
+- Halan
+- Delivery One
+- سكاي نت
+- IW Express
+- Dalilee
+- FedexGlobal
+- Qatar Post
+- Çokyaşar Lojistik
+- BirGünde Kargo
+- Tookan
+- Munch On
+- Getswift
+- Yallow
+- Cigo
+- Flickapp
+- Mylerz
+- Fedex
+- One Click Delivery
+- Sps Express
+- Lyve
+- Jumia Logistics
+- Zajel
+- Dayer Logistics
+- Sprint
+- Uruk Express
+- R2S Logistics
+- BeeThere Delivery
+- PackUpp Delivery
+- اليت
+- Quick Ship
+- Porter Express
+- Kolay Gelsin
+- FODEL
+- Yango
+- TFM Express
+- Paket Taxi
+- Bolt Kargo
+- Octovan
+- Banabikurye
+- Styla Sewa
+- Yango Next Day Delivery
+- QDelivery
+- Okadoc
+- Pharmaciaty
+- Soon Express
+- PDC
+- Najiz
+- Smart Point
+- SaaSMile
+- Beyond Delivery
+- Delybell
+- İletmen
+- Tard Delivery 2
+- Utrac Delivery
+- Dele Fast
+- Jetizz
+- Fareye
+- 9Cloud
+- SLSC Logistic
+- Waseel Logistics
+- Barq Jawhara
+- Pharmaciaty TMS
+- NiceOne Fleet
+- Adam Pharmacy
+- Barq Express
+- Cargo X
+- Fulfillment Bridge
+- Horoz Lojistik
+- Lyve Bullet
+- Fenix Express
+- Alamyal
+- Milenow
+- Posta Plus V2
+- Nasxpress
+- Fenx Kuwait
+- Logistic Supplier
+- ShipEntegra
+- Albabtain Logistic
+- Tal Delivery
+- Captain H
+- Delifast
+- Eco Express (Old)
+- Zid Logistics
+- DoDelivery
+- Swftbox
+- First Flight Me
+- Golden Sieeh
+- Sürat Kargo
+- iFast Express
+- Lead Express
+- Aber Elsahab
+- SAB Express
+- Noon Ride On Demand
+- Scotty
+- Emirates
+- JoeEx
+- GPL Express
+- KM Delivery
+- 360 Express Pro
+- Blink
+- Shopini Express
+- Pro Logistics
+- Net Global
+- Delivery Zone UAE
+- Golden Takaful
+- Express Relais
+- Fleetrun
+- Sareean
+- PieShip
+- Blue Logistics
+- Nbox
+- Sky Express
+- UPS Türkiye
+- KML
+- Delivery Bolt
+- NBN
+- PieShip Express
+- Eco Express
+- Mkfy Express
+- Namu for Logistics
+- Right Now
+- Next Global
+- Magic Delivery

@@ -1,5 +1,12 @@
 # Calapres handoff
 
+## OTO complete carrier inventory read — 2026-11-01
+
+Live own-contract catalog contained 433 integration cards (not distinct Saudi wallet carriers).
+Riyadh→Riyadh prepaid synthetic calculator result contained 21 services across 15 brands;
+carrier filter confirmed the same list. Full catalog and route limitations are recorded in
+[carrier inventory](docs/research/2026-11-01-oto-carrier-inventory.md). No activation or purchase.
+
 ## Additional owner-requested verification — 2026-11-01
 
 Verified the live Free account can preview both Launch and Growth courier prices without
