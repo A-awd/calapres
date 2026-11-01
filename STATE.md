@@ -1,5 +1,16 @@
 # Calapres current state
 
+## Customer-choice carrier requirement inspected live — 2026-11-01
+
+Owner requires visible carrier-brand choice at checkout. Live Shopify plan: Basic; General
+profile has two free-domestic manual tiers, no carrier choices. Unsaved calculated-rate dialog
+reported no carriers/apps available for the zone; discarded. Existing-cart checkout preview
+showed only free domestic delivery; no contact entry, cart change, order or payment. Preview
+URL carried a theme-preview parameter; live admin independently confirms configured rates.
+Named manual choices are feasible; automated OTO checkout rates/service mapping unproved.
+Do not upgrade or restrict to Fastlo based on assumption. Preserve physical-ready manual labels.
+[Evidence and limitations](docs/research/2026-11-01-oto-carrier-inventory.md).
+
 ## OTO checkout options clarified — 2026-11-01
 
 Carrier availability inside OTO is separate from customer-facing Shopify checkout options.

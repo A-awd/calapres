@@ -477,3 +477,44 @@ Sources read:
 - https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/third-party-carrier-calculated-shipping
 
 No store configuration changed and no checkout/order/shipment test was performed.
+
+## Actual Shopify admin and checkout inspection — 2026-11-01
+
+Owner clarified customer must choose familiar carrier brands; a generic delivery option does
+not satisfy this requirement. Do not substitute that recommendation for his objective.
+
+Authenticated Shopify using the existing Calapres account (another brand was initially selected;
+account chooser corrected it). No security setup or permission changes. Live plan page showed
+Basic. Shipping General profile contained only two manual free-domestic tiers covering order
+values below/above threshold, both named the same free-shipping label. Carrier accounts: None.
+Opened Add shipping option and selected Carrier or app calculated in the UNSAVED dialog.
+Authoritative message: "There are no carriers or apps available for this zone." Discarded the
+dialog; readback showed the original two tiers and no new rate. This establishes current
+configuration, not a universal assertion OTO can never offer such a service. Basic is outside
+the previously verified Shopify CCS eligible plans (Advanced/Plus, or Grow with entitlement).
+
+Opened storefront and used read-only cart tool: existing one-item cart; no item was added or
+removed. Proceeded to checkout without entering contact/address/payment information or buying.
+A previously populated Riyadh address was present; it was not copied to this report. The only
+shipping choice shown was the free-domestic label; no OTO/carrier selector. Checkout carried
+an existing preview_theme_id parameter, so this is a checkout preview observation, not proof
+of the published-theme visual appearance. Live admin shipping configuration independently
+establishes the configured rate list. No payment/order or shipment was created.
+
+Official OTO support Shopify guide documents installation and automatic ORDER synchronization,
+not publishing carrier checkout rates. Official Shopify app listing includes generic carrier
+selection/rate-calculation tags, but those alone do not prove this exact customer checkout
+feature. App data details list product, order/fulfillment/shipping information and locations.
+No install or permission action used. Search suggestion initially navigated to an unrelated
+tracking article; corrected via the explicit Shopify guide link under Sales Channels.
+
+Source pages read:
+- https://apps.shopify.com/oto
+- https://support.tryoto.com/ar/كيفية-ربط-متجر-شوبيفاي-shopify-مع-حساب-أوتو
+- Live Shopify Settings > Shipping > General profile; Plan > Basic.
+
+Outcome: multiple named MANUAL Shopify rates are possible on the current plan, and the merchant
+can honor the selected carrier when releasing the physical-ready shipment in OTO. Automatic
+OTO live checkout quoting and automatic selected-service mapping remain unproved. Do not
+recommend paid upgrade as a guaranteed fix without OTO feature confirmation. Never enable
+automatic labels merely to map the choice; physical-readiness release remains binding.
