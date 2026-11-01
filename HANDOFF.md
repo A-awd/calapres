@@ -1,5 +1,28 @@
 # Calapres handoff
 
+## Independent user evidence reviewed, Chatwoot added; no migration justified — 2026-11-01
+
+This supersedes the provisional Fin-first recommendation in the next historical section.
+Independent authored reviews were read in Shopify App Store and TrustRadius, and user reports
+in Chatwoot GitHub issues. Gartner Unifonic review detail required signup, which was not done.
+Blocked review sites/search snippets/AI summaries were not treated as full user evidence.
+Respond.io reviews include incentivized entries and duplicate-contact/media complaints; Shopify
+merchants report useful Fin order data and mixed update reliability. Neither proves Saudi Arabic
+superiority. Chatwoot issue #14853 is an open Captain V2 scenario-language report, not an Arabic
+benchmark or a diagnosis of Calapres. Historical backup request #9527 separates database backup
+from portable exit; current deployment ownership/backups were not verified in this research.
+
+Recommendation: retain Chatwoot for now, with Captain still paused. This does not endorse its
+current response quality or promise a repair. Respond.io is a candidate for channel operations;
+Fin is a candidate for Shopify support. Unifonic's Arabic claim lacks independently verified
+comparable evidence in the sources accessible here. No alternative is adopted. Data ownership,
+complete export, destination import, channel identity and workflow portability remain separate.
+[Arabic evidence review and decision limits](docs/research/2026-11-01-independent-support-platform-review.md).
+Next decision gate is evidence of Saudi ambiguity handling, exact Shopify personalization data,
+and usable full-history/media exit before any subscription or channel migration. No account,
+trial, vendor/customer message, data upload, setting, installation, permission, migration or
+production test occurred; Easy Life remains stopped. Preserve all previous operational work.
+
 ## Long-term messaging platforms compared; no migration adopted — 2026-11-01
 
 Owner requested deep research comparing respond.io, Fin/Intercom and Unifonic on Arabic,
