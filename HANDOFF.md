@@ -1,5 +1,22 @@
 # Calapres handoff
 
+## Fastlo direct contract versus OTO wallet comparison investigated — 2026-11-01
+
+Owner supplied a private OLEEL-addressed Fastlo offer and requested the same-carrier comparison:
+direct Fastlo transport plus OTO bridge versus Fastlo purchased from OTO wallet. Offer is dated
+Feb5 with seven-day validity; no current applicability or transfer to Calapres assumed. Original,
+exact rates and calculations are privately preserved/hash-verified. Do not publish commercial
+quote amounts or confuse incoming orders with permission to issue labels.
+OTO Free-account price calculator returned no Fastlo row for the explicit Riyadh→Riyadh prepaid
+5kg/20cm-cube sample. Fastlo was present under own-contract Shipping Partners, requiring Launch+.
+No universal availability/absence claim, other-carrier substitution or intercity quote. Jeddah
+input was not accepted as a selected city and the edit was canceled. Current own-contract bridge
+pricing is tiered monthly plus overage, not a remembered universal per-label amount. Exact VAT
+and same-carrier wallet rate remain unproved, so no final savings conclusion is justified.
+[Research and next data gate](docs/research/2026-11-01-fastlo-own-contract-versus-oto-wallet.md).
+No vendor send, label, shipment, wallet, plan, contract activation, order or mapping change occurred.
+Captain/Easy Life stay stopped; preserve prepaid/manual physical-readiness release constraints.
+
 ## Complete Respond inquiry submitted with owner's explicit authority — 2026-11-01
 
 Owner directed sending all questions using his designated Gmail. Official Email us form was
