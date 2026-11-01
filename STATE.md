@@ -1,5 +1,13 @@
 # Calapres current state
 
+## OTO checkout options clarified — 2026-11-01
+
+Carrier availability inside OTO is separate from customer-facing Shopify checkout options.
+Named manual rates are supported by Shopify; automatic live OTO carrier-rate publication was
+not established from the connected-channel form. Do not promise all 21 calculator services at
+checkout or assume a named rate automatically selects/books its carrier. Sources and limits in
+[OTO inventory](docs/research/2026-11-01-oto-carrier-inventory.md). Read-only; form canceled.
+
 ## OTO complete carrier inventory read — 2026-11-01
 
 Live own-contract catalog contained 433 integration cards (not distinct Saudi wallet carriers).

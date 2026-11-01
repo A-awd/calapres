@@ -455,3 +455,25 @@ no test was performed. This clarifies the earlier immediate snapshot that had no
 - Right Now
 - Next Global
 - Magic Delivery
+
+## Shopify checkout distinction — 2026-11-01
+
+Owner asked whether every calculator service appears at Shopify checkout. Official Shopify
+documentation confirms merchant-defined shipping-option names/prices can be displayed, while
+live carrier/app-calculated rates require a supporting integration and eligible Shopify plan.
+CCS is available on Advanced/Plus; Grow can add it for a fee or annual billing. Merely importing
+orders to OTO does not prove checkout rate publication.
+
+Inspected OTO connected Shopify channel read-only: enabled; its basic/advanced form exposed
+order import, COD, discounted OTO rates, automatic shipment and sync controls, but no observed
+checkout carrier/service rate publisher. No switches, tests or saves used; canceled the form.
+Absence from this form is not universal proof OTO cannot offer checkout rates through another
+feature. Therefore all 21 services must not be promised as automatic checkout choices.
+Merchant-created named rates are possible, but naming a rate does not itself map or book an OTO
+carrier; selected-service execution and geographic eligibility require separate confirmation.
+
+Sources read:
+- https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/setting-up-shipping-rates
+- https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/third-party-carrier-calculated-shipping
+
+No store configuration changed and no checkout/order/shipment test was performed.
