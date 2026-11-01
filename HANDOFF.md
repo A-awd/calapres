@@ -1,5 +1,28 @@
 # Calapres handoff
 
+## Current Chatwoot plan and Respond multi-brand economics verified — 2026-11-01
+
+Read-only live Chatwoot billing and its payment portal confirm Business Cloud with one paid
+seat. Exact recurring charge, renewal and paid-invoice summary are in private iCloud delivery;
+no billing-session URL, payment method or invoice identifier is stored here. No billing action,
+renewal change, cancellation, payment, customer send, Captain activation or migration occurred.
+
+Respond Advanced supports multiple Workspaces under an Organization subscription and ten included
+users at the published base tier. A numeric included Workspace allowance was not established;
+do not promise five or unlimited Workspaces. Channel documentation explicitly limits each
+Organization to five WhatsApp API Channels; more requires support, and Meta limits are separate.
+MAC/AI and users are organization-level shared allowances, not a fresh allocation per brand.
+Separate Organizations have independent subscriptions. Chatwoot is also multi-channel/per-seat;
+brand count alone does not prove Respond savings. Current public Advanced monthly pricing is
+near nine Chatwoot Business paid seats before taxes, usage, Meta and implementation differences.
+
+A newly read official comparison article explicitly advertises Arabic human live-chat/call
+support, revising the prior absence-of-documentation finding. It says 24/5 in prose but 24/7 in
+its table; do not promise Arabic 24/7. Written coverage and escalation remain acceptance gates.
+Respond's current plan/brand fit remains conditional on exact Shopify personalization, isolation,
+Workspace allowance, aggregate usage, human support and complete exit. Captain remains paused;
+Easy Life stopped. [Multi-brand economics and source details](docs/research/2026-11-01-respond-multibrand-economics.md).
+
 ## Respond.io acceptance checked: personalization, Arabic support, exit — 2026-11-01
 
 Owner requested a focused read-only check without subscription or channel movement. Public docs
