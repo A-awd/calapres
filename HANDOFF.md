@@ -1,5 +1,35 @@
 # Calapres handoff
 
+## Respond.io acceptance checked: personalization, Arabic support, exit — 2026-11-01
+
+Owner requested a focused read-only check without subscription or channel movement. Public docs
+were read in one Codex in-app tab. Shopify Orders access returned a current-account permission
+error, so actual order field names/storage and live letter/card text were not inspected. No
+account switch, permission change or customer data transfer occurred. Do not claim live readback.
+
+The documented Shopify recipe syncs contacts/order events via Zapier using email; it does not
+prove exact item personalization is exposed to humans or AI. AI HTTP skill can read external JSON
+but publishing requires Advanced/Enterprise/eligible Legacy and it has no OAuth flow/token refresh.
+Potential customized integration is not a ready-made accepted solution or authorization to build.
+Respond.io advertises 24/7 human and AI support on every plan; human Arabic support hours and
+technical escalation are not confirmed. A translated website is not proof of Arabic staffing.
+
+The migration guide explicitly addresses offboarding to another BSP with the same number and
+credit-line release, but account model/WAME and our current number/WABA ownership were not checked.
+Do not delete channels, change 2FA or follow a generic migration sequence. Export covers contacts,
+conversations and messages; 365 days is a per-request date range, seven days is download validity.
+Neither is a retention period. Actual media files, enduring links, destination import and workflow
+portability remain unproved. Published terms require an independent content copy and do not
+guarantee backup recovery. Written account-specific exit terms and a usable export sample are
+needed before commitment; no absolute ownership/zero-loss guarantee is asserted.
+
+Respond.io remains a candidate, not purchase-ready for Calapres's exact requirements. Next gate:
+provider demonstration of exact letter/card data with order/item identity and access controls,
+written Arabic human support coverage, implementation/maintenance ownership and same-number plus
+full-history/media exit. No vendor/customer send, trial, subscription, integration, installation,
+export test, order, shipment, setting or permission change occurred. Captain stays paused and
+Easy Life stopped. [Arabic findings and acceptance checklist](docs/research/2026-11-01-respond-shopify-arabic-support-exit-gates.md).
+
 ## Provider maturity and operational responsibility compared — 2026-11-01
 
 Owner clarified that vendor/company quality, mature operations, support, development and
