@@ -1,5 +1,18 @@
 # Calapres current state
 
+## Complete Respond inquiry submitted with owner's explicit authority — 2026-11-01
+
+Owner directed sending all questions using his designated Gmail. Official Email us form was
+submitted once with that address as reply contact and the storefront's public business phone.
+No direct vendor mailbox was verified; the owner was told this is a form submission, not Gmail
+Sent mail. Exact pre-submit body readback confirmed 12 sections / 7,274 characters. The official
+post-submit thank-you confirmed acceptance; human receipt, ticket and email reply are unproved.
+The full text and screenshot are privately saved/read back; personal sender address and inbox
+contents are excluded here. [Delivery record and full topic checklist](docs/handoffs/2026-11-01-respond-complete-inquiry-sent.md).
+Next gate is the written response plus technical evidence against all 12 sections; no monitor,
+subscription, trial, integration, migration, customer message or billing change was created.
+Captain remains paused and Easy Life stopped. Preserve all current operations.
+
 ## Provider-owned Shopify notification path is a hard selection gate — 2026-11-01
 
 Owner rejects recreating a user-maintained middleware path for Shopify order WhatsApp templates.
