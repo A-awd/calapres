@@ -1,5 +1,32 @@
 # Calapres handoff
 
+## Browser disconnection recovery and independent access pending — 2026-11-01
+
+Owner is on mobile and requires recovery without waiting to return home. Reproduced stale
+browser.user-unavailable error, then recovered via supported cua_repl.js_reset followed by
+getTab of the existing in-app browser2/tab2. Returned to OTO pricing and read rendered account
+content successfully; marked the same tab for handoff. No extra tab or external browser.
+For this exact error, perform that recovery before asking owner to visit desktop. A stale tool
+binding is not proof the Mac or browser is offline. Do not kill/restart the app or clear browser
+profile/cookies to recover a tool binding. If another failure occurs, use documented
+browser-troubleshooting guidance and current inventory; do not loop unchanged retries.
+
+Read-only OS diagnosis: AC system/display/disk sleep already disabled and keepawake assertion
+present. No sleep setting changed. Current-thread app logs include missing route/frame and CDP
+errors; no permanent application fix established. App UI access to com.openai.codex was denied
+by Computer Use safety; no alternative UI-control bypass attempted. Version read from local
+metadata; no update/restart was performed. Existing Tailscale was Running/online and existing
+macOS Screen Sharing service was enabled. Read-only protocol connection to loopback and this
+Mac's existing private Tailscale interface succeeded (RFB banner). No new listener, credentials,
+sharing permissions, firewall rule, public tunnel, daemon or worker was configured.
+
+Independent phone-to-Mac GUI access remains untested. No iOS peer was listed in current
+Tailscale status; owner asked asynchronously whether Tailscale is installed/logged in on phone.
+Next: connect the owner's phone through the existing private network and use a compatible Mac
+screen-sharing client; owner enters credentials locally. Do not claim end-to-end recovery or
+permanent resolution before successful phone GUI access. Historical OLEEL payment inspection
+remains pending, separate from this connectivity blocker. Captain and Easy Life stay stopped.
+
 ## Shipping fee scenarios verified and calculated — 2026-11-01
 
 Aramex OTO wallet can use Free; a paid subscription is not mandatory for that route.
