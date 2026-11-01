@@ -1,5 +1,24 @@
 # Calapres current state
 
+## Additional owner-requested verification — 2026-11-01
+
+Verified the live Free account can preview both Launch and Growth courier prices without
+subscribing. For the same synthetic Riyadh-to-Riyadh prepaid 5kg/20cm-cube sample, neither
+paid-plan preview returned Fastlo. Both previews showed other courier prices and upgrade
+buttons; none was clicked. This rules out claiming a subscription is necessary merely to
+inspect those previews, but does not prove worldwide or account-independent Fastlo absence.
+
+A Jeddah text entry followed by Show shipping prices retained Riyadh as the result destination;
+therefore no accepted intercity quote or intercity availability conclusion is claimed. Fastlo
+remains visibly listed in the own-contract catalog, whose banner requires Launch or above.
+Clicking its name did not expose a new pricing detail. One focused official-domain search
+returned no result. The remaining gap is an explicit OTO-wallet Fastlo quote or authoritative
+availability confirmation, not payment for access to the calculator. No purchase, plan change,
+label, shipment, order, funding, integration or message was made.
+
+Owner correction: use the supplied offer as the comparison baseline; do not block this price
+comparison on its historical validity. No operational adoption of that offer is implied.
+
 ## Fastlo direct contract versus OTO wallet comparison investigated — 2026-11-01
 
 Owner supplied a private OLEEL-addressed Fastlo offer and requested the same-carrier comparison:
