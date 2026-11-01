@@ -1,5 +1,19 @@
 # Calapres current state
 
+## Exact Growth versus Advanced feature matrix read — 2026-11-01
+
+Owner asked for the substantive plan differences. The current official pricing comparison's
+rendered check/minus cells were read directly in one Codex in-app tab. Both include ten users,
+text AI Agents, Workflows, advanced reports, Developer API, n8n/Zapier/Make, HubSpot, MCP, export
+and call recording/transcription/summary. Do not present these as Advanced-only.
+Advanced adds Multiple Workspaces (numeric allowance unproved), HTTP Requests Step, Webhook Events,
+AI Agents for voice calls, Salesforce, phone/email masking and SAML SSO; base AI credits double
+from 10,000 to 20,000 at the 1,000 MAC tier. AI answering calls is distinct from shared call
+recording/summary. Developer API access is distinct from HTTP calls inside the workflow/agent.
+This is a feature/eligibility comparison, not proof of smarter Arabic or exact Shopify fields.
+No subscription, send, setup, plan change or migration occurred. Captain and Easy Life remain
+stopped. [Exact Arabic matrix](docs/research/2026-11-01-respond-growth-vs-advanced-exact.md).
+
 ## Current Chatwoot plan and Respond multi-brand economics verified — 2026-11-01
 
 Read-only live Chatwoot billing and its payment portal confirm Business Cloud with one paid
