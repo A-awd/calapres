@@ -1,5 +1,19 @@
 # Calapres current state
 
+## Owner prioritizes provider-maintained native integrations — 2026-11-01
+
+Owner wants ready-made supported integration rather than custom intermediary maintenance; do not
+sell Salesforce as an Advanced benefit for his use. Current native HubSpot documentation was
+read: Growth+ supports viewing/editing selected contact properties and contact-field sync from
+HubSpot updates/creation, with email/phone matching and setup. It is not proof of full CRM object,
+Shopify order or personalization sync; no private HubSpot account was inspected or connected.
+The reviewed official Shopify recipe uses Zapier, not proof of a native Shopify-certified app or
+accepted letter/card integration. No universal absence claim is made. Native versus custom is
+about provider implementation/maintenance responsibility, not whether APIs exist internally.
+Respond remains conditional, not adopted; Advanced is not justified by HubSpot alone. No setup,
+subscription, send, install or migration occurred. Captain and Easy Life remain stopped.
+[Native integration fit](docs/research/2026-11-01-respond-native-shopify-hubspot-fit.md).
+
 ## Exact Growth versus Advanced feature matrix read — 2026-11-01
 
 Owner asked for the substantive plan differences. The current official pricing comparison's
