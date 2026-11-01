@@ -1,5 +1,41 @@
 # Calapres current state
 
+## Long-term messaging platforms compared; no migration adopted — 2026-11-01
+
+Owner requested deep research comparing respond.io, Fin/Intercom and Unifonic on Arabic,
+Shopify, data rights and exit portability without a subscription or channel move. Public official
+sources were reviewed in one Codex in-app tab; no accounts, trials, customer data uploads,
+channel/Shopify connections, vendor/customer messages, payments or permission changes occurred.
+
+Research now provisionally favors Fin for Service / Intercom for native Shopify support and
+explicit conversation-plus-attachment export documentation. This revises the earlier informal
+respond.io-first preference, not the approved production architecture. Arabic Saudi performance
+has not been benchmarked. Fin's Ecommerce shopping role excludes Social in its reviewed FAQ;
+Fin Memory documents Messenger/email only, so neither is credited as a proved WhatsApp capability.
+Native TikTok DM for Fin/Unifonic was not established. If all three ready-made channels are a
+hard requirement, respond.io remains the closer channel candidate, with AI suitability unresolved.
+
+Respond.io documents a 20-message AI context limit and lack of quoted-message/internal-comment
+visibility; these directly affect ambiguous-question use. Its Shopify recipe uses Zapier/email,
+while real-time HTTP skills require a qualifying plan and tailored integration. Intercom provides
+native order data but custom personalization fields/attachments and actual WhatsApp identity/memory
+still need acceptance. The reviewed Intercom WhatsApp FAQ contains prior-account deletion wording;
+never execute it or call migration safe without a supported preservation/rollback path.
+
+Data ownership, raw export, destination import and AI/workflow portability are separate. Intercom
+permits some de-identified Fin model training with a documented opt-out; third-party model training
+restrictions do not mean Intercom itself cannot train. Respond.io says messages/customer data are
+not used for model training and supplies its DPA on request. Unifonic retains customer data rights
+for the customer but public full-history/media exit proof remains incomplete; no provider is
+certified suitable for Saudi requirements merely by a marketing statement or hosting region.
+
+[Arabic assessment, primary sources and unexecuted acceptance criteria](docs/research/2026-11-01-respond-fin-unifonic-long-term-assessment.md).
+Recommendation is research only. No actual channel account eligibility, commercial quote, model
+quality or export/import round-trip was tested. Captain stays paused and Easy Life stopped.
+Preserve the latest address alternatives, Onwan Free and all earlier work. Next gate is proof of
+Saudi Arabic, personalization fields, channel coverage, account-preserving WhatsApp onboarding,
+training controls and complete data exit before any new subscription or migration decision.
+
 ## Independent address routes investigated; no architecture adopted — 2026-10-29
 
 The owner asked for a correct method even without relying on current vendors. SPL officially
