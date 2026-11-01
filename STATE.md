@@ -1,5 +1,17 @@
 # Calapres current state
 
+## Transfer to Claude Code at owner request — 2026-11-01
+
+Owner explicitly requested delivery of the current problem to Claude. The full bounded technical
+handoff was sent to authenticated, locally installed Claude Code; its successful reply confirmed
+the objective, only actual repair, evidence limits, outstanding update/restart verification, and
+safety boundaries. No repair execution occurred during the receipt turn. Local resumable session:
+`67fe3d38-9d8d-458c-ae45-84c69cc506b0`. Mobile/Desktop Claude UI synchronization was not verified.
+
+Detailed packet and receipt: [Claude connectivity transfer](docs/handoffs/2026-11-01-claude-codex-connectivity-transfer.md).
+Do not treat this transfer as resolution or as deletion readiness. Owner has not confirmed the
+manual update/restart steps. Preserve ongoing work and proceed from the exact pending action.
+
 ## Official connectivity research and live diagnostic — 2026-11-01
 
 Owner requests the correct root remedy, without substituting remote desktop or claiming a 100% guarantee. Official Remote connections and troubleshooting docs reviewed. Both desktop/mobile should be current; host must remain awake/online and Remote Control enabled. Signing out disables Remote Control without removing pairings. For a stuck terminal, reopen its panel first; restart the desktop app only after active chats finish. Do not reset pairings, delete profiles or change networking speculatively.
