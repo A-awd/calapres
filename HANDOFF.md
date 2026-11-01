@@ -1,5 +1,24 @@
 # Calapres handoff
 
+## Provider-owned Shopify notification path is a hard selection gate — 2026-11-01
+
+Owner rejects recreating a user-maintained middleware path for Shopify order WhatsApp templates.
+Require ready-made provider-supported order events, personalization, approved-template sending,
+status/failure visibility and recovery responsibility. API/webhooks internally do not disqualify
+a provider-maintained connector; mere documented integration or Meta template approval does not
+prove transactional delivery. Respond's reviewed Shopify recipe uses Zapier and does not pass
+this gate. No final platform selection or Advanced purchase is justified yet.
+
+Owner reports seeing Respond approved in Shopify; exact page/badge remains unidentified and link
+was requested. Focused search and App Store results did not establish Respond's own listing; no
+universal absence claim or substitution of similarly named apps. Shopify's Built for Shopify guide
+covers performance/design/integration, not guarantee of the exact notification path.
+Historical Oct26 handoff records failed messages and owner-reported absent confirmation, but no
+complete execution/error proof of middleware as cause; primary-vs-shipping phone was a hypothesis.
+A separate old delivered owner canary is limited evidence, not acceptance of real new-order flow.
+No retest, send, account change, install, subscription, migration or shipment occurred. Captain
+remains paused and Easy Life stopped. [Requirement and evidence](docs/research/2026-11-01-native-order-notification-requirement.md).
+
 ## Owner prioritizes provider-maintained native integrations — 2026-11-01
 
 Owner wants ready-made supported integration rather than custom intermediary maintenance; do not
