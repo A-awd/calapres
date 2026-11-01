@@ -1,5 +1,32 @@
 # Calapres handoff
 
+## Provider maturity and operational responsibility compared — 2026-11-01
+
+Owner clarified that vendor/company quality, mature operations, support, development and
+reliability matter beyond chatbot intelligence and price. New public research in one Codex
+in-app tab reviewed independent company reporting plus first-party support/SLA, changelogs
+and incident histories. Intercom is assessed as the most established general helpdesk ecosystem;
+respond.io is the first long-term fit candidate for Calapres's social B2C operations. This is a
+research recommendation, not vendor adoption or proof of superior Arabic or financial solvency.
+
+Respond.io has recent independently reported funding and active product releases; its October
+status history includes WhatsApp delivery/inbox and reporting incidents. Intercom has explicit
+support targets (not guaranteed) and a 99.8% monthly SLA with exclusions; its US status history
+includes Shopify/Fin incidents. Chatwoot remains actively developed with a good published Cloud
+availability window; self-hosted operational responsibility and our exact deployment remain
+unverified. Unifonic's historical institutional backing does not prove the current agent product
+or a Calapres-specific support obligation. Vendor uptime figures are not comparable across
+contractual targets, marketing claims, scopes and measurement windows.
+
+Respond.io's third-party BSP deprecation article contains conflicting historical dates despite
+a 2026 page date; do not treat it as a new October event or an actionable migration instruction.
+Verify channel setup, number ownership and exit route before any contract. No subscription,
+trial, connection, migration, upload, vendor/customer send, installation or setting change occurred.
+Captain remains paused and Easy Life stopped. Keep Chatwoot operationally unchanged pending an
+approved decision. Next gates remain Arabic evidence, exact Shopify personalization, channel
+eligibility, written human support/escalation and complete data/media exit.
+[Arabic company/platform assessment and source limitations](docs/research/2026-11-01-support-provider-maturity-reliability.md).
+
 ## Independent user evidence reviewed, Chatwoot added; no migration justified — 2026-11-01
 
 This supersedes the provisional Fin-first recommendation in the next historical section.
