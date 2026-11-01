@@ -1,5 +1,33 @@
 # Calapres handoff
 
+## Owner correction: root connectivity diagnosis, not remote-desktop substitution — 2026-11-01
+
+Owner explicitly paused phone remote-desktop setup: investigate why Codex host/browser/terminal
+connections stop while Mac remains running. Do not ask him to install Screens as the root fix.
+Phone Tailscale peer did become online and direct ping succeeded; phone GUI remains untested.
+
+Read-only app logs revealed a concrete computer-use MCP startup failure (file not found).
+Existing user config command was a relative bundle path with cwd="."; target signed executable
+exists under ~/.codex/computer-use. Corrected ONLY that existing entry's command and cwd to
+absolute existing locations. Restricted local backup retained under ~/.codex/backups; no config
+contents/secrets copied to GitHub. Isolated stdio MCP initialize after correction returned a
+successful response, then that diagnostic child was stopped. This fixes the demonstrated launch
+path defect; it does NOT establish permanent repair of browser routing or remote host access.
+
+Only today's app diagnostic logs are available. They show 15 pubsub closes, each followed by
+transport reopen within roughly5–11seconds; local app-server connected at startup with no
+subsequent logged disconnect transition. No recent app crash report. Sleep already disabled,
+current Wi-Fi signal strong and no configured HTTP proxy. Wired USB Ethernet link had a
+self-assigned address; no network settings changed and no causal attribution made. Missing
+browser route/frame errors are distinct from pubsub/host/terminal state. No crash or long host
+outage cause established from this run. Do not conflate short recovered streams with the owner's
+reported long outage. No app restart, private worker, security change or desktop-control bypass.
+
+Next dependency: owner asked for approximate time and displayed error of the last long outage
+that required waiting to return home; correlate if retained logs cover it. If outside retained
+logs, explain evidence gap rather than inventing cause or calling this complete. Existing
+browser recovery procedure remains available but is not the permanent root-cause resolution.
+
 ## Browser disconnection recovery and independent access pending — 2026-11-01
 
 Owner is on mobile and requires recovery without waiting to return home. Reproduced stale
