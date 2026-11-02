@@ -1,5 +1,31 @@
 # Calapres handoff
 
+## New physical reference photos received; Claude v5 requested — 2026-11-02
+
+Owner supplied actual `صور المبخرة.zip` from iCloud root after authorizing upload to the
+existing Claude Blender conversation. It contains23 DNG originals (IMG_3188..IMG_3210), not9.
+Verified ZIP CRC, preserved original ZIP and all23 RAW files, made full-resolution JPEG copies
+with built-in macOS sips quality90, no retouching. Manifest with original/JPEG hashes saved privately.
+Verified destination: `عمل/تجارة/Calapres/Ai-Work/التسليم/2026-11-02-mabkhara-new-reference/`.
+ZIP SHA256 `f96e0f4bd97179dd6eb8beeabd19bdcec5837cbe792ff83c19d1b18c9a0ec265`.
+Local readback verified; cloud-server/second-device synchronization not established.
+
+Reused one Codex in-app tab, same Claude chat78667554-0b35-4c81-89b0-db7032477c34.
+Uploaded19 JPEGs in message21; Claude explicitly confirmed all19 open with none failed.
+Uploaded remaining IMG_3207..3210 in message23 with bounded v5 instruction; actual sent message
+and ongoing response visible. This supersedes earlier statements that newer reference photos
+were unavailable. The23-photo set is new owner-supplied evidence, not proof of identity to every
+one of the earlier nine compressed attachments.
+
+Request: use new cream-product photos for shape, actual motif, leather, stitching, bowl and tray;
+retain125/95mm heights,100x100/70x70mm dimensions and4.5mm independent acrylic; preservev4 and
+all originals. Deliver original/v4/v5 same-angle comparison, ornament close-up, four-face2+2 check,
+per-product dimension audit, BLEND/GLB/script/ZIP. Do not force dimensions to fit camera estimates
+or claim100% fidelity/calibrated colour. Box95-to-lid versus pull-tab interpretation remains open;
+face placement only confirmed if new photos establish it. No manufacturing/store/laser/purchase,
+permission or scheduled task. v5 production/review still pending at this checkpoint.
+
+
 ## Owner correction: one-off geometry, existing dimensions, Opus Max continuation — 2026-11-02
 
 Owner clarified this is one-time product geometry preparation, not recurring capture. Do not
