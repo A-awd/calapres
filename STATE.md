@@ -21,7 +21,40 @@ Do not claim a finished UI if delivered tool is CLI scripts only.
 Required evidence: same-camera v5/v6 comparison, clay render with textures/normals off, wireframe
 or side section with relief depth in mm, actual BLEND/GLB reimported with relief geometry,
 per-product dimension audit and bounded name/SVG cutting checks. No laser operation, store,
-installation, purchases, permissions or schedules. New response running; v6 not delivered yet.
+installation, purchases, permissions or schedules. V6 delivered and reviewed; see delivery update below.
+
+V6 delivery update: Claude message28 completed actual mesh relief, bounded name/SVG cases,
+BLEND/GLB/script, clay-before/after, textured comparisons, wireframe/section and cut examples.
+Downloaded `mabkhara_v6_relief.zip` via same in-app tab, CRC and safe extraction verified.
+ZIP SHA256 `9093ddf1cc8a673de4f814af6aafe28834bb09acb6d28291c23210c290efdcbe`.
+Verified private destination `عمل/تجارة/Calapres/Ai-Work/التسليم/2026-11-02-mabkhara-blender-v6/`;
+original ZIP and extracted originals at `package/mabkhara_v6/`. Local save/readback verified;
+cloud-server/second-device sync not established. Prior versions preserved. No local installation
+or execution of downloaded scripts, laser, storefront, payment or permission change.
+
+Codex inspected actual clay comparison: v5 face flat when textures disabled, v6 relief visible;
+inspected name/SVG/cut sheet: connected readable Arabic name عبدالرحمن, generic v1 SVG ring/star
+fixture with real holes (NOT Calapres wordmark). Producer checks: name66x13.967mm,6 parts/1 hole;
+SVG46x45.999mm,2 parts each1 hole; calibration50mm, jig pocket offset0, cut contains acrylic only,
+both designs inside safe area. Small name dots~1.8x2mm need physical cut trial before fabrication
+acceptance; no trial authorized or performed. Tool is CLI scripts, NOT a completed graphical UI.
+Producer used Python bpy5.2.3; equivalent standalone Blender invocation documented but untested.
+
+Independent Codex read-only decode of actual4632088-byte GLB found5 relief mesh nodes and projected
+actual vertex positions onto the dominant local face normal with node scale: ~0.30064mm depth
+(span includes float/normal precision); confirms geometry independent of material effects.
+Check saved privately as `codex_glb_geometry_check.json`. Producer reimport confirms same relief;
+total111700 triangles. Decorated mabkhara2/plain2 retained; opposite placement provisional.
+Relief in separate MB_Decoration_relief collection; highest cells on outer envelope, grooves
+inward0.3mm, parameter --decor-depth. Depth estimate remains unmeasured, colour/contrast not exact.
+
+Producer dimension audit incl relief, excluding tray: heights125mm incl foot/rim and95mm to lid;
+tops70x70; widest99.983/99.985mm on0.1mm scan, finer scan99.997/99.994 reported; unchanged fromv5.
+Acrylic4.5mm, min/max0.05/4.55 above face. Earlier rounded-edge shrink was corrected and rebuilt
+before final checks/renders. Foot, tray, box layout and95mm versus pull-tab105.286 interpretation
+remain provisional; no100% physical fidelity claim. New inference must not override known dims.
+Next: owner reviews delivered v6/clay/cut examples; any later UI or fabrication work is separate.
+
 Next: inspect actual geometric result and preserve artifacts in a new verified private folder.
 
 
