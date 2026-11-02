@@ -1,5 +1,23 @@
 # Calapres handoff
 
+## Owner correction: one-off geometry, existing dimensions, Opus Max continuation — 2026-11-02
+
+Owner clarified this is one-time product geometry preparation, not recurring capture. Do not
+recommend scanner purchases or professional scanning as a prerequisite. He already gave dimensions
+in the same Claude web conversation: messages1/3 specify mabkhara125mm, box95mm, bottom100x100mm,
+top70x70mm; message10 explicitly includes the foot in total height. Message1 says stitch area,
+detailed depths and lid were not measured. Existing dimensions must be used before asking again.
+
+Opened and read those actual messages through the same in-app tab. Current model selector verified
+Opus5.5 Max; sent an authorized bounded audit/improvement request in message19. Require per-product
+world-space geometry checks, not overall tray/set bounding box or SVG self-consistency alone;
+compare owner values/before/after and deliver only real fixes in v4 while preserving earlier files.
+Do not force unmeasured visual details into claimed measurements. The v3 script interprets100mm
+as the widest section above the foot, with foot_bottom82mm estimated; this interpretation is not
+proof the owner measured that location. Audit/review remains running; no v4 delivery yet.
+No new device, purchase, subscription, permission, laser operation, Shopify change or monitor.
+The nine new photographs still have not reached Claude. Do not claim Max fills missing evidence.
+
 ## Physical capture recommendation for mabkhara fidelity — 2026-11-02
 
 Research/advice only after owner asked whether buying a scanner or iPhone LiDAR can guarantee
