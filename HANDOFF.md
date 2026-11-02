@@ -14,9 +14,33 @@ world-space geometry checks, not overall tray/set bounding box or SVG self-consi
 compare owner values/before/after and deliver only real fixes in v4 while preserving earlier files.
 Do not force unmeasured visual details into claimed measurements. The v3 script interprets100mm
 as the widest section above the foot, with foot_bottom82mm estimated; this interpretation is not
-proof the owner measured that location. Audit/review remains running; no v4 delivery yet.
+proof the owner measured that location. Audit/review completed; see the v4 delivery update below.
 No new device, purchase, subscription, permission, laser operation, Shopify change or monitor.
 The nine new photographs still have not reached Claude. Do not claim Max fills missing evidence.
+
+
+Delivery update — v4 completed and downloaded through the same in-app tab. Actual ZIP CRC,
+safe extraction and local readback verified. Preserved ZIP plus original package under
+`عمل/تجارة/Calapres/Ai-Work/التسليم/2026-11-02-mabkhara-blender-v4/`.
+ZIP `mabkhara_v4_audited.zip`, SHA256
+`b8e58d11ee3041c09b9e8c0cc1ecc64814835dab3b3de38431dd37b46ce3d19d`.
+BLEND, GLB, script, given/v3/v4 table, dimensioned PNG/PDF views and photo comparison delivered.
+Previous versions retained. Local save verified; server upload/second-device sync not established.
+
+Producer evaluated-mesh audit reports mabkhara height126.10 ->125.00mm including metal rim,
+widest section101.45 ->100.00mm, top71.60 ->70.00mm. Box lid73 ->70mm and widest section
+98.42x99.67 ->100x100mm; height95mm remains to lid top, excludes pull tab108.29mm.
+Cause: earlier dimensions applied to skeleton before projecting panels, rim and edge rounding.
+These are producer audit results, not independent physical acceptance. Codex inspected actual
+comparison PNG: visible height/proportion, texture and colour mismatch remains; not 100% fidelity.
+Claude's camera fitting suggests photo dimensions differ, but this is inference dependent on
+picked points/camera/shape assumptions, NOT proof owner measurements are wrong or that100mm
+measurement location is settled. Do not adopt its categorical conclusion without physical evidence.
+Foot, lid, bowl, stitching and tray remain estimated; v4 foot changed from~81 to~71mm estimated.
+Mabkhara two patterned/two plain retained, opposite placement provisional; box distribution unconfirmed.
+Nine newer cream photos still not received by Claude. Max did not resolve missing references.
+Next: review v4 comparison and resolve only specific remaining ambiguities before accepting fidelity;
+do not request all known dimensions again, buy scanners, cut, publish or activate operations.
 
 ## Physical capture recommendation for mabkhara fidelity — 2026-11-02
 
