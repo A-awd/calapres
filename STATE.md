@@ -26,6 +26,30 @@ new monitor, Easy Life or Captain activation. Next: finish and inspect Claude's 
 four-view render and actual BLEND/GLB/package; preserve delivered artifacts in verified project
 Ai-Work storage, keeping local save distinct from confirmed cloud upload.
 
+Delivery update: Claude completed v3, re-rendered after the stitching fix, and delivered the
+ZIP, BLEND, beige GLB, script, final four-view sheet and a low-resolution alternate-layout sheet.
+Codex downloaded the actual ZIP through the same in-app tab, verified ZIP CRC and local readback,
+and inspected the delivered four-view PNG: exactly 2 plain/2 decorated faces, no floating box
+stitching. The packaged verification JSON reports the same per-face assignment; this is producer
+verification, not independent manufacturing acceptance. All four panel faces carry stitching.
+
+Locally saved under verified iCloud project path:
+`عمل/تجارة/Calapres/Ai-Work/التسليم/2026-11-02-mabkhara-blender-v3/`.
+ZIP: `mabkhara_v3_two_patterned_sides.zip`;
+SHA-256 `eaddc4b1c09b9c771cc2608497fc908e87241890b2550e4a3d6af0aae4cd7803`.
+Extracted originals retained under `package/`; actual render
+`package/out_v3/mabkhara_four_sides_v3.png`, BLEND and GLB alongside it.
+Local existence and byte identity verified; server upload/second-device sync not established.
+No old version was removed. The new nine source images remain unavailable as local files.
+
+Current limit: 2+2 correction is delivered, full resemblance is NOT approved. Default decorated
+left/right is provisional; alternate left/back can be selected. Motif remains low-resolution
+from the OLD oblique source and cream color from new photos is not matched. Box kept unchanged
+(3 decorated/1 plain) because owner correction explicitly named only the mabkhara. Do not claim
+this box distribution is correct. Panel relief and several dimensions remain estimates.
+Next: make the nine new owner photographs available to the same Claude conversation, then replace
+motif/color and settle face placement from evidence without rerunning the completed 2+2 repair.
+
 ## Laser/acrylic and product3D continuity imported — 2026-11-02
 
 Owner requests merging the separate LT630/3D conversation into existing Calapres continuity.
