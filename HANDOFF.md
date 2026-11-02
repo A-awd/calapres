@@ -23,7 +23,39 @@ all originals. Deliver original/v4/v5 same-angle comparison, ornament close-up, 
 per-product dimension audit, BLEND/GLB/script/ZIP. Do not force dimensions to fit camera estimates
 or claim100% fidelity/calibrated colour. Box95-to-lid versus pull-tab interpretation remains open;
 face placement only confirmed if new photos establish it. No manufacturing/store/laser/purchase,
-permission or scheduled task. v5 production/review still pending at this checkpoint.
+permission or scheduled task. v5 production/review completed; see delivery update below.
+
+V5 delivery update: Claude confirmed all23 images open. Initial analysis ran over32 minutes
+without a model; Codex stopped the repetitive analysis and sent message25 directing immediate
+bounded build from existing analysis, preserving unresolved v4 assumptions. Message26 completed
+v5 and actual comparison files. No model/subscription/permission setting was changed.
+
+Downloaded actual `mabkhara_v5.zip` via same in-app tab. ZIP CRC, safe extraction, GLB header/
+declared length, BLEND presence and unchanged acrylic cut paths independently checked locally.
+ZIP SHA256 `c431134fe10e9527ffe3768a44b3c52f65c7a9b77e1dfee9230311b18c737a92`.
+Saved ZIP plus original package under verified private destination
+`عمل/تجارة/Calapres/Ai-Work/التسليم/2026-11-02-mabkhara-blender-v5/`.
+Package includes BLEND, cream GLB, script, audit/comparison table and three comparison PNGs.
+Reference index lists23 names but source JPEGs themselves are NOT bundled in the v5 ZIP;
+all23 actual DNG/JPEG originals remain preserved in the separate new-reference folder above.
+Local save/readback verified; server/second-device sync not established.
+
+Codex visually inspected actual overall, decoration-close-up and four-side PNGs: v5 replaces
+old blurred tile with clear octagonal/interlaced pattern, cream surface, thread between dark holes;
+four-side sheet shows2 patterned/2 plain. Producer also adds16-hole bowl grille, smaller lid tab
+and rounder panel edges. v4 and v5 use same render camera/lights; actual photo at left is only a
+reference at a DIFFERENT camera angle, not a registered silhouette match. Refuse100% fidelity.
+
+Producer evaluated-mesh audit (not physical acceptance): mabkhara125mm incl rim, box95mm to lid,
+tops70x70, widest sections99.983/99.985mm (nominal100; about0.02mm difference), acrylic4.5mm.
+Pattern is colour/bump TEXTURE, not geometric relief; photo's handmade stitches are more wavy,
+contrast/colour differ. Foot and left/right patterned placement remain provisional; box face
+layout, tray and lid thickness unchanged/unconfirmed. Pull-tab top105.286mm excludes95mm lid
+height. Photo cell/proportion analysis is assumption-dependent; do not adopt its final categorical
+claim that a single cell measurement proves owner height/base wrong. Known dimensions remain
+constraints; only specific unresolved details may need later clarification. Next: owner reviews
+actual before/after images; do not restart scanning/device research, broaden edits, cut or publish.
+
 
 
 ## Owner correction: one-off geometry, existing dimensions, Opus Max continuation — 2026-11-02
