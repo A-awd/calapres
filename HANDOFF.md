@@ -1,5 +1,22 @@
 # Calapres handoff
 
+## Laser/acrylic and product3D continuity imported — 2026-11-02
+
+Owner requests merging the separate LT630/3D conversation into existing Calapres continuity.
+[Detailed record](docs/handoffs/2026-11-02-lt630-acrylic-3d-merge.md) and
+[coverage/originals ledger](docs/handoffs/2026-11-02-lt630-acrylic-3d-evidence.md).
+Actual product operation is through-cut acrylic names/logos glued to leather; model125/95mm
+heights and100/70mm widths are owner-supplied, squaredepth/foot/panel/tray details estimated.
+Latest v2c Blender/GLB/sourceSVG package is privatelyretained under approvedAi-Work/التسليم;
+owner's exact-fidelity requirement remains unmet. No mobileviewer, Shopify3Dpublication,
+configurator or order-to-laserautomation was implemented. Next: detailed straight productphotos
+and measurements, then continue existingdraft; keep single-burner offer/otherCalapreswork intact.
+Historical laserconnection is not readiness: powerfault/extraction/interlock status unknown;
+no firing until physicallyverified. Sourcechat remains deletion-unsafe:64originalpaths unavailable,
+earlier exhaustiveassistant/toolreview incomplete, cloud uploadunverified. Nochatmerge/deletion,
+storemutation or EasyLife invocation from this preservation.
+
+
 ## Transfer to Claude Code at owner request — 2026-11-01
 
 Owner explicitly requested delivery of the current problem to Claude. The full bounded technical
