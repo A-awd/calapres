@@ -1,5 +1,22 @@
 # Calapres current state
 
+## Physical capture recommendation for mabkhara fidelity — 2026-11-02
+
+Research/advice only after owner asked whether buying a scanner or iPhone LiDAR can guarantee
+100% resemblance. No device/app purchase, installation, service order or new Claude message.
+Apple Object Capture docs describe multi-angle photogrammetry; LiDAR can help low-texture areas,
+but reflective surfaces and repeated/symmetric patterns remain challenging. Do not promise a
+phone LiDAR capture resolves the leather relief/stitching/metal bowl at manufacturing accuracy.
+Professional example verified on manufacturer's site: Artec Spider II blue-light scanner claims
+up to 0.05 mm accuracy and resolution, not guaranteed whole-workflow accuracy on this product.
+Proposed route: supplier CAD if available, otherwise professionally captured geometry plus
+close-up calibrated texture/color photography and measured dimensional checks. Define acceptable
+error per use (visual/AR versus cutting/manufacturing); do not use an untestable 100% claim.
+For one product, evaluate a scan service on the actual sample before buying hardware. No local
+service provider, quote, scanner purchase or acceptance tolerance was selected/approved.
+
+Sources read: https://developer.apple.com/documentation/realitykit/capturing-photographs-for-realitykit-object-capture ; https://developer.apple.com/videos/play/wwdc2023/10191/ ; https://www.artec3d.com/portable-3d-scanners/artec-spider .
+
 ## Mabkhara physical-reference correction and Claude Blender continuation — 2026-11-02
 
 Owner confirmed the mabkhara has exactly TWO decorated side faces and TWO plain side faces.
