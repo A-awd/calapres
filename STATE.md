@@ -1,5 +1,31 @@
 # Calapres current state
 
+## Mabkhara physical-reference correction and Claude Blender continuation — 2026-11-02
+
+Owner confirmed the mabkhara has exactly TWO decorated side faces and TWO plain side faces.
+This is a product-fidelity constraint; adjacent/opposite placement is not confirmed. Do not
+apply it to the separate box without its own evidence. Nine owner reference images are visible
+in the source chat; their supplied temporary paths are absent from this Mac, so attempted Claude
+uploads failed and were removed from the draft. Do not claim these originals reached Claude or
+were independently archived/synced. Do not substitute inferred imagery for those originals.
+
+Owner authorized continuing the existing Claude web chat:
+https://claude.ai/chat/78667554-0b35-4c81-89b0-db7032477c34 . This is the Blender design conversation,
+not the prior Claude Code connectivity handoff. Reused one Codex in-app browser tab. Sent exact
+owner correction plus image descriptions and an explicit disclosure of failed image uploads.
+Claude's visible Blender inspection reports v2c actually had three decorated faces and one plain.
+The v3 inspection reports front/back plain and left/right decorated; this opposite placement is
+provisional and configurable. First four-view render visibly agrees with the 2+2 count, but showed
+floating stitching from the hidden box. Claude is rebuilding after splitting stitching by product;
+updated files and corrected final render remain pending at this checkpoint. Preserve v1/v2/v2c.
+
+Do not claim 100% photo/manufacturing fidelity: new originals have not reached Claude, motif/color
+still rely on older references, several dimensions remain estimated, and physical measurement
+ambiguities remain. No production publication, cutting, shipment, payment, permission change,
+new monitor, Easy Life or Captain activation. Next: finish and inspect Claude's corrected v3
+four-view render and actual BLEND/GLB/package; preserve delivered artifacts in verified project
+Ai-Work storage, keeping local save distinct from confirmed cloud upload.
+
 ## Laser/acrylic and product3D continuity imported — 2026-11-02
 
 Owner requests merging the separate LT630/3D conversation into existing Calapres continuity.
