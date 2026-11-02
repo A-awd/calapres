@@ -1,5 +1,30 @@
 # Calapres current state
 
+## Owner requested real mesh relief and retained customization/cutting — 2026-11-02
+
+Owner reaffirmed the purpose is an actual3D internal tool: Arabic names or uploaded SVG logos
+as independent protruding acrylic on the slanted product face, adjustable4.5mm thickness, plus
+mm-scale cutting paths and alignment jigs for LightBurn. A flat photo composite does not replace
+this scope. Owner explicitly authorized continuing the same Claude Blender chat with real
+geometric ornament relief, keeping known dimensions, tool chain and prior versions.
+
+Sent message27 through the same single Codex in-app tab; Opus5.5 Max remains selected. Requested
+v6 from existing v5 analysis without repeating image/camera research. Convert actual extracted
+pattern into applied/exported mesh relief (not normal/bump or unapplied displacement); provisional
+0.3mm relief depth remains an estimate and must be adjustable. Keep highest surface within nominal
+outer envelope and recess grooves inward to preserve100/70mm widths and125/95mm heights.
+Preserve2+2 mabkhara count/provisional layout, independent acrylic, SVG holes, Arabic shaping,
+cut-only SVG and jig alignment; do not include body ornament in acrylic cut files. Confirm with
+one Arabic-name case and one available SVG logo/design without inventing the Calapres wordmark.
+Do not claim a finished UI if delivered tool is CLI scripts only.
+
+Required evidence: same-camera v5/v6 comparison, clay render with textures/normals off, wireframe
+or side section with relief depth in mm, actual BLEND/GLB reimported with relief geometry,
+per-product dimension audit and bounded name/SVG cutting checks. No laser operation, store,
+installation, purchases, permissions or schedules. New response running; v6 not delivered yet.
+Next: inspect actual geometric result and preserve artifacts in a new verified private folder.
+
+
 ## New physical reference photos received; Claude v5 requested — 2026-11-02
 
 Owner supplied actual `صور المبخرة.zip` from iCloud root after authorizing upload to the
