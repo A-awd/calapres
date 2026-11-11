@@ -4,6 +4,16 @@ Date: 2026-10-23
 
 Status: owner-approved Free installation executed; production adoption and end-to-end acceptance not approved or established
 
+## Latest technical checkpoint — 2026-11-11
+
+Owner supplied OTO's repair announcement; one bounded actual Onwan-origin post-order retest
+was completed on the existing Free plan. Detailed address, dedicated short code and postcode
+now update correctly in OTO. Building still receives the entire native address2 instead of4359.
+The repair is partial; no full acceptance, paid reactivation or production publication.
+Synthetic1012 was cancelled/archived/restocked with notifications off and paidSAR0. No label,
+shipment, Sync, middleware, new access or vendor send. A full updated reply/two images await
+owner approval. [Evidence and remaining gate](../docs/research/2026-11-11-oto-partial-fix-retest.md).
+
 ## Current commercial direction — owner-approved Free restoration, 2026-10-29
 
 The owner explicitly instructed returning Onwan to Free immediately, keeping it installed, and

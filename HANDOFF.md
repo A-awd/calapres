@@ -1,5 +1,22 @@
 # Calapres handoff
 
+## OTO repair retested once; building mapping still fails — 2026-11-11
+
+Owner supplied an OTO repair announcement. A single app-origin post-order retest on existing
+Onwan Free used public sample RCTB4359, without messages, payment, label, Sync or middleware.
+The genuine Onwan write updated Shopify; OTO now correctly updates the detailed address,
+dedicated short code and postcode12627. Building still wrongly contains all of address2
+(`RCTB4359, Al Dhubbat Dist.`) instead of4359. Full acceptance remains failed.
+
+Synthetic1012 was cancelled/voided/archived with notification unchecked and one item restocked;
+paidSAR0. No permanent deletion or paid renewal. OTO cancellation propagation was not reread.
+Current live Onwan Free and messages off, OTO auto-shipment off were checked before testing.
+No production theme/checkout publication or settings change. Post-order proof does not establish
+pre-checkout UX or carrier label correctness. [Result and limits](docs/research/2026-11-11-oto-partial-fix-retest.md).
+A complete updated reply and two synthetic-only images are proposed privately, NOT sent; owner
+approval and current email-thread verification required. Earlier unsent escalation drafts are
+superseded for this technical result. Await a specific building correction before another test.
+
 ## Owner requested real mesh relief and retained customization/cutting — 2026-11-02
 
 Owner reaffirmed the purpose is an actual3D internal tool: Arabic names or uploaded SVG logos
