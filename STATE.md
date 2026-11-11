@@ -1,5 +1,20 @@
 # Calapres current state
 
+## Owner requested in-thread reply draft only; Gmail reauthentication pending — 2026-11-11
+
+Owner explicitly requested preparing the complete reply and two comparison images as a draft
+in the existing OTO ticket email conversation; he will send it himself. This authorizes draft
+creation/attachments only, not Send. Expanded the private text with thanks for the three repaired
+fields, the remaining building error preventing full automation, and possible benefit for
+Shopify merchants using the same address format without claiming market-wide impact.
+
+Full571-word text and both original image hashes are verified privately. Gmail info@calapres.com
+requires reauthentication in the single Codex in-app tab. The password interface is ready for
+local owner entry; no password/OTP was requested in chat or stored. No actual Gmail draft or
+attachment has yet been saved, and no message was sent. The email thread/recipient still need
+live verification after login. Continue the authorized draft then verify persisted body and
+exactly two attachments, leave it for owner Send, and preserve Onwan Free/current test evidence.
+
 ## OTO repair retested once; building mapping still fails — 2026-11-11
 
 Owner supplied an OTO repair announcement. A single app-origin post-order retest on existing
