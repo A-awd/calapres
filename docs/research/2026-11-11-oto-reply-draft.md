@@ -1,5 +1,7 @@
 # OTO reply draft saved for owner Send — 2026-11-11
 
+Latest update: owner subsequently instructed Codex to Send this exact draft. One reply with both images was sent and verified at11:09 Riyadh. The draft-only scope below is historical; see [the sent record](2026-11-11-oto-reply-sent.md). Do not recreate or resend.
+
 Status: **Gmail draft saved and reopened; NOT sent.** This completes the owner's explicit
 request to prepare the full reply and two comparison images in the existing ticket email.
 The owner reserved Send for himself; do not press Send or interpret draft preparation as send

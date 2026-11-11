@@ -1,5 +1,19 @@
 # Calapres current state
 
+## Owner-approved OTO reply sent with two images — 2026-11-11
+
+Owner explicitly changed the preceding draft-only instruction to «ارسلها انت» for the exact
+prepared reply. Sent once at11:09 Riyadh in the same ticket125612 conversation, solely to
+support@tryoto.com. Before Send, verified unchanged571-word text and two completed synthetic
+comparison images. Sent-folder reopening and the outgoing message's own headers confirm sender,
+recipient, date, subject, full text match and both attachments. No duplicate/scheduled send.
+[Dispatch proof and scope](docs/research/2026-11-11-oto-reply-sent.md).
+
+This supersedes earlier owner-will-Send/draft-pending state for this exact reply only. Dispatch
+is not receipt, technical assignment or a completed building fix. No new test, Sync, subscription,
+access, production change, customer message or shipment. Keep Onwan Free and await a specific
+remaining-building correction; future replies still need owner review/approval. Do not resend.
+
 ## OTO reply draft saved and reopened; owner will Send — 2026-11-11
 
 Owner completed Gmail reauthentication. Live OTO9November16:32 reply verified from the official
