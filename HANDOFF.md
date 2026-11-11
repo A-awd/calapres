@@ -1,5 +1,21 @@
 # Calapres handoff
 
+## OTO reply draft saved and reopened; owner will Send — 2026-11-11
+
+Owner completed Gmail reauthentication. Live OTO9November16:32 reply verified from the official
+support sender, signed tryoto.com, with ticket125612; link to older308330 remains unconfirmed.
+Created native in-thread Reply draft only, sole support@tryoto.com recipient, unchanged subject.
+Full571-word Arabic text thanks the partial repair, documents synthetic1012/remaining building
+mis-map, requests supported automatic first-import/update correction and explains the value
+for national-address automation/Shopify merchants using the same field format.
+
+Exactly two synthetic comparison images finished uploading. Navigated to Drafts and reopened:
+new3436-character text matches exactly; normal Gmail quote retained, both attachments present,
+no upload progress, RTL confirmed. Draft remains open; NOT sent or scheduled.
+[Draft proof/scope](docs/research/2026-11-11-oto-reply-draft.md). Private URL/body/hashes/evidence
+are saved privately. Owner reserved Send; do not send/recreate or treat this as technical
+acceptance. No plan, settings, address retest, Sync or shipment change. Onwan remains Free.
+
 ## Owner requested in-thread reply draft only; Gmail reauthentication pending — 2026-11-11
 
 Owner explicitly requested preparing the complete reply and two comparison images as a draft
