@@ -1,5 +1,31 @@
 # سجل تسليم معرفة الشحن والعنوان الوطني — ١٢ نوفمبر ٢٠٢٦
 
+## Shipping summary reconciled and mailbox checked — 2026-11-12
+
+The repeated owner summary is already covered by this knowledge record, decision 0050,
+the 11 November partial-repair retest and the verified sent reply. Keep historical
+Oleel/Fastlo accounting as a bounded past case; it is not Calapres's current settlement
+model. No new platform, pricing winner, contract transfer, paid-plan restoration or
+production acceptance is adopted.
+
+At 11:46 Riyadh on 12 November, verified the connected Calapres mailbox and searched
+mailbox-wide, including separate conversations, all folders, known OTO/Mwwared senders,
+subject/topic terms and both historical case references. Returned result sets were
+exhausted. No newer matching incoming message was found after the 11 November 11:09
+sent reply. The current OTO conversation contains the 9 November repair announcement
+and our verified 11 November reply with two attachments. No unsent reply is pending.
+
+This is a dated mailbox observation, not a check of live in-app vendor chats, current
+Shopify/OTO configuration or future activity. The integration result remains partial:
+detailed address, short code and postcode updated correctly in the last justified test;
+the building field was still mis-mapped. Preserve Onwan Free and the existing native
+integration. There is no new evidence justifying another test, Sync or resend.
+
+Wait for a concrete building-field correction or supported native contract before one
+justified targeted test. Present any proposed company reply completely for owner review
+before sending. No message, draft, test, Sync, configuration/plan change, payment,
+customer action, label or shipment occurred during this review.
+
 ## الحالة التي يبدأ منها الاستكمال
 
 الهدف النشط هو مسار رسمي: العميل يكتب الرمز الوطني المختصر، تتحقق الإضافة من وجوده، تعبئ العنوان في شوبيفاي، وتنقله أوتو تلقائيًا بالخانات الصحيحة. لا تكفي مطابقة شكل الرمز أو وجوده في نص مجمع. يريد المالك تقليل مكالمات العنوان، ويفضل أوتو تقنيًا، ويرفض n8n والوسيط الخارجي لهذا المسار.

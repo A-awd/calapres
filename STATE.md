@@ -1,4 +1,17 @@
 # Calapres current state
+
+## Calapres workstreams reconciled; proof interface corrected — 2026-11-12
+
+[Active work and next actions](docs/handoffs/2026-11-12-calapres-active-work.md).
+Repeated owner summaries were reconciled with current sources, without restarting
+the lettering work or adopting a shipping alternative. Existing three lettering
+drafts remain unapproved; interface r2 fixes bounded numeric input and persistent
+model-load errors, with targeted code-behavior checks passed and live in-app rendering
+still unavailable. Same artwork/base geometry and private version history preserved.
+Calapres mailbox-wide review at 11:46 Riyadh found no newer matching incoming
+OTO/Mwwared reply after the verified 11 November send. Keep Onwan Free and the
+partial-building-field diagnosis; no new test/Sync/send is justified by this review.
+No final cutting approval, LightBurn import, laser/store or original-project/iCloud write.
 ## Offline acrylic lettering review — 2026-11-12
 
 [Current bounded progress and validation limits](docs/handoffs/2026-11-12-acrylic-lettering-review.md).

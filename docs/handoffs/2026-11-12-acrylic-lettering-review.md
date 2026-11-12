@@ -1,5 +1,31 @@
 # Offline monogram review and laser/3D continuity — 2026-11-12
 
+## Current interface correction, artwork unchanged — 2026-11-12
+
+The current review artifact was updated in place with version history preserved.
+Width, both placement axes and thickness now normalize finite inputs within the
+displayed controls' limits before extrusion. Export is gated by successful model load,
+a valid state, matching paths and placement inside the inherited margin. Model-load
+status/errors have their own persistent UI element and cannot be overwritten by the
+acrylic path-match result. Review SVG filenames and acceptance boundaries remain explicit.
+
+Four targeted executions of the actual page module with DOM/renderer test doubles
+passed: persistent load failure, valid-ready export, invalid numeric inputs and
+out-of-margin blocking/reset. JavaScript syntax passed. These are code-behavior checks,
+not a live WebGL/browser inspection. The current attempt found no available Codex
+in-app browser route; successful live in-app rendering is still unverified.
+
+Private revision r2 retains exactly the existing design polygons, default dimensions,
+base GLB and all three review cut-path files. No new lettering direction, owner
+aesthetic approval, final production release, LightBurn import or machine action.
+Editable sources/build scripts and the updated offline proof are retained privately;
+the original project/iCloud destination was not modified. The original r1 remains
+locally available and the saved deliverables retain their previous versions.
+
+The latest owner continuation and shipping summary are linked through the
+[active work register](2026-11-12-calapres-active-work.md). Do not replace these newer
+drafts with the historical c87-only or v2c-only status. Owner selection is still required.
+
 ## Source precedence and preservation
 
 Read the global launcher/routing and current project operating documents. Verified main at
