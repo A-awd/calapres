@@ -1,5 +1,19 @@
 # Calapres handoff
 
+## Calligraphy, current 3D proof and Mashq cancellation handoff — 2026-11-12
+
+[Detailed continuation and evidence limits](docs/handoffs/2026-11-12-calligraphy-mashq-continuation.md).
+Newer local Blender templates, three preview revisions and v8-based interactive proof exist;
+do not restart from the older v2c-only packet. Arabic monogram aesthetics remain rejected and
+unapproved. CorelDRAW is proposed, not purchased/installed here; current Apple trial length is
+unverified. Mashq Studio auto-renewal was canceled through its official Stripe portal on
+11 November; service ends 3 December 2026. Do not repeat cancellation. Mail filtering remains
+advice only. Preserved 38 exact active files privately with hash readback; cloud upload, complete
+external Blender dependencies and old attachment coverage remain unverified. Native local-thread
+creation is unavailable; draft-link fallback only, no new receiver submission claimed.
+
+
+
 ## Shipping/address handoff preserved; local receiver draft link prepared — 2026-11-12
 
 Owner invoked Handoff. [Compact continuation](docs/handoffs/2026-11-12-shipping-address-continuation.md)
