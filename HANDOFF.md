@@ -1,4 +1,16 @@
 # Calapres handoff
+## Offline acrylic lettering review — 2026-11-12
+
+[Current bounded progress and validation limits](docs/handoffs/2026-11-12-acrylic-lettering-review.md).
+Three new editable curve directions, same-path extruded proofs and numbered mm references
+are private visual drafts pending owner selection. Existing v8-derived geometry retained;
+older v2c-only instructions are historical. Geometry checks passed; narrow features remain
+subject to fabrication review. In-app UI testing was blocked by local-file browser policy,
+native Blender crashed during Metal startup, and writes to the original project folder were
+denied. Independent private review deliverables exist; no new BLEND, original-folder/iCloud
+write, manufacturing approval, LightBurn import or laser/store action is claimed.
+
+
 
 ## Calligraphy, current 3D proof and Mashq cancellation handoff — 2026-11-12
 
