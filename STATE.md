@@ -1,5 +1,14 @@
 # Calapres current state
 
+## Laser/3D handoff refreshed — 2026-11-12
+
+[Compact continuation and delivery limits](docs/handoffs/2026-11-12-laser-3d-continuation.md).
+Owner reports an existing new receiving chat; its identity/submission is unverified and no native
+local thread tool is available. Do not create duplicate receivers. v2c private archive hash was
+rechecked unchanged; still an unapproved visual draft, no new implementation or laser/store action.
+Preserve newer Calapres work and source chat. Existing original/source/cloud gaps remain explicit.
+
+
 ## Owner-approved OTO reply sent with two images — 2026-11-11
 
 Owner explicitly changed the preceding draft-only instruction to «ارسلها انت» for the exact
