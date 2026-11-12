@@ -1,5 +1,24 @@
 # Calapres current state
 
+## Shipping/address handoff preserved; local receiver draft link prepared — 2026-11-12
+
+Owner invoked Handoff. [Compact continuation](docs/handoffs/2026-11-12-shipping-address-continuation.md)
+and [material knowledge record](docs/handoffs/2026-11-12-shipping-address-knowledge.md) preserve
+market/accounting history, consequential tests/failures, reversals, vendor messages and exact
+current boundary. Last live result remains11November: three address fields fixed, building
+still wrong, Onwan Free, synthetic1012 cleaned up. The approved571-word reply and two images
+were SENT once at11:09 in ticket125612; do not recreate a draft or resend. No12November mailbox
+review or new experiment was performed.
+
+Read-only history was reviewed in bounded chronological ranges; private originals and exact
+artifacts copied/hash-verified locally, with explicit original-image and cloud-sync limits.
+No native local-thread management tool is available. A documented desktop new-local-composer
+link and verified local continuation file are prepared; receiver creation/submission/readback
+NOT performed or claimed. Private receipt binds source cutoff/publication to this delivery status.
+No source rename/archive/delete, Easy Life, vendor/customer send, plan/access/production change
+or shipment occurred during handoff. After opening/submitting the prepared local continuation,
+review newer vendor replies first; any new reply needs full owner review before Send.
+
 ## Laser/3D handoff refreshed — 2026-11-12
 
 [Compact continuation and delivery limits](docs/handoffs/2026-11-12-laser-3d-continuation.md).

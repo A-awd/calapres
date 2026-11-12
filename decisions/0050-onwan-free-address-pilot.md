@@ -11,8 +11,10 @@ was completed on the existing Free plan. Detailed address, dedicated short code 
 now update correctly in OTO. Building still receives the entire native address2 instead of4359.
 The repair is partial; no full acceptance, paid reactivation or production publication.
 Synthetic1012 was cancelled/archived/restocked with notifications off and paidSAR0. No label,
-shipment, Sync, middleware, new access or vendor send. A full updated reply/two images await
-owner approval. [Evidence and remaining gate](../docs/research/2026-11-11-oto-partial-fix-retest.md).
+shipment, Sync, middleware or new access occurred in the test. The complete later reply and
+two images were explicitly authorized and sent once at11:09 Riyadh11November; no send remains
+pending. [Test evidence](../docs/research/2026-11-11-oto-partial-fix-retest.md) and
+[sent proof](../docs/research/2026-11-11-oto-reply-sent.md).
 
 ## Current commercial direction — owner-approved Free restoration, 2026-10-29
 
