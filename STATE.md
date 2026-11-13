@@ -1,5 +1,21 @@
 # Calapres current state
 
+## تسليم للمتابعة محليًا على الماك الجديد، 13 نوفمبر 2026
+
+[التسليم المفصل ونقطة التوقف](docs/handoffs/2026-11-13-calapres-new-mac-local-continuation.md).
+طلب المالك الحفظ وتجهيز الانتقال فقط. لم تُنشأ محادثة ولم تُنسخ الأصول أو تُنقل أو
+تُحذف، ولم يُستأنف التنفيذ. يحفظ التسليم تقدم edce092 الأحدث: نجاح مثبت Corel على
+الجديد دون إثبات أول تشغيل/تفعيل، والعرض الحي لـr2 على القديم فقط، وفرق وحدات SVG
+الخام عن المصدر المليمترّي. لا تعاد خطوات من سجلات أقدم ولا يُفترض أن Corel يحدّث
+المعاينة آليًا. بقي تنسيق الجلسات ومسار بذور SVG الأحدث غير متحققين.
+
+جرد القراءة أكد تطابق 38 أصلًا ونسخها المحلية في iCloud، وسلامة أرشيف r2 وملفاته
+الخمسين. سجلّا HTML وZIP الخاصان ما زالا بالإصدار1؛ جرد خاص جديد يجمع المواقع
+والبصمات دون إعادة تجميع الوسائط. مزامنة iCloud وتطابق الجديد وحفظ r2 فيه غير
+متحققة. المستودع المحلي القديم المختلف وملفاته غير المتتبعة حُفظت كما هي.
+المالك يفتح المستقبل يدويًا برسالة الافتتاح؛ عليه التحقق من الجهاز والمجلد وقراءة
+المصادر والأصول والأدوات قبل التنفيذ. لا Easy Life أو تشغيل ليزر أو شراء أو إرسال أو نشر.
+
 ## Design-to-cut environment in progress; Corel installer completed — 2026-11-13
 
 Owner authorized saving current progress without Easy Life. [Current environment, live proof and remaining gates](docs/research/2026-11-13-design-cut-environment-progress.md). This later execution checkpoint supersedes the earlier research-only/no-install and unavailable-live-preview statements for the actions recorded here; all dated history remains. The ordinary conversation terminal is on the old M2/8GB Mac. Guarded new-Mac readback confirmed M6/32GB/macOS 27.2.1 and about 144 GB free; existing Blender 5.2.4 and LightBurn 2.2.01 were preserved without reinstall. The official notarized universal CorelDRAW 2026 desktop bootstrap ran on the new Mac, No Serial/Trial was selected, the owner entered the password locally, and the installer reported successful completion. Actual Corel first launch, account/trial activation and EULA gates remain unverified; no purchase or new subscription.
