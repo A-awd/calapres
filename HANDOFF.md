@@ -1,5 +1,14 @@
 # Calapres handoff
 
+## Mac vector-editor setup brief prepared — 2026-11-13
+
+[Verified CorelDRAW/LightBurn setup and workflow brief](docs/research/2026-11-13-coreldraw-mac-lightburn-setup-brief.md).
+Owner requested instructions for another conversation, not execution here.
+Verified the Mac desktop trial route, distinguished the web/App Store options and
+confirmed SVG/AI transfer on Mac with the direct Corel macro documented for Windows.
+Existing r2 artwork/proof remains unapproved. No software download/install/purchase,
+account or license action, new design approval, LightBurn import or machine/store operation.
+
 ## Calapres workstreams reconciled; proof interface corrected — 2026-11-12
 
 [Active work and next actions](docs/handoffs/2026-11-12-calapres-active-work.md).
