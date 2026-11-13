@@ -1,5 +1,13 @@
 # Calapres handoff
 
+## Design-to-cut environment in progress; Corel installer completed — 2026-11-13
+
+Owner authorized saving current progress without Easy Life. [Current environment, live proof and remaining gates](docs/research/2026-11-13-design-cut-environment-progress.md). This later execution checkpoint supersedes the earlier research-only/no-install and unavailable-live-preview statements for the actions recorded here; all dated history remains. The ordinary conversation terminal is on the old M2/8GB Mac. Guarded new-Mac readback confirmed M6/32GB/macOS 27.2.1 and about 144 GB free; existing Blender 5.2.4 and LightBurn 2.2.01 were preserved without reinstall. The official notarized universal CorelDRAW 2026 desktop bootstrap ran on the new Mac, No Serial/Trial was selected, the owner entered the password locally, and the installer reported successful completion. Actual Corel first launch, account/trial activation and EULA gates remain unverified; no purchase or new subscription.
+
+A real in-app-browser r2 preview rendered on the old Mac through temporary local serving: white product, extruded default A, 40×61.8589 mm and 4.5 mm thickness; runtime reported 755 matched vertices and about 0.00007 mm maximum deviation. This is observed rendering/digital geometry evidence, not artistic or manufacturing approval. Unitless editable SVG sources do not have the same X/Y mapping as the physical-mm r2 paths; do not silently stretch or treat them as canonical mm. Three proof-matched mm import-review seeds and a manifest are being prepared privately with originals preserved. A separate 50×50 mm calibration path exists; actual Corel→SVG→LightBurn scale proof remains pending. Corel SVG edits do not yet update the r2 3D proof automatically.
+
+Remote control timed out twice and was recovered; concurrent GUI changes have an unproved cause, with an owner coordination question pending. Continue only after coordination and verify actual Corel readiness, selected-artwork identity and the bounded mm round-trip. Final cut/assembly/LightBurn deliverables follow owner choice and scale verification. No general name/logo workflow, laser connection/transfer/frame/fire, storefront/customer send, Mashq renewal, Easy Life or overall completion is claimed.
+
 ## Mac vector-editor setup brief prepared — 2026-11-13
 
 [Verified CorelDRAW/LightBurn setup and workflow brief](docs/research/2026-11-13-coreldraw-mac-lightburn-setup-brief.md).
